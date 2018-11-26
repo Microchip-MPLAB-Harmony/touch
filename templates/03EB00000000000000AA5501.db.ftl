@@ -1,0 +1,429 @@
+<#assign heading = 'QTouch Data Visualizer'>
+<#assign debug_data_label = 'Sensor Data' >
+<#assign debug_data_key = ['State', 'Delta', 'Threshold']>
+<#assign debug_data_node = ['Signal', 'Reference' , 'Delta', 'Compensation'] >
+<#assign debug_graph_data = ['Signal', 'Reference' , 'Delta', 'Threshold'] >
+<#assign debug_data_node_title = ['Signal', 'Reference' , 'Delta', 'Compensation pF'] >
+<#assign label_ele = 10+5+TOUCH_CHAN_ENABLE_CNT >
+<#assign debug_data_key_label = 'Button Data' >
+<#assign debug_data_hop_label = 'Frequency Hop Data' >
+<#assign node_cnt = TOUCH_CHAN_ENABLE_CNT>
+<#assign key_cnt = TOUCH_KEY_ENABLE_CNT>
+<#assign debug_data_others_label = 'Debug Data' >
+<#assign debug_data_others = ['FrameCounter', 'QTouchLibError'] >
+<#assign blank = [" "]>
+<#if TUNE_MODE==true>
+<#assign label_ele = label_ele + 1 >
+<#assign debug_data_node_title = ['Signal', 'Reference' , 'Delta', 'Compensation pF', 'CSD'] >
+<#assign debug_data_node = ['Signal', 'Reference' , 'Delta', 'Compensation', 'CSD'] >
+</#if>
+<#if FREQ_AUTOTUNE==true>
+<#--if ENABLE_FREQ_HOP==true-->
+<#assign debug_data_hop = ['CurrentFrequency']>
+<#list 0..FREQ_HOP_STEPS-1 as i>
+<#assign debug_data_hop = debug_data_hop + [('HopFrequency+(i)')]>
+</#list>
+</#if>
+
+<#-- MACROS for db script -->
+<#macro db_buid_graph element,plot_count,x_pos,y_pos>
+{
+0, // Dashboard ID
+${element}, // Element ID
+DB_TYPE_GRAPH, // Element Type
+0, // Z-Index (GUI stack order)
+${x_pos}, 0, // X-coordinate
+${y_pos}, 0, // Y-coordinate
+1200, 0, // Width
+500, 0, // Height
+255, 255, 255, // Title color
+0, 0, 0, // Background color
+20, 20, 20, // Graph background color
+'Q', 'T', 'o', 'u', 'c', 'h', ' ', 'G', 'r', 'a', 'p', 'h','\0', // Title
+${plot_count}, // Number of plots
+0,0,0,0, // X Minimum
+0,0,32,65, // X Maximum
+0,0,0,0, // Y Minimum
+0,0,32,65, // Y Maximum
+5,
+1,
+};
+</#macro>
+
+<#macro db_buid_signal_element element,x_pos,y_pos,width,height>
+{
+0, // Dashboard ID
+${element}, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+${x_pos}, 0, // X-coordinate
+${y_pos}, 0, // Y-coordinate
+${width}, 0, // Width
+${height}, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+</#macro>
+
+<#macro db_build_signal_element ele_num,x_pos,y_pos,temp_lable_w, temp_row_h,node_cnt >
+<#list 0..(node_cnt-1) as cnt >
+<#assign temp_y_pos = y_pos + (temp_row_h * cnt)>
+<#assign temp_ele_num = ele_num + cnt >
+<@db_buid_signal_element temp_ele_num, x_pos, temp_y_pos, temp_lable_w, temp_row_h />
+</#list>
+</#macro>
+
+<#macro db_buid_label height, element,x_pos,y_pos,title,width >
+{
+0, // Dashboard ID
+${element}, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+${x_pos}, 0, // X-coordinate
+${y_pos}, 0, // Y-coordinate
+${width}, 0, // Width
+${height}, 0, // Height
+14, // Font Size
+3,
+1, // Horizontal Alignment
+1, // Vertical Alignment
+77, 77, 77, 77, // Background Color
+255, 0, 0, 0, // Foreground Color
+<#list 0..(title?length-1) as n >'${title[n]}',</#list>'\0', // Text
+};
+</#macro>
+
+<#macro db_buid_label_colourless height, element,x_pos,y_pos,title,width >
+{
+0, // Dashboard ID
+${element}, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+${x_pos}, 0, // X-coordinate
+${y_pos}, 0, // Y-coordinate
+${width}, 0, // Width
+${height}, 0, // Height
+12, // Font Size
+3,
+0, // Horizontal Alignment
+1, // Vertical Alignment
+126, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+<#list 0..(title?length-1) as n>'${title[n]}',</#list>'\0', // Text
+};
+</#macro>
+
+<#macro db_buid_label_links height, element,x_pos,y_pos,title,width >
+{
+0, // Dashboard ID
+${element}, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+${x_pos}, 0, // X-coordinate
+${y_pos}, 0, // Y-coordinate
+${width}, 0, // Width
+${height}, 0, // Height
+14, // Font Size
+3,
+0, // Horizontal Alignment
+1, // Vertical Alignment
+126, 255, 255, 255, // Background Color
+255, 0, 0, 255, // Foreground Color
+<#list 0..(title?length-1) as n>'${title[n]}',</#list>'\0', // Text
+};
+</#macro>
+
+<#macro db_build_table_element dashboard_num,element_num, xpos, ypos, Width, Height, data_width, label_width, row_height, rows, columns >
+{
+${dashboard_num}, // Dashboard ID
+${element_num}, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+${xpos}, 0, // X-coordinate
+${ypos}, 0, // Y-coordinate
+${Width}, 0, // Width
+${Height}, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+${data_width},0, // Data Column Width
+${label_width},0, // Label Column Width
+${row_height},0, // Row Height
+${rows}, // Number of Rows
+${columns}, // Number of Columns
+1, // AutoLabels
+'\0', // Label Configuration
+0,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+0, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+</#macro>
+
+<#macro db_build_table_element_new_table title, dashboard_num,element_num, xpos, ypos, Width, Height, data_width, label_width, row_height, rows, columns >
+{
+${dashboard_num}, // Dashboard ID
+${element_num}, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+${xpos}, 0, // X-coordinate
+${ypos}, 0, // Y-coordinate
+${Width}, 0, // Width
+${Height}, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+${data_width},0, // Data Column Width
+${label_width},0, // Label Column Width
+${row_height},0, // Row Height
+${rows}, // Number of Rows
+${columns}, // Number of Columns
+0, // AutoLabels
+<#list 0..(title?size-1) as n ><#list 0..(title[n]?length-1) as n1>'${title[n][n1]}',</#list></#list>'\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+</#macro>
+
+<#macro build_sensor_type_table temp_ele_num, x_pos, y_pos, row_height, temp_lable_w, node_cnt >
+<#assign debug_table_title = ['Channel ID', 'Sensor Type'] >
+<#assign column_cnt = debug_table_title?size >
+<#assign temp_string = [] >
+<#assign temp_width1 = (temp_lable_w) * (column_cnt) >
+<#assign temp_height1 = (row_height) * node_cnt> 
+<#assign element_num = temp_ele_num >
+<#assign sen_type_but_cnt = [] >
+<#list 0..(debug_table_title?size-1) as cnt >
+<#assign temp_string = temp_string + [((cnt)+":0"+":"+(debug_table_title[cnt])+";")]>
+</#list>
+<@db_build_table_element_new_table temp_string, 0, element_num,x_pos,y_pos,temp_width1, temp_height1,temp_lable_w, temp_lable_w,row_height,1, column_cnt />
+<#assign temp_string = [] >
+<#list 0..(node_cnt-1) as cnt >
+<#assign temp_string = temp_string + [("0:"+(cnt)+":"+(cnt)+";")]>
+<#assign temp_string = temp_string + [("1:"+(cnt)+":"+"Button"+" "+(sen_type_but_cnt?size)+";")]>
+<#assign sen_type_but_cnt = sen_type_but_cnt + [1] >
+</#list>
+<#local  y_pos = y_pos + row_height >
+<@db_build_table_element_new_table temp_string, 0, element_num+1,x_pos,y_pos,temp_width1, temp_height1,temp_lable_w, temp_lable_w,row_height,node_cnt, column_cnt />
+</#macro>
+
+<#macro build_table_headings title, temp_ele_num, x_pos, y_pos, row_height, temp_lable_w, node_cnt >
+<#assign column_cnt = title?size >
+<#assign temp_string = [] >
+<#assign temp_width2 = (temp_lable_w) * (column_cnt) >
+<#assign temp_height2 = (row_height) * node_cnt >
+<#assign element_num = temp_ele_num >
+<#list 0..(title?size-1) as cnt>
+<#assign temp_string =  temp_string + [((cnt)+":0"+":"+(title[cnt])+";")]>
+</#list>
+<@db_build_table_element_new_table temp_string, 0, element_num,x_pos,y_pos,temp_width2, temp_height2,temp_lable_w, temp_lable_w, row_height,node_cnt, column_cnt />
+</#macro>
+
+
+<#--  ####start of db file scripts#### -->
+<#if (TOUCH_CHAN_ENABLE_CNT%2) == 0 >
+<#assign dashboard_height = TOUCH_CHAN_ENABLE_CNT/2 >
+<#else>
+<#assign dashboard_height = (TOUCH_CHAN_ENABLE_CNT+1)/2>
+</#if>
+<#if dashboard_height  < 2 >
+<#assign dashboard_height = 3 >
+</#if>
+{
+0,
+<#--'Q', 'T', 'o', 'u', 'c', 'h', ' ', 'D', 'a', 't', 'a', ' ','V', 'i', 's', 'u', 'a', 'l', 'i', 'z', 'e', 'r','\0',-->
+<#list 0..(heading?length-1) as n>'${heading[n]}',</#list>'\0', //heading
+0, 255, 255, 255,
+200, ${dashboard_height+3},
+};
+
+<#-- Initialize the data visualizer dash board element positions -->
+<#assign ele_num = 0 >
+<#assign x_pos = 0 >
+<#assign y_pos = 0 >
+<#assign temp_data_w = 50 >
+<#assign temp_lable_w = 125 >
+<#assign temp_row_height = 30 >
+<#assign y_offset = temp_row_height + 5 >
+
+<#--  -------------------SENSOR SPECIFIC DATA ----------------------- -->
+
+<#if TOUCH_KEY_ENABLE_CNT!= 0 >
+<#assign temp_rows = TOUCH_KEY_ENABLE_CNT >
+<#assign temp_column = debug_data_key?size >
+<#assign temp_width = (temp_lable_w) * temp_column >
+<#assign temp_height = (temp_row_height) * temp_rows >
+
+<#-- LINKS  -->
+<#assign temp_string = "QTouch Modular Library User Guide: www.microchip.com" >
+<@db_buid_label_links temp_row_height, label_ele,x_pos,y_pos,temp_string,1200/>
+<#assign y_pos = y_pos + y_offset >
+<#assign label_ele = label_ele + 1 >
+<#assign temp_string = "Glossary: www.microchip.com" >
+<@db_buid_label_links temp_row_height, label_ele,x_pos,y_pos,temp_string,1200/>
+<#assign y_pos = y_pos + y_offset >
+<#assign label_ele = label_ele + 1 >
+
+<#-- Button data label  -->
+<@db_buid_label temp_row_height, label_ele,x_pos,y_pos,debug_data_key_label,(temp_lable_w * (temp_column+2))/>
+<#assign y_pos = y_pos + y_offset >
+<#assign label_ele = label_ele + 1 >
+
+<#-- sensor label -->
+<@build_sensor_type_table label_ele, x_pos, y_pos, temp_row_height, temp_lable_w, node_cnt/>
+<#assign x_pos = x_pos + temp_lable_w*2 >
+<#assign label_ele = label_ele + 2 >
+
+<@build_table_headings debug_data_key, label_ele, x_pos, y_pos, temp_row_height, temp_lable_w, 1 />
+<#assign label_ele = label_ele + 1 >
+<#assign y_pos = y_pos + temp_row_height >
+
+<#-- Button data table  -->
+<@db_build_table_element_new_table  blank,0,ele_num,x_pos,y_pos,temp_width, temp_height,temp_lable_w, temp_lable_w,temp_row_height,temp_rows, temp_column />
+<#assign x_pos = 0 >
+<#assign y_pos = y_pos + temp_height >
+<#assign ele_num = ele_num + 1>
+
+<#-- Signaling ON/OFF -->
+<#assign y_pos = y_pos - temp_height>
+<#assign x_pos = x_pos + 2 * temp_lable_w >
+<@db_build_signal_element ele_num,x_pos,y_pos,temp_lable_w, temp_row_height, node_cnt />
+<#assign x_pos = 0 >
+<#assign y_pos = y_pos + temp_height >
+<#assign ele_num = ele_num + node_cnt >
+</#if>
+
+<#--  -------------------GRAPH ELEMENT----------------------- -->
+<#assign num_of_plots = node_cnt*(debug_graph_data?size)>
+<#assign y_pos = y_pos + y_offset>
+<@db_buid_graph ele_num, num_of_plots,0,y_pos />
+<#assign x_pos = 0>
+<#assign temp_val = 25*((key_cnt/2)?int)>
+<#if temp_val < 75>
+<#assign temp_val = 75>
+</#if>
+<#assign y_pos = y_pos + (500) + temp_val>
+<#assign ele_num = ele_num + 1>
+
+<#assign temp_string = "* Vertial Zoom: Ctrl Key + Mouse Scroll (uncheck \"Automatically fit Y\" option).">
+<@db_buid_label_colourless temp_row_height, label_ele, x_pos, y_pos, temp_string, 500 />
+<#assign label_ele = label_ele + 1>
+<#assign x_pos = x_pos + 500>
+<#assign temp_string = "* Horizontal Zoom: Left-Shift Key + Mouse Scroll.">
+<@db_buid_label_colourless temp_row_height, label_ele, x_pos, y_pos, temp_string, 300/>
+<#assign label_ele = label_ele + 1>
+<#assign x_pos = x_pos + 300>
+<#assign temp_string = "* Click on \"Legend\" to enable or disable plot.">
+<@db_buid_label_colourless temp_row_height, label_ele, x_pos, y_pos, temp_string, 300/>
+<#assign label_ele = label_ele + 1>
+<#assign y_pos = y_pos + temp_row_height*2>
+<#assign x_pos = 0>
+
+<#--  -------------------NODE SPECIFIC DATA ------------------ -->
+<#assign temp_rows = node_cnt>
+<#assign temp_column = debug_data_node?size>
+<#assign temp_width = (temp_data_w+temp_lable_w) * temp_column>
+<#assign temp_height = (temp_row_height) * temp_rows>
+
+<#-- Node specific data label -->
+<@db_buid_label temp_row_height, label_ele,x_pos,y_pos,debug_data_label,(temp_lable_w * (temp_column+2))/>
+<#assign y_pos = y_pos + y_offset>
+<#assign label_ele = label_ele + 1>
+
+<#-- print sensor type label for node specific table  -->
+<@build_sensor_type_table label_ele, x_pos, y_pos, temp_row_height, temp_lable_w, node_cnt />
+<#assign label_ele = label_ele + 2>
+<#assign x_pos = x_pos + temp_lable_w*2>
+
+<@build_table_headings debug_data_node_title, label_ele, x_pos, y_pos, temp_row_height, temp_lable_w, 1/>
+<#assign label_ele = label_ele + 1>
+<#assign y_pos = y_pos + temp_row_height>
+
+<#-- Node specific data table  -->
+<@db_build_table_element_new_table blank,0,ele_num,x_pos,y_pos,temp_width, temp_height,temp_lable_w, temp_lable_w,temp_row_height,temp_rows, temp_column/>
+
+<#assign x_pos = 0>
+<#assign y_pos = y_pos + temp_height>
+<#assign ele_num = ele_num + 1>
+
+<#assign temp_string = "Compensation: Represents PTC compensation circuit value which is equivalent to sensor capacitance">
+<@db_buid_label_colourless 25, label_ele, x_pos, y_pos, temp_string, 800 />
+<#assign label_ele = label_ele + 1>
+<#assign y_pos = y_pos + 25>
+<#assign x_pos = 0>
+<#assign temp_string = "\"Compensation\" value can be used to check whether sensor is saturated. Refer to User Guide">
+<@db_buid_label_colourless 25, label_ele, x_pos, y_pos, temp_string, 800 />
+<#assign label_ele = label_ele + 1>
+<#assign y_pos = y_pos + 25>
+<#assign x_pos = 0>
+
+<#if TUNE_MODE==true>
+<#if TUNE_MODE_SELECTED=='CAL_AUTO_TUNE_CSD'>
+<#assign temp_string = "Charge Share Delay (CSD): displayed values are auto-tuned by QTouch Library">
+<#else>
+<#assign temp_string = "Prescaler: displayed values are auto-tuned by QTouch Library">
+</#if>
+<@db_buid_label_colourless temp_row_height, label_ele, x_pos, y_pos, temp_string, 800/>
+<#assign label_ele = label_ele + 1>
+<#assign y_pos = y_pos + temp_row_height>
+<#assign x_pos = 0>
+<#assign y_pos = y_pos + y_offset>
+<#else>
+<#assign y_pos = y_pos + y_offset>
+</#if>
+
+<#if FREQ_AUTOTUNE==true >
+<#assign temp_rows = 1 >
+<#assign temp_column = debug_data_hop?size >
+<#assign temp_width = (temp_data_w+temp_lable_w) * temp_column >
+<#assign temp_height = (temp_row_height) * temp_rows >
+
+<#-- Freq Hop data label -->
+<@db_buid_label temp_row_height, label_ele,x_pos,y_pos,debug_data_hop_label,temp_width />
+<#assign y_pos = y_pos + y_offset >
+<#assign label_ele = label_ele + 1 >
+
+<#-- Freq Hop data table -->
+<@db_build_table_element 0,ele_num,x_pos,y_pos,temp_width, temp_height,temp_data_w, temp_lable_w,temp_row_height,temp_rows, temp_column />
+<#assign x_pos = 0 >
+<#assign y_pos = y_pos + temp_height >
+<#assign ele_num = ele_num + 1 >
+
+<#assign temp_string = "Displayed frequencies are auto-tuned by QTouch Library based on noise levels">
+<@db_buid_label_colourless temp_row_height, label_ele, x_pos, y_pos, temp_string, 800 />
+<#assign label_ele = label_ele + 1 >
+<#assign y_pos = y_pos + temp_row_height >
+<#assign x_pos = 0 >
+<#assign y_pos = y_pos + y_offset >
+</#if >
+
+
+<#-- Other Debug Parameters table -->
+<#assign temp_rows = debug_data_others?size >
+<#assign temp_column = 1 >
+<#assign temp_width = (temp_data_w+temp_lable_w) * temp_column >
+
+<#-- Other Debug Parameters data label -->
+<@db_buid_label temp_row_height, label_ele,x_pos,y_pos,debug_data_others_label,temp_width />
+<#assign y_pos = y_pos + y_offset >
+<#assign label_ele = label_ele + 1 >
+
+<@db_build_table_element 0,ele_num,x_pos,y_pos,temp_width, temp_height,temp_data_w, temp_lable_w,temp_row_height,temp_rows, temp_column />
+<#assign x_pos = 0 >
+<#assign y_pos = y_pos + temp_height >
+<#assign ele_num = ele_num + 1 >
+
+<#assign temp_string = "Counter for datastreamer packets.  Missing count indicate packet drop">
+<#assign x_pos = (temp_data_w+temp_lable_w) * 1 >
+<#assign x_pos = x_pos + 25 >
+<#assign y_pos = y_pos - temp_height >
+<@db_buid_label_colourless temp_row_height, label_ele, x_pos, y_pos, temp_string, 800 />
+<#assign label_ele = label_ele + 1 >
+<#assign y_pos = y_pos + temp_row_height >
+<#assign temp_string = "Indicates library error state. Zero: no error. Refer \"Error Code\" section in User Guide" >
+<@db_buid_label_colourless temp_row_height, label_ele, x_pos, y_pos, temp_string, 800 />
+<#assign x_pos = 0 >
+<#assign y_pos = y_pos + temp_row_height >
+<#assign label_ele = label_ele + 1 >
