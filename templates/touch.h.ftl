@@ -78,7 +78,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  * Default value: CAL_AUTO_TUNE_NONE.
  */
 
-#define DEF_PTC_CAL_OPTION   ${(TUNE_MODE)?then(TUNE_MODE_SELECTED, 'CAL_AUTO_TUNE_NONE')}
+#define DEF_PTC_CAL_OPTION   ${TUNE_MODE_SELECTED}
 
 /* Defines the interrupt priority for the PTC. Set low priority to PTC interrupt for applications having interrupt time
  * constraints. Range: 0 to 2 Default: 2 (Lowest Priority)
@@ -225,7 +225,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  */
 #define DEF_MAX_ON_DURATION ${DEF_MAX_ON_DURATION}
 
-<#if ENABLE_FREQ_HOP?has_content>
+<#if ENABLE_FREQ_HOP==true>
 /**********************************************************/
 /********* Frequency Hop Module ****************/
 /**********************************************************/
@@ -240,7 +240,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 #define DEF_MEDIAN_FILTER_FREQUENCIES <#list 0..FREQ_HOP_STEPS-1 as i><#assign HOP_FREQ = "HOP_FREQ"+i><#if i == FREQ_HOP_STEPS-1>${.vars[HOP_FREQ]}<#else>${.vars[HOP_FREQ]},</#if></#list>
 
-<#if FREQ_AUTOTUNE?has_content>
+<#if FREQ_AUTOTUNE==true>
 /* Enable / Disable the frequency hop auto tune
  * Range: 0 / 1
  * Default value: 1

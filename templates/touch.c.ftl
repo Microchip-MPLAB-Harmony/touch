@@ -42,10 +42,10 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /*----------------------------------------------------------------------------
  *     include files
  *----------------------------------------------------------------------------*/
-#include "touch/touch.h"
+#include "qtouch/touch.h"
 #include "definitions.h" 
 <#if ENABLE_DATA_STREAMER = true>
-#include "touch/datastreamer.h"
+#include "qtouch/datastreamer/datastreamer.h"
 </#if>
 
 /*----------------------------------------------------------------------------
@@ -101,12 +101,68 @@ qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
 /* Node status, signal, calibration values */
 qtm_acq_node_data_t ptc_qtlib_node_stat1[DEF_NUM_CHANNELS];
 
+<#if TOUCH_CHAN_ENABLE_CNT&gt;=1>
 /* Node configurations */
-qtm_acq_samc21_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {NODE_0_PARAMS};
+qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
+<#else>
+/* Node configurations */
+qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
+</#if>
 
 /* Container */
 qtm_acquisition_control_t qtlib_acq_set1 = {&ptc_qtlib_acq_gen1, &ptc_seq_node_cfg1[0], &ptc_qtlib_node_stat1[0]};
 
+<#if ((ENABLE_FREQ_HOP==true) && (FREQ_AUTOTUNE!=true))>
+/**********************************************************/
+/*********** Frequency Hop Module **********************/
+/**********************************************************/
+
+/* Buffer used with various noise filtering functions */
+uint16_t noise_filter_buffer[DEF_NUM_SENSORS * NUM_FREQ_STEPS];
+uint8_t  freq_hop_delay_selection[NUM_FREQ_STEPS] = {DEF_MEDIAN_FILTER_FREQUENCIES};
+
+/* Configuration */
+qtm_freq_hop_config_t qtm_freq_hop_config1 = {
+    DEF_NUM_CHANNELS,
+    NUM_FREQ_STEPS,
+    &ptc_qtlib_acq_gen1.freq_option_select,
+    &freq_hop_delay_selection[0],
+};
+
+/* Data */
+qtm_freq_hop_data_t qtm_freq_hop_data1 = {0, 0, &noise_filter_buffer[0], &ptc_qtlib_node_stat1[0]};
+
+/* Container */
+qtm_freq_hop_control_t qtm_freq_hop_control1 = {&qtm_freq_hop_data1, &qtm_freq_hop_config1};
+
+<#elseif ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>
+/**********************************************************/
+/*********** Frequency Hop Auto tune Module **********************/
+/**********************************************************/
+
+/* Buffer used with various noise filtering functions */
+uint16_t noise_filter_buffer[DEF_NUM_SENSORS * NUM_FREQ_STEPS];
+uint8_t  freq_hop_delay_selection[NUM_FREQ_STEPS] = {DEF_MEDIAN_FILTER_FREQUENCIES};
+uint8_t  freq_hop_autotune_counters[NUM_FREQ_STEPS];
+
+/* Configuration */
+qtm_freq_hop_autotune_config_t qtm_freq_hop_autotune_config1 = {DEF_NUM_CHANNELS,
+                                                                NUM_FREQ_STEPS,
+                                                                &ptc_qtlib_acq_gen1.freq_option_select,
+                                                                &freq_hop_delay_selection[0],
+                                                                DEF_FREQ_AUTOTUNE_ENABLE,
+                                                                FREQ_AUTOTUNE_MAX_VARIANCE,
+                                                                FREQ_AUTOTUNE_COUNT_IN};
+
+/* Data */
+qtm_freq_hop_autotune_data_t qtm_freq_hop_autotune_data1
+    = {0, 0, &noise_filter_buffer[0], &ptc_qtlib_node_stat1[0], &freq_hop_autotune_counters[0]};
+
+/* Container */
+qtm_freq_hop_autotune_control_t qtm_freq_hop_autotune_control1
+    = {&qtm_freq_hop_autotune_data1, &qtm_freq_hop_autotune_config1};
+
+</#if>
 /**********************************************************/
 /*********************** Keys Module **********************/
 /**********************************************************/
@@ -127,9 +183,13 @@ qtm_touch_key_group_data_t qtlib_key_grp_data_set1;
 /* Key data */
 qtm_touch_key_data_t qtlib_key_data_set1[DEF_NUM_SENSORS];
 
+<#if TOUCH_KEY_ENABLE_CNT&gt;=1>
 /* Key Configurations */
-qtm_touch_key_config_t qtlib_key_configs_set1[DEF_NUM_SENSORS] = {KEY_0_PARAMS};
-
+qtm_touch_key_config_t qtlib_key_configs_set1[DEF_NUM_SENSORS] = {<#list 0..TOUCH_KEY_ENABLE_CNT-1 as i><#if i==TOUCH_KEY_ENABLE_CNT-1>KEY_${i}_PARAMS<#else> KEY_${i}_PARAMS,</#if></#list>}; 
+<#else>
+/* Key Configurations */
+qtm_touch_key_config_t qtlib_key_configs_set1[DEF_NUM_SENSORS];
+</#if>
 /* Container */
 qtm_touch_key_control_t qtlib_key_set1
     = {&qtlib_key_grp_data_set1, &qtlib_key_grp_config_set1, &qtlib_key_data_set1[0], &qtlib_key_configs_set1[0]};
@@ -144,7 +204,9 @@ qtm_touch_key_control_t qtlib_key_set1
 
 #define LIB_MODULES_PROC_LIST                                                                                          \
     {                                                                                                                  \
-        (module_proc_t) & qtm_key_sensors_process, null                                                                \
+    <#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>(module_proc_t)&qtm_freq_hop, (module_proc_t)&qtm_key_sensors_process, null\
+    <#elseif ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>(module_proc_t)&qtm_freq_hop_autotune, (module_proc_t)&qtm_key_sensors_process, null\
+    <#else>(module_proc_t)&qtm_key_sensors_process, null</#if>                                                          \
     }
 
 #define LIB_INIT_DATA_MODELS_LIST                                                                                      \
@@ -154,7 +216,9 @@ qtm_touch_key_control_t qtlib_key_set1
 
 #define LIB_DATA_MODELS_PROC_LIST                                                                                      \
     {                                                                                                                  \
-        (void *)&qtlib_key_set1, null                                                                                  \
+     <#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>(void *)&qtm_freq_hop_control1, (void *)&qtlib_key_set1, null\
+     <#elseif ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>(void *)&qtm_freq_hop_autotune_control1, (void *)&qtlib_key_set1, null\
+     <#else>(void *)&qtlib_key_set1, null</#if>                                                                        \
     }
 
 #define LIB_MODULES_ACQ_ENGINES_LIST                                                                                   \
@@ -302,10 +366,11 @@ static void qtm_post_process_complete(void)
     } else {
         measurement_done_touch = 1;
     }
-
+<#if ENABLE_DATA_STREAMER = true>
 #if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
     datastreamer_output();
 #endif
+</#if>
 }
 
 /*============================================================================
@@ -348,9 +413,11 @@ static void qtm_error_callback(uint8_t error)
         module_error_code = (error & 0x0F) + 2;
     }
 
+<#if ENABLE_DATA_STREAMER = true>
 #if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
     datastreamer_output();
 #endif
+</#if>
 }
 
 /*============================================================================
@@ -374,9 +441,11 @@ void touch_init(void)
     /* get a pointer to the binding layer control */
     p_qtm_control = qmt_get_binding_layer_ptr();
 
+<#if ENABLE_DATA_STREAMER = true>	
 #if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
     datastreamer_init();
 #endif
+</#if>
 }
 
 /*============================================================================
@@ -407,7 +476,7 @@ void touch_process(void)
 
     /* check the flag for node level post processing */
     if (p_qtm_control->binding_layer_flags & (1u << node_pp_request)) {
-        /* Run Acquisition moudle level post pocessing*/
+        /* Run Acquisition module level post pocessing*/
         touch_ret = qtm_lib_acq_process();
 
         /* Check the return value */
@@ -421,11 +490,12 @@ void touch_process(void)
 
         /* Reset the flags for node_level_post_processing */
         p_qtm_control->binding_layer_flags &= (uint8_t) ~(1u << node_pp_request);
-    }
+    
 
     if (p_qtm_control->binding_layer_flags & (1u << reburst_request)) {
         p_qtm_control->binding_layer_flags |= (1u << time_to_measure_touch);
         p_qtm_control->binding_layer_flags &= ~(1u << reburst_request);
+		}
     }
 }
 
@@ -451,12 +521,12 @@ void rtc_cb( RTC_TIMER32_INT_MASK intCause, uintptr_t context )
      touch_timer_handler();
 }
 uintptr_t rtc_context;
+
 void touch_timer_config(void)
-{
-    RTC_Timer32CallbackRegister(rtc_cb, rtc_context);
-    RTC_Timer32InterruptEnable(RTC_MODE0_INTENSET_CMP0_Msk);
-    RTC_Timer32Start();
-    RTC_Timer32CompareSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
+{   	
+	${.vars["${QTOUCH_TIMER_INSTANCE?lower_case}"].CALLBACK_API_NAME}(rtc_cb, rtc_context);
+	${.vars["${QTOUCH_TIMER_INSTANCE?lower_case}"].TIMER_START_API_NAME}();
+	${.vars["${QTOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 }
 
 uint16_t get_sensor_node_signal(uint16_t sensor_node)
@@ -518,5 +588,5 @@ Notes  : none
 void PTC_Handler(void)
 {
     qtm_ptc_clear_interrupt();
-    qtm_samc21_ptc_handler_eoc();
+    qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();
 }

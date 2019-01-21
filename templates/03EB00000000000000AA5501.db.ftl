@@ -12,7 +12,7 @@
 <#assign debug_data_others_label = 'Debug Data' >
 <#assign debug_data_others = ['FrameCounter', 'QTouchLibError'] >
 <#assign blank = [" "]>
-<#if TUNE_MODE==true>
+<#if TUNE_MODE_SELECTED != "CAL_AUTO_TUNE_NONE">
 <#assign label_ele = label_ele + 1 >
 <#assign debug_data_node_title = ['Signal', 'Reference' , 'Delta', 'Compensation pF', 'CSD'] >
 <#assign debug_data_node = ['Signal', 'Reference' , 'Delta', 'Compensation', 'CSD'] >
@@ -359,7 +359,7 @@ ${columns}, // Number of Columns
 <#assign y_pos = y_pos + 25>
 <#assign x_pos = 0>
 
-<#if TUNE_MODE==true>
+<#if TUNE_MODE_SELECTED != "CAL_AUTO_TUNE_NONE">
 <#if TUNE_MODE_SELECTED=='CAL_AUTO_TUNE_CSD'>
 <#assign temp_string = "Charge Share Delay (CSD): displayed values are auto-tuned by QTouch Library">
 <#else>

@@ -1,20 +1,20 @@
 ################################################################################
 #### Global Variables ####
 ################################################################################
-global touchAutoTuneMode
+def autoTuneFunc(symbol,event):
+    global touchAcqLibraryFile
+    global touchAcqAutoLibraryFile
+
+    if(event["value"] == "CAL_AUTO_TUNE_NONE"):
+        touchAcqAutoLibraryFile.setEnabled(False)
+        touchAcqLibraryFile.setEnabled(True)
+    else:
+        touchAcqAutoLibraryFile.setEnabled(True)
+        touchAcqLibraryFile.setEnabled(False)
+
 global touchAcqLibraryFile
 global touchAcqAutoLibraryFile
 
-def autoTuneFunc(symbol,event):
-	if(event["value"] == True):
-	    touchAutoTuneMode.setVisible(True)
-	    touchAcqAutoLibraryFile.setEnabled(True)
-	    touchAcqLibraryFile.setEnabled(False)
-	else:
-	    touchAutoTuneMode.setVisible(False)
-	    touchAcqAutoLibraryFile.setEnabled(False)
-	    touchAcqLibraryFile.setEnabled(True)
-		
 ############################################################################
 #### Code Generation ####
 ############################################################################
@@ -22,31 +22,31 @@ def autoTuneFunc(symbol,event):
 touchAcqLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_ACQ_LIB", None)
 touchAcqLibraryFile.setSourcePath("/src/libraries/0x0020_qtm_samc21_acq.X.a")
 touchAcqLibraryFile.setOutputName("0x0020_qtm_samc21_acq.X.a")
-touchAcqLibraryFile.setDestPath("/libraries/")
+touchAcqLibraryFile.setDestPath("/qtouch/lib/")
 touchAcqLibraryFile.setEnabled(True)
-touchAcqLibraryFile.setDependencies(autoTuneFunc,["TUNE_MODE"])
+touchAcqLibraryFile.setDependencies(autoTuneFunc,["TUNE_MODE_SELECTED"])
 
 # Library File
 touchAcqAutoLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_ACQ_AUTO_LIB", None)
 touchAcqAutoLibraryFile.setSourcePath("/src/libraries/0x0020_qtm_samc21_acq_auto.X.a")
 touchAcqAutoLibraryFile.setOutputName("0x0020_qtm_samc21_acq_auto.X.a")
-touchAcqAutoLibraryFile.setDestPath("/libraries/")
-touchAcqAutoLibraryFile.setEnabled(True)
-touchAcqAutoLibraryFile.setDependencies(autoTuneFunc,["TUNE_MODE"])
+touchAcqAutoLibraryFile.setDestPath("/qtouch/lib/")
+touchAcqAutoLibraryFile.setEnabled(False)
+touchAcqAutoLibraryFile.setDependencies(autoTuneFunc,["TUNE_MODE_SELECTED"])
 
 # Library File
 touchBindLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_BIND_LIB", None)
 touchBindLibraryFile.setSourcePath("/src/libraries/0x0005_qtm_binding_layer.X.a")
 touchBindLibraryFile.setOutputName("0x0005_qtm_binding_layer.X.a")
-touchBindLibraryFile.setDestPath("/libraries/")
+touchBindLibraryFile.setDestPath("/qtouch/lib/")
 touchBindLibraryFile.setEnabled(True)
 
 # Header File
 touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_ACQ_HEADER", None)
 touchHeaderFile.setSourcePath("/src/qtm_acq_samc21_0x0020_api.h")
 touchHeaderFile.setOutputName("qtm_acq_samc21_0x0020_api.h")
-touchHeaderFile.setDestPath("/touch/")
-touchHeaderFile.setProjectPath("config/" + "/touch/")
+touchHeaderFile.setDestPath("/qtouch/")
+touchHeaderFile.setProjectPath("config/" + configName + "/qtouch/")
 touchHeaderFile.setType("HEADER")
 touchHeaderFile.setMarkup(False)
 
@@ -54,8 +54,8 @@ touchHeaderFile.setMarkup(False)
 touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_BIND_HEADER", None)
 touchHeaderFile.setSourcePath("/src/qtm_binding_layer_0x0005_api.h")
 touchHeaderFile.setOutputName("qtm_binding_layer_0x0005_api.h")
-touchHeaderFile.setDestPath("/touch/")
-touchHeaderFile.setProjectPath("config/" + "/touch/")
+touchHeaderFile.setDestPath("/qtouch/")
+touchHeaderFile.setProjectPath("config/" + configName + "/qtouch/")
 touchHeaderFile.setType("HEADER")
 touchHeaderFile.setMarkup(False)
 
@@ -63,8 +63,8 @@ touchHeaderFile.setMarkup(False)
 touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_COMMON_HEADER", None)
 touchHeaderFile.setSourcePath("/src/qtm_common_components_api.h")
 touchHeaderFile.setOutputName("qtm_common_components_api.h")
-touchHeaderFile.setDestPath("/touch/")
-touchHeaderFile.setProjectPath("config/" + "/touch/")
+touchHeaderFile.setDestPath("/qtouch/")
+touchHeaderFile.setProjectPath("config/" + configName + "/qtouch/")
 touchHeaderFile.setType("HEADER")
 touchHeaderFile.setMarkup(False)
 
@@ -85,21 +85,15 @@ touchSenseTechnology.setDefaultValue(0)
 touchSenseTechnology.setOutputMode("Value")
 touchSenseTechnology.setDisplayMode("Description")
 
-# Tune Mode
-touchAutoTune = qtouchComponent.createBooleanSymbol("TUNE_MODE", acquisitionMenu)
-touchAutoTune.setLabel("Is Sensor Auto Tuning Required?")
-touchAutoTune.setDefaultValue(False)
-
 # Select Tuning mode
 touchAutoTuneMode = qtouchComponent.createKeyValueSetSymbol("TUNE_MODE_SELECTED", acquisitionMenu)
 touchAutoTuneMode.setLabel("Select the Required Tuning Mode")
+touchAutoTuneMode.addKey("Manual Tuning","CAL_AUTO_TUNE_NONE","Manual tuning is done based on the values defined by user")
 touchAutoTuneMode.addKey("Tune Resistor value","CAL_AUTO_TUNE_RSEL","Series Resistor is tuned")
 touchAutoTuneMode.addKey("Tune CSD","CAL_AUTO_TUNE_CSD","Charge Share Delay - CSD is tuned")
-touchAutoTuneMode.setDefaultValue(1)
+touchAutoTuneMode.setDefaultValue(0)
 touchAutoTuneMode.setOutputMode("Value")
-touchAutoTuneMode.setDisplayMode("Description")
-touchAutoTuneMode.setVisible(False)
-touchAutoTuneMode.setDependencies(autoTuneFunc,["TUNE_MODE"])
+touchAutoTuneMode.setDisplayMode("Key")
 
 #Scan Rate (ms)
 touchSym_TOUCH_MEASUREMENT_PERIOD_MS_Val = qtouchComponent.createIntegerSymbol("DEF_TOUCH_MEASUREMENT_PERIOD_MS", acquisitionMenu)

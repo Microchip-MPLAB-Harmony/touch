@@ -20,7 +20,7 @@ Copyright (c) 2017 Microchip. All rights reserved.
 /*----------------------------------------------------------------------------
   include files
 ----------------------------------------------------------------------------*/
-#include "touch/datastreamer.h"
+#include "qtouch/datastreamer/datastreamer.h"
 #include "definitions.h"
 
 #if (DEF_TOUCH_DATA_STREAMER_ENABLE == 1u)
@@ -28,7 +28,7 @@ Copyright (c) 2017 Microchip. All rights reserved.
 /*----------------------------------------------------------------------------
  *     defines
  *----------------------------------------------------------------------------*/
-<#if TUNE_MODE == true>
+<#if TUNE_MODE_SELECTED != "CAL_AUTO_TUNE_NONE">
 #define ACQ_MODULE_AUTOTUNE_OUTPUT 1
 <#else>
 #define ACQ_MODULE_AUTOTUNE_OUTPUT 0
@@ -88,7 +88,7 @@ Notes  :
 void datastreamer_transmit(uint8_t data_byte)
 {
 	/* Write the data bye */
-   SERCOM4_USART_Write(&data_byte, 1);
+   ${.vars["${QTOUCH_SERCOM_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Write(&data_byte, 1);
 }
 
 /*============================================================================

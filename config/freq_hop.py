@@ -1,32 +1,74 @@
 ################################################################################
 #### Global Variables ####
 ################################################################################
+def freqAutoTuneFunc(symbol,event):
+    global freqHopLibraryFile
+    global freqHopHeaderFile
+    global freqHopAutoLibraryFile
+    global freqHopAutoHeaderFile
+
+    if(event["value"] == True):
+        freqHopLibraryFile.setEnabled(False)
+        freqHopHeaderFile.setEnabled(False)
+        freqHopAutoLibraryFile.setEnabled(True)
+        freqHopAutoHeaderFile.setEnabled(True)
+    else:
+        freqHopLibraryFile.setEnabled(True)
+        freqHopHeaderFile.setEnabled(True)
+        freqHopAutoLibraryFile.setEnabled(False)
+        freqHopAutoHeaderFile.setEnabled(False)
+
+global freqHopLibraryFile
+global freqHopHeaderFile
+global freqHopAutoLibraryFile
+global freqHopAutoHeaderFile
+
+############################################################################
+#### Code Generation ####
+############################################################################
+# Library File
+freqHopLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_HOP_LIB", None)
+freqHopLibraryFile.setSourcePath("/src/libraries/0x0006_qtm_freq_hop.X.a")
+freqHopLibraryFile.setOutputName("0x0006_qtm_freq_hop.X.a")
+freqHopLibraryFile.setDestPath("/qtouch/lib/")
+freqHopLibraryFile.setEnabled(True)
+freqHopLibraryFile.setDependencies(freqAutoTuneFunc,["FREQ_AUTOTUNE"])
+
+# Header File
+freqHopHeaderFile = qtouchComponent.createFileSymbol("TOUCH_HOP_HEADER", None)
+freqHopHeaderFile.setSourcePath("/src/qtm_freq_hop_0x0006_api.h")
+freqHopHeaderFile.setOutputName("qtm_freq_hop_0x0006_api.h")
+freqHopHeaderFile.setDestPath("/qtouch/")
+freqHopHeaderFile.setProjectPath("config/" + configName + "/qtouch/")
+freqHopHeaderFile.setType("HEADER")
+freqHopHeaderFile.setMarkup(False)
+freqHopHeaderFile.setEnabled(True)
+freqHopHeaderFile.setDependencies(freqAutoTuneFunc,["FREQ_AUTOTUNE"])
+
+# Library File
+freqHopAutoLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_HOP_AUTO_LIB", None)
+freqHopAutoLibraryFile.setSourcePath("/src/libraries/0x0004_qtm_freq_hop_autotune.X.a")
+freqHopAutoLibraryFile.setOutputName("0x0004_qtm_freq_hop_autotune.X.a")
+freqHopAutoLibraryFile.setDestPath("/qtouch/lib/")
+freqHopAutoLibraryFile.setEnabled(False)
+freqHopAutoLibraryFile.setDependencies(freqAutoTuneFunc,["FREQ_AUTOTUNE"])
+
+# Header File
+freqHopAutoHeaderFile = qtouchComponent.createFileSymbol("TOUCH_HOP_AUTO_HEADER", None)
+freqHopAutoHeaderFile.setSourcePath("/src/qtm_freq_hop_auto_0x0004_api.h")
+freqHopAutoHeaderFile.setOutputName("qtm_freq_hop_auto_0x0004_api.h")
+freqHopAutoHeaderFile.setDestPath("/qtouch/")
+freqHopAutoHeaderFile.setProjectPath("config/" + configName + "/qtouch/")
+freqHopAutoHeaderFile.setType("HEADER")
+freqHopAutoHeaderFile.setMarkup(False)
+freqHopAutoHeaderFile.setEnabled(False)
+freqHopAutoHeaderFile.setDependencies(freqAutoTuneFunc,["FREQ_AUTOTUNE"])
+
+################################################################################
+#### Global Variables ####
+################################################################################
 freqHopStepsDefault = 3
 freqHopStepsMax = 7
-
-
-################################################################################
-#### Business Logic ####
-################################################################################
-def setFreqHopEnableProperty(symbol, event):
-    channelId = int(symbol.getID().strip("HOP_FREQ"))
-
-    channelCount = int(event["value"])
-
-    print channelCount, channelId
-    if channelId < channelCount:
-        symbol.setVisible(True)
-    else:
-        symbol.setVisible(False)
-        
-def enableFreqHopAutoTuneParameters(symbol,event):
-    component = symbol.getComponent()
-    if(event["value"] == True):
-        component.getSymbolByID("DEF_TOUCH_MAX_VARIANCE").setVisible(True)
-        component.getSymbolByID("DEF_TOUCH_TUNE_IN_COUNT").setVisible(True)
-    else:
-        component.getSymbolByID("DEF_TOUCH_MAX_VARIANCE").setVisible(False)
-        component.getSymbolByID("DEF_TOUCH_TUNE_IN_COUNT").setVisible(False)
 
 ################################################################################
 #### Component ####
@@ -37,7 +79,6 @@ freqSteps.setLabel("Frequency Hop Steps")
 freqSteps.setDefaultValue(freqHopStepsDefault)
 freqSteps.setMin(3)
 freqSteps.setMax(freqHopStepsMax)
-freqSteps.setVisible(False)
 
 for freqID in range(0, freqHopStepsMax):
 
@@ -62,17 +103,12 @@ for freqID in range(0, freqHopStepsMax):
     touchSym_HOP_FREQ_Val.addKey("FREQ_SEL15", "FREQ_SEL_15", "Frequency 15")
     touchSym_HOP_FREQ_Val.setOutputMode("Value")
     touchSym_HOP_FREQ_Val.setDisplayMode("Description")
-    touchSym_HOP_FREQ_Val.setVisible(False)
-    touchSym_HOP_FREQ_Val.setDependencies(setFreqHopEnableProperty, ["FREQ_HOP_STEPS"])
+    touchSym_HOP_FREQ_Val.setDefaultValue(freqID)
 
-    if(freqID>=freqHopStepsDefault):
-        touchSym_HOP_FREQ_Val.setVisible(False)
 
 #Frequency Auto Tuning
 enableFreqHopAutoTuneMenu = qtouchComponent.createBooleanSymbol("FREQ_AUTOTUNE", enableFreqHopMenu)
 enableFreqHopAutoTuneMenu.setLabel("Enable Frequency Auto Tuning")
-enableFreqHopAutoTuneMenu.setVisible(False)
-enableFreqHopAutoTuneMenu.setDependencies(enableFreqHopAutoTuneParameters,["FREQ_AUTOTUNE"])
 
 #Frequency Auto Tuning - Maximum Variance
 touchSym_VARIANCE_Val = qtouchComponent.createIntegerSymbol("DEF_TOUCH_MAX_VARIANCE", enableFreqHopAutoTuneMenu)
@@ -80,7 +116,6 @@ touchSym_VARIANCE_Val.setLabel("Maximum Variance")
 touchSym_VARIANCE_Val.setDefaultValue(25)
 touchSym_VARIANCE_Val.setMin(1)
 touchSym_VARIANCE_Val.setMax(255)
-touchSym_VARIANCE_Val.setVisible(False)
 
 #Frequency Auto Tuning - Tune-in count
 touchSym_TUNE_IN_COUNT_Val = qtouchComponent.createIntegerSymbol("DEF_TOUCH_TUNE_IN_COUNT", enableFreqHopAutoTuneMenu)
@@ -88,6 +123,5 @@ touchSym_TUNE_IN_COUNT_Val.setLabel("Maximum Tune-in count")
 touchSym_TUNE_IN_COUNT_Val.setDefaultValue(6)
 touchSym_TUNE_IN_COUNT_Val.setMin(1)
 touchSym_TUNE_IN_COUNT_Val.setMax(255)
-touchSym_TUNE_IN_COUNT_Val.setVisible(False)
 
 

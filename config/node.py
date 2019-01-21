@@ -1,43 +1,8 @@
 ################################################################################
 #### Global Variables ####
 ################################################################################
-touchChannelCountMax = 2
-################################################################################
-#### Business Logic ####
-################################################################################
-def setNodeChannelEnableProperty(symbol, event):
-    channelId = int(symbol.getID().strip("TOUCH_ENABLE_CH_"))
-    channelCount = int(event["value"])
-    #Log.writeInfoMessage(str(channelCount))
-    if channelId < channelCount:
-        symbol.setVisible(True)
-        symbol.setValue(True,1)
-    else:
-        symbol.setVisible(False)
-        symbol.setValue(False,1)
+touchChannelCountMax = 32
 
-def selfcapFunc(mySymbol, event):
-    symObj=event["symbol"]
-    Log.writeInfoMessage(symObj.getSelectedKey())
-    index = int(mySymbol.getID().split("_")[1])
-    Log.writeInfoMessage(str(index))
-    if (symObj.getSelectedKey() == "SelfCap"):
-        mySymbol.setVisible(True)
-    else:
-        mySymbol.setVisible(False)
-
-def mutlFunc(mySymbol, event):
-    symObj=event["symbol"]
-    Log.writeInfoMessage(symObj.getSelectedKey())
-    index = int(mySymbol.getID().split("_")[1])
-    Log.writeInfoMessage(str(index))
-    if (symObj.getSelectedKey() == "MutualCap"):
-        mySymbol.setVisible(True)
-    else:
-        mySymbol.setVisible(False)
-
-def getChannelCount(symbol,event):
-    numChann = int(event["value"])
 ################################################################################
 #### Component ####
 ################################################################################
@@ -50,7 +15,6 @@ touchNumChannel.setLabel("Number of Channels to enable")
 touchNumChannel.setDefaultValue(0)
 touchNumChannel.setMin(0)
 touchNumChannel.setMax(touchChannelCountMax)
-touchNumChannel.setDependencies(getChannelCount,["TOUCH_CHAN_ENABLE_CNT"])
 
 tchSelfPinSelection = []
 tchMutXPinSelection = []
@@ -60,16 +24,12 @@ for channelID in range(0,int(touchChannelCountMax)):
 
     touchChEnable = qtouchComponent.createBooleanSymbol("TOUCH_ENABLE_CH_" + str(channelID), nodeMenu)
     touchChEnable.setLabel("Use touch channel " + str(channelID))
-    touchChEnable.setVisible(False)
-    touchChEnable.setDependencies(setNodeChannelEnableProperty, ["TOUCH_CHAN_ENABLE_CNT"])
 
     tchSelfPinSelection.append(qtouchComponent.createKeyValueSetSymbol("SELFCAP-INPUT_"+ str(channelID), touchChEnable))
     tchSelfPinSelection[channelID].setLabel("Select Y Pin for Channel "+ str(channelID))
     tchSelfPinSelection[channelID].setDefaultValue(0)
     tchSelfPinSelection[channelID].setOutputMode("Key")
     tchSelfPinSelection[channelID].setDisplayMode("Description")
-    tchSelfPinSelection[channelID].setVisible(True)
-    tchSelfPinSelection[channelID].setDependencies(selfcapFunc, ["SENSE_TECHNOLOGY"])
     ptcPinNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PTC\"]/instance/signals")
     ptcPinValues = []
     ptcPinValues = ptcPinNode.getChildren()
@@ -84,8 +44,6 @@ for channelID in range(0,int(touchChannelCountMax)):
     tchMutXPinSelection[channelID].setDefaultValue(0)
     tchMutXPinSelection[channelID].setOutputMode("Key")
     tchMutXPinSelection[channelID].setDisplayMode("Description")
-    tchMutXPinSelection[channelID].setVisible(False)
-    tchMutXPinSelection[channelID].setDependencies(mutlFunc, ["SENSE_TECHNOLOGY"])
     ptcPinNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PTC\"]/instance/signals")
     ptcPinValues = []
     ptcPinValues = ptcPinNode.getChildren()
@@ -100,8 +58,6 @@ for channelID in range(0,int(touchChannelCountMax)):
     tchMutYPinSelection[channelID].setDefaultValue(0)
     tchMutYPinSelection[channelID].setOutputMode("Key")
     tchMutYPinSelection[channelID].setDisplayMode("Description")
-    tchMutYPinSelection[channelID].setVisible(False)
-    tchMutYPinSelection[channelID].setDependencies(mutlFunc, ["SENSE_TECHNOLOGY"])
     ptcPinNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PTC\"]/instance/signals")
     ptcPinValues = []
     ptcPinValues = ptcPinNode.getChildren()

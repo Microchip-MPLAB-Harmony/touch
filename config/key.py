@@ -5,38 +5,23 @@
 touchLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_KEY_LIB", None)
 touchLibraryFile.setSourcePath("/src/libraries/0x0002_qtm_touch_key.X.a")
 touchLibraryFile.setOutputName("0x0002_qtm_touch_key.X.a")
-touchLibraryFile.setDestPath("/libraries/")
+touchLibraryFile.setDestPath("/qtouch/lib/")
 touchLibraryFile.setEnabled(True)
 
 # Header File
 touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_KEY_HEADER", None)
 touchHeaderFile.setSourcePath("/src/qtm_touch_key_0x0002_api.h")
 touchHeaderFile.setOutputName("qtm_touch_key_0x0002_api.h")
-touchHeaderFile.setDestPath("/touch/")
-touchHeaderFile.setProjectPath("config/" + "/touch/")
+touchHeaderFile.setDestPath("/qtouch/")
+touchHeaderFile.setProjectPath("config/" + configName + "/qtouch/")
 touchHeaderFile.setType("HEADER")
 touchHeaderFile.setMarkup(False)
 
 ################################################################################
 #### Global Variables ####
 ################################################################################
-touchKeyCountMax = 2
+touchKeyCountMax = 32
 
-
-################################################################################
-#### Business Logic ####
-################################################################################
-def setKeyChannelEnableProperty(symbol, event):
-    channelId = int(symbol.getID().strip("TOUCH_ENABLE_KEY_"))
-
-    channelCount = int(event["value"])
-
-    if channelId < channelCount:
-        symbol.setVisible(True)
-        symbol.setValue(True, 1)
-    else:
-        symbol.setVisible(False)
-        symbol.setValue(False, 1)
 
 ################################################################################
 #### Component ####
@@ -56,12 +41,7 @@ for channelID in range(0, touchKeyCountMax):
 
     touchKeyEnable = qtouchComponent.createBooleanSymbol("TOUCH_ENABLE_KEY_" + str(channelID), keyMenu)
     touchKeyEnable.setLabel("Use touch channel " + str(channelID))
-    touchKeyEnable.setDependencies(setKeyChannelEnableProperty, ["TOUCH_KEY_ENABLE_CNT"])
-
-    if(channelID>=0):
-        touchKeyEnable.setVisible(False)
-    else:
-        touchKeyEnable.setDefaultValue(True)
+    touchKeyEnable.setDefaultValue(False)
 
     #Sensor Detect Threshold
     touchSym_SENSOR_DET_THRESHOLD_Val = qtouchComponent.createIntegerSymbol("DEF_SENSOR_DET_THRESHOLD" + str(channelID), touchKeyEnable)
