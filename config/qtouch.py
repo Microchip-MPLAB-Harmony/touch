@@ -58,7 +58,9 @@ def enableDataStreamerFtlFiles(symbol,event):
         component.getSymbolByID("TOUCH_DATA_STREAMER_HEADER_db").setEnabled(False)
         component.getSymbolByID("TOUCH_DATA_STREAMER_HEADER_ds").setEnabled(False)
         component.getSymbolByID("TOUCH_DATA_STREAMER_HEADER_sc").setEnabled(False)
-
+        
+autoComponentIDTable = ["rtc"]
+autoConnectTable = [["lib_qtouch", "QTouch_timer","rtc", "RTC_TMR"]]
 
 ################################################################################
 #### Component ####
@@ -159,4 +161,9 @@ def instantiateComponent(qtouchComponent):
     ptcSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
     ptcSystemDefFile.setSourcePath("../qtouch/templates/system/definitions.h.ftl")
     ptcSystemDefFile.setMarkup(True)
+
     qtouchComponent.addPlugin("../qtouch/plugin/ptc_manager_c21.jar")
+
+def finalizeComponent(qtouchComponent):
+    res = Database.activateComponents(autoComponentIDTable)
+    res = Database.connectDependencies(autoConnectTable)
