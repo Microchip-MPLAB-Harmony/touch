@@ -159,3 +159,4 @@ def instantiateComponent(qtouchComponent):
     ptcSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
     ptcSystemDefFile.setSourcePath("../qtouch/templates/system/definitions.h.ftl")
     ptcSystemDefFile.setMarkup(True)
+    qtouchComponent.addPlugin("../qtouch/plugin/ptc_manager_c21.jar")
