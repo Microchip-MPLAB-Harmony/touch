@@ -42,10 +42,10 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /*----------------------------------------------------------------------------
  *     include files
  *----------------------------------------------------------------------------*/
-#include "qtouch/touch.h"
+#include "touch/touch.h"
 #include "definitions.h" 
 <#if ENABLE_DATA_STREAMER = true>
-#include "qtouch/datastreamer/datastreamer.h"
+#include "touch/datastreamer/datastreamer.h"
 </#if>
 
 /*----------------------------------------------------------------------------
@@ -524,9 +524,9 @@ uintptr_t rtc_context;
 
 void touch_timer_config(void)
 {   	
-	${.vars["${QTOUCH_TIMER_INSTANCE?lower_case}"].CALLBACK_API_NAME}(rtc_cb, rtc_context);
-	${.vars["${QTOUCH_TIMER_INSTANCE?lower_case}"].TIMER_START_API_NAME}();
-	${.vars["${QTOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
+	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].CALLBACK_API_NAME}(rtc_cb, rtc_context);
+	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].TIMER_START_API_NAME}();
+	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 }
 
 uint16_t get_sensor_node_signal(uint16_t sensor_node)

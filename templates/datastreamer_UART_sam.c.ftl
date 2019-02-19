@@ -20,7 +20,7 @@ Copyright (c) 2017 Microchip. All rights reserved.
 /*----------------------------------------------------------------------------
   include files
 ----------------------------------------------------------------------------*/
-#include "qtouch/datastreamer/datastreamer.h"
+#include "touch/datastreamer/datastreamer.h"
 #include "definitions.h"
 
 #if (DEF_TOUCH_DATA_STREAMER_ENABLE == 1u)
@@ -88,7 +88,7 @@ Notes  :
 void datastreamer_transmit(uint8_t data_byte)
 {
 	/* Write the data bye */
-   ${.vars["${QTOUCH_SERCOM_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Write(&data_byte, 1);
+   ${.vars["${TOUCH_SERCOM_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Write(&data_byte, 1);
 }
 
 /*============================================================================

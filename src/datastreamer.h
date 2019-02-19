@@ -24,7 +24,7 @@ Copyright (c) 2017 Microchip. All rights reserved.
 /*----------------------------------------------------------------------------
  *     include files
  *----------------------------------------------------------------------------*/
-#include "qtouch/touch.h"
+#include "touch/touch.h"
 
 #if (DEF_TOUCH_DATA_STREAMER_ENABLE == 1u)
 

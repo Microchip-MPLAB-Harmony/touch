@@ -5,24 +5,22 @@
 touchLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_KEY_LIB", None)
 touchLibraryFile.setSourcePath("/src/libraries/0x0002_qtm_touch_key.X.a")
 touchLibraryFile.setOutputName("0x0002_qtm_touch_key.X.a")
-touchLibraryFile.setDestPath("/qtouch/lib/")
+touchLibraryFile.setDestPath("/touch/lib/")
 touchLibraryFile.setEnabled(True)
 
 # Header File
 touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_KEY_HEADER", None)
 touchHeaderFile.setSourcePath("/src/qtm_touch_key_0x0002_api.h")
 touchHeaderFile.setOutputName("qtm_touch_key_0x0002_api.h")
-touchHeaderFile.setDestPath("/qtouch/")
-touchHeaderFile.setProjectPath("config/" + configName + "/qtouch/")
+touchHeaderFile.setDestPath("/touch/")
+touchHeaderFile.setProjectPath("config/" + configName + "/touch/")
 touchHeaderFile.setType("HEADER")
 touchHeaderFile.setMarkup(False)
 
 ################################################################################
 #### Global Variables ####
 ################################################################################
-touchKeyCountMax = 32
-
-
+touchKeyCountMax = touchChannelCountMax
 ################################################################################
 #### Component ####
 ################################################################################
@@ -49,7 +47,8 @@ for channelID in range(0, touchKeyCountMax):
     touchSym_SENSOR_DET_THRESHOLD_Val.setDefaultValue(20)
     touchSym_SENSOR_DET_THRESHOLD_Val.setMin(0)
     touchSym_SENSOR_DET_THRESHOLD_Val.setMax(255)
-
+    touchSym_SENSOR_DET_THRESHOLD_Val.setDescription("Configure the sensor's detect threshold. When finger touches sensor, the touch delta increases.Sensor will be reported as touched only if the sensor's touch delta value is more than Sensor Threshold.It is recommended to configure Sensor Threshold as 50~70% of touch delta. User can start with default value and can configure after monitoring touch delta value.")
+	
     #Sensor Hysteresis
     touchSym_SENSOR_HYST_Val = qtouchComponent.createKeyValueSetSymbol("DEF_SENSOR_HYST" + str(channelID), touchKeyEnable)
     touchSym_SENSOR_HYST_Val.setLabel("Sensor Hysteresis")
@@ -60,7 +59,8 @@ for channelID in range(0, touchKeyCountMax):
     touchSym_SENSOR_HYST_Val.setDefaultValue(1)
     touchSym_SENSOR_HYST_Val.setOutputMode("Value")
     touchSym_SENSOR_HYST_Val.setDisplayMode("Description")
-
+    touchSym_SENSOR_HYST_Val.setDescription("Under noisy conditions, the delta value goes up/down over the sensor threshold.During these conditions, the sensor dither in and out of touch.To avoid this, once a sensor goes into detect state, the threshold for the sensor is reduced (by the hysteresis value).Hysteresis values are derived from Sensor Threshold value.")
+	
     #Sensor AKS Setting
     touchSym_NOD_AKS_Val = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_AKS" + str(channelID), touchKeyEnable)
     touchSym_NOD_AKS_Val.setLabel("Sensor AKS")
@@ -75,7 +75,7 @@ for channelID in range(0, touchKeyCountMax):
     touchSym_NOD_AKS_Val.setDefaultValue(0)
     touchSym_NOD_AKS_Val.setOutputMode("Value")
     touchSym_NOD_AKS_Val.setDisplayMode("Description")
-
+    touchSym_NOD_AKS_Val.setDescription("Configures the Adjacent Keys Suppression (AKS).AKS can be used when touching multiple sensors are not allowed in a system or When sensors are physically closer to each other. When sensors are closer to each other, there is a possibility that touching one sensor causes rise in touch delta value on other adjacent sensors. At times the delta raise in other sensors may cross threshold and could report false detection.When such sensors are configured in same AKS group, only the first sensor (which goes in to detect) will be reported as touched.All other sensor's state will be suppressed even if their delta crosses Sensor Threshold.Default: AKS is not used.")
 
 
 

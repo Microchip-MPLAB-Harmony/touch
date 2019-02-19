@@ -1,6 +1,15 @@
 ################################################################################
 #### Global Variables ####
 ################################################################################
+global touchChannelSelf
+global touchChannelMutual
+ptcPinNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PTC\"]/instance/parameters")
+ptcPinValues = []
+ptcPinValues = ptcPinNode.getChildren()
+touchChannelSelf = ptcPinValues[6].getAttribute("value")
+touchChannelMutual = ptcPinValues[7].getAttribute("value")
+
+
 def autoTuneFunc(symbol,event):
     global touchAcqLibraryFile
     global touchAcqAutoLibraryFile
@@ -12,6 +21,7 @@ def autoTuneFunc(symbol,event):
         touchAcqAutoLibraryFile.setEnabled(True)
         touchAcqLibraryFile.setEnabled(False)
 
+
 global touchAcqLibraryFile
 global touchAcqAutoLibraryFile
 
@@ -22,7 +32,7 @@ global touchAcqAutoLibraryFile
 touchAcqLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_ACQ_LIB", None)
 touchAcqLibraryFile.setSourcePath("/src/libraries/0x0020_qtm_samc21_acq.X.a")
 touchAcqLibraryFile.setOutputName("0x0020_qtm_samc21_acq.X.a")
-touchAcqLibraryFile.setDestPath("/qtouch/lib/")
+touchAcqLibraryFile.setDestPath("/touch/lib/")
 touchAcqLibraryFile.setEnabled(True)
 touchAcqLibraryFile.setDependencies(autoTuneFunc,["TUNE_MODE_SELECTED"])
 
@@ -30,7 +40,7 @@ touchAcqLibraryFile.setDependencies(autoTuneFunc,["TUNE_MODE_SELECTED"])
 touchAcqAutoLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_ACQ_AUTO_LIB", None)
 touchAcqAutoLibraryFile.setSourcePath("/src/libraries/0x0020_qtm_samc21_acq_auto.X.a")
 touchAcqAutoLibraryFile.setOutputName("0x0020_qtm_samc21_acq_auto.X.a")
-touchAcqAutoLibraryFile.setDestPath("/qtouch/lib/")
+touchAcqAutoLibraryFile.setDestPath("/touch/lib/")
 touchAcqAutoLibraryFile.setEnabled(False)
 touchAcqAutoLibraryFile.setDependencies(autoTuneFunc,["TUNE_MODE_SELECTED"])
 
@@ -38,15 +48,15 @@ touchAcqAutoLibraryFile.setDependencies(autoTuneFunc,["TUNE_MODE_SELECTED"])
 touchBindLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_BIND_LIB", None)
 touchBindLibraryFile.setSourcePath("/src/libraries/0x0005_qtm_binding_layer.X.a")
 touchBindLibraryFile.setOutputName("0x0005_qtm_binding_layer.X.a")
-touchBindLibraryFile.setDestPath("/qtouch/lib/")
+touchBindLibraryFile.setDestPath("/touch/lib/")
 touchBindLibraryFile.setEnabled(True)
 
 # Header File
 touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_ACQ_HEADER", None)
 touchHeaderFile.setSourcePath("/src/qtm_acq_samc21_0x0020_api.h")
 touchHeaderFile.setOutputName("qtm_acq_samc21_0x0020_api.h")
-touchHeaderFile.setDestPath("/qtouch/")
-touchHeaderFile.setProjectPath("config/" + configName + "/qtouch/")
+touchHeaderFile.setDestPath("/touch/")
+touchHeaderFile.setProjectPath("config/" + configName + "/touch/")
 touchHeaderFile.setType("HEADER")
 touchHeaderFile.setMarkup(False)
 
@@ -54,8 +64,8 @@ touchHeaderFile.setMarkup(False)
 touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_BIND_HEADER", None)
 touchHeaderFile.setSourcePath("/src/qtm_binding_layer_0x0005_api.h")
 touchHeaderFile.setOutputName("qtm_binding_layer_0x0005_api.h")
-touchHeaderFile.setDestPath("/qtouch/")
-touchHeaderFile.setProjectPath("config/" + configName + "/qtouch/")
+touchHeaderFile.setDestPath("/touch/")
+touchHeaderFile.setProjectPath("config/" + configName + "/touch/")
 touchHeaderFile.setType("HEADER")
 touchHeaderFile.setMarkup(False)
 
@@ -63,8 +73,8 @@ touchHeaderFile.setMarkup(False)
 touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_COMMON_HEADER", None)
 touchHeaderFile.setSourcePath("/src/qtm_common_components_api.h")
 touchHeaderFile.setOutputName("qtm_common_components_api.h")
-touchHeaderFile.setDestPath("/qtouch/")
-touchHeaderFile.setProjectPath("config/" + configName + "/qtouch/")
+touchHeaderFile.setDestPath("/touch/")
+touchHeaderFile.setProjectPath("config/" + configName + "/touch/")
 touchHeaderFile.setType("HEADER")
 touchHeaderFile.setMarkup(False)
 
@@ -75,7 +85,6 @@ touchHeaderFile.setMarkup(False)
 acquisitionMenu = qtouchComponent.createMenuSymbol("ACQUISITION_MENU", touchMenu)
 acquisitionMenu.setLabel("Acquisition Configuration")
 
-
 # Sensing Technology
 touchSenseTechnology = qtouchComponent.createKeyValueSetSymbol("SENSE_TECHNOLOGY", acquisitionMenu)
 touchSenseTechnology.setLabel("Sensor Technology")
@@ -84,6 +93,15 @@ touchSenseTechnology.addKey("MutualCap", "NODE_MUTUAL", "Mutual Capacitance Sens
 touchSenseTechnology.setDefaultValue(0)
 touchSenseTechnology.setOutputMode("Value")
 touchSenseTechnology.setDisplayMode("Description")
+touchSenseTechnology.setDescription("Selects the sensor technology - Selfcap: Requires one pin per channel; Simple sensor design; Recommended for small number of sensors (less than 12). Mutualcap: Requires one X pin and one Y pin per channel; Can realize X x Y number of sensors in a matrix form; Recommended for large number of sensors (more than 12)")
+
+totalChannelCountSelf = qtouchComponent.createIntegerSymbol("MAX_CHANNEL_COUNT_SELF",acquisitionMenu)
+totalChannelCountSelf.setVisible(True)
+totalChannelCountSelf.setDefaultValue(int(touchChannelSelf))
+
+totalChannelCountMutl = qtouchComponent.createIntegerSymbol("MAX_CHANNEL_COUNT_MUTL",acquisitionMenu)
+totalChannelCountMutl.setVisible(True)
+totalChannelCountMutl.setDefaultValue(int(touchChannelMutual))
 
 # Select Tuning mode
 touchAutoTuneMode = qtouchComponent.createKeyValueSetSymbol("TUNE_MODE_SELECTED", acquisitionMenu)
@@ -94,6 +112,7 @@ touchAutoTuneMode.addKey("Tune CSD","CAL_AUTO_TUNE_CSD","Charge Share Delay - CS
 touchAutoTuneMode.setDefaultValue(0)
 touchAutoTuneMode.setOutputMode("Value")
 touchAutoTuneMode.setDisplayMode("Key")
+touchAutoTuneMode.setDescription("Sets the sensor calibration mode - CAL_AUTO_TUNE_NONE: Manual user setting of Prescaler, Charge share delay & Series resistor. AUTO_TUNE_CSD: QTouch library will use the configured prescaler and series resistor value and adjusts the CSD to ensure full charging.")
 
 #Scan Rate (ms)
 touchSym_TOUCH_MEASUREMENT_PERIOD_MS_Val = qtouchComponent.createIntegerSymbol("DEF_TOUCH_MEASUREMENT_PERIOD_MS", acquisitionMenu)
@@ -101,6 +120,7 @@ touchSym_TOUCH_MEASUREMENT_PERIOD_MS_Val.setLabel("Scan Rate (ms)")
 touchSym_TOUCH_MEASUREMENT_PERIOD_MS_Val.setDefaultValue(20)
 touchSym_TOUCH_MEASUREMENT_PERIOD_MS_Val.setMin(1)
 touchSym_TOUCH_MEASUREMENT_PERIOD_MS_Val.setMax(255)
+touchSym_TOUCH_MEASUREMENT_PERIOD_MS_Val.setDescription("Defines the timer scan rate in milliseconds to initiate periodic touch measurement on all enabled touch sensors.")
 
 #PTC Interrupt Priority
 touchSym_PTC_INTERRUPT_PRIORITY_Val = qtouchComponent.createIntegerSymbol("DEF_PTC_INTERRUPT_PRIORITY", acquisitionMenu)
@@ -108,6 +128,7 @@ touchSym_PTC_INTERRUPT_PRIORITY_Val.setLabel("PTC Interrupt Priority")
 touchSym_PTC_INTERRUPT_PRIORITY_Val.setDefaultValue(2)
 touchSym_PTC_INTERRUPT_PRIORITY_Val.setMin(0)
 touchSym_PTC_INTERRUPT_PRIORITY_Val.setMax(2)
+touchSym_PTC_INTERRUPT_PRIORITY_Val.setDescription("Defines the interrupt priority for the PTC. Set low priority to PTC interrupt for applications having interrupt time constraints.")
 
 #Acquisition Frequency
 touchSym_SEL_FREQ_INIT_Val = qtouchComponent.createKeyValueSetSymbol("DEF_SEL_FREQ_INIT", acquisitionMenu)
@@ -131,5 +152,6 @@ touchSym_SEL_FREQ_INIT_Val.addKey("FREQ_15", "FREQ_SEL_15", "15 additional clock
 touchSym_SEL_FREQ_INIT_Val.addKey("FREQ_16", "FREQ_SEL_SPREAD", "16 different frequencies used")
 touchSym_SEL_FREQ_INIT_Val.setDefaultValue(0)
 touchSym_SEL_FREQ_INIT_Val.setOutputMode("Value")
-touchSym_SEL_FREQ_INIT_Val.setDisplayMode("Description")
-
+touchSym_SEL_FREQ_INIT_Val.setDisplayMode("Value")
+touchSym_SEL_FREQ_INIT_Val.setDescription("It may be required to change the acquisition frequency if system noise frequency is closer to acquisition frequency.In order to vary the acquisition frequency, additional clock cycles are added during measurement for FREQ_SEL_0 through FREQ_SEL_15. FREQ_SEL_0 provides the fastest measurement time (no additional clock cycles are added) and FREQ_SEL_15 provides the slowest measurement time (15 additional clock cycles are added). When FREQ_SEL_SPREAD option is used, all the 16 frequencies are used consecutively in a circular fashion.")
+ 

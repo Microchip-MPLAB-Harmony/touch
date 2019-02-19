@@ -17,7 +17,7 @@
 /* Configuration */
 typedef struct 
 {
-  uint8_t num_sensors;
+  uint16_t num_sensors;
   uint8_t num_freqs;
   uint8_t *freq_option_select;
   uint8_t *median_filter_freq;        /* PTC frequencies to be used on the median filter samples */

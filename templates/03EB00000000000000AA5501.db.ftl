@@ -1,4 +1,4 @@
-<#assign heading = 'QTouch Data Visualizer'>
+<#assign heading = 'Touch Data Visualizer'>
 <#assign debug_data_label = 'Sensor Data' >
 <#assign debug_data_key = ['State', 'Delta', 'Threshold']>
 <#assign debug_data_node = ['Signal', 'Reference' , 'Delta', 'Compensation'] >

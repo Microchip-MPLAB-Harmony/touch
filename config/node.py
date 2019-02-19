@@ -1,7 +1,7 @@
 ################################################################################
 #### Global Variables ####
 ################################################################################
-touchChannelCountMax = 32
+touchChannelCountMax =totalChannelCountMutl.getValue()
 
 ################################################################################
 #### Component ####
@@ -20,7 +20,7 @@ tchSelfPinSelection = []
 tchMutXPinSelection = []
 tchMutYPinSelection = []
 
-for channelID in range(0,int(touchChannelCountMax)):
+for channelID in range(0, touchChannelCountMax):
 
     touchChEnable = qtouchComponent.createBooleanSymbol("TOUCH_ENABLE_CH_" + str(channelID), nodeMenu)
     touchChEnable.setLabel("Use touch channel " + str(channelID))
@@ -73,6 +73,7 @@ for channelID in range(0,int(touchChannelCountMax)):
     touchSym_CSD_Val.setDefaultValue(0)
     touchSym_CSD_Val.setMin(0)
     touchSym_CSD_Val.setMax(255)
+    touchSym_CSD_Val.setDescription("Increase in Charge Share Delay increases sensor charging time and so the touch measurement time. It indicates the number of additional cycles that are inserted within a touch measurement cycle.")
 
     #Series Resistor
     touchSym_SERIES_RESISTOR_Val = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_SERIES_RESISTOR" + str(channelID), touchChEnable)
@@ -84,6 +85,7 @@ for channelID in range(0,int(touchChannelCountMax)):
     touchSym_SERIES_RESISTOR_Val.setDefaultValue(0)
     touchSym_SERIES_RESISTOR_Val.setOutputMode("Value")
     touchSym_SERIES_RESISTOR_Val.setDisplayMode("Description")
+    touchSym_SERIES_RESISTOR_Val.setDescription("Selection for internal series resistor.Higher series resistor provides higher noise immunity and requires long time for charging. This could affect response time. So, series resistor should be selected optimally.")
 
     #PTC Clock Prescaler
     touchSym_PTC_PRESCALER_Val = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_PTC_PRESCALER" + str(channelID), touchChEnable)
@@ -92,10 +94,11 @@ for channelID in range(0,int(touchChannelCountMax)):
     touchSym_PTC_PRESCALER_Val.addKey("PRESC2", "PRSC_DIV_SEL_2", "2")
     touchSym_PTC_PRESCALER_Val.addKey("PRESC4", "PRSC_DIV_SEL_4", "4")
     touchSym_PTC_PRESCALER_Val.addKey("PRESC8", "PRSC_DIV_SEL_8", "8")
-    touchSym_PTC_PRESCALER_Val.setDefaultValue(1)
+    touchSym_PTC_PRESCALER_Val.setDefaultValue(0)
     touchSym_PTC_PRESCALER_Val.setOutputMode("Value")
     touchSym_PTC_PRESCALER_Val.setDisplayMode("Description")
-
+    touchSym_PTC_PRESCALER_Val.setDescription("The PTC clock is prescaled by PTC and then used for touch measurement.The PTC prescaling factor is defined by this parameter. It is recommended to configure this parameter such that the clock used for touch measurement is less than 4MHz (8MHz for ATtiny devices).")
+	
     #Analog Gain
     touchSym_ANALOG_GAIN_Val = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_GAIN_ANA" + str(channelID), touchChEnable)
     touchSym_ANALOG_GAIN_Val.setLabel("Analog Gain")
@@ -107,7 +110,8 @@ for channelID in range(0,int(touchChannelCountMax)):
     touchSym_ANALOG_GAIN_Val.setDefaultValue(0)
     touchSym_ANALOG_GAIN_Val.setOutputMode("Value")
     touchSym_ANALOG_GAIN_Val.setDisplayMode("Description")
-
+    touchSym_ANALOG_GAIN_Val.setDescription("Gain setting for touch delta value.Higher gain setting increases touch delta as well as noise.So, optimum gain setting should be used.Gain should be tuned such that the touch delta is between 40~60 counts.")
+	
     #Digital Filter Gain - Accumulated sum is scaled to Digital Gain
     touchSym_DIGI_FILT_GAIN_Val = qtouchComponent.createKeyValueSetSymbol("DEF_DIGI_FILT_GAIN"  + str(channelID), touchChEnable)
     touchSym_DIGI_FILT_GAIN_Val.setLabel("Digital Filter Gain")
@@ -119,7 +123,8 @@ for channelID in range(0,int(touchChannelCountMax)):
     touchSym_DIGI_FILT_GAIN_Val.setDefaultValue(0)
     touchSym_DIGI_FILT_GAIN_Val.setOutputMode("Value")
     touchSym_DIGI_FILT_GAIN_Val.setDisplayMode("Description")
-
+    touchSym_DIGI_FILT_GAIN_Val.setDescription("Gain setting for touch delta value. Higher gain setting increases touch delta as well as noise. So, optimum gain setting should be used.Gain should be tuned such that the touch delta is between 40~60 counts. ")
+	
     #Digital Filter Oversampling - Number of samples for each measurement
     touchSym_DIGI_FILT_OVERSAMPLING_Val = qtouchComponent.createKeyValueSetSymbol("DEF_DIGI_FILT_OVERSAMPLING" + str(channelID), touchChEnable)
     touchSym_DIGI_FILT_OVERSAMPLING_Val.setLabel("Digital Filter Oversampling")
@@ -133,3 +138,4 @@ for channelID in range(0,int(touchChannelCountMax)):
     touchSym_DIGI_FILT_OVERSAMPLING_Val.setDefaultValue(4)
     touchSym_DIGI_FILT_OVERSAMPLING_Val.setOutputMode("Value")
     touchSym_DIGI_FILT_OVERSAMPLING_Val.setDisplayMode("Description")
+    touchSym_DIGI_FILT_OVERSAMPLING_Val.setDescription("Defines the number of samples taken for each measurement.Higher filter level settings, for each measurements more number of samples taken which helps to average out the noise.Higher filter level settings takes long time to do a touch measurement which affects response time.So, start with default value and increase depends on noise levels.")
