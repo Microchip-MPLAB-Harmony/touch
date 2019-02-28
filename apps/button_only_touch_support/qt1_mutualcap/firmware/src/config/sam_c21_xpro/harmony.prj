@@ -291,8 +291,8 @@
           <Name dnOrder="1">device_cache.h</Name>
           <LogicalPath dnOrder="2">config/sam_c21_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">6D7E462FF2BAB390D1846FBB4F1BBEB6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">6D7E462FF2BAB390D1846FBB4F1BBEB6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9ED2219AFB6FDB7A6E9A066E468DAE8B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9ED2219AFB6FDB7A6E9A066E468DAE8B</UserChecksum>
         </File>
         <File dnOrder="36">
           <Type dnOrder="0">HEADER</Type>
@@ -611,8 +611,8 @@
           <Name dnOrder="1">touch.h</Name>
           <LogicalPath dnOrder="2">config/sam_c21_xpro/touch/</LogicalPath>
           <PhysicalPath dnOrder="3">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">2C11CDCAAC88448D45B0D901F129818A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">2C11CDCAAC88448D45B0D901F129818A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E986AF80896AEAC24D4A3BDB5AE640E1</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E986AF80896AEAC24D4A3BDB5AE640E1</UserChecksum>
         </File>
         <File dnOrder="76">
           <Type dnOrder="0">HEADER</Type>
