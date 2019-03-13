@@ -1,5 +1,5 @@
 #  Microchip MPLAB® Harmony 3 Touch Library Release Notes
-## Touch Library v3.1.0 Release
+## Touch Library v3.1.1 Release
 
 ### NEW FEATURES
 
