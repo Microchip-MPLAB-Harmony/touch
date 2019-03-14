@@ -1,6 +1,25 @@
 #  Microchip MPLAB® Harmony 3 Touch Library Release Notes
 ## Touch Library v3.1.1 Release
 
+### BUG FIX
+
+* Compilation error related to Data Visualizer code when Frequency Hop is NOT enabled.
+
+### Required MPLAB Harmony v3.x.x Modules
+
+* csp v3.2.0
+* dev_packs v3.2.0
+* mhc v3.2.0
+
+### DEVELOPMENT TOOLS
+
+* [MPLAB X IDE v5.15](https://www.microchip.com/mplab/mplab-x-ide)
+* [MPLAB XC32 C/C++ Compiler v2.15](https://www.microchip.com/mplab/compilers)
+* MPLAB X IDE plug-ins:
+  * MPLAB Harmony Configurator (MHC) v3.2.0.
+  
+## Touch Library v3.1.0 Release
+
 ### NEW FEATURES
 
 * Button only touch support for SAM C2x device family along with Data Visualizer option
