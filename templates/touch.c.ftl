@@ -194,6 +194,27 @@ qtm_touch_key_config_t qtlib_key_configs_set1[DEF_NUM_SENSORS];
 qtm_touch_key_control_t qtlib_key_set1
     = {&qtlib_key_grp_data_set1, &qtlib_key_grp_config_set1, &qtlib_key_data_set1[0], &qtlib_key_configs_set1[0]};
 
+<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
+/**********************************************************/
+/***************** Scroller Module ********************/
+/**********************************************************/
+
+/* Individual and Group Data */
+qtm_scroller_data_t       qtm_scroller_data1[DEF_NUM_SCROLLERS];
+qtm_scroller_group_data_t qtm_scroller_group_data1 = {0};
+
+/* Group Configuration */
+qtm_scroller_group_config_t qtm_scroller_group_config1 = {&qtlib_key_data_set1[0], DEF_NUM_SCROLLERS};
+
+<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
+/* Scroller Configurations */
+qtm_scroller_config_t qtm_scroller_config1[DEF_NUM_SCROLLERS] = {<#list 0..TOUCH_SCROLLER_ENABLE_CNT-1 as i><#if i==TOUCH_SCROLLER_ENABLE_CNT-1>SCROLLER_${i}_PARAMS<#else> SCROLLER_${i}_PARAMS,</#if></#list>}; 
+</#if>
+
+/* Container */
+qtm_scroller_control_t qtm_scroller_control1
+    = {&qtm_scroller_group_data1, &qtm_scroller_group_config1, &qtm_scroller_data1[0], &qtm_scroller_config1[0]};
+</#if>
 /**********************************************************/
 /****************  Binding Layer Module  ******************/
 /**********************************************************/
@@ -204,9 +225,11 @@ qtm_touch_key_control_t qtlib_key_set1
 
 #define LIB_MODULES_PROC_LIST                                                                                          \
     {                                                                                                                  \
-    <#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>(module_proc_t)&qtm_freq_hop, (module_proc_t)&qtm_key_sensors_process, null\
-    <#elseif ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>(module_proc_t)&qtm_freq_hop_autotune, (module_proc_t)&qtm_key_sensors_process, null\
-    <#else>(module_proc_t)&qtm_key_sensors_process, null</#if>                                                          \
+		<#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>(module_proc_t)&qtm_freq_hop,                                    \
+		<#elseif ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>(module_proc_t)&qtm_freq_hop_autotune,</#if>                 \
+		(module_proc_t)&qtm_key_sensors_process,                                                                           \
+		<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>(module_proc_t)&qtm_scroller_process,</#if>                                   \ 
+	     null                                                                                                               \
     }
 
 #define LIB_INIT_DATA_MODELS_LIST                                                                                      \
@@ -214,11 +237,13 @@ qtm_touch_key_control_t qtlib_key_set1
         (void *)&qtlib_acq_set1, null                                                                                  \
     }
 
-#define LIB_DATA_MODELS_PROC_LIST                                                                                      \
-    {                                                                                                                  \
-     <#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>(void *)&qtm_freq_hop_control1, (void *)&qtlib_key_set1, null\
-     <#elseif ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>(void *)&qtm_freq_hop_autotune_control1, (void *)&qtlib_key_set1, null\
-     <#else>(void *)&qtlib_key_set1, null</#if>                                                                        \
+#define LIB_DATA_MODELS_PROC_LIST                                                                                       \
+    {                                                                                                                   \
+      <#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>(void *)&qtm_freq_hop_control1,                                  \
+      <#elseif ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>(void *)&qtm_freq_hop_autotune_control1, </#if>              \
+	  (void *)&qtlib_key_set1,                                                                                           \
+	  <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>(void *)&qtm_scroller_control1,</#if>                                         \
+	    null                                                                                                               \
     }
 
 #define LIB_MODULES_ACQ_ENGINES_LIST                                                                                   \
@@ -331,6 +356,10 @@ static void init_complete_callback(void)
 {
     /* Configure touch sensors with Application specific settings */
     touch_sensors_config();
+<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>	
+	/* scroller init */
+	qtm_init_scroller_module(&qtm_scroller_control1);
+</#if>
 }
 
 /*============================================================================
@@ -576,7 +605,17 @@ void calibrate_node(uint16_t sensor_node)
     /* Initialize key */
     qtm_init_sensor_key(&qtlib_key_set1, sensor_node, &ptc_qtlib_node_stat1[sensor_node]);
 }
+<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
+uint8_t get_scroller_state(uint16_t sensor_node)
+{
+	return (qtm_scroller_control1.qtm_scroller_data[sensor_node].scroller_status);
+}
 
+uint16_t get_scroller_position(uint16_t sensor_node)
+{
+	return (qtm_scroller_control1.qtm_scroller_data[sensor_node].position);
+}
+</#if>
 /*============================================================================
 void PTC_Handler_EOC(void)
 ------------------------------------------------------------------------------

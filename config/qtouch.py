@@ -110,7 +110,8 @@ def instantiateComponent(qtouchComponent):
     execfile(Module.getPath() +"/config/node.py")
     execfile(Module.getPath() +"/config/key.py")
     execfile(Module.getPath() +"/config/sensor.py")
-    
+    execfile(Module.getPath() +"/config/scroller.py")
+	
     global enableFreqHopMenu
     # Enable Frequency Hop  
     enableFreqHopMenu = qtouchComponent.createBooleanSymbol("ENABLE_FREQ_HOP", touchMenu)

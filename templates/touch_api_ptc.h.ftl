@@ -41,6 +41,9 @@ extern "C" {
 <#elseif ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>
 #include "qtm_freq_hop_auto_0x0004_api.h"
 </#if>
+<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
+#include "qtm_scroller_0x000b_api.h"
+</#if>
 /*----------------------------------------------------------------------------
  *   prototypes
  *----------------------------------------------------------------------------*/

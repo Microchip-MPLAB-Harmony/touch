@@ -225,6 +225,44 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  */
 #define DEF_MAX_ON_DURATION ${DEF_MAX_ON_DURATION}
 
+<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
+/**********************************************************/
+/***************** Slider/Wheel Parameters ****************/
+/**********************************************************/
+/* Defines the number of scrollers (sliders or wheels)
+ */
+#define DEF_NUM_SCROLLERS ${TOUCH_SCROLLER_ENABLE_CNT}
+
+/* Defines scroller parameter setting
+ * {touch_scroller_type, touch_start_key, touch_scroller_size,
+ * SCR_RESOL_DEADBAND(touch_scroller_resolution,touch_scroller_deadband), touch_scroller_hysterisis,
+ * touch_scr_detect_threshold}
+ * Configuring scr_detect_threshold: By default, scr_detect_threshold parameter should be
+ * set equal to threshold value of the underlying keys. Then the parameter has to be tuned based on the actual contact
+ * size of the touch when moved over the scroller. The contact size of the moving touch can be observed from
+ * "contact_size" parameter on scroller runtime data structure.
+ */
+ <#list 0..TOUCH_SCROLLER_ENABLE_CNT-1 as i>
+	<#assign TOUCH_ENABLE_SCROLLER_ = "TOUCH_ENABLE_SCROLLER_" + i>
+	<#assign DEF_SCR_TYPE = "DEF_SCR_TYPE" + i>
+	<#assign TOUCH_SCR_SIZE = "TOUCH_SCR_SIZE" + i>
+	<#assign TOUCH_SCR_START_KEY = "TOUCH_SCR_START_KEY" + i>
+	<#assign DEF_SCR_RESOLUTION = "DEF_SCR_RESOLUTION" + i>
+	<#assign DEF_SCR_DEADBAND = "DEF_SCR_DEADBAND" + i>
+	<#assign DEF_SCR_POS_HYS = "DEF_SCR_POS_HYS" + i>
+	<#assign DEF_SCR_CONTACT_THRESHOLD = "DEF_SCR_CONTACT_THRESHOLD" + i>
+	<#if .vars[TOUCH_ENABLE_SCROLLER_]?has_content>
+	<#if (.vars[TOUCH_ENABLE_SCROLLER_] != false)>
+    <#lt>#define SCROLLER_${i}_PARAMS                                                                                       \
+		<#lt>{                                                                                                              \
+		<#lt>    ${.vars[DEF_SCR_TYPE]}, ${.vars[TOUCH_SCR_START_KEY]}, ${.vars[TOUCH_SCR_SIZE]},                            \
+		SCR_RESOL_DEADBAND(${.vars[DEF_SCR_RESOLUTION]}, ${.vars[DEF_SCR_DEADBAND]}),${.vars[DEF_SCR_POS_HYS]},${.vars[DEF_SCR_CONTACT_THRESHOLD]}\
+		<#lt>}
+	</#if>
+	</#if>
+ </#list>
+</#if>
+
 <#if ENABLE_FREQ_HOP==true>
 /**********************************************************/
 /********* Frequency Hop Module ****************/
