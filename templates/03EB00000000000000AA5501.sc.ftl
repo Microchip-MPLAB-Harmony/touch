@@ -1,6 +1,9 @@
 <#if (TOUCH_CHAN_ENABLE_CNT > 0) >
 <#assign total_channels = TOUCH_CHAN_ENABLE_CNT-1>
 </#if>
+<#if (TOUCH_SCROLLER_ENABLE_CNT > 0)> 
+<#assign total_scr = TOUCH_SCROLLER_ENABLE_CNT>
+</#if>
 
 <#assign offset = 0>
 <#list 0..total_channels as i>
@@ -15,6 +18,21 @@ State${i}, ${i+offset}
 </#list>
 
 <#assign offset = offset +1>
+
+<#if (TOUCH_SCROLLER_ENABLE_CNT > 0)> 
+<#list 0..total_scr-1 as y>
+SWState${y}, ${total_channels+offset} (Column:0;Row:${y})
+SWDelta${y}, ${total_channels+offset}(Column:1;Row:${y})
+SWThreshold${y}, ${total_channels+offset} (Column:2;Row:${y})
+SWPosition${y}, ${total_channels+offset} (Column:3;Row:${y})
+</#list>
+<#assign offset = offset +1>
+<#list 0..total_scr-1 as y>
+SWState${y}, ${total_channels+offset+y}
+</#list>
+<#assign offset = offset +total_scr>
+</#if>
+
 <#list 0..total_channels as i>
 Signal${i},${total_channels+offset}(visible:0)
 </#list>
@@ -27,6 +45,15 @@ Delta${i},${total_channels+offset}(visible:1)
 <#list 0..total_channels as i>
 Threshold${i},${total_channels+offset}(visible:1)
 </#list>
+
+
+<#if (TOUCH_SCROLLER_ENABLE_CNT > 0)> 
+<#list 0..total_scr-1 as y>
+SWDelta${y},${total_channels+offset}(visible:1)
+SWThreshold${y},${total_channels+offset}(visible:1)
+</#list>
+</#if>
+
 
 <#assign offset = offset +1>
 <#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i>

@@ -38,7 +38,11 @@ Copyright (c) 2017 Microchip. All rights reserved.
 <#else>
 #define FREQ_HOP_AUTO_MODULE_OUTPUT 0
 </#if>
+<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
+#define SCROLLER_MODULE_OUTPUT 1
+<#else>
 #define SCROLLER_MODULE_OUTPUT 0
+</#if>
 
 /*----------------------------------------------------------------------------
   global variables
@@ -50,6 +54,9 @@ extern qtm_touch_key_config_t    qtlib_key_configs_set1[DEF_NUM_SENSORS];
 </#if>
 <#if FREQ_AUTOTUNE != false>
 extern qtm_freq_hop_autotune_control_t qtm_freq_hop_autotune_control1;
+</#if>
+<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
+extern qtm_scroller_control_t qtm_scroller_control1;
 </#if>
 extern uint8_t module_error_code;
 
@@ -174,7 +181,7 @@ void datastreamer_output(void)
 	for (count_bytes_out = 0u; count_bytes_out < qtm_scroller_control1.qtm_scroller_group_config->num_scrollers;
 	     count_bytes_out++) {
 
-		/* Slider State */
+		/* State */
 		u8temp_output = qtm_scroller_control1.qtm_scroller_data[count_bytes_out].scroller_status;
 		if (0u != (u8temp_output & 0x01)) {
 			datastreamer_transmit(0x01);
@@ -182,12 +189,12 @@ void datastreamer_output(void)
 			datastreamer_transmit(0x00);
 		}
 
-		/* Slider Delta */
+		/* Delta */
 		u16temp_output = qtm_scroller_control1.qtm_scroller_data[count_bytes_out].contact_size;
 		datastreamer_transmit((uint8_t)u16temp_output);
 		datastreamer_transmit((uint8_t)(u16temp_output >> 8u));
 
-		/* Slider Threshold */
+		/* Threshold */
 		u16temp_output = qtm_scroller_control1.qtm_scroller_config[count_bytes_out].contact_min_threshold;
 		datastreamer_transmit((uint8_t)u16temp_output);
 		datastreamer_transmit((uint8_t)(u16temp_output >> 8u));

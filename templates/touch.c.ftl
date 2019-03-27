@@ -228,7 +228,7 @@ qtm_scroller_control_t qtm_scroller_control1
 		<#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>(module_proc_t)&qtm_freq_hop,                                    \
 		<#elseif ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>(module_proc_t)&qtm_freq_hop_autotune,</#if>                 \
 		(module_proc_t)&qtm_key_sensors_process,                                                                           \
-		<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>(module_proc_t)&qtm_scroller_process,</#if>                                   \ 
+		<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>(module_proc_t)&qtm_scroller_process,</#if>                                   \
 	     null                                                                                                               \
     }
 

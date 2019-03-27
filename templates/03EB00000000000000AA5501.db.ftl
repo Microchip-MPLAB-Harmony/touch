@@ -9,6 +9,7 @@
 <#assign debug_data_hop_label = 'Frequency Hop Data' >
 <#assign node_cnt = TOUCH_CHAN_ENABLE_CNT>
 <#assign key_cnt = TOUCH_KEY_ENABLE_CNT>
+<#assign scr_cnt = TOUCH_SCROLLER_ENABLE_CNT>
 <#assign debug_data_others_label = 'Debug Data' >
 <#assign debug_data_others = ['FrameCounter', 'QTouchLibError'] >
 <#assign blank = [" "]>
@@ -23,6 +24,35 @@
 <#list 0..FREQ_HOP_STEPS-1 as i>
 <#assign debug_data_hop = debug_data_hop + [('HopFrequency+(i)')]>
 </#list>
+</#if>
+
+<#if scr_cnt != 0 >
+<#assign debug_data_scroller_label = 'Slider & Wheel Data' >
+<#assign debug_data_scroller = ['SWState', 'SWDelta', 'SWThreshold', 'SWPosition'] >
+<#assign debug_data_scroller_header = ['State', 'SW Delta', 'SW Threshold', 'Position'] >
+<#assign debug_graph_data_scr = ['SWDelta', 'SWThreshold'] >
+</#if>
+
+<#if scr_cnt != 0 >
+<#assign scroller_from_ch = []>
+<#assign scroller_num_ch = []>
+<#assign scroller_txt = []>
+<#assign scr_info = []>
+<#list 0..scr_cnt-1 as cnt >
+<#assign TOUCH_SCR_START_KEY = "TOUCH_SCR_START_KEY" + cnt>
+<#assign DEF_SCR_TYPE = "DEF_SCR_TYPE" + cnt>
+<#assign TOUCH_SCR_SIZE = "TOUCH_SCR_SIZE" + cnt>
+<#assign scroller_from_ch +=  [.vars[TOUCH_SCR_START_KEY]]>
+<#assign scroller_num_ch += [.vars[TOUCH_SCR_SIZE]]>
+<#assign temp_info = .vars[DEF_SCR_TYPE]>
+<#if temp_info == "SCROLLER_TYPE_SLIDER" >
+<#assign temp_info = "Slider" >
+<#else>
+<#assign temp_info = "Wheel" >
+</#if>
+<#assign scroller_txt +=  [temp_info] >
+</#list>
+<#assign scr_info =  scroller_from_ch + scroller_num_ch + scroller_txt>
 </#if>
 
 <#-- MACROS for db script -->
@@ -187,26 +217,94 @@ ${columns}, // Number of Columns
 };
 </#macro>
 
-<#macro build_sensor_type_table temp_ele_num, x_pos, y_pos, row_height, temp_lable_w, node_cnt >
+<#macro build_sensor_type_table temp_ele_num, x_pos, y_pos, row_height, temp_lable_w, node_cnt, scr_cnt, scr_info >
 <#assign debug_table_title = ['Channel ID', 'Sensor Type'] >
 <#assign column_cnt = debug_table_title?size >
 <#assign temp_string = [] >
 <#assign temp_width1 = (temp_lable_w) * (column_cnt) >
 <#assign temp_height1 = (row_height) * node_cnt> 
 <#assign element_num = temp_ele_num >
+<#assign temp_string = [] >
 <#assign sen_type_but_cnt = [] >
+<#assign sen_type_scr_cnt = [] >
+<#assign sen_type_sli_cnt = [] >
+<#assign sen_type_whe_cnt = [] >
 <#list 0..(debug_table_title?size-1) as cnt >
 <#assign temp_string = temp_string + [((cnt)+":0"+":"+(debug_table_title[cnt])+";")]>
 </#list>
 <@db_build_table_element_new_table temp_string, 0, element_num,x_pos,y_pos,temp_width1, temp_height1,temp_lable_w, temp_lable_w,row_height,1, column_cnt />
-<#assign temp_string = [] >
-<#list 0..(node_cnt-1) as cnt >
-<#assign temp_string = temp_string + [("0:"+(cnt)+":"+(cnt)+";")]>
-<#assign temp_string = temp_string + [("1:"+(cnt)+":"+"Button"+" "+(sen_type_but_cnt?size)+";")]>
-<#assign sen_type_but_cnt = sen_type_but_cnt + [1] >
-</#list>
 <#local  y_pos = y_pos + row_height >
+<#assign temp_string = [] >
+<#assign scr_from_ch_info =[] >
+<#assign scr_num_ch_info =[]>
+<#assign scr_txt =[] >
+<#list 0..(node_cnt-1) as cnt >
+<#list 0..TOUCH_SCROLLER_ENABLE_CNT-1 as i >
+<#assign TOUCH_SCR_START_KEY = "TOUCH_SCR_START_KEY" + i>
+<#assign DEF_SCR_TYPE = "DEF_SCR_TYPE" + i>
+<#assign TOUCH_SCR_SIZE = "TOUCH_SCR_SIZE" + i>
+<#assign scr_from_ch_info += [.vars[TOUCH_SCR_START_KEY]] >
+<#assign scr_num_ch_info += [.vars[TOUCH_SCR_SIZE]]>
+<#assign scr_txt += [.vars[DEF_SCR_TYPE]] >
+</#list>
+<#assign temp_string = temp_string + [("0:"+(cnt)+":"+(cnt)+";")] >
+
+<#if (sen_type_scr_cnt?size) < scr_cnt >
+<#if (scr_cnt > 0) && (cnt == (scr_from_ch_info[sen_type_scr_cnt?size]+scr_num_ch_info[sen_type_scr_cnt?size])) >
+<#assign tmp_txt = scr_txt[sen_type_scr_cnt?size] >
+<#if tmp_txt == "SCROLLER_TYPE_SLIDER" > <#assign sen_type_sli_cnt=sen_type_sli_cnt + [1] >
+<#elseif tmp_txt == "SCROLLER_TYPE_WHEEL" > <#assign sen_type_whe_cnt=sen_type_whe_cnt + [1] >
+</#if>
+<#assign sen_type_scr_cnt=sen_type_scr_cnt +[1]>
+</#if>
+</#if>
+<#if (sen_type_scr_cnt?size) < scr_cnt >
+<#if (scr_cnt > 0) && (cnt >= (scr_from_ch_info[sen_type_scr_cnt?size])) && (cnt <= scr_from_ch_info[sen_type_scr_cnt?size]+scr_num_ch_info[sen_type_scr_cnt?size]) >
+<#assign tmp_txt = scr_txt[sen_type_scr_cnt?size] >
+<#assign temp_val = cnt - scr_from_ch_info[sen_type_scr_cnt?size] >
+<#if tmp_txt == "SCROLLER_TYPE_SLIDER" > <#assign temp_string=temp_string + [("1:"+(cnt)+":"+("Slider")+" "+(sen_type_sli_cnt?size)+"["+(temp_val)+"];")] >
+<#elseif tmp_txt == "SCROLLER_TYPE_WHEEL" > <#assign temp_string = temp_string + [("1:"+(cnt)+":"+("Wheel")+" "+(sen_type_whe_cnt?size)+"["+(temp_val)+"];")] >
+</#if>
+<#else>
+<#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Button"+" "+(sen_type_but_cnt?size)+";")] > <#assign sen_type_but_cnt = sen_type_but_cnt +[1]>
+</#if>
+<#else>
+<#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Button"+" "+(sen_type_but_cnt?size)+";")] > <#assign sen_type_but_cnt = sen_type_but_cnt +[1]>
+</#if>
+</#list>
 <@db_build_table_element_new_table temp_string, 0, element_num+1,x_pos,y_pos,temp_width1, temp_height1,temp_lable_w, temp_lable_w,row_height,node_cnt, column_cnt />
+</#macro>
+
+
+<#macro build_sensor_type_table_scr temp_ele_num, x_pos, y_pos, row_height, temp_lable_w, node_cnt, scr_cnt, scr_info >
+<#assign column_cnt = scr_cnt >
+<#assign temp_string = [] >
+<#assign temp_width11 = (temp_lable_w) * (column_cnt) >
+<#assign temp_height11 = (row_height) * node_cnt >
+<#assign element_num = temp_ele_num >
+<#assign scr_from_ch_info =[] >
+<#assign scr_num_ch_info =[]>
+<#assign scr_txt =[] >
+<#list 0..TOUCH_SCROLLER_ENABLE_CNT-1 as i >
+<#assign TOUCH_SCR_START_KEY = "TOUCH_SCR_START_KEY" + i>
+<#assign DEF_SCR_TYPE = "DEF_SCR_TYPE" + i>
+<#assign TOUCH_SCR_SIZE = "TOUCH_SCR_SIZE" + i>
+<#assign scr_from_ch_info += [.vars[TOUCH_SCR_START_KEY]] >
+<#assign scr_num_ch_info += [.vars[TOUCH_SCR_SIZE]] >
+<#assign scr_txt += [.vars[DEF_SCR_TYPE]] >
+</#list>
+<#assign sen_type_scr_cnt = [] >
+<#assign sen_type_sli_cnt = [] >
+<#assign sen_type_whe_cnt = [] >
+<#list 0..(node_cnt-1) as cnt>
+<#if (sen_type_scr_cnt?size < scr_cnt) && (cnt == (scr_from_ch_info[sen_type_scr_cnt?size])) >
+<#if scr_txt[sen_type_scr_cnt?size] == "SCROLLER_TYPE_SLIDER" > <#assign temp_string = temp_string + [("0:"+(sen_type_scr_cnt?size)+":"+"Slider "+(sen_type_sli_cnt?size)+";")] > <#assign sen_type_sli_cnt = sen_type_sli_cnt + [1] >
+<#elseif scr_txt[sen_type_scr_cnt?size] == "SCROLLER_TYPE_WHEEL" > <#assign temp_string = temp_string + [("0:"+(sen_type_scr_cnt?size)+":"+"Wheel "+(sen_type_whe_cnt?size)+";")] > <#assign sen_type_whe_cnt=sen_type_whe_cnt + [1] >
+</#if>
+<#assign sen_type_scr_cnt = sen_type_scr_cnt +[1] >
+</#if>
+</#list>
+<@db_build_table_element_new_table temp_string, 0, element_num,x_pos,y_pos,temp_width11, temp_height11,temp_lable_w, temp_lable_w,row_height,scr_cnt, 1 />
 </#macro>
 
 <#macro build_table_headings title, temp_ele_num, x_pos, y_pos, row_height, temp_lable_w, node_cnt >
@@ -272,7 +370,7 @@ ${columns}, // Number of Columns
 <#assign label_ele = label_ele + 1 >
 
 <#-- sensor label -->
-<@build_sensor_type_table label_ele, x_pos, y_pos, temp_row_height, temp_lable_w, node_cnt/>
+<@build_sensor_type_table label_ele, x_pos, y_pos, temp_row_height, temp_lable_w, node_cnt, scr_cnt, scr_info />
 <#assign x_pos = x_pos + temp_lable_w*2 >
 <#assign label_ele = label_ele + 2 >
 
@@ -295,8 +393,53 @@ ${columns}, // Number of Columns
 <#assign ele_num = ele_num + node_cnt >
 </#if>
 
+<#if (scr_cnt >0)>
+<#assign x_pos = (temp_lable_w * (temp_column+3))>
+<#assign y_pos = y_pos - temp_height >
+<#assign y_pos = y_pos - temp_row_height>
+<#assign y_pos = y_pos - y_offset >
+<#assign temp_rows = scr_cnt >
+<#assign temp_column = debug_data_scroller?size >
+<#assign temp_width = (temp_data_w+temp_lable_w) * temp_column>
+<#assign temp_height = (temp_row_height) * temp_rows >
+
+
+<#-- Scroller data label -->
+<@db_buid_label temp_row_height, label_ele,x_pos,y_pos,debug_data_scroller_label,(temp_lable_w * (temp_column+1))/>
+<#assign y_pos = y_pos + y_offset >
+<#assign label_ele = label_ele + 1 >
+
+<#assign tempdata = ["Sensor"]>
+<@build_table_headings tempdata, label_ele, x_pos, y_pos, temp_row_height, temp_lable_w, 1 />
+<#assign label_ele = label_ele + 1 >
+<#assign y_pos = y_pos + temp_row_height >
+
+<@build_sensor_type_table_scr label_ele, x_pos, y_pos, temp_row_height, temp_lable_w, node_cnt, scr_cnt, scr_info/>
+<#assign y_pos = y_pos + temp_row_height >
+<#assign label_ele = label_ele + 1 >
+
+<#assign x_pos = x_pos + temp_lable_w >
+<#assign y_pos = y_pos - temp_row_height >
+<#assign y_pos = y_pos - temp_row_height >
+<@build_table_headings debug_data_scroller_header, label_ele, x_pos, y_pos, temp_row_height, temp_lable_w, 1/>
+<#assign label_ele = label_ele + 1 >
+<#assign y_pos = y_pos + temp_row_height >
+
+<#-- Scroller data table -->
+<@db_build_table_element_new_table blank,0,ele_num,x_pos,y_pos,temp_width, temp_height,temp_lable_w, temp_lable_w,temp_row_height,temp_rows, temp_column />
+<#assign ele_num = ele_num + 1 >
+
+<#--  Signaling ON/OFF  -->
+<@db_build_signal_element ele_num,x_pos,y_pos,temp_lable_w, temp_row_height, scr_cnt />
+<#assign ele_num = ele_num + scr_cnt >
+</#if>
+<#assign x_pos = 0 >
+<#assign y_pos = y_pos + (temp_row_height * key_cnt) >
 <#--  -------------------GRAPH ELEMENT----------------------- -->
 <#assign num_of_plots = node_cnt*(debug_graph_data?size)>
+<#if scr_cnt != 0>
+<#assign num_of_plots = num_of_plots+(scr_cnt*(debug_graph_data_scr?size)) >
+</#if>
 <#assign y_pos = y_pos + y_offset>
 <@db_buid_graph ele_num, num_of_plots,0,y_pos />
 <#assign x_pos = 0>
@@ -333,7 +476,7 @@ ${columns}, // Number of Columns
 <#assign label_ele = label_ele + 1>
 
 <#-- print sensor type label for node specific table  -->
-<@build_sensor_type_table label_ele, x_pos, y_pos, temp_row_height, temp_lable_w, node_cnt />
+<@build_sensor_type_table label_ele, x_pos, y_pos, temp_row_height, temp_lable_w, node_cnt, scr_cnt, scr_info />
 <#assign label_ele = label_ele + 2>
 <#assign x_pos = x_pos + temp_lable_w*2>
 
