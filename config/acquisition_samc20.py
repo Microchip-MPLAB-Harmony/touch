@@ -91,6 +91,23 @@ touchHeaderFile.setMarkup(False)
 #### Component ####
 ################################################################################
 
+#Set PTC INTERRUPT HANDLER
+Database.setSymbolValue("core", InterruptVector, True, 2)
+Database.setSymbolValue("core", InterruptHandler, "PTC_Handler", 2)
+
+#Set PTC PERIPHERAL CLOCK and Choose GCLK AS GCLK1
+Database.clearSymbolValue("core", "PTC" + "_CLOCK_ENABLE")
+Database.setSymbolValue("core", "PTC" + "_CLOCK_ENABLE", True, 2)
+Database.clearSymbolValue("core", "GCLK_ID_37_GENSEL")
+Database.setSymbolValue("core", "GCLK_ID_37_GENSEL", 1, 2)
+
+#Set GCLK FOR PTC - GCLK1 AT 4MHZ
+Database.clearSymbolValue("core", "GCLK_INST_NUM1")
+Database.setSymbolValue("core", "GCLK_INST_NUM1", True, 2)
+Database.clearSymbolValue("core", "GCLK_1_DIV")
+Database.setSymbolValue("core", "GCLK_1_DIV", 12, 2)
+
+
 acquisitionMenu = qtouchComponent.createMenuSymbol("ACQUISITION_MENU", touchMenu)
 acquisitionMenu.setLabel("Acquisition Configuration")
 

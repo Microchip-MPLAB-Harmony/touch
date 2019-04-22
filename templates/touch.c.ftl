@@ -1,5 +1,5 @@
 /*******************************************************************************
-  QTouch Modular Library
+  Touch Library ${REL_VER} Release
 
   Company:
     Microchip Technology Inc.
@@ -17,7 +17,7 @@
 *******************************************************************************/
 
 /*******************************************************************************
-Copyright (c) 2017 released Microchip Technology Inc.  All rights reserved.
+Copyright (c)  ${REL_YEAR} released Microchip Technology Inc.  All rights reserved.
 
 Microchip licenses to you the right to use, modify, copy and distribute
 Software only when embedded on a Microchip microcontroller or digital signal

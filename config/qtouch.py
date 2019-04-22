@@ -83,30 +83,11 @@ def instantiateComponent(qtouchComponent):
 
     configName = Variables.get("__CONFIGURATION_NAME")
 
-    #SET PTC INTERRUPT HANDLER
-    Database.setSymbolValue("core", InterruptVector, True, 2)
-    Database.setSymbolValue("core", InterruptHandler, "PTC_Handler", 2)
-    
-    #SET PTC PERIPHERAL CLOCK AND CHOOSE GCLK AS GCLK1
-    Database.clearSymbolValue("core", "PTC" + "_CLOCK_ENABLE")
-    Database.setSymbolValue("core", "PTC" + "_CLOCK_ENABLE", True, 2)
-    Database.clearSymbolValue("core", "GCLK_ID_37_GENSEL")
-    Database.setSymbolValue("core", "GCLK_ID_37_GENSEL", 1, 2)
-    
-    #SET GCLK FOR PTC - GCLK1 AT 4MHZ
-    Database.clearSymbolValue("core", "GCLK_INST_NUM1")
-    Database.setSymbolValue("core", "GCLK_INST_NUM1", True, 2)
-    Database.clearSymbolValue("core", "GCLK_1_DIV")
-    Database.setSymbolValue("core", "GCLK_1_DIV", 12, 2)
-    
     touchMenu = qtouchComponent.createMenuSymbol("TOUCH_MENU", None)
     touchMenu.setLabel("Touch Configuration")
     
     execfile(Module.getPath() +"/config/interface.py")
-    if(getDeviceName.getDefaultValue() == "SAMC20"):
-        execfile(Module.getPath() +"/config/acquisition_samc20.py")
-    else:
-        execfile(Module.getPath() +"/config/acquisition_samc21.py")
+    execfile(Module.getPath() +"/config/acquisition_"+getDeviceName.getDefaultValue().lower()+".py")
     execfile(Module.getPath() +"/config/node.py")
     execfile(Module.getPath() +"/config/key.py")
     execfile(Module.getPath() +"/config/sensor.py")

@@ -1,3 +1,8 @@
+#essential changes for each release
+releaseVersion = "v3.1.1"
+releaseYear    = "2019"
+
+
 deviceNode = ATDF.getNode("/avr-tools-device-file/devices")
 deviceChild = []
 deviceChild = deviceNode.getChildren()
@@ -8,3 +13,11 @@ global getDeviceName
 getDeviceName = qtouchComponent.createStringSymbol("DEVICE_NAME", touchMenu)
 getDeviceName.setDefaultValue(deviceName)
 getDeviceName.setVisible(False)
+
+getreleaseVersion = qtouchComponent.createStringSymbol("REL_VER", touchMenu)
+getreleaseVersion.setDefaultValue(releaseVersion)
+getreleaseVersion.setVisible(False)
+
+getreleaseYear = qtouchComponent.createStringSymbol("REL_YEAR", touchMenu)
+getreleaseYear.setDefaultValue(releaseYear)
+getreleaseYear.setVisible(False)
