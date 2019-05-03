@@ -1,6 +1,5 @@
 
 /*============================================================================
-QTouch Modular Library - ${releaseVersion}
 
 Company  : Microchip Technology Inc.
 
@@ -19,7 +18,7 @@ Support: Visit http://www.microchip.com/support/hottopics.aspx
                to create MySupport case.
 
 ------------------------------------------------------------------------------
-Copyright (c) ${releaseYear} Microchip. All rights reserved.
+Copyright (c) Microchip. All rights reserved.
 ------------------------------------------------------------------------------
 ============================================================================*/
 /*----------------------------------------------------------------------------

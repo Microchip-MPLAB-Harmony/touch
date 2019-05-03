@@ -3,7 +3,7 @@ Filename : qtm_acq_samc21_api.h
 Project : QTouch Modular Library
 Purpose : API for Acquisition module - SAMC21/PTC
 ------------------------------------------------------------------------------
-Copyright (c) 2017 Microchip. All rights reserved.
+Copyright (c)  Microchip. All rights reserved.
 ------------------------------------------------------------------------------
 ============================================================================*/
 

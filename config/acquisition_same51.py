@@ -1,13 +1,9 @@
 ################################################################################
 #### Global Variables ####
 ################################################################################
-global touchChannelSelf
-global touchChannelMutual
-ptcPinNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PTC\"]/instance/parameters")
-ptcPinValues = []
-ptcPinValues = ptcPinNode.getChildren()
-touchChannelSelf = ptcPinValues[6].getAttribute("value")
-touchChannelMutual = ptcPinValues[7].getAttribute("value")
+
+touchChannelSelf = 32
+touchChannelMutual = 256
 
 
 def autoTuneFunc(symbol,event):
@@ -30,44 +26,45 @@ global touchAcqAutoLibraryFile
 ############################################################################
 # Library File
 touchAcqLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_ACQ_LIB", None)
-touchAcqLibraryFile.setSourcePath("/src/libraries/0x0020_qtm_samc20_acq.X.a")
-touchAcqLibraryFile.setOutputName("0x0020_qtm_samc20_acq.X.a")
+touchAcqLibraryFile.setSourcePath("/src/libraries/0x000f_qtm_same51_acq.X.a")
+touchAcqLibraryFile.setOutputName("0x000f_qtm_same51_acq.X.a")
 touchAcqLibraryFile.setDestPath("/touch/lib/")
 touchAcqLibraryFile.setEnabled(True)
 touchAcqLibraryFile.setDependencies(autoTuneFunc,["TUNE_MODE_SELECTED"])
 
 # Library File
 touchAcqAutoLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_ACQ_AUTO_LIB", None)
-touchAcqAutoLibraryFile.setSourcePath("/src/libraries/0x0020_qtm_samc20_acq_auto.X.a")
-touchAcqAutoLibraryFile.setOutputName("0x0020_qtm_samc20_acq_auto.X.a")
+touchAcqAutoLibraryFile.setSourcePath("/src/libraries/0x000f_qtm_same51_acq.X.a")
+touchAcqAutoLibraryFile.setOutputName("0x000f_qtm_same51_acq.X.a")
 touchAcqAutoLibraryFile.setDestPath("/touch/lib/")
 touchAcqAutoLibraryFile.setEnabled(False)
 touchAcqAutoLibraryFile.setDependencies(autoTuneFunc,["TUNE_MODE_SELECTED"])
 
 # Library File
 touchBindLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_BIND_LIB", None)
-touchBindLibraryFile.setSourcePath("/src/libraries/0x0005_qtm_binding_layer_cm0p.X.a")
-touchBindLibraryFile.setOutputName("0x0005_qtm_binding_layer_cm0p.X.a")
+touchBindLibraryFile.setSourcePath("/src/libraries/0x0005_qtm_binding_layer_cm4.X.a")
+touchBindLibraryFile.setOutputName("0x0005_qtm_binding_layer_cm4.X.a")
 touchBindLibraryFile.setDestPath("/touch/lib/")
 touchBindLibraryFile.setEnabled(True)
 
 # Header File
 touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_ACQ_HEADER", None)
-touchHeaderFile.setSourcePath("/src/qtm_acq_samc20_0x0020_api.h")
-touchHeaderFile.setOutputName("qtm_acq_samc20_0x0020_api.h")
+touchHeaderFile.setSourcePath("/src/qtm_acq_same54_0x000f_api.h")
+touchHeaderFile.setOutputName("qtm_acq_same54_0x000f_api.h")
 touchHeaderFile.setDestPath("/touch/")
 touchHeaderFile.setProjectPath("config/" + configName + "/touch/")
 touchHeaderFile.setType("HEADER")
 touchHeaderFile.setMarkup(False)
 
 # Header File
-touchHeaderFile1 = qtouchComponent.createFileSymbol("TOUCH_ACQ_SAMC21_HEADER", None)
-touchHeaderFile1.setSourcePath("/src/qtm_acq_samc21_0x0020_api.h")
-touchHeaderFile1.setOutputName("qtm_acq_samc21_0x0020_api.h")
+touchHeaderFile1 = qtouchComponent.createFileSymbol("TOUCH_ACQ_HEADER1", None)
+touchHeaderFile1.setSourcePath("/src/qtm_acq_same51_0x000f_api.h")
+touchHeaderFile1.setOutputName("qtm_acq_same51_0x000f_api.h")
 touchHeaderFile1.setDestPath("/touch/")
 touchHeaderFile1.setProjectPath("config/" + configName + "/touch/")
 touchHeaderFile1.setType("HEADER")
 touchHeaderFile1.setMarkup(False)
+
 
 # Header File
 touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_BIND_HEADER", None)
@@ -91,27 +88,48 @@ touchHeaderFile.setMarkup(False)
 #### Component ####
 ################################################################################
 
+
 #Set acquisition module id for the device
 getModuleID = qtouchComponent.createStringSymbol("MODULE_ID", touchMenu)
-getModuleID.setDefaultValue("0x0020")
+getModuleID.setDefaultValue("0x000f")
 getModuleID.setVisible(False)
 
-#Set PTC INTERRUPT HANDLER
-Database.setSymbolValue("core", InterruptVector, True, 2)
-Database.setSymbolValue("core", InterruptHandler, "PTC_Handler", 2)
+#Set PTC/ADC0 INTERRUPT HANDLER
+Database.setSymbolValue("core", "NVIC_119_0_ENABLE", True)
+Database.setSymbolValue("core", "NVIC_119_0_HANDLER", "ADC0_1_Handler")
 
-#Set PTC PERIPHERAL CLOCK and Choose GCLK AS GCLK1
-Database.clearSymbolValue("core", "PTC" + "_CLOCK_ENABLE")
-Database.setSymbolValue("core", "PTC" + "_CLOCK_ENABLE", True, 2)
-Database.clearSymbolValue("core", "GCLK_ID_37_GENSEL")
-Database.setSymbolValue("core", "GCLK_ID_37_GENSEL", 1, 2)
+#Configure DFLL - closed mode
+Database.setSymbolValue("core", "CONFIG_CLOCK_DFLL_ENABLE", True) 
+Database.setSymbolValue("core", "CONFIG_CLOCK_DFLL_OPMODE", 1)
+Database.setSymbolValue("core", "CONFIG_CLOCK_DFLL_ONDEMAND", 0) 
+Database.setSymbolValue("core", "CONFIG_CLOCK_DFLL_COARSE", 10)
+Database.setSymbolValue("core", "CONFIG_CLOCK_DFLL_FINE", 10)
+Database.setSymbolValue("core", "CONFIG_CLOCK_DFLL_MUL", 1464)
+Database.setSymbolValue("core", "GCLK_ID_0_GENSEL", 3) 
+Database.setSymbolValue("core", "GCLK_ID_0_CHEN", True)
 
-#Set GCLK FOR PTC - GCLK1 AT 4MHZ
-Database.clearSymbolValue("core", "GCLK_INST_NUM1")
-Database.setSymbolValue("core", "GCLK_INST_NUM1", True, 2)
-Database.clearSymbolValue("core", "GCLK_1_DIV")
-Database.setSymbolValue("core", "GCLK_1_DIV", 12, 2)
+#Set GCLK FOR CPU, PTC - GCLK1(DFLL) AT 8MHZ, GCLK0(DFLL) AT 48MHz
+# Database.clearSymbolValue("core", "GCLK_0_SRC")
+# Database.setSymbolValue("core", "GCLK_0_SRC", 6) 
+# Database.clearSymbolValue("core", "GCLK_0_DIV")
+# Database.setSymbolValue("core", "GCLK_0_DIV", 1)
+# Database.setSymbolValue("core", "GCLK_INST_NUM1", True)
+# Database.clearSymbolValue("core", "GCLK_1_SRC")
+# Database.setSymbolValue("core", "GCLK_1_SRC", 5)
+# Database.clearSymbolValue("core", "GCLK_1_DIV") 
+# Database.setSymbolValue("core", "GCLK_1_DIV", 6)
+Database.setSymbolValue("core", "GCLK_INST_NUM3", True)
+Database.setSymbolValue("core", "GCLK_3_SRC", 4) 
+Database.setSymbolValue("core", "GCLK_INST_NUM4", True)
+Database.setSymbolValue("core", "GCLK_4_SRC", 6)
+Database.setSymbolValue("core", "GCLK_4_DIV", 6) 
 
+#Set ADC0 PERIPHERAL CLOCK and Choose GCLK AS GCLK1
+Database.clearSymbolValue("core", "ADC0_CLOCK_ENABLE")
+Database.setSymbolValue("core", "GCLK_ID_40_CHEN", True)
+Database.setSymbolValue("core", "ADC0_CLOCK_ENABLE", True)
+Database.clearSymbolValue("core", "GCLK_ID_40_GENSEL")
+Database.setSymbolValue("core", "GCLK_ID_40_GENSEL", 4)
 
 acquisitionMenu = qtouchComponent.createMenuSymbol("ACQUISITION_MENU", touchMenu)
 acquisitionMenu.setLabel("Acquisition Configuration")

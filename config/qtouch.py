@@ -13,14 +13,17 @@ def onAttachmentConnected(source,target):
         plibUsed.clearValue()
         plibUsed.setValue(remoteID.upper(), 1)
         if targetID == "RTC_TMR":
-            Database.setSymbolValue(remoteID, "RTC_MODE0_MATCHCLR", True, 1)
-            Database.setSymbolValue(remoteID, "RTC_MODE0_INTENSET_CMP0_ENABLE", True, 2)        
+            if (Database.getSymbolValue(remoteID, "RTC_MODE0_MATCHCLR") == False):
+                Database.setSymbolValue(remoteID, "RTC_MODE0_MATCHCLR", True)
+            if (Database.getSymbolValue(remoteID, "RTC_MODE0_INTENSET_CMP0_ENABLE") == False):
+                Database.setSymbolValue(remoteID, "RTC_MODE0_INTENSET_CMP0_ENABLE", True)
     
     if (connectID == "Touch_sercom"):
         plibUsed = localComponent.getSymbolByID("TOUCH_SERCOM_INSTANCE")
         plibUsed.clearValue()
         plibUsed.setValue(remoteID.upper(), 1)
-        Database.setSymbolValue(remoteID, "USART_INTERRUPT_MODE", False, 1)
+        if (Database.getSymbolValue(remoteID, "USART_INTERRUPT_MODE") == True):
+            Database.setSymbolValue(remoteID, "USART_INTERRUPT_MODE", False)
 
 
 def onAttachmentDisconnected(source, target):
@@ -73,6 +76,18 @@ def enableDataStreamerFtlFiles(symbol,event):
         component.getSymbolByID("TOUCH_DATA_STREAMER_HEADER_ds").setEnabled(False)
         component.getSymbolByID("TOUCH_DATA_STREAMER_HEADER_sc").setEnabled(False)
         
+
+def enableScroller(symbol,event):
+    component = symbol.getComponent()
+    print("scroller is enabled for this project")
+    print(event["value"])
+    if(event["value"] == True):
+        component.getSymbolByID("TOUCH_SCR_LIB").setEnabled(True)
+        component.getSymbolByID("TOUCH_SCR_HEADER").setEnabled(True)
+    else:
+        component.getSymbolByID("TOUCH_SCR_LIB").setEnabled(False)
+        component.getSymbolByID("TOUCH_SCR_HEADER").setEnabled(False)
+
 autoComponentIDTable = ["rtc"]
 autoConnectTable = [["lib_qtouch", "Touch_timer","rtc", "RTC_TMR"]]
 
@@ -88,11 +103,19 @@ def instantiateComponent(qtouchComponent):
     
     execfile(Module.getPath() +"/config/interface.py")
     execfile(Module.getPath() +"/config/acquisition_"+getDeviceName.getDefaultValue().lower()+".py")
-    execfile(Module.getPath() +"/config/node.py")
+    if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
+        execfile(Module.getPath() +"/config/node1.py")
+    else:
+        execfile(Module.getPath() +"/config/node.py")
     execfile(Module.getPath() +"/config/key.py")
     execfile(Module.getPath() +"/config/sensor.py")
+
+    enableScrollerMenu = qtouchComponent.createBooleanSymbol("ENABLE_SCROLLER", touchMenu)
+    enableScrollerMenu.setLabel("Enable Scroller")
+    enableScrollerMenu.setDefaultValue(False)
     execfile(Module.getPath() +"/config/scroller.py")
-	
+    enableScrollerMenu.setDependencies(enableScroller,["ENABLE_SCROLLER"])
+
     global enableFreqHopMenu
     # Enable Frequency Hop  
     enableFreqHopMenu = qtouchComponent.createBooleanSymbol("ENABLE_FREQ_HOP", touchMenu)

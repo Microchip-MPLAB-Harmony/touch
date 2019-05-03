@@ -1,12 +1,20 @@
 ############################################################################
 #### Code Generation ####
 ############################################################################
-# Library File
-touchLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_KEY_LIB", None)
-touchLibraryFile.setSourcePath("/src/libraries/0x0002_qtm_touch_key.X.a")
-touchLibraryFile.setOutputName("0x0002_qtm_touch_key.X.a")
-touchLibraryFile.setDestPath("/touch/lib/")
-touchLibraryFile.setEnabled(True)
+if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
+    # Library File
+    touchLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_KEY_LIB", None)
+    touchLibraryFile.setSourcePath("/src/libraries/0x0002_qtm_touch_key_cm4.X.a")
+    touchLibraryFile.setOutputName("0x0002_qtm_touch_key_cm4.X.a")
+    touchLibraryFile.setDestPath("/touch/lib/")
+    touchLibraryFile.setEnabled(True)
+else:
+    # Library File
+    touchLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_KEY_LIB", None)
+    touchLibraryFile.setSourcePath("/src/libraries/0x0002_qtm_touch_key_cm0p.X.a")
+    touchLibraryFile.setOutputName("0x0002_qtm_touch_key_cm0p.X.a")
+    touchLibraryFile.setDestPath("/touch/lib/")
+    touchLibraryFile.setEnabled(True)
 
 # Header File
 touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_KEY_HEADER", None)
@@ -48,7 +56,7 @@ for channelID in range(0, touchKeyCountMax):
     touchSym_SENSOR_DET_THRESHOLD_Val.setMin(0)
     touchSym_SENSOR_DET_THRESHOLD_Val.setMax(255)
     touchSym_SENSOR_DET_THRESHOLD_Val.setDescription("Configure the sensor's detect threshold. When finger touches sensor, the touch delta increases.Sensor will be reported as touched only if the sensor's touch delta value is more than Sensor Threshold.It is recommended to configure Sensor Threshold as 50~70% of touch delta. User can start with default value and can configure after monitoring touch delta value.")
-	
+    
     #Sensor Hysteresis
     touchSym_SENSOR_HYST_Val = qtouchComponent.createKeyValueSetSymbol("DEF_SENSOR_HYST" + str(channelID), touchKeyEnable)
     touchSym_SENSOR_HYST_Val.setLabel("Sensor Hysteresis")
@@ -60,7 +68,7 @@ for channelID in range(0, touchKeyCountMax):
     touchSym_SENSOR_HYST_Val.setOutputMode("Value")
     touchSym_SENSOR_HYST_Val.setDisplayMode("Description")
     touchSym_SENSOR_HYST_Val.setDescription("Under noisy conditions, the delta value goes up/down over the sensor threshold.During these conditions, the sensor dither in and out of touch.To avoid this, once a sensor goes into detect state, the threshold for the sensor is reduced (by the hysteresis value).Hysteresis values are derived from Sensor Threshold value.")
-	
+    
     #Sensor AKS Setting
     touchSym_NOD_AKS_Val = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_AKS" + str(channelID), touchKeyEnable)
     touchSym_NOD_AKS_Val.setLabel("Sensor AKS")

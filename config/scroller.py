@@ -1,13 +1,20 @@
 ############################################################################
 #### Code Generation ####
 ############################################################################
-# Library File
-scrollerLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SCR_LIB", None)
-scrollerLibraryFile.setSourcePath("/src/libraries/0x000b_qtm_scroller.X.a")
-scrollerLibraryFile.setOutputName("0x000b_qtm_scroller.X.a")
-scrollerLibraryFile.setDestPath("/touch/lib/")
-scrollerLibraryFile.setEnabled(True)
-
+if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
+    # Library File
+    scrollerLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SCR_LIB", None)
+    scrollerLibraryFile.setSourcePath("/src/libraries/0x000b_qtm_scroller_cm4.X.a")
+    scrollerLibraryFile.setOutputName("0x000b_qtm_scroller_cm4.X.a")
+    scrollerLibraryFile.setDestPath("/touch/lib/")
+    scrollerLibraryFile.setEnabled(True)
+else:
+    # Library File
+    scrollerLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SCR_LIB", None)
+    scrollerLibraryFile.setSourcePath("/src/libraries/0x000b_qtm_scroller_cm0p.X.a")
+    scrollerLibraryFile.setOutputName("0x000b_qtm_scroller_cm0p.X.a")
+    scrollerLibraryFile.setDestPath("/touch/lib/")
+    scrollerLibraryFile.setEnabled(True)
 # Header File
 scrollerHeaderFile = qtouchComponent.createFileSymbol("TOUCH_SCR_HEADER", None)
 scrollerHeaderFile.setSourcePath("/src/qtm_scroller_0x000b_api.h")
@@ -25,7 +32,7 @@ touchScrollerCountMax = touchChannelCountMax
 #### Components ####
 ################################################################################
 
-scrollerMenu = qtouchComponent.createMenuSymbol("SCROLLER_MENU", touchMenu)
+scrollerMenu = qtouchComponent.createMenuSymbol("SCROLLER_MENU", enableScrollerMenu)
 scrollerMenu.setLabel("Slider/Wheel Configuration")
 scrollerMenu.setDescription("Configure Scrollers - Sliders and Wheels")
 

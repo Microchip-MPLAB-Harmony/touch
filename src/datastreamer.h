@@ -14,7 +14,7 @@ Support: Visit http://www.microchip.com/support/hottopics.aspx
                to create MySupport case.
 
 ------------------------------------------------------------------------------
-Copyright (c) 2017 Microchip. All rights reserved.
+Copyright (c)  Microchip. All rights reserved.
 ------------------------------------------------------------------------------
 ============================================================================*/
 

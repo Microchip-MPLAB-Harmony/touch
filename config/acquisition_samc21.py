@@ -46,8 +46,8 @@ touchAcqAutoLibraryFile.setDependencies(autoTuneFunc,["TUNE_MODE_SELECTED"])
 
 # Library File
 touchBindLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_BIND_LIB", None)
-touchBindLibraryFile.setSourcePath("/src/libraries/0x0005_qtm_binding_layer.X.a")
-touchBindLibraryFile.setOutputName("0x0005_qtm_binding_layer.X.a")
+touchBindLibraryFile.setSourcePath("/src/libraries/0x0005_qtm_binding_layer_cm0p.X.a")
+touchBindLibraryFile.setOutputName("0x0005_qtm_binding_layer_cm0p.X.a")
 touchBindLibraryFile.setDestPath("/touch/lib/")
 touchBindLibraryFile.setEnabled(True)
 
@@ -81,6 +81,11 @@ touchHeaderFile.setMarkup(False)
 ################################################################################
 #### Component ####
 ################################################################################
+
+#Set acquisition module id for the device
+getModuleID = qtouchComponent.createStringSymbol("MODULE_ID", touchMenu)
+getModuleID.setDefaultValue("0x0020")
+getModuleID.setVisible(False)
 
 #Set PTC INTERRUPT HANDLER
 Database.setSymbolValue("core", InterruptVector, True, 2)

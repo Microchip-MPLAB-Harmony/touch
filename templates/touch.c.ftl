@@ -624,8 +624,24 @@ Input  : none
 Output : none
 Notes  : none
 ============================================================================*/
+<#assign device = 0>
+<#list ["SAME51","SAME53","SAME54","SAMD51"] as i>
+<#if DEVICE_NAME == i>
+<#assign device = 1>
+</#if>
+</#list>
+<#if device == 1>
+void ADC0_1_Handler(void)
+{
+    ADC0_REGS->ADC_INTFLAG |=1u;
+    qtm_same54_ptc_handler();
+}
+<#else>
 void PTC_Handler(void)
 {
     qtm_ptc_clear_interrupt();
     qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();
 }
+</#if>
+
+

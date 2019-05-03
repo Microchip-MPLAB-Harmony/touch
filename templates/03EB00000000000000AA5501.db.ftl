@@ -13,6 +13,7 @@
 <#assign debug_data_others_label = 'Debug Data' >
 <#assign debug_data_others = ['FrameCounter', 'QTouchLibError'] >
 <#assign blank = [" "]>
+<#assign scr_info = []>
 <#if TUNE_MODE_SELECTED != "CAL_AUTO_TUNE_NONE">
 <#assign label_ele = label_ele + 1 >
 <#assign debug_data_node_title = ['Signal', 'Reference' , 'Delta', 'Compensation pF', 'CSD'] >
@@ -247,6 +248,7 @@ ${columns}, // Number of Columns
 <#assign scr_num_ch_info =[]>
 <#assign scr_txt =[] >
 <#list 0..(node_cnt-1) as cnt >
+<#if scr_cnt != 0 >
 <#list 0..TOUCH_SCROLLER_ENABLE_CNT-1 as i >
 <#assign TOUCH_SCR_START_KEY = "TOUCH_SCR_START_KEY" + i>
 <#assign DEF_SCR_TYPE = "DEF_SCR_TYPE" + i>
@@ -255,6 +257,7 @@ ${columns}, // Number of Columns
 <#assign scr_num_ch_info += [.vars[TOUCH_SCR_SIZE]]>
 <#assign scr_txt += [.vars[DEF_SCR_TYPE]] >
 </#list>
+</#if>
 <#assign temp_string = temp_string + [("0:"+(cnt)+":"+(cnt)+";")] >
 
 <#if (sen_type_scr_cnt?size) < scr_cnt >
@@ -293,6 +296,7 @@ ${columns}, // Number of Columns
 <#assign scr_from_ch_info =[] >
 <#assign scr_num_ch_info =[]>
 <#assign scr_txt =[] >
+<#if scr_cnt != 0 >
 <#list 0..TOUCH_SCROLLER_ENABLE_CNT-1 as i >
 <#assign TOUCH_SCR_START_KEY = "TOUCH_SCR_START_KEY" + i>
 <#assign DEF_SCR_TYPE = "DEF_SCR_TYPE" + i>
@@ -301,6 +305,7 @@ ${columns}, // Number of Columns
 <#assign scr_num_ch_info += [.vars[TOUCH_SCR_SIZE]] >
 <#assign scr_txt += [.vars[DEF_SCR_TYPE]] >
 </#list>
+</#if>
 <#assign sen_type_scr_cnt = [] >
 <#assign sen_type_sli_cnt = [] >
 <#assign sen_type_whe_cnt = [] >
