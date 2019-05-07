@@ -3,11 +3,58 @@
 ################################################################################
 global touchChannelSelf
 global touchChannelMutual
-ptcPinNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PTC\"]/instance/parameters")
-ptcPinValues = []
-ptcPinValues = ptcPinNode.getChildren()
-touchChannelSelf = ptcPinValues[6].getAttribute("value")
-touchChannelMutual = ptcPinValues[7].getAttribute("value")
+
+getVariant =  ATDF.getNode("/avr-tools-device-file/variants/variant")
+getPinout = []
+getPinout = getVariant.getAttribute("ordercode")
+if ("D20J14" in getPinout):
+    touchChannelSelf = 16
+    touchChannelMutual = 48
+elif ("D20J15" in getPinout):
+    touchChannelSelf = 16
+    touchChannelMutual = 60
+elif ("D20J16" in getPinout):
+    touchChannelSelf = 16
+    touchChannelMutual = 130
+elif ("D20J17" in getPinout):
+    touchChannelSelf = 16
+    touchChannelMutual = 256
+elif ("D20J18" in getPinout):
+    touchChannelSelf = 16
+    touchChannelMutual = 256
+elif ("D20G14" in getPinout):
+    touchChannelSelf = 10
+    touchChannelMutual = 48
+elif ("D20G15" in getPinout):
+    touchChannelSelf = 10
+    touchChannelMutual = 60
+elif ("D20G16" in getPinout):
+    touchChannelSelf = 10
+    touchChannelMutual = 120
+elif ("D20G17" in getPinout):
+    touchChannelSelf = 10
+    touchChannelMutual = 120
+elif ("D20G18" in getPinout):
+    touchChannelSelf = 10
+    touchChannelMutual = 120
+elif ("D20E14" in getPinout):
+    touchChannelSelf = 6
+    touchChannelMutual = 48
+elif ("D20E15" in getPinout):
+    touchChannelSelf = 6
+    touchChannelMutual = 60
+elif ("D20E16" in getPinout):
+    touchChannelSelf = 6
+    touchChannelMutual = 60
+elif ("D20E17" in getPinout):
+    touchChannelSelf = 6
+    touchChannelMutual = 60
+elif ("D20E18" in getPinout):
+    touchChannelSelf = 6
+    touchChannelMutual = 60
+else:
+    touchChannelSelf = 16
+    touchChannelMutual = 256
 
 
 def autoTuneFunc(symbol,event):
@@ -30,16 +77,16 @@ global touchAcqAutoLibraryFile
 ############################################################################
 # Library File
 touchAcqLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_ACQ_LIB", None)
-touchAcqLibraryFile.setSourcePath("/src/libraries/0x0020_qtm_samc21_acq.X.a")
-touchAcqLibraryFile.setOutputName("0x0020_qtm_samc21_acq.X.a")
+touchAcqLibraryFile.setSourcePath("/src/libraries/0x000e_qtm_samd20_acq.X.a")
+touchAcqLibraryFile.setOutputName("0x000e_qtm_samd20_acq.X.a")
 touchAcqLibraryFile.setDestPath("/touch/lib/")
 touchAcqLibraryFile.setEnabled(True)
 touchAcqLibraryFile.setDependencies(autoTuneFunc,["TUNE_MODE_SELECTED"])
 
 # Library File
 touchAcqAutoLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_ACQ_AUTO_LIB", None)
-touchAcqAutoLibraryFile.setSourcePath("/src/libraries/0x0020_qtm_samc21_acq_auto.X.a")
-touchAcqAutoLibraryFile.setOutputName("0x0020_qtm_samc21_acq_auto.X.a")
+touchAcqAutoLibraryFile.setSourcePath("/src/libraries/0x000e_qtm_samd20_acq.X.a")
+touchAcqAutoLibraryFile.setOutputName("0x000e_qtm_samd20_acq.X.a")
 touchAcqAutoLibraryFile.setDestPath("/touch/lib/")
 touchAcqAutoLibraryFile.setEnabled(False)
 touchAcqAutoLibraryFile.setDependencies(autoTuneFunc,["TUNE_MODE_SELECTED"])
@@ -53,8 +100,8 @@ touchBindLibraryFile.setEnabled(True)
 
 # Header File
 touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_ACQ_HEADER", None)
-touchHeaderFile.setSourcePath("/src/qtm_acq_samc21_0x0020_api.h")
-touchHeaderFile.setOutputName("qtm_acq_samc21_0x0020_api.h")
+touchHeaderFile.setSourcePath("/src/qtm_acq_samd20_0x000e_api.h")
+touchHeaderFile.setOutputName("qtm_acq_samd20_0x000e_api.h")
 touchHeaderFile.setDestPath("/touch/")
 touchHeaderFile.setProjectPath("config/" + configName + "/touch/")
 touchHeaderFile.setType("HEADER")
@@ -84,24 +131,24 @@ touchHeaderFile.setMarkup(False)
 
 #Set acquisition module id for the device
 getModuleID = qtouchComponent.createStringSymbol("MODULE_ID", touchMenu)
-getModuleID.setDefaultValue("0x0020")
+getModuleID.setDefaultValue("0x000e")
 getModuleID.setVisible(False)
 
 #Set PTC INTERRUPT HANDLER
-Database.setSymbolValue("core", InterruptVector, True)
-Database.setSymbolValue("core", InterruptHandler, "PTC_Handler")
+Database.setSymbolValue("core", InterruptVector, True, 2)
+Database.setSymbolValue("core", InterruptHandler, "PTC_Handler", 2)
 
 #Set PTC PERIPHERAL CLOCK and Choose GCLK AS GCLK1
 Database.clearSymbolValue("core", "PTC" + "_CLOCK_ENABLE")
-Database.setSymbolValue("core", "PTC" + "_CLOCK_ENABLE", True)
-Database.clearSymbolValue("core", "GCLK_ID_37_GENSEL")
-Database.setSymbolValue("core", "GCLK_ID_37_GENSEL", 1)
+Database.setSymbolValue("core", "PTC" + "_CLOCK_ENABLE", True, 2)
+Database.clearSymbolValue("core", "GCLK_ID_27_GENSEL")
+Database.setSymbolValue("core", "GCLK_ID_27_GENSEL", 1, 2)
 
 #Set GCLK FOR PTC - GCLK1 AT 4MHZ
 # Database.clearSymbolValue("core", "GCLK_INST_NUM1")
-# Database.setSymbolValue("core", "GCLK_INST_NUM1", True)
+# Database.setSymbolValue("core", "GCLK_INST_NUM1", True, 2)
 # Database.clearSymbolValue("core", "GCLK_1_DIV")
-# Database.setSymbolValue("core", "GCLK_1_DIV", 12)
+# Database.setSymbolValue("core", "GCLK_1_DIV", 12, 2)
 
 
 acquisitionMenu = qtouchComponent.createMenuSymbol("ACQUISITION_MENU", touchMenu)
@@ -130,11 +177,11 @@ touchAutoTuneMode = qtouchComponent.createKeyValueSetSymbol("TUNE_MODE_SELECTED"
 touchAutoTuneMode.setLabel("Select the Required Tuning Mode")
 touchAutoTuneMode.addKey("Manual Tuning","CAL_AUTO_TUNE_NONE","Manual tuning is done based on the values defined by user")
 touchAutoTuneMode.addKey("Tune Resistor value","CAL_AUTO_TUNE_RSEL","Series Resistor is tuned")
-touchAutoTuneMode.addKey("Tune CSD","CAL_AUTO_TUNE_CSD","Charge Share Delay - CSD is tuned")
+touchAutoTuneMode.addKey("Tune Prescaler","CAL_AUTO_TUNE_PRSC","Pre-scaler is tuned")
 touchAutoTuneMode.setDefaultValue(0)
 touchAutoTuneMode.setOutputMode("Value")
 touchAutoTuneMode.setDisplayMode("Key")
-touchAutoTuneMode.setDescription("Sets the sensor calibration mode - CAL_AUTO_TUNE_NONE: Manual user setting of Prescaler, Charge share delay & Series resistor. AUTO_TUNE_CSD: QTouch library will use the configured prescaler and series resistor value and adjusts the CSD to ensure full charging.")
+touchAutoTuneMode.setDescription("Sets the sensor calibration mode - CAL_AUTO_TUNE_NONE: Manual user setting of Prescaler, & Series resistor. CAL_AUTO_TUNE_PRSC: QTouch library will use the configured series resistor value and adjusts the prescaler to ensure full charging.")
 
 #Scan Rate (ms)
 touchSym_TOUCH_MEASUREMENT_PERIOD_MS_Val = qtouchComponent.createIntegerSymbol("DEF_TOUCH_MEASUREMENT_PERIOD_MS", acquisitionMenu)

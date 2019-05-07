@@ -340,6 +340,11 @@ static touch_ret_t touch_sensors_config(void)
         qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[sensor_nodes]);
     }
 
+<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>	
+	/* scroller init */
+	qtm_init_scroller_module(&qtm_scroller_control1);
+</#if>
+
     return (touch_ret);
 }
 
@@ -356,10 +361,6 @@ static void init_complete_callback(void)
 {
     /* Configure touch sensors with Application specific settings */
     touch_sensors_config();
-<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>	
-	/* scroller init */
-	qtm_init_scroller_module(&qtm_scroller_control1);
-</#if>
 }
 
 /*============================================================================

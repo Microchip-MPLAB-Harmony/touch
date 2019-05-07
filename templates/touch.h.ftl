@@ -115,9 +115,18 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  * filter level}
  */
 
+<#assign noCSD = 0>
+<#list ["SAMD20","SAMD21"] as i>
+<#if DEVICE_NAME == i>
+<#assign noCSD = 1>
+</#if>
+</#list>
+
  <#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i>
     <#assign TOUCH_ENABLE_CH_ = "TOUCH_ENABLE_CH_" + i>
+	<#if noCSD == 0>
     <#assign DEF_TOUCH_CHARGE_SHARE_DELAY = "DEF_TOUCH_CHARGE_SHARE_DELAY" + i>
+	</#if>
     <#assign DEF_NOD_SERIES_RESISTOR = "DEF_NOD_SERIES_RESISTOR" + i>
     <#assign DEF_NOD_PTC_PRESCALER = "DEF_NOD_PTC_PRESCALER" + i>
     <#assign DEF_NOD_GAIN_ANA = "DEF_NOD_GAIN_ANA" + i>
@@ -129,6 +138,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 	
     <#if .vars[TOUCH_ENABLE_CH_]?has_content>
     <#if (.vars[TOUCH_ENABLE_CH_] != false)>  
+	<#if noCSD == 0>	
 	<#if SENSE_TECHNOLOGY == "NODE_SELFCAP">
     <#lt>#define NODE_${i}_PARAMS                                                                                               \
 		<#lt>{                                                                                                                  \
@@ -139,6 +149,19 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 		<#lt>{                                                                                                                  \
 		<#lt>   ${.vars[MUTLCAP_X_INPUT]}, ${.vars[MUTLCAP_Y_INPUT]}, ${.vars[DEF_TOUCH_CHARGE_SHARE_DELAY]}, NODE_RSEL_PRSC(${.vars[DEF_NOD_SERIES_RESISTOR]}, ${.vars[DEF_NOD_PTC_PRESCALER]}), NODE_GAIN(${.vars[DEF_NOD_GAIN_ANA]}, ${.vars[DEF_DIGI_FILT_GAIN]}), ${.vars[DEF_DIGI_FILT_OVERSAMPLING]}\
 		<#lt>}
+	</#if>
+	<#else>
+		<#if SENSE_TECHNOLOGY == "NODE_SELFCAP">
+    <#lt>#define NODE_${i}_PARAMS                                                                                               \
+		<#lt>{                                                                                                                  \
+		<#lt>   X_NONE, ${.vars[SELFCAP_INPUT]}, NODE_RSEL_PRSC(${.vars[DEF_NOD_SERIES_RESISTOR]}, ${.vars[DEF_NOD_PTC_PRESCALER]}), NODE_GAIN(${.vars[DEF_NOD_GAIN_ANA]}, ${.vars[DEF_DIGI_FILT_GAIN]}), ${.vars[DEF_DIGI_FILT_OVERSAMPLING]}                   \
+		<#lt>}
+	<#else>
+	<#lt>#define NODE_${i}_PARAMS                                                                                               \
+		<#lt>{                                                                                                                  \
+		<#lt>   ${.vars[MUTLCAP_X_INPUT]}, ${.vars[MUTLCAP_Y_INPUT]}, NODE_RSEL_PRSC(${.vars[DEF_NOD_SERIES_RESISTOR]}, ${.vars[DEF_NOD_PTC_PRESCALER]}), NODE_GAIN(${.vars[DEF_NOD_GAIN_ANA]}, ${.vars[DEF_DIGI_FILT_GAIN]}), ${.vars[DEF_DIGI_FILT_OVERSAMPLING]}\
+		<#lt>}
+	</#if>
 	</#if>
     </#if>
     </#if>

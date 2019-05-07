@@ -107,10 +107,10 @@ Database.clearSymbolValue("core", "GCLK_ID_37_GENSEL")
 Database.setSymbolValue("core", "GCLK_ID_37_GENSEL", 1, 2)
 
 #Set GCLK FOR PTC - GCLK1 AT 4MHZ
-Database.clearSymbolValue("core", "GCLK_INST_NUM1")
-Database.setSymbolValue("core", "GCLK_INST_NUM1", True, 2)
-Database.clearSymbolValue("core", "GCLK_1_DIV")
-Database.setSymbolValue("core", "GCLK_1_DIV", 12, 2)
+# Database.clearSymbolValue("core", "GCLK_INST_NUM1")
+# Database.setSymbolValue("core", "GCLK_INST_NUM1", True, 2)
+# Database.clearSymbolValue("core", "GCLK_1_DIV")
+# Database.setSymbolValue("core", "GCLK_1_DIV", 12, 2)
 
 
 acquisitionMenu = qtouchComponent.createMenuSymbol("ACQUISITION_MENU", touchMenu)

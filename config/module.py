@@ -1,6 +1,6 @@
-supportedDevices = ["SAMC21","SAMC20", "SAME51","SAME53","SAME54","SAMD51"]
+supportedDevices = ["SAMC21","SAMC20", "SAME51","SAME53","SAME54","SAMD51","SAMD20","SAMD21"]
 #The following devices which have X,Y signals listed under ADC0 instead of PTC are listed as special devices.
-specialDevices = ["SAME51","SAME53","SAME54","SAMD51"]
+ADCDevices = ["SAME51","SAME53","SAME54","SAMD51"]
 #notSupportedVariants = ["ATSAMC21J18A"]
 notSupportedVariants = []
 
@@ -19,7 +19,7 @@ def loadModule():
                     qtouchComponent.setDependencyEnabled("Touch_timer", True)
                     qtouchComponent.addDependency("Touch_sercom", "UART", None, False, False)
                     qtouchComponent.setDependencyEnabled("Touch_sercom", False)
-                elif x in specialDevices:
+                elif x in ADCDevices:
                     qtouchComponent = Module.CreateComponent("lib_qtouch", "Touch Library", "/Touch/", "config/qtouch.py")
                     qtouchComponent.setDisplayType("Peripheral Touch Controller(PTC)")
                     qtouchComponent.addCapability("lib_qtouch", "PTC")

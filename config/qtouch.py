@@ -15,8 +15,10 @@ def onAttachmentConnected(source,target):
         if targetID == "RTC_TMR":
             if (Database.getSymbolValue(remoteID, "RTC_MODE0_MATCHCLR") == False):
                 Database.setSymbolValue(remoteID, "RTC_MODE0_MATCHCLR", True)
-            if (Database.getSymbolValue(remoteID, "RTC_MODE0_INTENSET_CMP0_ENABLE") == False):
-                Database.setSymbolValue(remoteID, "RTC_MODE0_INTENSET_CMP0_ENABLE", True)
+            #if (Database.getSymbolValue(remoteID, "RTC_MODE0_INTENSET_CMP0_ENABLE") == False):
+                #Database.setSymbolValue(remoteID, "RTC_MODE0_INTENSET_CMP0_ENABLE", True)
+            #if (getDeviceName.getDefaultValue() in ["SAMD20","SAMD21"]):
+                #Database.setSymbolValue(remoteID, "RTC_MODE0_TIMER_COMPARE", 32)
     
     if (connectID == "Touch_sercom"):
         plibUsed = localComponent.getSymbolByID("TOUCH_SERCOM_INSTANCE")
@@ -104,9 +106,11 @@ def instantiateComponent(qtouchComponent):
     execfile(Module.getPath() +"/config/interface.py")
     execfile(Module.getPath() +"/config/acquisition_"+getDeviceName.getDefaultValue().lower()+".py")
     if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
-        execfile(Module.getPath() +"/config/node1.py")
+        execfile(Module.getPath() +"/config/node_E5X.py")
+    elif (getDeviceName.getDefaultValue() in ["SAMD20","SAMD21"]):
+        execfile(Module.getPath() +"/config/node_D2X.py")
     else:
-        execfile(Module.getPath() +"/config/node.py")
+        execfile(Module.getPath() +"/config/node_C2X.py")
     execfile(Module.getPath() +"/config/key.py")
     execfile(Module.getPath() +"/config/sensor.py")
 
