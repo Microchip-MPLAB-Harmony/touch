@@ -40,6 +40,7 @@
 <#assign debug_data_scroller = ['SWState', 'SWDelta', 'SWThreshold', 'SWPosition'] >
 <#assign debug_data_scroller_header = ['State', 'SW Delta', 'SW Threshold', 'Position'] >
 <#assign debug_graph_data_scr = ['SWDelta', 'SWThreshold'] >
+<#assign label_ele = label_ele + 20*scr_cnt >
 </#if>
 
 <#if scr_cnt != 0 >
@@ -499,6 +500,7 @@ ${(dashboard_height+3) * 300}
 <#assign num_of_plots = num_of_plots+(scr_cnt*(debug_graph_data_scr?size)) >
 </#if>
 <#assign x_pos = 0 >
+<#assign y_pos = (y_offset*4)+temp_row_height*node_cnt>
 <#assign y_pos = y_pos + y_offset>
 <@db_buid_graph graph_tab,ele_num, num_of_plots,x_pos,0 />
 <#assign ele_num = ele_num + 1 >
