@@ -52,6 +52,9 @@ def enableHopFiles(symbol,event):
         component.getSymbolByID("TOUCH_HOP_HEADER").setEnabled(False)
         component.getSymbolByID("TOUCH_HOP_AUTO_LIB").setEnabled(True)
         component.getSymbolByID("TOUCH_HOP_AUTO_HEADER").setEnabled(True)
+    elif(event["value"] == True):
+        component.getSymbolByID("TOUCH_HOP_LIB").setEnabled(True)
+        component.getSymbolByID("TOUCH_HOP_HEADER").setEnabled(True)
     else:
         component.getSymbolByID("TOUCH_HOP_LIB").setEnabled(False)
         component.getSymbolByID("TOUCH_HOP_HEADER").setEnabled(False)
