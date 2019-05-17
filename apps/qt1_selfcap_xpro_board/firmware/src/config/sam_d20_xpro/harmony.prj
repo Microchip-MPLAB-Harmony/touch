@@ -99,16 +99,16 @@
           <Name dnOrder="1">plib_port.c</Name>
           <LogicalPath dnOrder="2">config/sam_d20_xpro/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">DB44AD4650C6CF9836FF6DF0A4570CA9</GeneratedChecksum>
-          <UserChecksum dnOrder="5">DB44AD4650C6CF9836FF6DF0A4570CA9</UserChecksum>
+          <GeneratedChecksum dnOrder="4">74664B1F9814BF8138D1758169CF64CD</GeneratedChecksum>
+          <UserChecksum dnOrder="5">74664B1F9814BF8138D1758169CF64CD</UserChecksum>
         </File>
         <File dnOrder="12">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_rtc_timer.c</Name>
           <LogicalPath dnOrder="2">config/sam_d20_xpro/peripheral/rtc/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/rtc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9D90F877812831FC787C51D620EACEEB</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9D90F877812831FC787C51D620EACEEB</UserChecksum>
+          <GeneratedChecksum dnOrder="4">B73EB00635A211C50EDF48E1EC34C99D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">B73EB00635A211C50EDF48E1EC34C99D</UserChecksum>
         </File>
         <File dnOrder="13">
           <Type dnOrder="0">SOURCE</Type>
@@ -403,8 +403,8 @@
           <Name dnOrder="1">plib_rtc.h</Name>
           <LogicalPath dnOrder="2">config/sam_d20_xpro/peripheral/rtc/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/rtc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">38FC765E3F9AFC2FE0B5D95393E0E836</GeneratedChecksum>
-          <UserChecksum dnOrder="5">38FC765E3F9AFC2FE0B5D95393E0E836</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F555C1A9ACD8CC055252D7BEA5687EB7</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F555C1A9ACD8CC055252D7BEA5687EB7</UserChecksum>
         </File>
         <File dnOrder="50">
           <Type dnOrder="0">HEADER</Type>
@@ -547,8 +547,8 @@
           <Name dnOrder="1">touch.h</Name>
           <LogicalPath dnOrder="2">config/sam_d20_xpro/touch/</LogicalPath>
           <PhysicalPath dnOrder="3">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9015514B1182634A3A78CA75B0EBAC6E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9015514B1182634A3A78CA75B0EBAC6E</UserChecksum>
+          <GeneratedChecksum dnOrder="4">FB6CDF8EF7204575B0D37D8E141F4AEA</GeneratedChecksum>
+          <UserChecksum dnOrder="5">FB6CDF8EF7204575B0D37D8E141F4AEA</UserChecksum>
         </File>
         <File dnOrder="68">
           <Type dnOrder="0">HEADER</Type>

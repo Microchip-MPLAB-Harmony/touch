@@ -119,52 +119,52 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 	
 #define NODE_0_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(2), Y(30), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+   X(2), Y(30), 10, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
 }
 	
 #define NODE_1_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(3), Y(30), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+   X(3), Y(30), 10, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
 }
 	
 #define NODE_2_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(0), Y(24), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64\
+   X(0), Y(24), 10, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64\
 }
 	
 #define NODE_3_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(1), Y(24), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64\
+   X(1), Y(24), 10, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64\
 }
 	
 #define NODE_4_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(2), Y(24), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64\
+   X(2), Y(24), 10, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64\
 }
 	
 #define NODE_5_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(3), Y(24), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64\
+   X(3), Y(24), 10, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64\
 }
 	
 #define NODE_6_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(0), Y(25), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64\
+   X(0), Y(25), 10, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64\
 }
 	
 #define NODE_7_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(1), Y(25), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64\
+   X(1), Y(25), 10, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64\
 }
 	
 #define NODE_8_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(2), Y(25), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64\
+   X(2), Y(25), 10, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64\
 }
 	
 #define NODE_9_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(3), Y(25), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64\
+   X(3), Y(25), 10, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64\
 }
 
 /**********************************************************/

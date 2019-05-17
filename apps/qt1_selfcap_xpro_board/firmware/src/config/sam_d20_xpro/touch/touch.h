@@ -156,23 +156,23 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  */
 #define KEY_0_PARAMS                                                                                            \
 {                                                                                                              \
-    20, HYST_25, NO_AKS_GROUP                       \
+    60, HYST_25, NO_AKS_GROUP                       \
 }
 #define KEY_1_PARAMS                                                                                            \
 {                                                                                                              \
-    20, HYST_25, NO_AKS_GROUP                       \
+    60, HYST_25, NO_AKS_GROUP                       \
 }
 #define KEY_2_PARAMS                                                                                            \
 {                                                                                                              \
-    20, HYST_25, AKS_GROUP_1                       \
+    40, HYST_25, AKS_GROUP_1                       \
 }
 #define KEY_3_PARAMS                                                                                            \
 {                                                                                                              \
-    20, HYST_25, AKS_GROUP_1                       \
+    40, HYST_25, AKS_GROUP_1                       \
 }
 #define KEY_4_PARAMS                                                                                            \
 {                                                                                                              \
-    20, HYST_25, AKS_GROUP_1                       \
+    40, HYST_25, AKS_GROUP_1                       \
 }
 
 /* De-bounce counter for additional measurements to confirm touch detection

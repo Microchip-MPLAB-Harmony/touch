@@ -129,17 +129,17 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 	
 #define NODE_2_PARAMS                                                                                               \
 {                                                                                                                  \
-   X_NONE, Y(25), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64                   \
+   X_NONE, Y(25), 8, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64                   \
 }
 	
 #define NODE_3_PARAMS                                                                                               \
 {                                                                                                                  \
-   X_NONE, Y(30), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64                   \
+   X_NONE, Y(30), 8, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64                   \
 }
 	
 #define NODE_4_PARAMS                                                                                               \
 {                                                                                                                  \
-   X_NONE, Y(31), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64                   \
+   X_NONE, Y(31), 8, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64                   \
 }
 
 /**********************************************************/
@@ -164,15 +164,15 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 }
 #define KEY_2_PARAMS                                                                                            \
 {                                                                                                              \
-    20, HYST_25, AKS_GROUP_1                       \
+    40, HYST_25, AKS_GROUP_1                       \
 }
 #define KEY_3_PARAMS                                                                                            \
 {                                                                                                              \
-    20, HYST_25, AKS_GROUP_1                       \
+    40, HYST_25, AKS_GROUP_1                       \
 }
 #define KEY_4_PARAMS                                                                                            \
 {                                                                                                              \
-    20, HYST_25, AKS_GROUP_1                       \
+    40, HYST_25, AKS_GROUP_1                       \
 }
 
 /* De-bounce counter for additional measurements to confirm touch detection

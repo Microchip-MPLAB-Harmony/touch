@@ -99,8 +99,8 @@
           <Name dnOrder="1">plib_port.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B384E2563B095336A3EADCF5E56594F0</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B384E2563B095336A3EADCF5E56594F0</UserChecksum>
+          <GeneratedChecksum dnOrder="4">B1E241653607AB7F31C686599166A3B7</GeneratedChecksum>
+          <UserChecksum dnOrder="5">B1E241653607AB7F31C686599166A3B7</UserChecksum>
         </File>
         <File dnOrder="12">
           <Type dnOrder="0">SOURCE</Type>
@@ -715,8 +715,8 @@
           <Name dnOrder="1">touch.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/touch/</LogicalPath>
           <PhysicalPath dnOrder="3">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">88545F8ACD35DC4A3096897248BD5733</GeneratedChecksum>
-          <UserChecksum dnOrder="5">88545F8ACD35DC4A3096897248BD5733</UserChecksum>
+          <GeneratedChecksum dnOrder="4">BB7781128504AFFA624995D4064054CD</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BB7781128504AFFA624995D4064054CD</UserChecksum>
         </File>
         <File dnOrder="89">
           <Type dnOrder="0">HEADER</Type>
