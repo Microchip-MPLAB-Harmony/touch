@@ -13,11 +13,11 @@ pre {
 
 table.Table0 {
     width: 100%;
-    font-size: 9pt;
+    font-size: 8pt;
 }
 
 table.Table1 {
-    font-size: 9pt;
+    font-size: 8pt;
 }
 
 .Element901 {
@@ -79,7 +79,7 @@ a.Element874, a:visited.Element874, a:hover.Element874 {
     color: #000000;
     background-color: #EEEEEE;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -106,7 +106,7 @@ a:hover.Element862 {
     color: #000000;
     background-color: #EEEEEE;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     padding-left : 2px;
@@ -132,7 +132,7 @@ a:hover.Element861 {
     color: #000000;
     background-color: #EEEEEE;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: italic;
     text-decoration: none;
     padding-left : 2px;
@@ -158,7 +158,7 @@ a:hover.Element860 {
     color: #000000;
     background-color: #EEEEEE;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -184,7 +184,7 @@ a:hover.Element860 {
 a:visited.Element862 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -193,7 +193,7 @@ a:visited.Element862 {
 a:visited.Element861 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: italic;
     text-decoration: none;
     text-align : left;
@@ -202,7 +202,7 @@ a:visited.Element861 {
 a:visited.Element860 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -212,7 +212,7 @@ a:visited.Element860 {
 a.Element862 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -221,7 +221,7 @@ a.Element862 {
 a.Element861 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: italic;
     text-decoration: none;
     text-align : left;
@@ -230,7 +230,7 @@ a.Element861 {
 a.Element860 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -240,7 +240,7 @@ a.Element860 {
 .Element862 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 0px;
@@ -268,7 +268,7 @@ a.Element860 {
 .Element861 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: italic;
     text-decoration: none;
     margin-left : 0px;
@@ -296,7 +296,7 @@ a.Element860 {
 .Element860 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -338,7 +338,7 @@ a.Element860 {
 .Element810 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 15px;
@@ -374,7 +374,7 @@ a.Element860 {
     color: #000000;
     background-color: #EBF0FF;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -383,7 +383,7 @@ a.Element860 {
 .Element740 {
     color: #DDDDDD;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 15px;
@@ -407,7 +407,7 @@ a.Element860 {
 .Element730 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 0px;
@@ -487,27 +487,39 @@ a.Element860 {
 
 .Element633 {
     color: #000000;
+    margin-top : 4px;
+    margin-bottom : 4px;
     text-align : left;
+    line-height: 1.20;
 }
 
 .Element632 {
     color: #000000;
+    margin-top : 4px;
+    margin-bottom : 4px;
     text-align : left;
+    line-height: 1.20;
 }
 
 .Element631 {
     color: #000000;
+    margin-top : 4px;
+    margin-bottom : 4px;
     text-align : left;
+    line-height: 1.20;
 }
 
 .Element630 {
     color: #000000;
+    margin-top : 4px;
+    margin-bottom : 4px;
     text-align : left;
+    line-height: 1.20;
 }
 
 .Element609 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -515,7 +527,7 @@ a.Element860 {
 
 .Element608 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -523,7 +535,7 @@ a.Element860 {
 
 .Element607 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -531,7 +543,7 @@ a.Element860 {
 
 .Element606 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -539,7 +551,7 @@ a.Element860 {
 
 .Element605 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -547,7 +559,7 @@ a.Element860 {
 
 .Element604 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -555,7 +567,7 @@ a.Element860 {
 
 .Element603 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -563,26 +575,35 @@ a.Element860 {
 
 .Element602 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
+    margin-top : 2px;
+    margin-bottom : 2px;
     text-align : left;
+    line-height: 1.20;
 }
 
 .Element601 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
+    margin-top : 2px;
+    margin-bottom : 2px;
     text-align : left;
+    line-height: 1.20;
 }
 
 .Element600 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
+    margin-top : 2px;
+    margin-bottom : 2px;
     text-align : left;
+    line-height: 1.20;
 }
 
 .Element315 {
@@ -597,7 +618,7 @@ a.Element860 {
 
 .Element312 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 0px;
@@ -606,7 +627,7 @@ a.Element860 {
 
 .Element311 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -620,7 +641,7 @@ a.Element860 {
 
 .Element309 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -634,7 +655,7 @@ a.Element860 {
 .Element307 {
     color: #000000;
     background-color: #F7F7F7;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -663,7 +684,7 @@ a.Element860 {
 .Element305 {
     color: #353535;
     background-color: #EFEFEF;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -694,7 +715,7 @@ a.Element860 {
 .Element303 {
     color: #000000;
     background-color: #F7F7F7;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -723,7 +744,7 @@ a.Element860 {
 .Element301 {
     color: #353535;
     background-color: #EFEFEF;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -763,7 +784,7 @@ a.Element860 {
 
 .Element292 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 0px;
@@ -772,7 +793,7 @@ a.Element860 {
 
 .Element291 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -786,7 +807,7 @@ a.Element860 {
 
 .Element289 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -800,7 +821,7 @@ a.Element860 {
 .Element287 {
     color: #000000;
     background-color: #F7F7F7;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -827,9 +848,9 @@ a.Element860 {
 }
 
 .Element285 {
-    color: #000000;
+    color: #353535;
     background-color: #EFEFEF;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -860,7 +881,7 @@ a.Element860 {
 .Element283 {
     color: #000000;
     background-color: #F7F7F7;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -889,7 +910,7 @@ a.Element860 {
 .Element281 {
     color: #353535;
     background-color: #EFEFEF;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -929,7 +950,7 @@ a.Element860 {
 
 .Element272 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 0px;
@@ -938,7 +959,7 @@ a.Element860 {
 
 .Element271 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -952,7 +973,7 @@ a.Element860 {
 
 .Element269 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -966,7 +987,7 @@ a.Element860 {
 .Element267 {
     color: #000000;
     background-color: #F7F7F7;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -995,7 +1016,7 @@ a.Element860 {
 .Element265 {
     color: #353535;
     background-color: #EFEFEF;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -1026,7 +1047,7 @@ a.Element860 {
 .Element263 {
     color: #000000;
     background-color: #F7F7F7;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -1055,7 +1076,7 @@ a.Element860 {
 .Element261 {
     color: #353535;
     background-color: #EFEFEF;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -1095,7 +1116,7 @@ a.Element860 {
 
 .Element252 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 0px;
@@ -1104,7 +1125,7 @@ a.Element860 {
 
 .Element251 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -1118,7 +1139,7 @@ a.Element860 {
 
 .Element249 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -1132,7 +1153,7 @@ a.Element860 {
 .Element247 {
     color: #000000;
     background-color: #F7F7F7;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -1161,7 +1182,7 @@ a.Element860 {
 .Element245 {
     color: #353535;
     background-color: #EFEFEF;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -1192,7 +1213,7 @@ a.Element860 {
 .Element243 {
     color: #000000;
     background-color: #F7F7F7;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -1221,7 +1242,7 @@ a.Element860 {
 .Element241 {
     color: #353535;
     background-color: #EFEFEF;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -1261,7 +1282,7 @@ a.Element860 {
 
 .Element232 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 0px;
@@ -1270,7 +1291,7 @@ a.Element860 {
 
 .Element231 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -1284,7 +1305,7 @@ a.Element860 {
 
 .Element229 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -1298,7 +1319,7 @@ a.Element860 {
 .Element227 {
     color: #000000;
     background-color: #F7F7F7;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -1327,7 +1348,7 @@ a.Element860 {
 .Element225 {
     color: #353535;
     background-color: #EFEFEF;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -1358,7 +1379,7 @@ a.Element860 {
 .Element223 {
     color: #000000;
     background-color: #F7F7F7;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -1387,7 +1408,7 @@ a.Element860 {
 .Element221 {
     color: #000066;
     background-color: #EFEFF7;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -1416,8 +1437,8 @@ a.Element860 {
 }
 
 .Element215 {
-    color: #800040;
-    font-size: 10pt;
+    color: #000000;
+    font-size: 9pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -1427,7 +1448,7 @@ a.Element860 {
 
 .Element212 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 0px;
@@ -1436,7 +1457,7 @@ a.Element860 {
 
 .Element211 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -1450,7 +1471,7 @@ a.Element860 {
 
 .Element209 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -1464,7 +1485,7 @@ a.Element860 {
 .Element207 {
     color: #000000;
     background-color: #F7F7F7;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -1491,9 +1512,9 @@ a.Element860 {
 }
 
 .Element205 {
-    color: #000000;
+    color: #353535;
     background-color: #EFEFEF;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -1523,7 +1544,7 @@ a.Element860 {
 
 .Element203 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -1550,8 +1571,8 @@ a.Element860 {
 }
 
 .Element201 {
-    color: #000000;
-    font-size: 9pt;
+    color: #353535;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -1580,9 +1601,9 @@ a.Element860 {
 }
 
 .Element190 {
-    color: #800040;
+    color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 11pt;
+    font-size: 9pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -1595,7 +1616,7 @@ a.Element860 {
     color: #353535;
     background-color: #EFEFEF;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -1612,7 +1633,7 @@ a.Element860 {
 .Element182 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 0px;
@@ -1627,7 +1648,7 @@ a.Element860 {
 .Element180 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 15px;
@@ -1639,7 +1660,7 @@ a.Element860 {
     color: #353535;
     background-color: #EFEFEF;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 15px;
@@ -1672,7 +1693,7 @@ a.Element860 {
 }
 
 .Element160 {
-    color: #000000;
+    color: #003399;
     font-family: Verdana,Arial,Helvetica,sans-serif;
     font-size: 9pt;
     font-weight: bold;
@@ -1686,7 +1707,7 @@ a.Element860 {
 .Element153 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 15px;
@@ -1695,9 +1716,9 @@ a.Element860 {
 }
 
 .Element152 {
-    color: #800040;
+    color: #333333;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 11pt;
+    font-size: 10pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -1716,7 +1737,7 @@ a.Element860 {
 .Element150 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -1725,7 +1746,7 @@ a.Element860 {
 
 .Element146 {
     font-family: Courier New,Courier,monospace;
-    font-size: 9pt;
+    font-size: 8pt;
 }
 
 .Element145 {
@@ -1797,7 +1818,7 @@ a {
 .Element100 {
     color: #000000;
     font-family: Courier New,Courier,monospace;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -1805,10 +1826,10 @@ a {
 }
 
 .Element99 {
-    color: #800040;
+    color: #333333;
     background-color: #EFEFEF;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 11pt;
+    font-size: 9pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -1831,10 +1852,10 @@ a {
 }
 
 .a_Element99 {
-    color: #800040;
+    color: #333333;
     background-color: #EFEFEF;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 11pt;
+    font-size: 9pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -1843,7 +1864,7 @@ a {
 .Element97 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 0px;
@@ -1854,7 +1875,7 @@ a {
 .Element96 {
     color: #003399;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 3px;
@@ -1865,7 +1886,7 @@ a {
 .Element95 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 15px;
@@ -1883,7 +1904,7 @@ a {
 .Element94 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 0px;
@@ -1923,7 +1944,7 @@ a {
 .Element91 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 0px;
@@ -1934,7 +1955,7 @@ a {
 .Element90 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 3px;
@@ -1946,7 +1967,7 @@ a {
 .Element86 {
     color: #000000;
     background-color: #F7F7F7;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : justify;
@@ -1975,7 +1996,7 @@ a {
 .Element84 {
     color: #353535;
     background-color: #EFEFEF;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -2006,7 +2027,7 @@ a {
 .Element82 {
     color: #000000;
     background-color: #F7F7F7;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : right;
@@ -2035,7 +2056,7 @@ a {
 .Element80 {
     color: #353535;
     background-color: #EFEFEF;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -2066,7 +2087,7 @@ a {
 .Element78 {
     color: #000000;
     background-color: #F7F7F7;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : center;
@@ -2095,7 +2116,7 @@ a {
 .Element76 {
     color: #353535;
     background-color: #EFEFEF;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -2126,7 +2147,7 @@ a {
 .Element68 {
     color: #000000;
     background-color: #F7F7F7;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -2155,7 +2176,7 @@ a {
 .Element66 {
     color: #353535;
     background-color: #EFEFEF;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -2185,7 +2206,7 @@ a {
 
 .Element63 {
     color: #000000;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 15px;
@@ -2196,7 +2217,7 @@ a {
     color: #000066;
     background-color: #EFEFF7;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 0px;
@@ -2223,7 +2244,7 @@ a {
 .Element61 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -2232,7 +2253,7 @@ a {
 .Element58 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 15px;
@@ -2250,7 +2271,7 @@ a {
 .Element56 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-weight: normal;
     font-style: normal;
     text-decoration: none;
@@ -2258,13 +2279,12 @@ a {
 }
 
 .Element55 {
-    color: #800040;
+    color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 14pt;
+    font-size: 12pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
-    margin-top : 100px;
     text-align : center;
 }
 
@@ -2272,15 +2292,15 @@ a {
     color: #000000;
     background-color: #FFFFFF;
     text-align : left;
-    background-image: url("MICH4C_top.png");
-    background-position: center;
+    background-image: url("html_titlebkg.jpg");
+    background-position: top left;
     background-repeat: no-repeat;
 }
 
 .Element50 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 30px;
@@ -2290,7 +2310,7 @@ a {
 .Element49 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 15px;
@@ -2326,7 +2346,7 @@ a {
 .Element40 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 15px;
@@ -2335,9 +2355,9 @@ a {
 }
 
 .Element39 {
-    color: #800040;
+    color: #333333;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 11pt;
+    font-size: 9pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -2347,9 +2367,9 @@ a {
 }
 
 .Element37 {
-    color: #800040;
+    color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 12pt;
+    font-size: 9pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -2361,7 +2381,7 @@ a {
 .Element35 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 15px;
@@ -2370,9 +2390,9 @@ a {
 }
 
 .Element34 {
-    color: #800040;
+    color: #333333;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 11pt;
+    font-size: 9pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -2384,7 +2404,7 @@ a {
 .Element28 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 15px;
@@ -2407,7 +2427,7 @@ a {
 .Element25 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 15px;
@@ -2416,21 +2436,23 @@ a {
 
 .Element15 {
     color: #800040;
-    font-size: 9pt;
+    font-size: 10pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
     margin-left : -15px;
+    margin-top : 6px;
     text-align : left;
 }
 
 .Element14 {
     color: #0000A0;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 12pt;
+    font-size: 9pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
+    margin-top : 6px;
     border-left-style : none;
     border-top-style : none;
     border-right-style : none;
@@ -2444,7 +2466,7 @@ a {
 .a_Element14 {
     color: #0000A0;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 12pt;
+    font-size: 9pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -2475,7 +2497,7 @@ a {
 .Element12 {
     color: #000000;
     font-family: Courier New,Courier,monospace;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -2485,15 +2507,19 @@ a {
 .Element11 {
     color: #000000;
     margin-left : 15px;
+    margin-top : 6px;
+    margin-bottom : 0px;
     text-align : left;
 }
 
 .Element10 {
-    color: #333333;
+    color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
+    margin-top : 6px;
+    margin-bottom : 0px;
     text-align : left;
     line-height: 1.20;
 }
@@ -2507,7 +2533,7 @@ a {
 .Element8 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     text-align : left;
@@ -2516,7 +2542,7 @@ a {
 .Element7 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 15px;
@@ -2525,9 +2551,9 @@ a {
 }
 
 .Element6 {
-    color: #800040;
+    color: #333333;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 10pt;
+    font-size: 9pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -2537,7 +2563,7 @@ a {
 .Element5 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 12pt;
+    font-size: 10pt;
     font-weight: bold;
     font-style: normal;
     text-decoration: none;
@@ -2549,7 +2575,7 @@ a {
 .Element4 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 0px;
@@ -2560,7 +2586,7 @@ a {
 .Element3 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 0px;
@@ -2571,7 +2597,7 @@ a {
 .Element2 {
     color: #000000;
     font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 9pt;
+    font-size: 8pt;
     font-style: normal;
     text-decoration: none;
     margin-left : 3px;

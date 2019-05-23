@@ -1,15 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Running The Application</title>
+<title>on_board_sensor</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00008.html');" onmousedown="onBodyMouseDown();">
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
 
 <!-- Begin Popups -->
 
@@ -18,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00011.html" target="topic">Touch Library Help</a> &gt; <a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00005.html" target="topic">qt1_selfcap</a> &gt; <a href="00008.html" target="topic">Running The Application</a></div>
+<a href="00004.html">Touch Driver Applications</a> &gt; <a href="00008.html">on_board_sensor</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +28,15 @@
 MPLAB Harmony Help Template</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00011.html" target="topic">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00007.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00006.html" target="topic">Previous</a> | <a href="00005.html" target="topic">Up</a> | <a href="00000.html" target="topic">Next</a></div>
+<a href="00017.html">Previous</a> | <a href="00004.html">Up</a> | <a href="00009.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: qt1_selfcap Touch Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV Touch on_board_sensor Topic Title: on_board_sensor)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Running The Application</div>
+on_board_sensor</div>
 </div>
 </div>
 
@@ -45,44 +47,64 @@ Running The Application</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<a name="PageContent"></a><div class="Element58">
+<div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-
-<ol class="Element630">
-<li value="1" class="Element600">Build and Program the application using the MPLAB X IDE.</li>
-<li value="2" class="Element600">The Button LEDs turns ON when touch made on the respective buttons</li>
-<li value="3" class="Element600">Open Atmel Data Visualizer software and set the config path to folder that contains th datastreamer scripts
-<ul class="Element631">
-<li class="Element601"><span style="color: #000000"><strong>Scripts Folder:</strong></span><span style="color: #0000FF"> <u>\touch\apps\button_only_touch_support\<a href="00000.html" target="topic">qt1_mutualcap</a>\firmware\src\config\sam_c21_xpro\touch\datastreamer</u></span></li>
-</ul></li>
-<li value="4" class="Element600">Open serial port connection and connect to the target. Verify the connection is made successfully and the buttons touch status are displayed on the dashboard.
-<ul class="Element631">
-<li class="Element601">For more information, see the <a href="#" onclick="openExternalLink('http://microchipdeveloper.com/touch:configure datastreamer-and-visualize-touch-data');"><img src="indicator_external_link.gif" border="0" alt="" title="">microchip developer page.</a></li>
-</ul></li>
-</ol><p class="Element10">
-<img src="basic.png" border="0" alt="" title=""></p></div>
+<p class="Element10">
+This example demonstrates the basic touch application where the touch sensors are measured and the touch status is indicated using LED on the Xpro board. The touch library parameters are also displayed in the data visualizer software when the hardware kit is connected through edbg/medbg vritual com port.</p></div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00009.html">Building The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on how to build an application using the MPLAB X IDE.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00011.html">MPLAB Harmony Configurations</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on the MHC configurations.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00010.html">Hardware Setup</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00012.html">Running The Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section provides information on how to run an application using the MPLAB X IDE.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00011.html" target="topic">Touch Library Help</a> &gt; <a href="00010.html" target="topic">Applications Help</a> &gt; <a href="00005.html" target="topic">qt1_selfcap</a> &gt; <a href="00008.html" target="topic">Running The Application</a></div>
+<a href="00004.html">Touch Driver Applications</a> &gt; <a href="00008.html">on_board_sensor</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="25%">
+<tr><td width="100%">
 <div class="Element3">
-MPLAB Harmony Help Template</div>
-</td><td width="25%">
+ MPLAB Harmony Help Template</div>
+</td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00011.html" target="topic">Home</a></div>
-</td><td width="25%">
-<div class="Element91">
-<a href="00006.html" target="topic">Previous</a> | <a href="00005.html" target="topic">Up</a> | <a href="00000.html" target="topic">Next</a></div>
-</td><td width="25%">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00007.html">Home</a></div>
+</td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: qt1_selfcap Touch Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV Touch on_board_sensor Topic Title: on_board_sensor)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
