@@ -715,8 +715,8 @@
           <Name dnOrder="1">touch.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/touch/</LogicalPath>
           <PhysicalPath dnOrder="3">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">BB7781128504AFFA624995D4064054CD</GeneratedChecksum>
-          <UserChecksum dnOrder="5">BB7781128504AFFA624995D4064054CD</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E6A0946BDDB6050B89C159898FCFE6B8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E6A0946BDDB6050B89C159898FCFE6B8</UserChecksum>
         </File>
         <File dnOrder="89">
           <Type dnOrder="0">HEADER</Type>

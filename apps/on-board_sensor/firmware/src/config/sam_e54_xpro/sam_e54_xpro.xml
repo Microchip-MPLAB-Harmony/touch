@@ -800,106 +800,111 @@
     </UniqueComponent>
     <UniqueComponent dnOrder="4" id="lib_qtouch">
       <Symbols dnOrder="0">
-        <Integer dnOrder="0" id="DEF_SENSOR_DET_THRESHOLD0">
+        <Integer dnOrder="0" id="DEF_PTC_INTERRUPT_PRIORITY">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="7"/>
+          </Values>
+        </Integer>
+        <Integer dnOrder="1" id="DEF_SENSOR_DET_THRESHOLD0">
           <Values dnOrder="0">
             <User dnOrder="0" value="80"/>
           </Values>
         </Integer>
-        <Integer dnOrder="1" id="DEF_TOUCH_CHARGE_SHARE_DELAY0">
+        <Integer dnOrder="2" id="DEF_TOUCH_CHARGE_SHARE_DELAY0">
           <Values dnOrder="0">
             <User dnOrder="0" value="10"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="2" id="ENABLE_DATA_STREAMER">
+        <Boolean dnOrder="3" id="ENABLE_DATA_STREAMER">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="3" id="ENABLE_FREQ_HOP">
+        <Boolean dnOrder="4" id="ENABLE_FREQ_HOP">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="4" id="FREQ_AUTOTUNE">
+        <Boolean dnOrder="5" id="FREQ_AUTOTUNE">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <KeyValueSet dnOrder="5" id="SELFCAP-INPUT_0">
+        <KeyValueSet dnOrder="6" id="SELFCAP-INPUT_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="10"/>
           </Values>
         </KeyValueSet>
-        <Integer dnOrder="6" id="TOUCH_CHAN_ENABLE_CNT">
+        <Integer dnOrder="7" id="TOUCH_CHAN_ENABLE_CNT">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
         </Integer>
-        <File dnOrder="7" id="TOUCH_DATA_STREAMER_HEADER">
+        <File dnOrder="8" id="TOUCH_DATA_STREAMER_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="8" id="TOUCH_DATA_STREAMER_HEADER_db">
+        <File dnOrder="9" id="TOUCH_DATA_STREAMER_HEADER_db">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="9" id="TOUCH_DATA_STREAMER_HEADER_ds">
+        <File dnOrder="10" id="TOUCH_DATA_STREAMER_HEADER_ds">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="10" id="TOUCH_DATA_STREAMER_HEADER_sc">
+        <File dnOrder="11" id="TOUCH_DATA_STREAMER_HEADER_sc">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="11" id="TOUCH_DATA_STREAMER_SOURCE">
+        <File dnOrder="12" id="TOUCH_DATA_STREAMER_SOURCE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <Boolean dnOrder="12" id="TOUCH_ENABLE_CH_0">
+        <Boolean dnOrder="13" id="TOUCH_ENABLE_CH_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="13" id="TOUCH_ENABLE_KEY_0">
+        <Boolean dnOrder="14" id="TOUCH_ENABLE_KEY_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <File dnOrder="14" id="TOUCH_HOP_AUTO_HEADER">
+        <File dnOrder="15" id="TOUCH_HOP_AUTO_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <Library dnOrder="15" id="TOUCH_HOP_AUTO_LIB">
+        <Library dnOrder="16" id="TOUCH_HOP_AUTO_LIB">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Library>
-        <Integer dnOrder="16" id="TOUCH_KEY_ENABLE_CNT">
+        <Integer dnOrder="17" id="TOUCH_KEY_ENABLE_CNT">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
         </Integer>
-        <String dnOrder="17" id="TOUCH_SERCOM_INSTANCE">
+        <String dnOrder="18" id="TOUCH_SERCOM_INSTANCE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -909,7 +914,7 @@
             <Dynamic dnOrder="0" id="lib_qtouch" value="SERCOM2"/>
           </Values>
         </String>
-        <String dnOrder="18" id="TOUCH_TIMER_INSTANCE">
+        <String dnOrder="19" id="TOUCH_TIMER_INSTANCE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="lib_qtouch" value="RTC"/>
           </Values>
@@ -1049,7 +1054,12 @@
           </Values>
         </String>
         <KeyValueSet dnOrder="2" id="SERCOM_MODE">
-          <Values dnOrder="0">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="readOnly">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
             <Dynamic dnOrder="0" id="sercom2" value="0"/>
           </Values>
         </KeyValueSet>
@@ -1111,7 +1121,21 @@
         </Integer>
       </Symbols>
       <Attachments dnOrder="1">
-        <DirectCapability dnOrder="0" id="SERCOM2_UART">
+        <DirectCapability dnOrder="0" id="SERCOM2_I2C">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </DirectCapability>
+        <DirectCapability dnOrder="1" id="SERCOM2_SPI">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </DirectCapability>
+        <DirectCapability dnOrder="2" id="SERCOM2_UART">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="targetComponentID">
               <Value dnOrder="0">lib_qtouch</Value>

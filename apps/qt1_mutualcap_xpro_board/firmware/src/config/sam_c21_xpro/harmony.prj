@@ -651,8 +651,8 @@
           <Name dnOrder="1">touch.h</Name>
           <LogicalPath dnOrder="2">config/sam_c21_xpro/touch/</LogicalPath>
           <PhysicalPath dnOrder="3">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">92BF2D0C1CEA95BADC78D49893423C7F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">92BF2D0C1CEA95BADC78D49893423C7F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">61822DB9C0DE1FF854FD714E89448625</GeneratedChecksum>
+          <UserChecksum dnOrder="5">61822DB9C0DE1FF854FD714E89448625</UserChecksum>
         </File>
         <File dnOrder="81">
           <Type dnOrder="0">HEADER</Type>

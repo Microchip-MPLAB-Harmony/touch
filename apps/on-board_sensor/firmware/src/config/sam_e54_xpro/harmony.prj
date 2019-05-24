@@ -155,8 +155,8 @@
           <Name dnOrder="1">03EB00000000000000AA5501.ds</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/touch/datastreamer/</LogicalPath>
           <PhysicalPath dnOrder="3">/touch/datastreamer/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">302C94482B5355A1AB4E2E0E34D28CB9</GeneratedChecksum>
-          <UserChecksum dnOrder="5">302C94482B5355A1AB4E2E0E34D28CB9</UserChecksum>
+          <GeneratedChecksum dnOrder="4">B2F08156A74BE1A1F48F2A6D5F13AB21</GeneratedChecksum>
+          <UserChecksum dnOrder="5">B2F08156A74BE1A1F48F2A6D5F13AB21</UserChecksum>
         </File>
         <File dnOrder="19">
           <Type dnOrder="0">HEADER</Type>
@@ -715,8 +715,8 @@
           <Name dnOrder="1">touch.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/touch/</LogicalPath>
           <PhysicalPath dnOrder="3">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">615F18DCD6AEAAB25CF1B40F142B4F2A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">615F18DCD6AEAAB25CF1B40F142B4F2A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">978FA7CB3324735F97C3A089D775D1F0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">978FA7CB3324735F97C3A089D775D1F0</UserChecksum>
         </File>
         <File dnOrder="89">
           <Type dnOrder="0">HEADER</Type>

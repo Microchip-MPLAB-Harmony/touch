@@ -1508,52 +1508,52 @@
         </KeyValueSet>
         <Integer dnOrder="10" id="DEF_TOUCH_CHARGE_SHARE_DELAY0">
           <Values dnOrder="0">
-            <User dnOrder="0" value="10"/>
+            <User dnOrder="0" value="0"/>
           </Values>
         </Integer>
         <Integer dnOrder="11" id="DEF_TOUCH_CHARGE_SHARE_DELAY1">
           <Values dnOrder="0">
-            <User dnOrder="0" value="10"/>
+            <User dnOrder="0" value="0"/>
           </Values>
         </Integer>
         <Integer dnOrder="12" id="DEF_TOUCH_CHARGE_SHARE_DELAY2">
           <Values dnOrder="0">
-            <User dnOrder="0" value="10"/>
+            <User dnOrder="0" value="0"/>
           </Values>
         </Integer>
         <Integer dnOrder="13" id="DEF_TOUCH_CHARGE_SHARE_DELAY3">
           <Values dnOrder="0">
-            <User dnOrder="0" value="10"/>
+            <User dnOrder="0" value="0"/>
           </Values>
         </Integer>
         <Integer dnOrder="14" id="DEF_TOUCH_CHARGE_SHARE_DELAY4">
           <Values dnOrder="0">
-            <User dnOrder="0" value="10"/>
+            <User dnOrder="0" value="0"/>
           </Values>
         </Integer>
         <Integer dnOrder="15" id="DEF_TOUCH_CHARGE_SHARE_DELAY5">
           <Values dnOrder="0">
-            <User dnOrder="0" value="10"/>
+            <User dnOrder="0" value="0"/>
           </Values>
         </Integer>
         <Integer dnOrder="16" id="DEF_TOUCH_CHARGE_SHARE_DELAY6">
           <Values dnOrder="0">
-            <User dnOrder="0" value="10"/>
+            <User dnOrder="0" value="0"/>
           </Values>
         </Integer>
         <Integer dnOrder="17" id="DEF_TOUCH_CHARGE_SHARE_DELAY7">
           <Values dnOrder="0">
-            <User dnOrder="0" value="10"/>
+            <User dnOrder="0" value="0"/>
           </Values>
         </Integer>
         <Integer dnOrder="18" id="DEF_TOUCH_CHARGE_SHARE_DELAY8">
           <Values dnOrder="0">
-            <User dnOrder="0" value="10"/>
+            <User dnOrder="0" value="0"/>
           </Values>
         </Integer>
         <Integer dnOrder="19" id="DEF_TOUCH_CHARGE_SHARE_DELAY9">
           <Values dnOrder="0">
-            <User dnOrder="0" value="10"/>
+            <User dnOrder="0" value="0"/>
           </Values>
         </Integer>
         <Boolean dnOrder="20" id="ENABLE_DATA_STREAMER">
@@ -2021,7 +2021,12 @@
           </Values>
         </String>
         <KeyValueSet dnOrder="2" id="SERCOM_MODE">
-          <Values dnOrder="0">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="readOnly">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
             <Dynamic dnOrder="0" id="sercom2" value="0"/>
           </Values>
         </KeyValueSet>
@@ -2083,7 +2088,21 @@
         </Integer>
       </Symbols>
       <Attachments dnOrder="1">
-        <DirectCapability dnOrder="0" id="SERCOM2_UART">
+        <DirectCapability dnOrder="0" id="SERCOM2_I2C">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </DirectCapability>
+        <DirectCapability dnOrder="1" id="SERCOM2_SPI">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </DirectCapability>
+        <DirectCapability dnOrder="2" id="SERCOM2_UART">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="targetComponentID">
               <Value dnOrder="0">lib_qtouch</Value>

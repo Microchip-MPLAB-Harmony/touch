@@ -3,7 +3,7 @@ B,1,1,FrameCounter
 D,2,1,Signal0
 D,3,1,Reference0
 -D,4,1,Delta0
-D,5,1,Compensation0,F,(variable & 0x0F)*0.00675+((variable >> 4) & 0x0F)*0.0675+((variable >> 8) & 0x0F)*0.675+((variable >> 12) & 0x3) * 6.75
+D,5,1,Compensation0,F,((variable & 0x0F)*0.00675+((variable >> 4) & 0x0F)*0.0675+((variable >> 8) & 0x0F)*0.675+((variable >> 12) & 0x3) * 6.75)*2
 B,7,1,State0
 B,8,1,Threshold0
 

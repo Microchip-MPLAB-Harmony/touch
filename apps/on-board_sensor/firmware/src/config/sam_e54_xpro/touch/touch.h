@@ -81,9 +81,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define DEF_PTC_CAL_OPTION   CAL_AUTO_TUNE_NONE
 
 /* Defines the interrupt priority for the PTC. Set low priority to PTC interrupt for applications having interrupt time
- * constraints. Range: 0 to 2 Default: 2 (Lowest Priority)
+ * constraints.
  */
-#define DEF_PTC_INTERRUPT_PRIORITY 2
+#define DEF_PTC_INTERRUPT_PRIORITY 7
 
 /* Calibration option to ensure full charge transfer */
 /* Bits 7:0 = XX | TT SELECT_TAU | X | CAL_OPTION */

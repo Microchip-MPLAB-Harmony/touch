@@ -81,9 +81,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define DEF_PTC_CAL_OPTION   CAL_AUTO_TUNE_NONE
 
 /* Defines the interrupt priority for the PTC. Set low priority to PTC interrupt for applications having interrupt time
- * constraints. Range: 0 to 2 Default: 2 (Lowest Priority)
+ * constraints.
  */
-#define DEF_PTC_INTERRUPT_PRIORITY 2
+#define DEF_PTC_INTERRUPT_PRIORITY 7
 
 /* Calibration option to ensure full charge transfer */
 /* Bits 7:0 = XX | TT SELECT_TAU | X | CAL_OPTION */
@@ -119,52 +119,52 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 	
 #define NODE_0_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(31), Y(25), 10, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+   X(31), Y(25), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
 }
 	
 #define NODE_1_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(24), Y(25), 10, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+   X(24), Y(25), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
 }
 	
 #define NODE_2_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(30), Y(4), 10, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+   X(30), Y(4), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
 }
 	
 #define NODE_3_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(0), Y(4), 10, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+   X(0), Y(4), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
 }
 	
 #define NODE_4_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(31), Y(4), 10, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+   X(31), Y(4), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
 }
 	
 #define NODE_5_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(24), Y(4), 10, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+   X(24), Y(4), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
 }
 	
 #define NODE_6_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(30), Y(5), 10, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+   X(30), Y(5), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
 }
 	
 #define NODE_7_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(0), Y(5), 10, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+   X(0), Y(5), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
 }
 	
 #define NODE_8_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(31), Y(5), 10, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+   X(31), Y(5), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
 }
 	
 #define NODE_9_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(24), Y(5), 10, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+   X(24), Y(5), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
 }
 
 /**********************************************************/

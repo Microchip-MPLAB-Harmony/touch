@@ -2,9 +2,21 @@
 #### Global Variables ####
 ################################################################################
 
-touchChannelSelf = 32
-touchChannelMutual = 256
+global touchChannelSelf
+global touchChannelMutual
 
+getVariant =  ATDF.getNode("/avr-tools-device-file/variants/variant")
+getPinout = []
+getPinout = getVariant.getAttribute("ordercode")
+if ("D51G18A" in getPinout):
+    touchChannelSelf = 22
+    touchChannelMutual = 121
+elif ("D51G19A" in getPinout):
+    touchChannelSelf = 22
+    touchChannelMutual = 121
+else:
+    touchChannelSelf = 32
+    touchChannelMutual = 256
 
 def autoTuneFunc(symbol,event):
     global touchAcqLibraryFile
@@ -173,9 +185,9 @@ touchSym_TOUCH_MEASUREMENT_PERIOD_MS_Val.setDescription("Defines the timer scan 
 #PTC Interrupt Priority
 touchSym_PTC_INTERRUPT_PRIORITY_Val = qtouchComponent.createIntegerSymbol("DEF_PTC_INTERRUPT_PRIORITY", acquisitionMenu)
 touchSym_PTC_INTERRUPT_PRIORITY_Val.setLabel("PTC Interrupt Priority")
-touchSym_PTC_INTERRUPT_PRIORITY_Val.setDefaultValue(2)
+touchSym_PTC_INTERRUPT_PRIORITY_Val.setDefaultValue(7)
 touchSym_PTC_INTERRUPT_PRIORITY_Val.setMin(0)
-touchSym_PTC_INTERRUPT_PRIORITY_Val.setMax(2)
+touchSym_PTC_INTERRUPT_PRIORITY_Val.setMax(7)
 touchSym_PTC_INTERRUPT_PRIORITY_Val.setDescription("Defines the interrupt priority for the PTC. Set low priority to PTC interrupt for applications having interrupt time constraints.")
 
 #Acquisition Frequency

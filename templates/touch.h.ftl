@@ -81,7 +81,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define DEF_PTC_CAL_OPTION   ${TUNE_MODE_SELECTED}
 
 /* Defines the interrupt priority for the PTC. Set low priority to PTC interrupt for applications having interrupt time
- * constraints. Range: 0 to 2 Default: 2 (Lowest Priority)
+ * constraints.
  */
 #define DEF_PTC_INTERRUPT_PRIORITY ${DEF_PTC_INTERRUPT_PRIORITY}
 
