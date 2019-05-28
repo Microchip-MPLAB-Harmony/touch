@@ -129,22 +129,22 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 	
 #define NODE_2_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(2), Y(12), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+   X(2), Y(12), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_2), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
 }
 	
 #define NODE_3_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(3), Y(12), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+   X(3), Y(12), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_2), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
 }
 	
 #define NODE_4_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(8), Y(12), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+   X(8), Y(12), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_2), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
 }
 	
 #define NODE_5_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(9), Y(12), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+   X(9), Y(12), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_2), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
 }
 	
 #define NODE_6_PARAMS                                                                                               \
@@ -293,7 +293,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define SCROLLER_0_PARAMS                                                                                       \
 {                                                                                                              \
     SCROLLER_TYPE_SLIDER, 2, 4,                            \
-		SCR_RESOL_DEADBAND(RESOL_8_BIT, DB_10_PERCENT),8,20\
+		SCR_RESOL_DEADBAND(RESOL_8_BIT, DB_10_PERCENT),10,20\
 }
 #define SCROLLER_1_PARAMS                                                                                       \
 {                                                                                                              \
