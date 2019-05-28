@@ -1,4 +1,50 @@
 #  Microchip MPLAB® Harmony 3 Touch Library Release Notes
+  
+## Touch Library v3.2.0 Release
+
+### NEW DEVICES SUPPORTED
+
+* SAMD20
+* SAMD21
+* SAME51
+* SAME53
+* SAME54
+* SAMD51
+
+### NEW FEATURES
+
+* Slider and Wheel Firmware Support along with GUI Support
+* Support for Tabbed View of Data-Visualizer Software
+
+### NEW DEMO PROJECTS
+
+* ATSAMD20 Xplained Pro Mutual Capacitance Example Project with QT1
+* ATSAMD20 Xplained Pro Self Capacitance Example Project with QT1
+* ATSAMD21 Xplained Pro Mutual Capacitance Example Project with QT1
+* ATSAMD21 Xplained Pro Self Capacitance Example Project with QT1
+* ATSAME54 Xplained Pro Mutual Capacitance Example Project with QT1
+* ATSAME54 Xplained Pro Self Capacitance On Board Example Project 
+* ATSAMC21 Xplained Pro Mutual Capacitance Example Project with QT1
+* ATSAMC21 Xplained Pro Self Capacitance Example Project with QT1
+
+### Required MPLAB Harmony v3.x.x Modules
+
+* csp v3.3.0
+* bsp v3.3.0
+* dev_packs v3.3.0
+* mhc v3.3.0.1
+
+### KNOWN ISSUES
+
+* None.
+
+### DEVELOPMENT TOOLS
+
+* [MPLAB X IDE v5.20](https://www.microchip.com/mplabx-ide-windows-installer)
+* [MPLAB XC32 C/C++ Compiler v2.15](https://www.microchip.com/mplab/compilers)
+* MPLAB X IDE plug-ins:
+  * MPLAB Harmony Configurator (MHC) v3.3.0.1
+
 ## Touch Library v3.1.1 Release
 
 ### BUG FIX
