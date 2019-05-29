@@ -4,12 +4,9 @@
 
 ### NEW DEVICES SUPPORTED
 
-* SAMD20
-* SAMD21
-* SAME51
-* SAME53
-* SAME54
-* SAMD51
+* [SAM D20/D21](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-d-mcus), 
+* [SAME5x](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-e-mcus),
+* [SAMD5x](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-d-mcus)
 
 ### NEW FEATURES
 
@@ -36,7 +33,7 @@
 
 ### KNOWN ISSUES
 
-* None.
+* Touch libraries are built with v2.15 compiler version. Touch Applications may not work properly with other compiler versions.
 
 ### DEVELOPMENT TOOLS
 
