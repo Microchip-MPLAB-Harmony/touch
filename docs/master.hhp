@@ -5,7 +5,7 @@ Contents file=D:\H3FrameWork\doc_o_matic_h3\touch\master\output\master.hhc
 Default topic=D:\H3FrameWork\doc_o_matic_h3\touch\master\output\00007.html
 Index file=D:\H3FrameWork\doc_o_matic_h3\touch\master\output\master.hhk
 Language=0x0409 0x0 0x0 ; 
-Title=MPLAB Harmony Help Template
+Title=MPLAB Harmony Touch Library Help
 Display compile progress=No
 Flat=Yes
 Enhanced decompilation=No
@@ -15,7 +15,7 @@ Binary TOC=No
 Default Window=main
 
 [WINDOWS]
-main="MPLAB Harmony Help Template","D:\H3FrameWork\doc_o_matic_h3\touch\master\output\master.hhc","D:\H3FrameWork\doc_o_matic_h3\touch\master\output\master.hhk","D:\H3FrameWork\doc_o_matic_h3\touch\master\output\00007.html",,,,,,0x63520,,0x384e,,,,,,,,0
+main="MPLAB Harmony Touch Library Help","D:\H3FrameWork\doc_o_matic_h3\touch\master\output\master.hhc","D:\H3FrameWork\doc_o_matic_h3\touch\master\output\master.hhk","D:\H3FrameWork\doc_o_matic_h3\touch\master\output\00007.html",,,,,,0x63520,,0x384e,,,,,,,,0
 
 [FILES]
 D:\H3FrameWork\doc_o_matic_h3\touch\master\output\00000.html
