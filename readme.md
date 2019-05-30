@@ -12,11 +12,9 @@ and microprocessor devices.  Refer to the following links for more information.
  - [Microchip MPLAB Harmony](https://www.microchip.com/mplab/mplab-harmony)
  - [Microchip MPLAB Harmony Pages](https://microchip-mplab-harmony.github.io/)
 
-* Please refer the Touch Modular Library Userguide available in the link below for further information.
-https://www.microchip.com/mymicrochip/filehandler.aspx?ddocname=en590454 
+* Please refer the [Touch Modular Library Userguide](https://www.microchip.com/mymicrochip/filehandler.aspx?ddocname=en590454) available in the link below for further information.
 
-* Also, refer the microchip developer pages listed under "Harmony 3 Touch Configurator" for detailed information regarding configuring touch projects in Harmony framework.
-http://microchipdeveloper.com/touch:set-up-the-environment
+* Also, refer the microchip developer pages listed under "Harmony 3 Touch Configurator" > Step by Step Examples > [Set Up the Environment](http://microchipdeveloper.com/touch:set-up-the-environment) for detailed information regarding configuring touch projects in Harmony framework.
 
 * For licensing information about contents of this module, please refer to [MPLAB Harmony License](mplab_harmony_license.md).
 
