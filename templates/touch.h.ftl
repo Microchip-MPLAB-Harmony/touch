@@ -286,6 +286,166 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  </#list>
 </#if>
 
+<#if ENABLE_SURFACE==true>
+/**********************************************************/
+/***************** Surface Parameters ****************/
+/**********************************************************/
+
+/* Horizontal Start Key <0-65534>
+ * Start key of horizontal axis
+ * Range: 0 to 65534
+ */
+#define SURFACE_CS_START_KEY_H ${HORI_START_KEY}
+/* Horizontal Number of Channel <0-255>
+ * Number of Channels forming horizontal axis
+ * Range: 0 to 255
+ */
+#define SURFACE_CS_NUM_KEYS_H ${HORI_NUM_KEY}
+/* Vertical Start Key <0-65534>
+ * Start key of vertical axis
+ * Range: 0 to 65534
+ */
+#define SURFACE_CS_START_KEY_V ${VERT_START_KEY}
+/* Vertical Number of Channel <0-255>
+ * Number of Channels forming vertical axis
+ * Range: 0 to 255
+ */
+#define SURFACE_CS_NUM_KEYS_V ${VERT_NUM_KEY}
+/*  Position Resolution and Deadband Percentage
+ *  Full scale position resolution reported for the axis and the deadband Percentage
+ *  RESOL_2_BIT - RESOL_12_BIT
+ *  DB_NONE - DB_15_PERCENT
+ */
+#define SURFACE_CS_RESOL_DB SCR_RESOL_DEADBAND(${DEF_POS_RESOLUTION}, ${DEF_DEADBAND_PERCENT})
+/* Median filter enable and  IIR filter Config
+ * Median Filter <0-1>
+ * Enable or Disable Median Filter
+ * enable - 1
+ * disable - 0
+ * IIR filter <0-3>
+ * Configure IIR filter
+ *  0 - None
+ *  1 - 25%
+ *  2 - 50%
+ *  3 - 75%
+ */
+#define SURFACE_CS_FILT_CFG SCR_MEDIAN_IIR(${EANBLE_MED_FILTER}, ${EANBLE_IIR_FILTER})
+/* Position Hystersis <0-255>
+ * The minimum travel distance to be reported after contact or direction change
+ * Applicable to Horizontal and Vertical directions
+ */
+#define SURFACE_CS_POS_HYST ${DEF_POS_HYS}
+/* Minimum Contact <0-65534>
+ * The minimum contact size measurement for persistent contact tracking.
+ * Contact size is the sum of neighbouring keys' touch deltas forming the touch contact.
+ */
+#define SURFACE_CS_MIN_CONTACT ${DEF_CONTACT_THRESHOLD}
+</#if>
+
+<#if ENABLE_GESTURE==true>
+/**********************************************************/
+/***************** Gesture Parameters ****************/
+/**********************************************************/
+
+/*	Tap Release timeout  <3-255>
+ *	The TAP_RELEASE_TIMEOUT parameter limits the amount of time allowed between the initial finger press and the
+ *liftoff. Exceeding this value will cause the firmware to not consider the gesture as a tap gesture.
+ *  TAP_RELEASE_TIMEOUT should be lesser than the TAP_HOLD_TIMEOUT and SWIPE_TIMEOUT.
+ *  Unit: x10 ms
+ *  Example: if TAP_RELEASE_TIMEOUT is configured as 3, then the user should finish tapping within 30 ms to qualify the
+ *gesture as tap.
+ */
+#define TAP_RELEASE_TIMEOUT ${TAP_RELEASE_TIMEOUT}
+/*  Tap Hold timeout <0-255>
+ *	If a finger stays within the bounds set by TAP_AREA and is not removed, the firmware will report a Tap Hold gesture
+ *once the gesture timer exceeds the TAP_HOLD_TIMEOUT value. HOLD_TAP is a single finger gesture whereas HOLD_TAP_DUAL
+ *is dual finger gesture. Ideally, TAP_HOLD_TIMEOUT should be greater than the TAP_RELEASE_TIMEOUT and SWIPE_TIMEOUT.
+ *  Unit: x10 ms
+ *  Example: if TAP_HOLD_TIMEOUT is configured as 6, then the user should tap and hold inside the TAP_AREA for 60 ms to
+ *qualify the gesture as tap and hold.
+ */
+#define TAP_HOLD_TIMEOUT ${TAP_HOLD_TIMEOUT}
+/*  Swipe timeout <0-255>
+ *	The SWIPE_TIMEOUT limits the amount of time allowed for the swipe gesture (initial finger press, moving in a
+ *particular direction crossing the distance threshold and the liftoff). Ideally, SWIPE_TIMEOUT should be greater than
+ *TAP_RELEASE_TIMEOUT but smaller than the TAP_HOLD_TIMEOUT. Unit: x10 ms Example: if SWIPE_TIMEOUT is configured as 5,
+ *then the user should swipe in a particular direction and liftoff within 50 ms to qualify the gesture as swipe.
+ */
+#define SWIPE_TIMEOUT ${SWIPE_TIMEOUT}
+/*  Horizontal Swipe distance threshold <0-255>
+ *	HORIZONTAL_SWIPE_DISTANCE_THRESHOLD controls the distance travelled in the X axis direction for detecting Left and
+ *Right Swipe gestures. Unit: X-coordinate Example: If HORIZONTAL_SWIPE_DISTANCE_THRESHOLD is configured as 50, and a
+ *user places their finger at x-coordinate 100, they must move to at least x-coordinate 50 to record a left swipe
+ *gesture.
+ */
+#define HORIZONTAL_SWIPE_DISTANCE_THRESHOLD ${HORIZONTAL_SWIPE_DISTANCE_THRESHOLD}
+/* 	Vertical swipe distance threshold <0-255>
+ *	VERTICAL_SWIPE_DISTANCE_THRESHOLD controls the distance travelled in the Y axis direction for detecting Up and Down
+ *Swipe gestures. Unit: Y-coordinate Example: if VERTICAL_SWIPE_DISTANCE_THRESHOLD is configured as 30, and a user
+ *places their finger at y-coordinate 100, they must move to at least y-coordinate 70 to record a down swipe gesture.
+ */
+#define VERTICAL_SWIPE_DISTANCE_THRESHOLD ${VERTICAL_SWIPE_DISTANCE_THRESHOLD}
+/* 	Tap area <0-255>
+ *	The TAP_AREA bounds the finger to an area it must stay within to be considered a tap gesture when the finger is
+ *removed and tap and hold gesture if the finger is not removed for sometime. Unit: coordinates Example: if TAP_AREA is
+ *configured as 20, then user should tap within 20 coordinates to detect the tap gesture.
+ */
+#define TAP_AREA ${TAP_AREA}
+/* 	Seq Tap distance threshold <0-255>
+ *	The SEQ_TAP_DIST_THRESHOLD parameter limits the allowable distance of the current touch's initial press from the
+ *liftoff position of the previous touch. It is used for multiple taps (double-tap, triple-tap etc). If the taps
+ *following the first are within this threshold, then the tap counter will be incremented. If the following tap
+ *gestures exceed this threshold, the previous touch is sent as a single tap and the current touch will reset the tap
+ *counter. Unit: coordinates Example: if SEQ_TAP_DIST_THRESHOLD is configured as 20, after the first tap, if the user
+ *taps again within 20 coordinates, it is considered as double tap gesture.
+ */
+#define SEQ_TAP_DIST_THRESHOLD ${DISTANCE_THRESHOLD}
+/* 	Edge Boundary <0-255>
+ *	The firmware can also be modified to define an edge region along the border of the touch sensor.
+ *	With Edge Boundary defined, swipe gestures that start in an edge region will be reported as edge swipe gestures in
+ *place of normal swipe gestures. To create an edge region, the EDGE_BOUNDARY is set with the size (in touch
+ *coordinates) of the edge region. Unit: coordinates Example: Setting the EDGE_BOUNDARY parameter to 100 will designate
+ *the area 100 units in from each edge as the edge region.
+ */
+#define EDGE_BOUNDARY ${EDGE_BOUNDARY}
+/*  Wheel Post-scaler <0-255>
+ *	The clockwise wheel is performed with 4 swipes (right->down->left->up). Similarly, the anti-clockwise wheel is
+ *performed with 4 swipes (left->down->right->up). To detect a wheel, the minimum number of swipe required is wheel
+ *start quadrant count + wheel post scaler. Once the wheel is detected, for post scaler number of swipe detections, the
+ *wheel counter will be incremented by 1. Example: if wheel post scaler is 2, then for each two swipe detection, the
+ *wheel counter will be incremented by 1.
+ */
+#define WHEEL_POSTSCALER ${WHEEL_POSTSCALER}
+/* 	Wheel Start Quadrant count <2-255>
+ *	The wheel gesture movement can be broken down into 90 degree arcs.
+ *	The firmware watches for a certain number of arcs to occur in a circular pattern before starting to report wheel
+ *gesture information. The number of arcs that must be first detected is determined by the WHEEL_START_QUADRANT_COUNT
+ *parameter. Lower values for this parameter make it faster to start a wheel gesture, but it also makes the firmware
+ *prone to prematurely reporting wheel gesture information. Example: if WHEEL_START_QUADRANT_COUNT is configured as 2,
+ *then after 180 degree, the gesture is updated as Wheel.
+ */
+#define WHEEL_START_QUADRANT_COUNT ${WHEEL_START_QUADRANT_COUNT}
+/* 	Wheel Reverse Quadrant count <2-255>
+ *	The WHEEL_REVERSE_QUADRANT_COUNT performs a similar function as WHEEL_START_QUADRANT_COUNT except it is used when
+ *changing the direction of the wheel instead of starting it new. This is used to prevent quick toggling between
+ *directions. Example: If WHEEL_REVERSE_QUADRANT_COUNT is set as 4 and after some wheel gestures, if the user changes
+ *the direction of rotation, then only after 360 degree, it will be detected as one wheel gesture.
+ */
+#define WHEEL_REVERSE_QUADRANT_COUNT ${WHEEL_REVERSE_QUADRANT_COUNT}
+<#if ENABLE_SURFACE2T==true>
+
+/* Pinch Zoom Threshold <0-255>
+ * The PINCH_ZOOM_THRESHOLD limits the allowable distance between the two fingers to detect the pinch and the zoom
+ * gestures. After crossing the PINCH_ZOOM_THRESHOLD, if the distance between the contacts is reducing, then the gesture
+ * is reported as 'PINCH'. After crossing the PINCH_ZOOM_THRESHOLD, if the distance between the contacts is increasing,
+ * then the gesture is reported as 'ZOOM'. Unit: coordinates Example: if PINCH_ZOOM_THRESHOLD is configured as 20, then
+ * after crossing 20 coordinates, it will be reported as the pinch gesture or the zoom gesture.
+ */
+#define PINCH_ZOOM_THRESHOLD ${PINCH_ZOOM_THRESHOLD}
+</#if>
+#define DEF_GESTURE_TIME_BASE_MS 10u
+</#if>
+
 <#if ENABLE_FREQ_HOP==true>
 /**********************************************************/
 /********* Frequency Hop Module ****************/

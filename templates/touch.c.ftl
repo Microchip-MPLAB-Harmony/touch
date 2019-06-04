@@ -215,6 +215,117 @@ qtm_scroller_config_t qtm_scroller_config1[DEF_NUM_SCROLLERS] = {<#list 0..TOUCH
 qtm_scroller_control_t qtm_scroller_control1
     = {&qtm_scroller_group_data1, &qtm_scroller_group_config1, &qtm_scroller_data1[0], &qtm_scroller_config1[0]};
 </#if>
+<#if ENABLE_SURFACE1T==true>
+/**********************************************************/
+/***************** Surface 1t Module ********************/
+/**********************************************************/
+
+qtm_surface_cs_config_t qtm_surface_cs_config1 = {
+    /* Config: */
+    SURFACE_CS_START_KEY_H,
+    SURFACE_CS_NUM_KEYS_H,
+    SURFACE_CS_START_KEY_V,
+    SURFACE_CS_NUM_KEYS_V,
+    SURFACE_CS_RESOL_DB,
+    SURFACE_CS_POS_HYST,
+    SURFACE_CS_FILT_CFG,
+    SURFACE_CS_MIN_CONTACT,
+    &qtlib_key_data_set1[0]};
+
+/* Surface Data */
+qtm_surface_contact_data_t qtm_surface_cs_data1;
+
+/* Container */
+qtm_surface_cs_control_t qtm_surface_cs_control1 = {&qtm_surface_cs_data1, &qtm_surface_cs_config1};
+</#if>
+
+<#if ENABLE_SURFACE2T==true>
+/**********************************************************/
+/***************** Surface 2t Module ********************/
+/**********************************************************/
+
+qtm_surface_cs_config_t qtm_surface_cs_config1 = {
+    /* Config: */
+    SURFACE_CS_START_KEY_H,
+    SURFACE_CS_NUM_KEYS_H,
+    SURFACE_CS_START_KEY_V,
+    SURFACE_CS_NUM_KEYS_V,
+    SURFACE_CS_RESOL_DB,
+    SURFACE_CS_POS_HYST,
+    SURFACE_CS_FILT_CFG,
+    SURFACE_CS_MIN_CONTACT,
+    &qtlib_key_data_set1[0]};
+
+/* surface Configurations */
+/* Surface Data */
+qtm_surface_cs2t_data_t qtm_surface_cs_data1;
+
+/* Contact Data */
+qtm_surface_contact_data_t qtm_surface_contacts[2];
+
+/* Container */
+qtm_surface_cs2t_control_t qtm_surface_cs_control1
+    = {&qtm_surface_cs_data1, &qtm_surface_contacts[0], &qtm_surface_cs_config1};
+</#if>
+
+<#if ENABLE_GESTURE==true>
+/**********************************************************/
+/***************** Gesture Module ********************/
+/**********************************************************/
+
+/* Gesture Configurations */
+<#if ENABLE_SURFACE2T==true>
+qtm_gestures_2d_config_t qtm_gestures_2d_config = {&qtm_surface_contacts[0].h_position,
+                                                   &qtm_surface_contacts[0].v_position,
+                                                   &qtm_surface_contacts[0].qt_contact_status,
+                                                   &qtm_surface_contacts[1].h_position,
+                                                   &qtm_surface_contacts[1].v_position,
+                                                   &qtm_surface_contacts[1].qt_contact_status,
+                                                   SCR_RESOLUTION(SURFACE_CS_RESOL_DB),
+                                                   TAP_RELEASE_TIMEOUT,
+                                                   TAP_HOLD_TIMEOUT,
+                                                   SWIPE_TIMEOUT,
+                                                   HORIZONTAL_SWIPE_DISTANCE_THRESHOLD,
+                                                   VERTICAL_SWIPE_DISTANCE_THRESHOLD,
+                                                   0,
+                                                   TAP_AREA,
+                                                   SEQ_TAP_DIST_THRESHOLD,
+                                                   EDGE_BOUNDARY,
+                                                   WHEEL_POSTSCALER,
+                                                   WHEEL_START_QUADRANT_COUNT,
+                                                   WHEEL_REVERSE_QUADRANT_COUNT,
+
+                                                   PINCH_ZOOM_THRESHOLD
+
+};
+<#elseif ENABLE_SURFACE1T==true>
+qtm_gestures_2d_config_t qtm_gestures_2d_config = {&qtm_surface_cs_data1.h_position,
+                                                   &qtm_surface_cs_data1.v_position,
+                                                   &qtm_surface_cs_data1.qt_surface_status,
+                                                   0,
+                                                   0,
+                                                   0,
+                                                   SCR_RESOLUTION(SURFACE_CS_RESOL_DB),
+                                                   TAP_RELEASE_TIMEOUT,
+                                                   TAP_HOLD_TIMEOUT,
+                                                   SWIPE_TIMEOUT,
+                                                   HORIZONTAL_SWIPE_DISTANCE_THRESHOLD,
+                                                   VERTICAL_SWIPE_DISTANCE_THRESHOLD,
+                                                   0,
+                                                   TAP_AREA,
+                                                   SEQ_TAP_DIST_THRESHOLD,
+                                                   EDGE_BOUNDARY,
+                                                   WHEEL_POSTSCALER,
+                                                   WHEEL_START_QUADRANT_COUNT,
+                                                   WHEEL_REVERSE_QUADRANT_COUNT,
+                                                   0
+};
+</#if>
+qtm_gestures_2d_data_t qtm_gestures_2d_data;
+
+qtm_gestures_2d_control_t qtm_gestures_2d_control1 = {&qtm_gestures_2d_data, &qtm_gestures_2d_config};
+</#if>
+
 /**********************************************************/
 /****************  Binding Layer Module  ******************/
 /**********************************************************/
@@ -225,11 +336,14 @@ qtm_scroller_control_t qtm_scroller_control1
 
 #define LIB_MODULES_PROC_LIST                                                                                          \
     {                                                                                                                  \
-		<#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>(module_proc_t)&qtm_freq_hop,                                    \
-		<#elseif ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>(module_proc_t)&qtm_freq_hop_autotune,</#if>                 \
-		(module_proc_t)&qtm_key_sensors_process,                                                                           \
-		<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>(module_proc_t)&qtm_scroller_process,</#if>                                   \
-	     null                                                                                                               \
+		<#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>(module_proc_t)&qtm_freq_hop,                                \
+		<#elseif ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>(module_proc_t)&qtm_freq_hop_autotune,</#if>             \
+		(module_proc_t)&qtm_key_sensors_process,                                                                        \
+	 	<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>(module_proc_t)&qtm_scroller_process,</#if>                               \
+		<#if ENABLE_SURFACE1T==true>(module_proc_t)&qtm_surface_cs_process,</#if>                               \
+		<#if ENABLE_SURFACE2T==true>(module_proc_t)&qtm_surface_cs2t_process,</#if>                               \
+		<#if ENABLE_GESTURE==true>(module_proc_t)&qtm_gestures_2d_process,</#if>                               \
+		null                                                                                                           \
     }
 
 #define LIB_INIT_DATA_MODELS_LIST                                                                                      \
@@ -239,11 +353,14 @@ qtm_scroller_control_t qtm_scroller_control1
 
 #define LIB_DATA_MODELS_PROC_LIST                                                                                       \
     {                                                                                                                   \
-      <#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>(void *)&qtm_freq_hop_control1,                                  \
-      <#elseif ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>(void *)&qtm_freq_hop_autotune_control1, </#if>              \
-	  (void *)&qtlib_key_set1,                                                                                           \
-	  <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>(void *)&qtm_scroller_control1,</#if>                                         \
-	    null                                                                                                               \
+		<#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>(void *)&qtm_freq_hop_control1,                                  \
+		<#elseif ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>(void *)&qtm_freq_hop_autotune_control1, </#if>              \
+		(void *)&qtlib_key_set1,                                                                                           \
+		<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>(void *)&qtm_scroller_control1,</#if>                                         \
+		<#if ENABLE_SURFACE1T==true>(void *)&qtm_surface_cs_control1,</#if>                                      \
+		<#if ENABLE_SURFACE2T==true>(void *)&qtm_surface_cs_control1,</#if>                               \
+		<#if ENABLE_GESTURE==true> (void *)&qtm_gestures_2d_control1,</#if>                               \
+		null                                                                                                               \
     }
 
 #define LIB_MODULES_ACQ_ENGINES_LIST                                                                                   \
@@ -343,6 +460,16 @@ static touch_ret_t touch_sensors_config(void)
 <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>	
 	/* scroller init */
 	qtm_init_scroller_module(&qtm_scroller_control1);
+</#if>
+
+<#if ENABLE_SURFACE1T==true>	
+	touch_ret |= qtm_init_surface_cs(&qtm_surface_cs_control1);
+</#if>
+<#if ENABLE_SURFACE2T==true>	
+	touch_ret |= qtm_init_surface_cs2t(&qtm_surface_cs_control1);
+</#if>
+<#if ENABLE_GESTURE==true>	
+	touch_ret |= qtm_init_gestures_2d();
 </#if>
 
     return (touch_ret);
@@ -528,7 +655,9 @@ void touch_process(void)
 		}
     }
 }
-
+<#if ENABLE_GESTURE==true>
+uint8_t interrupt_cnt;
+</#if>
 /*============================================================================
 void touch_timer_handler(void)
 ------------------------------------------------------------------------------
@@ -540,11 +669,23 @@ Notes  :
 ============================================================================*/
 void touch_timer_handler(void)
 {
-
+<#if ENABLE_GESTURE==true>
+	interrupt_cnt++;
+	if (interrupt_cnt % DEF_GESTURE_TIME_BASE_MS == 0) {
+		qtm_update_gesture_2d_timer(1);
+	}
+	if (interrupt_cnt >= DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
+		interrupt_cnt = 0;
+		/* Count complete - Measure touch sensors */
+		qtm_control.binding_layer_flags |= (1u << time_to_measure_touch);
+		qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
+	}
+<#else>
     /* Count complete - Measure touch sensors */
     qtm_control.binding_layer_flags |= (1u << time_to_measure_touch);
 
     qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
+</#if>
 }
 void rtc_cb( RTC_TIMER32_INT_MASK intCause, uintptr_t context )
 {

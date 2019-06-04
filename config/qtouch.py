@@ -84,14 +84,21 @@ def enableDataStreamerFtlFiles(symbol,event):
 
 def enableScroller(symbol,event):
     component = symbol.getComponent()
-    print("scroller is enabled for this project")
-    print(event["value"])
     if(event["value"] == True):
         component.getSymbolByID("TOUCH_SCR_LIB").setEnabled(True)
         component.getSymbolByID("TOUCH_SCR_HEADER").setEnabled(True)
     else:
         component.getSymbolByID("TOUCH_SCR_LIB").setEnabled(False)
         component.getSymbolByID("TOUCH_SCR_HEADER").setEnabled(False)
+
+def enableGestureFiles(symbol,event):
+    component = symbol.getComponent()
+    if(event["value"] == True):
+        component.getSymbolByID("TOUCH_GESTURE_LIB").setEnabled(True)
+        component.getSymbolByID("TOUCH_GESTURE_HEADER").setEnabled(True)
+    else:
+        component.getSymbolByID("TOUCH_GESTURE_LIB").setEnabled(False)
+        component.getSymbolByID("TOUCH_GESTURE_HEADER").setEnabled(False)
 
 autoComponentIDTable = ["rtc"]
 autoConnectTable = [["lib_qtouch", "Touch_timer","rtc", "RTC_TMR"]]
@@ -117,11 +124,25 @@ def instantiateComponent(qtouchComponent):
     execfile(Module.getPath() +"/config/key.py")
     execfile(Module.getPath() +"/config/sensor.py")
 
+    # Enable Scroller 
     enableScrollerMenu = qtouchComponent.createBooleanSymbol("ENABLE_SCROLLER", touchMenu)
     enableScrollerMenu.setLabel("Enable Scroller")
     enableScrollerMenu.setDefaultValue(False)
     execfile(Module.getPath() +"/config/scroller.py")
     enableScrollerMenu.setDependencies(enableScroller,["ENABLE_SCROLLER"])
+
+    # Enable Surface 
+    enableSurfaceMenu = qtouchComponent.createBooleanSymbol("ENABLE_SURFACE", touchMenu)
+    enableSurfaceMenu.setLabel("Enable Surface")
+    enableSurfaceMenu.setDefaultValue(False)
+    execfile(Module.getPath() +"/config/surface.py")
+    
+    # Enable Gesture 
+    enableGestureMenu = qtouchComponent.createBooleanSymbol("ENABLE_GESTURE", touchMenu)
+    enableGestureMenu.setLabel("Enable Gesture")
+    enableGestureMenu.setDefaultValue(False)
+    execfile(Module.getPath() +"/config/gesture.py")
+    enableGestureMenu.setDependencies(enableGestureFiles,["ENABLE_GESTURE"])
 
     global enableFreqHopMenu
     # Enable Frequency Hop  
@@ -164,7 +185,7 @@ def instantiateComponent(qtouchComponent):
     touchHeaderFile.setProjectPath("config/" + configName + "/touch/")
     touchHeaderFile.setType("HEADER")
     touchHeaderFile.setMarkup(True)
-	
+    
     # Header File
     touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_HEADER1", None)
     touchHeaderFile.setSourcePath("/templates/touch_api_ptc.h.ftl")
@@ -173,7 +194,7 @@ def instantiateComponent(qtouchComponent):
     touchHeaderFile.setProjectPath("config/" + configName + "/touch/")
     touchHeaderFile.setType("HEADER")
     touchHeaderFile.setMarkup(True)
-	
+    
     # Source File
     touchSourceFile = qtouchComponent.createFileSymbol("TOUCH_SOURCE", None)
     touchSourceFile.setSourcePath("/templates/touch.c.ftl")
@@ -183,7 +204,7 @@ def instantiateComponent(qtouchComponent):
     touchSourceFile.setType("SOURCE")
     touchSourceFile.setMarkup(True)
 
-        #System Initialization
+    #System Initialization
     ptcSystemInitFile = qtouchComponent.createFileSymbol("PTC_SYS_INIT", None)
     ptcSystemInitFile.setType("STRING")
     ptcSystemInitFile.setOutputName("core.LIST_SYSTEM_INIT_C_INITIALIZE_MIDDLEWARE")

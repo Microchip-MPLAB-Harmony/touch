@@ -47,6 +47,15 @@ extern "C" {
 <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
 #include "qtm_scroller_0x000b_api.h"
 </#if>
+<#if ENABLE_SURFACE1T==true>
+#include "qtm_surface_cs_0x0021_api.h"
+</#if>
+<#if ENABLE_SURFACE2T==true>
+#include "qtm_surface_cs2t_0x0025_api.h"
+</#if>
+<#if ENABLE_GESTURE==true>
+#include "qtm_gestures_2d_0x0023_api.h"
+</#if>
 /*----------------------------------------------------------------------------
  *   prototypes
  *----------------------------------------------------------------------------*/
@@ -67,7 +76,6 @@ void touch_timer_handler(void);
 void touch_init(void);
 void touch_process(void);
 
-//void Timer_task_cb(const struct timer_task *const timer_task);
 void touch_timer_config(void);
 
 #ifdef __cplusplus
