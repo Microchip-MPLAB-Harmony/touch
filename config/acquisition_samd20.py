@@ -134,6 +134,11 @@ getModuleID = qtouchComponent.createStringSymbol("MODULE_ID", touchMenu)
 getModuleID.setDefaultValue("0x000e")
 getModuleID.setVisible(False)
 
+#Set clock xml for the device
+clockXml = qtouchComponent.createStringSymbol("CLOCK_XML", touchMenu)
+clockXml.setDefaultValue("d21_clock_config")
+clockXml.setVisible(False)
+
 #Set PTC INTERRUPT HANDLER
 Database.setSymbolValue("core", InterruptVector, True, 2)
 Database.setSymbolValue("core", InterruptHandler, "PTC_Handler", 2)

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!-- 
+This is for SAMC21, SAMC20 Family
+-->
+
+<clock_settings>
+	<all_clock_symbols_list>
+		<clock index = "0_0" symbol="GCLK_INST_NUM1" value="True" component_id= "core" name="Select Generic Clock Generator 1 (GCLK1)" />
+		<clock index = "1_0" symbol="GCLK_1_DIV" value="12" component_id= "core" name="Div 48MHz by 12" />
+	</all_clock_symbols_list>
+	<all_conditions_list>
+		<condition />
+	</all_conditions_list>
+	<common>
+		<default clock_update_index_list="0_0,1_0"/>
+	</common>
+</clock_settings>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!-- 
+This is for SAMD20, SAMD21 Family
+-->
+
+<clock_settings>
+	<all_clock_symbols_list>
+		<clock index = "0_0" symbol="CONFIG_CLOCK_DFLL_OPMODE" value="1" component_id= "core" name="DFLL Closed mode" />
+		<clock index = "1_0" symbol="CONFIG_CLOCK_DFLL_COARSE" value="10" component_id= "core" name="DFLL Course value" />
+		<clock index = "2_0" symbol="CONFIG_CLOCK_DFLL_FINE" value="10" component_id= "core" name="DFLL Fine value" />
+		<clock index = "3_0" symbol="CONFIG_CLOCK_DFLL_MUL" value="1500" component_id= "core" name="DFLL Mul value" />
+		<clock index = "4_0" symbol="GCLK_ID_0_CHEN" value="True" component_id= "core" name="Select reference clock for DFLL" />
+		<clock index = "5_0" symbol="GCLK_ID_0_GENSEL" value="3" component_id= "core" name="Select GCLK3 as ref clock" />
+		<clock index = "6_0" symbol="CONFIG_CLOCK_OSC8M_ENABLE" value="True" component_id= "core" name="Enable OSC8M" />
+		<clock index = "7_0" symbol="CONFIG_CLOCK_OSC8M_PRES" value="1" component_id= "core" name="OSC8M Prescaler - 2" />
+		<clock index = "8_0" symbol="GCLK_INST_NUM1" value="True" component_id= "core" name="Select GCLK1" />
+		<clock index = "9_0" symbol="GCLK_INST_NUM2" value="True" component_id= "core" name="Select GCLK2" />
+		<clock index = "10_0" symbol="GCLK_INST_NUM3" value="True" component_id= "core" name="Select GCLK3" />
+		<clock index = "11_0" symbol="GCLK_1_SRC" value="5" component_id= "core" name="GCLK1 Source" />
+		<clock index = "12_0" symbol="GCLK_2_SRC" value="3" component_id= "core" name="GCLK2 Source" />
+		<clock index = "13_0" symbol="GCLK_3_SRC" value="6" component_id= "core" name="GCLK3 Source" />
+		<clock index = "14_0" symbol="GCLK_3_DIV" value="125" component_id= "core" name="GCLK3 division factor" />
+		<clock index = "15_0" symbol="RTC_MODE0_PRESCALER" value="5" component_id= "rtc" name="RTC pre-scaled by 32" />
+		<clock index = "16_0" symbol="NVM_RWS" value="4" component_id= "nvmctrl" name="Wait state - 4" />		
+	</all_clock_symbols_list>
+	<all_conditions_list>
+		<condition />
+	</all_conditions_list>
+	<common>
+		<default clock_update_index_list="0_0,1_0,2_0,3_0,4_0,5_0,6_0,7_0,8_0,9_0,10_0,11_0,12_0,13_0,14_0,15_0,16_0"/>
+	</common>
+</clock_settings>

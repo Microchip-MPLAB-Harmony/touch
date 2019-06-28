@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!-- 
+This is for SAME51, SAME53, SAME54, SAMD51 Family
+-->
+
+<clock_settings>
+	<all_clock_symbols_list>
+		<clock index = "0_0" symbol="CONFIG_CLOCK_DFLL_ENABLE" value="True" component_id= "core" name="DFLL Enable" />
+		<clock index = "1_0" symbol="CONFIG_CLOCK_DFLL_OPMODE" value="1" component_id= "core" name="DFLL Closed mode" />
+		<clock index = "2_0" symbol="CONFIG_CLOCK_DFLL_ONDEMAND" value="0" component_id= "core" name="DFLL ondemand" />
+		<clock index = "3_0" symbol="CONFIG_CLOCK_DFLL_COARSE" value="10" component_id= "core" name="DFLL Course value" />
+		<clock index = "4_0" symbol="CONFIG_CLOCK_DFLL_FINE" value="10" component_id= "core" name="DFLL Fine value" />
+		<clock index = "5_0" symbol="CONFIG_CLOCK_DFLL_MUL" value="1464" component_id= "core" name="Select Mul value" />
+		<clock index = "6_0" symbol="GCLK_ID_0_GENSEL" value="3" component_id= "core" name="GCLK3 as ref clock" />
+		<clock index = "7_0" symbol="GCLK_ID_0_CHEN" value="True" component_id= "core" name="Select reference clock for DFLL" />
+		<clock index = "8_0" symbol="GCLK_0_SRC" value="6" component_id= "core" name="Select GCLK0 source" />
+		<clock index = "9_0" symbol="GCLK_0_DIV" value="1" component_id= "core" name="Select GCLK0 div" />
+		<clock index = "10_0" symbol="GCLK_INST_NUM1" value="True" component_id= "core" name="Select GCLK1" />
+		<clock index = "11_0" symbol="GCLK_1_SRC" value="5" component_id= "core" name="GCLK1 Source" />
+		<clock index = "12_0" symbol="GCLK_1_DIV" value="6" component_id= "core" name="GCLK1 Div" />
+		<clock index = "13_0" symbol="GCLK_INST_NUM3" value="True" component_id= "core" name="Select GCLK3" />
+		<clock index = "14_0" symbol="GCLK_3_SRC" value="4" component_id= "core" name="GCLK3 Source" />
+		<clock index = "15_0" symbol="GCLK_INST_NUM4" value="True" component_id= "core" name="Select GCLK4" />
+		<clock index = "16_0" symbol="GCLK_4_SRC" value="6" component_id= "core" name="GCLK4 Source" />
+		<clock index = "17_0" symbol="GCLK_4_DIV" value="6" component_id= "core" name="GCLK4 division factor" />
+		<clock index = "18_0" symbol="NVM_RWS" value="4" component_id= "nvmctrl" name="Wait state -4" />		
+	</all_clock_symbols_list>
+	<all_conditions_list>
+		<condition />
+	</all_conditions_list>
+	<common>
+		<default clock_update_index_list="0_0,1_0,2_0,3_0,4_0,5_0,6_0,7_0,8_0,9_0,10_0,11_0,12_0,13_0,14_0,15_0,16_0,17_0"/>
+	</common>
+</clock_settings>
