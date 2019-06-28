@@ -1,6 +1,6 @@
 <#if (TOUCH_CHAN_ENABLE_CNT > 0) >
 <#assign total_channels = TOUCH_CHAN_ENABLE_CNT-1>
-</#if>
+
 <#if (TOUCH_SCROLLER_ENABLE_CNT > 0)> 
 <#assign total_scr = TOUCH_SCROLLER_ENABLE_CNT>
 </#if>
@@ -52,6 +52,35 @@ SWState${y}, ${total_channels+offset+y}
 SWState${y}, ${total_channels+offset+y}
 </#list>
 <#assign offset = offset +total_scr>
+</#if>
+
+<#if ENABLE_SURFACE == true>
+<#if ENABLE_SURFACE1T != true>
+<#assign position = 1>
+<#else>
+<#assign position = 0>
+</#if>
+<#list 0..position as i>
+SurStatus${i}, ${total_channels+offset} (Column:0;Row:${i})
+hposition${i}, ${total_channels+offset}(Column:1;Row:${i})
+vposition${i}, ${total_channels+offset} (Column:2;Row:${i})
+conctsize${i}, ${total_channels+offset} (Column:3;Row:${i})
+</#list>
+<#assign offset = offset +1>
+<#list 0..position as i>
+SurStatus${i}, ${total_channels+offset} (Column:0;Row:${i})
+hposition${i}, ${total_channels+offset}(Column:1;Row:${i})
+vposition${i}, ${total_channels+offset} (Column:2;Row:${i})
+conctsize${i}, ${total_channels+offset} (Column:3;Row:${i})
+</#list>
+
+<#if ENABLE_SURFACE1T != true>
+<#assign offset = offset +1>
+Sur2TStatus0, ${total_channels+offset} (Column:0;Row:0)
+<#assign offset = offset +1>
+Sur2TStatus0, ${total_channels+offset} (Column:0;Row:0)
+<#assign offset = offset +1>
+</#if>
 </#if>
 
 <#list 0..total_channels as i>
@@ -149,3 +178,5 @@ QTouchLibError, ${total_channels+offset} (Column:0;Row:1)
 <#assign offset = offset +1>
 FrameCounter, ${total_channels+offset} (Column:0;Row:0)
 QTouchLibError, ${total_channels+offset} (Column:0;Row:1)
+
+</#if>

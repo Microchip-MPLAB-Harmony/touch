@@ -14,6 +14,7 @@
 <#assign debug_data_others = ['FrameCounter', 'QTouchLibError'] >
 <#assign blank = [" "]>
 <#assign scr_info = []>
+<#assign surface_info = [] >
 <#if TUNE_MODE_SELECTED != "CAL_AUTO_TUNE_NONE">
 <#assign label_ele = label_ele + 1 >
 <#assign debug_data_node_title = ['Signal', 'Reference' , 'Delta', 'Compensation pF', 'CSD'] >
@@ -41,6 +42,21 @@
 <#assign debug_data_scroller_header = ['State', 'SW Delta', 'SW Threshold', 'Position'] >
 <#assign debug_graph_data_scr = ['SWDelta', 'SWThreshold'] >
 <#assign label_ele = label_ele + 20*scr_cnt >
+</#if>
+
+<#if ENABLE_SURFACE == true>
+
+<#assign label_ele = label_ele + 20 >
+<#assign debug_data_surface = ['SurStatus', 'hposition', 'vposition', 'conctsize'] >
+<#assign debug_data_surface2t = ['Sur2TStatus'] >
+<#assign debug_data_surface_label = 'Surface Data' >
+<#assign debug_data_surface_header = ['Status', 'Hor Position', 'Ver Position', 'Contact Size'] >
+<#assign surface_info = [VERT_START_KEY] + [VERT_NUM_KEY] + [HORI_START_KEY] + [HORI_NUM_KEY]>
+<#if ENABLE_SURFACE1T == true>
+<#assign surface_info += [1]>
+<#else>
+<#assign surface_info += [2]>
+</#if>
 </#if>
 
 <#if scr_cnt != 0 >
@@ -227,7 +243,7 @@ ${columns}, // Number of Columns
 };
 </#macro>
 
-<#macro build_sensor_type_table tab,temp_ele_num, x_pos, y_pos, row_height, temp_lable_w, node_cnt, scr_cnt, scr_info >
+<#macro build_sensor_type_table tab,temp_ele_num, x_pos, y_pos, row_height, temp_lable_w, node_cnt, scr_cnt, scr_info, sur_info >
 <#assign debug_table_title = ['Channel ID', 'Sensor Type'] >
 <#assign column_cnt = debug_table_title?size >
 <#assign temp_string = [] >
@@ -248,6 +264,11 @@ ${columns}, // Number of Columns
 <#assign scr_from_ch_info =[] >
 <#assign scr_num_ch_info =[]>
 <#assign scr_txt =[] >
+<#assign sen_type_surv_cnt = [] >
+<#assign sen_type_surh_cnt = [] >
+<#assign surface_ver_channels = [] >
+<#assign surface_hor_channels = [] >
+
 <#list 0..(node_cnt-1) as cnt >
 <#if scr_cnt != 0 >
 <#list 0..TOUCH_SCROLLER_ENABLE_CNT-1 as i >
@@ -278,10 +299,30 @@ ${columns}, // Number of Columns
 <#elseif tmp_txt == "SCROLLER_TYPE_WHEEL" > <#assign temp_string = temp_string + [("1:"+(cnt)+":"+("Wheel")+" "+(sen_type_whe_cnt?size)+"["+(temp_val)+"];")] >
 </#if>
 <#else>
+</#if>
+<#elseif (ENABLE_SURFACE == false)>
 <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Button"+" "+(sen_type_but_cnt?size)+";")] > <#assign sen_type_but_cnt = sen_type_but_cnt +[1]>
 </#if>
+
+<#if (ENABLE_SURFACE == true)>
+
+<#list VERT_START_KEY..(VERT_START_KEY+VERT_NUM_KEY-1) as i>
+<#assign surface_ver_channels = surface_ver_channels + [i]>
+</#list>
+<#list HORI_START_KEY..(HORI_START_KEY+HORI_NUM_KEY-1) as i>
+<#assign surface_hor_channels = surface_hor_channels + [i]>
+</#list>
+
+<#if surface_ver_channels?seq_contains(cnt) >
+<#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Surface V"+" ["+(sen_type_surv_cnt?size)+"];")]>
+<#assign sen_type_surv_cnt= sen_type_surv_cnt +[1] >
+<#elseif surface_hor_channels?seq_contains(cnt)>
+<#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Surface H"+" ["+(sen_type_surh_cnt?size)+"];")]> 
+<#assign sen_type_surh_cnt= sen_type_surh_cnt +[1] >
 <#else>
 <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Button"+" "+(sen_type_but_cnt?size)+";")] > <#assign sen_type_but_cnt = sen_type_but_cnt +[1]>
+</#if>
+
 </#if>
 </#list>
 <@db_build_table_element_new_table temp_string, tab, element_num+1,x_pos,y_pos,temp_width1, temp_height1,temp_lable_w, temp_lable_w,row_height,node_cnt, column_cnt />
@@ -319,6 +360,21 @@ ${columns}, // Number of Columns
 </#if>
 </#list>
 <@db_build_table_element_new_table temp_string, tab, element_num,x_pos,y_pos,temp_width11, temp_height11,temp_lable_w, temp_lable_w,row_height,scr_cnt, 1 />
+</#macro>
+
+
+<#macro build_sensor_type_table_sur tab, temp_ele_num, x_pos, y_pos, row_height, temp_lable_w, sur_cnt >
+<#assign column_cnt = sur_cnt >
+<#assign temp_string = [] >
+<#assign temp_width = (temp_lable_w) * (column_cnt) >
+<#assign temp_height = (row_height) * sur_cnt >
+<#assign element_num = temp_ele_num >
+<#assign sen_type_sur_cnt = [] >
+<#list 0..(sur_cnt-1) as cnt>
+<#assign temp_string = temp_string + [("0:"+(sen_type_sur_cnt?size)+":"+"Contact "+(sen_type_sur_cnt?size)+";")] >
+<#assign sen_type_sur_cnt += [1] >
+</#list>
+<@db_build_table_element_new_table temp_string, tab, element_num,x_pos,y_pos,temp_width, temp_height,temp_lable_w, temp_lable_w,row_height,sur_cnt, 1 />
 </#macro>
 
 <#macro build_table_headings tab, title, temp_ele_num, x_pos, y_pos, row_height, temp_lable_w, node_cnt >
@@ -396,9 +452,9 @@ ${(dashboard_height+3) * 300}
 <#assign temp_y_pos = temp_y_pos + y_offset >
 
 <#-- sensor label -->
-<@build_sensor_type_table sensor_tab, label_ele, x_pos, temp_y_pos, temp_row_height, temp_lable_w, node_cnt, scr_cnt, scr_info />
+<@build_sensor_type_table sensor_tab, label_ele, x_pos, temp_y_pos, temp_row_height, temp_lable_w, node_cnt, scr_cnt, scr_info, surface_info />
 <#assign label_ele = label_ele + 2 >
-<@build_sensor_type_table all_data_tab, label_ele, x_pos, y_pos, temp_row_height, temp_lable_w, node_cnt, scr_cnt, scr_info />
+<@build_sensor_type_table all_data_tab, label_ele, x_pos, y_pos, temp_row_height, temp_lable_w, node_cnt, scr_cnt, scr_info, surface_info />
 <#assign label_ele = label_ele + 2 >
 <#assign x_pos = x_pos + temp_lable_w*2 >
 <@build_table_headings sensor_tab, debug_data_key, label_ele, x_pos, temp_y_pos, temp_row_height, temp_lable_w, 1 />
@@ -494,6 +550,73 @@ ${(dashboard_height+3) * 300}
 <#assign y_pos = y_pos + (temp_row_height * key_cnt) >
 <#assign temp_y_pos = temp_y_pos + (temp_row_height * key_cnt) >
 </#if>
+
+
+<#-- Surface details -->
+<#if ENABLE_SURFACE == true>
+<#assign temp_column = debug_data_key?size >
+<#assign x_pos = (temp_lable_w * (temp_column+3))>
+<#assign y_pos = y_offset*(2)>
+<#if (scr_cnt >0) >
+<#assign y_pos = y_pos + y_offset*2 + temp_row_height*scr_cnt>
+</#if >
+<#assign temp_column = debug_data_surface?size >
+<#assign temp_width = (temp_data_w+temp_lable_w) * temp_column >
+<#assign temp_y_pos = 0>
+<#if (scr_cnt >0) >
+<#assign temp_y_pos = temp_y_pos + y_offset*2 + temp_row_height*scr_cnt>
+</#if >
+
+<#-- Surface data label  -->
+<@db_buid_label sensor_tab,temp_row_height, label_ele,x_pos,temp_y_pos,debug_data_surface_label,(temp_lable_w * (temp_column+1))/>
+<#assign label_ele = label_ele + 1 >
+<#assign temp_y_pos = temp_y_pos + y_offset >
+<@db_buid_label all_data_tab,temp_row_height, label_ele,x_pos,y_pos,debug_data_surface_label,(temp_lable_w * (temp_column+1))/>
+<#assign label_ele = label_ele + 1 >
+<#assign y_pos = y_pos + y_offset >
+<#assign tempdata = ["Contacts"] >
+<@build_table_headings sensor_tab, tempdata, label_ele, x_pos, temp_y_pos, temp_row_height, temp_lable_w, 1/>
+<#assign label_ele = label_ele + 1 >
+<@build_table_headings all_data_tab, tempdata, label_ele, x_pos, y_pos, temp_row_height, temp_lable_w, 1/>
+<#assign label_ele = label_ele + 1 >
+<#assign x_pos = x_pos + temp_lable_w >
+<@build_table_headings sensor_tab, debug_data_surface_header, label_ele, x_pos, temp_y_pos, temp_row_height, temp_lable_w, 1/>
+<#assign label_ele = label_ele + 1 >
+<@build_table_headings all_data_tab, debug_data_surface_header, label_ele, x_pos, y_pos, temp_row_height, temp_lable_w, 1/>
+<#assign label_ele = label_ele + 1 >
+
+<#assign y_pos = y_pos + temp_row_height >
+<#assign temp_y_pos = temp_y_pos + temp_row_height >
+<#assign temp_rows = surface_info[4] >
+<#assign temp_height = (temp_row_height) * temp_rows >
+<@db_build_table_element_new_table blank,sensor_tab,ele_num,x_pos,temp_y_pos,temp_width, temp_height,temp_lable_w, temp_lable_w,temp_row_height,temp_rows, temp_column/>
+<#assign ele_num = ele_num + 1 >
+<@db_build_table_element_new_table blank,all_data_tab,ele_num,x_pos,y_pos,temp_width, temp_height,temp_lable_w, temp_lable_w,temp_row_height,temp_rows, temp_column/>
+<#assign ele_num = ele_num + 1 >
+
+<#assign x_pos = x_pos - temp_lable_w >
+<@build_sensor_type_table_sur sensor_tab, label_ele, x_pos, temp_y_pos, temp_row_height, temp_lable_w, surface_info[4]/>
+<#assign label_ele = label_ele + 1 >
+<#assign temp_y_pos = temp_y_pos + temp_height >
+<@build_sensor_type_table_sur all_data_tab, label_ele, x_pos, y_pos, temp_row_height, temp_lable_w, surface_info[4]/>
+<#assign label_ele = label_ele + 1 >
+<#assign y_pos = y_pos + temp_height >
+
+<#if surface_info[4] == 2 >
+<#assign temp_rows = debug_data_surface2t?size >
+<#assign temp_column = 1 >
+<#assign temp_width = (temp_data_w+temp_lable_w) * temp_column >
+<@db_build_table_element sensor_tab,ele_num,x_pos,temp_y_pos,temp_width, temp_height,temp_data_w, temp_lable_w,temp_row_height,temp_rows, temp_column/>
+<#assign temp_y_pos = temp_y_pos + temp_height >
+<#assign ele_num = ele_num + 1 >
+<@db_build_table_element all_data_tab,ele_num,x_pos,y_pos,temp_width, temp_height,temp_data_w, temp_lable_w,temp_row_height,temp_rows, temp_column/>
+<#assign y_pos = y_pos + temp_height >
+<#assign ele_num = ele_num + 1 >
+</#if >
+
+</#if >
+
+
 <#--  -------------------GRAPH ELEMENT----------------------- -->
 <#assign num_of_plots = node_cnt*(debug_graph_data?size)>
 <#if scr_cnt != 0>
@@ -549,9 +672,9 @@ ${(dashboard_height+3) * 300}
 <#assign y_pos = y_pos + y_offset >
 
 <#-- print sensor type label for node specific table  -->
-<@build_sensor_type_table node_tab, label_ele, x_pos, temp_y_pos, temp_row_height, temp_lable_w, node_cnt, scr_cnt, scr_info />
+<@build_sensor_type_table node_tab, label_ele, x_pos, temp_y_pos, temp_row_height, temp_lable_w, node_cnt, scr_cnt, scr_info, surface_info />
 <#assign label_ele = label_ele + 2 >
-<@build_sensor_type_table all_data_tab, label_ele, x_pos, y_pos, temp_row_height, temp_lable_w, node_cnt, scr_cnt, scr_info />
+<@build_sensor_type_table all_data_tab, label_ele, x_pos, y_pos, temp_row_height, temp_lable_w, node_cnt, scr_cnt, scr_info, surface_info />
 <#assign label_ele = label_ele + 2>
 <#assign x_pos = x_pos + temp_lable_w*2>
 

@@ -8,7 +8,6 @@
 B,1,1,FrameCounter
 <#if (TOUCH_CHAN_ENABLE_CNT > 0)>
 <#assign x= TOUCH_CHAN_ENABLE_CNT-1>
-</#if>
 
 <#list 0..x as i>
 D,${2},${i+1},Signal${i}
@@ -39,11 +38,31 @@ D,${12+temp},${1+y},SWPosition${y}
 <#assign temp = temp+4>
 </#if>
 
+<#if ENABLE_SURFACE == true>
+<#if ENABLE_SURFACE1T != true>
+<#list 0..1 as y>
+B,${9+temp},${1+y},SurStatus${y}
+D,${10+temp},${1+y},hposition${y}
+D,${11+temp},${1+y},vposition${y}
+D,${12+temp},${1+y},conctsize${y}
+</#list>
+B,${13+temp},1,Sur2TStatus0
+<#assign temp = temp+5>
+<#else>
+B,${9+temp},1,SurStatus0
+D,${10+temp},1,hposition0
+D,${11+temp},1,vposition0
+D,${12+temp},1,conctsize0
+<#assign temp = temp+4>
+</#if>
+</#if>
+
 <#if FREQ_AUTOTUNE>
 B,${9+temp},${1},CurrentFrequency
 <#list 0..FREQ_HOP_STEPS-1 as j>
 B,${10+temp+j},${1},HopFrequency${j}
 </#list>
+</#if>
 </#if>
 
 B,1,3,QTouchLibError

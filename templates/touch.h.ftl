@@ -114,59 +114,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  * {X-line, Y-line, Charge Share Delay, NODE_RSEL_PRSC(series resistor, prescaler), NODE_G(Analog Gain , Digital Gain),
  * filter level}
  */
-
-<#assign noCSD = 0>
-<#list ["SAMD20","SAMD21"] as i>
-<#if DEVICE_NAME == i>
-<#assign noCSD = 1>
-</#if>
-</#list>
-
- <#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i>
-    <#assign TOUCH_ENABLE_CH_ = "TOUCH_ENABLE_CH_" + i>
-	<#if noCSD == 0>
-    <#assign DEF_TOUCH_CHARGE_SHARE_DELAY = "DEF_TOUCH_CHARGE_SHARE_DELAY" + i>
-	</#if>
-    <#assign DEF_NOD_SERIES_RESISTOR = "DEF_NOD_SERIES_RESISTOR" + i>
-    <#assign DEF_NOD_PTC_PRESCALER = "DEF_NOD_PTC_PRESCALER" + i>
-    <#assign DEF_NOD_GAIN_ANA = "DEF_NOD_GAIN_ANA" + i>
-    <#assign DEF_DIGI_FILT_GAIN = "DEF_DIGI_FILT_GAIN" + i>
-    <#assign DEF_DIGI_FILT_OVERSAMPLING = "DEF_DIGI_FILT_OVERSAMPLING" + i>
-	<#assign SELFCAP_INPUT = "SELFCAP-INPUT_" + i>
-	<#assign MUTLCAP_X_INPUT = "MUTL-X-INPUT_" + i>
-	<#assign MUTLCAP_Y_INPUT = "MUTL-Y-INPUT_" + i>
+<#import "/node.h.ftl" as node>	
 	
-    <#if .vars[TOUCH_ENABLE_CH_]?has_content>
-    <#if (.vars[TOUCH_ENABLE_CH_] != false)>  
-	<#if noCSD == 0>	
-	<#if SENSE_TECHNOLOGY == "NODE_SELFCAP">
-    <#lt>#define NODE_${i}_PARAMS                                                                                               \
-		<#lt>{                                                                                                                  \
-		<#lt>   X_NONE, ${.vars[SELFCAP_INPUT]}, ${.vars[DEF_TOUCH_CHARGE_SHARE_DELAY]}, NODE_RSEL_PRSC(${.vars[DEF_NOD_SERIES_RESISTOR]}, ${.vars[DEF_NOD_PTC_PRESCALER]}), NODE_GAIN(${.vars[DEF_NOD_GAIN_ANA]}, ${.vars[DEF_DIGI_FILT_GAIN]}), ${.vars[DEF_DIGI_FILT_OVERSAMPLING]}                   \
-		<#lt>}
-	<#else>
-	<#lt>#define NODE_${i}_PARAMS                                                                                               \
-		<#lt>{                                                                                                                  \
-		<#lt>   ${.vars[MUTLCAP_X_INPUT]}, ${.vars[MUTLCAP_Y_INPUT]}, ${.vars[DEF_TOUCH_CHARGE_SHARE_DELAY]}, NODE_RSEL_PRSC(${.vars[DEF_NOD_SERIES_RESISTOR]}, ${.vars[DEF_NOD_PTC_PRESCALER]}), NODE_GAIN(${.vars[DEF_NOD_GAIN_ANA]}, ${.vars[DEF_DIGI_FILT_GAIN]}), ${.vars[DEF_DIGI_FILT_OVERSAMPLING]}\
-		<#lt>}
-	</#if>
-	<#else>
-		<#if SENSE_TECHNOLOGY == "NODE_SELFCAP">
-    <#lt>#define NODE_${i}_PARAMS                                                                                               \
-		<#lt>{                                                                                                                  \
-		<#lt>   X_NONE, ${.vars[SELFCAP_INPUT]}, NODE_RSEL_PRSC(${.vars[DEF_NOD_SERIES_RESISTOR]}, ${.vars[DEF_NOD_PTC_PRESCALER]}), NODE_GAIN(${.vars[DEF_NOD_GAIN_ANA]}, ${.vars[DEF_DIGI_FILT_GAIN]}), ${.vars[DEF_DIGI_FILT_OVERSAMPLING]}                   \
-		<#lt>}
-	<#else>
-	<#lt>#define NODE_${i}_PARAMS                                                                                               \
-		<#lt>{                                                                                                                  \
-		<#lt>   ${.vars[MUTLCAP_X_INPUT]}, ${.vars[MUTLCAP_Y_INPUT]}, NODE_RSEL_PRSC(${.vars[DEF_NOD_SERIES_RESISTOR]}, ${.vars[DEF_NOD_PTC_PRESCALER]}), NODE_GAIN(${.vars[DEF_NOD_GAIN_ANA]}, ${.vars[DEF_DIGI_FILT_GAIN]}), ${.vars[DEF_DIGI_FILT_OVERSAMPLING]}\
-		<#lt>}
-	</#if>
-	</#if>
-    </#if>
-    </#if>
-</#list>
-
+<@node.nodeComponent/>
 /**********************************************************/
 /***************** Key Params   ******************/
 /**********************************************************/

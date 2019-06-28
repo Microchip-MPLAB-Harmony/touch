@@ -47,6 +47,11 @@ Copyright (c) Microchip. All rights reserved.
 <#else>
 #define SCROLLER_MODULE_OUTPUT 0
 </#if>
+<#if ENABLE_SURFACE != false>
+#define SURFACE_MODULE_OUTPUT 1
+<#else>
+#define SURFACE_MODULE_OUTPUT 0
+</#if>
 
 /*----------------------------------------------------------------------------
   global variables
@@ -61,6 +66,13 @@ extern qtm_freq_hop_autotune_control_t qtm_freq_hop_autotune_control1;
 </#if>
 <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
 extern qtm_scroller_control_t qtm_scroller_control1;
+</#if>
+<#if ENABLE_SURFACE == true>
+<#if ENABLE_SURFACE1T == true>
+extern qtm_surface_cs_control_t qtm_surface_cs_control1;
+<#else>
+extern qtm_surface_cs2t_control_t qtm_surface_cs_control1;
+</#if>
 </#if>
 extern uint8_t module_error_code;
 
@@ -210,6 +222,55 @@ void datastreamer_output(void)
 	}
 
 #endif
+<#if ENABLE_SURFACE != false>
+#if (SURFACE_MODULE_OUTPUT == 1)
+<#if ENABLE_SURFACE1T != true>
+	for (count_bytes_out = 0u; count_bytes_out < 2u; count_bytes_out++) {
+
+		/* surface contact state */
+		u8temp_output = qtm_surface_cs_control1.qtm_surface_contact_data[count_bytes_out].qt_contact_status;
+		datastreamer_transmit(u8temp_output);
+
+		/* horizontal position */
+		u16temp_output = qtm_surface_cs_control1.qtm_surface_contact_data[count_bytes_out].h_position;
+		datastreamer_transmit((uint8_t)u16temp_output);
+		datastreamer_transmit((uint8_t)(u16temp_output >> 8u));
+
+		/* vertical position */
+		u16temp_output = qtm_surface_cs_control1.qtm_surface_contact_data[count_bytes_out].v_position;
+		datastreamer_transmit((uint8_t)u16temp_output);
+		datastreamer_transmit((uint8_t)(u16temp_output >> 8u));
+
+		/* filtered position */
+		u16temp_output = qtm_surface_cs_control1.qtm_surface_contact_data[count_bytes_out].contact_size;
+		datastreamer_transmit((uint8_t)(u16temp_output & 0x00FFu));
+		datastreamer_transmit((uint8_t)((u16temp_output & 0xFF00u) >> 8u));
+	}
+
+	u8temp_output = qtm_surface_cs_control1.qtm_surface_cs2t_data->qt_surface_cs2t_status;
+	datastreamer_transmit(u8temp_output);
+<#else>
+	/* surface contact state */
+	u8temp_output = qtm_surface_cs_control1.qtm_surface_contact_data->qt_surface_status;
+	datastreamer_transmit(u8temp_output);
+
+	/* horizontal position */
+	u16temp_output = qtm_surface_cs_control1.qtm_surface_contact_data->h_position;
+	datastreamer_transmit((uint8_t)u16temp_output);
+	datastreamer_transmit((uint8_t)(u16temp_output >> 8u));
+
+	/* vertical position */
+	u16temp_output = qtm_surface_cs_control1.qtm_surface_contact_data->v_position;
+	datastreamer_transmit((uint8_t)u16temp_output);
+	datastreamer_transmit((uint8_t)(u16temp_output >> 8u));
+
+	/* filtered position */
+	u16temp_output = qtm_surface_cs_control1.qtm_surface_contact_data->contact_size;
+	datastreamer_transmit((uint8_t)(u16temp_output & 0x00FFu));
+	datastreamer_transmit((uint8_t)((u16temp_output & 0xFF00u) >> 8u));
+</#if>
+#endif
+</#if>
 
 #if (FREQ_HOP_AUTO_MODULE_OUTPUT == 1)
 
