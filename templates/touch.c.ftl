@@ -48,6 +48,12 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include "touch/datastreamer/datastreamer.h"
 </#if>
 
+<#if ENABLE_KRONOCOMM = true>
+#if KRONOCOMM_UART == 1u
+#include "surface2DUtility/kronocommuart.h"
+#endif
+</#if>
+
 /*----------------------------------------------------------------------------
  *   prototypes
  *----------------------------------------------------------------------------*/
@@ -528,6 +534,14 @@ static void qtm_post_process_complete(void)
     datastreamer_output();
 #endif
 </#if>
+
+<#if ENABLE_KRONOCOMM = true>
+#if KRONOCOMM_ENABLE == 1u
+	cpu_irq_disable();
+	Krono_UpdateBuffer();
+	cpu_irq_enable();
+#endif
+</#if>
 }
 
 /*============================================================================
@@ -659,6 +673,9 @@ void touch_process(void)
         p_qtm_control->binding_layer_flags &= ~(1u << reburst_request);
 		}
     }
+#if KRONOCOMM_ENABLE == 1u
+	uart_process();
+#endif
 }
 <#if ENABLE_GESTURE==true>
 uint8_t interrupt_cnt;

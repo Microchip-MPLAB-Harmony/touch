@@ -437,6 +437,16 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /**********************************************************/
 #define DEF_TOUCH_DATA_STREAMER_ENABLE ${(ENABLE_DATA_STREAMER)?then('1u', '0u')}
 
+<#if ENABLE_KRONOCOMM == true>
+#define KRONOCOMM_UART 1u
+#define KRONOCOMM_ENABLE 1u
+#define KRONO_GESTURE_ENABLE 1u
+</#if>
+
+#ifdef __cplusplus
+}
+#endif // __cplusplus
+
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 

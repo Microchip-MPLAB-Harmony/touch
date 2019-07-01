@@ -27,6 +27,13 @@ def onAttachmentConnected(source,target):
         if (Database.getSymbolValue(remoteID, "USART_INTERRUPT_MODE") == True):
             Database.setSymbolValue(remoteID, "USART_INTERRUPT_MODE", False)
 
+    if (connectID == "Touch_sercom_Command"):
+        plibUsed = localComponent.getSymbolByID("TOUCH_SERCOM_INSTANCE")
+        plibUsed.clearValue()
+        plibUsed.setValue(remoteID.upper(), 1)
+        if (Database.getSymbolValue(remoteID, "USART_INTERRUPT_MODE") == True):
+            Database.setSymbolValue(remoteID, "USART_INTERRUPT_MODE", False)
+
 
 def onAttachmentDisconnected(source, target):
     localComponent = source["component"]
@@ -100,6 +107,25 @@ def enableGestureFiles(symbol,event):
         component.getSymbolByID("TOUCH_GESTURE_LIB").setEnabled(False)
         component.getSymbolByID("TOUCH_GESTURE_HEADER").setEnabled(False)
 
+def enable2DSurfaceFtlFiles(symbol,event):
+    component = symbol.getComponent()
+    if(event["value"] == True):
+        #tchKronocommUartHeaderFile.setEnabled(True)
+        component.setDependencyEnabled("Touch_sercom", True)
+        component.getSymbolByID("TOUCH_SERCOM_INSTANCE").setVisible(True)
+        component.getSymbolByID("TOUCH_KRONOCOMM_UART_HEADER").setEnabled(True)
+        component.getSymbolByID("TOUCH_KRONOCOMM_ADAPTOR_HEADER").setEnabled(True)
+        component.getSymbolByID("TOUCH_KRONOCOMM_UART_SOURCE").setEnabled(True)
+        component.getSymbolByID("TOUCH_KRONOCOMM_ADAPTOR_SOURCE").setEnabled(True)
+    else:
+        #tchKronocommUartHeaderFile.setEnabled(False)
+        component.setDependencyEnabled("Touch_sercom", False)
+        component.getSymbolByID("TOUCH_SERCOM_INSTANCE").setVisible(False)
+        component.getSymbolByID("TOUCH_KRONOCOMM_UART_HEADER").setEnabled(False)
+        component.getSymbolByID("TOUCH_KRONOCOMM_ADAPTOR_HEADER").setEnabled(False)
+        component.getSymbolByID("TOUCH_KRONOCOMM_UART_SOURCE").setEnabled(False)
+        component.getSymbolByID("TOUCH_KRONOCOMM_ADAPTOR_SOURCE").setEnabled(False)
+
 autoComponentIDTable = ["rtc"]
 autoConnectTable = [["lib_qtouch", "Touch_timer","rtc", "RTC_TMR"]]
 
@@ -160,7 +186,15 @@ def instantiateComponent(qtouchComponent):
     enableDataStreamerMenu.setDescription("The Data Visualizer allows touch sensor debug information to be relayed on the USART interface to Data Visualizer software tool. This setting should be enabled for initial sensor tuning and can be disabled later to avoid using USART and additionally save code memory. More information can be found in Microchip Developer Help page.")
     enableDataStreamerMenu.setDependencies(enableDataStreamerFtlFiles,["ENABLE_DATA_STREAMER"])
     execfile(Module.getPath() +"/config/datastreamer.py")
-    
+
+    # Enable 2D Surface Visualizer 
+    enableSurfaceUtilityMenu = qtouchComponent.createBooleanSymbol("ENABLE_KRONOCOMM", touchMenu)
+    enableSurfaceUtilityMenu.setLabel("Enable 2D Surface Utility")
+    enableSurfaceUtilityMenu.setDefaultValue(False)
+    enableSurfaceUtilityMenu.setDescription("The 2D Surface Utility allows touch sensor debug information to be relayed on the USART interface to 2D Surface Utility software tool. This setting should be enabled for evaluating gestures and touch performance in surface applications. More information can be found in Microchip Developer Help page.")
+    enableSurfaceUtilityMenu.setDependencies(enable2DSurfaceFtlFiles,["ENABLE_KRONOCOMM"])
+    execfile(Module.getPath() +"/config/Surface_2D_Utility.py")
+
     qtouchTimerComponent = qtouchComponent.createStringSymbol("TOUCH_TIMER_INSTANCE", None)
     qtouchTimerComponent.setLabel("Timer Component Chosen for Touch middleware")
     qtouchTimerComponent.setReadOnly(True)
