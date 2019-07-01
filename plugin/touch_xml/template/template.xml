@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!-- 
+Note 1: For each new clock symbol increase the index id : 
+	    Example: index = "0_0" symbol="abc" value="12" component_id="core"
+				 index = "1_0" symbol="def" value="2"  component_id="core"
+				 index = "2_0" symbol="def" value="5"  component_id="core"
+				 ...
+Note 2: For same same clock symbol different value need to update means :-> increment the count value in each index".
+		Example: index = "0_0" symbol="abc" value="12" component_id="core"
+				 index = "0_1" symbol="abc" value="18" component_id="core"
+				 index = "0_2" symbol="abc" value="25" component_id="core"
+				 ...
+Note 3: condition  name can be any thing. Java will update clock symbols based on condition index id.
+-->
+<!-- 
+Below is the default template for all families. Use this template when you are adding touch support to new family.
+*********************************************************************************************************************-->	
+<clock_settings>
+	<all_clock_symbols_list>
+		<clock index = "" name="" symbol="" component_id="" value=""/>
+	</all_clock_symbols_list>
+	<all_conditions_list>
+		<condition name="" condition_id ="" touch_symbol="" > 
+			<touch_value touch_check_value="" clock_update_index_list=""/>
+		</condition>
+	</all_conditions_list>
+	<common>
+		<default clock_update_index_list=""/>
+		<condition eligable_conditions=""/>
+	</common>
+	<device name="" >
+		<default clock_update_index_list="" />
+		<condition eligable_conditions=""/>
+	</device>
+</clock_settings>
