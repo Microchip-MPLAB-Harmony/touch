@@ -30,14 +30,14 @@ if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
     surface1TLibraryFile.setSourcePath("/src/libraries/0x0021_qtm_surface_cs_cm4.X.a")
     surface1TLibraryFile.setOutputName("0x0021_qtm_surface_cs_cm4.X.a")
     surface1TLibraryFile.setDestPath("/touch/lib/")
-    surface1TLibraryFile.setEnabled(True)
+    surface1TLibraryFile.setEnabled(False)
 else:
     # Library File
     surface1TLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SURFACE1T_LIB", None)
     surface1TLibraryFile.setSourcePath("/src/libraries/0x0021_qtm_surface_cs_cm0p.X.a")
     surface1TLibraryFile.setOutputName("0x0021_qtm_surface_cs_cm0p.X.a")
     surface1TLibraryFile.setDestPath("/touch/lib/")
-    surface1TLibraryFile.setEnabled(True)
+    surface1TLibraryFile.setEnabled(False)
 # Header File
 surface1THeaderFile = qtouchComponent.createFileSymbol("TOUCH_SURFACE1T_HEADER", None)
 surface1THeaderFile.setSourcePath("/src/qtm_surface_cs_0x0021_api.h")
@@ -46,6 +46,7 @@ surface1THeaderFile.setDestPath("/touch/")
 surface1THeaderFile.setProjectPath("config/" + configName + "/touch/")
 surface1THeaderFile.setType("HEADER")
 surface1THeaderFile.setMarkup(False)
+surface1THeaderFile.setEnabled(False)
 
 #SURFACE 2T
 if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
@@ -54,14 +55,14 @@ if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
     surface2TLibraryFile.setSourcePath("/src/libraries/0x0025_qtm_surface_cs_2t_cm4.X.a")
     surface2TLibraryFile.setOutputName("0x0025_qtm_surface_cs_2t_cm4.X.a")
     surface2TLibraryFile.setDestPath("/touch/lib/")
-    surface2TLibraryFile.setEnabled(True)
+    surface2TLibraryFile.setEnabled(False)
 else:
     # Library File
     surface2TLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SURFACE2T_LIB", None)
     surface2TLibraryFile.setSourcePath("/src/libraries/0x0025_qtm_surface_cs_2t_cm0p.X.a")
     surface2TLibraryFile.setOutputName("0x0025_qtm_surface_cs_2t_cm0p.X.a")
     surface2TLibraryFile.setDestPath("/touch/lib/")
-    surface2TLibraryFile.setEnabled(True)
+    surface2TLibraryFile.setEnabled(False)
 # Header File
 surface2THeaderFile = qtouchComponent.createFileSymbol("TOUCH_SURFACE2T_HEADER", None)
 surface2THeaderFile.setSourcePath("/src/qtm_surface_cs2t_0x0025_api.h")
@@ -70,6 +71,7 @@ surface2THeaderFile.setDestPath("/touch/")
 surface2THeaderFile.setProjectPath("config/" + configName + "/touch/")
 surface2THeaderFile.setType("HEADER")
 surface2THeaderFile.setMarkup(False)
+surface2THeaderFile.setEnabled(False)
 
 ################################################################################
 #### Components ####

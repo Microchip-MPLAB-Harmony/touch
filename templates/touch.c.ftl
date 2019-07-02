@@ -615,19 +615,23 @@ Input  : none
 Output : none
 Notes  :
 ============================================================================*/
+volatile uint8_t time_to_measure_touch_var =0;
 void touch_process(void)
 {
     touch_ret_t touch_ret;
 
-    /* check the time_to_measure_touch flag for Touch Acquisition */
-    if (p_qtm_control->binding_layer_flags & (1u << time_to_measure_touch)) {
+    /* check the time_to_measure_touch for Touch Acquisition */
+    //if (p_qtm_control->binding_layer_flags & (1u << time_to_measure_touch))
+    if (time_to_measure_touch_var)
+	{
         /* Do the acquisition */
         touch_ret = qtm_lib_start_acquisition(0);
 
         /* if the Acquistion request was successful then clear the request flag */
         if (TOUCH_SUCCESS == touch_ret) {
             /* Clear the Measure request flag */
-            p_qtm_control->binding_layer_flags &= (uint8_t) ~(1u << time_to_measure_touch);
+            //p_qtm_control->binding_layer_flags &= (uint8_t) ~(1u << time_to_measure_touch);
+			time_to_measure_touch_var = 0;
         }
     }
 
@@ -650,7 +654,8 @@ void touch_process(void)
     
 
     if (p_qtm_control->binding_layer_flags & (1u << reburst_request)) {
-        p_qtm_control->binding_layer_flags |= (1u << time_to_measure_touch);
+        //p_qtm_control->binding_layer_flags |= (1u << time_to_measure_touch);
+		time_to_measure_touch_var = 1;
         p_qtm_control->binding_layer_flags &= ~(1u << reburst_request);
 		}
     }
@@ -677,12 +682,14 @@ void touch_timer_handler(void)
 	if (interrupt_cnt >= DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
 		interrupt_cnt = 0;
 		/* Count complete - Measure touch sensors */
-		qtm_control.binding_layer_flags |= (1u << time_to_measure_touch);
+		//qtm_control.binding_layer_flags |= (1u << time_to_measure_touch);
+		time_to_measure_touch_var = 1;
 		qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 	}
 <#else>
     /* Count complete - Measure touch sensors */
-    qtm_control.binding_layer_flags |= (1u << time_to_measure_touch);
+    //qtm_control.binding_layer_flags |= (1u << time_to_measure_touch);
+	time_to_measure_touch_var = 1;
 
     qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 </#if>

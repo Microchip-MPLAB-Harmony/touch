@@ -8,14 +8,14 @@ if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
     gestureLibraryFile.setSourcePath("/src/libraries/0x0023_qtm_surface_gestures_cm4.X.a")
     gestureLibraryFile.setOutputName("0x0023_qtm_surface_gestures_cm4.X.a")
     gestureLibraryFile.setDestPath("/touch/lib/")
-    gestureLibraryFile.setEnabled(True)
+    gestureLibraryFile.setEnabled(False)
 else:
     # Library File
     gestureLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_GESTURE_LIB", None)
     gestureLibraryFile.setSourcePath("/src/libraries/0x0023_qtm_surface_gestures_cm0p.X.a")
     gestureLibraryFile.setOutputName("0x0023_qtm_surface_gestures_cm0p.X.a")
     gestureLibraryFile.setDestPath("/touch/lib/")
-    gestureLibraryFile.setEnabled(True)
+    gestureLibraryFile.setEnabled(False)
 # Header File
 gestureHeaderFile = qtouchComponent.createFileSymbol("TOUCH_GESTURE_HEADER", None)
 gestureHeaderFile.setSourcePath("/src/qtm_gestures_2d_0x0023_api.h")
@@ -24,6 +24,7 @@ gestureHeaderFile.setDestPath("/touch/")
 gestureHeaderFile.setProjectPath("config/" + configName + "/touch/")
 gestureHeaderFile.setType("HEADER")
 gestureHeaderFile.setMarkup(False)
+gestureHeaderFile.setEnabled(False)
 
 ################################################################################
 #### Components ####

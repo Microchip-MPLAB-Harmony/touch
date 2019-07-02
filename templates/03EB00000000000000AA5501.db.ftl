@@ -298,7 +298,8 @@ ${columns}, // Number of Columns
 <#if tmp_txt == "SCROLLER_TYPE_SLIDER" > <#assign temp_string=temp_string + [("1:"+(cnt)+":"+("Slider")+" "+(sen_type_sli_cnt?size)+"["+(temp_val)+"];")] >
 <#elseif tmp_txt == "SCROLLER_TYPE_WHEEL" > <#assign temp_string = temp_string + [("1:"+(cnt)+":"+("Wheel")+" "+(sen_type_whe_cnt?size)+"["+(temp_val)+"];")] >
 </#if>
-<#else>
+<#elseif (ENABLE_SURFACE == false)>
+<#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Button"+" "+(sen_type_but_cnt?size)+";")] > <#assign sen_type_but_cnt = sen_type_but_cnt +[1]>
 </#if>
 <#elseif (ENABLE_SURFACE == false)>
 <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Button"+" "+(sen_type_but_cnt?size)+";")] > <#assign sen_type_but_cnt = sen_type_but_cnt +[1]>

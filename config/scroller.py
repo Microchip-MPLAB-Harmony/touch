@@ -7,14 +7,14 @@ if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
     scrollerLibraryFile.setSourcePath("/src/libraries/0x000b_qtm_scroller_cm4.X.a")
     scrollerLibraryFile.setOutputName("0x000b_qtm_scroller_cm4.X.a")
     scrollerLibraryFile.setDestPath("/touch/lib/")
-    scrollerLibraryFile.setEnabled(True)
+    scrollerLibraryFile.setEnabled(False)
 else:
     # Library File
     scrollerLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SCR_LIB", None)
     scrollerLibraryFile.setSourcePath("/src/libraries/0x000b_qtm_scroller_cm0p.X.a")
     scrollerLibraryFile.setOutputName("0x000b_qtm_scroller_cm0p.X.a")
     scrollerLibraryFile.setDestPath("/touch/lib/")
-    scrollerLibraryFile.setEnabled(True)
+    scrollerLibraryFile.setEnabled(False)
 # Header File
 scrollerHeaderFile = qtouchComponent.createFileSymbol("TOUCH_SCR_HEADER", None)
 scrollerHeaderFile.setSourcePath("/src/qtm_scroller_0x000b_api.h")
@@ -22,6 +22,7 @@ scrollerHeaderFile.setOutputName("qtm_scroller_0x000b_api.h")
 scrollerHeaderFile.setDestPath("/touch/")
 scrollerHeaderFile.setProjectPath("config/" + configName + "/touch/")
 scrollerHeaderFile.setType("HEADER")
+scrollerHeaderFile.setEnabled(False)
 scrollerHeaderFile.setMarkup(False)
 
 ################################################################################

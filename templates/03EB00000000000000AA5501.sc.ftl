@@ -74,8 +74,8 @@ vposition${i}, ${total_channels+offset} (Column:2;Row:${i})
 conctsize${i}, ${total_channels+offset} (Column:3;Row:${i})
 </#list>
 
-<#if ENABLE_SURFACE1T != true>
 <#assign offset = offset +1>
+<#if ENABLE_SURFACE1T != true>
 Sur2TStatus0, ${total_channels+offset} (Column:0;Row:0)
 <#assign offset = offset +1>
 Sur2TStatus0, ${total_channels+offset} (Column:0;Row:0)
