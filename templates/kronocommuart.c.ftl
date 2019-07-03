@@ -1,4 +1,5 @@
-#include "KronoCommuart_sam.h"
+#include "touch/datastreamer/KronoCommuart_sam.h"
+#include "definitions.h"
 
 #if KRONOCOMM_UART == 1u
 
@@ -68,7 +69,7 @@ uint8_t uart_get_char(void)
 void uart_send_data_wait(uint8_t data)
 {
 	uart_tx_in_progress = 1;
-	io_write(uart_io_ptr, &data, 1);
+    ${.vars["${TOUCH_SERCOM_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Write(&data, 1);
 	while (uart_tx_in_progress == 1)
 		;
 }
@@ -79,9 +80,11 @@ void uart_send_data(void)
 		uart_tx_in_progress = 1;
 
 		write_buf_read_ptr = 0;
-		io_write(uart_io_ptr, &uart_runtime_data[write_buf_read_ptr++], 1);
+        ${.vars["${TOUCH_SERCOM_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Write(&uart_runtime_data[write_buf_read_ptr++], 1);
 	}
 }
+
+uintptr_t usart_ptr;
 
 void uart_init_debug_data(void)
 {
@@ -108,6 +111,12 @@ void uart_init_debug_data(void)
 	uart_runtime_data[UART_DELTA_POS + 4] = 0x00;
 	uart_runtime_data[UART_DELTA_POS + 5] = UART_DELTA_ADDR;
 	uart_runtime_data[UART_DELTA_END]     = UART_FOOTER;
+
+    ${.vars["${TOUCH_SERCOM_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_WriteCallbackRegister(krono_tx_complete_callback, usart_ptr);
+    ${.vars["${TOUCH_SERCOM_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_ReadCallbackRegister(krono_rx_complete_callback, usart_ptr);
+
+    ${.vars["${TOUCH_SERCOM_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Read(&read_buffer[read_buf_write_ptr], 1);
+
 }
 
 void uart_send_touch_gesture_data(void)
@@ -171,6 +180,7 @@ void uart_send_header(uint8_t len, uint8_t id, uint8_t address)
 void uart_process(void)
 {
 	uint8_t l_trans_id = 0, l_addr = 0, l_len = 0;
+    
 
 	if (uart_new_data_available == 1) {
 		uart_new_data_available = 0;
@@ -246,7 +256,7 @@ void uart_process(void)
 	}
 }
 
-void krono_tx_complete_callback(struct usart_async_descriptor *data)
+void krono_tx_complete_callback(uintptr_t usart_ptr)
 {
 	// USART TX complete interrupt
 	if (uart_send_ges_data_flag != 1) {
@@ -254,7 +264,7 @@ void krono_tx_complete_callback(struct usart_async_descriptor *data)
 	} else {
 
 		if (write_buf_read_ptr < (UART_GES_LEN + UART_SIG_LEN + UART_DELTA_LEN + UART_FIXED * 3)) {
-			io_write(uart_io_ptr, &uart_runtime_data[write_buf_read_ptr], 1);
+			${.vars["${TOUCH_SERCOM_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Write(&uart_runtime_data[write_buf_read_ptr], 1);
 			write_buf_read_ptr++;
 		} else {
 			uart_tx_in_progress = 0;
@@ -262,14 +272,14 @@ void krono_tx_complete_callback(struct usart_async_descriptor *data)
 	}
 }
 
-void krono_rx_complete_callback(struct usart_async_descriptor *data)
+void krono_rx_complete_callback(uintptr_t usart_ptr)
 {
-	io_read(uart_io_ptr, &read_buffer[read_buf_write_ptr], 1);
+    read_buf_write_ptr++;
+    if (read_buf_write_ptr == UART_RX_BUF_LEN) {
+        read_buf_write_ptr = 0;
+    }
 
-	read_buf_write_ptr++;
-	if (read_buf_write_ptr == UART_RX_BUF_LEN) {
-		read_buf_write_ptr = 0;
-	}
+    ${.vars["${TOUCH_SERCOM_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Read(&read_buffer[read_buf_write_ptr], 1);
 }
 
 #endif

@@ -18,13 +18,14 @@ Copyright (c) 2019 Microchip. All rights reserved.
 /*----------------------------------------------------------------------------
   include files
 ----------------------------------------------------------------------------*/
-#include "../touch.h"
+#include "touch/touch.h"
 
 #if KRONOCOMM_ENABLE == 1u
-#include "kronocommadaptor.h"
-#endif
+#include "touch/datastreamer/kronocommadaptor.h"
 #if KRONOCOMM_UART == 1u
-#include "KronoCommuart_sam.h"
+ 
+#include "touch/datastreamer/KronoCommuart_sam.h"
+
 #endif
 
 static uint8_t                   writeback_req = 0u;
@@ -41,7 +42,7 @@ extern qtm_gestures_2d_data_t    qtm_gestures_2d_data;
 #endif
 extern qtm_touch_key_data_t qtlib_key_data_set1[DEF_NUM_SENSORS];
 
-extern qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
+extern qtm_acq_samd21_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
 
 extern qtm_touch_key_config_t qtlib_key_configs_set1[DEF_NUM_SENSORS];
 

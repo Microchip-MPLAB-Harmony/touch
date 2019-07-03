@@ -443,10 +443,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define KRONO_GESTURE_ENABLE 1u
 </#if>
 
-#ifdef __cplusplus
-}
-#endif // __cplusplus
-
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 

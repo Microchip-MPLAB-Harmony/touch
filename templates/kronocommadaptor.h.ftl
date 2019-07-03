@@ -2,7 +2,7 @@
 #define KRONOCOMMADAPTOR_H_
 
 #include <stdint.h>
-#include "../touch.h"
+#include "touch/touch.h"
 
 #define GESTURECFGRAM_SIZE 14u
 
@@ -92,7 +92,7 @@ typedef struct _TOUCHRAM {
 #define TOUCHSTATE_GES 0x02
 #define TOUCHSTATE_nGES 0xfd
 
-
+#endif /* KRONOCOMMADAPTOR_H_ */
 
 uint8_t *Adaptor_QueryCoreValues(uint8_t addressOffset);
 uint8_t *Adaptor_QueryCFGValues(uint8_t addressOffset);
@@ -109,4 +109,3 @@ void Krono_UpdateBuffer(void);
 void InitIRQPin(void);
 void SetIRQPin(void);
 void ClearIRQPin(void);
-#endif /* KRONOCOMMADAPTOR_H_ */

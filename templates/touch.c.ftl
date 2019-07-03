@@ -47,11 +47,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#if ENABLE_DATA_STREAMER = true>
 #include "touch/datastreamer/datastreamer.h"
 </#if>
-
 <#if ENABLE_KRONOCOMM = true>
-#if KRONOCOMM_UART == 1u
-#include "surface2DUtility/kronocommuart.h"
-#endif
+#include "touch/datastreamer/kronocommadaptor.h"
+#include "touch/datastreamer/kronocommuart_sam.h"
 </#if>
 
 /*----------------------------------------------------------------------------
@@ -536,10 +534,9 @@ static void qtm_post_process_complete(void)
 </#if>
 
 <#if ENABLE_KRONOCOMM = true>
+
 #if KRONOCOMM_ENABLE == 1u
-	cpu_irq_disable();
 	Krono_UpdateBuffer();
-	cpu_irq_enable();
 #endif
 </#if>
 }

@@ -1,13 +1,14 @@
 #ifndef UART_H_
 #define UART_H_
 
-#include "../touch.h"
-#include "kronocommadaptor.h"
+#include "definitions.h"                // SYS function prototypes
+#include "touch/touch.h"
+#include "touch/datastreamer/kronocommadaptor.h"
 
-void uart_init(void);
+void uart_init_debug_data(void);
 void uart_process(void);
-void krono_rx_complete_callback(struct usart_async_descriptor *data);
-void krono_tx_complete_callback(struct usart_async_descriptor *data);
+void krono_rx_complete_callback(uintptr_t);
+void krono_tx_complete_callback(uintptr_t);
 void uart_send_touch_gesture_data(void);
 
 /* Register MAP https://microchip.app.box.com/file/139775393441 */

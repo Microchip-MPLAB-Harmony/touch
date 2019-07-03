@@ -8,7 +8,7 @@
 # Header File
 tchKronocommUartHeaderFile = qtouchComponent.createFileSymbol("TOUCH_KRONOCOMM_UART_HEADER", None)
 tchKronocommUartHeaderFile.setSourcePath("/templates/kronocommuart.h.ftl")
-tchKronocommUartHeaderFile.setOutputName("kronocommuart.h")
+tchKronocommUartHeaderFile.setOutputName("kronocommuart_sam.h")
 tchKronocommUartHeaderFile.setDestPath("/touch/datastreamer/")
 tchKronocommUartHeaderFile.setProjectPath("config/" + configName + "/touch/datastreamer/")
 tchKronocommUartHeaderFile.setType("HEADER")
@@ -28,7 +28,7 @@ tchKronocommUartHeaderFile.setMarkup(False)
 # Source File
 tchKronocommUartSourceFile = qtouchComponent.createFileSymbol("TOUCH_KRONOCOMM_UART_SOURCE", None)
 tchKronocommUartSourceFile.setSourcePath("/templates/kronocommuart.c.ftl")
-tchKronocommUartSourceFile.setOutputName("kronocommuart.c")
+tchKronocommUartSourceFile.setOutputName("kronocommuart_sam.c")
 tchKronocommUartSourceFile.setDestPath("/touch/datastreamer/")
 tchKronocommUartSourceFile.setProjectPath("config/" + configName + "/touch/datastreamer/")
 tchKronocommUartSourceFile.setType("SOURCE")
