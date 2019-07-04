@@ -52,7 +52,7 @@ def autoTuneFunc(symbol,event):
     global touchAcqLibraryFile
     global touchAcqAutoLibraryFile
 
-    if(event["value"] == "CAL_AUTO_TUNE_NONE"):
+    if(event["value"] == 0):
         touchAcqAutoLibraryFile.setEnabled(False)
         touchAcqLibraryFile.setEnabled(True)
     else:

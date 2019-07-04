@@ -73,7 +73,7 @@
 	<#if SENSE_TECHNOLOGY == "NODE_SELFCAP">
     <#lt>#define NODE_${i}_PARAMS                                                                                               \
 		<#lt>{                                                                                                                  \
-		<#lt>   X_NONE, ${.vars["SELFCAP-INPUT_" + i]}, NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, ${.vars["DEF_NOD_PTC_PRESCALER" + i]}),\ NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
+		<#lt>   X_NONE, ${.vars["SELFCAP-INPUT_" + i]}, NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, ${.vars["DEF_NOD_PTC_PRESCALER" + i]}), NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
 		<#lt>}
 	</#if>
 </#list>
