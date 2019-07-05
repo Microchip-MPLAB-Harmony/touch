@@ -69,7 +69,7 @@ uint8_t uart_get_char(void)
 void uart_send_data_wait(uint8_t data)
 {
 	uart_tx_in_progress = 1;
-    ${.vars["${TOUCH_SERCOM_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Write(&data, 1);
+    ${.vars["${TOUCH_SERCOM_KRONO_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Write(&data, 1);
 	while (uart_tx_in_progress == 1)
 		;
 }
@@ -80,7 +80,7 @@ void uart_send_data(void)
 		uart_tx_in_progress = 1;
 
 		write_buf_read_ptr = 0;
-        ${.vars["${TOUCH_SERCOM_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Write(&uart_runtime_data[write_buf_read_ptr++], 1);
+        ${.vars["${TOUCH_SERCOM_KRONO_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Write(&uart_runtime_data[write_buf_read_ptr++], 1);
 	}
 }
 
@@ -112,10 +112,10 @@ void uart_init_debug_data(void)
 	uart_runtime_data[UART_DELTA_POS + 5] = UART_DELTA_ADDR;
 	uart_runtime_data[UART_DELTA_END]     = UART_FOOTER;
 
-    ${.vars["${TOUCH_SERCOM_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_WriteCallbackRegister(krono_tx_complete_callback, usart_ptr);
-    ${.vars["${TOUCH_SERCOM_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_ReadCallbackRegister(krono_rx_complete_callback, usart_ptr);
+    ${.vars["${TOUCH_SERCOM_KRONO_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_WriteCallbackRegister(krono_tx_complete_callback, usart_ptr);
+    ${.vars["${TOUCH_SERCOM_KRONO_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_ReadCallbackRegister(krono_rx_complete_callback, usart_ptr);
 
-    ${.vars["${TOUCH_SERCOM_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Read(&read_buffer[read_buf_write_ptr], 1);
+    ${.vars["${TOUCH_SERCOM_KRONO_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Read(&read_buffer[read_buf_write_ptr], 1);
 
 }
 
@@ -264,7 +264,7 @@ void krono_tx_complete_callback(uintptr_t usart_ptr)
 	} else {
 
 		if (write_buf_read_ptr < (UART_GES_LEN + UART_SIG_LEN + UART_DELTA_LEN + UART_FIXED * 3)) {
-			${.vars["${TOUCH_SERCOM_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Write(&uart_runtime_data[write_buf_read_ptr], 1);
+			${.vars["${TOUCH_SERCOM_KRONO_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Write(&uart_runtime_data[write_buf_read_ptr], 1);
 			write_buf_read_ptr++;
 		} else {
 			uart_tx_in_progress = 0;
@@ -279,7 +279,7 @@ void krono_rx_complete_callback(uintptr_t usart_ptr)
         read_buf_write_ptr = 0;
     }
 
-    ${.vars["${TOUCH_SERCOM_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Read(&read_buffer[read_buf_write_ptr], 1);
+    ${.vars["${TOUCH_SERCOM_KRONO_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Read(&read_buffer[read_buf_write_ptr], 1);
 }
 
 #endif

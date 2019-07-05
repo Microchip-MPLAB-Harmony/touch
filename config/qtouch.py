@@ -27,12 +27,12 @@ def onAttachmentConnected(source,target):
         if (Database.getSymbolValue(remoteID, "USART_INTERRUPT_MODE") == True):
             Database.setSymbolValue(remoteID, "USART_INTERRUPT_MODE", False)
 
-    if (connectID == "Touch_sercom_Command"):
-        plibUsed = localComponent.getSymbolByID("TOUCH_SERCOM_INSTANCE")
+    if (connectID == "Touch_sercom_Krono"):
+        plibUsed = localComponent.getSymbolByID("TOUCH_SERCOM_KRONO_INSTANCE")
         plibUsed.clearValue()
         plibUsed.setValue(remoteID.upper(), 1)
-        if (Database.getSymbolValue(remoteID, "USART_INTERRUPT_MODE") == True):
-            Database.setSymbolValue(remoteID, "USART_INTERRUPT_MODE", False)
+        if (Database.getSymbolValue(remoteID, "USART_INTERRUPT_MODE") == False):
+            Database.setSymbolValue(remoteID, "USART_INTERRUPT_MODE", True)
 
 
 def onAttachmentDisconnected(source, target):
@@ -48,6 +48,9 @@ def onAttachmentDisconnected(source, target):
     
     if (connectID == "Touch_sercom"):
         plibUsed = localComponent.getSymbolByID("TOUCH_SERCOM_INSTANCE")
+        plibUsed.clearValue()
+    if (connectID == "Touch_sercom_Krono"):
+        plibUsed = localComponent.getSymbolByID("TOUCH_SERCOM_KRONO_INSTANCE")
         plibUsed.clearValue()
 
 def enableHopFiles(symbol,event):
@@ -111,16 +114,16 @@ def enable2DSurfaceFtlFiles(symbol,event):
     component = symbol.getComponent()
     if(event["value"] == True):
         #tchKronocommUartHeaderFile.setEnabled(True)
-        component.setDependencyEnabled("Touch_sercom", True)
-        component.getSymbolByID("TOUCH_SERCOM_INSTANCE").setVisible(True)
+        component.setDependencyEnabled("Touch_sercom_Krono", True)
+        component.getSymbolByID("TOUCH_SERCOM_KRONO_INSTANCE").setVisible(True)
         component.getSymbolByID("TOUCH_KRONOCOMM_UART_HEADER").setEnabled(True)
         component.getSymbolByID("TOUCH_KRONOCOMM_ADAPTOR_HEADER").setEnabled(True)
         component.getSymbolByID("TOUCH_KRONOCOMM_UART_SOURCE").setEnabled(True)
         component.getSymbolByID("TOUCH_KRONOCOMM_ADAPTOR_SOURCE").setEnabled(True)
     else:
         #tchKronocommUartHeaderFile.setEnabled(False)
-        component.setDependencyEnabled("Touch_sercom", False)
-        component.getSymbolByID("TOUCH_SERCOM_INSTANCE").setVisible(False)
+        component.setDependencyEnabled("Touch_sercom_Krono", False)
+        component.getSymbolByID("TOUCH_SERCOM_KRONO_INSTANCE").setVisible(False)
         component.getSymbolByID("TOUCH_KRONOCOMM_UART_HEADER").setEnabled(False)
         component.getSymbolByID("TOUCH_KRONOCOMM_ADAPTOR_HEADER").setEnabled(False)
         component.getSymbolByID("TOUCH_KRONOCOMM_UART_SOURCE").setEnabled(False)
@@ -201,6 +204,12 @@ def instantiateComponent(qtouchComponent):
     qtouchTimerComponent.setDefaultValue("")
     
     qtouchSercomComponent = qtouchComponent.createStringSymbol("TOUCH_SERCOM_INSTANCE", None)
+    qtouchSercomComponent.setLabel("Sercom Component Chosen for Touch middleware")
+    qtouchSercomComponent.setReadOnly(True)
+    qtouchSercomComponent.setVisible(False)
+    qtouchSercomComponent.setDefaultValue("")
+
+    qtouchSercomComponent = qtouchComponent.createStringSymbol("TOUCH_SERCOM_KRONO_INSTANCE", None)
     qtouchSercomComponent.setLabel("Sercom Component Chosen for Touch middleware")
     qtouchSercomComponent.setReadOnly(True)
     qtouchSercomComponent.setVisible(False)

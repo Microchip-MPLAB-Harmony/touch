@@ -19,6 +19,8 @@ def loadModule():
                     qtouchComponent.setDependencyEnabled("Touch_timer", True)
                     qtouchComponent.addDependency("Touch_sercom", "UART", None, False, False)
                     qtouchComponent.setDependencyEnabled("Touch_sercom", False)
+                    qtouchComponent.addDependency("Touch_sercom_Krono", "UART", None, False, False)
+                    qtouchComponent.setDependencyEnabled("Touch_sercom_Krono", False)
                 elif x in ADCDevices:
                     qtouchComponent = Module.CreateComponent("lib_qtouch", "Touch Library", "/Touch/", "config/qtouch.py")
                     qtouchComponent.setDisplayType("Peripheral Touch Controller(PTC)")
@@ -27,3 +29,5 @@ def loadModule():
                     qtouchComponent.setDependencyEnabled("Touch_timer", True)
                     qtouchComponent.addDependency("Touch_sercom", "UART", None, False, False)
                     qtouchComponent.setDependencyEnabled("Touch_sercom", False)
+                    qtouchComponent.addDependency("Touch_sercom_Krono", "UART", None, False, False)
+                    qtouchComponent.setDependencyEnabled("Touch_sercom_Krono", False)
