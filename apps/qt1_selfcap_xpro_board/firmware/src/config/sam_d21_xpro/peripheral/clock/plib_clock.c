@@ -120,8 +120,9 @@ static void GCLK1_Initialize(void)
 
 static void GCLK2_Initialize(void)
 {
-    GCLK_REGS->GCLK_GENCTRL = GCLK_GENCTRL_SRC(4) | GCLK_GENCTRL_GENEN_Msk | GCLK_GENCTRL_ID(2);
+    GCLK_REGS->GCLK_GENCTRL = GCLK_GENCTRL_SRC(3) | GCLK_GENCTRL_GENEN_Msk | GCLK_GENCTRL_ID(2);
 
+    GCLK_REGS->GCLK_GENDIV = GCLK_GENDIV_DIV(31) | GCLK_GENDIV_ID(2);
     while((GCLK_REGS->GCLK_STATUS & GCLK_STATUS_SYNCBUSY_Msk) == GCLK_STATUS_SYNCBUSY_Msk)
     {
         /* wait for the Generator 2 synchronization */

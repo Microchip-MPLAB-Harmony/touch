@@ -20,13 +20,14 @@ This is for SAMD20, SAMD21 Family
 		<clock index = "12_0" symbol="GCLK_2_SRC" value="3" component_id= "core" name="GCLK2 Source" />
 		<clock index = "13_0" symbol="GCLK_3_SRC" value="6" component_id= "core" name="GCLK3 Source" />
 		<clock index = "14_0" symbol="GCLK_3_DIV" value="125" component_id= "core" name="GCLK3 division factor" />
-		<clock index = "15_0" symbol="RTC_MODE0_PRESCALER" value="5" component_id= "rtc" name="RTC pre-scaled by 32" />
-		<clock index = "16_0" symbol="NVM_RWS" value="4" component_id= "nvmctrl" name="Wait state - 4" />		
+		<clock index = "15_0" symbol="RTC_MODE0_PRESCALER" value="0" component_id= "rtc" name="RTC pre-scaled by 1" />
+		<clock index = "16_0" symbol="NVM_RWS" value="4" component_id= "nvmctrl" name="Wait state - 4" />
+		<clock index = "17_0" symbol="GCLK_2_DIV" value="31" component_id= "core" name="GCLK2 Div" />		
 	</all_clock_symbols_list>
 	<all_conditions_list>
 		<condition />
 	</all_conditions_list>
 	<common>
-		<default clock_update_index_list="0_0,1_0,2_0,3_0,4_0,5_0,6_0,7_0,8_0,9_0,10_0,11_0,12_0,13_0,14_0,15_0,16_0"/>
+		<default clock_update_index_list="0_0,1_0,2_0,3_0,4_0,5_0,6_0,7_0,8_0,9_0,10_0,11_0,12_0,13_0,14_0,15_0,16_0,17_0"/>
 	</common>
 </clock_settings>

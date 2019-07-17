@@ -3,6 +3,7 @@
 
 
 
+
 {
 0,
 'T','o','u','c','h',' ','D','a','t','a',' ','V','i','s','u','a','l','i','z','e','r','\0', //heading
@@ -114,22 +115,33 @@ DB_TYPE_TABLE, // Element Type
 
 
 
- 
+
+
 
  
 
- 
 
  
 
- 
- 
 
  
 
- 
 
  
+
+
+ 
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
 {
 0:0:1, // Dashboard ID
 80, // Element ID
@@ -181,22 +193,33 @@ DB_TYPE_TABLE, // Element Type
 
 
 
- 
+
+
 
  
 
- 
 
  
 
- 
- 
 
  
 
- 
 
  
+
+
+ 
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
 {
 0:0:4, // Dashboard ID
 82, // Element ID
@@ -837,6 +860,10 @@ DB_TYPE_SIGNAL, // Element Type
 128, 0, 255, 0, // Color On
 128, 255, 0, 0, // Color Off
 };
+
+
+
+
 {
 0:0:2, // Dashboard ID
 28, // Element ID
@@ -1042,22 +1069,33 @@ DB_TYPE_TABLE, // Element Type
 
 
 
- 
+
+
 
  
 
- 
 
  
 
- 
- 
 
  
 
- 
 
  
+
+
+ 
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
 {
 0:0:3, // Dashboard ID
 102, // Element ID
@@ -1109,22 +1147,33 @@ DB_TYPE_TABLE, // Element Type
 
 
 
- 
+
+
 
  
 
- 
 
  
 
- 
- 
 
  
 
- 
 
  
+
+
+ 
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
 {
 0:0:4, // Dashboard ID
 104, // Element ID

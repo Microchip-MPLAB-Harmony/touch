@@ -1,4 +1,5 @@
 
+
 State0, 0 (Column:0;Row:0)
 Delta0, 0 (Column:1;Row:0)
 Threshold0, 0 (Column:2;Row:0)
@@ -8,6 +9,7 @@ Threshold0, 1 (Column:2;Row:0)
 
 State0, 2
 State0, 3
+
 
 
 Signal0,4(visible:0)
@@ -48,3 +50,4 @@ FrameCounter, 10 (Column:0;Row:0)
 QTouchLibError, 10 (Column:0;Row:1)
 FrameCounter, 11 (Column:0;Row:0)
 QTouchLibError, 11 (Column:0;Row:1)
+

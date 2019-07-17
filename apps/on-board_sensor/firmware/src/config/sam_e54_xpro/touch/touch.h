@@ -83,7 +83,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /* Defines the interrupt priority for the PTC. Set low priority to PTC interrupt for applications having interrupt time
  * constraints.
  */
-#define DEF_PTC_INTERRUPT_PRIORITY 3
+#define DEF_PTC_INTERRUPT_PRIORITY 7
 
 /* Calibration option to ensure full charge transfer */
 /* Bits 7:0 = XX | TT SELECT_TAU | X | CAL_OPTION */
@@ -114,9 +114,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  * {X-line, Y-line, Charge Share Delay, NODE_RSEL_PRSC(series resistor, prescaler), NODE_G(Analog Gain , Digital Gain),
  * filter level}
  */
-
-
 	
+
 #define NODE_0_PARAMS                                                                                               \
 {                                                                                                                  \
    X_NONE, Y(10), 10, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
@@ -194,6 +193,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define DEF_MAX_ON_DURATION 0
 
 
+
+
 /**********************************************************/
 /********* Frequency Hop Module ****************/
 /**********************************************************/
@@ -230,6 +231,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /***************** Communication - Data Streamer ******************/
 /**********************************************************/
 #define DEF_TOUCH_DATA_STREAMER_ENABLE 1u
+
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

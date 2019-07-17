@@ -64,7 +64,7 @@
         </Integer>
         <Integer dnOrder="11" id="GCLK_1_DIV">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="lib_qtouch" value="12"/>
+            <User dnOrder="0" value="12"/>
           </Values>
         </Integer>
         <Integer dnOrder="12" id="GCLK_1_DIVIDER_VALUE">
@@ -154,7 +154,7 @@
         </KeyValueSet>
         <Boolean dnOrder="28" id="GCLK_INST_NUM1">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="lib_qtouch" value="true"/>
+            <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
         <Integer dnOrder="29" id="GCLK_IO_0_FREQ">
@@ -474,7 +474,7 @@
         </String>
         <String dnOrder="92" id="PORT_GROUP_0_PINCFG15">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0x6"/>
+            <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
         <String dnOrder="93" id="PORT_GROUP_0_PMUX7">
@@ -826,16 +826,16 @@
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="19" id="FREQ_AUTOTUNE">
+        <Boolean dnOrder="19" id="ENABLE_SCROLLER">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="20" id="FREQ_HOP_STEPS">
+        <Boolean dnOrder="20" id="FREQ_AUTOTUNE">
           <Values dnOrder="0">
-            <User dnOrder="0" value="3"/>
+            <User dnOrder="0" value="true"/>
           </Values>
-        </Integer>
+        </Boolean>
         <KeyValueSet dnOrder="21" id="SELFCAP-INPUT_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="23"/>
@@ -970,27 +970,50 @@
             </Boolean>
           </Attributes>
         </Library>
-        <Integer dnOrder="45" id="TOUCH_KEY_ENABLE_CNT">
+        <File dnOrder="45" id="TOUCH_HOP_HEADER">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <Library dnOrder="46" id="TOUCH_HOP_LIB">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </Library>
+        <Integer dnOrder="47" id="TOUCH_KEY_ENABLE_CNT">
           <Values dnOrder="0">
             <User dnOrder="0" value="5"/>
           </Values>
         </Integer>
-        <Integer dnOrder="46" id="TOUCH_SCROLLER_ENABLE_CNT">
+        <Integer dnOrder="48" id="TOUCH_SCROLLER_ENABLE_CNT">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
         </Integer>
-        <Integer dnOrder="47" id="TOUCH_SCR_SIZE0">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="3"/>
-          </Values>
-        </Integer>
-        <Integer dnOrder="48" id="TOUCH_SCR_START_KEY0">
+        <File dnOrder="49" id="TOUCH_SCR_HEADER">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <Library dnOrder="50" id="TOUCH_SCR_LIB">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Library>
+        <Integer dnOrder="51" id="TOUCH_SCR_START_KEY0">
           <Values dnOrder="0">
             <User dnOrder="0" value="2"/>
           </Values>
         </Integer>
-        <String dnOrder="49" id="TOUCH_SERCOM_INSTANCE">
+        <String dnOrder="52" id="TOUCH_SERCOM_INSTANCE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -1000,7 +1023,7 @@
             <Dynamic dnOrder="0" id="lib_qtouch" value="SERCOM4"/>
           </Values>
         </String>
-        <String dnOrder="50" id="TOUCH_TIMER_INSTANCE">
+        <String dnOrder="53" id="TOUCH_TIMER_INSTANCE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="lib_qtouch" value="RTC"/>
           </Values>
@@ -1248,7 +1271,7 @@
         <ElementPosition dnOrder="2" id="core" x="400" y="20"/>
         <ElementPosition dnOrder="3" id="dfp" x="180" y="20"/>
         <ElementPosition dnOrder="4" id="evsys" x="20" y="20"/>
-        <ElementPosition dnOrder="5" id="lib_qtouch" x="176" y="106"/>
+        <ElementPosition dnOrder="5" id="lib_qtouch" x="170" y="100"/>
         <ElementPosition dnOrder="6" id="nvmctrl" x="640" y="20"/>
         <ElementPosition dnOrder="7" id="rtc" x="12" y="162"/>
         <ElementPosition dnOrder="8" id="sercom4" x="15" y="83"/>

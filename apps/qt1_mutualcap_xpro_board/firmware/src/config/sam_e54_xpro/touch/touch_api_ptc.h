@@ -61,7 +61,6 @@ void touch_timer_handler(void);
 void touch_init(void);
 void touch_process(void);
 
-//void Timer_task_cb(const struct timer_task *const timer_task);
 void touch_timer_config(void);
 
 #ifdef __cplusplus

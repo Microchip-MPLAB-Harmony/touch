@@ -114,29 +114,24 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  * {X-line, Y-line, Charge Share Delay, NODE_RSEL_PRSC(series resistor, prescaler), NODE_G(Analog Gain , Digital Gain),
  * filter level}
  */
-
-
 	
+
 #define NODE_0_PARAMS                                                                                               \
 {                                                                                                                  \
    X_NONE, Y(5), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
 }
-	
 #define NODE_1_PARAMS                                                                                               \
 {                                                                                                                  \
    X_NONE, Y(4), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
 }
-	
 #define NODE_2_PARAMS                                                                                               \
 {                                                                                                                  \
    X_NONE, Y(11), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
 }
-	
 #define NODE_3_PARAMS                                                                                               \
 {                                                                                                                  \
    X_NONE, Y(10), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
 }
-	
 #define NODE_4_PARAMS                                                                                               \
 {                                                                                                                  \
    X_NONE, Y(13), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
@@ -251,6 +246,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 		SCR_RESOL_DEADBAND(RESOL_8_BIT, DB_10_PERCENT),8,20\
 }
 
+
+
 /**********************************************************/
 /********* Frequency Hop Module ****************/
 /**********************************************************/
@@ -287,6 +284,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /***************** Communication - Data Streamer ******************/
 /**********************************************************/
 #define DEF_TOUCH_DATA_STREAMER_ENABLE 1u
+
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

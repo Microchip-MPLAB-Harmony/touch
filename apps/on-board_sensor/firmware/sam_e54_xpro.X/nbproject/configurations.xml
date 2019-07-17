@@ -46,7 +46,6 @@
             <itemPath>../src/config/sam_e54_xpro/touch/qtm_binding_layer_0x0005_api.h</itemPath>
             <itemPath>../src/config/sam_e54_xpro/touch/qtm_common_components_api.h</itemPath>
             <itemPath>../src/config/sam_e54_xpro/touch/qtm_touch_key_0x0002_api.h</itemPath>
-            <itemPath>../src/config/sam_e54_xpro/touch/qtm_scroller_0x000b_api.h</itemPath>
             <itemPath>../src/config/sam_e54_xpro/touch/qtm_freq_hop_auto_0x0004_api.h</itemPath>
             <itemPath>../src/config/sam_e54_xpro/touch/touch.h</itemPath>
             <itemPath>../src/config/sam_e54_xpro/touch/touch_api_ptc.h</itemPath>
@@ -85,7 +84,6 @@
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/pdec.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/pm.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/port.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/ptc.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/pukcc.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/qspi.h</itemPath>
             <itemPath>../src/packs/ATSAME54P20A_DFP/component/ramecc.h</itemPath>
@@ -217,7 +215,6 @@
             <linkerLibFileItem>../src/config/sam_e54_xpro/touch/lib/0x000f_qtm_same54_acq.X.a</linkerLibFileItem>
             <linkerLibFileItem>../src/config/sam_e54_xpro/touch/lib/0x0005_qtm_binding_layer_cm4.X.a</linkerLibFileItem>
             <linkerLibFileItem>../src/config/sam_e54_xpro/touch/lib/0x0002_qtm_touch_key_cm4.X.a</linkerLibFileItem>
-            <linkerLibFileItem>../src/config/sam_e54_xpro/touch/lib/0x000b_qtm_scroller_cm4.X.a</linkerLibFileItem>
             <linkerLibFileItem>../src/config/sam_e54_xpro/touch/lib/0x0004_qtm_freq_hop_autotune_cm4.X.a</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
@@ -334,7 +331,7 @@
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-cross-reference-file" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
-        <property key="heap-size" value="0"/>
+        <property key="heap-size" value="512"/>
         <property key="input-libraries" value=""/>
         <property key="kseg-length" value=""/>
         <property key="kseg-origin" value=""/>

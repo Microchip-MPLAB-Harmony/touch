@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-04-08T12:38:18Z */
+/* file generated from device description version 2019-06-04T17:37:50Z */
 #ifndef _SAMC21_TSENS_COMPONENT_H_
 #define _SAMC21_TSENS_COMPONENT_H_
 

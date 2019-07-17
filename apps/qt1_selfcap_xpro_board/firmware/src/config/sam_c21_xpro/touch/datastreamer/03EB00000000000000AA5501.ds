@@ -1,5 +1,4 @@
 
-
 B,1,1,FrameCounter
 
 D,2,1,Signal0
@@ -43,6 +42,7 @@ B,9,1,SWState0
 D,10,1,SWDelta0
 D,11,1,SWThreshold0
 D,12,1,SWPosition0
+
 
 B,13,1,CurrentFrequency
 B,14,1,HopFrequency0

@@ -114,57 +114,47 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  * {X-line, Y-line, Charge Share Delay, NODE_RSEL_PRSC(series resistor, prescaler), NODE_G(Analog Gain , Digital Gain),
  * filter level}
  */
-
-
 	
+
 #define NODE_0_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(8), Y(10), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+  X(8), Y(10), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
 }
-	
 #define NODE_1_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(9), Y(10), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+  X(9), Y(10), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
 }
-	
 #define NODE_2_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(2), Y(12), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_2), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+  X(2), Y(12), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_2), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
 }
-	
 #define NODE_3_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(3), Y(12), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_2), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+  X(3), Y(12), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_2), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
 }
-	
 #define NODE_4_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(8), Y(12), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_2), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+  X(8), Y(12), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_2), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
 }
-	
 #define NODE_5_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(9), Y(12), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_2), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+  X(9), Y(12), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_2), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
 }
-	
 #define NODE_6_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(2), Y(13), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+  X(2), Y(13), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
 }
-	
 #define NODE_7_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(3), Y(13), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+  X(3), Y(13), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
 }
-	
 #define NODE_8_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(8), Y(13), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+  X(8), Y(13), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
 }
-	
 #define NODE_9_PARAMS                                                                                               \
 {                                                                                                                  \
-   X(9), Y(13), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16\
+  X(9), Y(13), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
 }
 
 /**********************************************************/
@@ -301,6 +291,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 		SCR_RESOL_DEADBAND(RESOL_8_BIT, DB_10_PERCENT),8,20\
 }
 
+
+
 /**********************************************************/
 /********* Frequency Hop Module ****************/
 /**********************************************************/
@@ -337,6 +329,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /***************** Communication - Data Streamer ******************/
 /**********************************************************/
 #define DEF_TOUCH_DATA_STREAMER_ENABLE 1u
+
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

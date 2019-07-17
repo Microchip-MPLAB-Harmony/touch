@@ -58,7 +58,7 @@
 
 
 /* SERCOM2 USART baud value for 115200 Hz baud rate */
-#define SERCOM2_USART_INT_BAUD_VALUE            (55469U)
+#define SERCOM2_USART_INT_BAUD_VALUE            (50427U)
 
 
 // *****************************************************************************
@@ -123,7 +123,7 @@ void SERCOM2_USART_Initialize( void )
 
 uint32_t SERCOM2_USART_FrequencyGet( void )
 {
-    return (uint32_t) (12000000UL);
+    return (uint32_t) (7995392UL);
 }
 
 bool SERCOM2_USART_SerialSetup( USART_SERIAL_SETUP * serialSetup, uint32_t clkFrequency )
@@ -272,6 +272,7 @@ bool SERCOM2_USART_Read( void *buffer, const size_t size )
     uint8_t *pu8Data       = (uint8_t*)buffer;
     uint32_t u32Length     = size;
     uint32_t processedSize = 0;
+    USART_ERROR errorStatus = USART_ERROR_NONE;
 
     if(pu8Data != NULL)
     {
@@ -289,7 +290,9 @@ bool SERCOM2_USART_Read( void *buffer, const size_t size )
             *pu8Data++ = SERCOM2_REGS->USART_INT.SERCOM_DATA;
             processedSize++;
 
-            if(SERCOM2_USART_ErrorGet() != USART_ERROR_NONE)
+            errorStatus = SERCOM2_REGS->USART_INT.SERCOM_STATUS & (SERCOM_USART_INT_STATUS_PERR_Msk | SERCOM_USART_INT_STATUS_FERR_Msk | SERCOM_USART_INT_STATUS_BUFOVF_Msk);
+
+            if(errorStatus != USART_ERROR_NONE)
             {
                 break;
             }

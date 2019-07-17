@@ -82,7 +82,7 @@ static void DFLL_Initialize(void)
         /* Wait for synchronization */
     }
 
-    OSCCTRL_REGS->OSCCTRL_DFLLMUL = OSCCTRL_DFLLMUL_MUL(1465) | OSCCTRL_DFLLMUL_FSTEP(10) | OSCCTRL_DFLLMUL_CSTEP(10);
+    OSCCTRL_REGS->OSCCTRL_DFLLMUL = OSCCTRL_DFLLMUL_MUL(1464) | OSCCTRL_DFLLMUL_FSTEP(10) | OSCCTRL_DFLLMUL_CSTEP(10);
     while((OSCCTRL_REGS->OSCCTRL_DFLLSYNC & OSCCTRL_DFLLSYNC_DFLLMUL_Msk) == OSCCTRL_DFLLSYNC_DFLLMUL_Msk )
     {
         /* Waiting for the DPLL enable synchronization */
@@ -122,7 +122,7 @@ static void GCLK0_Initialize(void)
 
 static void GCLK1_Initialize(void)
 {
-    GCLK_REGS->GCLK_GENCTRL[1] = GCLK_GENCTRL_DIV(1) | GCLK_GENCTRL_SRC(1) | GCLK_GENCTRL_GENEN_Msk;
+    GCLK_REGS->GCLK_GENCTRL[1] = GCLK_GENCTRL_DIV(6) | GCLK_GENCTRL_SRC(6) | GCLK_GENCTRL_GENEN_Msk;
 
     while((GCLK_REGS->GCLK_SYNCBUSY & GCLK_SYNCBUSY_GENCTRL_GCLK1) == GCLK_SYNCBUSY_GENCTRL_GCLK1)
     {
@@ -132,11 +132,21 @@ static void GCLK1_Initialize(void)
 
 static void GCLK3_Initialize(void)
 {
-    GCLK_REGS->GCLK_GENCTRL[3] = GCLK_GENCTRL_DIV(1) | GCLK_GENCTRL_SRC(5) | GCLK_GENCTRL_GENEN_Msk;
+    GCLK_REGS->GCLK_GENCTRL[3] = GCLK_GENCTRL_DIV(1) | GCLK_GENCTRL_SRC(4) | GCLK_GENCTRL_GENEN_Msk;
 
     while((GCLK_REGS->GCLK_SYNCBUSY & GCLK_SYNCBUSY_GENCTRL_GCLK3) == GCLK_SYNCBUSY_GENCTRL_GCLK3)
     {
         /* wait for the Generator 3 synchronization */
+    }
+}
+
+static void GCLK4_Initialize(void)
+{
+    GCLK_REGS->GCLK_GENCTRL[4] = GCLK_GENCTRL_DIV(6) | GCLK_GENCTRL_SRC(6) | GCLK_GENCTRL_GENEN_Msk;
+
+    while((GCLK_REGS->GCLK_SYNCBUSY & GCLK_SYNCBUSY_GENCTRL_GCLK4) == GCLK_SYNCBUSY_GENCTRL_GCLK4)
+    {
+        /* wait for the Generator 4 synchronization */
     }
 }
 
@@ -149,9 +159,10 @@ void CLOCK_Initialize (void)
     OSC32KCTRL_Initialize();
 
     GCLK3_Initialize();
-    GCLK1_Initialize();
     DFLL_Initialize();
     GCLK0_Initialize();
+    GCLK1_Initialize();
+    GCLK4_Initialize();
 
     /* selection of the CPU clock Division */
     MCLK_REGS->MCLK_CPUDIV = MCLK_CPUDIV_DIV(0x01);

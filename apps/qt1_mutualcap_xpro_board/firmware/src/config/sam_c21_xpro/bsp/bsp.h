@@ -60,10 +60,7 @@
 // Section: BSP Macros
 // *****************************************************************************
 // *****************************************************************************
-/*** SWITCH Macros for SWITCH ***/
-#define SWITCH_Get() ((PORT_REGS->GROUP[0].PORT_IN >> 15) & 0x01)
-#define SWITCH_STATE_PRESSED 0
-#define SWITCH_STATE_RELEASED 1
+
 
 
 

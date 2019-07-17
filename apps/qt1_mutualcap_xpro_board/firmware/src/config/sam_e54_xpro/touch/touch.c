@@ -174,6 +174,9 @@ qtm_scroller_config_t qtm_scroller_config1[DEF_NUM_SCROLLERS] = { SCROLLER_0_PAR
 /* Container */
 qtm_scroller_control_t qtm_scroller_control1
     = {&qtm_scroller_group_data1, &qtm_scroller_group_config1, &qtm_scroller_data1[0], &qtm_scroller_config1[0]};
+
+
+
 /**********************************************************/
 /****************  Binding Layer Module  ******************/
 /**********************************************************/
@@ -184,10 +187,13 @@ qtm_scroller_control_t qtm_scroller_control1
 
 #define LIB_MODULES_PROC_LIST                                                                                          \
     {                                                                                                                  \
-		(module_proc_t)&qtm_freq_hop_autotune,                 \
-		(module_proc_t)&qtm_key_sensors_process,                                                                           \
-		(module_proc_t)&qtm_scroller_process,                                   \
-	     null                                                                                                               \
+		(module_proc_t)&qtm_freq_hop_autotune,             \
+		(module_proc_t)&qtm_key_sensors_process,                                                                        \
+	 	(module_proc_t)&qtm_scroller_process,                               \
+		                               \
+		                               \
+		                               \
+		null                                                                                                           \
     }
 
 #define LIB_INIT_DATA_MODELS_LIST                                                                                      \
@@ -197,10 +203,13 @@ qtm_scroller_control_t qtm_scroller_control1
 
 #define LIB_DATA_MODELS_PROC_LIST                                                                                       \
     {                                                                                                                   \
-      (void *)&qtm_freq_hop_autotune_control1,               \
-	  (void *)&qtlib_key_set1,                                                                                           \
-	  (void *)&qtm_scroller_control1,                                         \
-	    null                                                                                                               \
+		(void *)&qtm_freq_hop_autotune_control1,               \
+		(void *)&qtlib_key_set1,                                                                                           \
+		(void *)&qtm_scroller_control1,                                         \
+		                                      \
+		                               \
+		                               \
+		null                                                                                                               \
     }
 
 #define LIB_MODULES_ACQ_ENGINES_LIST                                                                                   \
@@ -300,6 +309,7 @@ static touch_ret_t touch_sensors_config(void)
 	/* scroller init */
 	qtm_init_scroller_module(&qtm_scroller_control1);
 
+
     return (touch_ret);
 }
 
@@ -354,6 +364,7 @@ static void qtm_post_process_complete(void)
 #if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
     datastreamer_output();
 #endif
+
 }
 
 /*============================================================================
@@ -437,19 +448,21 @@ Input  : none
 Output : none
 Notes  :
 ============================================================================*/
+volatile uint8_t time_to_measure_touch_var =0;
 void touch_process(void)
 {
     touch_ret_t touch_ret;
 
-    /* check the time_to_measure_touch flag for Touch Acquisition */
-    if (p_qtm_control->binding_layer_flags & (1u << time_to_measure_touch)) {
+    /* check the time_to_measure_touch for Touch Acquisition */
+    if (time_to_measure_touch_var)
+	{
         /* Do the acquisition */
         touch_ret = qtm_lib_start_acquisition(0);
 
         /* if the Acquistion request was successful then clear the request flag */
         if (TOUCH_SUCCESS == touch_ret) {
             /* Clear the Measure request flag */
-            p_qtm_control->binding_layer_flags &= (uint8_t) ~(1u << time_to_measure_touch);
+			time_to_measure_touch_var = 0;
         }
     }
 
@@ -472,12 +485,14 @@ void touch_process(void)
     
 
     if (p_qtm_control->binding_layer_flags & (1u << reburst_request)) {
-        p_qtm_control->binding_layer_flags |= (1u << time_to_measure_touch);
+		time_to_measure_touch_var = 1;
         p_qtm_control->binding_layer_flags &= ~(1u << reburst_request);
 		}
     }
+#if KRONOCOMM_ENABLE == 1u
+	uart_process();
+#endif
 }
-
 /*============================================================================
 void touch_timer_handler(void)
 ------------------------------------------------------------------------------
@@ -489,9 +504,8 @@ Notes  :
 ============================================================================*/
 void touch_timer_handler(void)
 {
-
     /* Count complete - Measure touch sensors */
-    qtm_control.binding_layer_flags |= (1u << time_to_measure_touch);
+	time_to_measure_touch_var = 1;
 
     qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 }

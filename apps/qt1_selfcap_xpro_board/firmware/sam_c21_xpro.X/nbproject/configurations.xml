@@ -205,7 +205,7 @@
       <compileType>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibFileItem>../src/config/sam_c21_xpro/touch/lib/0x0020_qtm_samc21_acq_auto.X.a</linkerLibFileItem>
+            <linkerLibFileItem>../src/config/sam_c21_xpro/touch/lib/0x0020_qtm_samc21_acq.X.a</linkerLibFileItem>
             <linkerLibFileItem>../src/config/sam_c21_xpro/touch/lib/0x0005_qtm_binding_layer_cm0p.X.a</linkerLibFileItem>
             <linkerLibFileItem>../src/config/sam_c21_xpro/touch/lib/0x0002_qtm_touch_key_cm0p.X.a</linkerLibFileItem>
             <linkerLibFileItem>../src/config/sam_c21_xpro/touch/lib/0x000b_qtm_scroller_cm0p.X.a</linkerLibFileItem>
@@ -325,7 +325,7 @@
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-cross-reference-file" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
-        <property key="heap-size" value="0"/>
+        <property key="heap-size" value="512"/>
         <property key="input-libraries" value=""/>
         <property key="kseg-length" value=""/>
         <property key="kseg-origin" value=""/>

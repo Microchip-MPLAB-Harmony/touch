@@ -64,7 +64,7 @@
         </Integer>
         <Integer dnOrder="11" id="GCLK_1_DIV">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="lib_qtouch" value="12"/>
+            <User dnOrder="0" value="12"/>
           </Values>
         </Integer>
         <Integer dnOrder="12" id="GCLK_1_DIVIDER_VALUE">
@@ -154,7 +154,7 @@
         </KeyValueSet>
         <Boolean dnOrder="28" id="GCLK_INST_NUM1">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="lib_qtouch" value="true"/>
+            <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
         <Integer dnOrder="29" id="GCLK_IO_0_FREQ">
@@ -774,7 +774,7 @@
         </String>
         <String dnOrder="152" id="PORT_GROUP_0_PINCFG15">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0x6"/>
+            <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
         <String dnOrder="153" id="PORT_GROUP_0_PINCFG16">
@@ -1111,586 +1111,399 @@
     </UniqueComponent>
     <UniqueComponent dnOrder="5" id="lib_qtouch">
       <Symbols dnOrder="0">
-        <KeyValueSet dnOrder="0" id="DEF_DIGI_FILT_OVERSAMPLING2">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="6"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="1" id="DEF_DIGI_FILT_OVERSAMPLING3">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="6"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="2" id="DEF_DIGI_FILT_OVERSAMPLING4">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="6"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="3" id="DEF_DIGI_FILT_OVERSAMPLING5">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="6"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="4" id="DEF_DIGI_FILT_OVERSAMPLING6">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="6"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="5" id="DEF_DIGI_FILT_OVERSAMPLING7">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="6"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="6" id="DEF_DIGI_FILT_OVERSAMPLING8">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="6"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="7" id="DEF_DIGI_FILT_OVERSAMPLING9">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="6"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="8" id="DEF_NOD_AKS2">
+        <KeyValueSet dnOrder="0" id="DEF_NOD_AKS2">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="9" id="DEF_NOD_AKS3">
+        <KeyValueSet dnOrder="1" id="DEF_NOD_AKS3">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="10" id="DEF_NOD_AKS4">
+        <KeyValueSet dnOrder="2" id="DEF_NOD_AKS4">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="11" id="DEF_NOD_AKS5">
+        <KeyValueSet dnOrder="3" id="DEF_NOD_AKS5">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="12" id="DEF_NOD_AKS6">
+        <KeyValueSet dnOrder="4" id="DEF_NOD_AKS6">
           <Values dnOrder="0">
             <User dnOrder="0" value="2"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="13" id="DEF_NOD_AKS7">
+        <KeyValueSet dnOrder="5" id="DEF_NOD_AKS7">
           <Values dnOrder="0">
             <User dnOrder="0" value="2"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="14" id="DEF_NOD_AKS8">
+        <KeyValueSet dnOrder="6" id="DEF_NOD_AKS8">
           <Values dnOrder="0">
             <User dnOrder="0" value="2"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="15" id="DEF_NOD_AKS9">
+        <KeyValueSet dnOrder="7" id="DEF_NOD_AKS9">
           <Values dnOrder="0">
             <User dnOrder="0" value="2"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="16" id="DEF_SCR_RESOLUTION0">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="6"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="17" id="DEF_SCR_TYPE0">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="0"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="18" id="DEF_SCR_TYPE1">
+        <KeyValueSet dnOrder="8" id="DEF_SCR_TYPE1">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="19" id="DEF_SCR_TYPE2">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="0"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="20" id="DEF_SCR_TYPE3">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="1"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="21" id="DEF_SCR_TYPE4">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="1"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="22" id="DEF_SCR_TYPE5">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="0"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="23" id="DEF_SCR_TYPE6">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="0"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="24" id="DEF_SCR_TYPE7">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="1"/>
-          </Values>
-        </KeyValueSet>
-        <Integer dnOrder="25" id="DEF_TOUCH_CHARGE_SHARE_DELAY0">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="0"/>
-          </Values>
-        </Integer>
-        <Integer dnOrder="26" id="DEF_TOUCH_CHARGE_SHARE_DELAY1">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="0"/>
-          </Values>
-        </Integer>
-        <Integer dnOrder="27" id="DEF_TOUCH_CHARGE_SHARE_DELAY2">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="0"/>
-          </Values>
-        </Integer>
-        <Integer dnOrder="28" id="DEF_TOUCH_CHARGE_SHARE_DELAY3">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="0"/>
-          </Values>
-        </Integer>
-        <Integer dnOrder="29" id="DEF_TOUCH_CHARGE_SHARE_DELAY4">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="0"/>
-          </Values>
-        </Integer>
-        <Integer dnOrder="30" id="DEF_TOUCH_CHARGE_SHARE_DELAY5">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="0"/>
-          </Values>
-        </Integer>
-        <Integer dnOrder="31" id="DEF_TOUCH_CHARGE_SHARE_DELAY6">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="0"/>
-          </Values>
-        </Integer>
-        <Integer dnOrder="32" id="DEF_TOUCH_CHARGE_SHARE_DELAY7">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="0"/>
-          </Values>
-        </Integer>
-        <Integer dnOrder="33" id="DEF_TOUCH_CHARGE_SHARE_DELAY8">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="0"/>
-          </Values>
-        </Integer>
-        <Integer dnOrder="34" id="DEF_TOUCH_CHARGE_SHARE_DELAY9">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="0"/>
-          </Values>
-        </Integer>
-        <Boolean dnOrder="35" id="ENABLE_DATA_STREAMER">
+        <Boolean dnOrder="9" id="ENABLE_DATA_STREAMER">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="36" id="ENABLE_FREQ_HOP">
+        <Boolean dnOrder="10" id="ENABLE_FREQ_HOP">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="37" id="FREQ_AUTOTUNE">
+        <Boolean dnOrder="11" id="ENABLE_SCROLLER">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <KeyValueSet dnOrder="38" id="MUTL-X-INPUT_0">
+        <Boolean dnOrder="12" id="FREQ_AUTOTUNE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <KeyValueSet dnOrder="13" id="MUTL-X-INPUT_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="2"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="39" id="MUTL-X-INPUT_1">
+        <KeyValueSet dnOrder="14" id="MUTL-X-INPUT_1">
           <Values dnOrder="0">
             <User dnOrder="0" value="3"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="40" id="MUTL-X-INPUT_2">
+        <KeyValueSet dnOrder="15" id="MUTL-X-INPUT_2">
           <Values dnOrder="0">
             <User dnOrder="0" value="0"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="41" id="MUTL-X-INPUT_3">
+        <KeyValueSet dnOrder="16" id="MUTL-X-INPUT_3">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="42" id="MUTL-X-INPUT_4">
+        <KeyValueSet dnOrder="17" id="MUTL-X-INPUT_4">
           <Values dnOrder="0">
             <User dnOrder="0" value="2"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="43" id="MUTL-X-INPUT_5">
+        <KeyValueSet dnOrder="18" id="MUTL-X-INPUT_5">
           <Values dnOrder="0">
             <User dnOrder="0" value="3"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="44" id="MUTL-X-INPUT_6">
+        <KeyValueSet dnOrder="19" id="MUTL-X-INPUT_6">
           <Values dnOrder="0">
             <User dnOrder="0" value="0"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="45" id="MUTL-X-INPUT_7">
+        <KeyValueSet dnOrder="20" id="MUTL-X-INPUT_7">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="46" id="MUTL-X-INPUT_8">
+        <KeyValueSet dnOrder="21" id="MUTL-X-INPUT_8">
           <Values dnOrder="0">
             <User dnOrder="0" value="2"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="47" id="MUTL-X-INPUT_9">
+        <KeyValueSet dnOrder="22" id="MUTL-X-INPUT_9">
           <Values dnOrder="0">
             <User dnOrder="0" value="3"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="48" id="MUTL-Y-INPUT_0">
+        <KeyValueSet dnOrder="23" id="MUTL-Y-INPUT_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="30"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="49" id="MUTL-Y-INPUT_1">
+        <KeyValueSet dnOrder="24" id="MUTL-Y-INPUT_1">
           <Values dnOrder="0">
             <User dnOrder="0" value="30"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="50" id="MUTL-Y-INPUT_2">
+        <KeyValueSet dnOrder="25" id="MUTL-Y-INPUT_2">
           <Values dnOrder="0">
             <User dnOrder="0" value="24"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="51" id="MUTL-Y-INPUT_3">
+        <KeyValueSet dnOrder="26" id="MUTL-Y-INPUT_3">
           <Values dnOrder="0">
             <User dnOrder="0" value="24"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="52" id="MUTL-Y-INPUT_4">
+        <KeyValueSet dnOrder="27" id="MUTL-Y-INPUT_4">
           <Values dnOrder="0">
             <User dnOrder="0" value="24"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="53" id="MUTL-Y-INPUT_5">
+        <KeyValueSet dnOrder="28" id="MUTL-Y-INPUT_5">
           <Values dnOrder="0">
             <User dnOrder="0" value="24"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="54" id="MUTL-Y-INPUT_6">
+        <KeyValueSet dnOrder="29" id="MUTL-Y-INPUT_6">
           <Values dnOrder="0">
             <User dnOrder="0" value="25"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="55" id="MUTL-Y-INPUT_7">
+        <KeyValueSet dnOrder="30" id="MUTL-Y-INPUT_7">
           <Values dnOrder="0">
             <User dnOrder="0" value="25"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="56" id="MUTL-Y-INPUT_8">
+        <KeyValueSet dnOrder="31" id="MUTL-Y-INPUT_8">
           <Values dnOrder="0">
             <User dnOrder="0" value="25"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="57" id="MUTL-Y-INPUT_9">
+        <KeyValueSet dnOrder="32" id="MUTL-Y-INPUT_9">
           <Values dnOrder="0">
             <User dnOrder="0" value="25"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="58" id="SENSE_TECHNOLOGY">
+        <KeyValueSet dnOrder="33" id="SENSE_TECHNOLOGY">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
-        <Integer dnOrder="59" id="TOUCH_CHAN_ENABLE_CNT">
+        <Integer dnOrder="34" id="TOUCH_CHAN_ENABLE_CNT">
           <Values dnOrder="0">
             <User dnOrder="0" value="10"/>
           </Values>
         </Integer>
-        <File dnOrder="60" id="TOUCH_DATA_STREAMER_HEADER">
+        <File dnOrder="35" id="TOUCH_DATA_STREAMER_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="61" id="TOUCH_DATA_STREAMER_HEADER_db">
+        <File dnOrder="36" id="TOUCH_DATA_STREAMER_HEADER_db">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="62" id="TOUCH_DATA_STREAMER_HEADER_ds">
+        <File dnOrder="37" id="TOUCH_DATA_STREAMER_HEADER_ds">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="63" id="TOUCH_DATA_STREAMER_HEADER_sc">
+        <File dnOrder="38" id="TOUCH_DATA_STREAMER_HEADER_sc">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="64" id="TOUCH_DATA_STREAMER_SOURCE">
+        <File dnOrder="39" id="TOUCH_DATA_STREAMER_SOURCE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <Boolean dnOrder="65" id="TOUCH_ENABLE_CH_0">
+        <Boolean dnOrder="40" id="TOUCH_ENABLE_CH_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="66" id="TOUCH_ENABLE_CH_1">
+        <Boolean dnOrder="41" id="TOUCH_ENABLE_CH_1">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="67" id="TOUCH_ENABLE_CH_2">
+        <Boolean dnOrder="42" id="TOUCH_ENABLE_CH_2">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="68" id="TOUCH_ENABLE_CH_3">
+        <Boolean dnOrder="43" id="TOUCH_ENABLE_CH_3">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="69" id="TOUCH_ENABLE_CH_4">
+        <Boolean dnOrder="44" id="TOUCH_ENABLE_CH_4">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="70" id="TOUCH_ENABLE_CH_5">
+        <Boolean dnOrder="45" id="TOUCH_ENABLE_CH_5">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="71" id="TOUCH_ENABLE_CH_6">
+        <Boolean dnOrder="46" id="TOUCH_ENABLE_CH_6">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="72" id="TOUCH_ENABLE_CH_7">
+        <Boolean dnOrder="47" id="TOUCH_ENABLE_CH_7">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="73" id="TOUCH_ENABLE_CH_8">
+        <Boolean dnOrder="48" id="TOUCH_ENABLE_CH_8">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="74" id="TOUCH_ENABLE_CH_9">
+        <Boolean dnOrder="49" id="TOUCH_ENABLE_CH_9">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="75" id="TOUCH_ENABLE_KEY_0">
+        <Boolean dnOrder="50" id="TOUCH_ENABLE_KEY_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="76" id="TOUCH_ENABLE_KEY_1">
+        <Boolean dnOrder="51" id="TOUCH_ENABLE_KEY_1">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="77" id="TOUCH_ENABLE_KEY_2">
+        <Boolean dnOrder="52" id="TOUCH_ENABLE_KEY_2">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="78" id="TOUCH_ENABLE_KEY_3">
+        <Boolean dnOrder="53" id="TOUCH_ENABLE_KEY_3">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="79" id="TOUCH_ENABLE_KEY_4">
+        <Boolean dnOrder="54" id="TOUCH_ENABLE_KEY_4">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="80" id="TOUCH_ENABLE_KEY_5">
+        <Boolean dnOrder="55" id="TOUCH_ENABLE_KEY_5">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="81" id="TOUCH_ENABLE_KEY_6">
+        <Boolean dnOrder="56" id="TOUCH_ENABLE_KEY_6">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="82" id="TOUCH_ENABLE_KEY_7">
+        <Boolean dnOrder="57" id="TOUCH_ENABLE_KEY_7">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="83" id="TOUCH_ENABLE_KEY_8">
+        <Boolean dnOrder="58" id="TOUCH_ENABLE_KEY_8">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="84" id="TOUCH_ENABLE_KEY_9">
+        <Boolean dnOrder="59" id="TOUCH_ENABLE_KEY_9">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="85" id="TOUCH_ENABLE_SCROLLER_0">
+        <Boolean dnOrder="60" id="TOUCH_ENABLE_SCROLLER_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="86" id="TOUCH_ENABLE_SCROLLER_1">
+        <Boolean dnOrder="61" id="TOUCH_ENABLE_SCROLLER_1">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="87" id="TOUCH_ENABLE_SCROLLER_2">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="false"/>
-          </Values>
-        </Boolean>
-        <Boolean dnOrder="88" id="TOUCH_ENABLE_SCROLLER_3">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="false"/>
-          </Values>
-        </Boolean>
-        <Boolean dnOrder="89" id="TOUCH_ENABLE_SCROLLER_4">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="false"/>
-          </Values>
-        </Boolean>
-        <Boolean dnOrder="90" id="TOUCH_ENABLE_SCROLLER_5">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="false"/>
-          </Values>
-        </Boolean>
-        <Boolean dnOrder="91" id="TOUCH_ENABLE_SCROLLER_6">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="false"/>
-          </Values>
-        </Boolean>
-        <Boolean dnOrder="92" id="TOUCH_ENABLE_SCROLLER_7">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="false"/>
-          </Values>
-        </Boolean>
-        <File dnOrder="93" id="TOUCH_HOP_AUTO_HEADER">
+        <File dnOrder="62" id="TOUCH_HOP_AUTO_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <Library dnOrder="94" id="TOUCH_HOP_AUTO_LIB">
+        <Library dnOrder="63" id="TOUCH_HOP_AUTO_LIB">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Library>
-        <Integer dnOrder="95" id="TOUCH_KEY_ENABLE_CNT">
+        <File dnOrder="64" id="TOUCH_HOP_HEADER">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <Library dnOrder="65" id="TOUCH_HOP_LIB">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </Library>
+        <Integer dnOrder="66" id="TOUCH_KEY_ENABLE_CNT">
           <Values dnOrder="0">
             <User dnOrder="0" value="10"/>
           </Values>
         </Integer>
-        <Integer dnOrder="96" id="TOUCH_SCROLLER_ENABLE_CNT">
+        <Integer dnOrder="67" id="TOUCH_SCROLLER_ENABLE_CNT">
           <Values dnOrder="0">
             <User dnOrder="0" value="2"/>
           </Values>
         </Integer>
-        <Integer dnOrder="97" id="TOUCH_SCR_SIZE0">
+        <File dnOrder="68" id="TOUCH_SCR_HEADER">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <Library dnOrder="69" id="TOUCH_SCR_LIB">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Library>
+        <Integer dnOrder="70" id="TOUCH_SCR_SIZE0">
           <Values dnOrder="0">
             <User dnOrder="0" value="4"/>
           </Values>
         </Integer>
-        <Integer dnOrder="98" id="TOUCH_SCR_SIZE1">
+        <Integer dnOrder="71" id="TOUCH_SCR_SIZE1">
           <Values dnOrder="0">
             <User dnOrder="0" value="4"/>
           </Values>
         </Integer>
-        <Integer dnOrder="99" id="TOUCH_SCR_SIZE2">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="4"/>
-          </Values>
-        </Integer>
-        <Integer dnOrder="100" id="TOUCH_SCR_SIZE3">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="4"/>
-          </Values>
-        </Integer>
-        <Integer dnOrder="101" id="TOUCH_SCR_SIZE4">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="4"/>
-          </Values>
-        </Integer>
-        <Integer dnOrder="102" id="TOUCH_SCR_SIZE5">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="4"/>
-          </Values>
-        </Integer>
-        <Integer dnOrder="103" id="TOUCH_SCR_SIZE6">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="4"/>
-          </Values>
-        </Integer>
-        <Integer dnOrder="104" id="TOUCH_SCR_SIZE7">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="4"/>
-          </Values>
-        </Integer>
-        <Integer dnOrder="105" id="TOUCH_SCR_START_KEY0">
+        <Integer dnOrder="72" id="TOUCH_SCR_START_KEY0">
           <Values dnOrder="0">
             <User dnOrder="0" value="2"/>
           </Values>
         </Integer>
-        <Integer dnOrder="106" id="TOUCH_SCR_START_KEY1">
+        <Integer dnOrder="73" id="TOUCH_SCR_START_KEY1">
           <Values dnOrder="0">
             <User dnOrder="0" value="6"/>
           </Values>
         </Integer>
-        <Integer dnOrder="107" id="TOUCH_SCR_START_KEY2">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="2"/>
-          </Values>
-        </Integer>
-        <Integer dnOrder="108" id="TOUCH_SCR_START_KEY3">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="6"/>
-          </Values>
-        </Integer>
-        <Integer dnOrder="109" id="TOUCH_SCR_START_KEY4">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="2"/>
-          </Values>
-        </Integer>
-        <Integer dnOrder="110" id="TOUCH_SCR_START_KEY5">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="6"/>
-          </Values>
-        </Integer>
-        <Integer dnOrder="111" id="TOUCH_SCR_START_KEY6">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="2"/>
-          </Values>
-        </Integer>
-        <Integer dnOrder="112" id="TOUCH_SCR_START_KEY7">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="6"/>
-          </Values>
-        </Integer>
-        <String dnOrder="113" id="TOUCH_SERCOM_INSTANCE">
+        <String dnOrder="74" id="TOUCH_SERCOM_INSTANCE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -1700,7 +1513,7 @@
             <Dynamic dnOrder="0" id="lib_qtouch" value="SERCOM4"/>
           </Values>
         </String>
-        <String dnOrder="114" id="TOUCH_TIMER_INSTANCE">
+        <String dnOrder="75" id="TOUCH_TIMER_INSTANCE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="lib_qtouch" value="RTC"/>
           </Values>
@@ -1940,19 +1753,19 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_C21_Xplained_Pro" x="203" y="56"/>
         <ElementPosition dnOrder="1" id="cmsis" x="500" y="20"/>
         <ElementPosition dnOrder="2" id="core" x="400" y="20"/>
         <ElementPosition dnOrder="3" id="dfp" x="180" y="20"/>
         <ElementPosition dnOrder="4" id="evsys" x="20" y="20"/>
-        <ElementPosition dnOrder="5" id="lib_qtouch" x="193" y="93"/>
+        <ElementPosition dnOrder="5" id="lib_qtouch" x="190" y="100"/>
         <ElementPosition dnOrder="6" id="nvmctrl" x="639" y="21"/>
         <ElementPosition dnOrder="7" id="rtc" x="24" y="166"/>
         <ElementPosition dnOrder="8" id="sercom4" x="23" y="76"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>

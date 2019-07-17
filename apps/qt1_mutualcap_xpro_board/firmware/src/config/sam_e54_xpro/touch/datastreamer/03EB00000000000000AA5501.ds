@@ -82,6 +82,7 @@ D,10,2,SWDelta1
 D,11,2,SWThreshold1
 D,12,2,SWPosition1
 
+
 B,13,1,CurrentFrequency
 B,14,1,HopFrequency0
 B,15,1,HopFrequency1

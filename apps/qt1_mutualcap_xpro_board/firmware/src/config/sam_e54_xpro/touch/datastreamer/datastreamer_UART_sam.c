@@ -35,6 +35,7 @@ Copyright (c) Microchip. All rights reserved.
 #define ACQ_MODULE_AUTOTUNE_OUTPUT 0
 #define FREQ_HOP_AUTO_MODULE_OUTPUT 1
 #define SCROLLER_MODULE_OUTPUT 1
+#define SURFACE_MODULE_OUTPUT 0
 
 /*----------------------------------------------------------------------------
   global variables

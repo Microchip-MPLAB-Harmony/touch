@@ -122,9 +122,9 @@ void SYS_Initialize ( void* data )
     CLOCK_Initialize();
 
 
-	BSP_Initialize();
     SERCOM3_USART_Initialize();
 
+	BSP_Initialize();
     EVSYS_Initialize();
 
     RTC_Initialize();
