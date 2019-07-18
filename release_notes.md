@@ -1,5 +1,30 @@
 #  Microchip MPLAB® Harmony 3 Touch Library Release Notes
-  
+
+## Touch Library v3.3.0 Release
+
+### NEW FEATURES
+
+* Touch Surface (One Finger and Two Fingers) and Gesture firmware, GUI along with DataVisualizer and 2D Touch Surface Utility (Kronocomm) support for SAMC2x, SAMD2x, SAMD51, SAME51, SAME53, SAME54 devices.
+* Clock selection support for proper operation of Touch, automated through the Touch configurator.
+
+### Required MPLAB Harmony v3.x.x Modules
+
+* csp v3.4.0
+* bsp v3.4.0
+* dev_packs v3.4.0
+* mhc v3.3.1
+
+### KNOWN ISSUES
+
+* Scroller + Surface combination is not supported.
+
+### DEVELOPMENT TOOLS
+
+* [MPLAB X IDE v5.20](https://www.microchip.com/mplabx-ide-windows-installer)
+* [MPLAB XC32 C/C++ Compiler v2.20](https://www.microchip.com/mplab/compilers)
+* MPLAB X IDE plug-ins:
+  * MPLAB Harmony Configurator (MHC) v3.3.1
+
 ## Touch Library v3.2.0 Release
 
 ### NEW DEVICES SUPPORTED
