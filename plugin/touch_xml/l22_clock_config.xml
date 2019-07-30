@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!-- 
+This is for SAML22 Family
+-->
+
+<clock_settings>
+	<all_clock_symbols_list>
+		<clock index = "0_0" symbol="GCLK_0_SRC" value="1" component_id= "core" name="Select 16MHz OSC as main clock" />
+		<clock index = "1_0" symbol="GCLK_INST_NUM1" value="true" component_id= "core" name="Select GCLK1" />
+		<clock index = "2_0" symbol="GCLK_1_DIV" value="4" component_id= "core" name="Prescale 16MHz by 4 for PTC" />
+		<clock index = "3_0" symbol="NVM_RWS" value="2" component_id= "nvmctrl" name="Configure wait state as 2" />
+		<clock index = "4_0" symbol="CONFIG_CLOCK_OSC16M_FREQSEL" value="3" component_id= "core" name="Choose 16MHz in OSC" />
+		<clock index = "5_0" symbol="GCLK_0_DIV" value="1" component_id= "core" name="Div GCLK0 by 1" />
+		<clock index = "6_0" symbol="CONFIG_CLOCK_DPLL_ENABLE" value="false" component_id= "core" name="Set DPLL as false" />
+		<clock index = "7_0" symbol="GCLK_ID_1_CHEN" value="false" component_id= "core" name="Set DPLL as false" />
+		<clock index = "8_0" symbol="CONFIG_CLOCK_DPLL_REF_CLOCK" value="1" component_id= "core" name="Set DPLL as false" />
+	</all_clock_symbols_list>
+	<all_conditions_list>
+		<condition />
+	</all_conditions_list>
+	<common>
+		<default clock_update_index_list="0_0,1_0,2_0,3_0,4_0,5_0,6_0,7_0,8_0"/>
+	</common>
+</clock_settings>

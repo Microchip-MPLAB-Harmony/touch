@@ -150,6 +150,8 @@ def instantiateComponent(qtouchComponent):
         execfile(Module.getPath() +"/config/node_D2X.py")
     elif (getDeviceName.getDefaultValue() in ["SAML21"]):
         execfile(Module.getPath() +"/config/node_L21.py")
+    elif (getDeviceName.getDefaultValue() in ["SAML22"]):
+        execfile(Module.getPath() +"/config/node_L22.py")
     else:
         execfile(Module.getPath() +"/config/node_C2X.py")
     execfile(Module.getPath() +"/config/key.py")
