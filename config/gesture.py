@@ -9,6 +9,13 @@ if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
     gestureLibraryFile.setOutputName("0x0023_qtm_surface_gestures_cm4.X.a")
     gestureLibraryFile.setDestPath("/touch/lib/")
     gestureLibraryFile.setEnabled(False)
+if (getDeviceName.getDefaultValue() in ["SAML10","SAML11"]):
+    # Library File
+    gestureLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_GESTURE_LIB", None)
+    gestureLibraryFile.setSourcePath("/src/libraries/0x0023_qtm_surface_gestures_cm23.X.a")
+    gestureLibraryFile.setOutputName("0x0023_qtm_surface_gestures_cm23.X.a")
+    gestureLibraryFile.setDestPath("/touch/lib/")
+    gestureLibraryFile.setEnabled(False)
 else:
     # Library File
     gestureLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_GESTURE_LIB", None)
