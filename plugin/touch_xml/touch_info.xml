@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!-- 
+This is for device feature and library version information
+-->
+
+<info>
+	<feature>
+		<!-- csd unsupported device list-->
+		<csd>
+			<device>SAMD2</device>
+			<device>SAML2</device>
+		</csd>		
+	</feature>
+	<version>
+	</version>
+	<clock>
+	</clock>
+	<timer>
+	</timer>
+</info>
