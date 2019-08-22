@@ -94,6 +94,7 @@ void touch_status_display1(void)
 
 	scroller_status1   = get_scroller_state(0);
 	scroller_position1 = get_scroller_position(0);
+	
     LED_0_SLIDER_Set();
     LED_1_SLIDER_Set();
     LED_2_SLIDER_Set();
