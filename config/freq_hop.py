@@ -38,7 +38,6 @@ if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
     freqHopLibraryFile.setDestPath("/touch/lib/")
     freqHopLibraryFile.setEnabled(False)
     freqHopLibraryFile.setDependencies(freqAutoTuneFunc,["FREQ_AUTOTUNE"])
-
     # Library File
     freqHopAutoLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_HOP_AUTO_LIB", None)
     freqHopAutoLibraryFile.setSourcePath("/src/libraries/0x0004_qtm_freq_hop_autotune_cm4.X.a")
@@ -46,7 +45,21 @@ if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
     freqHopAutoLibraryFile.setDestPath("/touch/lib/")
     freqHopAutoLibraryFile.setEnabled(False)
     freqHopAutoLibraryFile.setDependencies(freqAutoTuneFunc,["FREQ_AUTOTUNE"])
-
+elif(getDeviceName.getDefaultValue() in ["SAML10","SAML11"]):
+    # Library File
+    freqHopLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_HOP_LIB", None)
+    freqHopLibraryFile.setSourcePath("/src/libraries/0x0006_qtm_freq_hop_cm23.X.a")
+    freqHopLibraryFile.setOutputName("0x0006_qtm_freq_hop_cm23.X.a")
+    freqHopLibraryFile.setDestPath("/touch/lib/")
+    freqHopLibraryFile.setEnabled(False)
+    freqHopLibraryFile.setDependencies(freqAutoTuneFunc,["FREQ_AUTOTUNE"])
+    # Library File
+    freqHopAutoLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_HOP_AUTO_LIB", None)
+    freqHopAutoLibraryFile.setSourcePath("/src/libraries/0x0004_qtm_freq_hop_autotune_cm23.X.a")
+    freqHopAutoLibraryFile.setOutputName("0x0004_qtm_freq_hop_autotune_cm23.X.a")
+    freqHopAutoLibraryFile.setDestPath("/touch/lib/")
+    freqHopAutoLibraryFile.setEnabled(False)
+    freqHopAutoLibraryFile.setDependencies(freqAutoTuneFunc,["FREQ_AUTOTUNE"])
 else:
     # Library File
     freqHopLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_HOP_LIB", None)
@@ -55,7 +68,6 @@ else:
     freqHopLibraryFile.setDestPath("/touch/lib/")
     freqHopLibraryFile.setEnabled(False)
     freqHopLibraryFile.setDependencies(freqAutoTuneFunc,["FREQ_AUTOTUNE"])
-
     # Library File
     freqHopAutoLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_HOP_AUTO_LIB", None)
     freqHopAutoLibraryFile.setSourcePath("/src/libraries/0x0004_qtm_freq_hop_autotune_cm0p.X.a")
