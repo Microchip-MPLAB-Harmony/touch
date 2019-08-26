@@ -148,11 +148,11 @@ touchAutoTuneMode = qtouchComponent.createKeyValueSetSymbol("TUNE_MODE_SELECTED"
 touchAutoTuneMode.setLabel("Select the Required Tuning Mode")
 touchAutoTuneMode.addKey("Manual Tuning","CAL_AUTO_TUNE_NONE","Manual tuning is done based on the values defined by user")
 touchAutoTuneMode.addKey("Tune Resistor value","CAL_AUTO_TUNE_RSEL","Series Resistor is tuned")
-touchAutoTuneMode.addKey("Tune Prescaler","CAL_AUTO_TUNE_PRSC","Pre-scaler is tuned")
+touchAutoTuneMode.addKey("Tune CSD","CAL_AUTO_TUNE_CSD","Charge Share Delay - CSD is tuned")
 touchAutoTuneMode.setDefaultValue(0)
 touchAutoTuneMode.setOutputMode("Value")
 touchAutoTuneMode.setDisplayMode("Key")
-touchAutoTuneMode.setDescription("Sets the sensor calibration mode - CAL_AUTO_TUNE_NONE: Manual user setting of Prescaler, & Series resistor. CAL_AUTO_TUNE_PRSC: QTouch library will use the configured series resistor value and adjusts the prescaler to ensure full charging.")
+touchAutoTuneMode.setDescription("Sets the sensor calibration mode - CAL_AUTO_TUNE_NONE: Manual user setting of Prescaler, Charge share delay & Series resistor. AUTO_TUNE_CSD: QTouch library will use the configured prescaler and series resistor value and adjusts the CSD to ensure full charging.")
 
 #Scan Rate (ms)
 touchSym_TOUCH_MEASUREMENT_PERIOD_MS_Val = qtouchComponent.createIntegerSymbol("DEF_TOUCH_MEASUREMENT_PERIOD_MS", acquisitionMenu)
