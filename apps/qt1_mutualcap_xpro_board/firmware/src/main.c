@@ -37,9 +37,9 @@ extern volatile uint8_t measurement_done_touch;
 /*----------------------------------------------------------------------------
  *   Global variables
  *----------------------------------------------------------------------------*/
-volatile uint8_t rotor_state    = 0u;
+volatile uint8_t rotor_state = 0u;
 volatile uint8_t rotor_position = 0u;
-uint8_t          PWM_Count      = 0u;
+uint8_t PWM_Count = 0u;
 
 const uint8_t PWM_RGB_values[64][3]
     = {{20, 0, 0},  {20, 0, 0}, {19, 1, 0}, {18, 2, 0},  {17, 3, 0}, {16, 4, 0},  {15, 5, 0}, {14, 6, 0},
@@ -59,17 +59,17 @@ static void touch_led_display_1(void);
 int main ( void )
 {
     /* Initialize all modules */
-    SYS_Initialize ( NULL );
-
+    SYS_Initialize(NULL);
+        
     while ( true )
     {
         touch_process();
-		touch_led_display_1();
+        touch_led_display_1();
     }
 
     /* Execution should not come here during normal operation */
 
-    return ( EXIT_FAILURE );
+    return ( EXIT_FAILURE);
 }
 /*============================================================================
 static void touch_led_display_1(void)
@@ -82,168 +82,166 @@ Notes  : none
 
 static void touch_led_display_1(void)
 {
-	uint8_t button1_state;
-	uint8_t button2_state;
-	uint8_t slider_state;
-	uint8_t slider_position;
+    uint8_t button1_state;
+    uint8_t button2_state;
+    uint8_t slider_state;
+    uint8_t slider_position;
 
-	if ((measurement_done_touch == 1u)) {
+    if ((measurement_done_touch == 1u)) {
 
-		measurement_done_touch = 0u;
+        measurement_done_touch = 0u;
 
-		/**
-		 * Get touch sensor states
-		 */
-		button1_state = get_sensor_state(0);
-		button2_state = get_sensor_state(1);
-		slider_state  = get_scroller_state(0);
+        /**
+         * Get touch sensor states
+         */
+        button1_state = get_sensor_state(0);
+        button2_state = get_sensor_state(1);
+        slider_state = get_scroller_state(0);
 
-		if (button1_state == 0x03) {
-			PORT_PinSet(LED_BUT1_PIN);
-		} else {		
-            PORT_PinClear(LED_BUT1_PIN);
-		}
+        if (button1_state == 0x03) {
+            LED_BUT_0_Set();
+        } else {
+            LED_BUT_0_Clear();
+        }
 
-		if (button2_state == 0x03) {
-            PORT_PinSet(LED_BUT2_PIN);
-		} else {
-			PORT_PinClear(LED_BUT2_PIN);
-		}
+        if (button2_state == 0x03) {
+            LED_BUT_1_Set();
+        } else {
+            LED_BUT_1_Clear();
+        }
 
-		/**
-		 * Clear all slider controlled LEDs
-		 */
-		PORT_PinSet(LED_SLIDER0_PIN);
-		PORT_PinSet(LED_SLIDER1_PIN);
-		PORT_PinSet(LED_SLIDER2_PIN);
-		PORT_PinSet(LED_SLIDER3_PIN);
-		PORT_PinSet(LED_SLIDER4_PIN);
-		PORT_PinSet(LED_SLIDER5_PIN);
-		PORT_PinSet(LED_SLIDER6_PIN);
-		PORT_PinSet(LED_SLIDER7_PIN);
+        /**
+         * Clear all slider controlled LEDs
+         */
+        LED_0_SLIDER_Set();
+        LED_1_SLIDER_Set();
+        LED_2_SLIDER_Set();
+        LED_3_SLIDER_Set();
+        LED_4_SLIDER_Set();
+        LED_5_SLIDER_Set();
+        LED_6_SLIDER_Set();
+        LED_7_SLIDER_Set();
+        
+        /**
+         * If slider is activated
+         */
+        if (slider_state) {
+            /**
+             * Parse slider position
+             */
+            slider_position = get_scroller_position(0);
+            slider_position = slider_position >> 5u;
+            switch (slider_position) {
+                case 0:
+                    LED_0_SLIDER_Clear();
+                    break;
 
-		/**
-		 * If slider is activated
-		 */
-		if (slider_state) {
-			/**
-			 * Parse slider position
-			 */
-			slider_position = get_scroller_position(0);
-			slider_position = slider_position >> 5u;
-			switch (slider_position) {
-			case 0:
-				PORT_PinClear(LED_SLIDER0_PIN);
-				break;
+                case 1:
+                    LED_0_SLIDER_Clear();
+                    LED_1_SLIDER_Clear();
+                    break;
 
-			case 1:
-				PORT_PinClear(LED_SLIDER0_PIN);
-				PORT_PinClear(LED_SLIDER1_PIN);
-				break;
+                case 2:
+                    LED_0_SLIDER_Clear();
+                    LED_1_SLIDER_Clear();
+                    LED_2_SLIDER_Clear();
+                    break;
 
-			case 2:
-                PORT_PinClear(LED_SLIDER0_PIN);
-				PORT_PinClear(LED_SLIDER1_PIN);
-                PORT_PinClear(LED_SLIDER2_PIN);
-				break;
+                case 3:
+                    LED_0_SLIDER_Clear();
+                    LED_1_SLIDER_Clear();
+                    LED_2_SLIDER_Clear();
+                    LED_3_SLIDER_Clear();
+                    break;
 
-			case 3:
-                PORT_PinClear(LED_SLIDER0_PIN);
-				PORT_PinClear(LED_SLIDER1_PIN);
-                PORT_PinClear(LED_SLIDER2_PIN);
-                PORT_PinClear(LED_SLIDER3_PIN);
-				break;
+                case 4:
+                    LED_0_SLIDER_Clear();
+                    LED_1_SLIDER_Clear();
+                    LED_2_SLIDER_Clear();
+                    LED_3_SLIDER_Clear();
+                    LED_4_SLIDER_Clear();
+                    break;
 
-			case 4:
-                PORT_PinClear(LED_SLIDER0_PIN);
-				PORT_PinClear(LED_SLIDER1_PIN);
-                PORT_PinClear(LED_SLIDER2_PIN);
-                PORT_PinClear(LED_SLIDER3_PIN);
-                PORT_PinClear(LED_SLIDER4_PIN);
-				break;
+                case 5:
+                    LED_0_SLIDER_Clear();
+                    LED_1_SLIDER_Clear();
+                    LED_2_SLIDER_Clear();
+                    LED_3_SLIDER_Clear();
+                    LED_4_SLIDER_Clear();
+                    LED_5_SLIDER_Clear();
+                    break;
 
-			case 5:
-                PORT_PinClear(LED_SLIDER0_PIN);
-				PORT_PinClear(LED_SLIDER1_PIN);
-                PORT_PinClear(LED_SLIDER2_PIN);
-                PORT_PinClear(LED_SLIDER3_PIN);
-                PORT_PinClear(LED_SLIDER4_PIN);
-                PORT_PinClear(LED_SLIDER5_PIN);
-				break;
+                case 6:
+                    LED_0_SLIDER_Clear();
+                    LED_1_SLIDER_Clear();
+                    LED_2_SLIDER_Clear();
+                    LED_3_SLIDER_Clear();
+                    LED_4_SLIDER_Clear();
+                    LED_5_SLIDER_Clear();
+                    LED_6_SLIDER_Clear();
+                    break;
 
-			case 6:
-                PORT_PinClear(LED_SLIDER0_PIN);
-				PORT_PinClear(LED_SLIDER1_PIN);
-                PORT_PinClear(LED_SLIDER2_PIN);
-                PORT_PinClear(LED_SLIDER3_PIN);
-                PORT_PinClear(LED_SLIDER4_PIN);
-                PORT_PinClear(LED_SLIDER5_PIN);
-                PORT_PinClear(LED_SLIDER6_PIN);
-				break;
+                case 7:
+                    LED_0_SLIDER_Clear();
+                    LED_1_SLIDER_Clear();
+                    LED_2_SLIDER_Clear();
+                    LED_3_SLIDER_Clear();
+                    LED_4_SLIDER_Clear();
+                    LED_5_SLIDER_Clear();
+                    LED_6_SLIDER_Clear();
+                    LED_7_SLIDER_Clear();
+                    break;
 
-			case 7:
-                PORT_PinClear(LED_SLIDER0_PIN);
-				PORT_PinClear(LED_SLIDER1_PIN);
-                PORT_PinClear(LED_SLIDER2_PIN);
-                PORT_PinClear(LED_SLIDER3_PIN);
-                PORT_PinClear(LED_SLIDER4_PIN);
-                PORT_PinClear(LED_SLIDER5_PIN);
-                PORT_PinClear(LED_SLIDER6_PIN);
-                PORT_PinClear(LED_SLIDER7_PIN);
-				break;
+                default:
+                    LED_0_SLIDER_Set();
+                    LED_1_SLIDER_Set();
+                    LED_2_SLIDER_Set();
+                    LED_3_SLIDER_Set();
+                    LED_4_SLIDER_Set();
+                    LED_5_SLIDER_Set();
+                    LED_6_SLIDER_Set();
+                    LED_7_SLIDER_Set();
+                    break;
+            }
+        }
+    } /* measurement done flag */
 
-			default:
-                PORT_PinSet(LED_SLIDER0_PIN);
-                PORT_PinSet(LED_SLIDER1_PIN);
-                PORT_PinSet(LED_SLIDER2_PIN);
-                PORT_PinSet(LED_SLIDER3_PIN);
-                PORT_PinSet(LED_SLIDER4_PIN);
-                PORT_PinSet(LED_SLIDER5_PIN);
-                PORT_PinSet(LED_SLIDER6_PIN);
-                PORT_PinSet(LED_SLIDER7_PIN);
-				break;
-			}
-		}
-	} /* measurement done flag */
+    /* Update PWM counter */
+    if (PWM_Count < 4) {
+        PWM_Count++;
+    } else {
+        PWM_Count = 0;
+    }
 
-	/* Update PWM counter */
-	if (PWM_Count < 4) {
-		PWM_Count++;
-	} else {
-		PWM_Count = 0;
-	}
+    rotor_state = get_scroller_state(1);
+    /* If rotor is active */
+    if (rotor_state) {
+        rotor_position = get_scroller_position(1);
+        rotor_position = rotor_position >> 2u;
+        if (PWM_Count < PWM_RGB_values[rotor_position][0]) {
+            LED_WHEEL_R_Clear();
+        } else {
+            LED_WHEEL_R_Set();
+        }
 
-	rotor_state = get_scroller_state(1);
-	/* If rotor is active */
-	if (rotor_state) {
-		rotor_position = get_scroller_position(1);
-		rotor_position = rotor_position >> 2u;
-		if (PWM_Count < PWM_RGB_values[rotor_position][0]) {
-			PORT_PinClear(LED_WHEEL_R_PIN);
-		} else {
-			PORT_PinSet(LED_WHEEL_R_PIN);
-		}
+        if (PWM_Count < PWM_RGB_values[rotor_position][1]) {
+            LED_WHEEL_G_Clear();
+        } else {
+            LED_WHEEL_G_Set();
+        }
 
-		if (PWM_Count < PWM_RGB_values[rotor_position][1]) {
-			PORT_PinClear(LED_WHEEL_G_PIN);
-		} else {
-			PORT_PinSet(LED_WHEEL_G_PIN);
-		}
-
-		if (PWM_Count < PWM_RGB_values[rotor_position][2]) {
-			PORT_PinClear(LED_WHEEL_B_PIN);
-		} else {
-			PORT_PinSet(LED_WHEEL_B_PIN);
-		}
-	} else {
-		PORT_PinSet(LED_WHEEL_R_PIN);
-        PORT_PinSet(LED_WHEEL_G_PIN);
-		PORT_PinSet(LED_WHEEL_B_PIN);
-	}
+        if (PWM_Count < PWM_RGB_values[rotor_position][2]) {
+            LED_WHEEL_B_Clear();
+        } else {
+            LED_WHEEL_B_Set();
+        }
+    } else {
+        LED_WHEEL_R_Set();
+        LED_WHEEL_G_Set();
+        LED_WHEEL_B_Set();
+    }
 }
-
-
 /*******************************************************************************
  End of File
-*/
+ */
 

@@ -1,0 +1,1672 @@
+
+
+
+
+
+
+{
+0,
+'T','o','u','c','h',' ','D','a','t','a',' ','V','i','s','u','a','l','i','z','e','r','\0', //heading
+0, 255, 255, 255,
+200, 8,
+};
+
+{
+0, // Dashboard ID
+0, // Element ID
+DB_TYPE_TAB, // Element Type
+1-BasicData,2-Graph,3-AdvanceData,4-AllData,
+2400
+};
+
+
+{
+0:0:4, // Dashboard ID
+76, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+0, 0, // Y-coordinate
+1200, 0, // Width
+30, 0, // Height
+14, // Font Size
+3,
+0, // Horizontal Alignment
+1, // Vertical Alignment
+126, 255, 255, 255, // Background Color
+255, 0, 0, 255, // Foreground Color
+'Q','T','o','u','c','h',' ','M','o','d','u','l','a','r',' ','L','i','b','r','a','r','y',' ','U','s','e','r',' ','G','u','i','d','e',':',' ','w','w','w','.','m','i','c','r','o','c','h','i','p','.','c','o','m','\0', // Text
+};
+{
+0:0:4, // Dashboard ID
+77, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+35, 0, // Y-coordinate
+1200, 0, // Width
+30, 0, // Height
+14, // Font Size
+3,
+0, // Horizontal Alignment
+1, // Vertical Alignment
+126, 255, 255, 255, // Background Color
+255, 0, 0, 255, // Foreground Color
+'G','l','o','s','s','a','r','y',':',' ','w','w','w','.','m','i','c','r','o','c','h','i','p','.','c','o','m','\0', // Text
+};
+{
+0:0:1, // Dashboard ID
+78, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+0, 0, // Y-coordinate
+625, 0, // Width
+30, 0, // Height
+14, // Font Size
+3,
+1, // Horizontal Alignment
+1, // Vertical Alignment
+77, 77, 77, 77, // Background Color
+255, 0, 0, 0, // Foreground Color
+'B','u','t','t','o','n',' ','D','a','t','a','\0', // Text
+};
+{
+0:0:4, // Dashboard ID
+79, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+70, 0, // Y-coordinate
+625, 0, // Width
+30, 0, // Height
+14, // Font Size
+3,
+1, // Horizontal Alignment
+1, // Vertical Alignment
+77, 77, 77, 77, // Background Color
+255, 0, 0, 0, // Foreground Color
+'B','u','t','t','o','n',' ','D','a','t','a','\0', // Text
+};
+{
+0:0:1, // Dashboard ID
+80, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+35, 0, // Y-coordinate
+250, 0, // Width
+300, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+1, // Number of Rows
+2, // Number of Columns
+0, // AutoLabels
+'0',':','0',':','C','h','a','n','n','e','l',' ','I','D',';','1',':','0',':','S','e','n','s','o','r',' ','T','y','p','e',';','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+
+
+
+
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+{
+0:0:1, // Dashboard ID
+81, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+65, 0, // Y-coordinate
+250, 0, // Width
+300, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+10, // Number of Rows
+2, // Number of Columns
+0, // AutoLabels
+'0',':','0',':','0',';','1',':','0',':','B','u','t','t','o','n',' ','0',';','0',':','1',':','1',';','1',':','1',':','B','u','t','t','o','n',' ','1',';','0',':','2',':','2',';','1',':','2',':','S','l','i','d','e','r',' ','0','[','0',']',';','0',':','3',':','3',';','1',':','3',':','S','l','i','d','e','r',' ','0','[','1',']',';','0',':','4',':','4',';','1',':','4',':','S','l','i','d','e','r',' ','0','[','2',']',';','0',':','5',':','5',';','1',':','5',':','S','l','i','d','e','r',' ','0','[','3',']',';','0',':','6',':','6',';','1',':','6',':','W','h','e','e','l',' ','0','[','0',']',';','0',':','7',':','7',';','1',':','7',':','W','h','e','e','l',' ','0','[','1',']',';','0',':','8',':','8',';','1',':','8',':','W','h','e','e','l',' ','0','[','2',']',';','0',':','9',':','9',';','1',':','9',':','W','h','e','e','l',' ','0','[','3',']',';','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+{
+0:0:4, // Dashboard ID
+82, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+105, 0, // Y-coordinate
+250, 0, // Width
+300, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+1, // Number of Rows
+2, // Number of Columns
+0, // AutoLabels
+'0',':','0',':','C','h','a','n','n','e','l',' ','I','D',';','1',':','0',':','S','e','n','s','o','r',' ','T','y','p','e',';','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+
+
+
+
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+{
+0:0:4, // Dashboard ID
+83, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+135, 0, // Y-coordinate
+250, 0, // Width
+300, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+10, // Number of Rows
+2, // Number of Columns
+0, // AutoLabels
+'0',':','0',':','0',';','1',':','0',':','B','u','t','t','o','n',' ','0',';','0',':','1',':','1',';','1',':','1',':','B','u','t','t','o','n',' ','1',';','0',':','2',':','2',';','1',':','2',':','S','l','i','d','e','r',' ','0','[','0',']',';','0',':','3',':','3',';','1',':','3',':','S','l','i','d','e','r',' ','0','[','1',']',';','0',':','4',':','4',';','1',':','4',':','S','l','i','d','e','r',' ','0','[','2',']',';','0',':','5',':','5',';','1',':','5',':','S','l','i','d','e','r',' ','0','[','3',']',';','0',':','6',':','6',';','1',':','6',':','W','h','e','e','l',' ','0','[','0',']',';','0',':','7',':','7',';','1',':','7',':','W','h','e','e','l',' ','0','[','1',']',';','0',':','8',':','8',';','1',':','8',':','W','h','e','e','l',' ','0','[','2',']',';','0',':','9',':','9',';','1',':','9',':','W','h','e','e','l',' ','0','[','3',']',';','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+{
+0:0:1, // Dashboard ID
+84, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+35, 0, // Y-coordinate
+375, 0, // Width
+30, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+1, // Number of Rows
+3, // Number of Columns
+0, // AutoLabels
+'0',':','0',':','S','t','a','t','e',';','1',':','0',':','D','e','l','t','a',';','2',':','0',':','T','h','r','e','s','h','o','l','d',';','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+{
+0:0:4, // Dashboard ID
+85, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+105, 0, // Y-coordinate
+375, 0, // Width
+30, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+1, // Number of Rows
+3, // Number of Columns
+0, // AutoLabels
+'0',':','0',':','S','t','a','t','e',';','1',':','0',':','D','e','l','t','a',';','2',':','0',':','T','h','r','e','s','h','o','l','d',';','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+{
+0:0:1, // Dashboard ID
+0, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+65, 0, // Y-coordinate
+375, 0, // Width
+300, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+10, // Number of Rows
+3, // Number of Columns
+0, // AutoLabels
+' ','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+{
+0:0:4, // Dashboard ID
+1, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+135, 0, // Y-coordinate
+375, 0, // Width
+300, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+10, // Number of Rows
+3, // Number of Columns
+0, // AutoLabels
+' ','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+{
+0:0:1, // Dashboard ID
+2, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+65, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+{
+0:0:1, // Dashboard ID
+3, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+95, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+{
+0:0:1, // Dashboard ID
+4, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+125, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+{
+0:0:1, // Dashboard ID
+5, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+155, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+{
+0:0:1, // Dashboard ID
+6, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+185, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+{
+0:0:1, // Dashboard ID
+7, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+215, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+{
+0:0:1, // Dashboard ID
+8, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+245, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+{
+0:0:1, // Dashboard ID
+9, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+275, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+{
+0:0:1, // Dashboard ID
+10, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+305, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+{
+0:0:1, // Dashboard ID
+11, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+335, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+{
+0:0:4, // Dashboard ID
+12, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+135, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+{
+0:0:4, // Dashboard ID
+13, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+165, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+{
+0:0:4, // Dashboard ID
+14, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+195, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+{
+0:0:4, // Dashboard ID
+15, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+225, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+{
+0:0:4, // Dashboard ID
+16, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+255, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+{
+0:0:4, // Dashboard ID
+17, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+285, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+{
+0:0:4, // Dashboard ID
+18, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+315, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+{
+0:0:4, // Dashboard ID
+19, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+345, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+{
+0:0:4, // Dashboard ID
+20, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+375, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+{
+0:0:4, // Dashboard ID
+21, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+405, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+
+{
+0:0:1, // Dashboard ID
+86, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+750, 0, // X-coordinate
+0, 0, // Y-coordinate
+625, 0, // Width
+30, 0, // Height
+14, // Font Size
+3,
+1, // Horizontal Alignment
+1, // Vertical Alignment
+77, 77, 77, 77, // Background Color
+255, 0, 0, 0, // Foreground Color
+'S','l','i','d','e','r',' ','&',' ','W','h','e','e','l',' ','D','a','t','a','\0', // Text
+};
+{
+0:0:4, // Dashboard ID
+87, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+750, 0, // X-coordinate
+70, 0, // Y-coordinate
+625, 0, // Width
+30, 0, // Height
+14, // Font Size
+3,
+1, // Horizontal Alignment
+1, // Vertical Alignment
+77, 77, 77, 77, // Background Color
+255, 0, 0, 0, // Foreground Color
+'S','l','i','d','e','r',' ','&',' ','W','h','e','e','l',' ','D','a','t','a','\0', // Text
+};
+{
+0:0:1, // Dashboard ID
+88, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+750, 0, // X-coordinate
+35, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+1, // Number of Rows
+1, // Number of Columns
+0, // AutoLabels
+'0',':','0',':','S','e','n','s','o','r',';','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+{
+0:0:4, // Dashboard ID
+89, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+750, 0, // X-coordinate
+105, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+1, // Number of Rows
+1, // Number of Columns
+0, // AutoLabels
+'0',':','0',':','S','e','n','s','o','r',';','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+
+ 
+ 
+{
+0:0:1, // Dashboard ID
+90, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+750, 0, // X-coordinate
+65, 0, // Y-coordinate
+250, 0, // Width
+300, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+2, // Number of Rows
+1, // Number of Columns
+0, // AutoLabels
+'0',':','0',':','S','l','i','d','e','r',' ','0',';','0',':','1',':','W','h','e','e','l',' ','0',';','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+ 
+ 
+{
+0:0:4, // Dashboard ID
+91, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+750, 0, // X-coordinate
+135, 0, // Y-coordinate
+250, 0, // Width
+300, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+2, // Number of Rows
+1, // Number of Columns
+0, // AutoLabels
+'0',':','0',':','S','l','i','d','e','r',' ','0',';','0',':','1',':','W','h','e','e','l',' ','0',';','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+{
+0:0:1, // Dashboard ID
+92, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+875, 0, // X-coordinate
+35, 0, // Y-coordinate
+500, 0, // Width
+30, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+1, // Number of Rows
+4, // Number of Columns
+0, // AutoLabels
+'0',':','0',':','S','t','a','t','e',';','1',':','0',':','S','W',' ','D','e','l','t','a',';','2',':','0',':','S','W',' ','T','h','r','e','s','h','o','l','d',';','3',':','0',':','P','o','s','i','t','i','o','n',';','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+{
+0:0:4, // Dashboard ID
+93, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+875, 0, // X-coordinate
+105, 0, // Y-coordinate
+500, 0, // Width
+30, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+1, // Number of Rows
+4, // Number of Columns
+0, // AutoLabels
+'0',':','0',':','S','t','a','t','e',';','1',':','0',':','S','W',' ','D','e','l','t','a',';','2',':','0',':','S','W',' ','T','h','r','e','s','h','o','l','d',';','3',':','0',':','P','o','s','i','t','i','o','n',';','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+{
+0:0:1, // Dashboard ID
+22, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+875, 0, // X-coordinate
+65, 0, // Y-coordinate
+700, 0, // Width
+60, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+2, // Number of Rows
+4, // Number of Columns
+0, // AutoLabels
+' ','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+{
+0:0:4, // Dashboard ID
+23, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+875, 0, // X-coordinate
+135, 0, // Y-coordinate
+700, 0, // Width
+60, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+2, // Number of Rows
+4, // Number of Columns
+0, // AutoLabels
+' ','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+{
+0:0:1, // Dashboard ID
+24, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+875, 0, // X-coordinate
+65, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+{
+0:0:1, // Dashboard ID
+25, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+875, 0, // X-coordinate
+95, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+{
+0:0:4, // Dashboard ID
+26, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+875, 0, // X-coordinate
+135, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+{
+0:0:4, // Dashboard ID
+27, // Element ID
+DB_TYPE_SIGNAL, // Element Type
+0, // Z-Index (GUI stack order)
+875, 0, // X-coordinate
+165, 0, // Y-coordinate
+125, 0, // Width
+30, 0, // Height
+128, 0, 255, 0, // Color On
+128, 255, 0, 0, // Color Off
+};
+
+
+
+
+{
+0:0:2, // Dashboard ID
+28, // Element ID
+DB_TYPE_GRAPH, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+0, 0, // Y-coordinate
+1200, 0, // Width
+500, 0, // Height
+255, 255, 255, // Title color
+0, 0, 0, // Background color
+20, 20, 20, // Graph background color
+'Q', 'T', 'o', 'u', 'c', 'h', ' ', 'G', 'r', 'a', 'p', 'h','\0', // Title
+44, // Number of plots
+0,0,0,0, // X Minimum
+0,0,32,65, // X Maximum
+0,0,0,0, // Y Minimum
+0,0,32,65, // Y Maximum
+5,
+1,
+};
+{
+0:0:4, // Dashboard ID
+29, // Element ID
+DB_TYPE_GRAPH, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+475, 0, // Y-coordinate
+1200, 0, // Width
+500, 0, // Height
+255, 255, 255, // Title color
+0, 0, 0, // Background color
+20, 20, 20, // Graph background color
+'Q', 'T', 'o', 'u', 'c', 'h', ' ', 'G', 'r', 'a', 'p', 'h','\0', // Title
+44, // Number of plots
+0,0,0,0, // X Minimum
+0,0,32,65, // X Maximum
+0,0,0,0, // Y Minimum
+0,0,32,65, // Y Maximum
+5,
+1,
+};
+{
+0:0:2, // Dashboard ID
+94, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+625, 0, // Y-coordinate
+500, 0, // Width
+30, 0, // Height
+12, // Font Size
+3,
+0, // Horizontal Alignment
+1, // Vertical Alignment
+126, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+'*',' ','V','e','r','t','i','a','l',' ','Z','o','o','m',':',' ','C','t','r','l',' ','K','e','y',' ','+',' ','M','o','u','s','e',' ','S','c','r','o','l','l',' ','(','u','n','c','h','e','c','k',' ','"','A','u','t','o','m','a','t','i','c','a','l','l','y',' ','f','i','t',' ','Y','"',' ','o','p','t','i','o','n',')','.','\0', // Text
+};
+{
+0:0:4, // Dashboard ID
+95, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+1100, 0, // Y-coordinate
+500, 0, // Width
+30, 0, // Height
+12, // Font Size
+3,
+0, // Horizontal Alignment
+1, // Vertical Alignment
+126, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+'*',' ','V','e','r','t','i','a','l',' ','Z','o','o','m',':',' ','C','t','r','l',' ','K','e','y',' ','+',' ','M','o','u','s','e',' ','S','c','r','o','l','l',' ','(','u','n','c','h','e','c','k',' ','"','A','u','t','o','m','a','t','i','c','a','l','l','y',' ','f','i','t',' ','Y','"',' ','o','p','t','i','o','n',')','.','\0', // Text
+};
+{
+0:0:2, // Dashboard ID
+96, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+500, 0, // X-coordinate
+625, 0, // Y-coordinate
+300, 0, // Width
+30, 0, // Height
+12, // Font Size
+3,
+0, // Horizontal Alignment
+1, // Vertical Alignment
+126, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+'*',' ','H','o','r','i','z','o','n','t','a','l',' ','Z','o','o','m',':',' ','L','e','f','t','-','S','h','i','f','t',' ','K','e','y',' ','+',' ','M','o','u','s','e',' ','S','c','r','o','l','l','.','\0', // Text
+};
+{
+0:0:4, // Dashboard ID
+97, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+500, 0, // X-coordinate
+1100, 0, // Y-coordinate
+300, 0, // Width
+30, 0, // Height
+12, // Font Size
+3,
+0, // Horizontal Alignment
+1, // Vertical Alignment
+126, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+'*',' ','H','o','r','i','z','o','n','t','a','l',' ','Z','o','o','m',':',' ','L','e','f','t','-','S','h','i','f','t',' ','K','e','y',' ','+',' ','M','o','u','s','e',' ','S','c','r','o','l','l','.','\0', // Text
+};
+{
+0:0:2, // Dashboard ID
+98, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+800, 0, // X-coordinate
+625, 0, // Y-coordinate
+300, 0, // Width
+30, 0, // Height
+12, // Font Size
+3,
+0, // Horizontal Alignment
+1, // Vertical Alignment
+126, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+'*',' ','C','l','i','c','k',' ','o','n',' ','"','L','e','g','e','n','d','"',' ','t','o',' ','e','n','a','b','l','e',' ','o','r',' ','d','i','s','a','b','l','e',' ','p','l','o','t','.','\0', // Text
+};
+{
+0:0:4, // Dashboard ID
+99, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+800, 0, // X-coordinate
+1100, 0, // Y-coordinate
+300, 0, // Width
+30, 0, // Height
+12, // Font Size
+3,
+0, // Horizontal Alignment
+1, // Vertical Alignment
+126, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+'*',' ','C','l','i','c','k',' ','o','n',' ','"','L','e','g','e','n','d','"',' ','t','o',' ','e','n','a','b','l','e',' ','o','r',' ','d','i','s','a','b','l','e',' ','p','l','o','t','.','\0', // Text
+};
+{
+0:0:3, // Dashboard ID
+100, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+0, 0, // Y-coordinate
+875, 0, // Width
+30, 0, // Height
+14, // Font Size
+3,
+1, // Horizontal Alignment
+1, // Vertical Alignment
+77, 77, 77, 77, // Background Color
+255, 0, 0, 0, // Foreground Color
+'S','e','n','s','o','r',' ','D','a','t','a','\0', // Text
+};
+{
+0:0:4, // Dashboard ID
+101, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+1160, 0, // Y-coordinate
+875, 0, // Width
+30, 0, // Height
+14, // Font Size
+3,
+1, // Horizontal Alignment
+1, // Vertical Alignment
+77, 77, 77, 77, // Background Color
+255, 0, 0, 0, // Foreground Color
+'S','e','n','s','o','r',' ','D','a','t','a','\0', // Text
+};
+{
+0:0:3, // Dashboard ID
+102, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+35, 0, // Y-coordinate
+250, 0, // Width
+300, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+1, // Number of Rows
+2, // Number of Columns
+0, // AutoLabels
+'0',':','0',':','C','h','a','n','n','e','l',' ','I','D',';','1',':','0',':','S','e','n','s','o','r',' ','T','y','p','e',';','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+
+
+
+
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+{
+0:0:3, // Dashboard ID
+103, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+65, 0, // Y-coordinate
+250, 0, // Width
+300, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+10, // Number of Rows
+2, // Number of Columns
+0, // AutoLabels
+'0',':','0',':','0',';','1',':','0',':','B','u','t','t','o','n',' ','0',';','0',':','1',':','1',';','1',':','1',':','B','u','t','t','o','n',' ','1',';','0',':','2',':','2',';','1',':','2',':','S','l','i','d','e','r',' ','0','[','0',']',';','0',':','3',':','3',';','1',':','3',':','S','l','i','d','e','r',' ','0','[','1',']',';','0',':','4',':','4',';','1',':','4',':','S','l','i','d','e','r',' ','0','[','2',']',';','0',':','5',':','5',';','1',':','5',':','S','l','i','d','e','r',' ','0','[','3',']',';','0',':','6',':','6',';','1',':','6',':','W','h','e','e','l',' ','0','[','0',']',';','0',':','7',':','7',';','1',':','7',':','W','h','e','e','l',' ','0','[','1',']',';','0',':','8',':','8',';','1',':','8',':','W','h','e','e','l',' ','0','[','2',']',';','0',':','9',':','9',';','1',':','9',':','W','h','e','e','l',' ','0','[','3',']',';','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+{
+0:0:4, // Dashboard ID
+104, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+1195, 0, // Y-coordinate
+250, 0, // Width
+300, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+1, // Number of Rows
+2, // Number of Columns
+0, // AutoLabels
+'0',':','0',':','C','h','a','n','n','e','l',' ','I','D',';','1',':','0',':','S','e','n','s','o','r',' ','T','y','p','e',';','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+
+
+
+
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+{
+0:0:4, // Dashboard ID
+105, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+1225, 0, // Y-coordinate
+250, 0, // Width
+300, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+10, // Number of Rows
+2, // Number of Columns
+0, // AutoLabels
+'0',':','0',':','0',';','1',':','0',':','B','u','t','t','o','n',' ','0',';','0',':','1',':','1',';','1',':','1',':','B','u','t','t','o','n',' ','1',';','0',':','2',':','2',';','1',':','2',':','S','l','i','d','e','r',' ','0','[','0',']',';','0',':','3',':','3',';','1',':','3',':','S','l','i','d','e','r',' ','0','[','1',']',';','0',':','4',':','4',';','1',':','4',':','S','l','i','d','e','r',' ','0','[','2',']',';','0',':','5',':','5',';','1',':','5',':','S','l','i','d','e','r',' ','0','[','3',']',';','0',':','6',':','6',';','1',':','6',':','W','h','e','e','l',' ','0','[','0',']',';','0',':','7',':','7',';','1',':','7',':','W','h','e','e','l',' ','0','[','1',']',';','0',':','8',':','8',';','1',':','8',':','W','h','e','e','l',' ','0','[','2',']',';','0',':','9',':','9',';','1',':','9',':','W','h','e','e','l',' ','0','[','3',']',';','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+
+{
+0:0:3, // Dashboard ID
+106, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+35, 0, // Y-coordinate
+625, 0, // Width
+30, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+1, // Number of Rows
+5, // Number of Columns
+0, // AutoLabels
+'0',':','0',':','S','i','g','n','a','l',';','1',':','0',':','R','e','f','e','r','e','n','c','e',';','2',':','0',':','D','e','l','t','a',';','3',':','0',':','C','o','m','p','e','n','s','a','t','i','o','n',' ','p','F',';','4',':','0',':','C','S','D',';','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+{
+0:0:4, // Dashboard ID
+107, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+1195, 0, // Y-coordinate
+625, 0, // Width
+30, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+1, // Number of Rows
+5, // Number of Columns
+0, // AutoLabels
+'0',':','0',':','S','i','g','n','a','l',';','1',':','0',':','R','e','f','e','r','e','n','c','e',';','2',':','0',':','D','e','l','t','a',';','3',':','0',':','C','o','m','p','e','n','s','a','t','i','o','n',' ','p','F',';','4',':','0',':','C','S','D',';','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+{
+0:0:3, // Dashboard ID
+30, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+65, 0, // Y-coordinate
+875, 0, // Width
+300, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+10, // Number of Rows
+5, // Number of Columns
+0, // AutoLabels
+' ','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+
+{
+0:0:4, // Dashboard ID
+31, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+250, 0, // X-coordinate
+1225, 0, // Y-coordinate
+875, 0, // Width
+300, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+125,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+10, // Number of Rows
+5, // Number of Columns
+0, // AutoLabels
+' ','\0', // Text
+4,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+1, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+{
+0:0:3, // Dashboard ID
+108, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+365, 0, // Y-coordinate
+800, 0, // Width
+25, 0, // Height
+12, // Font Size
+3,
+0, // Horizontal Alignment
+1, // Vertical Alignment
+126, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+'C','o','m','p','e','n','s','a','t','i','o','n',':',' ','R','e','p','r','e','s','e','n','t','s',' ','P','T','C',' ','c','o','m','p','e','n','s','a','t','i','o','n',' ','c','i','r','c','u','i','t',' ','v','a','l','u','e',' ','w','h','i','c','h',' ','i','s',' ','e','q','u','i','v','a','l','e','n','t',' ','t','o',' ','s','e','n','s','o','r',' ','c','a','p','a','c','i','t','a','n','c','e','\0', // Text
+};
+{
+0:0:4, // Dashboard ID
+109, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+1525, 0, // Y-coordinate
+800, 0, // Width
+25, 0, // Height
+12, // Font Size
+3,
+0, // Horizontal Alignment
+1, // Vertical Alignment
+126, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+'C','o','m','p','e','n','s','a','t','i','o','n',':',' ','R','e','p','r','e','s','e','n','t','s',' ','P','T','C',' ','c','o','m','p','e','n','s','a','t','i','o','n',' ','c','i','r','c','u','i','t',' ','v','a','l','u','e',' ','w','h','i','c','h',' ','i','s',' ','e','q','u','i','v','a','l','e','n','t',' ','t','o',' ','s','e','n','s','o','r',' ','c','a','p','a','c','i','t','a','n','c','e','\0', // Text
+};
+{
+0:0:3, // Dashboard ID
+110, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+390, 0, // Y-coordinate
+800, 0, // Width
+25, 0, // Height
+12, // Font Size
+3,
+0, // Horizontal Alignment
+1, // Vertical Alignment
+126, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+'"','C','o','m','p','e','n','s','a','t','i','o','n','"',' ','v','a','l','u','e',' ','c','a','n',' ','b','e',' ','u','s','e','d',' ','t','o',' ','c','h','e','c','k',' ','w','h','e','t','h','e','r',' ','s','e','n','s','o','r',' ','i','s',' ','s','a','t','u','r','a','t','e','d','.',' ','R','e','f','e','r',' ','t','o',' ','U','s','e','r',' ','G','u','i','d','e','\0', // Text
+};
+{
+0:0:4, // Dashboard ID
+111, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+1550, 0, // Y-coordinate
+800, 0, // Width
+25, 0, // Height
+12, // Font Size
+3,
+0, // Horizontal Alignment
+1, // Vertical Alignment
+126, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+'"','C','o','m','p','e','n','s','a','t','i','o','n','"',' ','v','a','l','u','e',' ','c','a','n',' ','b','e',' ','u','s','e','d',' ','t','o',' ','c','h','e','c','k',' ','w','h','e','t','h','e','r',' ','s','e','n','s','o','r',' ','i','s',' ','s','a','t','u','r','a','t','e','d','.',' ','R','e','f','e','r',' ','t','o',' ','U','s','e','r',' ','G','u','i','d','e','\0', // Text
+};
+
+{
+0:0:3, // Dashboard ID
+112, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+1575, 0, // Y-coordinate
+800, 0, // Width
+30, 0, // Height
+12, // Font Size
+3,
+0, // Horizontal Alignment
+1, // Vertical Alignment
+126, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+'C','h','a','r','g','e',' ','S','h','a','r','e',' ','D','e','l','a','y',' ','(','C','S','D',')',':',' ','d','i','s','p','l','a','y','e','d',' ','v','a','l','u','e','s',' ','a','r','e',' ','a','u','t','o','-','t','u','n','e','d',' ','b','y',' ','Q','T','o','u','c','h',' ','L','i','b','r','a','r','y','\0', // Text
+};
+{
+0:0:4, // Dashboard ID
+113, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+1575, 0, // Y-coordinate
+800, 0, // Width
+30, 0, // Height
+12, // Font Size
+3,
+0, // Horizontal Alignment
+1, // Vertical Alignment
+126, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+'C','h','a','r','g','e',' ','S','h','a','r','e',' ','D','e','l','a','y',' ','(','C','S','D',')',':',' ','d','i','s','p','l','a','y','e','d',' ','v','a','l','u','e','s',' ','a','r','e',' ','a','u','t','o','-','t','u','n','e','d',' ','b','y',' ','Q','T','o','u','c','h',' ','L','i','b','r','a','r','y','\0', // Text
+};
+
+{
+0:0:3, // Dashboard ID
+114, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+445, 0, // Y-coordinate
+700, 0, // Width
+30, 0, // Height
+14, // Font Size
+3,
+1, // Horizontal Alignment
+1, // Vertical Alignment
+77, 77, 77, 77, // Background Color
+255, 0, 0, 0, // Foreground Color
+'F','r','e','q','u','e','n','c','y',' ','H','o','p',' ','D','a','t','a','\0', // Text
+};
+{
+0:0:4, // Dashboard ID
+115, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+1640, 0, // Y-coordinate
+700, 0, // Width
+30, 0, // Height
+14, // Font Size
+3,
+1, // Horizontal Alignment
+1, // Vertical Alignment
+77, 77, 77, 77, // Background Color
+255, 0, 0, 0, // Foreground Color
+'F','r','e','q','u','e','n','c','y',' ','H','o','p',' ','D','a','t','a','\0', // Text
+};
+{
+0:0:3, // Dashboard ID
+32, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+480, 0, // Y-coordinate
+700, 0, // Width
+30, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+50,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+1, // Number of Rows
+4, // Number of Columns
+1, // AutoLabels
+'\0', // Label Configuration
+0,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+0, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+{
+0:0:4, // Dashboard ID
+33, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+1675, 0, // Y-coordinate
+700, 0, // Width
+30, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+50,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+1, // Number of Rows
+4, // Number of Columns
+1, // AutoLabels
+'\0', // Label Configuration
+0,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+0, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+{
+0:0:3, // Dashboard ID
+116, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+510, 0, // Y-coordinate
+800, 0, // Width
+30, 0, // Height
+12, // Font Size
+3,
+0, // Horizontal Alignment
+1, // Vertical Alignment
+126, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+'D','i','s','p','l','a','y','e','d',' ','f','r','e','q','u','e','n','c','i','e','s',' ','a','r','e',' ','a','u','t','o','-','t','u','n','e','d',' ','b','y',' ','Q','T','o','u','c','h',' ','L','i','b','r','a','r','y',' ','b','a','s','e','d',' ','o','n',' ','n','o','i','s','e',' ','l','e','v','e','l','s','\0', // Text
+};
+{
+0:0:4, // Dashboard ID
+117, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+1705, 0, // Y-coordinate
+800, 0, // Width
+30, 0, // Height
+12, // Font Size
+3,
+0, // Horizontal Alignment
+1, // Vertical Alignment
+126, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+'D','i','s','p','l','a','y','e','d',' ','f','r','e','q','u','e','n','c','i','e','s',' ','a','r','e',' ','a','u','t','o','-','t','u','n','e','d',' ','b','y',' ','Q','T','o','u','c','h',' ','L','i','b','r','a','r','y',' ','b','a','s','e','d',' ','o','n',' ','n','o','i','s','e',' ','l','e','v','e','l','s','\0', // Text
+};
+
+
+
+{
+0:0:1, // Dashboard ID
+118, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+575, 0, // Y-coordinate
+175, 0, // Width
+30, 0, // Height
+14, // Font Size
+3,
+1, // Horizontal Alignment
+1, // Vertical Alignment
+77, 77, 77, 77, // Background Color
+255, 0, 0, 0, // Foreground Color
+'D','e','b','u','g',' ','D','a','t','a','\0', // Text
+};
+{
+0:0:4, // Dashboard ID
+119, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+1770, 0, // Y-coordinate
+175, 0, // Width
+30, 0, // Height
+14, // Font Size
+3,
+1, // Horizontal Alignment
+1, // Vertical Alignment
+77, 77, 77, 77, // Background Color
+255, 0, 0, 0, // Foreground Color
+'D','e','b','u','g',' ','D','a','t','a','\0', // Text
+};
+
+{
+0:0:1, // Dashboard ID
+34, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+610, 0, // Y-coordinate
+175, 0, // Width
+30, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+50,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+2, // Number of Rows
+1, // Number of Columns
+1, // AutoLabels
+'\0', // Label Configuration
+0,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+0, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+{
+0:0:4, // Dashboard ID
+35, // Element ID
+DB_TYPE_TABLE, // Element Type
+0, // Z-Index (GUI stack order)
+0, 0, // X-coordinate
+1805, 0, // Y-coordinate
+175, 0, // Width
+30, 0, // Height
+12, // Data Font Size
+12, // Label Font Size
+50,0, // Data Column Width
+125,0, // Label Column Width
+30,0, // Row Height
+2, // Number of Rows
+1, // Number of Columns
+1, // AutoLabels
+'\0', // Label Configuration
+0,
+0, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+0, // Label Horizontal Alignment
+1, // Data Horizontal Alignment
+};
+{
+0:0:1, // Dashboard ID
+120, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+200, 0, // X-coordinate
+610, 0, // Y-coordinate
+800, 0, // Width
+30, 0, // Height
+12, // Font Size
+3,
+0, // Horizontal Alignment
+1, // Vertical Alignment
+126, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+'C','o','u','n','t','e','r',' ','f','o','r',' ','d','a','t','a','s','t','r','e','a','m','e','r',' ','p','a','c','k','e','t','s','.',' ',' ','M','i','s','s','i','n','g',' ','c','o','u','n','t',' ','i','n','d','i','c','a','t','e',' ','p','a','c','k','e','t',' ','d','r','o','p','\0', // Text
+};
+{
+0:0:4, // Dashboard ID
+121, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+200, 0, // X-coordinate
+1805, 0, // Y-coordinate
+800, 0, // Width
+30, 0, // Height
+12, // Font Size
+3,
+0, // Horizontal Alignment
+1, // Vertical Alignment
+126, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+'C','o','u','n','t','e','r',' ','f','o','r',' ','d','a','t','a','s','t','r','e','a','m','e','r',' ','p','a','c','k','e','t','s','.',' ',' ','M','i','s','s','i','n','g',' ','c','o','u','n','t',' ','i','n','d','i','c','a','t','e',' ','p','a','c','k','e','t',' ','d','r','o','p','\0', // Text
+};
+{
+0:0:1, // Dashboard ID
+122, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+200, 0, // X-coordinate
+640, 0, // Y-coordinate
+800, 0, // Width
+30, 0, // Height
+12, // Font Size
+3,
+0, // Horizontal Alignment
+1, // Vertical Alignment
+126, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+'I','n','d','i','c','a','t','e','s',' ','l','i','b','r','a','r','y',' ','e','r','r','o','r',' ','s','t','a','t','e','.',' ','Z','e','r','o',':',' ','n','o',' ','e','r','r','o','r','.',' ','R','e','f','e','r',' ','"','E','r','r','o','r',' ','C','o','d','e','"',' ','s','e','c','t','i','o','n',' ','i','n',' ','U','s','e','r',' ','G','u','i','d','e','\0', // Text
+};
+{
+0:0:4, // Dashboard ID
+123, // Element ID
+DB_TYPE_LABEL, // Element Type
+0, // Z-Index (GUI stack order)
+200, 0, // X-coordinate
+1835, 0, // Y-coordinate
+800, 0, // Width
+30, 0, // Height
+12, // Font Size
+3,
+0, // Horizontal Alignment
+1, // Vertical Alignment
+126, 255, 255, 255, // Background Color
+255, 0, 0, 0, // Foreground Color
+'I','n','d','i','c','a','t','e','s',' ','l','i','b','r','a','r','y',' ','e','r','r','o','r',' ','s','t','a','t','e','.',' ','Z','e','r','o',':',' ','n','o',' ','e','r','r','o','r','.',' ','R','e','f','e','r',' ','"','E','r','r','o','r',' ','C','o','d','e','"',' ','s','e','c','t','i','o','n',' ','i','n',' ','U','s','e','r',' ','G','u','i','d','e','\0', // Text
+};
