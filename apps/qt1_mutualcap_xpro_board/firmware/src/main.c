@@ -27,7 +27,6 @@
 #include <stdlib.h>                     // Defines EXIT_FAILURE
 #include "definitions.h"                // SYS function prototypes
 
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Main Entry Point
