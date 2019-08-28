@@ -275,16 +275,16 @@
           <Name dnOrder="1">datastreamer.h</Name>
           <LogicalPath dnOrder="2">config/sam_l22_xpro/touch/datastreamer/</LogicalPath>
           <PhysicalPath dnOrder="3">/touch/datastreamer/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">7FA2CBA155924E62B8CA54CCAAFE6B89</GeneratedChecksum>
-          <UserChecksum dnOrder="5">7FA2CBA155924E62B8CA54CCAAFE6B89</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9370572AD402AB9E975F0FDC2266795F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9370572AD402AB9E975F0FDC2266795F</UserChecksum>
         </File>
         <File dnOrder="34">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_l22_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">FBBE7686BCCE9FF2EF806D22427C1662</GeneratedChecksum>
-          <UserChecksum dnOrder="5">FBBE7686BCCE9FF2EF806D22427C1662</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9765148CFF0D1853517815755DD28E4D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9765148CFF0D1853517815755DD28E4D</UserChecksum>
         </File>
         <File dnOrder="35">
           <Type dnOrder="0">HEADER</Type>
@@ -451,8 +451,8 @@
           <Name dnOrder="1">plib_port.h</Name>
           <LogicalPath dnOrder="2">config/sam_l22_xpro/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">BF34EAEBAC7E5BD6A6534DB932ED2E37</GeneratedChecksum>
-          <UserChecksum dnOrder="5">BF34EAEBAC7E5BD6A6534DB932ED2E37</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C974C65AD4CBECCC84B789AF193E08D2</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C974C65AD4CBECCC84B789AF193E08D2</UserChecksum>
         </File>
         <File dnOrder="56">
           <Type dnOrder="0">HEADER</Type>
@@ -507,48 +507,48 @@
           <Name dnOrder="1">qtm_acq_saml22_0x0028_api.h</Name>
           <LogicalPath dnOrder="2">config/sam_l22_xpro/touch/</LogicalPath>
           <PhysicalPath dnOrder="3">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">2BDD22D9C8BCDD7A61D753CFEA0FDA71</GeneratedChecksum>
-          <UserChecksum dnOrder="5">2BDD22D9C8BCDD7A61D753CFEA0FDA71</UserChecksum>
+          <GeneratedChecksum dnOrder="4">2ABB77BD11B663E95DA31069E6AE9A77</GeneratedChecksum>
+          <UserChecksum dnOrder="5">2ABB77BD11B663E95DA31069E6AE9A77</UserChecksum>
         </File>
         <File dnOrder="63">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">qtm_binding_layer_0x0005_api.h</Name>
           <LogicalPath dnOrder="2">config/sam_l22_xpro/touch/</LogicalPath>
           <PhysicalPath dnOrder="3">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">EFB32EC47FBB39EEBF7A2D3262DB0EA5</GeneratedChecksum>
-          <UserChecksum dnOrder="5">EFB32EC47FBB39EEBF7A2D3262DB0EA5</UserChecksum>
+          <GeneratedChecksum dnOrder="4">47039FCA47FDB2A85762AFB56DD0BA6A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">47039FCA47FDB2A85762AFB56DD0BA6A</UserChecksum>
         </File>
         <File dnOrder="64">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">qtm_common_components_api.h</Name>
           <LogicalPath dnOrder="2">config/sam_l22_xpro/touch/</LogicalPath>
           <PhysicalPath dnOrder="3">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">548B7EB8B1B3DE1D1DDB275AF003F74C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">548B7EB8B1B3DE1D1DDB275AF003F74C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E4C11D411F15AC218FC492B34ACBFF5C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E4C11D411F15AC218FC492B34ACBFF5C</UserChecksum>
         </File>
         <File dnOrder="65">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">qtm_freq_hop_auto_0x0004_api.h</Name>
           <LogicalPath dnOrder="2">config/sam_l22_xpro/touch/</LogicalPath>
           <PhysicalPath dnOrder="3">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">551C819BBD390EB832D5B1BC9960871A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">551C819BBD390EB832D5B1BC9960871A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9D97AA6DCD7F4BB3C4582D995C98D84B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9D97AA6DCD7F4BB3C4582D995C98D84B</UserChecksum>
         </File>
         <File dnOrder="66">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">qtm_scroller_0x000b_api.h</Name>
           <LogicalPath dnOrder="2">config/sam_l22_xpro/touch/</LogicalPath>
           <PhysicalPath dnOrder="3">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">99A018289F7A05CCDF829694ADE6C845</GeneratedChecksum>
-          <UserChecksum dnOrder="5">99A018289F7A05CCDF829694ADE6C845</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1BCA5204880D2D9A662781D70D62217C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1BCA5204880D2D9A662781D70D62217C</UserChecksum>
         </File>
         <File dnOrder="67">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">qtm_touch_key_0x0002_api.h</Name>
           <LogicalPath dnOrder="2">config/sam_l22_xpro/touch/</LogicalPath>
           <PhysicalPath dnOrder="3">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F614126ABF4646F8460CC1CDA26DDFFD</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F614126ABF4646F8460CC1CDA26DDFFD</UserChecksum>
+          <GeneratedChecksum dnOrder="4">B40B26CBF970F40A2CB63C74002B65D4</GeneratedChecksum>
+          <UserChecksum dnOrder="5">B40B26CBF970F40A2CB63C74002B65D4</UserChecksum>
         </File>
         <File dnOrder="68">
           <Type dnOrder="0">HEADER</Type>

@@ -102,7 +102,7 @@ Output : none
 Notes  : none
 ============================================================================*/
 
-static void touch_led_display_1(void)
+static void touch_led_display_1(void) 
 {
 	uint8_t button1_state;
 	uint8_t button2_state;
