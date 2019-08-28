@@ -249,7 +249,7 @@
         </String>
         <String dnOrder="47" id="PIN_11_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="LED_SLIDER1"/>
+            <User dnOrder="0" value="LED_SLIDER_1"/>
           </Values>
         </String>
         <String dnOrder="48" id="PIN_11_FUNCTION_TYPE">
@@ -284,7 +284,7 @@
         </String>
         <String dnOrder="54" id="PIN_12_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="LED_SLIDER0"/>
+            <User dnOrder="0" value="LED_SLIDER_0"/>
           </Values>
         </String>
         <String dnOrder="55" id="PIN_12_FUNCTION_TYPE">
@@ -349,7 +349,7 @@
         </String>
         <String dnOrder="67" id="PIN_25_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="LED_SLIDER2"/>
+            <User dnOrder="0" value="LED_SLIDER_2"/>
           </Values>
         </String>
         <String dnOrder="68" id="PIN_25_FUNCTION_TYPE">
@@ -384,7 +384,7 @@
         </String>
         <String dnOrder="74" id="PIN_26_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="LED_SLIDER3"/>
+            <User dnOrder="0" value="LED_SLIDER_3"/>
           </Values>
         </String>
         <String dnOrder="75" id="PIN_26_FUNCTION_TYPE">
@@ -429,7 +429,7 @@
         </String>
         <String dnOrder="83" id="PIN_35_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="LED_SLIDER6"/>
+            <User dnOrder="0" value="LED_SLIDER_6"/>
           </Values>
         </String>
         <String dnOrder="84" id="PIN_35_FUNCTION_TYPE">
@@ -464,7 +464,7 @@
         </String>
         <String dnOrder="90" id="PIN_36_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="LED_SLIDER4"/>
+            <User dnOrder="0" value="LED_SLIDER_4"/>
           </Values>
         </String>
         <String dnOrder="91" id="PIN_36_FUNCTION_TYPE">
@@ -499,7 +499,7 @@
         </String>
         <String dnOrder="97" id="PIN_37_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="LED_SLIDER5"/>
+            <User dnOrder="0" value="LED_SLIDER_5"/>
           </Values>
         </String>
         <String dnOrder="98" id="PIN_37_FUNCTION_TYPE">
@@ -534,7 +534,7 @@
         </String>
         <String dnOrder="104" id="PIN_38_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="LED_SLIDER7"/>
+            <User dnOrder="0" value="LED_SLIDER_7"/>
           </Values>
         </String>
         <String dnOrder="105" id="PIN_38_FUNCTION_TYPE">
@@ -639,7 +639,7 @@
         </String>
         <String dnOrder="125" id="PIN_59_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="LED_BUT1"/>
+            <User dnOrder="0" value="LED_BUT_0"/>
           </Values>
         </String>
         <String dnOrder="126" id="PIN_59_FUNCTION_TYPE">
@@ -669,7 +669,7 @@
         </String>
         <String dnOrder="131" id="PIN_60_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="LED_BUT2"/>
+            <User dnOrder="0" value="LED_BUT_1"/>
           </Values>
         </String>
         <String dnOrder="132" id="PIN_60_FUNCTION_TYPE">

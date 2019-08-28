@@ -1,5 +1,5 @@
 /*******************************************************************************
-  Touch Library v3.1.1 Release
+  Touch Library v3.4.0 Release
 
   Company:
     Microchip Technology Inc.

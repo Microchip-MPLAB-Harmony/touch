@@ -60,7 +60,14 @@
 // Section: BSP Macros
 // *****************************************************************************
 // *****************************************************************************
-
+/*** LED Macros for LED ***/
+#define LED_Toggle() (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 15)
+#define LED_On() (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 15)
+#define LED_Off() (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 15)
+/*** SWITCH Macros for SWITCH ***/
+#define SWITCH_Get() ((PORT_REGS->GROUP[0].PORT_IN >> 28) & 0x01)
+#define SWITCH_STATE_PRESSED 0
+#define SWITCH_STATE_RELEASED 1
 
 
 

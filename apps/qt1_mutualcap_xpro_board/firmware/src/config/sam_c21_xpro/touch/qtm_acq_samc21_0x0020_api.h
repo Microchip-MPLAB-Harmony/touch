@@ -1,11 +1,43 @@
-/*============================================================================
-Filename : qtm_acq_samc21_api.h
-Project : QTouch Modular Library
-Purpose : API for Acquisition module - SAMC21/PTC
-------------------------------------------------------------------------------
-Copyright (c)  Microchip. All rights reserved.
-------------------------------------------------------------------------------
-============================================================================*/
+
+/*******************************************************************************
+  Touch Library
+
+  Company:
+    Microchip Technology Inc.
+
+  File Name:
+    qtm_acq_samc21_0x0020_api.h
+
+  Summary:
+    QTouch Modular Library
+
+  Description:
+    API for Acquisition module - SAMC21/PTC
+	
+*******************************************************************************/
+
+/*******************************************************************************
+Copyright (c) Microchip Technology Inc.  All rights reserved.
+
+Microchip licenses to you the right to use, modify, copy and distribute
+Software only when embedded on a Microchip microcontroller or digital signal
+controller that is integrated into your product or third party product
+(pursuant to the sublicense terms in the accompanying license agreement).
+
+You should refer to the license agreement accompanying this Software for
+additional information regarding your rights and obligations.
+
+SOFTWARE AND DOCUMENTATION ARE PROVIDED AS IS  WITHOUT  WARRANTY  OF  ANY  KIND,
+EITHER EXPRESS  OR  IMPLIED,  INCLUDING  WITHOUT  LIMITATION,  ANY  WARRANTY  OF
+MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A  PARTICULAR  PURPOSE.
+IN NO EVENT SHALL MICROCHIP OR  ITS  LICENSORS  BE  LIABLE  OR  OBLIGATED  UNDER
+CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION,  BREACH  OF  WARRANTY,  OR
+OTHER LEGAL  EQUITABLE  THEORY  ANY  DIRECT  OR  INDIRECT  DAMAGES  OR  EXPENSES
+INCLUDING BUT NOT LIMITED TO ANY  INCIDENTAL,  SPECIAL,  INDIRECT,  PUNITIVE  OR
+CONSEQUENTIAL DAMAGES, LOST  PROFITS  OR  LOST  DATA,  COST  OF  PROCUREMENT  OF
+SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
+(INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
+*******************************************************************************/
 
 #ifndef TOUCH_API_C21_ACQ_H
 #define TOUCH_API_C21_ACQ_H

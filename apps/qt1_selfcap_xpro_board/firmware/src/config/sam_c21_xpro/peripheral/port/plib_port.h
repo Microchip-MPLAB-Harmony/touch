@@ -84,23 +84,23 @@
 #define LED_WHEEL_G_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 17)
 #define LED_WHEEL_G_PIN                  PORT_PIN_PB17
 
-/*** Macros for LED_BUT1 pin ***/
-#define LED_BUT1_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 30)
-#define LED_BUT1_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 30)
-#define LED_BUT1_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 30)
-#define LED_BUT1_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 30)) & 0x01)
-#define LED_BUT1_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 30)
-#define LED_BUT1_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 30)
-#define LED_BUT1_PIN                  PORT_PIN_PB30
+/*** Macros for LED_BUT_0 pin ***/
+#define LED_BUT_0_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 30)
+#define LED_BUT_0_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 30)
+#define LED_BUT_0_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 30)
+#define LED_BUT_0_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 30)) & 0x01)
+#define LED_BUT_0_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 30)
+#define LED_BUT_0_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 30)
+#define LED_BUT_0_PIN                  PORT_PIN_PB30
 
-/*** Macros for LED_BUT2 pin ***/
-#define LED_BUT2_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 31)
-#define LED_BUT2_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 31)
-#define LED_BUT2_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 31)
-#define LED_BUT2_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 31)) & 0x01)
-#define LED_BUT2_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 31)
-#define LED_BUT2_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 31)
-#define LED_BUT2_PIN                  PORT_PIN_PB31
+/*** Macros for LED_BUT_1 pin ***/
+#define LED_BUT_1_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 31)
+#define LED_BUT_1_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 31)
+#define LED_BUT_1_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 31)
+#define LED_BUT_1_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 31)) & 0x01)
+#define LED_BUT_1_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 31)
+#define LED_BUT_1_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 31)
+#define LED_BUT_1_PIN                  PORT_PIN_PB31
 
 /*** Macros for LED_WHEEL_B pin ***/
 #define LED_WHEEL_B_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 3)

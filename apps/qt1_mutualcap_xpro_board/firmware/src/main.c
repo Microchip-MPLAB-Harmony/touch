@@ -15,6 +15,28 @@
     "main" function calls the "SYS_Initialize" function to initialize the state
     machines of all modules in the system
  *******************************************************************************/
+/*******************************************************************************
+	Copyright (c) Microchip Technology Inc.  All rights reserved.
+
+	Microchip licenses to you the right to use, modify, copy and distribute
+	Software only when embedded on a Microchip microcontroller or digital signal
+	controller that is integrated into your product or third party product
+	(pursuant to the sublicense terms in the accompanying license agreement).
+
+	You should refer to the license agreement accompanying this Software for
+	additional information regarding your rights and obligations.
+
+	SOFTWARE AND DOCUMENTATION ARE PROVIDED AS IS  WITHOUT  WARRANTY  OF  ANY  KIND,
+	EITHER EXPRESS  OR  IMPLIED,  INCLUDING  WITHOUT  LIMITATION,  ANY  WARRANTY  OF
+	MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A  PARTICULAR  PURPOSE.
+	IN NO EVENT SHALL MICROCHIP OR  ITS  LICENSORS  BE  LIABLE  OR  OBLIGATED  UNDER
+	CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION,  BREACH  OF  WARRANTY,  OR
+	OTHER LEGAL  EQUITABLE  THEORY  ANY  DIRECT  OR  INDIRECT  DAMAGES  OR  EXPENSES
+	INCLUDING BUT NOT LIMITED TO ANY  INCIDENTAL,  SPECIAL,  INDIRECT,  PUNITIVE  OR
+	CONSEQUENTIAL DAMAGES, LOST  PROFITS  OR  LOST  DATA,  COST  OF  PROCUREMENT  OF
+	SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
+	(INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
+*******************************************************************************/
 
 // *****************************************************************************
 // *****************************************************************************
@@ -37,9 +59,9 @@ extern volatile uint8_t measurement_done_touch;
 /*----------------------------------------------------------------------------
  *   Global variables
  *----------------------------------------------------------------------------*/
-volatile uint8_t rotor_state = 0u;
+volatile uint8_t rotor_state    = 0u;
 volatile uint8_t rotor_position = 0u;
-uint8_t PWM_Count = 0u;
+uint8_t          PWM_Count      = 0u;
 
 const uint8_t PWM_RGB_values[64][3]
     = {{20, 0, 0},  {20, 0, 0}, {19, 1, 0}, {18, 2, 0},  {17, 3, 0}, {16, 4, 0},  {15, 5, 0}, {14, 6, 0},
@@ -59,17 +81,17 @@ static void touch_led_display_1(void);
 int main ( void )
 {
     /* Initialize all modules */
-    SYS_Initialize(NULL);
-        
+    SYS_Initialize ( NULL );
+
     while ( true )
     {
         touch_process();
-        touch_led_display_1();
+		touch_led_display_1();
     }
 
     /* Execution should not come here during normal operation */
 
-    return ( EXIT_FAILURE);
+    return ( EXIT_FAILURE );
 }
 /*============================================================================
 static void touch_led_display_1(void)
@@ -82,166 +104,168 @@ Notes  : none
 
 static void touch_led_display_1(void)
 {
-    uint8_t button1_state;
-    uint8_t button2_state;
-    uint8_t slider_state;
-    uint8_t slider_position;
+	uint8_t button1_state;
+	uint8_t button2_state;
+	uint8_t slider_state;
+	uint8_t slider_position;
 
-    if ((measurement_done_touch == 1u)) {
+	if ((measurement_done_touch == 1u)) {
 
-        measurement_done_touch = 0u;
+		measurement_done_touch = 0u;
 
-        /**
-         * Get touch sensor states
-         */
-        button1_state = get_sensor_state(0);
-        button2_state = get_sensor_state(1);
-        slider_state = get_scroller_state(0);
+		/**
+		 * Get touch sensor states
+		 */
+		button1_state = get_sensor_state(0) & 0x80;
+		button2_state = get_sensor_state(1) & 0x80;
+		slider_state  = get_scroller_state(0);
 
-        if (button1_state == 0x03) {
+		if (0u != button1_state) {
+			LED_BUT_0_Clear();
+		} else {		
             LED_BUT_0_Set();
-        } else {
-            LED_BUT_0_Clear();
-        }
+		}
 
-        if (button2_state == 0x03) {
-            LED_BUT_1_Set();
-        } else {
+		if (0u != button2_state) {
             LED_BUT_1_Clear();
-        }
+		} else {
+			LED_BUT_1_Set();
+		}
 
-        /**
-         * Clear all slider controlled LEDs
-         */
-        LED_0_SLIDER_Set();
-        LED_1_SLIDER_Set();
-        LED_2_SLIDER_Set();
-        LED_3_SLIDER_Set();
-        LED_4_SLIDER_Set();
-        LED_5_SLIDER_Set();
-        LED_6_SLIDER_Set();
-        LED_7_SLIDER_Set();
-        
-        /**
-         * If slider is activated
-         */
-        if (slider_state) {
-            /**
-             * Parse slider position
-             */
-            slider_position = get_scroller_position(0);
-            slider_position = slider_position >> 5u;
-            switch (slider_position) {
-                case 0:
-                    LED_0_SLIDER_Clear();
-                    break;
+		/**
+		 * Clear all slider controlled LEDs
+		 */
+		LED_SLIDER_0_Set();
+		LED_SLIDER_1_Set();
+		LED_SLIDER_2_Set();
+		LED_SLIDER_3_Set();
+		LED_SLIDER_4_Set();
+		LED_SLIDER_5_Set();
+		LED_SLIDER_6_Set();
+		LED_SLIDER_7_Set();
 
-                case 1:
-                    LED_0_SLIDER_Clear();
-                    LED_1_SLIDER_Clear();
-                    break;
+		/**
+		 * If slider is activated
+		 */
+		if (slider_state) {
+			/**
+			 * Parse slider position
+			 */
+			slider_position = get_scroller_position(0);
+			slider_position = slider_position >> 5u;
+			switch (slider_position) {
+			case 0:
+				LED_SLIDER_0_Clear();
+				break;
 
-                case 2:
-                    LED_0_SLIDER_Clear();
-                    LED_1_SLIDER_Clear();
-                    LED_2_SLIDER_Clear();
-                    break;
+			case 1:
+				LED_SLIDER_0_Clear();
+				LED_SLIDER_1_Clear();
+				break;
 
-                case 3:
-                    LED_0_SLIDER_Clear();
-                    LED_1_SLIDER_Clear();
-                    LED_2_SLIDER_Clear();
-                    LED_3_SLIDER_Clear();
-                    break;
+			case 2:
+                LED_SLIDER_0_Clear();
+                LED_SLIDER_1_Clear();
+                LED_SLIDER_2_Clear();
+				break;
 
-                case 4:
-                    LED_0_SLIDER_Clear();
-                    LED_1_SLIDER_Clear();
-                    LED_2_SLIDER_Clear();
-                    LED_3_SLIDER_Clear();
-                    LED_4_SLIDER_Clear();
-                    break;
+			case 3:
+                LED_SLIDER_0_Clear();
+                LED_SLIDER_1_Clear();
+                LED_SLIDER_2_Clear();
+                LED_SLIDER_3_Clear();
+				break;
 
-                case 5:
-                    LED_0_SLIDER_Clear();
-                    LED_1_SLIDER_Clear();
-                    LED_2_SLIDER_Clear();
-                    LED_3_SLIDER_Clear();
-                    LED_4_SLIDER_Clear();
-                    LED_5_SLIDER_Clear();
-                    break;
+			case 4:
+                LED_SLIDER_0_Clear();
+                LED_SLIDER_1_Clear();
+                LED_SLIDER_2_Clear();
+                LED_SLIDER_3_Clear();
+                LED_SLIDER_4_Clear();
+				break;
 
-                case 6:
-                    LED_0_SLIDER_Clear();
-                    LED_1_SLIDER_Clear();
-                    LED_2_SLIDER_Clear();
-                    LED_3_SLIDER_Clear();
-                    LED_4_SLIDER_Clear();
-                    LED_5_SLIDER_Clear();
-                    LED_6_SLIDER_Clear();
-                    break;
+			case 5:
+                LED_SLIDER_0_Clear();
+                LED_SLIDER_1_Clear();
+                LED_SLIDER_2_Clear();
+                LED_SLIDER_3_Clear();
+                LED_SLIDER_4_Clear();
+                LED_SLIDER_5_Clear();
+				break;
 
-                case 7:
-                    LED_0_SLIDER_Clear();
-                    LED_1_SLIDER_Clear();
-                    LED_2_SLIDER_Clear();
-                    LED_3_SLIDER_Clear();
-                    LED_4_SLIDER_Clear();
-                    LED_5_SLIDER_Clear();
-                    LED_6_SLIDER_Clear();
-                    LED_7_SLIDER_Clear();
-                    break;
+			case 6:
+                LED_SLIDER_0_Clear();
+				LED_SLIDER_1_Clear();
+                LED_SLIDER_2_Clear();
+                LED_SLIDER_3_Clear();
+                LED_SLIDER_4_Clear();
+                LED_SLIDER_5_Clear();
+                LED_SLIDER_6_Clear();
+				break;
 
-                default:
-                    LED_0_SLIDER_Set();
-                    LED_1_SLIDER_Set();
-                    LED_2_SLIDER_Set();
-                    LED_3_SLIDER_Set();
-                    LED_4_SLIDER_Set();
-                    LED_5_SLIDER_Set();
-                    LED_6_SLIDER_Set();
-                    LED_7_SLIDER_Set();
-                    break;
-            }
-        }
-    } /* measurement done flag */
+			case 7:
+                LED_SLIDER_0_Clear();
+                LED_SLIDER_1_Clear();
+                LED_SLIDER_2_Clear();
+                LED_SLIDER_3_Clear();
+                LED_SLIDER_4_Clear();
+                LED_SLIDER_5_Clear();
+                LED_SLIDER_6_Clear();
+                LED_SLIDER_7_Clear();
+				break;
 
-    /* Update PWM counter */
-    if (PWM_Count < 4) {
-        PWM_Count++;
-    } else {
-        PWM_Count = 0;
-    }
+			default:
+                LED_SLIDER_0_Set();
+                LED_SLIDER_1_Set();
+                LED_SLIDER_2_Set();
+                LED_SLIDER_3_Set();
+                LED_SLIDER_4_Set();
+                LED_SLIDER_5_Set();
+                LED_SLIDER_6_Set();
+                LED_SLIDER_7_Set();
+				break;
+			}
+		}
+	} /* measurement done flag */
 
-    rotor_state = get_scroller_state(1);
-    /* If rotor is active */
-    if (rotor_state) {
-        rotor_position = get_scroller_position(1);
-        rotor_position = rotor_position >> 2u;
-        if (PWM_Count < PWM_RGB_values[rotor_position][0]) {
-            LED_WHEEL_R_Clear();
-        } else {
-            LED_WHEEL_R_Set();
-        }
+	/* Update PWM counter */
+	if (PWM_Count < 4) {
+		PWM_Count++;
+	} else {
+		PWM_Count = 0;
+	}
 
-        if (PWM_Count < PWM_RGB_values[rotor_position][1]) {
-            LED_WHEEL_G_Clear();
-        } else {
-            LED_WHEEL_G_Set();
-        }
+	rotor_state = get_scroller_state(1);
+	/* If rotor is active */
+	if (rotor_state) {
+		rotor_position = get_scroller_position(1);
+		rotor_position = rotor_position >> 2u;
+		if (PWM_Count < PWM_RGB_values[rotor_position][0]) {
+			LED_WHEEL_R_Clear();
+		} else {
+			LED_WHEEL_R_Set();
+		}
 
-        if (PWM_Count < PWM_RGB_values[rotor_position][2]) {
-            LED_WHEEL_B_Clear();
-        } else {
-            LED_WHEEL_B_Set();
-        }
-    } else {
-        LED_WHEEL_R_Set();
+		if (PWM_Count < PWM_RGB_values[rotor_position][1]) {
+			LED_WHEEL_G_Clear();
+		} else {
+			LED_WHEEL_G_Set();
+		}
+
+		if (PWM_Count < PWM_RGB_values[rotor_position][2]) {
+			LED_WHEEL_B_Clear();
+		} else {
+			LED_WHEEL_B_Set();
+		}
+	} else {
+		LED_WHEEL_R_Set();
         LED_WHEEL_G_Set();
-        LED_WHEEL_B_Set();
-    }
+		LED_WHEEL_B_Set();
+	}
 }
+
+
 /*******************************************************************************
  End of File
- */
+*/
 

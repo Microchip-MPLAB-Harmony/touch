@@ -66,59 +66,59 @@
 // *****************************************************************************
 
 
-/*** Macros for LED_1_SLIDER pin ***/
-#define LED_1_SLIDER_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 3)
-#define LED_1_SLIDER_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 3)
-#define LED_1_SLIDER_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 3)
-#define LED_1_SLIDER_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 3)) & 0x01)
-#define LED_1_SLIDER_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 3)
-#define LED_1_SLIDER_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 3)
-#define LED_1_SLIDER_PIN                  PORT_PIN_PA03
+/*** Macros for LED_SLIDER_1 pin ***/
+#define LED_SLIDER_1_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 3)
+#define LED_SLIDER_1_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 3)
+#define LED_SLIDER_1_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 3)
+#define LED_SLIDER_1_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 3)) & 0x01)
+#define LED_SLIDER_1_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 3)
+#define LED_SLIDER_1_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 3)
+#define LED_SLIDER_1_PIN                  PORT_PIN_PA03
 
-/*** Macros for LED_0_SLIDER pin ***/
-#define LED_0_SLIDER_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 5)
-#define LED_0_SLIDER_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 5)
-#define LED_0_SLIDER_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 5)
-#define LED_0_SLIDER_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 5)) & 0x01)
-#define LED_0_SLIDER_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 5)
-#define LED_0_SLIDER_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 5)
-#define LED_0_SLIDER_PIN                  PORT_PIN_PB05
+/*** Macros for LED_SLIDER_0 pin ***/
+#define LED_SLIDER_0_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 5)
+#define LED_SLIDER_0_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 5)
+#define LED_SLIDER_0_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 5)
+#define LED_SLIDER_0_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 5)) & 0x01)
+#define LED_SLIDER_0_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 5)
+#define LED_SLIDER_0_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 5)
+#define LED_SLIDER_0_PIN                  PORT_PIN_PB05
 
-/*** Macros for LED_6_SLIDER pin ***/
-#define LED_6_SLIDER_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 4)
-#define LED_6_SLIDER_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 4)
-#define LED_6_SLIDER_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 4)
-#define LED_6_SLIDER_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 4)) & 0x01)
-#define LED_6_SLIDER_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 4)
-#define LED_6_SLIDER_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 4)
-#define LED_6_SLIDER_PIN                  PORT_PIN_PA04
+/*** Macros for LED_SLIDER_6 pin ***/
+#define LED_SLIDER_6_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 4)
+#define LED_SLIDER_6_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 4)
+#define LED_SLIDER_6_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 4)
+#define LED_SLIDER_6_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 4)) & 0x01)
+#define LED_SLIDER_6_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 4)
+#define LED_SLIDER_6_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 4)
+#define LED_SLIDER_6_PIN                  PORT_PIN_PA04
 
-/*** Macros for LED_4_SLIDER pin ***/
-#define LED_4_SLIDER_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 5)
-#define LED_4_SLIDER_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 5)
-#define LED_4_SLIDER_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 5)
-#define LED_4_SLIDER_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 5)) & 0x01)
-#define LED_4_SLIDER_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 5)
-#define LED_4_SLIDER_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 5)
-#define LED_4_SLIDER_PIN                  PORT_PIN_PA05
+/*** Macros for LED_SLIDER_4 pin ***/
+#define LED_SLIDER_4_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 5)
+#define LED_SLIDER_4_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 5)
+#define LED_SLIDER_4_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 5)
+#define LED_SLIDER_4_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 5)) & 0x01)
+#define LED_SLIDER_4_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 5)
+#define LED_SLIDER_4_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 5)
+#define LED_SLIDER_4_PIN                  PORT_PIN_PA05
 
-/*** Macros for LED_5_SLIDER pin ***/
-#define LED_5_SLIDER_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 6)
-#define LED_5_SLIDER_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 6)
-#define LED_5_SLIDER_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 6)
-#define LED_5_SLIDER_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 6)) & 0x01)
-#define LED_5_SLIDER_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 6)
-#define LED_5_SLIDER_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 6)
-#define LED_5_SLIDER_PIN                  PORT_PIN_PA06
+/*** Macros for LED_SLIDER_5 pin ***/
+#define LED_SLIDER_5_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 6)
+#define LED_SLIDER_5_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 6)
+#define LED_SLIDER_5_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 6)
+#define LED_SLIDER_5_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 6)) & 0x01)
+#define LED_SLIDER_5_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 6)
+#define LED_SLIDER_5_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 6)
+#define LED_SLIDER_5_PIN                  PORT_PIN_PA06
 
-/*** Macros for LED_7_SLIDER pin ***/
-#define LED_7_SLIDER_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 7)
-#define LED_7_SLIDER_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 7)
-#define LED_7_SLIDER_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 7)
-#define LED_7_SLIDER_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 7)) & 0x01)
-#define LED_7_SLIDER_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 7)
-#define LED_7_SLIDER_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 7)
-#define LED_7_SLIDER_PIN                  PORT_PIN_PA07
+/*** Macros for LED_SLIDER_7 pin ***/
+#define LED_SLIDER_7_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 7)
+#define LED_SLIDER_7_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 7)
+#define LED_SLIDER_7_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 7)
+#define LED_SLIDER_7_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 7)) & 0x01)
+#define LED_SLIDER_7_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 7)
+#define LED_SLIDER_7_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 7)
+#define LED_SLIDER_7_PIN                  PORT_PIN_PA07
 
 /*** Macros for LED_BUT_0 pin ***/
 #define LED_BUT_0_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 12)
@@ -156,23 +156,23 @@
 #define LED_WHEEL_G_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 15)
 #define LED_WHEEL_G_PIN                  PORT_PIN_PB15
 
-/*** Macros for LED_2_SLIDER pin ***/
-#define LED_2_SLIDER_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 12)
-#define LED_2_SLIDER_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 12)
-#define LED_2_SLIDER_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 12)
-#define LED_2_SLIDER_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 12)) & 0x01)
-#define LED_2_SLIDER_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 12)
-#define LED_2_SLIDER_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 12)
-#define LED_2_SLIDER_PIN                  PORT_PIN_PA12
+/*** Macros for LED_SLIDER_2 pin ***/
+#define LED_SLIDER_2_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 12)
+#define LED_SLIDER_2_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 12)
+#define LED_SLIDER_2_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 12)
+#define LED_SLIDER_2_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 12)) & 0x01)
+#define LED_SLIDER_2_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 12)
+#define LED_SLIDER_2_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 12)
+#define LED_SLIDER_2_PIN                  PORT_PIN_PA12
 
-/*** Macros for LED_3_SLIDER pin ***/
-#define LED_3_SLIDER_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 13)
-#define LED_3_SLIDER_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 13)
-#define LED_3_SLIDER_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 13)
-#define LED_3_SLIDER_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 13)) & 0x01)
-#define LED_3_SLIDER_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 13)
-#define LED_3_SLIDER_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 13)
-#define LED_3_SLIDER_PIN                  PORT_PIN_PA13
+/*** Macros for LED_SLIDER_3 pin ***/
+#define LED_SLIDER_3_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 13)
+#define LED_SLIDER_3_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 13)
+#define LED_SLIDER_3_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 13)
+#define LED_SLIDER_3_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 13)) & 0x01)
+#define LED_SLIDER_3_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 13)
+#define LED_SLIDER_3_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 13)
+#define LED_SLIDER_3_PIN                  PORT_PIN_PA13
 
 /*** Macros for LED_WHEEL_B pin ***/
 #define LED_WHEEL_B_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 17)

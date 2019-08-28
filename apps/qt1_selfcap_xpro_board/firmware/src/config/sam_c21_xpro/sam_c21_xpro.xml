@@ -359,7 +359,7 @@
         </String>
         <String dnOrder="69" id="PIN_59_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="LED_BUT1"/>
+            <User dnOrder="0" value="LED_BUT_0"/>
           </Values>
         </String>
         <String dnOrder="70" id="PIN_59_FUNCTION_TYPE">
@@ -389,7 +389,7 @@
         </String>
         <String dnOrder="75" id="PIN_60_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="LED_BUT2"/>
+            <User dnOrder="0" value="LED_BUT_1"/>
           </Values>
         </String>
         <String dnOrder="76" id="PIN_60_FUNCTION_TYPE">
