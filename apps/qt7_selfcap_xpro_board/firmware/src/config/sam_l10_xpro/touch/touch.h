@@ -1,5 +1,5 @@
 /*******************************************************************************
-  Touch Library v3.3.0 Release
+  Touch Library v3.4.0 Release
 
   Company:
     Microchip Technology Inc.
@@ -66,7 +66,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  * Range: 1 to 255.
  * Default value: 20.
  */
-#define DEF_TOUCH_MEASUREMENT_PERIOD_MS 10
+#define DEF_TOUCH_MEASUREMENT_PERIOD_MS 20
 
 /* Defines the Type of sensor
  * Default value: NODE_MUTUAL.
@@ -155,7 +155,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 }
 #define KEY_1_PARAMS                                                                                            \
 {                                                                                                              \
-    80, HYST_25, NO_AKS_GROUP                       \
+    20, HYST_25, NO_AKS_GROUP                       \
 }
 #define KEY_2_PARAMS                                                                                            \
 {                                                                                                              \
@@ -243,7 +243,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define SCROLLER_0_PARAMS                                                                                       \
 {                                                                                                              \
     SCROLLER_TYPE_SLIDER, 2, 3,                            \
-		SCR_RESOL_DEADBAND(RESOL_8_BIT, DB_10_PERCENT),8,50\
+		SCR_RESOL_DEADBAND(RESOL_8_BIT, DB_10_PERCENT),8,20\
 }
 
 
@@ -272,7 +272,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  * Range: 1 to 255.
  * Default value: 15
  */
-#define FREQ_AUTOTUNE_MAX_VARIANCE 25
+#define FREQ_AUTOTUNE_MAX_VARIANCE 15
 
 /* sets the Tune in count for Frequency Hop Auto tune.
  * Range: 1 to 255.

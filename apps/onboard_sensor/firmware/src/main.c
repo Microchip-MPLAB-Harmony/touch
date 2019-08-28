@@ -60,7 +60,7 @@ int main(void) {
     uint8_t key_status0 = 0;
     /* Initialize all modules */
     SYS_Initialize(NULL);
-    LED_Clear();
+    LED_BUT_0_Clear();
     
     while (true) {
         /* Maintain state machines of all polled MPLAB Harmony modules. */
@@ -69,9 +69,9 @@ int main(void) {
         key_status0 = get_sensor_state(0) & 0x80;
 
         if (0u != key_status0)
-            LED_Clear();
+            LED_BUT_0_Clear();
         else
-            LED_Set();
+            LED_BUT_0_Set();
     }
 
     /* Execution should not come here during normal operation */

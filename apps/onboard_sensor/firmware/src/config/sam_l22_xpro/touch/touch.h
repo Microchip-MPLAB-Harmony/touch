@@ -219,7 +219,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  * Range: 1 to 255.
  * Default value: 15
  */
-#define FREQ_AUTOTUNE_MAX_VARIANCE 25
+#define FREQ_AUTOTUNE_MAX_VARIANCE 15
 
 /* sets the Tune in count for Frequency Hop Auto tune.
  * Range: 1 to 255.

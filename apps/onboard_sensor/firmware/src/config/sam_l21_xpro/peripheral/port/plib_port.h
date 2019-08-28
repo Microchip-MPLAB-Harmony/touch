@@ -66,14 +66,14 @@
 // *****************************************************************************
 
 
-/*** Macros for LED pin ***/
-#define LED_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 10)
-#define LED_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 10)
-#define LED_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 10)
-#define LED_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 10)) & 0x01)
-#define LED_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 10)
-#define LED_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 10)
-#define LED_PIN                  PORT_PIN_PB10
+/*** Macros for LED_BUT_0 pin ***/
+#define LED_BUT_0_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 10)
+#define LED_BUT_0_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 10)
+#define LED_BUT_0_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 10)
+#define LED_BUT_0_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 10)) & 0x01)
+#define LED_BUT_0_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 10)
+#define LED_BUT_0_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 10)
+#define LED_BUT_0_PIN                  PORT_PIN_PB10
 
 
 

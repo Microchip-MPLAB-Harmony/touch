@@ -1,5 +1,6 @@
+
 /*******************************************************************************
-  Touch Library ${REL_VER} Release
+  Touch Library
 
   Company:
     Microchip Technology Inc.
@@ -11,11 +12,12 @@
     QTouch Modular Library
 
   Description:
-     API Header file for SAML22 device support
+    API for Acquisition module - SAML22/PTC
+	
 *******************************************************************************/
 
 /*******************************************************************************
-Copyright (c)  ${REL_YEAR} released Microchip Technology Inc.  All rights reserved.
+Copyright (c) Microchip Technology Inc.  All rights reserved.
 
 Microchip licenses to you the right to use, modify, copy and distribute
 Software only when embedded on a Microchip microcontroller or digital signal
@@ -36,7 +38,6 @@ CONSEQUENTIAL DAMAGES, LOST  PROFITS  OR  LOST  DATA,  COST  OF  PROCUREMENT  OF
 SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
-
 
 #ifndef TOUCH_API_L22_ACQ_H
 #define TOUCH_API_L22_ACQ_H

@@ -77,17 +77,6 @@ static void GCLK1_Initialize(void)
     }
 }
 
-
-static void GCLK3_Initialize(void)
-{
-    GCLK_REGS->GCLK_GENCTRL[3] = GCLK_GENCTRL_DIV(40) | GCLK_GENCTRL_SRC(5) | GCLK_GENCTRL_GENEN_Msk;
-
-    while((GCLK_REGS->GCLK_SYNCBUSY & GCLK_SYNCBUSY_GENCTRL3_Msk) == GCLK_SYNCBUSY_GENCTRL3_Msk)
-    {
-        /* wait for the Generator 3 synchronization */
-    }
-}
-
 void CLOCK_Initialize (void)
 {
     /* Function to Initialize the Oscillators */
@@ -99,19 +88,11 @@ void CLOCK_Initialize (void)
     /*Initialize Backup Divider*/    
     MCLK_REGS->MCLK_BUPDIV = MCLK_BUPDIV_BUPDIV(0x04);
 
-    GCLK3_Initialize();
     GCLK0_Initialize();
     GCLK1_Initialize();
 
 
 
-	/* Selection of the Generator and write Lock for SERCOM0_SLOW SERCOM1_SLOW SERCOM2_SLOW SERCOM3_SLOW SERCOM4_SLOW SERCOM5_SLOW */
-    GCLK_REGS->GCLK_PCHCTRL[15] = GCLK_PCHCTRL_GEN(0x3)  | GCLK_PCHCTRL_CHEN_Msk;
-
-    while ((GCLK_REGS->GCLK_PCHCTRL[15] & GCLK_PCHCTRL_CHEN_Msk) != GCLK_PCHCTRL_CHEN_Msk)
-    {
-        /* Wait for synchronization */
-    }
 	/* Selection of the Generator and write Lock for SERCOM0_CORE */
     GCLK_REGS->GCLK_PCHCTRL[16] = GCLK_PCHCTRL_GEN(0x0)  | GCLK_PCHCTRL_CHEN_Msk;
 

@@ -523,8 +523,8 @@
           <Name dnOrder="1">plib_port.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F3B53A3973DE9EBEBB44A8602DF3F151</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F3B53A3973DE9EBEBB44A8602DF3F151</UserChecksum>
+          <GeneratedChecksum dnOrder="4">D1731D65DAC74C799805F666533F2415</GeneratedChecksum>
+          <UserChecksum dnOrder="5">D1731D65DAC74C799805F666533F2415</UserChecksum>
         </File>
         <File dnOrder="65">
           <Type dnOrder="0">HEADER</Type>
