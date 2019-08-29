@@ -1,5 +1,44 @@
 #  Microchip MPLAB® Harmony 3 Touch Library Release Notes
 
+## Touch Library v3.4.0 Release
+
+### NEW DEVICES SUPPORTED
+
+* [SAML2x](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-l-mcus)
+* [SAML1x](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-l-mcus)
+
+### NEW FEATURES:
+
+### NEW DEMO PROJECTS:
+
+* ATSAML21 Xplained Pro Mutual Capacitance Example Project with QT1
+* ATSAML21 Xplained Pro Self Capacitance Example Project with onboard Button
+* ATSAML22 Xplained Pro Mutual Capacitance Example Project with QT1
+* ATSAML22 Xplained Pro Self Capacitance Example Project with onboard Button
+* ATSAML10 Xplained Pro Self Capacitance Example Project with QT7
+
+### Required MPLAB Harmony v3.x.x Modules:
+
+* csp v3.4.0
+* bsp v3.4.0
+* dev_packs v3.3.0
+* mhc v3.3.0.1
+
+### KNOWN ISSUES:
+
+### BUG FIXES
+
+* Clock configuration set by touch configurator is removed when touch configurator is closed. This bug is fixed.
+
+
+### DEVELOPMENT TOOLS
+
+* [MPLAB X IDE v5.20](https://www.microchip.com/mplabx-ide-windows-installer)
+* [MPLAB XC32 C/C++ Compiler v2.20](https://www.microchip.com/mplab/compilers)
+* MPLAB X IDE plug-ins:
+  * MPLAB Harmony Configurator (MHC) v3.3.1
+
+
 ## Touch Library v3.3.0 Release
 
 ### NEW FEATURES
