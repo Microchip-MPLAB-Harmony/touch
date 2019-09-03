@@ -1,11 +1,11 @@
 /*******************************************************************************
-  Touch Library ${REL_VER} Release
+  Touch Library Release
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    kronocommuart.h
+    kronocommuart_sam.h
 
   Summary:
     QTouch Modular Library
@@ -17,7 +17,7 @@
 *******************************************************************************/
 
 /*******************************************************************************
-Copyright (c)  ${REL_YEAR} released Microchip Technology Inc.  All rights reserved.
+Copyright (c) Microchip Technology Inc.  All rights reserved.
 
 Microchip licenses to you the right to use, modify, copy and distribute
 Software only when embedded on a Microchip microcontroller or digital signal

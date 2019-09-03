@@ -6,7 +6,7 @@
     Microchip Technology Inc.
 
   File Name:
-    touch_api_ptc.c
+    touch_api_ptc.h
 
   Summary:
     QTouch Modular Library
