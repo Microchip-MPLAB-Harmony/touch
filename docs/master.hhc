@@ -15,71 +15,26 @@
 <ul>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Touch Library Help">
-    <PARAM name="Local" value="00007.html">
+    <PARAM name="Local" value="00003.html">
     </OBJECT>
 <ul>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Introduction">
-    <PARAM name="Local" value="00006.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Needed Configurations for Proper Operation">
-    <PARAM name="Local" value="00005.html">
-    </OBJECT>
-<ul>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Clock_Configuration_SAMD20">
-    <PARAM name="Local" value="00001.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Clock_Configuration_SAMD21">
     <PARAM name="Local" value="00002.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Clock_Configuration_SAMC20_SAMC21">
-    <PARAM name="Local" value="00000.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Clock_Configuration_SAME54_SAME53_SAME51_SAMD51">
-    <PARAM name="Local" value="00003.html">
-    </OBJECT>
-</ul>
-</ul>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Touch Driver Applications">
-    <PARAM name="Local" value="00004.html">
+    <PARAM name="Name" value="Applications Help">
+    <PARAM name="Local" value="00001.html">
     </OBJECT>
 <ul>
 <li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="qt1_selfcap_xpro_board">
-    <PARAM name="Local" value="00018.html">
-    </OBJECT>
-<ul>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Building The Application">
-    <PARAM name="Local" value="00022.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="MPLAB Harmony Configurations">
-    <PARAM name="Local" value="00020.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Hardware Setup">
-    <PARAM name="Local" value="00019.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Running The Application">
-    <PARAM name="Local" value="00021.html">
-    </OBJECT>
-</ul>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="qt1_mutualcap_xpro_board">
-    <PARAM name="Local" value="00013.html">
-    </OBJECT>
-<ul>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Building The Application">
+    <PARAM name="Name" value="qt1_selfcap">
     <PARAM name="Local" value="00014.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building The Application">
+    <PARAM name="Local" value="00018.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="MPLAB Harmony Configurations">
@@ -95,26 +50,71 @@
     </OBJECT>
 </ul>
 <li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="on_board_sensor">
-    <PARAM name="Local" value="00008.html">
+    <PARAM name="Name" value="qt1_mutualcap">
+    <PARAM name="Local" value="00009.html">
     </OBJECT>
 <ul>
 <li><OBJECT type="text/sitemap">
     <PARAM name="Name" value="Building The Application">
-    <PARAM name="Local" value="00009.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="MPLAB Harmony Configurations">
-    <PARAM name="Local" value="00011.html">
-    </OBJECT>
-<li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Hardware Setup">
     <PARAM name="Local" value="00010.html">
     </OBJECT>
 <li><OBJECT type="text/sitemap">
-    <PARAM name="Name" value="Running The Application">
+    <PARAM name="Name" value="MPLAB Harmony Configurations">
     <PARAM name="Local" value="00012.html">
     </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Hardware Setup">
+    <PARAM name="Local" value="00011.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running The Application">
+    <PARAM name="Local" value="00013.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="on_board_sensor">
+    <PARAM name="Local" value="00004.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building The Application">
+    <PARAM name="Local" value="00005.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="MPLAB Harmony Configurations">
+    <PARAM name="Local" value="00007.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Hardware Setup">
+    <PARAM name="Local" value="00006.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running The Application">
+    <PARAM name="Local" value="00008.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="qt7_selfcap">
+    <PARAM name="Local" value="00000.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building The Application">
+    <PARAM name="Local" value="00019.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="MPLAB Harmony Configurations">
+    <PARAM name="Local" value="00021.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Hardware Setup">
+    <PARAM name="Local" value="00020.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running The Application">
+    <PARAM name="Local" value="00022.html">
+    </OBJECT>
+</ul>
 </ul>
 </ul>
 </ul>
