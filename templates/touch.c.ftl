@@ -107,7 +107,12 @@ qtm_acq_node_data_t ptc_qtlib_node_stat1[DEF_NUM_CHANNELS];
 
 <#if TOUCH_CHAN_ENABLE_CNT&gt;=1>
 /* Node configurations */
+<#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
+qtm_acq_samd1x_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
+<#else>
 qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
+</#if>
+
 <#else>
 /* Node configurations */
 qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
@@ -806,7 +811,12 @@ void ADC0_1_Handler(void)
 void PTC_Handler(void)
 {
     qtm_ptc_clear_interrupt();
-    qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();
+<#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
+	qtm_samd1x_ptc_handler_eoc();
+<#else>
+	qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();
+</#if>
+    
 }
 </#if>
 

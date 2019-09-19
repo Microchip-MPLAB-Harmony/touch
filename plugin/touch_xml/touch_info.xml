@@ -9,6 +9,7 @@ This is for device feature and library version information
         <csd>
             <device>SAMD2</device>
             <device>SAML21</device>
+			<device>SAMD1</device>
         </csd>		
     </feature>
     <version>
@@ -71,6 +72,14 @@ This is for device feature and library version information
                 <auto>1.1</auto>
             </device>
             <device name="SAML22">
+                <manual>1.1</manual>
+                <auto>1.1</auto>
+            </device>
+            <device name="SAMD10">
+                <manual>1.1</manual>
+                <auto>1.1</auto>
+            </device>
+            <device name="SAMD11">
                 <manual>1.1</manual>
                 <auto>1.1</auto>
             </device>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!-- 
+This is for SAMD1x Family
+-->
+
+<clock_settings>
+	<all_clock_symbols_list>
+		<clock index = "0_0" symbol="CONFIG_CLOCK_OSC8M_ENABLE" value="True" component_id= "core" name="Enable OSC8M" />
+		<clock index = "1_0" symbol="CONFIG_CLOCK_OSC8M_PRES" value="0" component_id= "core" name="OSC8M Prescaler - 1" />
+		<clock index = "2_0" symbol="OSC32K_EN32K" value="True" component_id= "core" name="Enable OSC32K" />
+		<clock index = "3_0" symbol="CONF_CLOCK_OSC32K_ENABLE" value="True" component_id= "core" name="Enable OSC32K" />
+		<clock index = "4_0" symbol="GCLK_INST_NUM2" value="True" component_id= "core" name="Select GCLK2" />
+		<clock index = "5_0" symbol="GCLK_2_SRC" value="6" component_id= "core" name="Select OSC8M for GCLK2" />
+		<clock index = "6_0" symbol="GCLK_2_DIV" value="2" component_id= "core" name="Prescale OSC8M by 2 for PTC" />
+		<clock index = "7_0" symbol="GCLK_INST_NUM1" value="True" component_id= "core" name="Select GCLK1" />
+		<clock index = "8_0" symbol="GCLK_1_SRC" value="3" component_id= "core" name="Select OSC32K for GCLK1" />
+		<clock index = "9_0" symbol="GCLK_1_DIV" value="32" component_id= "core" name="Prescale OSC32K by 1 for RTC" />
+	</all_clock_symbols_list>
+	<all_conditions_list>
+		<condition />
+	</all_conditions_list>
+	<common>
+		<default clock_update_index_list="0_0,1_0,2_0,3_0,4_0,5_0,6_0,7_0,8_0,9_0"/>
+	</common>
+</clock_settings>

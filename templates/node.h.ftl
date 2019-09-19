@@ -1,6 +1,6 @@
 <#macro nodeComponent>
 <#assign noCSD = 0>
-<#list ["SAMD20","SAMD21", "SAML21"] as i>
+<#list ["SAMD20","SAMD21", "SAML21", "SAMD10","SAMD11"] as i>
 <#if DEVICE_NAME == i>
 <#assign noCSD = 1>
 </#if>
