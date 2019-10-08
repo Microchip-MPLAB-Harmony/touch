@@ -6,7 +6,6 @@
 </#if>
 </#list>
 <#if (TOUCH_CHAN_ENABLE_CNT > 0) >
-
 <#assign MUTL_SURFACE_X = []>
 <#list HORI_START_KEY..(HORI_START_KEY+HORI_NUM_KEY-1) as j>
 	<#if MUTL_SURFACE_X ?seq_contains(.vars["MUTL-X-INPUT_" + j])>			    
@@ -24,10 +23,28 @@
 <#if noCSD == 0>
 <#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i>
 	<#if SENSE_TECHNOLOGY == "NODE_SELFCAP">
-    <#lt>#define NODE_${i}_PARAMS                                                                                               \
+		<#lt>#define NODE_${i}_PARAMS                                                                                               \
 		<#lt>{                                                                                                                  \
 		<#lt>   X_NONE, ${.vars["SELFCAP-INPUT_" + i]}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]}, NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, ${.vars["DEF_NOD_PTC_PRESCALER" + i]}), NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
 		<#lt>}
+	<#else>
+	<#if SENSE_TECHNOLOGY == "NODE_SELFCAP_SHIELD">
+	<#assign DRIVEN_SHIELD_PIN_TOTAL = []>
+	<#if DS_DEDICATED_PIN_ENABLE == true>
+	<#assign DRIVEN_SHIELD_PIN_TOTAL += [.vars["DS_DEDICATED_PIN"]]>
+	</#if>
+	<#if DS_ADJACENT_SENSE_LINE_AS_SHIELD == true>
+	<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as j>
+	<#if i != j>
+	<#assign DRIVEN_SHIELD_PIN_TOTAL += [.vars["SELFCAP-INPUT_" + j]]>
+	</#if>
+	</#list>
+	</#if>
+		<#lt>#define NODE_${i}_PARAMS                                                                                               \
+		<#lt>{                                                                                                                  \
+		<#lt>   ${DRIVEN_SHIELD_PIN_TOTAL?join("|")}, ${.vars["SELFCAP-INPUT_" + i]}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]}, NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, ${.vars["DEF_NOD_PTC_PRESCALER" + i]}), NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
+		<#lt>}
+	</#if>
 	</#if>
 </#list>
 <#if (ENABLE_SURFACE == false && SENSE_TECHNOLOGY == "NODE_MUTUAL")>
