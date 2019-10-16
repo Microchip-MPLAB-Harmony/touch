@@ -1,6 +1,6 @@
 <#macro nodeComponent>
 <#assign noCSD = 0>
-<#list ["SAMD20","SAMD21", "SAML21", "SAMD10","SAMD11"] as i>
+<#list ["SAMD20","SAMD21","SAML21","SAMD10","SAMD11","SAML10","SAMDA1"] as i>
 <#if DEVICE_NAME == i>
 <#assign noCSD = 1>
 </#if>
@@ -21,32 +21,32 @@
 	</#if>	
 </#list>	 
 <#if noCSD == 0>
-<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i>
-	<#if SENSE_TECHNOLOGY == "NODE_SELFCAP">
-		<#lt>#define NODE_${i}_PARAMS                                                                                               \
-		<#lt>{                                                                                                                  \
-		<#lt>   X_NONE, ${.vars["SELFCAP-INPUT_" + i]}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]}, NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, ${.vars["DEF_NOD_PTC_PRESCALER" + i]}), NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
-		<#lt>}
-	<#else>
-	<#if SENSE_TECHNOLOGY == "NODE_SELFCAP_SHIELD">
-	<#assign DRIVEN_SHIELD_PIN_TOTAL = []>
-	<#if DS_DEDICATED_PIN_ENABLE == true>
-	<#assign DRIVEN_SHIELD_PIN_TOTAL += [.vars["DS_DEDICATED_PIN"]]>
-	</#if>
-	<#if DS_ADJACENT_SENSE_LINE_AS_SHIELD == true>
-	<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as j>
-	<#if i != j>
-	<#assign DRIVEN_SHIELD_PIN_TOTAL += [.vars["SELFCAP-INPUT_" + j]]>
-	</#if>
+	<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i>
+		<#if (SENSE_TECHNOLOGY == "NODE_SELFCAP")||(SENSE_TECHNOLOGY == "NODE_SELFCAP_SHIELD")>
+			<#if (DS_DEDICATED_PIN_ENABLE == true)||(DS_ADJACENT_SENSE_LINE_AS_SHIELD == true)>
+				<#assign DRIVEN_SHIELD_PIN_TOTAL = []>
+				<#if DS_DEDICATED_PIN_ENABLE == true>
+					<#assign DRIVEN_SHIELD_PIN_TOTAL += [.vars["DS_DEDICATED_PIN"]]>
+				</#if>
+				<#if DS_ADJACENT_SENSE_LINE_AS_SHIELD == true>
+					<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as j>
+						<#if i != j>
+							<#assign DRIVEN_SHIELD_PIN_TOTAL += [.vars["SELFCAP-INPUT_" + j]]>
+						</#if>
+					</#list>
+				</#if>					
+				<#lt>#define NODE_${i}_PARAMS                                                                                               \
+				<#lt>{                                                                                                                  \
+				<#lt>   ${DRIVEN_SHIELD_PIN_TOTAL?join("|")}, ${.vars["SELFCAP-INPUT_" + i]}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]}, NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, ${.vars["DEF_NOD_PTC_PRESCALER" + i]}), NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
+				<#lt>}				
+			<#else>
+				<#lt>#define NODE_${i}_PARAMS                                                                                               \
+				<#lt>{                                                                                                                  \
+				<#lt>   X_NONE, ${.vars["SELFCAP-INPUT_" + i]}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]}, NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, ${.vars["DEF_NOD_PTC_PRESCALER" + i]}), NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
+				<#lt>}
+			</#if>
+		</#if>	
 	</#list>
-	</#if>
-		<#lt>#define NODE_${i}_PARAMS                                                                                               \
-		<#lt>{                                                                                                                  \
-		<#lt>   ${DRIVEN_SHIELD_PIN_TOTAL?join("|")}, ${.vars["SELFCAP-INPUT_" + i]}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]}, NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, ${.vars["DEF_NOD_PTC_PRESCALER" + i]}), NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
-		<#lt>}
-	</#if>
-	</#if>
-</#list>
 <#if (ENABLE_SURFACE == false && SENSE_TECHNOLOGY == "NODE_MUTUAL")>
 <#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i>
     <#lt>#define NODE_${i}_PARAMS                                                                                               \
@@ -87,12 +87,30 @@
 </#if>
 <#else>
 <#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i>
-	<#if SENSE_TECHNOLOGY == "NODE_SELFCAP">
-    <#lt>#define NODE_${i}_PARAMS                                                                                               \
-		<#lt>{                                                                                                                  \
-		<#lt>   X_NONE, ${.vars["SELFCAP-INPUT_" + i]}, NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, ${.vars["DEF_NOD_PTC_PRESCALER" + i]}), NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
-		<#lt>}
-	</#if>
+	<#if (SENSE_TECHNOLOGY == "NODE_SELFCAP")||(SENSE_TECHNOLOGY == "NODE_SELFCAP_SHIELD")>
+		<#if (DS_DEDICATED_PIN_ENABLE == true)||(DS_ADJACENT_SENSE_LINE_AS_SHIELD == true)>
+			<#assign DRIVEN_SHIELD_PIN_TOTAL = []>
+			<#if DS_DEDICATED_PIN_ENABLE == true>
+				<#assign DRIVEN_SHIELD_PIN_TOTAL += [.vars["DS_DEDICATED_PIN"]]>
+			</#if>
+			<#if DS_ADJACENT_SENSE_LINE_AS_SHIELD == true>
+				<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as j>
+					<#if i != j>
+						<#assign DRIVEN_SHIELD_PIN_TOTAL += [.vars["SELFCAP-INPUT_" + j]]>
+					</#if>
+				</#list>
+			</#if>					
+			<#lt>#define NODE_${i}_PARAMS                                                                                               \
+			<#lt>{                                                                                                                  \
+			<#lt>   ${DRIVEN_SHIELD_PIN_TOTAL?join("|")}, ${.vars["SELFCAP-INPUT_" + i]}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]}, NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, ${.vars["DEF_NOD_PTC_PRESCALER" + i]}), NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
+			<#lt>}				
+		<#else>
+			<#lt>#define NODE_${i}_PARAMS                                                                                               \
+			<#lt>{                                                                                                                  \
+			<#lt>   X_NONE, ${.vars["SELFCAP-INPUT_" + i]}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]}, NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, ${.vars["DEF_NOD_PTC_PRESCALER" + i]}), NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
+			<#lt>}
+		</#if>
+	</#if>	
 </#list>
 <#if (ENABLE_SURFACE == false && SENSE_TECHNOLOGY == "NODE_MUTUAL")>
 <#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i>

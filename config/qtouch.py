@@ -146,7 +146,7 @@ def instantiateComponent(qtouchComponent):
     execfile(Module.getPath() +"/config/acquisition_"+getDeviceName.getDefaultValue().lower()+".py")
     if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
         execfile(Module.getPath() +"/config/node_E5X.py")
-    elif (getDeviceName.getDefaultValue() in ["SAMD20","SAMD21"]):
+    elif (getDeviceName.getDefaultValue() in ["SAMD20","SAMD21","SAMDA1"]):
         execfile(Module.getPath() +"/config/node_D2X.py")
     elif (getDeviceName.getDefaultValue() in ["SAML21"]):
         execfile(Module.getPath() +"/config/node_L21.py")
