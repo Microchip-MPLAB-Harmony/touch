@@ -59,8 +59,8 @@
           <Name dnOrder="1">plib_clock.c</Name>
           <LogicalPath dnOrder="2">config/sam_d10_xmini/peripheral/clock/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clock/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A3BAAB0BAD0D4E5762FFA416712EF013</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A3BAAB0BAD0D4E5762FFA416712EF013</UserChecksum>
+          <GeneratedChecksum dnOrder="4">31CED6400A8A5318C29C596D2A6EFE44</GeneratedChecksum>
+          <UserChecksum dnOrder="5">31CED6400A8A5318C29C596D2A6EFE44</UserChecksum>
         </File>
         <File dnOrder="7">
           <Type dnOrder="0">SOURCE</Type>

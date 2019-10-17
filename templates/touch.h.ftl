@@ -72,14 +72,19 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  * Default value: NODE_MUTUAL.
  */
 <#if SENSE_TECHNOLOGY == "NODE_SELFCAP">
-	<#if (DS_ADJACENT_SENSE_LINE_AS_SHIELD == true) || (DS_DEDICATED_PIN_ENABLE == true)> 
-#define DEF_SENSOR_TYPE NODE_SELFCAP_SHIELD
+	<#if ((DS_ADJACENT_SENSE_LINE_AS_SHIELD?exists)&&(DS_DEDICATED_PIN_ENABLE?exists))>
+		<#if (DS_ADJACENT_SENSE_LINE_AS_SHIELD == true) || (DS_DEDICATED_PIN_ENABLE == true)> 
+	#define DEF_SENSOR_TYPE NODE_SELFCAP_SHIELD
+		<#else>
+	#define DEF_SENSOR_TYPE ${SENSE_TECHNOLOGY}
+		</#if>
 	<#else>
-#define DEF_SENSOR_TYPE ${SENSE_TECHNOLOGY}
+		#define DEF_SENSOR_TYPE ${SENSE_TECHNOLOGY}
 	</#if>
 <#else>
 	#define DEF_SENSOR_TYPE ${SENSE_TECHNOLOGY}
 </#if>
+
 
 /* Set sensor calibration mode for charge share delay ,Prescaler or series resistor.
  * Range: CAL_AUTO_TUNE_NONE / CAL_AUTO_TUNE_RSEL / CAL_AUTO_TUNE_PRSC / CAL_AUTO_TUNE_CSD

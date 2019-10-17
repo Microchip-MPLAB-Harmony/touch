@@ -643,8 +643,8 @@
           <Name dnOrder="1">touch.h</Name>
           <LogicalPath dnOrder="2">config/sam_l10_xpro/touch/</LogicalPath>
           <PhysicalPath dnOrder="3">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">D3D13C580286310C94977E517DB785C5</GeneratedChecksum>
-          <UserChecksum dnOrder="5">D3D13C580286310C94977E517DB785C5</UserChecksum>
+          <GeneratedChecksum dnOrder="4">7483B1E4CAAD79C788754498730E8354</GeneratedChecksum>
+          <UserChecksum dnOrder="5">7483B1E4CAAD79C788754498730E8354</UserChecksum>
         </File>
         <File dnOrder="80">
           <Type dnOrder="0">HEADER</Type>

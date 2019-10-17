@@ -160,8 +160,8 @@ Database.setSymbolValue("core", "PTC" + "_CLOCK_ENABLE", True)
 # Database.setSymbolValue("core", "GCLK_3_DIV", 125)
 
 #Set Peripheral clocks
-Database.setSymbolValue("core", "GCLK_ID_4_GENSEL", 2)
-Database.setSymbolValue("core", "GCLK_ID_34_GENSEL", 1)
+Database.setSymbolValue("core", "GCLK_ID_4_GENSEL", 1)
+Database.setSymbolValue("core", "GCLK_ID_34_GENSEL", 2)
 
 #Database.setSymbolValue("nvmctrl", "NVM_RWS", 2)
 

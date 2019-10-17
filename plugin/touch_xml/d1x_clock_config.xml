@@ -15,11 +15,12 @@ This is for SAMD1x Family
 		<clock index = "7_0" symbol="GCLK_INST_NUM1" value="True" component_id= "core" name="Select GCLK1" />
 		<clock index = "8_0" symbol="GCLK_1_SRC" value="3" component_id= "core" name="Select OSC32K for GCLK1" />
 		<clock index = "9_0" symbol="GCLK_1_DIV" value="32" component_id= "core" name="Prescale OSC32K by 1 for RTC" />
+		<clock index = "10_0" symbol="GCLK_1_ENABLE" value="True" component_id= "core" name="Enable GCLK1" />
 	</all_clock_symbols_list>
 	<all_conditions_list>
 		<condition />
 	</all_conditions_list>
 	<common>
-		<default clock_update_index_list="0_0,1_0,2_0,3_0,4_0,5_0,6_0,7_0,8_0,9_0"/>
+		<default clock_update_index_list="0_0,1_0,2_0,3_0,4_0,5_0,6_0,7_0,8_0,9_0,10_0"/>
 	</common>
 </clock_settings>
