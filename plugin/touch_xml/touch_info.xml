@@ -10,6 +10,7 @@ This is for device feature and library version information
             <device>SAMD2</device>
             <device>SAML21</device>
 			<device>SAMD1</device>
+			<device>SAMDA1</device>
         </csd>		
     </feature>
     <version>
