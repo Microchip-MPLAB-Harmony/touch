@@ -1,3 +1,4 @@
+
 /*******************************************************************************
   Touch Library
 
@@ -5,13 +6,13 @@
     Microchip Technology Inc.
 
   File Name:
-    qtm_acq_samda1_0x0024_api.h
+    datastreamer.h
 
   Summary:
     QTouch Modular Library
 
   Description:
-    API for Acquisition module - SAMDA1/PTC
+    Header file for datastreamer.
 	
 *******************************************************************************/
 
@@ -38,18 +39,32 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
 
-#ifndef TOUCH_API_DA1_ACQ_H
-#define TOUCH_API_DA1_ACQ_H
+#ifndef __DATASTREAMER_H_
+#define __DATASTREAMER_H_
 
-/* Include files */
-#include <stdint.h>
-#include <stddef.h>
-#include "qtm_acq_samd21_0x0024_api.h"
-#define qtm_samda1_ptc_handler_eoc qtm_samd21_ptc_handler_eoc 
-#define qtm_samda1_acq_module_get_id qtm_samd21_acq_module_get_id 
-#define qtm_samda1_acq_module_get_version qtm_samd21_acq_module_get_version 
-#define qtm_samda1_ptc_handler_wcomp qtm_samd21_ptc_handler_wcomp 
-#define qtm_acq_samda1_node_config_t qtm_acq_samd21_node_config_t 
+/*----------------------------------------------------------------------------
+ *     include files
+ *----------------------------------------------------------------------------*/
+#include "touch/touch.h"
 
+#if (DEF_TOUCH_DATA_STREAMER_ENABLE == 1u)
 
-#endif    /* TOUCH_API_DA1_ACQ_H */
+/*----------------------------------------------------------------------------
+ *     defines
+ *----------------------------------------------------------------------------*/
+#define USER_BOARD 0x0000
+#define TINY_XPLAINED_MINI 0xF012
+#define TINY_XPLAINED_PRO 0xF013
+#define TINY_MOISTURE_DEMO 0xF014
+#define MEGA_328PB_XPLAINED_MINI 0xF015
+#define MEGA_324PB_XPLAINED_PRO 0xF016
+
+/*----------------------------------------------------------------------------
+ *   prototypes
+ *----------------------------------------------------------------------------*/
+void datastreamer_init(void);
+void datastreamer_output(void);
+
+#endif
+
+#endif
