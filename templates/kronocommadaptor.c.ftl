@@ -69,7 +69,12 @@ extern qtm_gestures_2d_data_t    qtm_gestures_2d_data;
 #endif
 extern qtm_touch_key_data_t qtlib_key_data_set1[DEF_NUM_SENSORS];
 
+<#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
+extern qtm_acq_samd1x_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
+<#else>
 extern qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
+</#if>
+
 
 extern qtm_touch_key_config_t qtlib_key_configs_set1[DEF_NUM_SENSORS];
 <#if (ENABLE_GESTURE == true)>
