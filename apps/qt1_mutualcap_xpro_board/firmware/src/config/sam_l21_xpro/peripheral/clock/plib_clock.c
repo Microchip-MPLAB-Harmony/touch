@@ -59,6 +59,7 @@ static void OSC32KCTRL_Initialize(void)
 
 static void GCLK0_Initialize(void)
 {
+    
     GCLK_REGS->GCLK_GENCTRL[0] = GCLK_GENCTRL_DIV(1) | GCLK_GENCTRL_SRC(6) | GCLK_GENCTRL_GENEN_Msk;
 
     while((GCLK_REGS->GCLK_SYNCBUSY & GCLK_SYNCBUSY_GENCTRL0_Msk) == GCLK_SYNCBUSY_GENCTRL0_Msk)
@@ -106,7 +107,6 @@ void CLOCK_Initialize (void)
     GCLK3_Initialize();
     GCLK0_Initialize();
     GCLK1_Initialize();
-
 
 
 	/* Selection of the Generator and write Lock for SERCOM0_SLOW SERCOM1_SLOW SERCOM2_SLOW SERCOM3_SLOW SERCOM4_SLOW */

@@ -1,5 +1,5 @@
 /*******************************************************************************
-  Touch Library v3.4.0 Release
+  Touch Library v3.5.0 Release
 
   Company:
     Microchip Technology Inc.
@@ -71,7 +71,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /* Defines the Type of sensor
  * Default value: NODE_MUTUAL.
  */
-#define DEF_SENSOR_TYPE NODE_SELFCAP
+		#define DEF_SENSOR_TYPE NODE_SELFCAP
+
 
 /* Set sensor calibration mode for charge share delay ,Prescaler or series resistor.
  * Range: CAL_AUTO_TUNE_NONE / CAL_AUTO_TUNE_RSEL / CAL_AUTO_TUNE_PRSC / CAL_AUTO_TUNE_CSD
@@ -115,7 +116,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  * filter level}
  */
 	
-
 #define NODE_0_PARAMS                                                                                               \
 {                                                                                                                  \
    X_NONE, Y(5), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_1), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \

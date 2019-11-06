@@ -1,5 +1,5 @@
 /*******************************************************************************
-  Touch Library v3.4.0 Release
+  Touch Library v3.5.0 Release
 
   Company:
     Microchip Technology Inc.
@@ -101,6 +101,7 @@ qtm_acq_node_data_t ptc_qtlib_node_stat1[DEF_NUM_CHANNELS];
 
 /* Node configurations */
 qtm_acq_same54_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {NODE_0_PARAMS};
+
 
 /* Container */
 qtm_acquisition_control_t qtlib_acq_set1 = {&ptc_qtlib_acq_gen1, &ptc_seq_node_cfg1[0], &ptc_qtlib_node_stat1[0]};
