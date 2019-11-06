@@ -107,32 +107,6 @@ qtm_acq_samda1_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {NODE_0_PARAM
 qtm_acquisition_control_t qtlib_acq_set1 = {&ptc_qtlib_acq_gen1, &ptc_seq_node_cfg1[0], &ptc_qtlib_node_stat1[0]};
 
 /**********************************************************/
-/*********** Frequency Hop Auto tune Module **********************/
-/**********************************************************/
-
-/* Buffer used with various noise filtering functions */
-uint16_t noise_filter_buffer[DEF_NUM_SENSORS * NUM_FREQ_STEPS];
-uint8_t  freq_hop_delay_selection[NUM_FREQ_STEPS] = {DEF_MEDIAN_FILTER_FREQUENCIES};
-uint8_t  freq_hop_autotune_counters[NUM_FREQ_STEPS];
-
-/* Configuration */
-qtm_freq_hop_autotune_config_t qtm_freq_hop_autotune_config1 = {DEF_NUM_CHANNELS,
-                                                                NUM_FREQ_STEPS,
-                                                                &ptc_qtlib_acq_gen1.freq_option_select,
-                                                                &freq_hop_delay_selection[0],
-                                                                DEF_FREQ_AUTOTUNE_ENABLE,
-                                                                FREQ_AUTOTUNE_MAX_VARIANCE,
-                                                                FREQ_AUTOTUNE_COUNT_IN};
-
-/* Data */
-qtm_freq_hop_autotune_data_t qtm_freq_hop_autotune_data1
-    = {0, 0, &noise_filter_buffer[0], &ptc_qtlib_node_stat1[0], &freq_hop_autotune_counters[0]};
-
-/* Container */
-qtm_freq_hop_autotune_control_t qtm_freq_hop_autotune_control1
-    = {&qtm_freq_hop_autotune_data1, &qtm_freq_hop_autotune_config1};
-
-/**********************************************************/
 /*********************** Keys Module **********************/
 /**********************************************************/
 
@@ -188,7 +162,7 @@ qtm_scroller_control_t qtm_scroller_control1
 
 #define LIB_MODULES_PROC_LIST                                                                                          \
     {                                                                                                                  \
-		(module_proc_t)&qtm_freq_hop_autotune,             \
+		             \
 		(module_proc_t)&qtm_key_sensors_process,                                                                        \
 	 	(module_proc_t)&qtm_scroller_process,                               \
 		                               \
@@ -204,7 +178,7 @@ qtm_scroller_control_t qtm_scroller_control1
 
 #define LIB_DATA_MODELS_PROC_LIST                                                                                       \
     {                                                                                                                   \
-		(void *)&qtm_freq_hop_autotune_control1,               \
+		              \
 		(void *)&qtlib_key_set1,                                                                                           \
 		(void *)&qtm_scroller_control1,                                         \
 		                                      \

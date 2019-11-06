@@ -293,37 +293,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 
 
-/**********************************************************/
-/********* Frequency Hop Module ****************/
-/**********************************************************/
-
-/* sets the frequency steps for hop.
- * Range: 3 to 7.
- * Default value: 3
- */
-#define NUM_FREQ_STEPS 3
-
-/* PTC Sampling Delay Selection - 0 to 15 PTC CLK cycles */
-
-#define DEF_MEDIAN_FILTER_FREQUENCIES FREQ_SEL_0,FREQ_SEL_1,FREQ_SEL_2
-
-/* Enable / Disable the frequency hop auto tune
- * Range: 0 / 1
- * Default value: 1
- */
-#define DEF_FREQ_AUTOTUNE_ENABLE 1
-
-/* sets the maximum variance for Frequency Hop Auto tune.
- * Range: 1 to 255.
- * Default value: 15
- */
-#define FREQ_AUTOTUNE_MAX_VARIANCE 15
-
-/* sets the Tune in count for Frequency Hop Auto tune.
- * Range: 1 to 255.
- * Default value: 6
- */
-#define FREQ_AUTOTUNE_COUNT_IN 6
 
 /**********************************************************/
 /***************** Communication - Data Streamer ******************/

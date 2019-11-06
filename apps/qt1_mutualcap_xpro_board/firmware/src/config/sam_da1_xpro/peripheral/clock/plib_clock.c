@@ -96,6 +96,18 @@ static void GCLK0_Initialize(void)
 }
 
 
+static void GCLK1_Initialize(void)
+{
+    GCLK_REGS->GCLK_GENCTRL = GCLK_GENCTRL_SRC(3) | GCLK_GENCTRL_GENEN_Msk | GCLK_GENCTRL_ID(1);
+
+    GCLK_REGS->GCLK_GENDIV = GCLK_GENDIV_DIV(32) | GCLK_GENDIV_ID(1);
+    while((GCLK_REGS->GCLK_STATUS & GCLK_STATUS_SYNCBUSY_Msk) == GCLK_STATUS_SYNCBUSY_Msk)
+    {
+        /* wait for the Generator 1 synchronization */
+    }
+}
+
+
 static void GCLK2_Initialize(void)
 {
     GCLK_REGS->GCLK_GENCTRL = GCLK_GENCTRL_SRC(6) | GCLK_GENCTRL_GENEN_Msk | GCLK_GENCTRL_ID(2);
@@ -106,34 +118,19 @@ static void GCLK2_Initialize(void)
     }
 }
 
-
-static void GCLK3_Initialize(void)
-{
-    GCLK_REGS->GCLK_GENCTRL = GCLK_GENCTRL_SRC(3) | GCLK_GENCTRL_GENEN_Msk | GCLK_GENCTRL_ID(3);
-
-    while((GCLK_REGS->GCLK_STATUS & GCLK_STATUS_SYNCBUSY_Msk) == GCLK_STATUS_SYNCBUSY_Msk)
-    {
-        /* wait for the Generator 3 synchronization */
-    }
-}
-
 void CLOCK_Initialize (void)
 {
     /* Function to Initialize the Oscillators */
     SYSCTRL_Initialize();
 
-    GCLK3_Initialize();
     DFLL_Initialize();
+    GCLK1_Initialize();
     GCLK2_Initialize();
     GCLK0_Initialize();
 
 
     /* Selection of the Generator and write Lock for RTC */
-    GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_ID(4) | GCLK_CLKCTRL_GEN(0x3)  | GCLK_CLKCTRL_CLKEN_Msk;
-    /* Selection of the Generator and write Lock for SERCOM0_SLOW SERCOM1_SLOW SERCOM2_SLOW SERCOM3_SLOW SERCOM4_SLOW SERCOM5_SLOW */
-    GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_ID(19) | GCLK_CLKCTRL_GEN(0x3)  | GCLK_CLKCTRL_CLKEN_Msk;
-    /* Selection of the Generator and write Lock for SERCOM0_CORE */
-    GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_ID(20) | GCLK_CLKCTRL_GEN(0x0)  | GCLK_CLKCTRL_CLKEN_Msk;
+    GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_ID(4) | GCLK_CLKCTRL_GEN(0x1)  | GCLK_CLKCTRL_CLKEN_Msk;
     /* Selection of the Generator and write Lock for SERCOM3_CORE */
     GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_ID(23) | GCLK_CLKCTRL_GEN(0x0)  | GCLK_CLKCTRL_CLKEN_Msk;
     /* Selection of the Generator and write Lock for PTC */

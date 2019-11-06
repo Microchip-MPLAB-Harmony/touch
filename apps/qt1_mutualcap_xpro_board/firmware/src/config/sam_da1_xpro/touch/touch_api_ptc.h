@@ -55,7 +55,6 @@ extern "C" {
 #include "qtm_binding_layer_0x0005_api.h"
 #include "qtm_acq_samda1_0x0024_api.h"
 #include "qtm_touch_key_0x0002_api.h"
-#include "qtm_freq_hop_auto_0x0004_api.h"
 #include "qtm_scroller_0x000b_api.h"
 /*----------------------------------------------------------------------------
  *   prototypes
