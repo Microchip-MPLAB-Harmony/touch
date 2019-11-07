@@ -1,17 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Building The Application</title>
+<title>Running The Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
-    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
-<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00018.html');" onmousedown="onBodyMouseDown();">
 
 <!-- Begin Popups -->
 
@@ -20,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00003.html">Touch Library Help</a> &gt; <a href="00001.html">Applications Help</a> &gt; <a href="00014.html">qt1_selfcap</a> &gt; <a href="00018.html">Building The Application</a></div>
+<a href="00003.html" target="topic">Touch Library Help</a> &gt; <a href="00001.html" target="topic">Applications Help</a> &gt; <a href="00014.html" target="topic">qt1_mutualcap</a> &gt; <a href="00018.html" target="topic">Running The Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,15 +26,15 @@
 MPLAB Harmony Touch Library Help</div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00003.html">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00003.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00014.html">Previous</a> | <a href="00014.html">Up</a> | <a href="00016.html">Next</a></div>
+<a href="00016.html" target="topic">Previous</a> | <a href="00014.html" target="topic">Up</a> | <a href="00004.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV Touch qt1_setlfcap Building The Application Topic Title: Building The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV Touch qt1_mutualcap Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Building The Application</div>
+Running The Application</div>
 </div>
 </div>
 
@@ -47,65 +45,44 @@ Building The Application</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<div class="Element58">
+<a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10">
-The parent folder for all the MPLAB X IDE projects for this application is given below: </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="25%">
-<div class="Element66">
-Application Path&nbsp;</div></td><td class="Element65" valign="top" width="75%">
-<div class="Element66">
-\touch\apps\qt1_selfcap_xpro_board\firmware&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000">To build the application, refer the following table and open the appropriate project file in the MPLAB X IDE.</span> </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="25%">
-<div class="Element66">
-Project Name&nbsp;</div></td><td class="Element65" valign="top" width="75%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="25%">
-<div class="Element68">
-sam_c21_xpro.X&nbsp;</div></td><td class="Element67" valign="top" width="75%">
-<div class="Element68">
-SAM C21 Xplained Pro Evaluation Kit&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="25%">
-<div class="Element68">
-sam_d20_xpro.X&nbsp;</div></td><td class="Element67" valign="top" width="75%">
-<div class="Element68">
-SAM D20 Xplained Pro Evaluation Kit&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="25%">
-<div class="Element68">
-sam_d21_xpro.X&nbsp;</div></td><td class="Element67" valign="top" width="75%">
-<div class="Element68">
-SAM D21 Xplained Pro Evaluation Kit&nbsp;</div></td></tr></table></div></div>
-</div>
+
+<ol class="Element630">
+<li value="1" class="Element600">Build and Program the application using the MPLAB X IDE.</li>
+<li value="2" class="Element600">The Button LEDs turns ON when touch made on the respective buttons</li>
+<li value="3" class="Element600">Open Atmel Data Visualizer software and set the config path to folder that contains th datastreamer scripts
+<ul class="Element631">
+<li class="Element601"><span style="color: #000000"><strong>Scripts Folder:</strong></span><span style="color: #0000FF"> touch\apps\qt1_mutualcap_xpro_board\firmware\src\config\sam_xxx_xpro\touch\datastreamer</span></li>
+</ul></li>
+<li value="4" class="Element600">Open serial port connection and connect to the target. Verify the connection is made successfully and the buttons touch status are displayed on the dashboard.
+<ul class="Element631">
+<li class="Element601">For more information, see the <a href="#" onclick="openExternalLink('http://microchipdeveloper.com/touch:configure datastreamer-and-visualize-touch-data');"><img src="indicator_external_link.gif" border="0" alt="" title="">microchip developer page.</a></li>
+</ul></li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="qt1 mutual-cap sensor.png" border="0" alt="" title=""></p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00003.html">Touch Library Help</a> &gt; <a href="00001.html">Applications Help</a> &gt; <a href="00014.html">qt1_selfcap</a> &gt; <a href="00018.html">Building The Application</a></div>
+<a href="00003.html" target="topic">Touch Library Help</a> &gt; <a href="00001.html" target="topic">Applications Help</a> &gt; <a href="00014.html" target="topic">qt1_mutualcap</a> &gt; <a href="00018.html" target="topic">Running The Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="100%">
+<tr><td width="25%">
 <div class="Element3">
- MPLAB Harmony Touch Library Help</div>
-</td></tr><tr><td width="100%">
+MPLAB Harmony Touch Library Help</div>
+</td><td width="25%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00003.html">Home</a></div>
-</td></tr><tr><td width="100%">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00003.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00016.html" target="topic">Previous</a> | <a href="00014.html" target="topic">Up</a> | <a href="00004.html" target="topic">Next</a></div>
+</td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV Touch qt1_setlfcap Building The Application Topic Title: Building The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV Touch qt1_mutualcap Running The Application Topic Title: Running The Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
