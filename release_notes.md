@@ -1,5 +1,43 @@
 #  Microchip MPLAB® Harmony 3 Touch Library Release Notes
 
+## Touch Library v3.5.0 Release
+
+### NEW DEVICES SUPPORTED
+
+* [SAMDA1](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-d-mcus)
+* [SAMD1x](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-d-mcus)
+
+### NEW FEATURES:
+* Driven shield support for SAML10 is addded.
+
+### NEW DEMO PROJECTS:
+
+* ATSAMDA1 Xplained Pro Mutual Capacitance Example Project with QT1
+* ATSAMDA1 Xplained Pro Self Capacitance Example Project with QT1
+* ATSAML10 Xplained Pro Driven Shield Example Project with QT7 (updated with Driven Shield)
+* ATSAMD10 Xplained Mini Self Capacitance Example Project with onboard Button
+* ATSAMD11 Xplained Pro Self Capacitance Example Project with onboard Button
+
+### Required MPLAB Harmony v3.x.x Modules:
+
+* csp v3.5.0
+* bsp v3.5.0
+* dev_packs v3.5.0
+* mhc v3.3.3
+
+### KNOWN ISSUES:
+
+* SAMD10 (C variant) Project generation fails, error is related to clock support.
+
+### BUG FIXES
+
+### DEVELOPMENT TOOLS
+
+* [MPLAB X IDE v5.25](https://www.microchip.com/mplabx-ide-windows-installer)
+* [MPLAB XC32 C/C++ Compiler v2.30](https://www.microchip.com/mplab/compilers)
+* MPLAB X IDE plug-ins:
+  * MPLAB Harmony Configurator (MHC) v3.3.1
+
 ## Touch Library v3.4.0 Release
 
 ### NEW DEVICES SUPPORTED
