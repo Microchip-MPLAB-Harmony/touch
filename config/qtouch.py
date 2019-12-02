@@ -158,6 +158,7 @@ def instantiateComponent(qtouchComponent):
         execfile(Module.getPath() +"/config/node_D1X.py")
     else:
         execfile(Module.getPath() +"/config/node_C2X.py")
+    # execfile(Module.getPath() +"/config/drivenshield.py")
     execfile(Module.getPath() +"/config/key.py")
     execfile(Module.getPath() +"/config/sensor.py")
 

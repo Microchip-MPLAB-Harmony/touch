@@ -4,6 +4,10 @@
 touchChannelCountMax =totalChannelCountMutl.getValue()
 
 ################################################################################
+#### Function ####
+################################################################################
+
+################################################################################
 #### Component ####
 ################################################################################
 nodeMenu = qtouchComponent.createMenuSymbol("NODE_MENU", touchMenu)
@@ -90,7 +94,7 @@ for channelID in range(0, touchChannelCountMax):
     touchSym_PTC_PRESCALER_Val.setOutputMode("Value")
     touchSym_PTC_PRESCALER_Val.setDisplayMode("Description")
     touchSym_PTC_PRESCALER_Val.setDescription("The PTC clock is prescaled by PTC and then used for touch measurement.The PTC prescaling factor is defined by this parameter. It is recommended to configure this parameter such that the clock used for touch measurement is less than 4MHz (8MHz for ATtiny devices).")
-	
+    
     #Analog Gain
     touchSym_ANALOG_GAIN_Val = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_GAIN_ANA" + str(channelID), touchChEnable)
     touchSym_ANALOG_GAIN_Val.setLabel("Analog Gain")
@@ -103,7 +107,7 @@ for channelID in range(0, touchChannelCountMax):
     touchSym_ANALOG_GAIN_Val.setOutputMode("Value")
     touchSym_ANALOG_GAIN_Val.setDisplayMode("Description")
     touchSym_ANALOG_GAIN_Val.setDescription("Gain setting for touch delta value.Higher gain setting increases touch delta as well as noise.So, optimum gain setting should be used.Gain should be tuned such that the touch delta is between 40~60 counts.")
-	
+    
     #Digital Filter Gain - Accumulated sum is scaled to Digital Gain
     touchSym_DIGI_FILT_GAIN_Val = qtouchComponent.createKeyValueSetSymbol("DEF_DIGI_FILT_GAIN"  + str(channelID), touchChEnable)
     touchSym_DIGI_FILT_GAIN_Val.setLabel("Digital Filter Gain")
@@ -116,9 +120,9 @@ for channelID in range(0, touchChannelCountMax):
     touchSym_DIGI_FILT_GAIN_Val.setOutputMode("Value")
     touchSym_DIGI_FILT_GAIN_Val.setDisplayMode("Description")
     touchSym_DIGI_FILT_GAIN_Val.setDescription("Gain setting for touch delta value. Higher gain setting increases touch delta as well as noise. So, optimum gain setting should be used.Gain should be tuned such that the touch delta is between 40~60 counts. ")
-	
+    
     #Digital Filter Oversampling - Number of samples for each measurement
-    touchSym_DIGI_FILT_OVERSAMPLING_Val = qtouchComponent.createKeyValueSetSymbol("DEF_DIGI_FILT_OVERSAMPLING" + str(channelID), touchChEnable)
+    touchSym_DIGI_FILT_OVERSAMPLING_Val = qtouchComponent.createKeyValueSetSymbol("DEF_DIGI_FILT_OVERSAMPLING"  + str(channelID), touchChEnable)
     touchSym_DIGI_FILT_OVERSAMPLING_Val.setLabel("Digital Filter Oversampling")
     touchSym_DIGI_FILT_OVERSAMPLING_Val.addKey("DF_OVERSAMPLE1", "FILTER_LEVEL_1", "1 sample")
     touchSym_DIGI_FILT_OVERSAMPLING_Val.addKey("DF_OVERSAMPLE2", "FILTER_LEVEL_2", "2 samples")
@@ -131,3 +135,34 @@ for channelID in range(0, touchChannelCountMax):
     touchSym_DIGI_FILT_OVERSAMPLING_Val.setOutputMode("Value")
     touchSym_DIGI_FILT_OVERSAMPLING_Val.setDisplayMode("Description")
     touchSym_DIGI_FILT_OVERSAMPLING_Val.setDescription("Defines the number of samples taken for each measurement.Higher filter level settings, for each measurements more number of samples taken which helps to average out the noise.Higher filter level settings takes long time to do a touch measurement which affects response time.So, start with default value and increase depends on noise levels.")
+    
+    
+    touchSym_DS_ADJACENT_TIMER_PIN_Val = qtouchComponent.createKeyValueSetSymbol("DSPLUS_TIMER_PIN"  + str(channelID), touchChEnable)
+    touchSym_DS_ADJACENT_TIMER_PIN_Val.setLabel("Selected DS TC/TCC")
+    touchSym_DS_ADJACENT_TIMER_PIN_Val.setDisplayMode("Description")
+    touchSym_DS_ADJACENT_TIMER_PIN_Val.setDescription("The Timer or Timer counter assigned for Driven shield +")
+    
+    if(getDeviceName.getDefaultValue() in ["SAMD21"]):
+        touchSym_DS_ADJACENT_TIMER_PIN_Val.clearKeys()
+
+        tcInstance = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"TC\"]/instance")
+        tcPinNode =  ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"TC\"]/instance/signals")
+        tcPinValues = []
+        tcPinValues = tcPinNode.getChildren()
+        for ptcIndex in range(0, len(ptcPinValues)):
+            for tcIndex in range(0, len(tcPinValues)):
+                if(ptcPinValues[ptcIndex].getAttribute("pad") == tcPinValues[tcIndex].getAttribute("pad")):
+                    touchSym_DS_ADJACENT_TIMER_PIN_Val.addKey(tcInstance.getAttribute("name")+tcPinValues[tcIndex].getAttribute("group")+"("+tcPinValues[tcIndex].getAttribute("index")+")",
+                tcPinValues[tcIndex].getAttribute("index"),
+                tcPinValues[tcIndex].getAttribute("group")+tcPinValues[tcIndex].getAttribute("index")+ "  ("+ tcPinValues[tcIndex].getAttribute("pad")+")")
+
+        tccInstance = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"TCC\"]/instance")
+        tccPinNode =  ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"TCC\"]/instance/signals")
+        tccPinValues = []
+        tccPinValues = tccPinNode.getChildren()
+        for ptcIndex in range(0, len(ptcPinValues)):
+            for tccIndex in range(0, len(tccPinValues)):
+                if(ptcPinValues[ptcIndex].getAttribute("pad") == tccPinValues[tccIndex].getAttribute("pad")):
+                    touchSym_DS_ADJACENT_TIMER_PIN_Val.addKey(tccInstance.getAttribute("name")+tccPinValues[tccIndex].getAttribute("group")+"("+tccPinValues[tccIndex].getAttribute("index")+")",
+                tccPinValues[tccIndex].getAttribute("index"),
+                tccPinValues[tccIndex].getAttribute("group")+tccPinValues[tccIndex].getAttribute("index")+ "  ("+ tccPinValues[tccIndex].getAttribute("pad")+")")

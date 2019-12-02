@@ -1,5 +1,5 @@
 #essential changes for each release
-releaseVersion = "v3.5.0"
+releaseVersion = "v3.6.0"
 releaseYear    = "2019"
 
 
