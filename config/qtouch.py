@@ -19,6 +19,9 @@ def onAttachmentConnected(source,target):
             if (Database.getSymbolValue(remoteID, "RTC_MODE0_MATCHCLR") == False):
                 Database.setSymbolValue(remoteID, "RTC_MODE0_MATCHCLR", True)
 
+        else:
+            Database.setSymbolValue(remoteID, "TIMER_PRE_SCALER", 2)
+            Database.setSymbolValue(remoteID, "TMR_INTERRUPT_MODE", True)
     if (connectID == "Touch_sercom"):
         plibUsed = localComponent.getSymbolByID("TOUCH_SERCOM_INSTANCE")
         plibUsed.clearValue()
@@ -165,6 +168,11 @@ def instantiateComponent(qtouchComponent):
         execfile(Module.getPath() +"/config/node_L1x.py")
     elif (getDeviceName.getDefaultValue() in ["SAMD10","SAMD11"]):
         execfile(Module.getPath() +"/config/node_D1X.py")
+    elif (getDeviceName.getDefaultValue() in ["PIC32MZW"]):
+        execfile(Module.getPath() +"/config/node_pic32mz.py")
+        print "Activating ADCHS for HCVD use"
+        comp = ["adchs"]
+        res = Database.activateComponents(comp)
     else:
         execfile(Module.getPath() +"/config/node_C2X.py")
     

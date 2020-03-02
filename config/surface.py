@@ -37,6 +37,13 @@ elif(getDeviceName.getDefaultValue() in ["SAML10","SAML11"]):
     surface1TLibraryFile.setOutputName("qtm_surface_cs_cm23_0x0021.X.a")
     surface1TLibraryFile.setDestPath("/touch/lib/")
     surface1TLibraryFile.setEnabled(False)
+elif (getDeviceName.getDefaultValue() in ["PIC32MZW"]):
+    # Library File
+    scrollerLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SURFACE1T_LIB", None)
+    scrollerLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_pic32mz_0x0021.X.a")
+    scrollerLibraryFile.setOutputName("qtm_surface_cs_pic32mz_0x0021.X.a")
+    scrollerLibraryFile.setDestPath("/touch/lib/")
+    scrollerLibraryFile.setEnabled(False)
 else:
     # Library File
     surface1TLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SURFACE1T_LIB", None)
@@ -69,6 +76,13 @@ elif (getDeviceName.getDefaultValue() in ["SAML10","SAML11"]):
     surface2TLibraryFile.setOutputName("qtm_surface_cs_2t_cm23_0x0025.X.a")
     surface2TLibraryFile.setDestPath("/touch/lib/")
     surface2TLibraryFile.setEnabled(False)
+elif (getDeviceName.getDefaultValue() in ["PIC32MZW"]):
+    # Library File
+    scrollerLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SURFACE2T_LIB", None)
+    scrollerLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_2t_pic32mz_0x0025.X.a")
+    scrollerLibraryFile.setOutputName("qtm_surface_cs_2t_pic32mz_0x0025.X.a")
+    scrollerLibraryFile.setDestPath("/touch/lib/")
+    scrollerLibraryFile.setEnabled(False)
 else:
     # Library File
     surface2TLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SURFACE2T_LIB", None)

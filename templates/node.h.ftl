@@ -1,12 +1,12 @@
 <#macro nodeComponent>
-<#assign noCSD = 0>
+<#assign CSD = 0>
 <#assign drivenShieldSupported = 0>
-<#list ["SAMD20","SAMD21","SAML21","SAMD10","SAMD11","SAML10","SAMDA1"] as i>
+<#list ["SAML10","SAML11","SAML22","SAMC20","SAMC21","SAME54","SAME53","SAME51","SAMD51","PIC32MZW"] as i>
 	<#if DEVICE_NAME == i>
-		<#assign noCSD = 1>
+		<#assign CSD = 1>
 	</#if>
 </#list>
-<#list ["SAML10","SAMD21"] as i>
+<#list ["SAML10","SAML11","PIC32MZW"] as i>
 	<#if DEVICE_NAME == i>
 		<#assign drivenShieldSupported = 1>
 	</#if>
@@ -26,7 +26,7 @@
 		<#assign MUTL_SURFACE_Y +=  [.vars["MUTL-Y-INPUT_" + j]]>
 	</#if>	
 </#list>	 
-<#if noCSD == 0>
+<#if CSD == 1>
 	<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i>
 		<#if (SENSE_TECHNOLOGY == "NODE_SELFCAP")||(SENSE_TECHNOLOGY == "NODE_SELFCAP_SHIELD")>
 			<#if drivenShieldSupported == 1>
@@ -46,7 +46,12 @@
 					<#lt>{                                                                                                                  \
 					<#lt>   ${DRIVEN_SHIELD_PIN_TOTAL?join("|")}, ${.vars["SELFCAP-INPUT_" + i]}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]}, NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, ${.vars["DEF_NOD_PTC_PRESCALER" + i]}), NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
 					<#lt>}
-				</#if>		
+			<#else>
+				<#lt>#define NODE_${i}_PARAMS                                                                                               \
+				<#lt>{                                                                                                                  \
+				<#lt>   X_NONE, ${.vars["SELFCAP-INPUT_" + i]}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]}, NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, ${.vars["DEF_NOD_PTC_PRESCALER" + i]}), NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
+				<#lt>}
+			</#if>
 			<#else>
 				<#lt>#define NODE_${i}_PARAMS                                                                                               \
 				<#lt>{                                                                                                                  \
@@ -113,7 +118,12 @@
 					<#lt>{                                                                                                                  \
 					<#lt>   ${DRIVEN_SHIELD_PIN_TOTAL?join("|")}, ${.vars["SELFCAP-INPUT_" + i]}, NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, ${.vars["DEF_NOD_PTC_PRESCALER" + i]}), NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
 					<#lt>}
-				</#if>		
+				<#else>
+					<#lt>#define NODE_${i}_PARAMS                                                                                               \
+					<#lt>{                                                                                                                  \
+					<#lt>   X_NONE, ${.vars["SELFCAP-INPUT_" + i]}, NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, ${.vars["DEF_NOD_PTC_PRESCALER" + i]}), NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
+					<#lt>}
+				</#if>
 			<#else>
 				<#lt>#define NODE_${i}_PARAMS                                                                                               \
 				<#lt>{                                                                                                                  \

@@ -15,6 +15,13 @@ elif (getDeviceName.getDefaultValue() in ["SAML10","SAML11"]):
     scrollerLibraryFile.setOutputName("qtm_scroller_cm23_0x000b.X.a")
     scrollerLibraryFile.setDestPath("/touch/lib/")
     scrollerLibraryFile.setEnabled(False)
+elif (getDeviceName.getDefaultValue() in ["PIC32MZW"]):
+    # Library File
+    scrollerLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SCR_LIB", None)
+    scrollerLibraryFile.setSourcePath("/src/libraries/qtm_scroller_pic32mz_0x000b.X.a")
+    scrollerLibraryFile.setOutputName("qtm_scroller_pic32mz_0x000b.X.a")
+    scrollerLibraryFile.setDestPath("/touch/lib/")
+    scrollerLibraryFile.setEnabled(False)
 else:
     # Library File
     scrollerLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SCR_LIB", None)

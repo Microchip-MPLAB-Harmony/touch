@@ -94,13 +94,19 @@ qtm_state_t    qstate;
 
 /* Measurement Done Touch Flag  */
 volatile uint8_t measurement_done_touch = 0;
+<#if DEVICE_NAME=="PIC32MZW">
+static uint8_t all_measure_complete = 0;
+</#if>
 
 /* Error Handling */
 uint8_t module_error_code = 0;
 
 /* Acquisition module internal data - Size to largest acquisition set */
+<#if DEVICE_NAME == "PIC32MZW">
+uint32_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
+<#else>
 uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
-
+</#if>
 /* Acquisition set 1 - General settings */
 qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
     = {DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, DEF_PTC_CAL_AUTO_TUNE, DEF_SEL_FREQ_INIT, DEF_PTC_INTERRUPT_PRIORITY};
@@ -343,7 +349,11 @@ qtm_gestures_2d_control_t qtm_gestures_2d_control1 = {&qtm_gestures_2d_data, &qt
 /**********************************************************/
 #define LIB_MODULES_INIT_LIST                                                                                          \
     {                                                                                                                  \
+<#if DEVICE_NAME == "PIC32MZW">
+        (module_init_t) & qtm_cvd_init_acquisition_module, null                                                        \
+<#else>
         (module_init_t) & qtm_ptc_init_acquisition_module, null                                                        \
+</#if>
     }
 
 #define LIB_MODULES_PROC_LIST                                                                                          \
@@ -377,7 +387,11 @@ qtm_gestures_2d_control_t qtm_gestures_2d_control1 = {&qtm_gestures_2d_data, &qt
 
 #define LIB_MODULES_ACQ_ENGINES_LIST                                                                                   \
     {                                                                                                                  \
+<#if DEVICE_NAME == "PIC32MZW">
+        (module_acq_t) & qtm_cvd_start_measurement_seq, null                                                           \
+<#else>
         (module_acq_t) & qtm_ptc_start_measurement_seq, null                                                           \
+</#if>
     }
 
 #define LIB_MODULES_ACQ_ENGINES_LIST_DM                                                                                \
@@ -455,7 +469,11 @@ static touch_ret_t touch_sensors_config(void)
     touch_ret_t touch_ret = TOUCH_SUCCESS;
 
     /* Init pointers to DMA sequence memory */
+<#if DEVICE_NAME == "PIC32MZW">
+    qtm_cvd_qtlib_assign_signal_memory(&touch_acq_signals_raw[0]);
+<#else>
     qtm_ptc_qtlib_assign_signal_memory(&touch_acq_signals_raw[0]);
+</#if>
 
     /* Initialize sensor nodes */
     for (sensor_nodes = 0u; sensor_nodes < DEF_NUM_CHANNELS; sensor_nodes++) {
@@ -515,6 +533,9 @@ Notes  :
 static void qtm_measure_complete_callback(void)
 {
     qtm_control.binding_layer_flags |= (1 << node_pp_request);
+<#if DEVICE_NAME=="PIC32MZW">
+	all_measure_complete = 1;
+</#if>
 }
 
 /*============================================================================
@@ -653,8 +674,20 @@ void touch_process(void)
         if (TOUCH_SUCCESS == touch_ret) {
             /* Clear the Measure request flag */
 			time_to_measure_touch_var = 0;
+<#if DEVICE_NAME=="PIC32MZW">
+			all_measure_complete = 0;
+</#if>
         }
     }
+
+<#if DEVICE_NAME=="PIC32MZW">
+    /* check if the measurement is complete, otherwise, process the last measured node */
+    if(!all_measure_complete){
+        if(qtm_cvd_last_measure_is_complete()){
+            qtm_pic32_cvd_handler_eoc();
+        }
+    }
+</#if>
 
     /* check the flag for node level post processing */
     if (p_qtm_control->binding_layer_flags & (1u << node_pp_request)) {
@@ -715,6 +748,20 @@ void touch_timer_handler(void)
     qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 </#if>
 }
+<#if DEVICE_NAME == "PIC32MZW">
+void timer_handler( uint32_t intCause, uintptr_t context )
+{
+     touch_timer_handler();
+}
+uintptr_t rtc_context;
+
+void touch_timer_config(void)
+{
+     ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].CALLBACK_API_NAME}(timer_handler,rtc_context);
+     ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].TIMER_START_API_NAME}();
+    ${TOUCH_TIMER_INSTANCE}_PeriodSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS*(TMR2_FrequencyGet()/1000));
+}
+<#else>
 void rtc_cb( RTC_TIMER32_INT_MASK intCause, uintptr_t context )
 {
      touch_timer_handler();
@@ -735,6 +782,7 @@ void touch_timer_config(void)
 	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 </#if>
 }
+</#if>
 
 uint16_t get_sensor_node_signal(uint16_t sensor_node)
 {
@@ -794,6 +842,8 @@ uint16_t get_scroller_position(uint16_t sensor_node)
 	return (qtm_scroller_control1.qtm_scroller_data[sensor_node].position);
 }
 </#if>
+
+<#if DEVICE_NAME != "PIC32MZW">
 /*============================================================================
 void PTC_Handler_EOC(void)
 ------------------------------------------------------------------------------
@@ -858,4 +908,4 @@ qtm_ptc_clear_interrupt();
 }
 </#if>
 
-
+</#if>

@@ -15,6 +15,13 @@ elif (getDeviceName.getDefaultValue() in ["SAML10","SAML11"]):
     touchLibraryFile.setOutputName("qtm_touch_key_cm23_0x0002.X.a")
     touchLibraryFile.setDestPath("/touch/lib/")
     touchLibraryFile.setEnabled(True)
+elif (getDeviceName.getDefaultValue() in ["PIC32MZW"]):
+    # Library File
+    touchLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_KEY_LIB", None)
+    touchLibraryFile.setSourcePath("/src/libraries/qtm_touch_key_pic32mz_0x0002.X.a")
+    touchLibraryFile.setOutputName("qtm_touch_key_pic32mz_0x0002.X.a")
+    touchLibraryFile.setDestPath("/touch/lib/")
+    touchLibraryFile.setEnabled(True)
 else:
     # Library File
     touchLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_KEY_LIB", None)
