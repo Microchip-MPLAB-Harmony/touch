@@ -4,22 +4,22 @@
 if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
     # Library File
     scrollerLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SCR_LIB", None)
-    scrollerLibraryFile.setSourcePath("/src/libraries/0x000b_qtm_scroller_cm4.X.a")
-    scrollerLibraryFile.setOutputName("0x000b_qtm_scroller_cm4.X.a")
+    scrollerLibraryFile.setSourcePath("/src/libraries/qtm_scroller_cm4_0x000b.X.a")
+    scrollerLibraryFile.setOutputName("qtm_scroller_cm4_0x000b.X.a")
     scrollerLibraryFile.setDestPath("/touch/lib/")
     scrollerLibraryFile.setEnabled(False)
 elif (getDeviceName.getDefaultValue() in ["SAML10","SAML11"]):
     # Library File
     scrollerLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SCR_LIB", None)
-    scrollerLibraryFile.setSourcePath("/src/libraries/0x000b_qtm_scroller_cm23.X.a")
-    scrollerLibraryFile.setOutputName("0x000b_qtm_scroller_cm23.X.a")
+    scrollerLibraryFile.setSourcePath("/src/libraries/qtm_scroller_cm23_0x000b.X.a")
+    scrollerLibraryFile.setOutputName("qtm_scroller_cm23_0x000b.X.a")
     scrollerLibraryFile.setDestPath("/touch/lib/")
     scrollerLibraryFile.setEnabled(False)
 else:
     # Library File
     scrollerLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SCR_LIB", None)
-    scrollerLibraryFile.setSourcePath("/src/libraries/0x000b_qtm_scroller_cm0p.X.a")
-    scrollerLibraryFile.setOutputName("0x000b_qtm_scroller_cm0p.X.a")
+    scrollerLibraryFile.setSourcePath("/src/libraries/qtm_scroller_cm0p_0x000b.X.a")
+    scrollerLibraryFile.setOutputName("qtm_scroller_cm0p_0x000b.X.a")
     scrollerLibraryFile.setDestPath("/touch/lib/")
     scrollerLibraryFile.setEnabled(False)
 # Header File
