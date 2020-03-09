@@ -51,7 +51,10 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include "touch/datastreamer/kronocommadaptor.h"
 #include "touch/datastreamer/kronocommuart_sam.h"
 </#if>
-
+#if (DEF_ENABLE_DRIVEN_SHIELD == 1u)
+#include "driven_shield.h"
+extern qtm_drivenshield_config_t qtm_drivenshield_config;
+#endif
 /*----------------------------------------------------------------------------
  *   prototypes
  *----------------------------------------------------------------------------*/
@@ -614,6 +617,10 @@ void touch_init(void)
     /* get a pointer to the binding layer control */
     p_qtm_control = qmt_get_binding_layer_ptr();
 
+#if (DEF_ENABLE_DRIVEN_SHIELD == 1u)
+	drivenshield_configure();
+#endif
+	
 <#if ENABLE_DATA_STREAMER = true>	
 #if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
     datastreamer_init();
@@ -805,7 +812,17 @@ Notes  : none
 void ADC0_1_Handler(void)
 {
     ADC0_REGS->ADC_INTFLAG |=1u;
+#if (DEF_ENABLE_DRIVEN_SHIELD == 1u)
+	if (qtm_drivenshield_config.flags & (1u << DRIVEN_SHIELD_DUMMY_ACQ)) {
+		/* Clear the flag */
+		qtm_drivenshield_config.flags &= (uint8_t) ~(1u << DRIVEN_SHIELD_DUMMY_ACQ);
+	} else {
+		drivenshield_stop();
     qtm_same54_ptc_handler();
+}
+#else
+	qtm_same54_ptc_handler();
+#endif
 }
 <#else>
 void PTC_Handler(void)

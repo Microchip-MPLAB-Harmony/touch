@@ -38,6 +38,7 @@ for channelID in range(0, touchChannelCountMax):
             tchSelfPinSelection[channelID].addKey(ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
         ptcPinValues[index].getAttribute("index"),
         ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
+            ptcYPads.append(ptcPinValues[index].getAttribute("pad"))
 
     tchMutXPinSelection.append(qtouchComponent.createKeyValueSetSymbol("MUTL-X-INPUT_"+ str(channelID), touchChEnable))
     tchMutXPinSelection[channelID].setLabel("Select X Pin for Channel "+ str(channelID))
@@ -72,16 +73,20 @@ for channelID in range(0, touchChannelCountMax):
     touchSym_CSD_Val.setLabel("Additional Charge Share Delay")
     touchSym_CSD_Val.setDefaultValue(0)
     touchSym_CSD_Val.setMin(0)
-    touchSym_CSD_Val.setMax(255)
+    touchSym_CSD_Val.setMax(63)
     touchSym_CSD_Val.setDescription("Increase in Charge Share Delay increases sensor charging time and so the touch measurement time. It indicates the number of additional cycles that are inserted within a touch measurement cycle.")
 
     #Series Resistor
     touchSym_SERIES_RESISTOR_Val = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_SERIES_RESISTOR" + str(channelID), touchChEnable)
     touchSym_SERIES_RESISTOR_Val.setLabel("Series Resistor")
     touchSym_SERIES_RESISTOR_Val.addKey("RES0", "RSEL_VAL_0", "No resistor")
+    touchSym_SERIES_RESISTOR_Val.addKey("RES3", "RSEL_VAL_3", "3")
+    touchSym_SERIES_RESISTOR_Val.addKey("RES6", "RSEL_VAL_6", "6 k")
     touchSym_SERIES_RESISTOR_Val.addKey("RES20", "RSEL_VAL_20", "20 k")
     touchSym_SERIES_RESISTOR_Val.addKey("RES50", "RSEL_VAL_50", "50 k")
+    touchSym_SERIES_RESISTOR_Val.addKey("RES75", "RSEL_VAL_75", "75 k")
     touchSym_SERIES_RESISTOR_Val.addKey("RES100", "RSEL_VAL_100", "100 k")
+    touchSym_SERIES_RESISTOR_Val.addKey("RES200", "RSEL_VAL_200", "200 k")
     touchSym_SERIES_RESISTOR_Val.setDefaultValue(0)
     touchSym_SERIES_RESISTOR_Val.setOutputMode("Value")
     touchSym_SERIES_RESISTOR_Val.setDisplayMode("Description")
@@ -90,14 +95,18 @@ for channelID in range(0, touchChannelCountMax):
     #PTC Clock Prescaler
     touchSym_PTC_PRESCALER_Val = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_PTC_PRESCALER" + str(channelID), touchChEnable)
     touchSym_PTC_PRESCALER_Val.setLabel("PTC Clock Prescaler")
-    touchSym_PTC_PRESCALER_Val.addKey("PRESC0", "PRSC_DIV_SEL_1", "No prescaler")
     touchSym_PTC_PRESCALER_Val.addKey("PRESC2", "PRSC_DIV_SEL_2", "2")
     touchSym_PTC_PRESCALER_Val.addKey("PRESC4", "PRSC_DIV_SEL_4", "4")
     touchSym_PTC_PRESCALER_Val.addKey("PRESC8", "PRSC_DIV_SEL_8", "8")
+    touchSym_PTC_PRESCALER_Val.addKey("PRESC16", "PRSC_DIV_SEL_16", "16")
+    touchSym_PTC_PRESCALER_Val.addKey("PRESC32", "PRSC_DIV_SEL_32", "32")
+    touchSym_PTC_PRESCALER_Val.addKey("PRESC64", "PRSC_DIV_SEL_64", "64")
+    touchSym_PTC_PRESCALER_Val.addKey("PRESC128", "PRSC_DIV_SEL_128", "128")
+    touchSym_PTC_PRESCALER_Val.addKey("PRESC256", "PRSC_DIV_SEL_256", "256")
     touchSym_PTC_PRESCALER_Val.setDefaultValue(0)
     touchSym_PTC_PRESCALER_Val.setOutputMode("Value")
     touchSym_PTC_PRESCALER_Val.setDisplayMode("Description")
-    touchSym_PTC_PRESCALER_Val.setDescription("The PTC clock is prescaled by PTC and then used for touch measurement.The PTC prescaling factor is defined by this parameter. It is recommended to configure this parameter such that the clock used for touch measurement is less than 4MHz (8MHz for ATtiny devices).")
+    touchSym_PTC_PRESCALER_Val.setDescription("The PTC clock is prescaled by PTC and then used for touch measurement.The PTC prescaling factor is defined by this parameter. It is recommended to configure this parameter such that the clock used for touch measurement is less than 2MHz.")
 	
     #Analog Gain
     touchSym_ANALOG_GAIN_Val = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_GAIN_ANA" + str(channelID), touchChEnable)
@@ -135,7 +144,13 @@ for channelID in range(0, touchChannelCountMax):
     touchSym_DIGI_FILT_OVERSAMPLING_Val.addKey("DF_OVERSAMPLE16", "FILTER_LEVEL_16", "16 samples")
     touchSym_DIGI_FILT_OVERSAMPLING_Val.addKey("DF_OVERSAMPLE32", "FILTER_LEVEL_32", "32 samples")
     touchSym_DIGI_FILT_OVERSAMPLING_Val.addKey("DF_OVERSAMPLE64", "FILTER_LEVEL_64", "64 samples")
+    touchSym_DIGI_FILT_OVERSAMPLING_Val.addKey("DF_OVERSAMPLE128", "FILTER_LEVEL_128", "128 samples")
+    touchSym_DIGI_FILT_OVERSAMPLING_Val.addKey("DF_OVERSAMPLE256", "FILTER_LEVEL_256", "256 samples")
+    touchSym_DIGI_FILT_OVERSAMPLING_Val.addKey("DF_OVERSAMPLE512", "FILTER_LEVEL_512", "512 samples")
+    touchSym_DIGI_FILT_OVERSAMPLING_Val.addKey("DF_OVERSAMPLE1024", "FILTER_LEVEL_1024", "1024 samples")
     touchSym_DIGI_FILT_OVERSAMPLING_Val.setDefaultValue(4)
     touchSym_DIGI_FILT_OVERSAMPLING_Val.setOutputMode("Value")
     touchSym_DIGI_FILT_OVERSAMPLING_Val.setDisplayMode("Description")
     touchSym_DIGI_FILT_OVERSAMPLING_Val.setDescription("Defines the number of samples taken for each measurement.Higher filter level settings, for each measurements more number of samples taken which helps to average out the noise.Higher filter level settings takes long time to do a touch measurement which affects response time.So, start with default value and increase depends on noise levels.")
+    
+    touchChannels.append(touchChEnable)

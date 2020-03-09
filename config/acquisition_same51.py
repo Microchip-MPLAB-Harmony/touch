@@ -26,16 +26,16 @@ global touchAcqAutoLibraryFile
 ############################################################################
 # Library File
 touchAcqLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_ACQ_LIB", None)
-touchAcqLibraryFile.setSourcePath("/src/libraries/0x000f_qtm_same51_acq.X.a")
-touchAcqLibraryFile.setOutputName("0x000f_qtm_same51_acq.X.a")
+touchAcqLibraryFile.setSourcePath("/src/libraries/qtm_acq_same51_0x000f.X.a")
+touchAcqLibraryFile.setOutputName("qtm_acq_same51_0x000f.X.a")
 touchAcqLibraryFile.setDestPath("/touch/lib/")
 touchAcqLibraryFile.setEnabled(True)
 touchAcqLibraryFile.setDependencies(autoTuneFunc,["TUNE_MODE_SELECTED"])
 
 # Library File
 touchAcqAutoLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_ACQ_AUTO_LIB", None)
-touchAcqAutoLibraryFile.setSourcePath("/src/libraries/0x000f_qtm_same51_acq.X.a")
-touchAcqAutoLibraryFile.setOutputName("0x000f_qtm_same51_acq.X.a")
+touchAcqAutoLibraryFile.setSourcePath("/src/libraries/qtm_acq_same51_0x000f.X.a")
+touchAcqAutoLibraryFile.setOutputName("qtm_acq_same51_0x000f.X.a")
 touchAcqAutoLibraryFile.setDestPath("/touch/lib/")
 touchAcqAutoLibraryFile.setEnabled(False)
 touchAcqAutoLibraryFile.setDependencies(autoTuneFunc,["TUNE_MODE_SELECTED"])

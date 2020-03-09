@@ -1,6 +1,6 @@
 #essential changes for each release
 releaseVersion = "v3.6.0"
-releaseYear    = "2019"
+releaseYear    = "2020"
 
 
 deviceNode = ATDF.getNode("/avr-tools-device-file/devices")

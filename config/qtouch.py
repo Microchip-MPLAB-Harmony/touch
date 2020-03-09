@@ -1,6 +1,8 @@
 InterruptVector = "PTC" + "_INTERRUPT_ENABLE"
 InterruptHandler = "PTC" + "_INTERRUPT_HANDLER"
 
+timer_based_driven_shield_supported_device = ["SAMD21","SAME54"]
+
 def onAttachmentConnected(source,target):
     localComponent = source["component"]
     remoteComponent = target["component"]
@@ -15,11 +17,7 @@ def onAttachmentConnected(source,target):
         if targetID == "RTC_TMR":
             if (Database.getSymbolValue(remoteID, "RTC_MODE0_MATCHCLR") == False):
                 Database.setSymbolValue(remoteID, "RTC_MODE0_MATCHCLR", True)
-            #if (Database.getSymbolValue(remoteID, "RTC_MODE0_INTENSET_CMP0_ENABLE") == False):
-                #Database.setSymbolValue(remoteID, "RTC_MODE0_INTENSET_CMP0_ENABLE", True)
-            #if (getDeviceName.getDefaultValue() in ["SAMD20","SAMD21"]):
-                #Database.setSymbolValue(remoteID, "RTC_MODE0_TIMER_COMPARE", 32)
-    
+
     if (connectID == "Touch_sercom"):
         plibUsed = localComponent.getSymbolByID("TOUCH_SERCOM_INSTANCE")
         plibUsed.clearValue()
@@ -131,6 +129,9 @@ def enable2DSurfaceFtlFiles(symbol,event):
 
 autoComponentIDTable = ["rtc"]
 autoConnectTable = [["lib_qtouch", "Touch_timer","rtc", "RTC_TMR"]]
+#used for driven shield 
+ptcYPads = []
+touchChannels = []
 
 ################################################################################
 #### Component ####
@@ -141,6 +142,13 @@ def instantiateComponent(qtouchComponent):
 
     touchMenu = qtouchComponent.createMenuSymbol("TOUCH_MENU", None)
     touchMenu.setLabel("Touch Configuration")
+    
+    touchInfoMenu = qtouchComponent.createMenuSymbol("TOUCH_INFO", None)
+    touchInfoMenu.setLabel("Touch Configuration Helper")
+    
+    touchScriptEvent = qtouchComponent.createStringSymbol("TOUCH_SCRIPT_EVENT", touchInfoMenu)
+    touchScriptEvent.setLabel("Script Event ")
+    touchScriptEvent.setReadOnly(True)
     
     execfile(Module.getPath() +"/config/interface.py")
     execfile(Module.getPath() +"/config/acquisition_"+getDeviceName.getDefaultValue().lower()+".py")
@@ -158,7 +166,10 @@ def instantiateComponent(qtouchComponent):
         execfile(Module.getPath() +"/config/node_D1X.py")
     else:
         execfile(Module.getPath() +"/config/node_C2X.py")
-    # execfile(Module.getPath() +"/config/drivenshield.py")
+    
+    if (getDeviceName.getDefaultValue() in timer_based_driven_shield_supported_device):
+        execfile(Module.getPath() +"/config/drivenshield.py")
+        
     execfile(Module.getPath() +"/config/key.py")
     execfile(Module.getPath() +"/config/sensor.py")
 

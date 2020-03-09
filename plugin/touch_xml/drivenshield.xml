@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!-- 
+This is for driven shield feature settings
+-->
+<setting>
+	<device name="ATSAME54">
+		<core>
+			<clock tc="GCLK4" tcc="GCLK4" />
+			<dma  DMAC_ENABLE_CH_0="true"  DMAC_BTCTRL_SRCINC_CH_0="Fixed Address Mode" DMAC_BTCTRL_DSTINC_CH_0="Fixed Address Mode" 
+						DMAC_BTCTRL_BEATSIZE_CH_0="8-bit bus transfer"  DMAC_CHCTRLA_RUNSTDBY_CH_0="true"  DMAC_ENABLE_EVSYS_OUT_0="true"
+						DMAC_BTCTRL_EVSYS_EVOSEL_0="Block event strobe" DMAC_ENABLE_EVSYS_IN_0="true"  DMAC_CHEVCTRL_EVACT_0="Transfer and periodic transfer trigger"/>
+		</core>
+		<timer>
+			<tc  TC_CTRLA_MODE="Counter in 8-bit mode"  TC_OPERATION_MODE="Compare" TC_COMPARE_WAVE_WAVEGEN="Normal PWM" 
+					TC_CTRLA_RUNSTDBY="true" TC_COMPARE_EVCTRL_EV="true" TC_COMPARE_EVCTRL_TCINV="false"/>
+			<tcc />
+		</timer>
+		<evsys>
+			<module  EVSYS_CHANNEL_0="true"  EVSYS_CHANNEL_0_GENERATOR="ADC0_RESRDY"  
+							  EVSYS_CHANNEL_1="true"  EVSYS_CHANNEL_1_GENERATOR="DMAC_CH_0"/>	
+			<user  EVSYS_USER_55="CHANNEL_1"  EVSYS_USER_5="CHANNEL_0"/>
+			<timer evsys_user_tmr="CHANNEL_1"/>
+		</evsys>
+	</device>
+</setting>
