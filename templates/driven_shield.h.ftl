@@ -42,7 +42,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #ifndef DRIVEN_SHIELD_H
 #define DRIVEN_SHIELD_H
 <#assign data_type = "uint8_t" >
-<#list ["SAML22"] as i>
+<#list ["SAMC20", "SAMC21","SAML22"] as i>
 	<#if DEVICE_NAME == i>
 		<#assign data_type = "uint32_t">
 	</#if>

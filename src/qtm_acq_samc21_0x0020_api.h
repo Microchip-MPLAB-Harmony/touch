@@ -63,7 +63,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define CAL_CHRG_5TAU 3u
 
 #define RSEL_MAX_OPTION RSEL_VAL_100
-#define PRSC_MAX_OPTION PRSC_DIV_SEL_8
+#define PRSC_MAX_OPTION                 PRSC_DIV_SEL_32
 
 /* X line bit position */
 #define X_NONE 0u
@@ -99,14 +99,19 @@ typedef enum tag_filter_level_t {
 /* Touch library GAIN setting */
 typedef enum tag_gain_t { GAIN_1, GAIN_2, GAIN_4, GAIN_8, GAIN_16 } gain_t;
 /* PTC clock prescale setting.
- * If Generic clock input to PTC = 4MHz, then:
- * PRSC_DIV_SEL_1 sets PTC Clock to 4MHz
- * PRSC_DIV_SEL_2 sets PTC Clock to 2MHz
- * PRSC_DIV_SEL_4 sets PTC Clock to 1MHz
- * PRSC_DIV_SEL_8 sets PTC Clock to 500KHz
- *
- */
-typedef enum tag_prsc_div_sel_t { PRSC_DIV_SEL_1, PRSC_DIV_SEL_2, PRSC_DIV_SEL_4, PRSC_DIV_SEL_8 } prsc_div_sel_t;
+* For Example: if Generic clock input to PTC = 4MHz, then:
+* PRSC_DIV_SEL_4 sets PTC Clock to 1MHz
+* PRSC_DIV_SEL_8 sets PTC Clock to 500KHz
+*
+*/
+typedef enum tag_prsc_div_sel_t 
+{
+  PRSC_DIV_SEL_4,
+  PRSC_DIV_SEL_8,
+  PRSC_DIV_SEL_16,
+  PRSC_DIV_SEL_32
+}
+prsc_div_sel_t;
 
 /**
  * PTC series resistor setting, only works in mutual capacitance mode
@@ -184,6 +189,50 @@ typedef struct {
 	uint8_t                    auto_scan_trigger;
 } qtm_auto_scan_config_t;
 
+
+#define DRIVEN_SHIELD_DUMMY_ACQ	3u
+
+typedef void (*qtm_drivenshield_callback_t)(uint8_t csd, uint8_t sds, uint8_t prescaler, uint32_t volatile * ptr, uint32_t value);
+
+/* Drivenshield status flag */
+typedef struct qtm_drivenshield_config_tag
+{
+	uint8_t  flags;
+}qtm_drivenshield_config_t;
+
+/*============================================================================
+touch_ret_t drivenshield_setup(drivenshield_config_t* config);
+------------------------------------------------------------------------------
+Purpose: Setup the drivenshield with settings from the user
+Input  : drivenshield_config_t  setup in touch.c and touch.h
+Output : touch_ret_t
+Notes  : Called by application to load the drivenshield operating parameters
+============================================================================*/
+touch_ret_t qtm_drivenshield_setup(qtm_drivenshield_config_t* config);
+
+/*============================================================================
+void drivenshield_register_start_callback(drivenshield_callback_t callback);
+------------------------------------------------------------------------------
+Purpose: register the Softshield Start callback with the touch library
+Input  : pointer to the applicaion function to start the event system
+Output : touch_ret_t
+Notes  : the library initialises this with a null, if this remains the the
+         library will function as normal, if this is not null then the
+         application will start the event system to kick off the PTC
+============================================================================*/
+touch_ret_t qtm_drivenshield_register_start_callback(qtm_drivenshield_callback_t callback);
+
+/*============================================================================
+void drivenshield_register_start_callback(drivenshield_callback_t callback);
+------------------------------------------------------------------------------
+Purpose: register the Softshield Start callback with the touch library
+Input  : pointer to the applicaion function to start the event system
+Output : touch_ret_t
+Notes  : the library initialises this with a null, if this remains the the
+         library will function as normal, if this is not null then the
+         application will start the event system to kick off the PTC
+============================================================================*/
+touch_ret_t qtm_drivenshield_deregister_start_callback(void);
 /*----------------------------------------------------------------------------
  * prototypes
  *----------------------------------------------------------------------------*/

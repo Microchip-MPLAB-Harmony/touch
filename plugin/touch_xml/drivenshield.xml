@@ -22,6 +22,43 @@ This is for driven shield feature settings
 			<timer evsys_user_tmr="CHANNEL_1"/>
 		</evsys>
 	</device>
+	<device name="ATSAMC21">
+		<core>
+			<clock tc="GCLK1" tcc="GCLK1" />
+			<dma  DMAC_ENABLE_CH_0="true"  DMAC_CHCTRLA_RUNSTDBY_CH_0="true"  DMAC_CHCTRLB_TRIGSRC_CH_0="PTC_EOC"
+			DMAC_CHCTRLB_TRIGACT_CH_0="One Block Transfer Per DMA Request" DMAC_BTCTRL_SRCINC_CH_0="Fixed Address Mode"
+			DMAC_BTCTRL_DSTINC_CH_0="Fixed Address Mode" DMAC_BTCTRL_BEATSIZE_CH_0="32-bit bus transfer"
+			DMAC_ENABLE_EVSYS_OUT_0="true"  DMAC_BTCTRL_EVSYS_EVOSEL_0="Event strobe when block transfer complete"  />
+		</core>
+		<timer>
+			<tc  TC_CTRLA_MODE="Counter in 8-bit mode"  TC_OPERATION_MODE="Compare" TC_COMPARE_WAVE_WAVEGEN="Normal PWM" 
+					TC_CTRLA_RUNSTDBY="true" TC_COMPARE_EVCTRL_EV="true" TC_COMPARE_EVCTRL_TCINV="false"/>
+			<tcc />
+		</timer>
+		<evsys>
+			<module  EVSYS_CHANNEL_1="true"  EVSYS_CHANNEL_1_GENERATOR="DMAC_CH_0"/>	
+			<user  />
+			<timer evsys_user_tmr="CHANNEL_1"/>
+		</evsys>
+	</device>
+	<device name="ATSAMC20">
+		<core>
+			<clock tc="GCLK1" tcc="GCLK1" />
+			<dma  DMAC_ENABLE_CH_0="true"  DMAC_CHCTRLB_TRIGSRC_CH_0="PTC_EOC" DMAC_BTCTRL_SRCINC_CH_0="Fixed Address Mode" DMAC_BTCTRL_DSTINC_CH_0="Fixed Address Mode" 
+						DMAC_CHCTRLB_TRIGACT_CH_0="One Block Transfer Per DMA Request"   DMAC_BTCTRL_BEATSIZE_CH_0="32-bit bus transfer"  DMAC_CHCTRLA_RUNSTDBY_CH_0="true"
+						DMAC_BTCTRL_EVSYS_EVOSEL_0="Event strobe when block transfer complete"  DMAC_ENABLE_EVSYS_OUT_0="true"/>
+		</core>
+		<timer>
+			<tc  TC_CTRLA_MODE="Counter in 8-bit mode"  TC_OPERATION_MODE="Compare" TC_COMPARE_WAVE_WAVEGEN="Normal PWM" 
+					TC_CTRLA_RUNSTDBY="true" TC_COMPARE_EVCTRL_EV="true" TC_COMPARE_EVCTRL_TCINV="false"/>
+			<tcc />
+		</timer>
+		<evsys>
+			<module  EVSYS_CHANNEL_1="true"  EVSYS_CHANNEL_1_GENERATOR="DMAC_CH_0"/>	
+			<user  />
+			<timer evsys_user_tmr="CHANNEL_1"/>
+		</evsys>
+	</device>
 	<device name="ATSAML22">
 		<core>
 			<clock tc="GCLK1" tcc="GCLK1" />

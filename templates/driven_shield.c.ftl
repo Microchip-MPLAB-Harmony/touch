@@ -63,7 +63,18 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 	</#if>
 </#list>
 
-
+<#list ["SAMC20", "SAMC21"] as i>
+	<#if DEVICE_NAME == i>
+	<#if DEVICE_VARIANT == "SAMC21N">
+		<#assign prescaler_value = "4, 3, 3, 4" >
+	<#else>
+		<#assign prescaler_value = "1, 3, 4, 3" >
+	</#if>
+	<#assign data_type = "uint32_t">
+	<#assign block_transfer_count = "4" >
+		<#break>
+	</#if>
+</#list>
 </#if>
 
 /*============================================================================
@@ -179,7 +190,7 @@ void drivenshield_configure()
 		output to PTC Start of convertion Event Inuput */
 	EVSYS_REGS->EVSYS_USER[37] = EVSYS_USER_CHANNEL(0x2);
 </#if>
-	
+
 <#if DS_DEDICATED_ENABLE ==true>
 	/* Dedicated Shield Timer pin mux setting */
 	drivenshield_port_mux_config(PIN_${.vars["DS_DEDICATED_TIMER_PIN"]}, MUX_${.vars["DS_DEDICATED_TIMER_PIN"]});
@@ -238,7 +249,7 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	<#break>
 </#if>
 </#list>
-<#list ["SAML22"] as i>
+<#list ["SAML22", "SAMC20", "SAMC21"] as i>
 <#if DEVICE_NAME == i>
 	/* TC/TCC period value */
 	period = csd+1;
@@ -257,6 +268,10 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	count = csd+1;
 	count = count * 2;
 	count = count << 2;
+	<#if DEVICE_VARIANT == "SAMC21N">
+	period = period - 4;
+	cc = cc - 2;
+	</#if>
 	
 	<#break>
 </#if>

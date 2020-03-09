@@ -1,7 +1,7 @@
 InterruptVector = "PTC" + "_INTERRUPT_ENABLE"
 InterruptHandler = "PTC" + "_INTERRUPT_HANDLER"
 
-timer_based_driven_shield_supported_device = ["SAMD21","SAME54","SAML21","SAML22"]
+timer_based_driven_shield_supported_device = ["SAMD21","SAME54","SAMC21","SAMC20","SAML21","SAML22"]
 adc_based_touch_acqusition_device = ["SAME54","SAME53","SAME51","SAMD51"]
 
 def onAttachmentConnected(source,target):
