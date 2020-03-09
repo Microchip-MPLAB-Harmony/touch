@@ -41,15 +41,13 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 #ifndef DRIVEN_SHIELD_H
 #define DRIVEN_SHIELD_H
-<#assign prescaler_value = "0, 0, 0, 0" >
-<#assign data_type = "uint32_t" >
-<#list ["SAME54","SAME53","SAME51","SAMD51"] as i>
+<#assign data_type = "uint8_t" >
+<#list ["SAML22"] as i>
 	<#if DEVICE_NAME == i>
-		<#assign data_type = "uint8_t">
+		<#assign data_type = "uint32_t">
 	</#if>
 </#list>
 #include <definitions.h>
-//#include "peripheral_clk_config.h"
 
 /*============================================================================
 void drivenshield_configure()

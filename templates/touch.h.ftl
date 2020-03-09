@@ -458,6 +458,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define DEF_ENABLE_DRIVEN_SHIELD 0u
 </#if>
 /**********************************************************/
+
 <#if ENABLE_KRONOCOMM == true>
 #define KRONOCOMM_UART 1u
 #define KRONOCOMM_ENABLE 1u

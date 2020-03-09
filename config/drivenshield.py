@@ -1,7 +1,8 @@
 #driven shield support
 
 global timer_based_driven_shield_supported_device
-            
+global adc_based_touch_acqusition_device
+
 def applyDrivenShieldTimers(symbol, event):
     
     component = symbol.getComponent()
@@ -40,8 +41,9 @@ def applyDrivenShieldTimers(symbol, event):
 def enableDrivenShield(symbol,event):
     global drivenShieldHeadFile
     global drivenShieldSourceFile
-
-    if(event["value"] == 1):
+    dsPlusEnabled = enableDrivenShieldPlus.getValue()
+    dsEnabled = enableDrivenShieldDedicated.getValue()
+    if((dsPlusEnabled == True) or (dsEnabled == True)):
         drivenShieldHeadFile.setEnabled(True)
         drivenShieldSourceFile.setEnabled(True)
     else:
@@ -130,10 +132,12 @@ if (getDeviceName.getDefaultValue() in timer_based_driven_shield_supported_devic
     drivenShieldMenu = qtouchComponent.createMenuSymbol("DRIVEN_SHIELD", touchMenu)
     drivenShieldMenu.setLabel("Driven Shield")
     
+    global enableDrivenShieldPlus
     enableDrivenShieldPlus = qtouchComponent.createBooleanSymbol("DS_PLUS_ENABLE", drivenShieldMenu)
     enableDrivenShieldPlus.setLabel("Enable Driven Shield Plus")
     enableDrivenShieldPlus.setDefaultValue(False)
     
+    global enableDrivenShieldDedicated
     enableDrivenShieldDedicated = qtouchComponent.createBooleanSymbol("DS_DEDICATED_ENABLE", drivenShieldMenu)
     enableDrivenShieldDedicated.setLabel("Enable Dedicated Driven Shield Pin")
     enableDrivenShieldDedicated.setDefaultValue(False)
@@ -179,7 +183,10 @@ if (getDeviceName.getDefaultValue() in timer_based_driven_shield_supported_devic
         timerMuxYpin.setLabel("Ypin")
     
         tcSignalNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"TC\"]/instance@[name=\""+ tctimer +"\"]/signals")
-        tcptcPinNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"ADC\"]/instance@[name=\"ADC0\"]/signals")
+        if getDeviceName.getDefaultValue() in adc_based_touch_acqusition_device:
+          tcptcPinNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"ADC\"]/instance@[name=\"ADC0\"]/signals")
+        else:
+          tcptcPinNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PTC\"]/instance/parameters")
         tcptcSignals = []
         tcptcSignals = tcptcPinNode.getChildren()
         tcSignals = []

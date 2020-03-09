@@ -45,38 +45,25 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 #if (DEF_ENABLE_DRIVEN_SHIELD == 1u)
 <#assign prescaler_value = "0, 0, 0, 0" >
-<#assign data_type = "uint32_t" >
-<#list ["SAME54","SAME53","SAME51","SAMD51"] as i>
-	<#if DEVICE_NAME == i>
-		<#assign data_type = "uint8_t">
-	</#if>
-</#list>
+<#assign block_transfer_count = "1" >
+<#assign data_type = "uint8_t" >
 
 <#if DEVICE_NAME == "SAML22">
 	<#assign prescaler_value = "4, 3, 3, 4" >
+	<#assign block_transfer_count = "4" >
+	<#assign data_type = "uint32_t" >
 <#elseif DEVICE_NAME == "SAML21">
 	<#assign prescaler_value = "3, 4, 4, 4" >
-<#elseif DEVICE_NAME == "SAMC21N">
-	<#assign prescaler_value = "4, 3, 3, 4" >
 <#else>
 <#list ["SAME54","SAME53","SAME51","SAMD51"] as i>
 	<#if DEVICE_NAME == i>
 		<#assign prescaler_value = "0, 0, 0, 0" >
+		<#assign block_transfer_count = "3" >
 		<#break>
 	</#if>
 </#list>
-<#list ["SAMD20", "SAMD21", "SAMHA1", "SAMDA1"] as i>
-	<#if DEVICE_NAME == i>
-		<#assign prescaler_value = "4, 2, 3, 4" >
-		<#break>
-	</#if>
-</#list>
-<#list ["SAMC20", "SAMC21"] as i>
-	<#if DEVICE_NAME == i>
-		<#assign prescaler_value = "1, 3, 4, 3" >
-		<#break>
-	</#if>
-</#list>
+
+
 </#if>
 
 /*============================================================================
@@ -174,6 +161,25 @@ void drivenshield_configure()
 			;
 	}
 	
+<#if DEVICE_NAME == "SAML22">
+	/* Map DMA Transfer complete Event
+		output to PTC Start of convertion Event Inuput */
+	EVSYS_REGS->EVSYS_USER[23] = EVSYS_USER_CHANNEL(0x2);
+<#elseif DEVICE_NAME == "SAMC21" || DEVICE_NAME == "SAMC20">
+	/* Map DMA Transfer complete Event
+		output to PTC Start of convertion Event Inuput */
+	EVSYS_REGS->EVSYS_USER[39] = EVSYS_USER_CHANNEL(0x2);
+<#elseif DEVICE_NAME == "SAML21">
+
+	/* Map PTC EOC Event to DMA */
+	EVSYS_REGS->EVSYS_CHANNEL[0] = EVSYS_CHANNEL_EVGEN(0x4B) | EVSYS_CHANNEL_PATH(2) | EVSYS_CHANNEL_EDGSEL(0) \
+									 ;
+
+	/* Map DMA Transfer complete Event
+		output to PTC Start of convertion Event Inuput */
+	EVSYS_REGS->EVSYS_USER[37] = EVSYS_USER_CHANNEL(0x2);
+</#if>
+	
 <#if DS_DEDICATED_ENABLE ==true>
 	/* Dedicated Shield Timer pin mux setting */
 	drivenshield_port_mux_config(PIN_${.vars["DS_DEDICATED_TIMER_PIN"]}, MUX_${.vars["DS_DEDICATED_TIMER_PIN"]});
@@ -203,7 +209,7 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	filter_level = value;
 
 	/* Configure DMA transfer */
-	DMAC_ChannelTransfer(0, &filter_level, addr, 3);
+	DMAC_ChannelTransfer(0, &filter_level, addr, ${block_transfer_count});
 
 <#list ["SAME54", "SAME53", "SAME51", "SAMD51"] as i>
 <#if DEVICE_NAME == i>
@@ -232,7 +238,47 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	<#break>
 </#if>
 </#list>
+<#list ["SAML22"] as i>
+<#if DEVICE_NAME == i>
+	/* TC/TCC period value */
+	period = csd+1;
+	period = period * 6;
+	period = period + sds + 1;
+	period = period << 2;
+	period = period - 1;
 
+	/* TC/TCC compare value */
+	cc = csd+1;
+	cc = cc * 3;
+	cc = cc << 2;
+	cc = cc + (sds<<2);
+	
+	/* TC/TCC count value - initial offset */
+	count = csd+1;
+	count = count * 2;
+	count = count << 2;
+	
+	<#break>
+</#if>
+</#list>
+<#list ["SAML21"] as i>
+<#if DEVICE_NAME == i>
+	/* TC/TCC period value */
+	period = csd + 15 + sds;
+	period = period << 2;
+	period = period - 1;
+
+	/* TC/TCC compare value */
+	cc = 9 + sds;
+	cc = cc << 2;
+
+	/* TC/TCC count value - initial offset */
+	count = 6;
+	count = count << 2;
+	count = count - offset_vs_prescaler[prescaler];
+	<#break>
+</#if>
+</#list>
 	while (period > 255) {
 		prescaler = prescaler + 1;
 		period    = period >> 1;

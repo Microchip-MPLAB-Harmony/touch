@@ -827,13 +827,34 @@ void ADC0_1_Handler(void)
 <#else>
 void PTC_Handler(void)
 {
-    qtm_ptc_clear_interrupt();
+qtm_ptc_clear_interrupt();
+<#if DS_DEDICATED_ENABLE == true || DS_PLUS_ENABLE == true>
+#if (DEF_ENABLE_DRIVEN_SHIELD == 1u)
+	if (qtm_drivenshield_config.flags & (1u << DRIVEN_SHIELD_DUMMY_ACQ)) {
+		/* Clear the flag */
+		qtm_drivenshield_config.flags &= (uint8_t) ~(1u << DRIVEN_SHIELD_DUMMY_ACQ);
+	} else {
+		drivenshield_stop();
 <#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
 	qtm_samd1x_ptc_handler_eoc();
 <#else>
 	qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();
 </#if>
-    
+}
+#else
+<#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
+	qtm_samd1x_ptc_handler_eoc();
+<#else>
+	qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();
+</#if>
+#endif
+<#else>
+<#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
+	qtm_samd1x_ptc_handler_eoc();
+<#else>
+	qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();
+</#if>
+</#if>   
 }
 </#if>
 
