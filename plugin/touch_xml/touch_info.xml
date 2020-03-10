@@ -7,10 +7,10 @@ This is for device feature and library version information
     <feature>
         <!-- csd unsupported device list-->
         <csd>
-            <device>SAMD2</device>
-            <device>SAML21</device>
-			<device>SAMD1</device>
-			<device>SAMDA1</device>
+            <device name="SAMD2"/>
+            <device name="SAML21"/>
+			<device name="SAMD1"/>
+			<device name="SAMDA1"/>
         </csd>		
     </feature>
     <version>
