@@ -25,14 +25,16 @@ def applyDrivenShieldTimers(symbol, event):
         component.setDependencyEnabled("Drivenshield_"+timer, False)
     for timer in toadd:
         toAdd.append(timer.lower())
-        toConnect.append(["lib_qtouch", "Drivenshield_"+timer,timer.lower(), timer+"_TMR"])
+        if "TCC" not in timer:
+            toConnect.append(["lib_qtouch", "Drivenshield_"+timer,timer.lower(), timer+"_TMR"])
         component.setDependencyEnabled("Drivenshield_"+timer, True)
     
     if len(toRemove)!=0:
         Database.deactivateComponents(toRemove)
     if len(toAdd)!=0:
         Database.activateComponents(toAdd)
-        Database.connectDependencies(toConnect)        
+        if len(toConnect)!=0:
+            Database.connectDependencies(toConnect)
         sevent = component.getSymbolByID("TOUCH_SCRIPT_EVENT")
         sevent.setValue("dstimer")
         sevent.setValue("")
@@ -242,7 +244,7 @@ if (getDeviceName.getDefaultValue() in timer_based_driven_shield_supported_devic
             pindex+= 1
 
         timerClock = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"TCC\"]/instance@[name=\""+ tcctimer +"\"]/parameters/param@[name=\"GCLK_ID\"]")
-        clockIndex = qtouchComponent.createStringSymbol(tcctimer+"CLOCK_INDEX", timerMenu)
+        clockIndex = qtouchComponent.createStringSymbol(tcctimer+"_CLOCK_INDEX", timerMenu)
         clockIndex.setLabel("Clock Index ")
         clockIndex.setReadOnly(True)
         clockIndex.setDefaultValue("GCLK_ID_"+timerClock.getAttribute("value")+"_GENSEL")
