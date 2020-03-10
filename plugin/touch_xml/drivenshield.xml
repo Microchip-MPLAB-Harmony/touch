@@ -13,7 +13,7 @@ This is for driven shield feature settings
 		<timer>
 			<tc  TC_CTRLA_MODE="Counter in 8-bit mode"  TC_OPERATION_MODE="Compare" TC_COMPARE_WAVE_WAVEGEN="Normal PWM" 
 					TC_CTRLA_RUNSTDBY="true" TC_COMPARE_EVCTRL_EV="true" TC_COMPARE_EVCTRL_TCINV="false"/>
-			<tcc />
+			<tcc TCC_0_WEXCTRL_DTIEN = "false"  TCC_1_WEXCTRL_DTIEN="false" TCC_2_WEXCTRL_DTIEN="false" TCC_3_WEXCTRL_DTIEN="false"/>
 		</timer>
 		<evsys>
 			<module  EVSYS_CHANNEL_0="true"  EVSYS_CHANNEL_0_GENERATOR="ADC0_RESRDY"  
@@ -33,7 +33,7 @@ This is for driven shield feature settings
 		<timer>
 			<tc  TC_CTRLA_MODE="Counter in 8-bit mode"  TC_OPERATION_MODE="Compare" TC_COMPARE_WAVE_WAVEGEN="Normal PWM" 
 					TC_CTRLA_RUNSTDBY="true" TC_COMPARE_EVCTRL_EV="true" TC_COMPARE_EVCTRL_TCINV="false"/>
-			<tcc />
+			<tcc TCC_0_WEXCTRL_DTIEN = "false"  TCC_1_WEXCTRL_DTIEN="false" TCC_2_WEXCTRL_DTIEN="false" TCC_3_WEXCTRL_DTIEN="false"/>
 		</timer>
 		<evsys>
 			<module  EVSYS_CHANNEL_1="true"  EVSYS_CHANNEL_1_GENERATOR="DMAC_CH_0"/>	
@@ -51,7 +51,7 @@ This is for driven shield feature settings
 		<timer>
 			<tc  TC_CTRLA_MODE="Counter in 8-bit mode"  TC_OPERATION_MODE="Compare" TC_COMPARE_WAVE_WAVEGEN="Normal PWM" 
 					TC_CTRLA_RUNSTDBY="true" TC_COMPARE_EVCTRL_EV="true" TC_COMPARE_EVCTRL_TCINV="false"/>
-			<tcc />
+			<tcc TCC_0_WEXCTRL_DTIEN = "false"  TCC_1_WEXCTRL_DTIEN="false" TCC_2_WEXCTRL_DTIEN="false" TCC_3_WEXCTRL_DTIEN="false"/>
 		</timer>
 		<evsys>
 			<module  EVSYS_CHANNEL_1="true"  EVSYS_CHANNEL_1_GENERATOR="DMAC_CH_0"/>	
@@ -87,7 +87,7 @@ This is for driven shield feature settings
 		<timer>
 			<tc  TC_CTRLA_MODE="Counter in 8-bit mode"  TC_OPERATION_MODE="Compare" TC_COMPARE_WAVE_WAVEGEN="Normal PWM" 
 					TC_CTRLA_RUNSTDBY="true" TC_COMPARE_EVCTRL_EV="true" TC_COMPARE_EVCTRL_TCINV="false"/>
-			<tcc />
+			<tcc TCC_0_WEXCTRL_DTIEN = "false"  TCC_1_WEXCTRL_DTIEN="false" TCC_2_WEXCTRL_DTIEN="false" TCC_3_WEXCTRL_DTIEN="false"/>
 		</timer>
 		<evsys>
 			<module  EVSYS_CHANNEL_0="true" 

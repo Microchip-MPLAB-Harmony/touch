@@ -344,6 +344,28 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 </#list>
 </#if>
 <#list uniqueTimers as x>
+	<#if x?contains("TCC") >
+	${x}_REGS->TCC_EVCTRL = TCC_EVCTRL_EVACT0_START | TCC_EVCTRL_TCEI0(1);
+	${x}_REGS->TCC_PER = period;
+	${x}_REGS->TCC_COUNT = count;
+<#list 0..TOUCH_KEY_ENABLE_CNT-1 as i>
+	<#if .vars["DSPLUS_TIMER_PINMUX"+i]?contains(x) && .vars["DSPLUS_TIMER_PINMUX"+i] != "---">
+<#assign DediTimerWo = .vars["DSPLUS_TIMER_PINMUX"+i]>
+<#assign DediTimerWo1 = DediTimerWo?split("WO")[1]>
+	${x}_REGS->TCC_CC[${DediTimerWo1}%${x}_NUM_CHANNELS] = cc;
+	</#if>
+</#list>
+	<#if DS_DEDICATED_ENABLE ==true>
+		<#if .vars["DS_DEDICATED_TIMER"]?contains(x) >
+		<#assign DediTimerWo = .vars["DS_DEDICATED_TIMER_PIN"]>
+		<#assign DediTimerWo1 = DediTimerWo?split("WO")[1]>
+	/* Dedicated Shield */
+	${x}_REGS->TCC_CC[${DediTimerWo1}%${x}_NUM_CHANNELS] = cc;
+		</#if>
+	</#if>
+	${x}_REGS->TCC_CTRLA = TCC_CTRLA_PRESCALER(prescaler);
+	${x}_PWMStart();
+	<#else>
 	${x}_REGS->COUNT8.TC_PER = period;
 	${x}_REGS->COUNT8.TC_COUNT = count;
 <#list 0..TOUCH_KEY_ENABLE_CNT-1 as i>
@@ -363,17 +385,26 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	</#if>
 	${x}_REGS->COUNT8.TC_CTRLA = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER(prescaler) | TC_CTRLA_RUNSTDBY_Msk ;
 	${x}_CompareStart();
+</#if>
 </#list>
 <#elseif DS_DEDICATED_ENABLE ==true>
 		<#assign DediTimerWo = .vars["DS_DEDICATED_TIMER_PIN"]>
 		<#assign DediTimerWo1 = DediTimerWo?split("WO")[1]>
 	/* Dedicated Shield */
+	<#if .vars["DS_DEDICATED_TIMER"]?contains("TCC") >
+	${DS_DEDICATED_TIMER}_REGS->TCC_EVCTRL = TCC_EVCTRL_EVACT0_START | TCC_EVCTRL_TCEI0(1);
+	${DS_DEDICATED_TIMER}_REGS->TCC_PER = period;
+	${DS_DEDICATED_TIMER}_REGS->TCC_COUNT = count;
+	${DS_DEDICATED_TIMER}_REGS->TCC_CC[${DediTimerWo1}%${DS_DEDICATED_TIMER}_NUM_CHANNELS] = cc;
+	${DS_DEDICATED_TIMER}_REGS->TCC_CTRLA = TCC_CTRLA_PRESCALER(prescaler);
+	${DS_DEDICATED_TIMER}_PWMStart();
+	<#else>
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_PER = period;
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_COUNT = count;
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_CC[${DediTimerWo1}] = cc;
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_CTRLA = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER(prescaler) | TC_CTRLA_RUNSTDBY_Msk ;
 	${DS_DEDICATED_TIMER}_CompareStart();
-	
+	</#if>
 </#if>
 
 }
@@ -390,13 +421,21 @@ void drivenshield_stop(void)
 {
 <#if DS_PLUS_ENABLE == true>
 <#list uniqueTimers as x>
+	<#if x?contains("TCC") >
+	${x}_PWMStop();
+	<#else>
 	${x}_CompareStop();
+	</#if>
 </#list>
 <#elseif DS_DEDICATED_ENABLE ==true>
 		<#assign DediTimerWo = .vars["DS_DEDICATED_TIMER_PIN"]>
 		<#assign DediTimerWo1 = DediTimerWo?split("WO")[1]>
 	/* Dedicated Shield */
+	<#if .vars["DS_DEDICATED_TIMER"]?contains("TCC") >
+	${DS_DEDICATED_TIMER}_PWMStop();
+	<#else>
 	${DS_DEDICATED_TIMER}_CompareStop();
+	</#if>
 </#if>
 }
 #endif

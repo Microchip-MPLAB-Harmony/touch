@@ -232,15 +232,32 @@ if (getDeviceName.getDefaultValue() in timer_based_driven_shield_supported_devic
         #create signal info
         timerSignal = qtouchComponent.createKeyValueSetSymbol(tcctimer+"_SIGNAL", timerMenu)
         timerSignal.setLabel("Signal")
-        
+        timerMux = qtouchComponent.createKeyValueSetSymbol(tcctimer+"_Mux", timerMenu)
+        timerMux.setLabel("Mux")
+        timerMuxYpin = qtouchComponent.createKeyValueSetSymbol(tcctimer+"_Ypin", timerMenu)
+        timerMuxYpin.setLabel("Ypin")
+       
         tccSignalNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"TCC\"]/instance@[name=\""+ tcctimer +"\"]/signals")
+        if getDeviceName.getDefaultValue() in adc_based_touch_acqusition_device:
+          tcptcPinNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"ADC\"]/instance@[name=\"ADC0\"]/signals")
+        else:
+          tcptcPinNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PTC\"]/instance/parameters")
+        tccptcSignals = []
+        tccptcSignals = tcptcPinNode.getChildren()
         tccSignals = []
         tccSignals = tccSignalNode.getChildren()
         timerPins = []
         for sindex in range(0, len(tccSignals)):
-            timerPin = tccSignals[sindex].getAttribute("pad")+"("+tccSignals[sindex].getAttribute("group")+"/"+tccSignals[sindex].getAttribute("index")+")"
+            timermux = "MUX_"+tccSignals[sindex].getAttribute("pad")+tccSignals[sindex].getAttribute("function")+"_"+tcctimer+"_"+tccSignals[sindex].getAttribute("group")+tccSignals[sindex].getAttribute("index")
+            timerMux.addKey(timermux, str(sindex), timermux)
+            timerPin = tccSignals[sindex].getAttribute("pad")+tccSignals[sindex].getAttribute("function")+"_"+tcctimer+"_"+tccSignals[sindex].getAttribute("group")+tccSignals[sindex].getAttribute("index")
             timerSignal.addKey(timerPin, str(sindex), timerPin)
             drivenShieldDedicatedTimerPin.addKey(timerPin,str(pindex+1),timerPin)
+            for cnt in range (0, len(tccptcSignals)):
+                if tccptcSignals[cnt].getAttribute("pad") == tccSignals[sindex].getAttribute("pad"):
+                    tempstring = "Y("+tccptcSignals[cnt].getAttribute("index")+")"
+                    timerMuxYpin.addKey(tempstring, str(sindex) ,tempstring)
+                    break;
             pindex+= 1
 
         timerClock = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"TCC\"]/instance@[name=\""+ tcctimer +"\"]/parameters/param@[name=\"GCLK_ID\"]")
