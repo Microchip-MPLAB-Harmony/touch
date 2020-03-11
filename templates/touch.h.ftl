@@ -452,10 +452,12 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 /***************** Enable/Disbale Driven shield ***********/
 /**********************************************************/
+<#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
 <#if ((DS_DEDICATED_ENABLE == true) || (DS_PLUS_ENABLE == true)) >
 #define DEF_ENABLE_DRIVEN_SHIELD 1u
 <#else>
 #define DEF_ENABLE_DRIVEN_SHIELD 0u
+</#if>
 </#if>
 /**********************************************************/
 

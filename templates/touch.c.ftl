@@ -878,6 +878,7 @@ void ADC0_1_Handler(void)
 void PTC_Handler(void)
 {
 qtm_ptc_clear_interrupt();
+<#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
 <#if DS_DEDICATED_ENABLE == true || DS_PLUS_ENABLE == true>
 #if (DEF_ENABLE_DRIVEN_SHIELD == 1u)
 	if (qtm_drivenshield_config.flags & (1u << DRIVEN_SHIELD_DUMMY_ACQ)) {
@@ -905,6 +906,7 @@ qtm_ptc_clear_interrupt();
 	qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();
 </#if>
 </#if>   
+</#if>
 }
 </#if>
 
