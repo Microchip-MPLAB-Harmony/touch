@@ -57,7 +57,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#else>
 <#list ["SAME54","SAME53","SAME51","SAMD51"] as i>
 	<#if DEVICE_NAME == i>
-		<#assign prescaler_value = "0, 0, 0, 0" >
+		<#assign prescaler_value = "1, 0, 0, 0" >
 		<#assign block_transfer_count = "3" >
 		<#break>
 	</#if>
