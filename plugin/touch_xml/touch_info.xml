@@ -11,6 +11,7 @@ This is for device feature and library version information
             <device name="SAML21"/>
 			<device name="SAMD1"/>
 			<device name="SAMDA1"/>
+            <device name="SAMHA1"/>
         </csd>		
     </feature>
     <version>

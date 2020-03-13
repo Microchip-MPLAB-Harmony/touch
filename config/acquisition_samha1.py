@@ -3,57 +3,31 @@
 ################################################################################
 global touchChannelSelf
 global touchChannelMutual
-try:
-    ptcPinNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PTC\"]/instance/parameters")
-    ptcPinValues = []
-    ptcPinValues = ptcPinNode.getChildren()
-    touchChannelSelf = ptcPinValues[6].getAttribute("value")
-    touchChannelMutual = ptcPinValues[7].getAttribute("value")
-except:
-    print("----Channel counts not in atdf file----")
-    getVariant =  ATDF.getNode("/avr-tools-device-file/devices/device")
-    getPinout = []
-    getPinout = getVariant.getAttribute("name")
-    print("selected Device : " + getPinout)
-    if ("D21J15" in getPinout):
-        touchChannelSelf = 16
-        touchChannelMutual = 60
-    elif ("D21J16" in getPinout):
-        touchChannelSelf = 16
-        touchChannelMutual = 130
-    elif ("D21J17" in getPinout):
-        touchChannelSelf = 16
-        touchChannelMutual = 256
-    elif ("D21J18" in getPinout):
-        touchChannelSelf = 16
-        touchChannelMutual = 256
-    elif ("D21G15" in getPinout):
-        touchChannelSelf = 10
-        touchChannelMutual = 60
-    elif ("D21G16" in getPinout):
-        touchChannelSelf = 10
-        touchChannelMutual = 120
-    elif ("D21G17" in getPinout):
-        touchChannelSelf = 10
-        touchChannelMutual = 120
-    elif ("D21G18" in getPinout):
-        touchChannelSelf = 10
-        touchChannelMutual = 120
-    elif ("D21E15" in getPinout):
-        touchChannelSelf = 6
-        touchChannelMutual = 60
-    elif ("D21E16" in getPinout):
-        touchChannelSelf = 6
-        touchChannelMutual = 60
-    elif ("D21E17" in getPinout):
-        touchChannelSelf = 6
-        touchChannelMutual = 60
-    elif ("D21E18" in getPinout):
-        touchChannelSelf = 6
-        touchChannelMutual = 60
-    else:
-        touchChannelSelf = 16
-        touchChannelMutual = 256
+
+getVariant =  ATDF.getNode("/avr-tools-device-file/variants/variant")
+getPinout = []
+getPinout = getVariant.getAttribute("ordercode")
+if ("HA1G14" in getPinout):
+    touchChannelSelf = 9
+    touchChannelMutual = 90
+elif ("HA1G15" in getPinout):
+    touchChannelSelf = 9
+    touchChannelMutual = 90
+elif ("HA1G16" in getPinout):
+    touchChannelSelf = 9
+    touchChannelMutual = 90
+elif ("HA1E14" in getPinout):
+    touchChannelSelf = 4
+    touchChannelMutual = 24
+elif ("HA1E15" in getPinout):
+    touchChannelSelf = 4
+    touchChannelMutual = 24
+elif ("HA1E16" in getPinout):
+    touchChannelSelf = 4
+    touchChannelMutual = 24
+else:
+    touchChannelSelf = 4
+    touchChannelMutual = 24
 
 
 def autoTuneFunc(symbol,event):
@@ -98,9 +72,9 @@ touchBindLibraryFile.setDestPath("/touch/lib/")
 touchBindLibraryFile.setEnabled(True)
 
 # Header File
-touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_ACQ_HEADER", None)
-touchHeaderFile.setSourcePath("/src/qtm_acq_samd21_0x0024_api.h")
-touchHeaderFile.setOutputName("qtm_acq_samd21_0x0024_api.h")
+touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_ACQ_HEADER_1", None)
+touchHeaderFile.setSourcePath("/src/qtm_acq_samha1_0x0024_api.h")
+touchHeaderFile.setOutputName("qtm_acq_samda1_0x0024_api.h")
 touchHeaderFile.setDestPath("/touch/")
 touchHeaderFile.setProjectPath("config/" + configName + "/touch/")
 touchHeaderFile.setType("HEADER")
@@ -119,6 +93,15 @@ touchHeaderFile.setMarkup(False)
 touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_COMMON_HEADER", None)
 touchHeaderFile.setSourcePath("/src/qtm_common_components_api.h")
 touchHeaderFile.setOutputName("qtm_common_components_api.h")
+touchHeaderFile.setDestPath("/touch/")
+touchHeaderFile.setProjectPath("config/" + configName + "/touch/")
+touchHeaderFile.setType("HEADER")
+touchHeaderFile.setMarkup(False)
+
+# Header File
+touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_ACQ_HEADER_2", None)
+touchHeaderFile.setSourcePath("/src/qtm_acq_samd21_0x0024_api.h")
+touchHeaderFile.setOutputName("qtm_acq_samd21_0x0024_api.h")
 touchHeaderFile.setDestPath("/touch/")
 touchHeaderFile.setProjectPath("config/" + configName + "/touch/")
 touchHeaderFile.setType("HEADER")

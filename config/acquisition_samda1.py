@@ -59,7 +59,7 @@ global touchAcqAutoLibraryFile
 ############################################################################
 # Library File
 touchAcqLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_ACQ_LIB", None)
-touchAcqLibraryFile.setSourcePath("/src/libraries/0x0024_qtm_samd21_acq.X.a")
+touchAcqLibraryFile.setSourcePath("/src/libraries/qtm_acq_samd21_0x0024.X.a")
 touchAcqLibraryFile.setOutputName("0x0024_qtm_samd21_acq.X.a")
 touchAcqLibraryFile.setDestPath("/touch/lib/")
 touchAcqLibraryFile.setEnabled(True)
@@ -67,7 +67,7 @@ touchAcqLibraryFile.setDependencies(autoTuneFunc,["TUNE_MODE_SELECTED"])
 
 # Library File
 touchAcqAutoLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_ACQ_AUTO_LIB", None)
-touchAcqAutoLibraryFile.setSourcePath("/src/libraries/0x0024_qtm_samd21_acq.X.a")
+touchAcqAutoLibraryFile.setSourcePath("/src/libraries/qtm_acq_samd21_0x0024.X.a")
 touchAcqAutoLibraryFile.setOutputName("0x0024_qtm_samd21_acq.X.a")
 touchAcqAutoLibraryFile.setDestPath("/touch/lib/")
 touchAcqAutoLibraryFile.setEnabled(False)
@@ -154,26 +154,6 @@ Database.setSymbolValue("core", InterruptHandler, "PTC_Handler")
 Database.clearSymbolValue("core", "PTC" + "_CLOCK_ENABLE")
 Database.setSymbolValue("core", "PTC" + "_CLOCK_ENABLE", True)
 
-# #Set Oscillators 
-# Database.setSymbolValue("core", "CONFIG_CLOCK_DFLL_OPMODE", 1)
-# Database.setSymbolValue("core", "CONFIG_CLOCK_DFLL_COARSE", 10)
-# Database.setSymbolValue("core", "CONFIG_CLOCK_DFLL_FINE", 10)
-# Database.setSymbolValue("core", "CONFIG_CLOCK_DFLL_MUL", 1500)
-# Database.setSymbolValue("core", "GCLK_ID_0_CHEN", True)
-# Database.setSymbolValue("core", "GCLK_ID_0_GENSEL", 3)
-
-# #Database.clearSymbolValue("core", "CONFIG_CLOCK_OSC8M_ENABLE")
-# Database.setSymbolValue("core", "CONFIG_CLOCK_OSC8M_ENABLE", True)
-# Database.setSymbolValue("core", "CONFIG_CLOCK_OSC8M_PRES", 1)
-
-# #Set GCLK
-# Database.setSymbolValue("core", "GCLK_INST_NUM1", True)
-# Database.setSymbolValue("core", "GCLK_INST_NUM2", True)
-# Database.setSymbolValue("core", "GCLK_INST_NUM3", True)
-# Database.setSymbolValue("core", "GCLK_1_SRC", 5)
-# Database.setSymbolValue("core", "GCLK_2_SRC", 3)
-# Database.setSymbolValue("core", "GCLK_3_SRC", 6)
-# Database.setSymbolValue("core", "GCLK_3_DIV", 125)
 
 #Set Peripheral clocks
 Database.setSymbolValue("core", "GCLK_ID_4_GENSEL", 1)

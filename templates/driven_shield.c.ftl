@@ -75,7 +75,14 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 		<#break>
 	</#if>
 </#list>
-</#if>
+
+<#list ["SAMD21", "SAMDA1","SAMHA1"] as i>
+	<#if DEVICE_NAME == i>
+		<#assign prescaler_value = "4, 2, 3, 4" >
+		<#assign block_transfer_count = "1" >
+		<#assign data_type = "uint8_t" >
+	</#if>
+</#list>
 
 /*============================================================================
 void drivenshield_port_mux_config()
@@ -189,6 +196,15 @@ void drivenshield_configure()
 	/* Map DMA Transfer complete Event
 		output to PTC Start of convertion Event Inuput */
 	EVSYS_REGS->EVSYS_USER[37] = EVSYS_USER_CHANNEL(0x2);
+
+<#elseif (DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")>
+
+	EVSYS_REGS->EVSYS_CHANNEL = EVSYS_CHANNEL_EVGEN(0x48) | EVSYS_CHANNEL_PATH(2) | EVSYS_CHANNEL_EDGSEL(0) \
+									 ;
+
+	/* Map DMA Transfer complete Event
+		output to PTC Start of convertion Event Inuput */
+	EVSYS_REGS->EVSYS_USER = EVSYS_USER_CHANNEL(0x2)|EVSYS_USER_USER(0x1C);
 </#if>
 
 <#if DS_DEDICATED_ENABLE ==true>
@@ -292,6 +308,24 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	count = count << 2;
 	count = count - offset_vs_prescaler[prescaler];
 	<#break>
+</#if>
+</#list>
+<#list ["SAMD21", "SAMDA1","SAMHA1"] as i>
+<#if DEVICE_NAME == i>
+ /* TC/TCC period value */
+    period = csd + 15 + sds;
+    period = period << 2;
+    period = period - 1; 
+
+    /* TC/TCC compare value */
+    cc = 9 + sds;
+    cc = cc << 2;
+ 
+
+    /* TC/TCC count value - initial offset */
+    count = 6;
+    count = count << 2;
+    count = count - offset_vs_prescaler[prescaler];
 </#if>
 </#list>
 	while (period > 255) {
@@ -402,7 +436,13 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_PER = period;
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_COUNT = count;
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_CC[${DediTimerWo1}] = cc;
+<#if (DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")>	
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_CTRLA = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER(prescaler) | TC_CTRLA_RUNSTDBY_Msk ;
+<#else>
+	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_CTRLA = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER(prescaler);
+</#if>
+	
+</#if>
 	${DS_DEDICATED_TIMER}_CompareStart();
 	</#if>
 </#if>

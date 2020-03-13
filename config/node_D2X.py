@@ -42,6 +42,7 @@ for channelID in range(0, touchChannelCountMax):
             tchSelfPinSelection[channelID].addKey(ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
         ptcPinValues[index].getAttribute("index"),
         ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
+        ptcYPads.append(ptcPinValues[index].getAttribute("pad"))
 
     tchMutXPinSelection.append(qtouchComponent.createKeyValueSetSymbol("MUTL-X-INPUT_"+ str(channelID), touchChEnable))
     tchMutXPinSelection[channelID].setLabel("Select X Pin for Channel "+ str(channelID))
@@ -86,10 +87,10 @@ for channelID in range(0, touchChannelCountMax):
     #PTC Clock Prescaler
     touchSym_PTC_PRESCALER_Val = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_PTC_PRESCALER" + str(channelID), touchChEnable)
     touchSym_PTC_PRESCALER_Val.setLabel("PTC Clock Prescaler")
-    touchSym_PTC_PRESCALER_Val.addKey("PRESC0", "PRSC_DIV_SEL_1", "No prescaler")
-    touchSym_PTC_PRESCALER_Val.addKey("PRESC2", "PRSC_DIV_SEL_2", "2")
     touchSym_PTC_PRESCALER_Val.addKey("PRESC4", "PRSC_DIV_SEL_4", "4")
     touchSym_PTC_PRESCALER_Val.addKey("PRESC8", "PRSC_DIV_SEL_8", "8")
+    touchSym_PTC_PRESCALER_Val.addKey("PRESC16", "PRSC_DIV_SEL_16", "16")
+    touchSym_PTC_PRESCALER_Val.addKey("PRESC32", "PRSC_DIV_SEL_32", "32")
     touchSym_PTC_PRESCALER_Val.setDefaultValue(0)
     touchSym_PTC_PRESCALER_Val.setOutputMode("Value")
     touchSym_PTC_PRESCALER_Val.setDisplayMode("Description")
@@ -136,33 +137,4 @@ for channelID in range(0, touchChannelCountMax):
     touchSym_DIGI_FILT_OVERSAMPLING_Val.setDisplayMode("Description")
     touchSym_DIGI_FILT_OVERSAMPLING_Val.setDescription("Defines the number of samples taken for each measurement.Higher filter level settings, for each measurements more number of samples taken which helps to average out the noise.Higher filter level settings takes long time to do a touch measurement which affects response time.So, start with default value and increase depends on noise levels.")
     
-    
-    touchSym_DS_ADJACENT_TIMER_PIN_Val = qtouchComponent.createKeyValueSetSymbol("DSPLUS_TIMER_PIN"  + str(channelID), touchChEnable)
-    touchSym_DS_ADJACENT_TIMER_PIN_Val.setLabel("Selected DS TC/TCC")
-    touchSym_DS_ADJACENT_TIMER_PIN_Val.setDisplayMode("Description")
-    touchSym_DS_ADJACENT_TIMER_PIN_Val.setDescription("The Timer or Timer counter assigned for Driven shield +")
-    
-    if(getDeviceName.getDefaultValue() in ["SAMD21"]):
-        touchSym_DS_ADJACENT_TIMER_PIN_Val.clearKeys()
-
-        tcInstance = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"TC\"]/instance")
-        tcPinNode =  ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"TC\"]/instance/signals")
-        tcPinValues = []
-        tcPinValues = tcPinNode.getChildren()
-        for ptcIndex in range(0, len(ptcPinValues)):
-            for tcIndex in range(0, len(tcPinValues)):
-                if(ptcPinValues[ptcIndex].getAttribute("pad") == tcPinValues[tcIndex].getAttribute("pad")):
-                    touchSym_DS_ADJACENT_TIMER_PIN_Val.addKey(tcInstance.getAttribute("name")+tcPinValues[tcIndex].getAttribute("group")+"("+tcPinValues[tcIndex].getAttribute("index")+")",
-                tcPinValues[tcIndex].getAttribute("index"),
-                tcPinValues[tcIndex].getAttribute("group")+tcPinValues[tcIndex].getAttribute("index")+ "  ("+ tcPinValues[tcIndex].getAttribute("pad")+")")
-
-        tccInstance = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"TCC\"]/instance")
-        tccPinNode =  ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"TCC\"]/instance/signals")
-        tccPinValues = []
-        tccPinValues = tccPinNode.getChildren()
-        for ptcIndex in range(0, len(ptcPinValues)):
-            for tccIndex in range(0, len(tccPinValues)):
-                if(ptcPinValues[ptcIndex].getAttribute("pad") == tccPinValues[tccIndex].getAttribute("pad")):
-                    touchSym_DS_ADJACENT_TIMER_PIN_Val.addKey(tccInstance.getAttribute("name")+tccPinValues[tccIndex].getAttribute("group")+"("+tccPinValues[tccIndex].getAttribute("index")+")",
-                tccPinValues[tccIndex].getAttribute("index"),
-                tccPinValues[tccIndex].getAttribute("group")+tccPinValues[tccIndex].getAttribute("index")+ "  ("+ tccPinValues[tccIndex].getAttribute("pad")+")")
+    touchChannels.append(touchChEnable)
