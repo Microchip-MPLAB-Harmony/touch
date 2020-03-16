@@ -50,7 +50,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 <#if DEVICE_NAME == "SAML22">
 	<#assign prescaler_value = "4, 3, 3, 4" >
-	<#assign block_transfer_count = "4" >
+	<#assign block_transfer_count = "8" >
 	<#assign data_type = "uint32_t" >
 <#elseif DEVICE_NAME == "SAML21">
 	<#assign prescaler_value = "3, 4, 4, 4" >
@@ -83,6 +83,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 		<#assign data_type = "uint8_t" >
 	</#if>
 </#list>
+</#if>
 
 /*============================================================================
 void drivenshield_port_mux_config()
@@ -288,7 +289,9 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	period = period - 4;
 	cc = cc - 2;
 	</#if>
-	
+	<#if DEVICE_NAME == "SAML22">
+	count = count - 2;
+	</#if>	
 	<#break>
 </#if>
 </#list>
@@ -441,10 +444,9 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 <#else>
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_CTRLA = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER(prescaler);
 </#if>
-	
-</#if>
 	${DS_DEDICATED_TIMER}_CompareStart();
-	</#if>
+</#if>
+
 </#if>
 
 }
