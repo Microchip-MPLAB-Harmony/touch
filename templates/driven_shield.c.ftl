@@ -47,7 +47,23 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#assign prescaler_value = "0, 0, 0, 0" >
 <#assign block_transfer_count = "1" >
 <#assign data_type = "uint8_t" >
-
+<#assign uniqueTimersDSP = []>
+<#if DS_PLUS_ENABLE == true>
+<#list 0..TOUCH_KEY_ENABLE_CNT-1 as i>
+<#if (i = 0) && (.vars["DSPLUS_TIMER_PIN"+0] != "---")>
+        <#assign uniqueTimersDSP = uniqueTimersDSP + [ .vars["DSPLUS_TIMER_PIN"+0] ] >
+<#else>
+  <#list 0..i as j>
+    <#if .vars["DSPLUS_TIMER_PIN"+i] == .vars["DSPLUS_TIMER_PIN"+j]&& i!=j>
+        <#break>
+    <#elseif .vars["DSPLUS_TIMER_PIN"+i] != "---" && i==j>
+        <#assign uniqueTimersDSP = uniqueTimersDSP + [ .vars["DSPLUS_TIMER_PIN"+i] ] >
+         <#break>
+    </#if>
+  </#list>
+</#if>
+</#list>
+</#if>
 <#if DEVICE_NAME == "SAML22">
 	<#assign prescaler_value = "4, 3, 3, 4" >
 	<#assign block_transfer_count = "8" >
@@ -129,13 +145,10 @@ static void drivenshield_port_mux_config(uint8_t pin, uint8_t mux)
 	}
 }
 
-/* DMA channel used to confiugre filter level */
-#define SHIELD_DMA_CHANNEL 0u
-
 /* extern current measure channel data from lib */
 extern uint16_t current_measure_channel;
 
-<#if DS_PLUS_ENABLE == true>
+<#if DS_PLUS_ENABLE == true && uniqueTimersDSP?size != 0>
 /* PTC pin's TC/TCC pinmux settings */
 uint32_t driven_shield_pin[DEF_NUM_CHANNELS][2] = {
 <#list 0..TOUCH_KEY_ENABLE_CNT-1 as i>
@@ -151,8 +164,9 @@ uint32_t driven_shield_pin[DEF_NUM_CHANNELS][2] = {
 
 qtm_drivenshield_config_t qtm_drivenshield_config;
 
-
+<#if DEVICE_NAME != "SAML22" && DEVICE_NAME != "SAMC20" && DEVICE_NAME != "SAMC21">
 static const uint8_t offset_vs_prescaler[4] = { ${prescaler_value} };
+</#if>
 /*============================================================================
 void drivenshield_configure()
 ------------------------------------------------------------------------------
@@ -338,7 +352,7 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 		count     = count >> 1;
 	}
 
-<#if DS_PLUS_ENABLE == true>
+<#if DS_PLUS_ENABLE == true && uniqueTimersDSP?size != 0>
 	/* configure the pins as timer or analog based on current channel being measured */
 	for (uint16_t cnt = 0; cnt < DEF_NUM_CHANNELS; cnt++) {
 		if ((driven_shield_pin[cnt][0] != 0) && (driven_shield_pin[cnt][1] != 0)) {
@@ -351,7 +365,7 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	}
 </#if>
 
-<#if DS_PLUS_ENABLE == true>
+<#if DS_PLUS_ENABLE == true && uniqueTimersDSP?size != 0>
 	/* Shield plus configuration */
 <#assign uniqueTimers = []>
 <#if DS_PLUS_ENABLE == true>
@@ -371,14 +385,16 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 </#list>
 </#if>
 <#if DS_DEDICATED_ENABLE ==true>
-<#list 0..TOUCH_KEY_ENABLE_CNT-1 as i>
-	<#if .vars["DSPLUS_TIMER_PIN"+i] == .vars["DS_DEDICATED_TIMER"]>
+<#assign dsPartOfDsp = 0>
+<#list uniqueTimersDSP as i>
+	<#if i == .vars["DS_DEDICATED_TIMER"]>
+			<#assign dsPartOfDsp = 1>
 			<#break>
-	<#elseif .vars["DSPLUS_TIMER_PIN"+i] != "---" && i==TOUCH_KEY_ENABLE_CNT-1>
-			<#assign uniqueTimers = uniqueTimers + [ .vars["DS_DEDICATED_TIMER"] ] >
-		 <#break>
 	</#if>
 </#list>
+<#if dsPartOfDsp == 0>
+<#assign uniqueTimers = uniqueTimers + [ .vars["DS_DEDICATED_TIMER"] ] >
+</#if>
 </#if>
 <#list uniqueTimers as x>
 	<#if x?contains("TCC") >
@@ -446,9 +462,7 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 </#if>
 	${DS_DEDICATED_TIMER}_CompareStart();
 </#if>
-
 </#if>
-
 }
 
 /*============================================================================
@@ -461,7 +475,7 @@ Notes  : This function is called from the PTC EOC handler in the users applicati
 ============================================================================*/
 void drivenshield_stop(void)
 {
-<#if DS_PLUS_ENABLE == true>
+<#if DS_PLUS_ENABLE == true && uniqueTimersDSP?size != 0 >
 <#list uniqueTimers as x>
 	<#if x?contains("TCC") >
 	${x}_PWMStop();
