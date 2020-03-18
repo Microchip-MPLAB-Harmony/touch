@@ -740,11 +740,13 @@ void touch_timer_handler(void)
 </#if>
 }
 <#if DEVICE_NAME == "PIC32MZW">
+<#if TOUCH_TIMER_INSTANCE != "">
 void timer_handler( uint32_t intCause, uintptr_t context )
 {
      touch_timer_handler();
 }
 uintptr_t tmr_context;
+</#if>
 
 void touch_timer_config(void)
 {
@@ -753,18 +755,25 @@ void touch_timer_config(void)
 		 ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].TIMER_START_API_NAME}();
 		${TOUCH_TIMER_INSTANCE}_PeriodSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS*(TMR2_FrequencyGet()/1000));
 	<#else>
-	#warning "Timer for touch periodicity not defined"
+	<#if ENABLE_GESTURE==true>
+	#warning "Timer for periodic touch measurement not defined; Call touch_timer_handler() every 1 millisecond."
+	<#else>
+	#warning "Timer for periodic touch measurement not defined; Call touch_timer_handler() every DEF_TOUCH_MEASUREMENT_PERIOD_MS."
+	</#if>
 	</#if>
 }
 <#else>
+<#if TOUCH_TIMER_INSTANCE != "">
 void rtc_cb( RTC_TIMER32_INT_MASK intCause, uintptr_t context )
 {
      touch_timer_handler();
 }
 uintptr_t rtc_context;
+</#if>
 
 void touch_timer_config(void)
-{   	
+{  
+<#if TOUCH_TIMER_INSTANCE != "">
 	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].CALLBACK_API_NAME}(rtc_cb, rtc_context);
 	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].TIMER_START_API_NAME}();
 <#if ENABLE_GESTURE==true>
@@ -775,6 +784,13 @@ void touch_timer_config(void)
 #endif
 <#else>
 	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
+</#if>
+<#else>
+	<#if ENABLE_GESTURE==true>
+	#warning "Timer for periodic touch measurement not defined; Call touch_timer_handler() every 1 millisecond."
+	<#else>
+	#warning "Timer for periodic touch measurement not defined; Call touch_timer_handler() every DEF_TOUCH_MEASUREMENT_PERIOD_MS."
+	</#if>
 </#if>
 }
 </#if>
