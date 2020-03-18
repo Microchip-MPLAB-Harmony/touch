@@ -436,7 +436,7 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	${x}_REGS->COUNT8.TC_CC[${DediTimerWo1}] = cc;
 		</#if>
 	</#if>
-	${x}_REGS->COUNT8.TC_CTRLA = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER(prescaler) | TC_CTRLA_RUNSTDBY_Msk ;
+	${x}_REGS->COUNT8.TC_CTRLA = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER(prescaler)| TC_CTRLA_WAVEGEN_NPWM | TC_CTRLA_RUNSTDBY_Msk ;
 	${x}_CompareStart();
 </#if>
 </#list>
@@ -455,8 +455,8 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_PER = period;
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_COUNT = count;
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_CC[${DediTimerWo1}] = cc;
-<#if (DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")>	
-	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_CTRLA = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER(prescaler) | TC_CTRLA_RUNSTDBY_Msk ;
+<#if ((DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1"))>	
+	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_CTRLA = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER(prescaler) | TC_CTRLA_WAVEGEN_NPWM | TC_CTRLA_RUNSTDBY_Msk ;
 <#else>
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_CTRLA = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER(prescaler);
 </#if>

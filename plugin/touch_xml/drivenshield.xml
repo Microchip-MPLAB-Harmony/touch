@@ -161,14 +161,14 @@ This is for driven shield feature settings
 						DMAC_BTCTRL_EVSYS_EVOSEL_0="Event strobe when block transfer complete" DMAC_ENABLE_EVSYS_IN_0="true"  DMAC_CHCTRLB_EVACT_0="Transfer and periodic transfer trigger"/>
 		</core>
 		<timer>
-			<tc  TC_CTRLA_MODE="Counter in 8-bit mode"  TC_OPERATION_MODE="Compare" TC_COMPARE_CTRLA_WAVEGEN="Normal PWM" 
+			<tc  TC_CTRLA_MODE="Counter in 8-bit mode"  TC_OPERATION_MODE="Compare" TC_COMPARE_CTRLA_WAVEGEN="NPWM" 
 					TC_CTRLA_RUNSTDBY="true" TC_COMPARE_EVCTRL_EV="true" TC_COMPARE_EVCTRL_TCINV="false"/>
 			<tcc TCC_0_WEXCTRL_DTIEN = "false"  TCC_1_WEXCTRL_DTIEN="false" TCC_2_WEXCTRL_DTIEN="false" TCC_3_WEXCTRL_DTIEN="false"/>
 		</timer>
 		<evsys>
-			<module  EVSYS_CHANNEL_0="true"  EVSYS_CHANNEL_0_GENERATOR="ADC0_RESRDY"  
+			<module  EVSYS_CHANNEL_0="true"   
 							  EVSYS_CHANNEL_1="true"  EVSYS_CHANNEL_1_GENERATOR="DMAC_CH_0"/>	
-			<user  EVSYS_USER_4="CHANNEL_0"/>
+			<user  EVSYS_USER_0="CHANNEL_0"/>
 			<timer evsys_user_tmr="CHANNEL_0"/>
 		</evsys>
 	</device>
@@ -180,17 +180,16 @@ This is for driven shield feature settings
 						DMAC_BTCTRL_EVSYS_EVOSEL_0="Event strobe when block transfer complete" DMAC_ENABLE_EVSYS_IN_0="true"  DMAC_CHCTRLB_EVACT_0="Transfer and periodic transfer trigger"/>
 		</core>
 		<timer>
-			<tc  TC_CTRLA_MODE="Counter in 8-bit mode"  TC_OPERATION_MODE="Compare" TC_COMPARE_CTRLA_WAVEGEN="Normal PWM" 
+			<tc  TC_CTRLA_MODE="Counter in 8-bit mode"  TC_OPERATION_MODE="Compare" TC_COMPARE_CTRLA_WAVEGEN="NPWM" 
 					TC_CTRLA_RUNSTDBY="true" TC_COMPARE_EVCTRL_EV="true" TC_COMPARE_EVCTRL_TCINV="false"/>
 			<tcc TCC_0_WEXCTRL_DTIEN = "false"  TCC_1_WEXCTRL_DTIEN="false" TCC_2_WEXCTRL_DTIEN="false" TCC_3_WEXCTRL_DTIEN="false"/>
 		</timer>
 		<evsys>
-			<module  EVSYS_CHANNEL_0="true"  EVSYS_CHANNEL_0_GENERATOR="ADC0_RESRDY"  
+			<module  EVSYS_CHANNEL_0="true"   
 							  EVSYS_CHANNEL_1="true"  EVSYS_CHANNEL_1_GENERATOR="DMAC_CH_0"/>	
-			<user  EVSYS_USER_4="CHANNEL_0"/>
+			<user  EVSYS_USER_0="CHANNEL_0"/>
 			<timer evsys_user_tmr="CHANNEL_0"/>
 		</evsys>
-	</device>
 	</device>
 		<device name="ATSAMHA1">
 		<core>
@@ -200,14 +199,14 @@ This is for driven shield feature settings
 						DMAC_BTCTRL_EVSYS_EVOSEL_0="Event strobe when block transfer complete" DMAC_ENABLE_EVSYS_IN_0="true"  DMAC_CHCTRLB_EVACT_0="Transfer and periodic transfer trigger"/>
 		</core>
 		<timer>
-			<tc  TC_CTRLA_MODE="Counter in 8-bit mode"  TC_OPERATION_MODE="Compare" TC_COMPARE_CTRLA_WAVEGEN="Normal PWM" 
+			<tc  TC_CTRLA_MODE="Counter in 8-bit mode"  TC_OPERATION_MODE="Compare" TC_COMPARE_CTRLA_WAVEGEN="NPWM" 
 					TC_CTRLA_RUNSTDBY="true" TC_COMPARE_EVCTRL_EV="true" TC_COMPARE_EVCTRL_TCINV="false"/>
 			<tcc TCC_0_WEXCTRL_DTIEN = "false"  TCC_1_WEXCTRL_DTIEN="false" TCC_2_WEXCTRL_DTIEN="false" TCC_3_WEXCTRL_DTIEN="false"/>
 		</timer>
 		<evsys>
-			<module  EVSYS_CHANNEL_0="true"  EVSYS_CHANNEL_0_GENERATOR="ADC0_RESRDY"  
+			<module  EVSYS_CHANNEL_0="true"  
 							  EVSYS_CHANNEL_1="true"  EVSYS_CHANNEL_1_GENERATOR="DMAC_CH_0"/>	
-			<user  EVSYS_USER_4="CHANNEL_0"/>
+			<user  EVSYS_USER_0="CHANNEL_0"/>
 			<timer evsys_user_tmr="CHANNEL_0"/>
 		</evsys>
 	</device>
