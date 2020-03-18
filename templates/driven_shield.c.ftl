@@ -53,7 +53,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 	<#assign block_transfer_count = "8" >
 	<#assign data_type = "uint32_t" >
 <#elseif DEVICE_NAME == "SAML21">
-	<#assign prescaler_value = "3, 4, 4, 4" >
+	<#assign prescaler_value = "1, 3, 2, 3" >
 <#else>
 <#list ["SAME54","SAME53","SAME51","SAMD51"] as i>
 	<#if DEVICE_NAME == i>
