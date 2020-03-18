@@ -86,9 +86,6 @@ for indexI in range(0, len(tccInstances)):
             timersSharingPTC.append(timer)
             string = tccSignals[indexS].getAttribute("pad")+tccSignals[indexS].getAttribute("function")+"_"+timer+"_"+tccSignals[indexS].getAttribute("group")+tccSignals[indexS].getAttribute("index")
             timersSharingPTCMUX.append(string)
-            qtouchComponent.addDependency("Drivenshield_"+timer, "TMR", "TMR(Shield)", False, False)
-            qtouchComponent.setDependencyEnabled("Drivenshield_"+timer, False)
-        
 
 if (getDeviceName.getDefaultValue() in timer_based_driven_shield_supported_device):
     # Enable Driven Shield SW
