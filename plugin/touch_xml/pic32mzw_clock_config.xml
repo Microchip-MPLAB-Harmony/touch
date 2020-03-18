@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!-- 
+This is for SAMC21, SAMC20 Family
+-->
+
+<clock_settings>
+	<all_clock_symbols_list>
+		<clock index = "0_0" symbol="ADCHS_7_ENABLE" value="True" component_id= "adchs" name="Enable Shared ADC module" />
+		<clock index = "1_0" symbol="ADCCON1__SELRES" value="3" component_id= "adchs" name="Set resolution to 12 bit" />
+		<clock index = "2_0" symbol="ADCCON2__SAMC" value="0" component_id= "adchs" name="Sample Time for Shared ADC" />
+		<clock index = "3_0" symbol="ADCCON2__ADCDIV" value="0" component_id= "adchs" name="ADC Division factor" />
+		<clock index = "4_0" symbol="CVD_CLOCK_ENABLE" value="True" component_id= "core" name="Enable CVD Clock" />
+		<clock index = "5_0" symbol="CONFIG_SYS_CLK_PBDIV1" value="2" component_id= "core" name="Enable CVD Clock" />
+		<clock index = "7_0" symbol="CONFIG_SYS_CLK_PBDIV2" value="20" component_id= "core" name="Enable CVD Clock" />
+		<clock index = "8_0" symbol="CONFIG_SYS_CLK_REFCLK1_ENABLE" value="True" component_id= "core" name="Enable CVD Clock" />
+		<clock index = "9_0" symbol="CONFIG_SYS_CLK_RODIV1" value="100" component_id= "core" name="Enable CVD Clock" />
+		<clock index = "10_0" symbol="EVIC_168_ENABLE" value="True" component_id= "core" name="Enable CVD Interrupt" />
+	</all_clock_symbols_list>
+	<all_conditions_list>
+		<condition />
+	</all_conditions_list>
+	<common>
+		<default clock_update_index_list="0_0,1_0,4_0,5_0,7_0,8_0,9_0,10_0"/>
+	</common>
+</clock_settings>

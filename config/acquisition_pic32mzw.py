@@ -12,9 +12,8 @@ global touchChannelMutual
 getVariant =  ATDF.getNode("/avr-tools-device-file/variants/variant")
 getPinout = []
 getPinout = getVariant.getAttribute("ordercode")
-touchChannelSelf = 4
-touchChannelMutual = 4
-
+touchChannelSelf = 19
+touchChannelMutual = 256
 
 def autoTuneFunc(symbol,event):
     global touchAcqLibraryFile
@@ -235,7 +234,8 @@ drivenShieldDedicatedPin = qtouchComponent.createKeyValueSetSymbol("DS_DEDICATED
 drivenShieldDedicatedPin.setLabel("Select Dedicated Driven Shield Pin")
 drivenShieldDedicatedPin.setDefaultValue(0)
 drivenShieldDedicatedPin.setDisplayMode("Description")
+drivenShieldDedicatedPin.addKey("--","--","--")
 for index in range(0, len(cvdRPins)):
-		drivenShieldDedicatedPin.addKey("Y("+str(index)+")",
-		str(index),
-		"Y("+str(index)+")  "+cvdRPins[index])
+		drivenShieldDedicatedPin.addKey("Y("+str(index+1)+")",
+		str(index+1),
+		"Y("+str(index+1)+")  "+cvdRPins[index])

@@ -680,15 +680,6 @@ void touch_process(void)
         }
     }
 
-<#if DEVICE_NAME=="PIC32MZW">
-    /* check if the measurement is complete, otherwise, process the last measured node */
-    if(!all_measure_complete){
-        if(qtm_cvd_last_measure_is_complete()){
-            qtm_pic32_cvd_handler_eoc();
-        }
-    }
-</#if>
-
     /* check the flag for node level post processing */
     if (p_qtm_control->binding_layer_flags & (1u << node_pp_request)) {
         /* Run Acquisition module level post pocessing*/
@@ -753,13 +744,17 @@ void timer_handler( uint32_t intCause, uintptr_t context )
 {
      touch_timer_handler();
 }
-uintptr_t rtc_context;
+uintptr_t tmr_context;
 
 void touch_timer_config(void)
 {
-     ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].CALLBACK_API_NAME}(timer_handler,rtc_context);
-     ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].TIMER_START_API_NAME}();
-    ${TOUCH_TIMER_INSTANCE}_PeriodSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS*(TMR2_FrequencyGet()/1000));
+	<#if TOUCH_TIMER_INSTANCE != "">
+		 ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].CALLBACK_API_NAME}(timer_handler,tmr_context);
+		 ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].TIMER_START_API_NAME}();
+		${TOUCH_TIMER_INSTANCE}_PeriodSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS*(TMR2_FrequencyGet()/1000));
+	<#else>
+	#warning "Timer for touch periodicity not defined"
+	</#if>
 }
 <#else>
 void rtc_cb( RTC_TIMER32_INT_MASK intCause, uintptr_t context )

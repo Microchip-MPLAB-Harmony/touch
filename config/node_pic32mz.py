@@ -66,9 +66,9 @@ for channelID in range(0, touchChannelCountMax):
     tchSelfPinSelection[channelID].setOutputMode("Key")
     tchSelfPinSelection[channelID].setDisplayMode("Description")
     for index in range(0, len(cvdRPins)):
-        tchSelfPinSelection[channelID].addKey("Y("+str(index)+")",
-        str(index),
-        "Y("+str(index)+")  "+cvdRPins[index])
+        tchSelfPinSelection[channelID].addKey("Y("+str(index+1)+")",
+        str(index+1),
+        "Y("+str(index+1)+")  "+cvdRPins[index])
 
     tchMutXPinSelection.append(qtouchComponent.createKeyValueSetSymbol("MUTL-X-INPUT_"+ str(channelID), touchChEnable))
     tchMutXPinSelection[channelID].setLabel("Select X Pin for Channel "+ str(channelID))
@@ -86,9 +86,9 @@ for channelID in range(0, touchChannelCountMax):
     tchMutYPinSelection[channelID].setOutputMode("Key")
     tchMutYPinSelection[channelID].setDisplayMode("Description")
     for index in range(0, len(cvdRPins)):
-        tchMutYPinSelection[channelID].addKey("Y("+str(index)+")",
-        str(index),
-        "Y("+str(index)+")  "+cvdRPins[index])
+        tchMutYPinSelection[channelID].addKey("Y("+str(index+1)+")",
+        str(index+1),
+        "Y("+str(index+1)+")  "+cvdRPins[index])
 
     #Charge Share Delay
     touchSym_CSD_Val = qtouchComponent.createIntegerSymbol("DEF_TOUCH_CHARGE_SHARE_DELAY" + str(channelID), touchChEnable)

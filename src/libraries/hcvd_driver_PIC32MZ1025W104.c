@@ -44,6 +44,12 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include "definitions.h" 
 #include <math.h>
 
+#if (__XC32_VERSION <2500)
+/* this is a workaround fix for compiler */
+asm(".section .__vector_offset_BF8107E0_data,data,keep,address(0xBF8107E0)");
+asm(".word __vector_offset_168");
+#endif
+
 /* Library state */
 static const uint8_t CVD_TX_PINS[] = {
     GPIO_PIN_NONE,
@@ -812,13 +818,13 @@ Notes  : the time will be stored in the module and can be used to time the
 static uint16_t calculate_burst_time(void)
 {
     uint16_t burst_time;
-    burst_time = ((uint16_t)CVDSD0T2bits.SD0OVRTIME<<1) 
+    burst_time = (uint16_t)CVDSD0T2bits.SD0OVRTIME
                 +(uint16_t)CVDSD0T2bits.SD0POLTIME  \
-                +(uint16_t)CVDSD0T2bits.SD0CONTIME  \
+                +((uint16_t)CVDSD0T2bits.SD0CONTIME<<1)  \
                 +((uint16_t)CVDSD0C3bits.SD0ACQTIME << 1) \
                 +((uint16_t)CVDSD0C3bits.SD0CHGTIME << 1) ;
     
-    burst_time = CVDSD0C1bits.SD0OVRSAMP * burst_time;  
+    burst_time = (CVDSD0C1bits.SD0OVRSAMP+1) * burst_time;  
     
     return burst_time;
 }
@@ -897,6 +903,7 @@ static void qtm_measure_node(uint16_t channel_number)
     uint8_t temp_var_mask_here = 0u;
     uint8_t xy_counter;
     uint8_t num_x, num_y;
+    uint16_t burst_time;
 
     /* Disable CVD */
     CVDCONbits.SDHOLD = 1u;
@@ -992,16 +999,23 @@ static void qtm_measure_node(uint16_t channel_number)
     CVDCONbits.SDHOLD = 0u;
     CVDCONbits.ON = 1u;
 
+    CVDCONbits.CVDIEN = 1;
+    
+    CVDSD0C3bits.SD0IEN = 1;
+    IFS5 &=~(0x00000100);   //clear the interrupt flag
+    IEC5 |=0x00000100;  //enable the interrupt 
 
     /* Start Measurement */
     CVDCONbits.SWTRIG = 1u;
     
-    /* assume the timer frequency is 10MHz, timer tick frequency is 3.125MHz*/
+   
     
     if(tmr_start!=NULL_POINTER)
     {
         tmr_start();
-        tmr_set_period((calculate_burst_time()*5)>>4);
+        burst_time = calculate_burst_time();
+         /* assume the CVD statemachine frequency is 10MHz, timer tick frequency is 0.390625MHz*/
+        tmr_set_period(((burst_time*10)>>8)+TIMEOUT_OVERHEAD);
     }
 }
 

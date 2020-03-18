@@ -102,6 +102,5 @@ manifest constants
 
 #define NULL_POINTER			0u
 
-
-
+#define TIMEOUT_OVERHEAD        2
 #endif /* __HCVD_PIC32MZ__ */

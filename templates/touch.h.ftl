@@ -123,10 +123,17 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  */
 #define DEF_NUM_CHANNELS (${TOUCH_CHAN_ENABLE_CNT})
 
+<#if DEVICE_NAME == "PIC32MZW">
+/* Defines node parameter setting
+ * {X-line, Y-line, Charge Share Delay, 0, NODE_G(Analog Gain , Digital Gain),
+ * filter level}
+ */
+<#else>
 /* Defines node parameter setting
  * {X-line, Y-line, Charge Share Delay, NODE_RSEL_PRSC(series resistor, prescaler), NODE_G(Analog Gain , Digital Gain),
  * filter level}
  */
+</#if>
 <#import "/node.h.ftl" as node>	
 	
 <@node.nodeComponent/>

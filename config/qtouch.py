@@ -21,9 +21,8 @@ def onAttachmentConnected(source,target):
             if (Database.getSymbolValue(remoteID, "RTC_MODE0_INTENSET_CMP0_ENABLE") == False):
                 Database.setSymbolValue(remoteID, "RTC_MODE0_INTENSET_CMP0_ENABLE", True)
                 Database.setSymbolValue(remoteID, "RTC_MODULE_SELECTION", 0)
-
         else:
-            Database.setSymbolValue(remoteID, "TIMER_PRE_SCALER", 2)
+            Database.setSymbolValue(remoteID, "TIMER_PRE_SCALER", 0)
             Database.setSymbolValue(remoteID, "TMR_INTERRUPT_MODE", True)
     if (connectID == "Touch_sercom"):
         plibUsed = localComponent.getSymbolByID("TOUCH_SERCOM_INSTANCE")
@@ -136,6 +135,7 @@ def enable2DSurfaceFtlFiles(symbol,event):
 
 autoComponentIDTable = ["rtc"]
 autoConnectTable = [["lib_qtouch", "Touch_timer","rtc", "RTC_TMR"]]
+
 #used for driven shield 
 ptcYPads = []
 touchChannels = []
@@ -144,7 +144,9 @@ touchChannels = []
 #### Component ####
 ################################################################################
 def instantiateComponent(qtouchComponent):
-
+    global autoComponentIDTable
+    global autoConnectTable
+		
     configName = Variables.get("__CONFIGURATION_NAME")
 
     touchMenu = qtouchComponent.createMenuSymbol("TOUCH_MENU", None)
@@ -173,9 +175,8 @@ def instantiateComponent(qtouchComponent):
         execfile(Module.getPath() +"/config/node_D1X.py")
     elif (getDeviceName.getDefaultValue() in ["PIC32MZW"]):
         execfile(Module.getPath() +"/config/node_pic32mz.py")
-        print "Activating ADCHS for HCVD use"
-        comp = ["adchs"]
-        res = Database.activateComponents(comp)
+        autoComponentIDTable = ["adchs","tmr2"]
+        autoConnectTable = [["lib_qtouch", "Touch_timer","tmr2","TMR2_TMR"]]
     else:
         execfile(Module.getPath() +"/config/node_C2X.py")
     
