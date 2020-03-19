@@ -90,15 +90,15 @@ for channelID in range(0, touchChannelCountMax):
     #PTC Clock Prescaler
     touchSym_PTC_PRESCALER_Val = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_PTC_PRESCALER" + str(channelID), touchChEnable)
     touchSym_PTC_PRESCALER_Val.setLabel("PTC Clock Prescaler")
-    touchSym_PTC_PRESCALER_Val.addKey("PRESC0", "PRSC_DIV_SEL_1", "No prescaler")
-    touchSym_PTC_PRESCALER_Val.addKey("PRESC2", "PRSC_DIV_SEL_2", "2")
     touchSym_PTC_PRESCALER_Val.addKey("PRESC4", "PRSC_DIV_SEL_4", "4")
     touchSym_PTC_PRESCALER_Val.addKey("PRESC8", "PRSC_DIV_SEL_8", "8")
+    touchSym_PTC_PRESCALER_Val.addKey("PRESC16", "PRSC_DIV_SEL_16", "16")
+    touchSym_PTC_PRESCALER_Val.addKey("PRESC32", "PRSC_DIV_SEL_32", "32")
     touchSym_PTC_PRESCALER_Val.setDefaultValue(0)
     touchSym_PTC_PRESCALER_Val.setOutputMode("Value")
     touchSym_PTC_PRESCALER_Val.setDisplayMode("Description")
     touchSym_PTC_PRESCALER_Val.setDescription("The PTC clock is prescaled by PTC and then used for touch measurement.The PTC prescaling factor is defined by this parameter. It is recommended to configure this parameter such that the clock used for touch measurement is less than 4MHz (8MHz for ATtiny devices).")
-	
+    
     #Analog Gain
     touchSym_ANALOG_GAIN_Val = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_GAIN_ANA" + str(channelID), touchChEnable)
     touchSym_ANALOG_GAIN_Val.setLabel("Analog Gain")
