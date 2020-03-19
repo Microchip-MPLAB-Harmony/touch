@@ -51,10 +51,14 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include "touch/datastreamer/kronocommadaptor.h"
 #include "touch/datastreamer/kronocommuart_sam.h"
 </#if>
+<#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
+<#if DS_DEDICATED_ENABLE == true || DS_PLUS_ENABLE == true>
 #if (DEF_ENABLE_DRIVEN_SHIELD == 1u)
 #include "driven_shield.h"
 extern qtm_drivenshield_config_t qtm_drivenshield_config;
 #endif
+</#if>
+</#if>
 /*----------------------------------------------------------------------------
  *   prototypes
  *----------------------------------------------------------------------------*/
@@ -638,9 +642,13 @@ void touch_init(void)
     /* get a pointer to the binding layer control */
     p_qtm_control = qmt_get_binding_layer_ptr();
 
+<#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
+<#if DS_DEDICATED_ENABLE == true || DS_PLUS_ENABLE == true>
 #if (DEF_ENABLE_DRIVEN_SHIELD == 1u)
 	drivenshield_configure();
 #endif
+</#if>
+</#if>
 	
 <#if ENABLE_DATA_STREAMER = true>	
 #if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
@@ -873,6 +881,8 @@ Notes  : none
 void ADC0_1_Handler(void)
 {
     ADC0_REGS->ADC_INTFLAG |=1u;
+<#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
+<#if DS_DEDICATED_ENABLE == true || DS_PLUS_ENABLE == true>
 #if (DEF_ENABLE_DRIVEN_SHIELD == 1u)
 	if (qtm_drivenshield_config.flags & (1u << DRIVEN_SHIELD_DUMMY_ACQ)) {
 		/* Clear the flag */
@@ -884,11 +894,15 @@ void ADC0_1_Handler(void)
 #else
 	qtm_same54_ptc_handler();
 #endif
+<#else>
+	qtm_same54_ptc_handler();
+</#if>
+</#if>
 }
 <#else>
 void PTC_Handler(void)
 {
-qtm_ptc_clear_interrupt();
+	qtm_ptc_clear_interrupt();
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
 <#if DS_DEDICATED_ENABLE == true || DS_PLUS_ENABLE == true>
 #if (DEF_ENABLE_DRIVEN_SHIELD == 1u)

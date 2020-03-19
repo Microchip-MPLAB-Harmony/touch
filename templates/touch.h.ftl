@@ -457,13 +457,12 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /**********************************************************/
 #define DEF_TOUCH_DATA_STREAMER_ENABLE ${(ENABLE_DATA_STREAMER)?then('1u', '0u')}
 
-/***************** Enable/Disbale Driven shield ***********/
-/**********************************************************/
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
 <#if ((DS_DEDICATED_ENABLE == true) || (DS_PLUS_ENABLE == true)) >
+/**********************************************************/
+/***************** Enable/Disbale Driven shield ***********/
+/**********************************************************/
 #define DEF_ENABLE_DRIVEN_SHIELD 1u
-<#else>
-#define DEF_ENABLE_DRIVEN_SHIELD 0u
 </#if>
 </#if>
 /**********************************************************/
