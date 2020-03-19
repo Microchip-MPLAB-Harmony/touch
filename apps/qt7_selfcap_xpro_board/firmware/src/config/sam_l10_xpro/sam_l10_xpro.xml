@@ -292,7 +292,7 @@
         </String>
         <String dnOrder="55" id="PIN_13_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="LED_5_SLIDER"/>
+            <User dnOrder="0" value="LED_SLIDER_5"/>
           </Values>
         </String>
         <String dnOrder="56" id="PIN_13_FUNCTION_TYPE">
@@ -322,7 +322,7 @@
         </String>
         <String dnOrder="61" id="PIN_14_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="LED_0_BUT"/>
+            <User dnOrder="0" value="LED_BUT_0"/>
           </Values>
         </String>
         <String dnOrder="62" id="PIN_14_FUNCTION_TYPE">
@@ -352,7 +352,7 @@
         </String>
         <String dnOrder="67" id="PIN_15_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="LED_2_SLIDER"/>
+            <User dnOrder="0" value="LED_SLIDER_2"/>
           </Values>
         </String>
         <String dnOrder="68" id="PIN_15_FUNCTION_TYPE">
@@ -382,7 +382,7 @@
         </String>
         <String dnOrder="73" id="PIN_16_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="LED_0_SLIDER"/>
+            <User dnOrder="0" value="LED_SLIDER_0"/>
           </Values>
         </String>
         <String dnOrder="74" id="PIN_16_FUNCTION_TYPE">
@@ -412,7 +412,7 @@
         </String>
         <String dnOrder="79" id="PIN_17_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="LED_1_BUT"/>
+            <User dnOrder="0" value="LED_BUT_1"/>
           </Values>
         </String>
         <String dnOrder="80" id="PIN_17_FUNCTION_TYPE">
@@ -442,7 +442,7 @@
         </String>
         <String dnOrder="85" id="PIN_18_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="LED_4_SLIDER"/>
+            <User dnOrder="0" value="LED_SLIDER_4"/>
           </Values>
         </String>
         <String dnOrder="86" id="PIN_18_FUNCTION_TYPE">
@@ -507,7 +507,7 @@
         </String>
         <String dnOrder="98" id="PIN_5_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="LED_1_SLIDER"/>
+            <User dnOrder="0" value="LED_SLIDER_1"/>
           </Values>
         </String>
         <String dnOrder="99" id="PIN_5_FUNCTION_TYPE">
@@ -537,7 +537,7 @@
         </String>
         <String dnOrder="104" id="PIN_6_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="LED_3_SLIDER"/>
+            <User dnOrder="0" value="LED_SLIDER_3"/>
           </Values>
         </String>
         <String dnOrder="105" id="PIN_6_FUNCTION_TYPE">
@@ -705,154 +705,159 @@
             <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
-        <Boolean dnOrder="138" id="PTC_CLOCK_ENABLE">
+        <String dnOrder="138" id="PORT_REG_NAME">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="PORT"/>
+          </Values>
+        </String>
+        <Boolean dnOrder="139" id="PTC_CLOCK_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="lib_qtouch" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="139" id="PTC_CLOCK_FREQUENCY">
+        <Integer dnOrder="140" id="PTC_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="4000000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="140" id="PTC_INTERRUPT_ENABLE">
+        <Boolean dnOrder="141" id="PTC_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="lib_qtouch" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="141" id="PTC_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="142" id="PTC_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="142" id="PTC_INTERRUPT_HANDLER">
+        <String dnOrder="143" id="PTC_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="lib_qtouch" value="PTC_Handler"/>
           </Values>
         </String>
-        <Boolean dnOrder="143" id="RTC_INTERRUPT_ENABLE">
+        <Boolean dnOrder="144" id="RTC_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="rtc" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="144" id="RTC_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="145" id="RTC_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="145" id="RTC_INTERRUPT_HANDLER">
+        <String dnOrder="146" id="RTC_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="rtc" value="RTC_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="146" id="RTC_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="147" id="RTC_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="rtc" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="147" id="SERCOM0_0_INTERRUPT_ENABLE">
+        <Boolean dnOrder="148" id="SERCOM0_0_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom0" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="148" id="SERCOM0_0_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="149" id="SERCOM0_0_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="149" id="SERCOM0_0_INTERRUPT_HANDLER">
+        <String dnOrder="150" id="SERCOM0_0_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom0" value="SERCOM0_0_Handler"/>
           </Values>
         </String>
-        <Boolean dnOrder="150" id="SERCOM0_0_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="151" id="SERCOM0_0_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom0" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="151" id="SERCOM0_1_INTERRUPT_ENABLE">
+        <Boolean dnOrder="152" id="SERCOM0_1_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom0" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="152" id="SERCOM0_1_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="153" id="SERCOM0_1_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="153" id="SERCOM0_1_INTERRUPT_HANDLER">
+        <String dnOrder="154" id="SERCOM0_1_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom0" value="SERCOM0_1_Handler"/>
           </Values>
         </String>
-        <Boolean dnOrder="154" id="SERCOM0_1_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="155" id="SERCOM0_1_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom0" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="155" id="SERCOM0_2_INTERRUPT_ENABLE">
+        <Boolean dnOrder="156" id="SERCOM0_2_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom0" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="156" id="SERCOM0_2_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="157" id="SERCOM0_2_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="157" id="SERCOM0_2_INTERRUPT_HANDLER">
+        <String dnOrder="158" id="SERCOM0_2_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom0" value="SERCOM0_2_Handler"/>
           </Values>
         </String>
-        <Boolean dnOrder="158" id="SERCOM0_2_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="159" id="SERCOM0_2_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom0" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="159" id="SERCOM0_CORE_CLOCK_ENABLE">
+        <Boolean dnOrder="160" id="SERCOM0_CORE_CLOCK_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom0" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="160" id="SERCOM0_CORE_CLOCK_FREQUENCY">
+        <Integer dnOrder="161" id="SERCOM0_CORE_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="16000000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="161" id="SERCOM0_OTHER_INTERRUPT_ENABLE">
+        <Boolean dnOrder="162" id="SERCOM0_OTHER_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom0" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="162" id="SERCOM0_OTHER_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="163" id="SERCOM0_OTHER_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="163" id="SERCOM0_OTHER_INTERRUPT_HANDLER">
+        <String dnOrder="164" id="SERCOM0_OTHER_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom0" value="SERCOM0_OTHER_Handler"/>
           </Values>
         </String>
-        <Boolean dnOrder="164" id="SERCOM0_OTHER_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="165" id="SERCOM0_OTHER_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom0" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="165" id="SYSTICK_PERIOD">
+        <String dnOrder="166" id="SYSTICK_PERIOD">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x3e80"/>
           </Values>
         </String>
-        <Float dnOrder="166" id="SYSTICK_PERIOD_MS">
+        <Float dnOrder="167" id="SYSTICK_PERIOD_MS">
           <Attributes dnOrder="0">
             <Float dnOrder="0" id="max">
               <Value dnOrder="0">1048.576</Value>
             </Float>
           </Attributes>
         </Float>
-        <Integer dnOrder="167" id="SYSTICK_PERIOD_US">
+        <Integer dnOrder="168" id="SYSTICK_PERIOD_US">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="1000"/>
           </Values>
@@ -1333,18 +1338,23 @@
     </UniqueComponent>
     <UniqueComponent dnOrder="8" id="sercom0">
       <Symbols dnOrder="0">
-        <Integer dnOrder="0" id="I2CM_BAUD">
+        <Hex dnOrder="0" id="I2CM_BAUD">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom0" value="74"/>
           </Values>
-        </Integer>
+        </Hex>
         <String dnOrder="1" id="RECEIVE_DATA_REGISTER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom0" value="&amp;(SERCOM0_REGS-&gt;USART_INT.SERCOM_DATA)"/>
           </Values>
         </String>
         <KeyValueSet dnOrder="2" id="SERCOM_MODE">
-          <Values dnOrder="0">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="readOnly">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
             <Dynamic dnOrder="0" id="sercom0" value="0"/>
           </Values>
         </KeyValueSet>
@@ -1411,7 +1421,21 @@
         </KeyValueSet>
       </Symbols>
       <Attachments dnOrder="1">
-        <DirectCapability dnOrder="0" id="SERCOM0_UART">
+        <DirectCapability dnOrder="0" id="SERCOM0_I2C">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </DirectCapability>
+        <DirectCapability dnOrder="1" id="SERCOM0_SPI">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </DirectCapability>
+        <DirectCapability dnOrder="2" id="SERCOM0_UART">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="targetComponentID">
               <Value dnOrder="0">lib_qtouch</Value>
@@ -1425,8 +1449,7 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
-    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="cmsis" x="820" y="20"/>
         <ElementPosition dnOrder="1" id="core" x="720" y="20"/>
@@ -1439,5 +1462,6 @@
         <ElementPosition dnOrder="8" id="sercom0" x="359" y="138"/>
       </ElementPositions>
     </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>

@@ -50,16 +50,16 @@ global touchAcqAutoLibraryFile
 ############################################################################
 # Library File
 touchAcqLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_ACQ_LIB", None)
-touchAcqLibraryFile.setSourcePath("/src/libraries/0x0027_qtm_saml11_acq.X.a")
-touchAcqLibraryFile.setOutputName("0x0027_qtm_saml11_acq.X.a")
+touchAcqLibraryFile.setSourcePath("/src/libraries/qtm_acq_saml10_0x0027.X.a")
+touchAcqLibraryFile.setOutputName("qtm_acq_saml10_0x0027.X.a")
 touchAcqLibraryFile.setDestPath("/touch/lib/")
 touchAcqLibraryFile.setEnabled(True)
 touchAcqLibraryFile.setDependencies(autoTuneFunc,["TUNE_MODE_SELECTED"])
 
 # Library File
 touchAcqAutoLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_ACQ_AUTO_LIB", None)
-touchAcqAutoLibraryFile.setSourcePath("/src/libraries/0x0027_qtm_saml11_acq.X.a")
-touchAcqAutoLibraryFile.setOutputName("0x0027_qtm_saml11_acq.X.a")
+touchAcqAutoLibraryFile.setSourcePath("/src/libraries/qtm_acq_saml10_0x0027.X.a")
+touchAcqAutoLibraryFile.setOutputName("qtm_acq_saml10_0x0027.X.a")
 touchAcqAutoLibraryFile.setDestPath("/touch/lib/")
 touchAcqAutoLibraryFile.setEnabled(False)
 touchAcqAutoLibraryFile.setDependencies(autoTuneFunc,["TUNE_MODE_SELECTED"])
@@ -130,10 +130,11 @@ touchSenseTechnology = qtouchComponent.createKeyValueSetSymbol("SENSE_TECHNOLOGY
 touchSenseTechnology.setLabel("Sensor Technology")
 touchSenseTechnology.addKey("SelfCap", "NODE_SELFCAP", "Self Capacitance Sensing")
 touchSenseTechnology.addKey("MutualCap", "NODE_MUTUAL", "Mutual Capacitance Sensing")
+touchSenseTechnology.addKey("SelfCapShield", "NODE_SELFCAP_SHIELD", "Self-Capacitance Sensing With Driven Shield")
 touchSenseTechnology.setDefaultValue(0)
 touchSenseTechnology.setOutputMode("Value")
 touchSenseTechnology.setDisplayMode("Description")
-touchSenseTechnology.setDescription("Selects the sensor technology - Selfcap: Requires one pin per channel; Simple sensor design; Recommended for small number of sensors (less than 12). Mutualcap: Requires one X pin and one Y pin per channel; Can realize X x Y number of sensors in a matrix form; Recommended for large number of sensors (more than 12)")
+touchSenseTechnology.setDescription("Selects the sensor technology - Selfcap: Requires one pin per channel; Simple sensor design; Recommended for small number of sensors (less than 12). SelfCapShield: Requires one pin per channel with Driven shield options; Simple sensor design; Recommended for small number of sensors (less than 12). Mutualcap: Requires one X pin and one Y pin per channel; Can realize X x Y number of sensors in a matrix form; Recommended for large number of sensors (more than 12)")
 
 totalChannelCountSelf = qtouchComponent.createIntegerSymbol("MAX_CHANNEL_COUNT_SELF",acquisitionMenu)
 totalChannelCountSelf.setVisible(True)
@@ -148,11 +149,11 @@ touchAutoTuneMode = qtouchComponent.createKeyValueSetSymbol("TUNE_MODE_SELECTED"
 touchAutoTuneMode.setLabel("Select the Required Tuning Mode")
 touchAutoTuneMode.addKey("Manual Tuning","CAL_AUTO_TUNE_NONE","Manual tuning is done based on the values defined by user")
 touchAutoTuneMode.addKey("Tune Resistor value","CAL_AUTO_TUNE_RSEL","Series Resistor is tuned")
-touchAutoTuneMode.addKey("Tune Prescaler","CAL_AUTO_TUNE_PRSC","Pre-scaler is tuned")
+touchAutoTuneMode.addKey("Tune CSD","CAL_AUTO_TUNE_CSD","Charge Share Delay - CSD is tuned")
 touchAutoTuneMode.setDefaultValue(0)
 touchAutoTuneMode.setOutputMode("Value")
 touchAutoTuneMode.setDisplayMode("Key")
-touchAutoTuneMode.setDescription("Sets the sensor calibration mode - CAL_AUTO_TUNE_NONE: Manual user setting of Prescaler, & Series resistor. CAL_AUTO_TUNE_PRSC: QTouch library will use the configured series resistor value and adjusts the prescaler to ensure full charging.")
+touchAutoTuneMode.setDescription("Sets the sensor calibration mode - CAL_AUTO_TUNE_NONE: Manual user setting of Prescaler, Charge share delay & Series resistor. AUTO_TUNE_CSD: QTouch library will use the configured prescaler and series resistor value and adjusts the CSD to ensure full charging.")
 
 #Scan Rate (ms)
 touchSym_TOUCH_MEASUREMENT_PERIOD_MS_Val = qtouchComponent.createIntegerSymbol("DEF_TOUCH_MEASUREMENT_PERIOD_MS", acquisitionMenu)
@@ -195,3 +196,27 @@ touchSym_SEL_FREQ_INIT_Val.setOutputMode("Value")
 touchSym_SEL_FREQ_INIT_Val.setDisplayMode("Value")
 touchSym_SEL_FREQ_INIT_Val.setDescription("It may be required to change the acquisition frequency if system noise frequency is closer to acquisition frequency.In order to vary the acquisition frequency, additional clock cycles are added during measurement for FREQ_SEL_0 through FREQ_SEL_15. FREQ_SEL_0 provides the fastest measurement time (no additional clock cycles are added) and FREQ_SEL_15 provides the slowest measurement time (15 additional clock cycles are added). When FREQ_SEL_SPREAD option is used, all the 16 frequencies are used consecutively in a circular fashion.")
  
+# Enable Driven Shield Plus
+drivenShieldMenu = qtouchComponent.createMenuSymbol("DRIVEN_SHIELD", touchMenu)
+drivenShieldMenu.setLabel("Driven Shield")
+
+enableDrivenShieldAdjacent = qtouchComponent.createBooleanSymbol("DS_ADJACENT_SENSE_LINE_AS_SHIELD", drivenShieldMenu)
+enableDrivenShieldAdjacent.setLabel("Enable Adjacent Sense Pins as Shield")
+enableDrivenShieldAdjacent.setDefaultValue(False)
+
+enableDrivenShieldDedicated = qtouchComponent.createBooleanSymbol("DS_DEDICATED_PIN_ENABLE", drivenShieldMenu)
+enableDrivenShieldDedicated.setLabel("Enable Dedicated Driven Shield Pin")
+enableDrivenShieldDedicated.setDefaultValue(False)
+
+drivenShieldDedicatedPin = qtouchComponent.createKeyValueSetSymbol("DS_DEDICATED_PIN", enableDrivenShieldDedicated)
+drivenShieldDedicatedPin.setLabel("Select Dedicated Driven Shield Pin")
+drivenShieldDedicatedPin.setDefaultValue(0)
+drivenShieldDedicatedPin.setDisplayMode("Description")
+ptcPinNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PTC\"]/instance/signals")
+ptcPinValues = []
+ptcPinValues = ptcPinNode.getChildren()
+for index in range(0, len(ptcPinValues)):
+    if(ptcPinValues[index].getAttribute("group") == "Y"):
+        drivenShieldDedicatedPin.addKey(ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
+    ptcPinValues[index].getAttribute("index"),
+    ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")

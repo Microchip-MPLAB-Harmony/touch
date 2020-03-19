@@ -81,45 +81,45 @@ void touch_status_display1(void)
 {
 	key_status1 = get_sensor_state(0) & 0x80;
 	if (0u != key_status1) {
-		LED_0_BUT_Clear();
+		LED_BUT_0_Clear();
 	} else {
-		LED_0_BUT_Set();
+		LED_BUT_0_Set();
 	}
 	key_status1 = get_sensor_state(1) & 0x80;
 	if (0u != key_status1) {
-		LED_1_BUT_Clear();
+		LED_BUT_1_Clear();
 	} else {
-		LED_1_BUT_Set();
+		LED_BUT_1_Set();
 	}
 
 	scroller_status1   = get_scroller_state(0);
 	scroller_position1 = get_scroller_position(0);
 	
-    LED_0_SLIDER_Set();
-    LED_1_SLIDER_Set();
-    LED_2_SLIDER_Set();
-    LED_3_SLIDER_Set();
-    LED_4_SLIDER_Set();
-    LED_5_SLIDER_Set();
+    LED_SLIDER_0_Set();
+    LED_SLIDER_1_Set();
+    LED_SLIDER_2_Set();
+    LED_SLIDER_3_Set();
+    LED_SLIDER_4_Set();
+    LED_SLIDER_5_Set();
 
 	if (0u != scroller_status1) {
 
-		LED_0_SLIDER_Clear();
+		LED_SLIDER_0_Clear();
 
 		if (scroller_position1 > 43) {
-			LED_1_SLIDER_Clear();
+			LED_SLIDER_1_Clear();
 		}
 		if (scroller_position1 > 85) {
-			LED_2_SLIDER_Clear();
+			LED_SLIDER_2_Clear();
 		}
 		if (scroller_position1 > 120) {
-			LED_3_SLIDER_Clear();
+			LED_SLIDER_3_Clear();
 		}
 		if (scroller_position1 > 165) {
-			LED_4_SLIDER_Clear();
+			LED_SLIDER_4_Clear();
 		}
 		if (scroller_position1 > 213) {
-            LED_5_SLIDER_Clear();
+            LED_SLIDER_5_Clear();
 		}
 	}
 }
