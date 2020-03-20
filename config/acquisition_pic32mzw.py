@@ -199,9 +199,9 @@ touchSym_SEL_FREQ_INIT_Val.setDescription("It may be required to change the acqu
  
 # Enable Driven Shield Plus
 
-cvdRPins = []
-cvdRPinsTemp = []
-cvdRPinsIndex = []
+dsPins = []
+dsPinsTemp = []
+dsPinsIndex = []
 
 currentPath = os.path.dirname(os.path.abspath(inspect.stack()[0][1]))
 pinoutXmlPath = os.path.join(currentPath, "../../csp/peripheral/gpio_02467/plugin/pin_xml/pins/MZ_W1_132.xml")
@@ -210,21 +210,21 @@ root = tree.getroot()
 for myPins in root.findall('pins'):
     for myPin in myPins.findall('pin'):
         for myFunction in myPin.findall('function'):
-            if myFunction.get("name").startswith("CVDR"):
+            if myFunction.get("name").startswith("CVDT"):
                 tempstring = myPin.get("name")
                 index = myFunction.get("name")
-                index.replace("CVDR",'')
-                cvdRPinsIndex.append(int(index[4:]))
-                cvdRPinsTemp.append(tempstring)
+                index.replace("CVDT",'')
+                dsPinsIndex.append(int(index[4:]))
+                dsPinsTemp.append(tempstring)
 
-cvdRPins = [x for _,x in sorted(zip(cvdRPinsIndex,cvdRPinsTemp))]
+dsPins = [x for _,x in sorted(zip(dsPinsIndex,dsPinsTemp))]
 
 drivenShieldMenu = qtouchComponent.createMenuSymbol("DRIVEN_SHIELD", touchMenu)
 drivenShieldMenu.setLabel("Driven Shield")
 
-enableDrivenShieldAdjacent = qtouchComponent.createBooleanSymbol("DS_ADJACENT_SENSE_LINE_AS_SHIELD", drivenShieldMenu)
-enableDrivenShieldAdjacent.setLabel("Enable Adjacent Sense Pins as Shield")
-enableDrivenShieldAdjacent.setDefaultValue(False)
+#enableDrivenShieldAdjacent = qtouchComponent.createBooleanSymbol("DS_ADJACENT_SENSE_LINE_AS_SHIELD", drivenShieldMenu)
+#enableDrivenShieldAdjacent.setLabel("Enable Adjacent Sense Pins as Shield")
+#enableDrivenShieldAdjacent.setDefaultValue(False)
 
 enableDrivenShieldDedicated = qtouchComponent.createBooleanSymbol("DS_DEDICATED_PIN_ENABLE", drivenShieldMenu)
 enableDrivenShieldDedicated.setLabel("Enable Dedicated Driven Shield Pin")
@@ -234,8 +234,8 @@ drivenShieldDedicatedPin = qtouchComponent.createKeyValueSetSymbol("DS_DEDICATED
 drivenShieldDedicatedPin.setLabel("Select Dedicated Driven Shield Pin")
 drivenShieldDedicatedPin.setDefaultValue(0)
 drivenShieldDedicatedPin.setDisplayMode("Description")
-#drivenShieldDedicatedPin.addKey("--","0","--")
-for index in range(0, len(cvdRPins)):
-		drivenShieldDedicatedPin.addKey("Y"+str(index+1),
-		str(index+1),
-		"Y"+str(index+1)+"  ("+cvdRPins[index]+")")
+drivenShieldDedicatedPin.addKey("--","--","--")
+for index in range(0, len(dsPins)):
+    drivenShieldDedicatedPin.addKey("X("+str(index)+")",
+    str(index),
+    "X("+str(index)+")  "+dsPins[index])

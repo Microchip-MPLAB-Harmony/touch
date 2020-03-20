@@ -32,18 +32,11 @@
 	<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i>
 		<#if (SENSE_TECHNOLOGY == "NODE_SELFCAP")||(SENSE_TECHNOLOGY == "NODE_SELFCAP_SHIELD")>
 			<#if drivenShieldSupported == 1>
-				<#if (DS_DEDICATED_PIN_ENABLE == true)||(DS_ADJACENT_SENSE_LINE_AS_SHIELD == true)>
+				<#if (DS_DEDICATED_PIN_ENABLE == true)>
 					<#assign DRIVEN_SHIELD_PIN_TOTAL = []>
 					<#if DS_DEDICATED_PIN_ENABLE == true>
 						<#assign DRIVEN_SHIELD_PIN_TOTAL += [.vars["DS_DEDICATED_PIN"]]>
 					</#if>
-					<#if DS_ADJACENT_SENSE_LINE_AS_SHIELD == true>
-						<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as j>
-							<#if i != j>
-								<#assign DRIVEN_SHIELD_PIN_TOTAL += [.vars["SELFCAP-INPUT_" + j]]>
-							</#if>
-						</#list>
-					</#if>					
 					<#lt>#define NODE_${i}_PARAMS                                                           \
 					<#lt>{                                                                              \
 					<#lt>   ${DRIVEN_SHIELD_PIN_TOTAL?join("|")}, ${.vars["SELFCAP-INPUT_" + i]}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]}, 0, NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \

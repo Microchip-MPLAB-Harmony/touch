@@ -52,7 +52,7 @@ asm(".word __vector_offset_168");
 
 /* Library state */
 static const uint8_t CVD_TX_PINS[] = {
-    GPIO_PIN_NONE,
+    GPIO_PIN_RB7,
     GPIO_PIN_RB6,
     GPIO_PIN_RB5,
     GPIO_PIN_RB4,
@@ -175,36 +175,6 @@ Output : none
 Notes  : none
 ============================================================================*/
 static void (*cvd_seq_measure_complete_pointer) (void);
-
-/*============================================================================
-static void (*tmr_set_period)(uint16_t period);
-------------------------------------------------------------------------------
-Purpose: this is used to time the end of CVD completion
-Input  : Pointer to timer set period function
-Output : none
-Notes  : none
-============================================================================*/
-static void (*tmr_set_period)(uint16_t period);
-
-/*============================================================================
-static void (*tmr_start)(void);
-------------------------------------------------------------------------------
-Purpose: this is used to start the time for CVD burst
-Input  : Pointer to timer start function
-Output : none
-Notes  : none
-============================================================================*/
-static void (*tmr_start)(void);
-
-/*============================================================================
-static void (*tmr_stop)(void);
-------------------------------------------------------------------------------
-Purpose: this is used to stop the time for CVD burst
-Input  : Pointer to timer stop function
-Output : none
-Notes  : none
-============================================================================*/
-static void (*tmr_stop)(void);
 
 /*============================================================================
 static void cvd_config_io_pins(uint32_t cvd_lines,uint8_t direction, const uint8_t* pin_table)
@@ -373,6 +343,51 @@ static uint8_t charge_share_test(uint16_t which_sensor_node, uint16_t new_measur
 
     /* 0 = OK, 1 = NG */
     return need_further_cal;
+}
+/*============================================================================
+touch_ret_t qtm_calibrate_sensor_node(qtm_acquisition_control_t* qtm_acq_control_ptr, uint16_t qtm_which_node_number)
+------------------------------------------------------------------------------
+Purpose:  Marks a sensor node for calibration
+Input  :  Node configurations pointer, node (channel) number
+Output : touch_ret_t:
+Notes  :
+============================================================================*/
+touch_ret_t qtm_calibrate_sensor_node(qtm_acquisition_control_t* qtm_acq_control_ptr, uint16_t qtm_which_node_number)
+{
+  uint8_t c_temp_calc = 0u;
+  
+  touch_ret_t node_calibrate_t_status = TOUCH_SUCCESS;
+  if(qtm_acq_control_ptr == NULL)
+  {
+    /* Not assigned */
+    node_calibrate_t_status = TOUCH_INVALID_POINTER;
+  }
+  else if(qtm_which_node_number >= (qtm_acq_control_ptr->qtm_acq_node_group_config->num_sensor_nodes))
+  {
+    node_calibrate_t_status = TOUCH_INVALID_INPUT_PARAM;
+  }
+  else
+  {
+    c_temp_calc = qtm_acq_control_ptr->qtm_acq_node_group_config->acq_sensor_type;
+    /* Self or mutual - to decide starting CCCAL */
+    if(NODE_MUTUAL == c_temp_calc)
+    {
+      qtm_acq_control_ptr->qtm_acq_node_data[qtm_which_node_number].node_comp_caps = MUTL_START_CCCAL;
+    }
+    else if((NODE_SELFCAP == c_temp_calc)||(NODE_SELFCAP_SHIELD == c_temp_calc))
+    {
+      qtm_acq_control_ptr->qtm_acq_node_data[qtm_which_node_number].node_comp_caps = SELFCAP_START_CCCAL;
+    }
+    else
+    {
+      node_calibrate_t_status = TOUCH_INVALID_INPUT_PARAM;
+    }
+    
+    /* CAL Flag */
+    qtm_acq_control_ptr->qtm_acq_node_data[qtm_which_node_number].node_acq_status |= NODE_CAL_REQ;
+    
+  }
+  return node_calibrate_t_status;
 }
 
 /*============================================================================
@@ -805,30 +820,6 @@ static uint32_t get_cvd_result(void)
     //touch_measurement_capture = result_offset + CVDRES0Dbits.DELTA;
     return touch_measurement_capture;
 }
-
-/*============================================================================
-static uint16_t calculate_burst_time(void);
-------------------------------------------------------------------------------
-Purpose: calculate the total burst time
-Input  : none
-Output : burst time
-Notes  : the time will be stored in the module and can be used to time the 
- completion of the burst
-============================================================================*/
-static uint16_t calculate_burst_time(void)
-{
-    uint16_t burst_time;
-    burst_time = (uint16_t)CVDSD0T2bits.SD0OVRTIME
-                +(uint16_t)CVDSD0T2bits.SD0POLTIME  \
-                +((uint16_t)CVDSD0T2bits.SD0CONTIME<<1)  \
-                +((uint16_t)CVDSD0C3bits.SD0ACQTIME << 1) \
-                +((uint16_t)CVDSD0C3bits.SD0CHGTIME << 1) ;
-    
-    burst_time = (CVDSD0C1bits.SD0OVRSAMP+1) * burst_time;  
-    
-    return burst_time;
-}
-
 /*============================================================================
 static uint8_t qtm_load_group_config(void)
 ------------------------------------------------------------------------------
@@ -903,7 +894,6 @@ static void qtm_measure_node(uint16_t channel_number)
     uint8_t temp_var_mask_here = 0u;
     uint8_t xy_counter;
     uint8_t num_x, num_y;
-    uint16_t burst_time;
 
     /* Disable CVD */
     CVDCONbits.SDHOLD = 1u;
@@ -941,6 +931,11 @@ static void qtm_measure_node(uint16_t channel_number)
         }
     }
 
+    if (num_x == 0u)
+    {
+        num_x = 1u;
+    }
+    
     /* number of X and Y */
     CVDSD0C2bits.SD0RXSTRIDE1 = 0b0011 & (num_y - 1u);
     CVDSD0C2bits.SD0RXSTRIDE2 = (num_y - 1u) >> 2u;
@@ -1007,16 +1002,6 @@ static void qtm_measure_node(uint16_t channel_number)
 
     /* Start Measurement */
     CVDCONbits.SWTRIG = 1u;
-    
-   
-    
-    if(tmr_start!=NULL_POINTER)
-    {
-        tmr_start();
-        burst_time = calculate_burst_time();
-         /* assume the CVD statemachine frequency is 10MHz, timer tick frequency is 0.390625MHz*/
-        tmr_set_period(((burst_time*10)>>8)+TIMEOUT_OVERHEAD);
-    }
 }
 
 /*============================================================================
@@ -1099,7 +1084,8 @@ Notes    :  none
 void qtm_pic32_cvd_handler_eoc(void)
 {    
     uint8_t sequence_complete;
-
+    
+    IFS5 &=~(0x00000100);   //clear the interrupt flag
     qtm_raw_data_measurements_ptr[current_measure_channel] = get_cvd_result();
     CVDCONbits.ON = 0u;
     cvd_config_io_pins(qtm_acquisition_control_working_set_ptr->qtm_acq_node_config[current_measure_channel].node_ymask, 0u, CVD_RX_PINS);
@@ -1163,45 +1149,6 @@ touch_ret_t qtm_enable_sensor_node(qtm_acquisition_control_t* qtm_acq_control_pt
         qtm_acq_control_ptr->qtm_acq_node_data[qtm_which_node_number].node_acq_status = NODE_ENABLED;
     }
     return node_enable_t_status;
-}
-
-/*============================================================================
-void qtm_cvd_set_timer_period_function(void (*timer_period_function_ptr) (uint16_t period))
-------------------------------------------------------------------------------
-Purpose:  set the timer period function 
-Input  :  function pointer of the timer period function
-Output :  
-Notes  :
-============================================================================*/
-void qtm_cvd_set_timer_period_function(void (*timer_period_function_ptr) (uint16_t period))
-{
-    tmr_set_period = timer_period_function_ptr;
-}
-
-/*============================================================================
-void qtm_cvd_set_timer_start_function(void (*timer_start) (void))
-------------------------------------------------------------------------------
-Purpose:  set the timer start function 
-Input  :  function pointer of the timer start function
-Output :  
-Notes  :
-============================================================================*/
-void qtm_cvd_set_timer_start_function(void (*timer_start) (void))
-{
-    tmr_start = timer_start;
-}
-
-/*============================================================================
-void qtm_cvd_set_timer_stop_function(void (*timer_stop) (void))
-------------------------------------------------------------------------------
-Purpose:  set the timer start function 
-Input  :  function pointer of the timer start function
-Output :  
-Notes  :
-============================================================================*/
-void qtm_cvd_set_timer_stop_function(void (*timer_stop) (void))
-{
-    tmr_stop = timer_stop;
 }
 
 /*============================================================================

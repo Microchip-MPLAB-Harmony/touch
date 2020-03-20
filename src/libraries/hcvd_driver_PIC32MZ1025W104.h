@@ -63,11 +63,11 @@ manifest constants
 
 /* Module #38 */
 
-#define QTM_MODULE_ID_PIC32MZW_ACQ        0x0038u
+#define QTM_MODULE_ID_PIC32MZW_ACQ        0x003eu
 
-/* Version 0.1:  */ 
+/* Version 0.3:  */ 
 
-#define QTM_MODULE_VERSION              0x01u
+#define QTM_MODULE_VERSION                  0x02u
 
 /* CSD Limit is 7 bits, otherwise overflow at acquisition status bit */
 #define NUM_BITS_CSD                          7u
