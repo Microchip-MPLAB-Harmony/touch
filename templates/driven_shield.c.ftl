@@ -435,7 +435,11 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	${x}_REGS->COUNT8.TC_CC[${DediTimerWo1}] = cc;
 		</#if>
 	</#if>
+	<#if ((DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1"))>	
 	${x}_REGS->COUNT8.TC_CTRLA = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER(prescaler)| TC_CTRLA_WAVEGEN_NPWM | TC_CTRLA_RUNSTDBY_Msk ;
+	<#else>
+	${x}_REGS->COUNT8.TC_CTRLA = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER(prescaler);
+	</#if>
 	${x}_CompareStart();
 </#if>
 </#list>
