@@ -911,28 +911,21 @@ void PTC_Handler(void)
 		qtm_drivenshield_config.flags &= (uint8_t) ~(1u << DRIVEN_SHIELD_DUMMY_ACQ);
 	} else {
 		drivenshield_stop();
-<#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
-	qtm_samd1x_ptc_handler_eoc();
-<#else>
 	qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();
-</#if>
 }
 #else
-<#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
-	qtm_samd1x_ptc_handler_eoc();
-<#else>
 	qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();
-</#if>
 #endif
 <#else>
+	qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();
+</#if>
+<#else>
 <#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
 	qtm_samd1x_ptc_handler_eoc();
 <#else>
 	qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();
 </#if>
-</#if>   
 </#if>
 }
 </#if>
-
 </#if>

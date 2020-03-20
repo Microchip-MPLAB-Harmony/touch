@@ -54,8 +54,8 @@ touchAcqAutoLibraryFile.setDependencies(autoTuneFunc,["TUNE_MODE_SELECTED"])
 
 # Library File
 touchBindLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_BIND_LIB", None)
-touchBindLibraryFile.setSourcePath("/src/libraries/qtm_binding_layer_cm23_0x0005.X.a")
-touchBindLibraryFile.setOutputName("qtm_binding_layer_cm23_0x0005.X.a")
+touchBindLibraryFile.setSourcePath("/src/libraries/qtm_binding_layer_cm0p_0x0005.X.a")
+touchBindLibraryFile.setOutputName("qtm_binding_layer_cm0p_0x0005.X.a")
 touchBindLibraryFile.setDestPath("/touch/lib/")
 touchBindLibraryFile.setEnabled(True)
 
