@@ -74,7 +74,7 @@ touchBindLibraryFile.setEnabled(True)
 # Header File
 touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_ACQ_HEADER_1", None)
 touchHeaderFile.setSourcePath("/src/qtm_acq_samha1_0x0024_api.h")
-touchHeaderFile.setOutputName("qtm_acq_samda1_0x0024_api.h")
+touchHeaderFile.setOutputName("qtm_acq_samha1_0x0024_api.h")
 touchHeaderFile.setDestPath("/touch/")
 touchHeaderFile.setProjectPath("config/" + configName + "/touch/")
 touchHeaderFile.setType("HEADER")
