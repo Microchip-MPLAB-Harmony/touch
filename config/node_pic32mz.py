@@ -66,9 +66,9 @@ for channelID in range(0, touchChannelCountMax):
     tchSelfPinSelection[channelID].setOutputMode("Key")
     tchSelfPinSelection[channelID].setDisplayMode("Description")
     for index in range(0, len(cvdRPins)):
-        tchSelfPinSelection[channelID].addKey("Y("+str(index+1)+")",
+        tchSelfPinSelection[channelID].addKey("Y"+str(index+1),
         str(index+1),
-        "Y("+str(index+1)+")  "+cvdRPins[index])
+        "Y"+str(index+1)+"  ("+cvdRPins[index]+")")
 
     tchMutXPinSelection.append(qtouchComponent.createKeyValueSetSymbol("MUTL-X-INPUT_"+ str(channelID), touchChEnable))
     tchMutXPinSelection[channelID].setLabel("Select X Pin for Channel "+ str(channelID))
@@ -76,9 +76,9 @@ for channelID in range(0, touchChannelCountMax):
     tchMutXPinSelection[channelID].setOutputMode("Key")
     tchMutXPinSelection[channelID].setDisplayMode("Description")
     for index in range(0, len(cvdTPins)):
-        tchMutXPinSelection[channelID].addKey("X("+str(index)+")",
+        tchMutXPinSelection[channelID].addKey("X"+str(index),
         str(index),
-        "X("+str(index)+")  "+cvdTPins[index])
+        "X"+str(index)+"  ("+cvdTPins[index]+")")
 
     tchMutYPinSelection.append(qtouchComponent.createKeyValueSetSymbol("MUTL-Y-INPUT_"+ str(channelID), touchChEnable))
     tchMutYPinSelection[channelID].setLabel("Select Y Pin for Channel "+ str(channelID))
@@ -86,9 +86,9 @@ for channelID in range(0, touchChannelCountMax):
     tchMutYPinSelection[channelID].setOutputMode("Key")
     tchMutYPinSelection[channelID].setDisplayMode("Description")
     for index in range(0, len(cvdRPins)):
-        tchMutYPinSelection[channelID].addKey("Y("+str(index+1)+")",
+        tchMutYPinSelection[channelID].addKey("Y"+str(index+1),
         str(index+1),
-        "Y("+str(index+1)+")  "+cvdRPins[index])
+        "Y"+str(index+1)+"  ("+cvdRPins[index]+")")
 
     #Charge Share Delay
     touchSym_CSD_Val = qtouchComponent.createIntegerSymbol("DEF_TOUCH_CHARGE_SHARE_DELAY" + str(channelID), touchChEnable)
