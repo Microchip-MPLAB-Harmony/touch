@@ -66,9 +66,9 @@ for channelID in range(0, touchChannelCountMax):
     tchSelfPinSelection[channelID].setOutputMode("Key")
     tchSelfPinSelection[channelID].setDisplayMode("Description")
     for index in range(0, len(cvdRPins)):
-        tchSelfPinSelection[channelID].addKey("Y"+str(index+1),
+        tchSelfPinSelection[channelID].addKey("Y("+str(index+1)+")",
         str(index+1),
-        "Y"+str(index+1)+"  ("+cvdRPins[index]+")")
+        "Y("+str(index+1)+")  "+cvdRPins[index])
 
     tchMutXPinSelection.append(qtouchComponent.createKeyValueSetSymbol("MUTL-X-INPUT_"+ str(channelID), touchChEnable))
     tchMutXPinSelection[channelID].setLabel("Select X Pin for Channel "+ str(channelID))
@@ -76,9 +76,9 @@ for channelID in range(0, touchChannelCountMax):
     tchMutXPinSelection[channelID].setOutputMode("Key")
     tchMutXPinSelection[channelID].setDisplayMode("Description")
     for index in range(0, len(cvdTPins)):
-        tchMutXPinSelection[channelID].addKey("X"+str(index),
+        tchMutXPinSelection[channelID].addKey("X("+str(index)+")",
         str(index),
-        "X"+str(index)+"  ("+cvdTPins[index]+")")
+        "X("+str(index)+")  "+cvdTPins[index])
 
     tchMutYPinSelection.append(qtouchComponent.createKeyValueSetSymbol("MUTL-Y-INPUT_"+ str(channelID), touchChEnable))
     tchMutYPinSelection[channelID].setLabel("Select Y Pin for Channel "+ str(channelID))
@@ -86,9 +86,9 @@ for channelID in range(0, touchChannelCountMax):
     tchMutYPinSelection[channelID].setOutputMode("Key")
     tchMutYPinSelection[channelID].setDisplayMode("Description")
     for index in range(0, len(cvdRPins)):
-        tchMutYPinSelection[channelID].addKey("Y"+str(index+1),
+        tchMutYPinSelection[channelID].addKey("Y("+str(index+1)+")",
         str(index+1),
-        "Y"+str(index+1)+"  ("+cvdRPins[index]+")")
+        "Y("+str(index+1)+")  "+cvdRPins[index])
 
     #Charge Share Delay
     touchSym_CSD_Val = qtouchComponent.createIntegerSymbol("DEF_TOUCH_CHARGE_SHARE_DELAY" + str(channelID), touchChEnable)
@@ -98,30 +98,6 @@ for channelID in range(0, touchChannelCountMax):
     touchSym_CSD_Val.setMax(255)
     touchSym_CSD_Val.setDescription("Increase in Charge Share Delay increases sensor charging time and so the touch measurement time. It indicates the number of additional cycles that are inserted within a touch measurement cycle.")
 
-    #Series Resistor
-    touchSym_SERIES_RESISTOR_Val = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_SERIES_RESISTOR" + str(channelID), touchChEnable)
-    touchSym_SERIES_RESISTOR_Val.setLabel("Series Resistor")
-    touchSym_SERIES_RESISTOR_Val.addKey("RES0", "RSEL_VAL_0", "No resistor")
-    touchSym_SERIES_RESISTOR_Val.addKey("RES20", "RSEL_VAL_20", "20 k")
-    touchSym_SERIES_RESISTOR_Val.addKey("RES50", "RSEL_VAL_50", "50 k")
-    touchSym_SERIES_RESISTOR_Val.addKey("RES100", "RSEL_VAL_100", "100 k")
-    touchSym_SERIES_RESISTOR_Val.setDefaultValue(0)
-    touchSym_SERIES_RESISTOR_Val.setOutputMode("Value")
-    touchSym_SERIES_RESISTOR_Val.setDisplayMode("Description")
-    touchSym_SERIES_RESISTOR_Val.setDescription("Selection for internal series resistor.Higher series resistor provides higher noise immunity and requires long time for charging. This could affect response time. So, series resistor should be selected optimally.")
-
-    #PTC Clock Prescaler
-    touchSym_PTC_PRESCALER_Val = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_PTC_PRESCALER" + str(channelID), touchChEnable)
-    touchSym_PTC_PRESCALER_Val.setLabel("PTC Clock Prescaler")
-    touchSym_PTC_PRESCALER_Val.addKey("PRESC0", "PRSC_DIV_SEL_1", "No prescaler")
-    touchSym_PTC_PRESCALER_Val.addKey("PRESC2", "PRSC_DIV_SEL_2", "2")
-    touchSym_PTC_PRESCALER_Val.addKey("PRESC4", "PRSC_DIV_SEL_4", "4")
-    touchSym_PTC_PRESCALER_Val.addKey("PRESC8", "PRSC_DIV_SEL_8", "8")
-    touchSym_PTC_PRESCALER_Val.setDefaultValue(0)
-    touchSym_PTC_PRESCALER_Val.setOutputMode("Value")
-    touchSym_PTC_PRESCALER_Val.setDisplayMode("Description")
-    touchSym_PTC_PRESCALER_Val.setDescription("The PTC clock is prescaled by PTC and then used for touch measurement.The PTC prescaling factor is defined by this parameter. It is recommended to configure this parameter such that the clock used for touch measurement is less than 4MHz (8MHz for ATtiny devices).")
-	
     #Analog Gain
     touchSym_ANALOG_GAIN_Val = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_GAIN_ANA" + str(channelID), touchChEnable)
     touchSym_ANALOG_GAIN_Val.setLabel("Analog Gain")

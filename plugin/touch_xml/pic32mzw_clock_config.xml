@@ -15,11 +15,14 @@ This is for SAMC21, SAMC20 Family
 		<clock index = "8_0" symbol="CONFIG_SYS_CLK_REFCLK1_ENABLE" value="True" component_id= "core" name="Enable CVD Clock" />
 		<clock index = "9_0" symbol="CONFIG_SYS_CLK_RODIV1" value="100" component_id= "core" name="Enable CVD Clock" />
 		<clock index = "10_0" symbol="EVIC_168_ENABLE" value="True" component_id= "core" name="Enable CVD Interrupt" />
+		<clock index = "11_0" symbol="CVD_EVENT_INTERRUPT_ENABLE" value="True" component_id= "core" name="Enable CVD Interrupt" />
+		<clock index = "12_0" symbol="CVD_EVENT_INTERRUPT_HANDLER_LOCK" value="True" component_id= "core" name="Enable CVD Interrupt" />
+		<clock index = "13_0" symbol="CVD_EVENT_INTERRUPT_HANDLER" value="qtm_pic32_cvd_handler_eoc" component_id= "core" name="Enable CVD Interrupt" />
 	</all_clock_symbols_list>
 	<all_conditions_list>
 		<condition />
 	</all_conditions_list>
 	<common>
-		<default clock_update_index_list="0_0,1_0,4_0,5_0,7_0,8_0,9_0,10_0"/>
+		<default clock_update_index_list="0_0,1_0,4_0,5_0,7_0,8_0,9_0,10_0,11_0,12_0,13_0"/>
 	</common>
 </clock_settings>

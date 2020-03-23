@@ -45,6 +45,7 @@ Purpose : Acquisition module - hcvd_driver_PIC32MZ1025W104/HCVD
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 Revision 0.1 - New build 
+Revision 0.2 - removed all the timer code for interrupt workaround
 ============================================================================*/
 
 #ifndef __HCVD_PIC32MZ__
