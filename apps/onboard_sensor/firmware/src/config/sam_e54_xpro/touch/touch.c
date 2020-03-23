@@ -1,5 +1,5 @@
 /*******************************************************************************
-  Touch Library v3.5.0 Release
+  Touch Library v3.6.0 Release
 
   Company:
     Microchip Technology Inc.
@@ -17,7 +17,7 @@
 *******************************************************************************/
 
 /*******************************************************************************
-Copyright (c)  2019 released Microchip Technology Inc.  All rights reserved.
+Copyright (c)  2020 released Microchip Technology Inc.  All rights reserved.
 
 Microchip licenses to you the right to use, modify, copy and distribute
 Software only when embedded on a Microchip microcontroller or digital signal
@@ -45,7 +45,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include "touch/touch.h"
 #include "definitions.h" 
 #include "touch/datastreamer/datastreamer.h"
-
 /*----------------------------------------------------------------------------
  *   prototypes
  *----------------------------------------------------------------------------*/
@@ -91,7 +90,6 @@ uint8_t module_error_code = 0;
 
 /* Acquisition module internal data - Size to largest acquisition set */
 uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
-
 /* Acquisition set 1 - General settings */
 qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
     = {DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, DEF_PTC_CAL_AUTO_TUNE, DEF_SEL_FREQ_INIT, DEF_PTC_INTERRUPT_PRIORITY};
@@ -415,6 +413,7 @@ void touch_init(void)
     /* get a pointer to the binding layer control */
     p_qtm_control = qmt_get_binding_layer_ptr();
 
+	
 #if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
     datastreamer_init();
 #endif
@@ -498,7 +497,7 @@ void rtc_cb( RTC_TIMER32_INT_MASK intCause, uintptr_t context )
 uintptr_t rtc_context;
 
 void touch_timer_config(void)
-{   	
+{  
 	RTC_Timer32CallbackRegister(rtc_cb, rtc_context);
 	RTC_Timer32Start();
 	RTC_Timer32Compare0Set(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
@@ -551,6 +550,7 @@ void calibrate_node(uint16_t sensor_node)
     /* Initialize key */
     qtm_init_sensor_key(&qtlib_key_set1, sensor_node, &ptc_qtlib_node_stat1[sensor_node]);
 }
+
 /*============================================================================
 void PTC_Handler_EOC(void)
 ------------------------------------------------------------------------------
@@ -562,7 +562,6 @@ Notes  : none
 void ADC0_1_Handler(void)
 {
     ADC0_REGS->ADC_INTFLAG |=1u;
-    qtm_same54_ptc_handler();
+	qtm_same54_ptc_handler();
 }
-
 

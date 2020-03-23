@@ -51,7 +51,6 @@ static void SYSCTRL_Initialize(void)
     {
         /* Waiting for the OSC8M Ready state */
     }
-
     /****************** OSC32K Initialization  ******************************/
     uint32_t calibValue = (uint32_t)(((*(uint64_t*)0x806020) >> 38 ) & 0x7f);
     /* Configure 32K RC oscillator */
@@ -82,7 +81,6 @@ static void DFLL_Initialize(void)
     SYSCTRL_REGS->SYSCTRL_DFLLVAL = SYSCTRL_DFLLVAL_COARSE(calibCoarse) | SYSCTRL_DFLLVAL_FINE(calibFine);
 
     GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_GEN(0x3)  | GCLK_CLKCTRL_CLKEN_Msk | GCLK_CLKCTRL_ID(0);
-
     SYSCTRL_REGS->SYSCTRL_DFLLMUL = SYSCTRL_DFLLMUL_MUL(1500) | SYSCTRL_DFLLMUL_FSTEP(10) | SYSCTRL_DFLLMUL_CSTEP(10);
 
 

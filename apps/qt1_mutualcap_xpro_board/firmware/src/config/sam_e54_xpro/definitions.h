@@ -54,6 +54,7 @@
 #include "peripheral/port/plib_port.h"
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"
+#include "peripheral/cmcc/plib_cmcc.h"
 #include "touch/touch.h"
 #include "peripheral/rtc/plib_rtc.h"
 

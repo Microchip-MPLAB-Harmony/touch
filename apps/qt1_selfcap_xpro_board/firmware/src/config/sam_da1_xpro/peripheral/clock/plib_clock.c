@@ -51,7 +51,6 @@ static void SYSCTRL_Initialize(void)
     {
         /* Waiting for the OSC8M Ready state */
     }
-
     /****************** OSC32K Initialization  ******************************/
     uint32_t calibValue = (uint32_t)(((*(uint64_t*)0x806020) >> 38 ) & 0x7f);
     /* Configure 32K RC oscillator */

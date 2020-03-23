@@ -45,6 +45,7 @@
             <itemPath>../src/config/sam_l22_xpro/touch/qtm_acq_saml22_0x0028_api.h</itemPath>
             <itemPath>../src/config/sam_l22_xpro/touch/qtm_binding_layer_0x0005_api.h</itemPath>
             <itemPath>../src/config/sam_l22_xpro/touch/qtm_common_components_api.h</itemPath>
+            <itemPath>../src/config/sam_l22_xpro/touch/driven_shield.h</itemPath>
             <itemPath>../src/config/sam_l22_xpro/touch/qtm_touch_key_0x0002_api.h</itemPath>
             <itemPath>../src/config/sam_l22_xpro/touch/qtm_scroller_0x000b_api.h</itemPath>
             <itemPath>../src/config/sam_l22_xpro/touch/qtm_freq_hop_auto_0x0004_api.h</itemPath>
@@ -158,6 +159,7 @@
             <logicalFolder name="f1" displayName="datastreamer" projectFiles="true">
               <itemPath>../src/config/sam_l22_xpro/touch/datastreamer/datastreamer_UART_sam.c</itemPath>
             </logicalFolder>
+            <itemPath>../src/config/sam_l22_xpro/touch/driven_shield.c</itemPath>
             <itemPath>../src/config/sam_l22_xpro/touch/touch.c</itemPath>
           </logicalFolder>
           <itemPath>../src/config/sam_l22_xpro/initialization.c</itemPath>
@@ -188,7 +190,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.30</languageToolchainVersion>
+        <languageToolchainVersion>2.40</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
@@ -198,11 +200,11 @@
       <compileType>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibFileItem>../src/config/sam_l22_xpro/touch/lib/0x0028_qtm_saml22_acq.X.a</linkerLibFileItem>
-            <linkerLibFileItem>../src/config/sam_l22_xpro/touch/lib/0x0005_qtm_binding_layer_cm0p.X.a</linkerLibFileItem>
-            <linkerLibFileItem>../src/config/sam_l22_xpro/touch/lib/0x0002_qtm_touch_key_cm0p.X.a</linkerLibFileItem>
-            <linkerLibFileItem>../src/config/sam_l22_xpro/touch/lib/0x000b_qtm_scroller_cm0p.X.a</linkerLibFileItem>
-            <linkerLibFileItem>../src/config/sam_l22_xpro/touch/lib/0x0004_qtm_freq_hop_autotune_cm0p.X.a</linkerLibFileItem>
+            <linkerLibFileItem>../src/config/sam_l22_xpro/touch/lib/qtm_acq_saml22_0x0028.X.a</linkerLibFileItem>
+            <linkerLibFileItem>../src/config/sam_l22_xpro/touch/lib/qtm_binding_layer_cm0p_0x0005.X.a</linkerLibFileItem>
+            <linkerLibFileItem>../src/config/sam_l22_xpro/touch/lib/qtm_touch_key_cm0p_0x0002.X.a</linkerLibFileItem>
+            <linkerLibFileItem>../src/config/sam_l22_xpro/touch/lib/qtm_scroller_cm0p_0x000b.X.a</linkerLibFileItem>
+            <linkerLibFileItem>../src/config/sam_l22_xpro/touch/lib/qtm_freq_hop_auto_cm0p_0x0004.X.a</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
         <archiverTool>

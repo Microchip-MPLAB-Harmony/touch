@@ -65,7 +65,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-
+  
 /*** Macros for LED_SLIDER_1 pin ***/
 #define LED_SLIDER_1_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 8)
 #define LED_SLIDER_1_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 8)
@@ -1089,7 +1089,7 @@ void PORT_GroupOutputEnable(PORT_GROUP group, uint32_t mask);
 
 static inline void PORT_PinWrite(PORT_PIN pin, bool value)
 {
-    PORT_GroupWrite(PORT_BASE_ADDRESS + (0x80 * (pin>>5)), (uint32_t)(0x1) << (pin & 0x1f), (uint32_t)(value) << (pin & 0x1f));
+    PORT_GroupWrite((PORT_GROUP)(PORT_BASE_ADDRESS + (0x80 * (pin>>5))), (uint32_t)(0x1) << (pin & 0x1f), (uint32_t)(value) << (pin & 0x1f));
 }
 
 // *****************************************************************************
@@ -1113,7 +1113,7 @@ static inline void PORT_PinWrite(PORT_PIN pin, bool value)
 
 bool PORT_PinRead(PORT_PIN pin)
 {
-    return (bool)((PORT_GroupRead(PORT_BASE_ADDRESS + (0x80 * (pin>>5))) >> (pin & 0x1F)) & 0x1);
+    return (bool)((PORT_GroupRead((PORT_GROUP)(PORT_BASE_ADDRESS + (0x80 * (pin>>5)))) >> (pin & 0x1F)) & 0x1);
 }
 
 // *****************************************************************************
@@ -1135,7 +1135,7 @@ bool PORT_PinRead(PORT_PIN pin)
 
 bool PORT_PinLatchRead(PORT_PIN pin)
 {
-    return (bool)((PORT_GroupLatchRead(PORT_BASE_ADDRESS + (0x80 * (pin>>5))) >> (pin & 0x1F)) & 0x1);
+    return (bool)((PORT_GroupLatchRead((PORT_GROUP)(PORT_BASE_ADDRESS + (0x80 * (pin>>5)))) >> (pin & 0x1F)) & 0x1);
 }
 
 // *****************************************************************************
@@ -1154,7 +1154,7 @@ bool PORT_PinLatchRead(PORT_PIN pin)
 
 void PORT_PinToggle(PORT_PIN pin)
 {
-    PORT_GroupToggle(PORT_BASE_ADDRESS + (0x80 * (pin>>5)), 0x1 << (pin & 0x1F));
+    PORT_GroupToggle((PORT_GROUP)(PORT_BASE_ADDRESS + (0x80 * (pin>>5))), 0x1 << (pin & 0x1F));
 }
 
 // *****************************************************************************
@@ -1173,7 +1173,7 @@ void PORT_PinToggle(PORT_PIN pin)
 
 void PORT_PinSet(PORT_PIN pin)
 {
-    PORT_GroupSet(PORT_BASE_ADDRESS + (0x80 * (pin>>5)), 0x1 << (pin & 0x1F));
+    PORT_GroupSet((PORT_GROUP)(PORT_BASE_ADDRESS + (0x80 * (pin>>5))), 0x1 << (pin & 0x1F));
 }
 
 // *****************************************************************************
@@ -1192,7 +1192,7 @@ void PORT_PinSet(PORT_PIN pin)
 
 void PORT_PinClear(PORT_PIN pin)
 {
-    PORT_GroupClear(PORT_BASE_ADDRESS + (0x80 * (pin>>5)), 0x1 << (pin & 0x1F));
+    PORT_GroupClear((PORT_GROUP)(PORT_BASE_ADDRESS + (0x80 * (pin>>5))), 0x1 << (pin & 0x1F));
 }
 
 // *****************************************************************************
@@ -1212,7 +1212,7 @@ void PORT_PinClear(PORT_PIN pin)
 
 void PORT_PinInputEnable(PORT_PIN pin)
 {
-    PORT_GroupInputEnable(PORT_BASE_ADDRESS + (0x80 * (pin>>5)), 0x1 << (pin & 0x1F));
+    PORT_GroupInputEnable((PORT_GROUP)(PORT_BASE_ADDRESS + (0x80 * (pin>>5))), 0x1 << (pin & 0x1F));
 }
 
 // *****************************************************************************
@@ -1232,7 +1232,7 @@ void PORT_PinInputEnable(PORT_PIN pin)
 
 void PORT_PinOutputEnable(PORT_PIN pin)
 {
-    PORT_GroupOutputEnable(PORT_BASE_ADDRESS + (0x80 * (pin>>5)), 0x1 << (pin & 0x1F));
+    PORT_GroupOutputEnable((PORT_GROUP)(PORT_BASE_ADDRESS + (0x80 * (pin>>5))), 0x1 << (pin & 0x1F));
 }
 
 // DOM-IGNORE-BEGIN
