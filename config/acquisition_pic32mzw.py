@@ -234,8 +234,8 @@ drivenShieldDedicatedPin = qtouchComponent.createKeyValueSetSymbol("DS_DEDICATED
 drivenShieldDedicatedPin.setLabel("Select Dedicated Driven Shield Pin")
 drivenShieldDedicatedPin.setDefaultValue(0)
 drivenShieldDedicatedPin.setDisplayMode("Description")
-drivenShieldDedicatedPin.addKey("--","--","--")
+#drivenShieldDedicatedPin.addKey("--","--","---")
 for index in range(0, len(dsPins)):
     drivenShieldDedicatedPin.addKey("X("+str(index)+")",
     str(index),
-    "X("+str(index)+")  "+dsPins[index])
+    "X"+str(index)+"  ("+dsPins[index]+")")
