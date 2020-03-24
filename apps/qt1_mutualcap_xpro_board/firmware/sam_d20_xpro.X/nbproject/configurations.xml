@@ -179,7 +179,7 @@
       <compileType>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibFileItem>../src/config/sam_d20_xpro/touch/lib/0x000e_qtm_samd20_acq.X.a</linkerLibFileItem>
+            <linkerLibFileItem>../src/config/sam_d20_xpro/touch/lib/qtm_acq_samd20_0x000e.X.a</linkerLibFileItem>
             <linkerLibFileItem>../src/config/sam_d20_xpro/touch/lib/qtm_binding_layer_cm0p_0x0005.X.a</linkerLibFileItem>
             <linkerLibFileItem>../src/config/sam_d20_xpro/touch/lib/qtm_touch_key_cm0p_0x0002.X.a</linkerLibFileItem>
             <linkerLibFileItem>../src/config/sam_d20_xpro/touch/lib/qtm_scroller_cm0p_0x000b.X.a</linkerLibFileItem>

@@ -138,8 +138,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d20_xpro/touch/</LogicalPath>
           <PhysicalPath dnOrder="4">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">806699CA4BB13560D56B092C6BD6E9CC</GeneratedChecksum>
-          <UserChecksum dnOrder="6">806699CA4BB13560D56B092C6BD6E9CC</UserChecksum>
+          <GeneratedChecksum dnOrder="5">57C4C626BCFCE58CC5EB8721D6A84EA8</GeneratedChecksum>
+          <UserChecksum dnOrder="6">57C4C626BCFCE58CC5EB8721D6A84EA8</UserChecksum>
         </File>
         <File dnOrder="15">
           <Type dnOrder="0">SOURCE</Type>
@@ -489,8 +489,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d20_xpro/touch/</LogicalPath>
           <PhysicalPath dnOrder="4">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">3AF314527659F3D1B20B027956239672</GeneratedChecksum>
-          <UserChecksum dnOrder="6">3AF314527659F3D1B20B027956239672</UserChecksum>
+          <GeneratedChecksum dnOrder="5">FC22710CE9F4AD0BB8DE3DDF809B12BA</GeneratedChecksum>
+          <UserChecksum dnOrder="6">FC22710CE9F4AD0BB8DE3DDF809B12BA</UserChecksum>
         </File>
         <File dnOrder="54">
           <Type dnOrder="0">HEADER</Type>
@@ -620,7 +620,7 @@
         </File>
       </Files>
       <Libraries dnOrder="1">
-        <Library dnOrder="0" name="0x000e_qtm_samd20_acq.X.a" path="/touch/lib/" security="NON_SECURE"/>
+        <Library dnOrder="0" name="qtm_acq_samd20_0x000e.X.a" path="/touch/lib/" security="NON_SECURE"/>
         <Library dnOrder="1" name="qtm_binding_layer_cm0p_0x0005.X.a" path="/touch/lib/" security="NON_SECURE"/>
         <Library dnOrder="2" name="qtm_touch_key_cm0p_0x0002.X.a" path="/touch/lib/" security="NON_SECURE"/>
         <Library dnOrder="3" name="qtm_scroller_cm0p_0x000b.X.a" path="/touch/lib/" security="NON_SECURE"/>

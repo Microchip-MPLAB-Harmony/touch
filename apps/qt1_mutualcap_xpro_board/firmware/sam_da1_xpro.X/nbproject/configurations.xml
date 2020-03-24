@@ -43,7 +43,6 @@
             <itemPath>../src/config/sam_da1_xpro/touch/qtm_binding_layer_0x0005_api.h</itemPath>
             <itemPath>../src/config/sam_da1_xpro/touch/qtm_common_components_api.h</itemPath>
             <itemPath>../src/config/sam_da1_xpro/touch/qtm_acq_samd21_0x0024_api.h</itemPath>
-            <itemPath>../src/config/sam_da1_xpro/touch/driven_shield.h</itemPath>
             <itemPath>../src/config/sam_da1_xpro/touch/qtm_touch_key_0x0002_api.h</itemPath>
             <itemPath>../src/config/sam_da1_xpro/touch/qtm_scroller_0x000b_api.h</itemPath>
             <itemPath>../src/config/sam_da1_xpro/touch/touch.h</itemPath>
@@ -147,7 +146,6 @@
             <logicalFolder name="f1" displayName="datastreamer" projectFiles="true">
               <itemPath>../src/config/sam_da1_xpro/touch/datastreamer/datastreamer_UART_sam.c</itemPath>
             </logicalFolder>
-            <itemPath>../src/config/sam_da1_xpro/touch/driven_shield.c</itemPath>
             <itemPath>../src/config/sam_da1_xpro/touch/touch.c</itemPath>
           </logicalFolder>
           <itemPath>../src/config/sam_da1_xpro/initialization.c</itemPath>
@@ -188,7 +186,7 @@
       <compileType>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibFileItem>../src/config/sam_da1_xpro/touch/lib/0x0024_qtm_samd21_acq.X.a</linkerLibFileItem>
+            <linkerLibFileItem>../src/config/sam_da1_xpro/touch/lib/qtm_acq_samd21_0x0024.X.a</linkerLibFileItem>
             <linkerLibFileItem>../src/config/sam_da1_xpro/touch/lib/qtm_binding_layer_cm0p_0x0005.X.a</linkerLibFileItem>
             <linkerLibFileItem>../src/config/sam_da1_xpro/touch/lib/qtm_touch_key_cm0p_0x0002.X.a</linkerLibFileItem>
             <linkerLibFileItem>../src/config/sam_da1_xpro/touch/lib/qtm_scroller_cm0p_0x000b.X.a</linkerLibFileItem>

@@ -45,7 +45,6 @@
             <itemPath>../src/config/sam_l22_xpro/touch/qtm_acq_saml22_0x0028_api.h</itemPath>
             <itemPath>../src/config/sam_l22_xpro/touch/qtm_binding_layer_0x0005_api.h</itemPath>
             <itemPath>../src/config/sam_l22_xpro/touch/qtm_common_components_api.h</itemPath>
-            <itemPath>../src/config/sam_l22_xpro/touch/driven_shield.h</itemPath>
             <itemPath>../src/config/sam_l22_xpro/touch/qtm_touch_key_0x0002_api.h</itemPath>
             <itemPath>../src/config/sam_l22_xpro/touch/qtm_freq_hop_auto_0x0004_api.h</itemPath>
             <itemPath>../src/config/sam_l22_xpro/touch/touch.h</itemPath>
@@ -158,7 +157,6 @@
             <logicalFolder name="f1" displayName="datastreamer" projectFiles="true">
               <itemPath>../src/config/sam_l22_xpro/touch/datastreamer/datastreamer_UART_sam.c</itemPath>
             </logicalFolder>
-            <itemPath>../src/config/sam_l22_xpro/touch/driven_shield.c</itemPath>
             <itemPath>../src/config/sam_l22_xpro/touch/touch.c</itemPath>
           </logicalFolder>
           <itemPath>../src/config/sam_l22_xpro/initialization.c</itemPath>

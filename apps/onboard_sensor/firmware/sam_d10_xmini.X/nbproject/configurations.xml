@@ -184,7 +184,7 @@
         <linkerTool>
           <linkerLibItems>
             <linkerLibFileItem>../src/config/sam_d10_xmini/touch/lib/qtm_acq_samd10_0x0009.X.a</linkerLibFileItem>
-            <linkerLibFileItem>../src/config/sam_d10_xmini/touch/lib/qtm_binding_layer_cm23_0x0005.X.a</linkerLibFileItem>
+            <linkerLibFileItem>../src/config/sam_d10_xmini/touch/lib/qtm_binding_layer_cm0p_0x0005.X.a</linkerLibFileItem>
             <linkerLibFileItem>../src/config/sam_d10_xmini/touch/lib/qtm_touch_key_cm0p_0x0002.X.a</linkerLibFileItem>
             <linkerLibFileItem>../src/config/sam_d10_xmini/touch/lib/qtm_freq_hop_auto_cm0p_0x0004.X.a</linkerLibFileItem>
           </linkerLibItems>

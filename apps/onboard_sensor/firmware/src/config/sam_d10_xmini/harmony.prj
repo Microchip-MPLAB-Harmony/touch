@@ -648,7 +648,7 @@
       </Files>
       <Libraries dnOrder="1">
         <Library dnOrder="0" name="qtm_acq_samd10_0x0009.X.a" path="/touch/lib/" security="NON_SECURE"/>
-        <Library dnOrder="1" name="qtm_binding_layer_cm23_0x0005.X.a" path="/touch/lib/" security="NON_SECURE"/>
+        <Library dnOrder="1" name="qtm_binding_layer_cm0p_0x0005.X.a" path="/touch/lib/" security="NON_SECURE"/>
         <Library dnOrder="2" name="qtm_touch_key_cm0p_0x0002.X.a" path="/touch/lib/" security="NON_SECURE"/>
         <Library dnOrder="3" name="qtm_freq_hop_auto_cm0p_0x0004.X.a" path="/touch/lib/" security="NON_SECURE"/>
       </Libraries>

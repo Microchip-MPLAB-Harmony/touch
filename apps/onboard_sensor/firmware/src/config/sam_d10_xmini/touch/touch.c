@@ -562,8 +562,6 @@ Notes  : none
 void PTC_Handler(void)
 {
 	qtm_ptc_clear_interrupt();
-{
-	qtm_ptc_clear_interrupt();
 	qtm_samd1x_ptc_handler_eoc();
    
 }
