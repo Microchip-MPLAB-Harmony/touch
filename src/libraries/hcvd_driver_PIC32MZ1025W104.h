@@ -46,6 +46,7 @@ Purpose : Acquisition module - hcvd_driver_PIC32MZ1025W104/HCVD
 ------------------------------------------------------------------------------
 Revision 0.1 - New build 
 Revision 0.2 - removed all the timer code for interrupt workaround
+Revision 1.0 - Baselining revision for release
 ============================================================================*/
 
 #ifndef __HCVD_PIC32MZ__
@@ -68,7 +69,7 @@ manifest constants
 
 /* Version 0.3:  */ 
 
-#define QTM_MODULE_VERSION                  0x02u
+#define QTM_MODULE_VERSION                  0x10u
 
 /* CSD Limit is 7 bits, otherwise overflow at acquisition status bit */
 #define NUM_BITS_CSD                          7u

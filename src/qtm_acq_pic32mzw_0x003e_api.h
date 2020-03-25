@@ -6,7 +6,7 @@
     Microchip Technology Inc.
 
   File Name:
-    qtm_acq_pic32mzw_0x0038_api.h
+    qtm_acq_pic32mzw_0x003e_api.h
 
   Summary:
     QTouch Modular Library

@@ -73,8 +73,8 @@ touchHeaderFile.setMarkup(False)
 
 # Header File
 touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_ACQ_API_HEADER", None)
-touchHeaderFile.setSourcePath("/src/qtm_acq_pic32mzw_0x0038_api.h")
-touchHeaderFile.setOutputName("qtm_acq_pic32mzw_0x0038_api.h")
+touchHeaderFile.setSourcePath("/src/qtm_acq_pic32mzw_0x003e_api.h")
+touchHeaderFile.setOutputName("qtm_acq_pic32mzw_0x003e_api.h")
 touchHeaderFile.setDestPath("/touch/")
 touchHeaderFile.setProjectPath("config/" + configName + "/touch/")
 touchHeaderFile.setType("HEADER")
@@ -104,7 +104,7 @@ touchHeaderFile.setMarkup(False)
 
 #Set acquisition module id for the device
 getModuleID = qtouchComponent.createStringSymbol("MODULE_ID", touchMenu)
-getModuleID.setDefaultValue("0x0038")
+getModuleID.setDefaultValue("0x003e")
 getModuleID.setVisible(False)
 
 #Set clock xml for the device

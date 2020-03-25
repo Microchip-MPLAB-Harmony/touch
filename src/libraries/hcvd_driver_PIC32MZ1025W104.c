@@ -39,6 +39,15 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
 
+/*============================================================================
+Filename : hcvd_driver_PIC32MZ1025W104 : QTouch Modular Library
+Purpose : Acquisition module - hcvd_driver_PIC32MZ1025W104/HCVD
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+Revision 0.1 - New build 
+Revision 0.2 - removed all the timer code for interrupt workaround
+Revision 1.0 - Baselining revision for release
+============================================================================*/
 
 #include "hcvd_driver_PIC32MZ1025W104.h"
 #include "definitions.h" 
