@@ -1,4 +1,3 @@
-
 /*******************************************************************************
   Touch Library
 
@@ -39,9 +38,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
 
-/* QTouch Modular Library Configuration */
-/* Header file for application project - Acquisition library API */
-
 #ifndef __TOUCH_API_L10_ACQ_H__
 #define __TOUCH_API_L10_ACQ_H__
 
@@ -68,7 +64,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define CAL_CHRG_5TAU 3u
 
 #define RSEL_MAX_OPTION                 RSEL_VAL_200
-#define PRSC_MAX_OPTION                 PRSC_DIV_SEL_8
+#define PRSC_MAX_OPTION                 PRSC_DIV_SEL_32
 
 /* X line bit position */
 #define X_NONE 0u
@@ -124,19 +120,17 @@ typedef enum tag_gain_t
 }
 gain_t;
 /* PTC clock prescale setting.
-* If Generic clock input to PTC = 4MHz, then:
-* PRSC_DIV_SEL_1 sets PTC Clock to 4MHz
-* PRSC_DIV_SEL_2 sets PTC Clock to 2MHz
+* For Example: if Generic clock input to PTC = 4MHz, then:
 * PRSC_DIV_SEL_4 sets PTC Clock to 1MHz
 * PRSC_DIV_SEL_8 sets PTC Clock to 500KHz
 *
 */
 typedef enum tag_prsc_div_sel_t 
 {
-  PRSC_DIV_SEL_1,
-  PRSC_DIV_SEL_2,
   PRSC_DIV_SEL_4,
-  PRSC_DIV_SEL_8
+  PRSC_DIV_SEL_8,
+  PRSC_DIV_SEL_16,
+  PRSC_DIV_SEL_32
 }
 prsc_div_sel_t;
 
@@ -145,7 +139,9 @@ prsc_div_sel_t;
 * RSEL_VAL_0 sets internal series resistor to 0ohms.
 * RSEL_VAL_20 sets internal series resistor to 20Kohms.
 * RSEL_VAL_50 sets internal series resistor to 50Kohms.
+* RSEL_VAL_75 sets internal series resistor to 75Kohms.
 * RSEL_VAL_100 sets internal series resistor to 100Kohms.
+* RSEL_VAL_200 sets internal series resistor to 200Kohms.
 */
 typedef enum tag_rsel_val_t 
 {
