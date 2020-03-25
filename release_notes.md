@@ -1,4 +1,43 @@
-#  Microchip MPLAB® Harmony 3 Touch Library Release Notes
+#  Microchip MPLABï¿½ Harmony 3 Touch Library Release Notes
+
+## Touch Library v3.6.0 Release
+
+### NEW DEVICES SUPPORTED
+
+* Device Support for SAM HA1
+* Device Support for PIC32MZ1025W104132 (HCVD)
+
+### NEW FEATURE SUPPORTED
+
+* Driven Shield support for SAM D21 
+* Driven Shield support for SAM DA1
+* Driven Shield support for SAM HA1
+* Driven Shield support for SAM L2x 
+* Driven Shield support for SAM C2x 
+* Driven Shield support for SAM E5x 
+* Driven Shield support for SAM D51 
+* Updated the prescaler values in api.h files to include the internal prescaler division factor. 
+    * For example, in SAML10, the prescaler values from 1, 2, 4, 8 are updated to 4, 8, 16, 32 
+      (to include a fixed internal division factor of 4). Similarly, all prescaler values are 
+      updated for all other devices. 
+
+### DEVELOPMENT TOOLS 
+
+* [MPLAB X IDE v5.35](https://www.microchip.com/mplabx-ide-windows-installer)
+* [MPLAB XC32 C/C++ Compiler v2.40](https://www.microchip.com/mplab/compilers)
+* MPLAB X IDE plug-ins:
+  * MPLAB Harmony Configurator (MHC) v3.4.2 
+
+### Required MPLAB Harmony v3.x.x Modules 
+
+* csp v3.6.1
+* bsp v3.6.1
+* dev_packs v3.6.1
+* mhc v3.3.5 
+
+### KNOWN ISSUES
+* none 
+
 
 ## Touch Library v3.5.0 Release
 
