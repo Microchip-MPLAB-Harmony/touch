@@ -30,8 +30,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d10_xmini/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">314AA564399D8A8C735D53739C7AA75C</GeneratedChecksum>
-          <UserChecksum dnOrder="6">314AA564399D8A8C735D53739C7AA75C</UserChecksum>
+          <GeneratedChecksum dnOrder="5">5647482ADBDFBD1A8AD79F164A9D63B7</GeneratedChecksum>
+          <UserChecksum dnOrder="6">5647482ADBDFBD1A8AD79F164A9D63B7</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
@@ -66,8 +66,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d10_xmini/peripheral/clock/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/clock/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">AE72521AB3C01C5B02FACDED0D1788AD</GeneratedChecksum>
-          <UserChecksum dnOrder="6">AE72521AB3C01C5B02FACDED0D1788AD</UserChecksum>
+          <GeneratedChecksum dnOrder="5">FBC79AC1F0A311C3106DD98D9BD7C6C5</GeneratedChecksum>
+          <UserChecksum dnOrder="6">FBC79AC1F0A311C3106DD98D9BD7C6C5</UserChecksum>
         </File>
         <File dnOrder="7">
           <Type dnOrder="0">SOURCE</Type>
@@ -138,8 +138,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d10_xmini/touch/</LogicalPath>
           <PhysicalPath dnOrder="4">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">421C610B11EDADA2A409088446D1CF1E</GeneratedChecksum>
-          <UserChecksum dnOrder="6">421C610B11EDADA2A409088446D1CF1E</UserChecksum>
+          <GeneratedChecksum dnOrder="5">6237275CBF64B39884CF19753E7F7E25</GeneratedChecksum>
+          <UserChecksum dnOrder="6">6237275CBF64B39884CF19753E7F7E25</UserChecksum>
         </File>
         <File dnOrder="15">
           <Type dnOrder="0">SOURCE</Type>
@@ -516,8 +516,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d10_xmini/touch/</LogicalPath>
           <PhysicalPath dnOrder="4">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">42E8912F318860DF7C959C745BE92D3F</GeneratedChecksum>
-          <UserChecksum dnOrder="6">42E8912F318860DF7C959C745BE92D3F</UserChecksum>
+          <GeneratedChecksum dnOrder="5">F700E6D46C87A9A6D6D3D14B1A81BCCD</GeneratedChecksum>
+          <UserChecksum dnOrder="6">F700E6D46C87A9A6D6D3D14B1A81BCCD</UserChecksum>
         </File>
         <File dnOrder="57">
           <Type dnOrder="0">HEADER</Type>
@@ -624,8 +624,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d10_xmini/touch/</LogicalPath>
           <PhysicalPath dnOrder="4">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">8A6AE00C65B5E7E7A090E00D0AD36DD1</GeneratedChecksum>
-          <UserChecksum dnOrder="6">8A6AE00C65B5E7E7A090E00D0AD36DD1</UserChecksum>
+          <GeneratedChecksum dnOrder="5">417FC05C104C2C2128E451B6DE94466C</GeneratedChecksum>
+          <UserChecksum dnOrder="6">417FC05C104C2C2128E451B6DE94466C</UserChecksum>
         </File>
         <File dnOrder="69">
           <Type dnOrder="0">HEADER</Type>

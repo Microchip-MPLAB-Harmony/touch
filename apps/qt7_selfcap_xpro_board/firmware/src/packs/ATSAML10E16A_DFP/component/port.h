@@ -323,12 +323,12 @@ typedef struct
   __I   uint8_t                        Reserved1[0x0C];
 } port_group_registers_t;
 
-#define GROUP_NUMBER _U_(1)
+#define PORT_GROUP_NUMBER _U_(1)
 
 /** \brief PORT register API structure */
 typedef struct
 {  /* Port Module */
-        port_group_registers_t         GROUP[GROUP_NUMBER]; /**< Offset: 0x00  */
+        port_group_registers_t         GROUP[PORT_GROUP_NUMBER]; /**< Offset: 0x00  */
 } port_registers_t;
 
 
