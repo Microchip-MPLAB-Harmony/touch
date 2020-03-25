@@ -9,6 +9,9 @@ def loadModule():
 
     #mod will have value if PTC peripheral is present in a device variant
     mod = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PTC\"]")
+    deviceNode = ATDF.getNode("/avr-tools-device-file/devices")
+    deviceChild = deviceNode.getChildren()
+    deviceName = deviceChild[0].getAttribute("family")
     for x in supportedDevices:
         if x in Variables.get("__PROCESSOR"):
             if Variables.get("__PROCESSOR") not in notSupportedVariants:
@@ -32,7 +35,7 @@ def loadModule():
                     qtouchComponent.setDependencyEnabled("Touch_sercom", False)
                     qtouchComponent.addDependency("Touch_sercom_Krono", "UART", None, False, False)
                     qtouchComponent.setDependencyEnabled("Touch_sercom_Krono", False)
-                elif x in PIC32Devices:
+                elif x in PIC32Devices and deviceName == "PIC32MZW":
                     qtouchComponent = Module.CreateComponent("lib_qtouch", "Touch Library", "/Touch/", "config/qtouch.py")
                     qtouchComponent.setDisplayType("HCVD")
                     qtouchComponent.addDependency("Touch_timer", "TMR", None, False, True)
