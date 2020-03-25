@@ -295,9 +295,9 @@ void datastreamer_output(void)
 	/* Frequency selection - from acq module */
 	datastreamer_transmit(qtlib_acq_set1.qtm_acq_node_group_config->freq_option_select);
 
-	for (uint8_t count = 0u; count < qtm_freq_hop_autotune_control1.qtm_freq_hop_autotune_config->num_freqs; count++) {
+	for (count_bytes_out = 0u; count_bytes_out < qtm_freq_hop_autotune_control1.qtm_freq_hop_autotune_config->num_freqs; count_bytes_out++) {
 		/* Frequencies */
-		datastreamer_transmit(qtm_freq_hop_autotune_control1.qtm_freq_hop_autotune_config->median_filter_freq[count]);
+		datastreamer_transmit(qtm_freq_hop_autotune_control1.qtm_freq_hop_autotune_config->median_filter_freq[count_bytes_out]);
 	}
 #endif
 
