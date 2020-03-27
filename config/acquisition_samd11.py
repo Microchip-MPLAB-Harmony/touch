@@ -7,12 +7,18 @@ global touchChannelMutual
 getVariant =  ATDF.getNode("/avr-tools-device-file/variants/variant")
 getPinout = []
 getPinout = getVariant.getAttribute("ordercode")
-if ("D10C14" in getPinout):
+if ("D11C14" in getPinout):
     touchChannelSelf = 7
     touchChannelMutual = 12
-elif ("D10D14" in getPinout):
+elif ("D11D14AM" in getPinout):
     touchChannelSelf = 16
     touchChannelMutual = 72
+elif ("D11D14AS" in getPinout):
+    touchChannelSelf = 13
+    touchChannelMutual = 42
+elif ("D11D14AU" in getPinout):
+    touchChannelSelf = 13
+    touchChannelMutual = 42
 else:
     touchChannelSelf = 16
     touchChannelMutual = 72

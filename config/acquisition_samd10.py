@@ -7,18 +7,27 @@ global touchChannelMutual
 getVariant =  ATDF.getNode("/avr-tools-device-file/devices/device")
 getName = []
 getName = getVariant.getAttribute("name")
-if ("D10C14" in getName):
+if ("D10C" in getName):
     touchChannelSelf = 7
     touchChannelMutual = 12
+elif ("D10D13AM" in getName):
+    touchChannelSelf = 16
+    touchChannelMutual = 72
+elif ("D10D13AS" in getName):
+    touchChannelSelf = 13
+    touchChannelMutual = 42
 elif ("D10D14AM" in getName):
     touchChannelSelf = 16
     touchChannelMutual = 72
+elif ("D10D14AS" in getName):
+    touchChannelSelf = 13
+    touchChannelMutual = 42
 elif ("D10D14AU" in getName):
     touchChannelSelf = 13
     touchChannelMutual = 42
 else:
-    touchChannelSelf = 1
-    touchChannelMutual = 1
+    touchChannelSelf = 16
+    touchChannelMutual = 72
 
 
 def autoTuneFunc(symbol,event):
