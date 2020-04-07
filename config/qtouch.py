@@ -198,7 +198,13 @@ def instantiateComponent(qtouchComponent):
     enableSurfaceMenu.setLabel("Enable Surface")
     enableSurfaceMenu.setDefaultValue(False)
     execfile(Module.getPath() +"/config/surface.py")
-    
+
+    # Enable 4p 
+    global fourP
+    enable4pMenu = qtouchComponent.createBooleanSymbol("ENABLE_4p", touchMenu)
+    enable4pMenu.setLabel("Enable 4p")
+    enable4pMenu.setDefaultValue(False)
+
     # Enable Gesture 
     enableGestureMenu = qtouchComponent.createBooleanSymbol("ENABLE_GESTURE", touchMenu)
     enableGestureMenu.setLabel("Enable Gesture")
