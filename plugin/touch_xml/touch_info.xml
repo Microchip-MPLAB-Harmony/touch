@@ -14,6 +14,13 @@ This is for device feature and library version information
             <device name="SAMHA1"/>
         </csd>		
     </feature>
+	<clock>
+		<device name="ATSAMD2"><limit min="0.1" max="1.0"/></device>
+        <device name="ATSAML2"><limit min="0.1" max="1.0"/></device>
+		<device name="ATSAMD1"><limit min="0.1" max="1.0"/></device>
+		<device name="ATSAMDA"><limit min="0.1" max="1.0"/></device>
+        <device name="ATSAMHA"><limit min="0.1" max="1.0"/></device>
+	</clock>
     <version>
         <!-- module version information -->
         <key>1.3</key>
