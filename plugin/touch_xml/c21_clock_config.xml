@@ -2,7 +2,7 @@
 <!-- 
 This is for SAMC21, SAMC20 Family
 -->
-
+<info>
 <clock_settings>
 	<all_clock_symbols_list>
 		<clock index = "0_0" symbol="GCLK_INST_NUM1" value="True" component_id= "core" name="Select Generic Clock Generator 1 (GCLK1)" />
@@ -15,3 +15,18 @@ This is for SAMC21, SAMC20 Family
 		<default clock_update_index_list="0_0,1_0"/>
 	</common>
 </clock_settings>
+<description>
+	<!-- first {} considered as heading-->
+	<data>	{Oscillator| Prescaler Divisor | Frequency},
+					{OSC48M| 1 | 48MHz}
+	</data>
+	<data>	{Generic clock(Peripherals)| Source | Frequency},
+					{GCLK0(CPU)|OSC48M| 48MHz}, 
+					{GCLK1(PTC, UART)|OSC48M(DIV 12)|4MHz},
+					{Timer (RTC)|OSCULP32K|32.768KHz}
+	</data>
+	<data>	{Wait states},
+					{NVM states| 2}
+	</data>
+</description>
+</info>

@@ -2,7 +2,7 @@
 <!-- 
 This is for SAME51, SAME53, SAME54, SAMD51 Family
 -->
-
+<info>
 <clock_settings>
 	<all_clock_symbols_list>
 		<clock index = "0_0" symbol="CONFIG_CLOCK_DFLL_ENABLE" value="True" component_id= "core" name="DFLL Enable" />
@@ -32,3 +32,18 @@ This is for SAME51, SAME53, SAME54, SAMD51 Family
 		<default clock_update_index_list="0_0,1_0,2_0,3_0,4_0,5_0,6_0,7_0,8_0,9_0,10_0,11_0,12_0,13_0,14_0,15_0,16_0,17_0,18_0"/>
 	</common>
 </clock_settings>
+<description>
+	<!-- first {} considered as heading-->
+	<data>	{Oscillator| Prescaler Divisor | Frequency},
+					{DFLL48M| 1 | 48MHz(GCLK3, closed loop, multi factor 1464)}
+	</data>
+	<data>	{Generic clock(Peripherals)| Source | Frequency},
+					{GCLK0(CPU)|DFLL48M| 48MHz}, 
+					{GCLK1(PTC, UART)|DFLL48M(DIV 6)|8MHz},
+					{GCLK3(RTC)|ULP32K|32.768KHz}
+	</data>
+	<data>	{Wait states},
+					{NVM states| 2}
+	</data>
+</description>
+</info>
