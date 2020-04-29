@@ -160,6 +160,8 @@ def instantiateComponent(qtouchComponent):
     touchScriptEvent.setReadOnly(True)
 	
     ptcClockInfo = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PTC\"]/instance@[name=\"PTC\"]/parameters/param@[name=\"GCLK_ID\"]")
+    if ptcClockInfo is None:
+        ptcClockInfo = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"ADC\"]/instance@[name=\"ADC0\"]/parameters/param@[name=\"GCLK_ID\"]")
     ptcFreqencyId= qtouchComponent.createStringSymbol("PTC_CLOCK_FREQ", touchInfoMenu)
     ptcFreqencyId.setLabel("PTC Freqency Id ")
     ptcFreqencyId.setReadOnly(True)

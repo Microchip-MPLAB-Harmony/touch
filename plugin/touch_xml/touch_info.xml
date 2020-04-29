@@ -15,11 +15,9 @@ This is for device feature and library version information
         </csd>		
     </feature>
 	<clock>
-		<device name="ATSAMD2"><limit min="0.1" max="1.0"/></device>
-        <device name="ATSAML2"><limit min="0.1" max="1.0"/></device>
-		<device name="ATSAMD1"><limit min="0.1" max="1.0"/></device>
-		<device name="ATSAMDA"><limit min="0.1" max="1.0"/></device>
-        <device name="ATSAMHA"><limit min="0.1" max="1.0"/></device>
+		<!--PTC clock default min/max  is 0.1/1.0-->
+		<device name="ATSAML1"><limit min="0.5" max="2.0"/></device>
+		<device name="ATSAME5"><limit min="0.16" max="2.0"/></device>		
 	</clock>
     <version>
         <!-- module version information -->
