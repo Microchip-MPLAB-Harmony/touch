@@ -130,6 +130,7 @@ acquisitionMenu = qtouchComponent.createMenuSymbol("ACQUISITION_MENU", touchMenu
 acquisitionMenu.setLabel("Acquisition Configuration")
 
 # Sensing Technology
+global touchSenseTechnology
 touchSenseTechnology = qtouchComponent.createKeyValueSetSymbol("SENSE_TECHNOLOGY", acquisitionMenu)
 touchSenseTechnology.setLabel("Sensor Technology")
 touchSenseTechnology.addKey("SelfCap", "NODE_SELFCAP", "Self Capacitance Sensing")

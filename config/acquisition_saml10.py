@@ -176,6 +176,7 @@ acquisitionMenu = qtouchComponent.createMenuSymbol("ACQUISITION_MENU", touchMenu
 acquisitionMenu.setLabel("Acquisition Configuration")
 
 # Sensing Technology
+global touchSenseTechnology
 touchSenseTechnology = qtouchComponent.createKeyValueSetSymbol("SENSE_TECHNOLOGY", acquisitionMenu)
 touchSenseTechnology.setLabel("Sensor Technology")
 touchSenseTechnology.addKey("SelfCap", "NODE_SELFCAP", "Self Capacitance Sensing")
@@ -260,6 +261,7 @@ enableDrivenShieldDedicated.setDefaultValue(False)
 
 drivenShieldDedicatedPin = qtouchComponent.createKeyValueSetSymbol("DS_DEDICATED_PIN", enableDrivenShieldDedicated)
 drivenShieldDedicatedPin.setLabel("Select Dedicated Driven Shield Pin")
+drivenShieldDedicatedPin.setOutputMode("Value")
 drivenShieldDedicatedPin.setDefaultValue(0)
 drivenShieldDedicatedPin.setDisplayMode("Description")
 ptcPinNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PTC\"]/instance/signals")
@@ -267,6 +269,5 @@ ptcPinValues = []
 ptcPinValues = ptcPinNode.getChildren()
 for index in range(0, len(ptcPinValues)):
     if(ptcPinValues[index].getAttribute("group") == "Y"):
-        drivenShieldDedicatedPin.addKey(ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
-    ptcPinValues[index].getAttribute("index"),
+        drivenShieldDedicatedPin.addKey(ptcPinValues[index].getAttribute("index"),ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
     ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")

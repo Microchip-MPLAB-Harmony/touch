@@ -3,6 +3,7 @@ InterruptHandler = "PTC" + "_INTERRUPT_HANDLER"
 
 timer_based_driven_shield_supported_device = ["SAMD21","SAMDA1","SAMHA1","SAME54","SAME53","SAME51","SAMD51","SAMC21","SAMC20","SAML21","SAML22"]
 adc_based_touch_acqusition_device = ["SAME54","SAME53","SAME51","SAMD51"]
+lump_not_supported_device = []
 
 def onAttachmentConnected(source,target):
     localComponent = source["component"]
@@ -169,6 +170,8 @@ def instantiateComponent(qtouchComponent):
     
     execfile(Module.getPath() +"/config/interface.py")
     execfile(Module.getPath() +"/config/acquisition_"+getDeviceName.getDefaultValue().lower()+".py")
+    if (getDeviceName.getDefaultValue() not in lump_not_supported_device):
+        execfile(Module.getPath() +"/config/lump.py")
     if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
         execfile(Module.getPath() +"/config/node_E5X.py")
     elif (getDeviceName.getDefaultValue() in ["SAMD20","SAMD21","SAMDA1","SAMHA1"]):

@@ -11,7 +11,22 @@
 		<#assign drivenShieldSupported = 1>
 	</#if>
 </#list>
+<#if ENABLE_LUMP == true>
+<#assign LUMP_INDI = []>
+ <#list LUMP_CONFIG?split(";")as x>
+<#assign LUMP_INDI = LUMP_INDI + [x]>
+</#list>
+<#assign LUMP_NUM = LUMP_INDI?size>
+<#assign input0 =[]>
+<#assign input1 =[]>
 
+<#list 0..(TOUCH_CHAN_ENABLE_CNT-1-LUMP_NUM)as a>
+<#assign input0 += [.vars["SELFCAP-INPUT_" + a]]>
+</#list>
+<#list (TOUCH_CHAN_ENABLE_CNT-LUMP_NUM)..(TOUCH_CHAN_ENABLE_CNT-1)as b>
+<#assign input1 += [.vars["SELFCAP-INPUT_" + b]]>
+</#list>
+</#if>
 <#if DEVICE_NAME == "PIC32MZW">
 <#if (TOUCH_CHAN_ENABLE_CNT > 0) >
 <#assign MUTL_SURFACE_X = []>
@@ -103,11 +118,37 @@
 						<#assign DRIVEN_SHIELD_PIN_TOTAL += [.vars["DS_DEDICATED_PIN"]]>
 					</#if>
 					<#if DS_ADJACENT_SENSE_LINE_AS_SHIELD == true>
+<#if ENABLE_LUMP == true>
+<#if i < TOUCH_CHAN_ENABLE_CNT-LUMP_NUM >
+<#list 0..(TOUCH_CHAN_ENABLE_CNT-1-LUMP_NUM) as j>
+	<#if .vars["SELFCAP-INPUT_" + i] != input0[j]>
+	<#assign DRIVEN_SHIELD_PIN_TOTAL += [input0[j]]>
+	</#if>
+</#list>
+<#else>
+<#assign LUMP_NODE_INDI = []>
+	<#list .vars["SELFCAP-INPUT_" + i]?split("|")as x>
+	<#assign LUMP_NODE_INDI = LUMP_NODE_INDI + [x]>
+	</#list>
+<#list 0..(TOUCH_CHAN_ENABLE_CNT-1-LUMP_NUM) as j>
+<#assign par = 0>
+	<#list 0..((LUMP_NODE_INDI?size)-1) as y>
+		<#if (LUMP_NODE_INDI[y] == input0[j])>
+		<#assign par = 1>
+		</#if>
+	</#list>
+<#if par == 0>
+<#assign DRIVEN_SHIELD_PIN_TOTAL += [input0[j]]>
+</#if>
+</#list>
+</#if>
+					<#else>
 						<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as j>
 							<#if i != j>
 								<#assign DRIVEN_SHIELD_PIN_TOTAL += [.vars["SELFCAP-INPUT_" + j]]>
 							</#if>
 						</#list>
+					</#if>
 					</#if>					
 					<#lt>#define NODE_${i}_PARAMS                                                           \
 					<#lt>{                                                                              \
@@ -194,11 +235,37 @@
 						<#assign DRIVEN_SHIELD_PIN_TOTAL += [.vars["DS_DEDICATED_PIN"]]>
 					</#if>
 					<#if DS_ADJACENT_SENSE_LINE_AS_SHIELD == true>
+<#if ENABLE_LUMP == true>
+<#if i < TOUCH_CHAN_ENABLE_CNT-LUMP_NUM >
+<#list 0..(TOUCH_CHAN_ENABLE_CNT-1-LUMP_NUM) as j>
+	<#if .vars["SELFCAP-INPUT_" + i] != input0[j]>
+	<#assign DRIVEN_SHIELD_PIN_TOTAL += [input0[j]]>
+	</#if>
+</#list>
+<#else>
+<#assign LUMP_NODE_INDI = []>
+	<#list .vars["SELFCAP-INPUT_" + i]?split("|")as x>
+	<#assign LUMP_NODE_INDI = LUMP_NODE_INDI + [x]>
+	</#list>
+<#list 0..(TOUCH_CHAN_ENABLE_CNT-1-LUMP_NUM) as j>
+<#assign par = 0>
+	<#list 0..((LUMP_NODE_INDI?size)-1) as y>
+		<#if (LUMP_NODE_INDI[y] == input0[j])>
+		<#assign par = 1>
+		</#if>
+	</#list>
+<#if par == 0>
+<#assign DRIVEN_SHIELD_PIN_TOTAL += [input0[j]]>
+</#if>
+</#list>
+</#if>
+					<#else>
 						<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as j>
 							<#if i != j>
 								<#assign DRIVEN_SHIELD_PIN_TOTAL += [.vars["SELFCAP-INPUT_" + j]]>
 							</#if>
 						</#list>
+					</#if>
 					</#if>					
 					<#lt>#define NODE_${i}_PARAMS                                                                                               \
 					<#lt>{                                                                                                                  \
@@ -266,11 +333,37 @@
 						<#assign DRIVEN_SHIELD_PIN_TOTAL += [.vars["DS_DEDICATED_PIN"]]>
 					</#if>
 					<#if DS_ADJACENT_SENSE_LINE_AS_SHIELD == true>
+<#if ENABLE_LUMP == true>
+<#if i < TOUCH_CHAN_ENABLE_CNT-LUMP_NUM >
+<#list 0..(TOUCH_CHAN_ENABLE_CNT-1-LUMP_NUM) as j>
+	<#if .vars["SELFCAP-INPUT_" + i] != input0[j]>
+	<#assign DRIVEN_SHIELD_PIN_TOTAL += [input0[j]]>
+	</#if>
+</#list>
+<#else>
+<#assign LUMP_NODE_INDI = []>
+	<#list .vars["SELFCAP-INPUT_" + i]?split("|")as x>
+	<#assign LUMP_NODE_INDI = LUMP_NODE_INDI + [x]>
+	</#list>
+<#list 0..(TOUCH_CHAN_ENABLE_CNT-1-LUMP_NUM) as j>
+<#assign par = 0>
+	<#list 0..((LUMP_NODE_INDI?size)-1) as y>
+		<#if (LUMP_NODE_INDI[y] == input0[j])>
+		<#assign par = 1>
+		</#if>
+	</#list>
+<#if par == 0>
+<#assign DRIVEN_SHIELD_PIN_TOTAL += [input0[j]]>
+</#if>
+</#list>
+</#if>
+					<#else>
 						<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as j>
 							<#if i != j>
 								<#assign DRIVEN_SHIELD_PIN_TOTAL += [.vars["SELFCAP-INPUT_" + j]]>
 							</#if>
 						</#list>
+					</#if>
 					</#if>					
 					<#lt>#define NODE_${i}_PARAMS                                                                                               \
 					<#lt>{                                                                                                                  \

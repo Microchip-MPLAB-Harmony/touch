@@ -16,6 +16,9 @@ touchNumChannel.setDefaultValue(0)
 touchNumChannel.setMin(0)
 touchNumChannel.setMax(touchChannelCountMax)
 
+global tchSelfPinSelection
+global tchMutXPinSelection
+global tchMutYPinSelection
 tchSelfPinSelection = []
 tchMutXPinSelection = []
 tchMutYPinSelection = []
@@ -28,45 +31,53 @@ for channelID in range(0, touchChannelCountMax):
     tchSelfPinSelection.append(qtouchComponent.createKeyValueSetSymbol("SELFCAP-INPUT_"+ str(channelID), touchChEnable))
     tchSelfPinSelection[channelID].setLabel("Select Y Pin for Channel "+ str(channelID))
     tchSelfPinSelection[channelID].setDefaultValue(0)
-    tchSelfPinSelection[channelID].setOutputMode("Key")
+    tchSelfPinSelection[channelID].setOutputMode("Value")
     tchSelfPinSelection[channelID].setDisplayMode("Description")
     ptcPinNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PTC\"]/instance/signals")
     ptcPinValues = []
     ptcPinValues = ptcPinNode.getChildren()
     for index in range(0, len(ptcPinValues)):
         if(ptcPinValues[index].getAttribute("group") == "Y"):
-            tchSelfPinSelection[channelID].addKey(ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
-        ptcPinValues[index].getAttribute("index"),
+            tchSelfPinSelection[channelID].addKey(
+            ptcPinValues[index].getAttribute("index"),ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
         ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
+    tchSelfPinSelection[channelID].setDependencies(getPinValue,["SELFCAP-INPUT_"+ str(channelID)])
 
     tchMutXPinSelection.append(qtouchComponent.createKeyValueSetSymbol("MUTL-X-INPUT_"+ str(channelID), touchChEnable))
     tchMutXPinSelection[channelID].setLabel("Select X Pin for Channel "+ str(channelID))
     tchMutXPinSelection[channelID].setDefaultValue(0)
-    tchMutXPinSelection[channelID].setOutputMode("Key")
+    tchMutXPinSelection[channelID].setOutputMode("Value")
     tchMutXPinSelection[channelID].setDisplayMode("Description")
     ptcPinNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PTC\"]/instance/signals")
     ptcPinValues = []
     ptcPinValues = ptcPinNode.getChildren()
     for index in range(0, len(ptcPinValues)):
         if(ptcPinValues[index].getAttribute("group") == "X"):        
-            tchMutXPinSelection[channelID].addKey(ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
-        ptcPinValues[index].getAttribute("index"),
+            tchMutXPinSelection[channelID].addKey(ptcPinValues[index].getAttribute("index"),ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
         ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
+    tchMutXPinSelection[channelID].setDependencies(getPinValue,["MUTL-X-INPUT_"+ str(channelID)])
 
     tchMutYPinSelection.append(qtouchComponent.createKeyValueSetSymbol("MUTL-Y-INPUT_"+ str(channelID), touchChEnable))
     tchMutYPinSelection[channelID].setLabel("Select Y Pin for Channel "+ str(channelID))
     tchMutYPinSelection[channelID].setDefaultValue(0)
-    tchMutYPinSelection[channelID].setOutputMode("Key")
+    tchMutYPinSelection[channelID].setOutputMode("Value")
     tchMutYPinSelection[channelID].setDisplayMode("Description")
     ptcPinNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PTC\"]/instance/signals")
     ptcPinValues = []
     ptcPinValues = ptcPinNode.getChildren()
     for index in range(0, len(ptcPinValues)):
         if(ptcPinValues[index].getAttribute("group") == "Y"):        
-            tchMutYPinSelection[channelID].addKey(ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
-        ptcPinValues[index].getAttribute("index"),
-        ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")   
+            tchMutYPinSelection[channelID].addKey(ptcPinValues[index].getAttribute("index"),ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
+        ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
+    tchMutYPinSelection[channelID].setDependencies(getPinValue,["MUTL-Y-INPUT_"+ str(channelID)])  
 
+    #Charge Share Delay
+    touchSym_CSD_Val = qtouchComponent.createIntegerSymbol("DEF_TOUCH_CHARGE_SHARE_DELAY" + str(channelID), touchChEnable)
+    touchSym_CSD_Val.setLabel("Additional Charge Share Delay")
+    touchSym_CSD_Val.setDefaultValue(0)
+    touchSym_CSD_Val.setMin(0)
+    touchSym_CSD_Val.setMax(255)
+    touchSym_CSD_Val.setDescription("Increase in Charge Share Delay increases sensor charging time and so the touch measurement time. It indicates the number of additional cycles that are inserted within a touch measurement cycle.")
     #Series Resistor
     touchSym_SERIES_RESISTOR_Val = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_SERIES_RESISTOR" + str(channelID), touchChEnable)
     touchSym_SERIES_RESISTOR_Val.setLabel("Series Resistor")
