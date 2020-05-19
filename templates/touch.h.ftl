@@ -228,7 +228,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 /* Defines scroller parameter setting
  * {touch_scroller_type, touch_start_key, touch_scroller_size,
- * SCR_RESOL_DEADBAND(touch_scroller_resolution,touch_scroller_deadband), touch_scroller_hysterisis,
+ * SCROLLER_RESOL_DEADBAND(touch_scroller_resolution,touch_scroller_deadband), touch_scroller_hysterisis,
  * touch_scr_detect_threshold}
  * Configuring scr_detect_threshold: By default, scr_detect_threshold parameter should be
  * set equal to threshold value of the underlying keys. Then the parameter has to be tuned based on the actual contact
@@ -249,7 +249,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
     <#lt>#define SCROLLER_${i}_PARAMS                                                                                       \
 		<#lt>{                                                                                                              \
 		<#lt>    ${.vars[DEF_SCR_TYPE]}, ${.vars[TOUCH_SCR_START_KEY]}, ${.vars[TOUCH_SCR_SIZE]},                            \
-		SCR_RESOL_DEADBAND(${.vars[DEF_SCR_RESOLUTION]}, ${.vars[DEF_SCR_DEADBAND]}),${.vars[DEF_SCR_POS_HYS]},${.vars[DEF_SCR_CONTACT_THRESHOLD]}\
+		SCROLLER_RESOL_DEADBAND(${.vars[DEF_SCR_RESOLUTION]}, ${.vars[DEF_SCR_DEADBAND]}),${.vars[DEF_SCR_POS_HYS]},${.vars[DEF_SCR_CONTACT_THRESHOLD]}\
 		<#lt>}
 	</#if>
 	</#if>
