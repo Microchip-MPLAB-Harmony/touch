@@ -268,8 +268,7 @@ ${columns}, // Number of Columns
 <#assign sen_type_surh_cnt = [] >
 <#assign surface_ver_channels = [] >
 <#assign surface_hor_channels = [] >
-
-<#list 0..(node_cnt-1) as cnt >
+<#assign scr_channels = [] >
 <#if scr_cnt != 0 >
 <#list 0..TOUCH_SCROLLER_ENABLE_CNT-1 as i >
 <#assign TOUCH_SCR_START_KEY = "TOUCH_SCR_START_KEY" + i>
@@ -280,8 +279,17 @@ ${columns}, // Number of Columns
 <#assign scr_txt += [.vars[DEF_SCR_TYPE]] >
 </#list>
 </#if>
-<#assign temp_string = temp_string + [("0:"+(cnt)+":"+(cnt)+";")] >
+<#if (ENABLE_SURFACE == true) >
+	<#list VERT_START_KEY..(VERT_START_KEY+VERT_NUM_KEY-1) as i>
+	<#assign surface_ver_channels = surface_ver_channels + [i]>
+	</#list>
+	<#list HORI_START_KEY..(HORI_START_KEY+HORI_NUM_KEY-1) as i>
+	<#assign surface_hor_channels = surface_hor_channels + [i]>
+	</#list>
+</#if>
 
+<#list 0..(node_cnt-1) as cnt >
+<#assign temp_string = temp_string + [("0:"+(cnt)+":"+(cnt)+";")] >
 <#if (sen_type_scr_cnt?size) < scr_cnt >
 <#if (scr_cnt > 0) && (cnt == (scr_from_ch_info[sen_type_scr_cnt?size]+scr_num_ch_info[sen_type_scr_cnt?size])) >
 <#assign tmp_txt = scr_txt[sen_type_scr_cnt?size] >
@@ -295,8 +303,9 @@ ${columns}, // Number of Columns
 <#if (scr_cnt > 0) && (cnt >= (scr_from_ch_info[sen_type_scr_cnt?size])) && (cnt <= scr_from_ch_info[sen_type_scr_cnt?size]+scr_num_ch_info[sen_type_scr_cnt?size]) >
 <#assign tmp_txt = scr_txt[sen_type_scr_cnt?size] >
 <#assign temp_val = cnt - scr_from_ch_info[sen_type_scr_cnt?size] >
-<#if tmp_txt == "SCROLLER_TYPE_SLIDER" > <#assign temp_string=temp_string + [("1:"+(cnt)+":"+("Slider")+" "+(sen_type_sli_cnt?size)+"["+(temp_val)+"];")] >
-<#elseif tmp_txt == "SCROLLER_TYPE_WHEEL" > <#assign temp_string = temp_string + [("1:"+(cnt)+":"+("Wheel")+" "+(sen_type_whe_cnt?size)+"["+(temp_val)+"];")] >
+<#if tmp_txt == "SCROLLER_TYPE_SLIDER" > <#assign scr_channels = scr_channels + [cnt] >
+ <#assign temp_string= temp_string + [("1:"+(cnt)+":"+("Slider")+" "+(sen_type_sli_cnt?size)+"["+(temp_val)+"];")] >
+<#elseif tmp_txt == "SCROLLER_TYPE_WHEEL" > <#assign scr_channels = scr_channels + [cnt] > <#assign temp_string = temp_string + [("1:"+(cnt)+":"+("Wheel")+" "+(sen_type_whe_cnt?size)+"["+(temp_val)+"];")] >
 </#if>
 <#elseif (ENABLE_SURFACE == false)>
 <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Button"+" "+(sen_type_but_cnt?size)+";")] > <#assign sen_type_but_cnt = sen_type_but_cnt +[1]>
@@ -321,7 +330,10 @@ ${columns}, // Number of Columns
 <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Surface H"+" ["+(sen_type_surh_cnt?size)+"];")]> 
 <#assign sen_type_surh_cnt= sen_type_surh_cnt +[1] >
 <#else>
+<#if scr_channels?seq_contains(cnt) >
+<#else>
 <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Button"+" "+(sen_type_but_cnt?size)+";")] > <#assign sen_type_but_cnt = sen_type_but_cnt +[1]>
+</#if>
 </#if>
 
 </#if>

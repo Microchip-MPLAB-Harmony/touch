@@ -334,8 +334,8 @@ void Krono_UpdateBuffer(void)
 			touchRef[i]   = qtlib_key_data_set1[SURFACE_CS_START_KEY_H + i].channel_reference;
 			touchDelta[i] = (touchRaw[i] > touchRef[i]) ? (touchRaw[i] - touchRef[i]) : 0;
 		} else {
-			touchRaw[i]   = qtlib_key_data_set1[i - SURFACE_CS_NUM_KEYS_H].node_data_struct_ptr->node_acq_signals;
-			touchRef[i]   = qtlib_key_data_set1[i - SURFACE_CS_NUM_KEYS_H].channel_reference;
+			touchRaw[i]   = qtlib_key_data_set1[SURFACE_CS_START_KEY_V + i - SURFACE_CS_NUM_KEYS_H].node_data_struct_ptr->node_acq_signals;
+			touchRef[i]   = qtlib_key_data_set1[SURFACE_CS_START_KEY_V + i - SURFACE_CS_NUM_KEYS_H].channel_reference;
 			touchDelta[i] = (touchRaw[i] > touchRef[i]) ? (touchRaw[i] - touchRef[i]) : 0;
 		}
 	}
