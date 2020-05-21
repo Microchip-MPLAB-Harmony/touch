@@ -13,7 +13,7 @@ touchChannelCountMax =totalChannelCountMutl.getValue()
 ################################################################################
 nodeMenu = qtouchComponent.createMenuSymbol("NODE_MENU", touchMenu)
 nodeMenu.setLabel("Node Configuration")
-
+global touchNumChannel
 # Touch Channel Enable Count
 touchNumChannel = qtouchComponent.createIntegerSymbol("TOUCH_CHAN_ENABLE_CNT", nodeMenu)
 touchNumChannel.setLabel("Number of Channels to enable")

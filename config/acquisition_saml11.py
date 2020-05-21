@@ -201,14 +201,17 @@ touchSym_SEL_FREQ_INIT_Val.setDescription("It may be required to change the acqu
 drivenShieldMenu = qtouchComponent.createMenuSymbol("DRIVEN_SHIELD", touchMenu)
 drivenShieldMenu.setLabel("Driven Shield")
 
+global enableDrivenShieldAdjacent
 enableDrivenShieldAdjacent = qtouchComponent.createBooleanSymbol("DS_ADJACENT_SENSE_LINE_AS_SHIELD", drivenShieldMenu)
 enableDrivenShieldAdjacent.setLabel("Enable Adjacent Sense Pins as Shield")
 enableDrivenShieldAdjacent.setDefaultValue(False)
 
+global enableDrivenShieldDedicated
 enableDrivenShieldDedicated = qtouchComponent.createBooleanSymbol("DS_DEDICATED_PIN_ENABLE", drivenShieldMenu)
 enableDrivenShieldDedicated.setLabel("Enable Dedicated Driven Shield Pin")
 enableDrivenShieldDedicated.setDefaultValue(False)
 
+global drivenShieldDedicatedPin
 drivenShieldDedicatedPin = qtouchComponent.createKeyValueSetSymbol("DS_DEDICATED_PIN", enableDrivenShieldDedicated)
 drivenShieldDedicatedPin.setLabel("Select Dedicated Driven Shield Pin")
 drivenShieldDedicatedPin.setOutputMode("Value")
@@ -219,5 +222,6 @@ ptcPinValues = []
 ptcPinValues = ptcPinNode.getChildren()
 for index in range(0, len(ptcPinValues)):
     if(ptcPinValues[index].getAttribute("group") == "Y"):
-        drivenShieldDedicatedPin.addKey(ptcPinValues[index].getAttribute("index"),ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
-    ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
+        drivenShieldDedicatedPin.addKey(ptcPinValues[index].getAttribute("index"),ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
+
+

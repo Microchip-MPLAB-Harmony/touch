@@ -226,11 +226,11 @@ drivenShieldMenu.setLabel("Driven Shield")
 #enableDrivenShieldAdjacent = qtouchComponent.createBooleanSymbol("DS_ADJACENT_SENSE_LINE_AS_SHIELD", drivenShieldMenu)
 #enableDrivenShieldAdjacent.setLabel("Enable Adjacent Sense Pins as Shield")
 #enableDrivenShieldAdjacent.setDefaultValue(False)
-
+global enableDrivenShieldDedicated
 enableDrivenShieldDedicated = qtouchComponent.createBooleanSymbol("DS_DEDICATED_PIN_ENABLE", drivenShieldMenu)
 enableDrivenShieldDedicated.setLabel("Enable Dedicated Driven Shield Pin")
 enableDrivenShieldDedicated.setDefaultValue(False)
-
+global drivenShieldDedicatedPin
 drivenShieldDedicatedPin = qtouchComponent.createKeyValueSetSymbol("DS_DEDICATED_PIN", enableDrivenShieldDedicated)
 drivenShieldDedicatedPin.setLabel("Select Dedicated Driven Shield Pin")
 drivenShieldDedicatedPin.setDefaultValue(0)

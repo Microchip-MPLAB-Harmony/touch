@@ -10,6 +10,7 @@ nodeMenu = qtouchComponent.createMenuSymbol("NODE_MENU", touchMenu)
 nodeMenu.setLabel("Node Configuration")
 
 # Touch Channel Enable Count
+global touchNumChannel
 touchNumChannel = qtouchComponent.createIntegerSymbol("TOUCH_CHAN_ENABLE_CNT", nodeMenu)
 touchNumChannel.setLabel("Number of Channels to enable")
 touchNumChannel.setDefaultValue(0)
@@ -42,7 +43,6 @@ for channelID in range(0, touchChannelCountMax):
             ptcPinValues[index].getAttribute("index"),ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
         ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
         ptcYPads.append(ptcPinValues[index].getAttribute("pad"))
-    tchSelfPinSelection[channelID].setDependencies(getPinValue,["SELFCAP-INPUT_"+ str(channelID)])
 
 
     tchMutXPinSelection.append(qtouchComponent.createKeyValueSetSymbol("MUTL-X-INPUT_"+ str(channelID), touchChEnable))
@@ -57,7 +57,6 @@ for channelID in range(0, touchChannelCountMax):
       if(ptcPinValues[index].getAttribute("group") == "X"):        
             tchMutXPinSelection[channelID].addKey(ptcPinValues[index].getAttribute("index"),ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
         ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
-    tchMutXPinSelection[channelID].setDependencies(getPinValue,["MUTL-X-INPUT_"+ str(channelID)])
 
     tchMutYPinSelection.append(qtouchComponent.createKeyValueSetSymbol("MUTL-Y-INPUT_"+ str(channelID), touchChEnable))
     tchMutYPinSelection[channelID].setLabel("Select Y Pin for Channel "+ str(channelID))
@@ -70,8 +69,7 @@ for channelID in range(0, touchChannelCountMax):
     for index in range(0, len(ptcPinValues)):
         if(ptcPinValues[index].getAttribute("group") == "Y"):        
             tchMutYPinSelection[channelID].addKey(ptcPinValues[index].getAttribute("index"),ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
-        ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
-    tchMutYPinSelection[channelID].setDependencies(getPinValue,["MUTL-Y-INPUT_"+ str(channelID)])  
+        ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")") 
 
     #Charge Share Delay
     touchSym_CSD_Val = qtouchComponent.createIntegerSymbol("DEF_TOUCH_CHARGE_SHARE_DELAY" + str(channelID), touchChEnable)

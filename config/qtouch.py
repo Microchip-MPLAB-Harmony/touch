@@ -4,6 +4,7 @@ InterruptHandler = "PTC" + "_INTERRUPT_HANDLER"
 timer_based_driven_shield_supported_device = ["SAMD21","SAMDA1","SAMHA1","SAME54","SAME53","SAME51","SAMD51","SAMC21","SAMC20","SAML21","SAML22"]
 adc_based_touch_acqusition_device = ["SAME54","SAME53","SAME51","SAMD51"]
 lump_not_supported_device = []
+device_with_hardware_driven_shield_support = ["SAML10","SAML11","PIC32MZW"]
 
 def onAttachmentConnected(source,target):
     localComponent = source["component"]
@@ -133,6 +134,142 @@ def enable2DSurfaceFtlFiles(symbol,event):
         component.getSymbolByID("TOUCH_KRONOCOMM_ADAPTOR_HEADER").setEnabled(False)
         component.getSymbolByID("TOUCH_KRONOCOMM_UART_SOURCE").setEnabled(False)
         component.getSymbolByID("TOUCH_KRONOCOMM_ADAPTOR_SOURCE").setEnabled(False)
+        
+def onGenerate(symbol,event):
+	global touchNumChannel
+	global enableDrivenShieldAdjacent
+	global enableDrivenShieldDedicated
+	global drivenShieldDedicatedPin
+	totalChannelCount = touchNumChannel.getValue()
+	for i in range(0,totalChannelCount):
+		if(touchSenseTechnology.getValue() == 0):
+			tchMutXPinSelection[int(i)].setKeyValue(str(i),"X_NONE")
+			tchMutXPinSelection[int(i)].setValue(int(i))
+	if (getDeviceName.getDefaultValue() not in lump_not_supported_device):
+		global lumpSymbol
+		lump_feature = lumpSymbol.getValue()
+		if (lump_feature != ""):
+			lump_items = lump_feature.split(";")
+			num_of_lumps = len(lump_items)
+			for lmp in range(0,num_of_lumps):
+				lump_x = []
+				lump_y = []
+				lump_split = lump_items[lmp].split(":")
+				lump_node = lump_split[0]
+				lump_node_array = lump_split[1].split(",")
+				if ((touchSenseTechnology.getValue() == 0) or (touchSenseTechnology.getValue() == 2)):
+					for item in lump_node_array:
+						val = tchSelfPinSelection[int(item)].getValue()
+						yCh = tchSelfPinSelection[int(item)].getKeyValue(val)
+						if yCh not in lump_y:
+							lump_y.append(yCh)
+					lumpy = "|".join(lump_y)
+					tchSelfPinSelection[int(lump_node)].setKeyValue(str(0),lumpy)
+					tchSelfPinSelection[int(lump_node)].setValue(0)
+				elif (touchSenseTechnology.getValue() == 1):
+					for item in lump_node_array:
+						val1 = tchMutXPinSelection[int(item)].getValue()
+						val2 = tchMutYPinSelection[int(item)].getValue()
+						xCh = tchMutXPinSelection[int(item)].getKeyValue(val1)
+						yCh = tchMutYPinSelection[int(item)].getKeyValue(val2)
+						if xCh not in lump_x:
+							lump_x.append(xCh)
+						if yCh not in lump_y:
+							lump_y.append(yCh)
+					lumpx = "|".join(lump_x)
+					tchMutXPinSelection[int(lump_node)].setKeyValue(str(0),lumpx)
+					tchMutXPinSelection[int(lump_node)].setValue(0)
+					lumpy = "|".join(lump_y)
+					tchMutYPinSelection[int(lump_node)].setKeyValue(str(0),lumpy)
+					tchMutYPinSelection[int(lump_node)].setValue(0)
+
+	for i in range(0,totalChannelCount):
+		if (getDeviceName.getDefaultValue() in device_with_hardware_driven_shield_support):
+			if((enableDrivenShieldAdjacent.getValue() == True)or(enableDrivenShieldDedicated.getValue() == True)):
+				shieldPins = []
+				if (enableDrivenShieldDedicated.getValue() == True):
+					shieldY = drivenShieldDedicatedPin.getValue()
+					shieldY = drivenShieldDedicatedPin.getKeyValue(shieldY)
+					shieldPins.append(shieldY)
+				if (enableDrivenShieldAdjacent.getValue() == True):
+					if (lump_feature != ""):
+						LUMP_INDI = lump_feature.split(";")
+						LUMP_NUM = len(LUMP_INDI)
+						input0 =[]
+						for a in range(0,(totalChannelCount-LUMP_NUM)):
+							value = tchSelfPinSelection[int(a)].getValue()
+							input0.append(tchSelfPinSelection[int(a)].getKeyValue(value))
+						if (i < totalChannelCount-LUMP_NUM):
+							for j in range(0,(totalChannelCount-LUMP_NUM)):
+								value1 = tchSelfPinSelection[int(i)].getValue()
+								if ((tchSelfPinSelection[int(i)].getKeyValue(value1)) != input0[j]):
+									shieldPins.append(input0[j])
+						else:
+							LUMP_NODE_VAL = tchSelfPinSelection[int(i)].getValue()
+							LUMP_NODE_INDI = tchSelfPinSelection[int(i)].getKeyValue(LUMP_NODE_VAL).split("|")
+							LUMP_NODE_SIZE = len(LUMP_NODE_INDI)
+							for j in range(0,(totalChannelCount-LUMP_NUM)):
+								par = 0
+								for y in range(0,LUMP_NODE_SIZE):
+									if (LUMP_NODE_INDI[y] == input0[j]):
+										par = 1
+								if par == 0:
+									shieldPins.append(input0[j])
+					else:
+						for j in range(0,totalChannelCount):
+							if (i != j):
+								shildY = tchSelfPinSelection[int(j)].getValue()
+								shieldY = tchSelfPinSelection[int(j)].getKeyValue(shildY)
+								shieldPins.append(shieldY)
+				if(shieldPins != []):
+					drivenPin = "|".join(shieldPins)
+				else:
+					drivenPin = "X_NONE"
+				tchMutXPinSelection[int(i)].setKeyValue(str(i),drivenPin)
+				tchMutXPinSelection[int(i)].setValue(int(i))
+			elif(touchSenseTechnology.getValue() == 0):
+				tchMutXPinSelection[int(i)].setKeyValue(str(i),"X_NONE")
+				tchMutXPinSelection[int(i)].setValue(int(i))
+
+	if (touchSenseTechnology.getValue() == 1) and (enableSurfaceMenu.getValue() == True):
+		MUTL_SURFACE_X = []
+		MUTL_SURFACE_Y = []
+		HORI_START_KEY = horiStartKey.getValue()
+		HORI_NUM_KEY = horiNumKey.getValue()
+		VERT_START_KEY = vertStartKey.getValue()
+		VERT_NUM_KEY = vertNumKey.getValue()
+		for i in range(HORI_START_KEY,(HORI_START_KEY+HORI_NUM_KEY)):
+			vals = tchMutXPinSelection[int(i)].getValue()
+			MUTL_SURFACE_X.append(tchMutXPinSelection[int(i)].getKeyValue(vals))
+		MUTL_SURFACE_X = "|".join(MUTL_SURFACE_X)
+		for j in range(VERT_START_KEY,(VERT_START_KEY+VERT_NUM_KEY)):
+			vals = tchMutYPinSelection[int(j)].getValue()
+			MUTL_SURFACE_Y.append(tchMutYPinSelection[int(j)].getKeyValue(vals))
+		MUTL_SURFACE_Y = "|".join(MUTL_SURFACE_Y)
+		if (VERT_START_KEY >0):
+			for i in range(0,VERT_START_KEY):
+				vals1 = tchMutXPinSelection[int(i)].getValue()
+				vals2 = tchMutYPinSelection[int(i)].getValue()
+				tchMutXPinSelection[int(i)].setValue(vals1)
+				tchMutYPinSelection[int(i)].setValue(vals2)
+		for i in range(VERT_START_KEY,(VERT_START_KEY+VERT_NUM_KEY)):
+			vals1 = tchMutXPinSelection[int(i)].getValue()
+			vals2 = tchMutYPinSelection[int(i)].getValue()
+			tchMutXPinSelection[int(i)].setKeyValue(str(vals1),MUTL_SURFACE_X)
+			tchMutXPinSelection[int(i)].setValue(vals1)
+			tchMutYPinSelection[int(i)].setValue(vals2)
+		for i in range(HORI_START_KEY,(HORI_START_KEY+HORI_NUM_KEY)):
+			vals1 = tchMutXPinSelection[int(i)].getValue()
+			vals2 = tchMutYPinSelection[int(i)].getValue()
+			tchMutYPinSelection[int(i)].setKeyValue(str(vals2),MUTL_SURFACE_Y)
+			tchMutXPinSelection[int(i)].setValue(vals1)
+			tchMutYPinSelection[int(i)].setValue(vals2)
+		if (totalChannelCount - (VERT_START_KEY + VERT_NUM_KEY + HORI_NUM_KEY ) >0):
+			for i in range((VERT_START_KEY + VERT_NUM_KEY + HORI_NUM_KEY),totalChannelCount):
+				vals1 = tchMutXPinSelection[int(i)].getValue()
+				vals2 = tchMutYPinSelection[int(i)].getValue()
+				tchMutXPinSelection[int(i)].setValue(vals1)
+				tchMutYPinSelection[int(i)].setValue(vals2)
 
 autoComponentIDTable = ["rtc"]
 autoConnectTable = [["lib_qtouch", "Touch_timer","rtc", "RTC_TMR"]]
@@ -147,7 +284,7 @@ touchChannels = []
 def instantiateComponent(qtouchComponent):
     global autoComponentIDTable
     global autoConnectTable
-		
+    global lumpSymbol
     configName = Variables.get("__CONFIGURATION_NAME")
 
     touchMenu = qtouchComponent.createMenuSymbol("TOUCH_MENU", None)
@@ -168,10 +305,18 @@ def instantiateComponent(qtouchComponent):
     ptcFreqencyId.setReadOnly(True)
     ptcFreqencyId.setDefaultValue("GCLK_ID_"+ptcClockInfo.getAttribute("value")+"_FREQ")
     
+    enableGenerate = qtouchComponent.createBooleanSymbol("TOUCH_PRE_GENERATE", touchInfoMenu)
+    enableGenerate.setLabel("Generate Project")
+    enableGenerate.setDefaultValue(False)
+    enableGenerate.setDependencies(onGenerate,["TOUCH_PRE_GENERATE"])
+	
     execfile(Module.getPath() +"/config/interface.py")
     execfile(Module.getPath() +"/config/acquisition_"+getDeviceName.getDefaultValue().lower()+".py")
     if (getDeviceName.getDefaultValue() not in lump_not_supported_device):
-        execfile(Module.getPath() +"/config/lump.py")
+        lumpSymbol = qtouchComponent.createStringSymbol("LUMP_CONFIG", touchMenu)
+        lumpSymbol.setLabel("Lump Configuration")
+        lumpSymbol.setDefaultValue("")
+        lumpSymbol.setVisible(True)
     if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
         execfile(Module.getPath() +"/config/node_E5X.py")
     elif (getDeviceName.getDefaultValue() in ["SAMD20","SAMD21","SAMDA1","SAMHA1"]):
@@ -203,7 +348,7 @@ def instantiateComponent(qtouchComponent):
     enableScrollerMenu.setDefaultValue(False)
     execfile(Module.getPath() +"/config/scroller.py")
     enableScrollerMenu.setDependencies(enableScroller,["ENABLE_SCROLLER"])
-
+    global enableSurfaceMenu
     # Enable Surface 
     enableSurfaceMenu = qtouchComponent.createBooleanSymbol("ENABLE_SURFACE", touchMenu)
     enableSurfaceMenu.setLabel("Enable Surface")

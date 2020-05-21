@@ -121,28 +121,28 @@ enableSurface2T.setDefaultValue(False)
 enableSurface2T.setDependencies(enableSurface2TFiles,["ENABLE_SURFACE2T"])
 
 #Surface Parameters
-
+global horiStartKey
 horiStartKey = qtouchComponent.createIntegerSymbol("HORI_START_KEY", surfaceMenu)
 horiStartKey.setLabel("Horizontal Start Key")
 horiStartKey.setDefaultValue(0)
 horiStartKey.setMin(0)
 horiStartKey.setMax(touchKeyCountMax)
 horiStartKey.setDescription("Start key of horizontal axis.")
-
+global horiNumKey
 horiNumKey = qtouchComponent.createIntegerSymbol("HORI_NUM_KEY", surfaceMenu)
 horiNumKey.setLabel("Horizontal Number of Channel")
 horiNumKey.setDefaultValue(2)
 horiNumKey.setMin(0)
 horiNumKey.setMax(255)
 horiNumKey.setDescription("Number of Channels forming horizontal axis.")
-
+global vertStartKey
 vertStartKey = qtouchComponent.createIntegerSymbol("VERT_START_KEY", surfaceMenu)
 vertStartKey.setLabel("Vertical Start Key")
 vertStartKey.setDefaultValue(2)
 vertStartKey.setMin(0)
 vertStartKey.setMax(touchKeyCountMax)
 vertStartKey.setDescription("Start key of Vertical axis.")
-
+global vertNumKey
 vertNumKey = qtouchComponent.createIntegerSymbol("VERT_NUM_KEY", surfaceMenu)
 vertNumKey.setLabel("Vertical Number of Channel")
 vertNumKey.setDefaultValue(2)
