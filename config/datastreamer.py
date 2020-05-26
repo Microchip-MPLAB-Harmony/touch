@@ -1,7 +1,7 @@
 ############################################################################
 #### Code Generation ####
 ############################################################################
-
+global qtouchFilesArray
 
 # Header File
 tchDataStreamerHeaderFile = qtouchComponent.createFileSymbol("TOUCH_DATA_STREAMER_HEADER", None)
@@ -52,3 +52,10 @@ tchDataStreamerSourceFile.setProjectPath("config/" + configName + "/touch/datast
 tchDataStreamerSourceFile.setType("SOURCE")
 tchDataStreamerSourceFile.setEnabled(False)
 tchDataStreamerSourceFile.setMarkup(True)
+
+if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
+    qtouchFilesArray.append(tchDataStreamerHeaderFile)
+    qtouchFilesArray.append(tchDataStreamerSourceFile)
+    qtouchFilesArray.append(tchDsHeaderFileSc)
+    qtouchFilesArray.append(tchDsHeaderFileDs)
+    qtouchFilesArray.append(tchDsHeaderFileDb)

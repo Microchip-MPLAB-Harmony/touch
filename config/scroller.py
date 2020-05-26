@@ -1,6 +1,8 @@
 ############################################################################
 #### Code Generation ####
 ############################################################################
+global qtouchFilesArray
+
 if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
     # Library File
     scrollerLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SCR_LIB", None)
@@ -38,6 +40,10 @@ scrollerHeaderFile.setProjectPath("config/" + configName + "/touch/")
 scrollerHeaderFile.setType("HEADER")
 scrollerHeaderFile.setEnabled(False)
 scrollerHeaderFile.setMarkup(False)
+
+if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
+    qtouchFilesArray.append(scrollerHeaderFile)
+    qtouchFilesArray.append(scrollerLibraryFile)
 
 ################################################################################
 #### Global Variables ####

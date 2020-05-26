@@ -1,6 +1,7 @@
 ################################################################################
 #### Global Variables ####
 ################################################################################
+global qtouchFilesArray
 global touchChannelSelf
 global touchChannelMutual
 
@@ -72,31 +73,39 @@ touchBindLibraryFile.setDestPath("/touch/lib/")
 touchBindLibraryFile.setEnabled(True)
 
 # Header File
-touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_ACQ_HEADER", None)
-touchHeaderFile.setSourcePath("/src/qtm_acq_saml11_0x0027_api.h")
-touchHeaderFile.setOutputName("qtm_acq_saml11_0x0027_api.h")
-touchHeaderFile.setDestPath("/touch/")
-touchHeaderFile.setProjectPath("config/" + configName + "/touch/")
-touchHeaderFile.setType("HEADER")
-touchHeaderFile.setMarkup(False)
+touchAcqHeaderFile = qtouchComponent.createFileSymbol("TOUCH_ACQ_HEADER", None)
+touchAcqHeaderFile.setSourcePath("/src/qtm_acq_saml11_0x0027_api.h")
+touchAcqHeaderFile.setOutputName("qtm_acq_saml11_0x0027_api.h")
+touchAcqHeaderFile.setDestPath("/touch/")
+touchAcqHeaderFile.setProjectPath("config/" + configName + "/touch/")
+touchAcqHeaderFile.setType("HEADER")
+touchAcqHeaderFile.setMarkup(False)
 
 # Header File
-touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_BIND_HEADER", None)
-touchHeaderFile.setSourcePath("/src/qtm_binding_layer_0x0005_api.h")
-touchHeaderFile.setOutputName("qtm_binding_layer_0x0005_api.h")
-touchHeaderFile.setDestPath("/touch/")
-touchHeaderFile.setProjectPath("config/" + configName + "/touch/")
-touchHeaderFile.setType("HEADER")
-touchHeaderFile.setMarkup(False)
+touchBindHeaderFile = qtouchComponent.createFileSymbol("TOUCH_BIND_HEADER", None)
+touchBindHeaderFile.setSourcePath("/src/qtm_binding_layer_0x0005_api.h")
+touchBindHeaderFile.setOutputName("qtm_binding_layer_0x0005_api.h")
+touchBindHeaderFile.setDestPath("/touch/")
+touchBindHeaderFile.setProjectPath("config/" + configName + "/touch/")
+touchBindHeaderFile.setType("HEADER")
+touchBindHeaderFile.setMarkup(False)
 
 # Header File
-touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_COMMON_HEADER", None)
-touchHeaderFile.setSourcePath("/src/qtm_common_components_api.h")
-touchHeaderFile.setOutputName("qtm_common_components_api.h")
-touchHeaderFile.setDestPath("/touch/")
-touchHeaderFile.setProjectPath("config/" + configName + "/touch/")
-touchHeaderFile.setType("HEADER")
-touchHeaderFile.setMarkup(False)
+touchCommonHeaderFile = qtouchComponent.createFileSymbol("TOUCH_COMMON_HEADER", None)
+touchCommonHeaderFile.setSourcePath("/src/qtm_common_components_api.h")
+touchCommonHeaderFile.setOutputName("qtm_common_components_api.h")
+touchCommonHeaderFile.setDestPath("/touch/")
+touchCommonHeaderFile.setProjectPath("config/" + configName + "/touch/")
+touchCommonHeaderFile.setType("HEADER")
+touchCommonHeaderFile.setMarkup(False)
+
+if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
+    qtouchFilesArray.append(touchAcqLibraryFile)
+    qtouchFilesArray.append(touchAcqAutoLibraryFile)
+    qtouchFilesArray.append(touchBindLibraryFile)
+    qtouchFilesArray.append(touchAcqHeaderFile)
+    qtouchFilesArray.append(touchBindHeaderFile)
+    qtouchFilesArray.append(touchCommonHeaderFile)
 
 ################################################################################
 #### Component ####

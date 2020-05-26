@@ -1,3 +1,5 @@
+global qtouchFilesArray
+
 ############################################################################
 #### Code Generation ####
 ############################################################################
@@ -39,6 +41,10 @@ gestureHeaderFile.setProjectPath("config/" + configName + "/touch/")
 gestureHeaderFile.setType("HEADER")
 gestureHeaderFile.setMarkup(False)
 gestureHeaderFile.setEnabled(False)
+
+if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
+    qtouchFilesArray.append(gestureHeaderFile)
+    qtouchFilesArray.append(gestureLibraryFile)
 
 ################################################################################
 #### Components ####

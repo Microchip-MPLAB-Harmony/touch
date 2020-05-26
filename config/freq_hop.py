@@ -1,6 +1,8 @@
 ################################################################################
 #### Global Variables ####
 ################################################################################
+global qtouchFilesArray
+
 def freqAutoTuneFunc(symbol,event):
     global freqHopLibraryFile
     global freqHopHeaderFile
@@ -112,6 +114,13 @@ freqHopAutoHeaderFile.setType("HEADER")
 freqHopAutoHeaderFile.setMarkup(False)
 freqHopAutoHeaderFile.setEnabled(False)
 freqHopAutoHeaderFile.setDependencies(freqAutoTuneFunc,["FREQ_AUTOTUNE"])
+
+if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
+    qtouchFilesArray.append(freqHopAutoHeaderFile)
+    qtouchFilesArray.append(freqHopHeaderFile)
+    qtouchFilesArray.append(freqHopLibraryFile)
+    qtouchFilesArray.append(freqHopAutoLibraryFile)
+    
 
 ################################################################################
 #### Global Variables ####

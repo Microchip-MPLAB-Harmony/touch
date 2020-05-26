@@ -1,5 +1,5 @@
 #driven shield support
-
+global qtouchFilesArray
 global timer_based_driven_shield_supported_device
 global adc_based_touch_acqusition_device
 
@@ -271,3 +271,7 @@ drivenShieldSourceFile.setMarkup(True)
 drivenShieldSourceFile.setEnabled(False)
 drivenShieldSourceFile.setDependencies(enableDrivenShield,["DS_DEDICATED_ENABLE"])
 drivenShieldSourceFile.setDependencies(enableDrivenShield,["DS_PLUS_ENABLE"])
+
+if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
+    qtouchFilesArray.append(drivenShieldHeadFile)
+    qtouchFilesArray.append(drivenShieldSourceFile)

@@ -1,7 +1,7 @@
 ################################################################################
 #### Global Variables ####
 ################################################################################
-
+global qtouchFilesArray
 ############################################################################
 #### Code Generation ####
 ############################################################################
@@ -16,14 +16,14 @@ tchKronocommUartHeaderFile.setEnabled(False)
 tchKronocommUartHeaderFile.setMarkup(False)
 
 # Header File
-tchKronocommUartHeaderFile = qtouchComponent.createFileSymbol("TOUCH_KRONOCOMM_ADAPTOR_HEADER", None)
-tchKronocommUartHeaderFile.setSourcePath("/templates/kronocommadaptor.h.ftl")
-tchKronocommUartHeaderFile.setOutputName("kronocommadaptor.h")
-tchKronocommUartHeaderFile.setDestPath("/touch/datastreamer/")
-tchKronocommUartHeaderFile.setProjectPath("config/" + configName + "/touch/datastreamer/")
-tchKronocommUartHeaderFile.setType("HEADER")
-tchKronocommUartHeaderFile.setEnabled(False)
-tchKronocommUartHeaderFile.setMarkup(False)
+tchKronocommAdapterHeaderFile = qtouchComponent.createFileSymbol("TOUCH_KRONOCOMM_ADAPTOR_HEADER", None)
+tchKronocommAdapterHeaderFile.setSourcePath("/templates/kronocommadaptor.h.ftl")
+tchKronocommAdapterHeaderFile.setOutputName("kronocommadaptor.h")
+tchKronocommAdapterHeaderFile.setDestPath("/touch/datastreamer/")
+tchKronocommAdapterHeaderFile.setProjectPath("config/" + configName + "/touch/datastreamer/")
+tchKronocommAdapterHeaderFile.setType("HEADER")
+tchKronocommAdapterHeaderFile.setEnabled(False)
+tchKronocommAdapterHeaderFile.setMarkup(False)
 
 # Source File
 tchKronocommUartSourceFile = qtouchComponent.createFileSymbol("TOUCH_KRONOCOMM_UART_SOURCE", None)
@@ -36,14 +36,20 @@ tchKronocommUartSourceFile.setEnabled(False)
 tchKronocommUartSourceFile.setMarkup(True)
 
 # Source File
-tchKronocommUartSourceFile = qtouchComponent.createFileSymbol("TOUCH_KRONOCOMM_ADAPTOR_SOURCE", None)
-tchKronocommUartSourceFile.setSourcePath("/templates/kronocommadaptor.c.ftl")
-tchKronocommUartSourceFile.setOutputName("kronocommadaptor.c")
-tchKronocommUartSourceFile.setDestPath("/touch/datastreamer/")
-tchKronocommUartSourceFile.setProjectPath("config/" + configName + "/touch/datastreamer/")
-tchKronocommUartSourceFile.setType("SOURCE")
-tchKronocommUartSourceFile.setEnabled(False)
-tchKronocommUartSourceFile.setMarkup(True)
+tchKronocommAdapterSourceFile = qtouchComponent.createFileSymbol("TOUCH_KRONOCOMM_ADAPTOR_SOURCE", None)
+tchKronocommAdapterSourceFile.setSourcePath("/templates/kronocommadaptor.c.ftl")
+tchKronocommAdapterSourceFile.setOutputName("kronocommadaptor.c")
+tchKronocommAdapterSourceFile.setDestPath("/touch/datastreamer/")
+tchKronocommAdapterSourceFile.setProjectPath("config/" + configName + "/touch/datastreamer/")
+tchKronocommAdapterSourceFile.setType("SOURCE")
+tchKronocommAdapterSourceFile.setEnabled(False)
+tchKronocommAdapterSourceFile.setMarkup(True)
+
+if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
+    qtouchFilesArray.append(tchKronocommUartHeaderFile)
+    qtouchFilesArray.append(tchKronocommAdapterHeaderFile)
+    qtouchFilesArray.append(tchKronocommUartSourceFile)
+    qtouchFilesArray.append(tchKronocommAdapterSourceFile)
 
 ################################################################################
 #### Component ####

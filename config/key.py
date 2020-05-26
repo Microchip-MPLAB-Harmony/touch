@@ -1,6 +1,8 @@
 ############################################################################
 #### Code Generation ####
 ############################################################################
+global qtouchFilesArray
+
 if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
     # Library File
     touchLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_KEY_LIB", None)
@@ -38,6 +40,11 @@ touchHeaderFile.setDestPath("/touch/")
 touchHeaderFile.setProjectPath("config/" + configName + "/touch/")
 touchHeaderFile.setType("HEADER")
 touchHeaderFile.setMarkup(False)
+
+if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
+    qtouchFilesArray.append(touchHeaderFile)
+    qtouchFilesArray.append(touchLibraryFile)
+
 
 ################################################################################
 #### Global Variables ####

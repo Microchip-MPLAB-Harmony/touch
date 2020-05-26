@@ -1,12 +1,108 @@
 InterruptVector = "PTC" + "_INTERRUPT_ENABLE"
 InterruptHandler = "PTC" + "_INTERRUPT_HANDLER"
 
+global nonSecureStatus
+nonSecureStatus = "SECURE"
+
+global InterruptVectorSecurity
+InterruptVectorSecurity = []
+
+global qtouchFilesArray
+qtouchFilesArray = []
+
+global IDArray
+IDArray = ["TOUCH_ACQ_LIB","TOUCH_ACQ_AUTO_LIB","TOUCH_ACQ_HEADER",
+"TOUCH_BIND_LIB","TOUCH_BIND_HEADER","TOUCH_COMMON_HEADER",
+"TOUCH_KEY_LIB","TOUCH_KEY_HEADER",
+"TOUCH_SCR_LIB","TOUCH_SCR_HEADER",
+"TOUCH_HOP_LIB","TOUCH_HOP_AUTO_LIB","TOUCH_HOP_HEADER","TOUCH_HOP_AUTO_HEADER"
+"TOUCH_SURFACE1T_LIB","TOUCH_SURFACE1T_HEADER",
+"TOUCH_SURFACE2T_LIB","TOUCH_SURFACE2T_HEADER"]
+
 timer_based_driven_shield_supported_device = ["SAMD21","SAMDA1","SAMHA1","SAME54","SAME53","SAME51","SAMD51","SAMC21","SAMC20","SAML21","SAML22"]
 adc_based_touch_acqusition_device = ["SAME54","SAME53","SAME51","SAMD51"]
 lump_not_supported_device = []
 device_with_hardware_driven_shield_support = ["SAML10","SAML11","PIC32MZW"]
 
+def searchqtouchFilesArray(idString):
+    retVal = False
+    for x in qtouchFilesArray:
+        if str(x.getID()) == idString:
+            retVal = True
+            break
+    return retVal;
+
+def checkqtouchFilesArray(symbol,idString):
+    component = symbol
+    if component.getSymbolByID(idString).getEnabled() == True:
+        if searchqtouchFilesArray(idString) == False:
+            qtouchFilesArray.append(component.getSymbolByID(idString))
+            print("------------------Added : " + idString)
+    else:
+        if searchqtouchFilesArray(idString) == True:
+            qtouchFilesArray.remove(component.getSymbolByID(idString))
+            print("------------------Removed : " + idString)
+    return     
+ 
+def securefileUpdate(symbol, event):
+    global nonSecureStatus
+    global qtouchFilesArray
+    global InterruptVectorSecurity
+    global IDArray
+    
+    component = symbol.getComponent()
+    
+    # for currID in IDArray:
+        # checkqtouchFilesArray(component,currID)
+   
+    if event["value"] == False:
+        nonSecureStatus = "SECURE"
+
+        if len(InterruptVectorSecurity) != 1:
+            for vector in InterruptVectorSecurity:
+                Database.setSymbolValue("core", vector, False)
+        else:
+            Database.setSymbolValue("core", InterruptVectorSecurity, False)
+    else:
+        nonSecureStatus = "NON_SECURE"
+
+        if len(InterruptVectorSecurity) != 1:
+            for vector in InterruptVectorSecurity:
+                Database.setSymbolValue("core", vector, True)
+        else:
+            Database.setSymbolValue("core", InterruptVectorSecurity, True)
+        
+    checknonsecureStatus();
+
+def checknonsecureStatus():
+    global checkname
+    global qtouchComponent
+    ptcNonSecureState = Database.getSymbolValue("core", "PTC_IS_NON_SECURE")
+    if ptcNonSecureState == False:
+        nonSecureStatus = "SECURE"
+    else:
+        nonSecureStatus = "NON_SECURE"    
+        
+    
+    print("*** checknonsecureStatus Updated : "+ nonSecureStatus)
+    print("*** Number of entries in file array : " + str(len(qtouchFilesArray)))
+
+    
+    for kx in range(len(qtouchFilesArray)):    
+        checkname = str(qtouchFilesArray[kx].getID()).split('_')       
+        if ("LIB" in checkname):
+            if(nonSecureStatus == "SECURE"):
+                qtouchFilesArray[kx].setDestPath("../../../../../Secure/firmware/src/config/default/touch/lib/")
+            else:
+                qtouchFilesArray[kx].setDestPath("../../../../../NonSecure/firmware/src/config/default/touch/lib/")
+            #print(str(qtouchFilesArray[kx].getDestPath()))
+        #else:
+            #print("--- lib NOT FOUND---")
+        qtouchFilesArray[kx].setSecurity(nonSecureStatus)
+        #print(str(checkname) + " = " + str(nonSecureStatus))
+    
 def onAttachmentConnected(source,target):
+    global nonSecureStatus
     localComponent = source["component"]
     remoteComponent = target["component"]
     remoteID = remoteComponent.getID()
@@ -285,6 +381,12 @@ def instantiateComponent(qtouchComponent):
     global autoComponentIDTable
     global autoConnectTable
     global lumpSymbol
+    global qtouchFilesArray
+    global InterruptVector
+    global IDArray
+    
+    qtouchFilesArray = []
+	
     configName = Variables.get("__CONFIGURATION_NAME")
 
     touchMenu = qtouchComponent.createMenuSymbol("TOUCH_MENU", None)
@@ -425,13 +527,13 @@ def instantiateComponent(qtouchComponent):
     touchHeaderFile.setMarkup(True)
     
     # Header File
-    touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_HEADER1", None)
-    touchHeaderFile.setSourcePath("/templates/touch_api_ptc.h.ftl")
-    touchHeaderFile.setOutputName("touch_api_ptc.h")
-    touchHeaderFile.setDestPath("/touch/")
-    touchHeaderFile.setProjectPath("config/" + configName + "/touch/")
-    touchHeaderFile.setType("HEADER")
-    touchHeaderFile.setMarkup(True)
+    touchHeaderFile1 = qtouchComponent.createFileSymbol("TOUCH_HEADER1", None)
+    touchHeaderFile1.setSourcePath("/templates/touch_api_ptc.h.ftl")
+    touchHeaderFile1.setOutputName("touch_api_ptc.h")
+    touchHeaderFile1.setDestPath("/touch/")
+    touchHeaderFile1.setProjectPath("config/" + configName + "/touch/")
+    touchHeaderFile1.setType("HEADER")
+    touchHeaderFile1.setMarkup(True)    
     
     # Source File
     touchSourceFile = qtouchComponent.createFileSymbol("TOUCH_SOURCE", None)
@@ -455,6 +557,24 @@ def instantiateComponent(qtouchComponent):
     ptcSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
     ptcSystemDefFile.setSourcePath("../touch/templates/system/definitions.h.ftl")
     ptcSystemDefFile.setMarkup(True)
+    
+   
+    if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
+        
+        ptcSystemDefFile.setDependencies(securefileUpdate, ["core.PTC_IS_NON_SECURE"])
+        ptcSystemDefFile.setDependencies(securefileUpdate, ["core.NVIC_42_0_SECURITY_TYPE"])
+        
+        print("***********PTC secure Dependency is setup*************")
+
+        qtouchFilesArray.append(ptcSystemDefFile)
+        qtouchFilesArray.append(ptcSystemInitFile)
+        qtouchFilesArray.append(touchSourceFile)
+        qtouchFilesArray.append(touchHeaderFile)
+        qtouchFilesArray.append(touchHeaderFile1)
+        checknonsecureStatus()
+
+    else:
+        print("TE ERROR")
 
     qtouchComponent.addPlugin("../touch/plugin/ptc_manager_c21.jar")
 
