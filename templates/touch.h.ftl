@@ -52,7 +52,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // DOM-IGNORE-END
 
 
-
+<#import "/node.h.ftl" as node>
+<#import "/eventlowpower.ftl" as eventlp>
+<#import "/softwarelowpower.ftl" as softwarelp>
 /*----------------------------------------------------------------------------
  *     include files
  *----------------------------------------------------------------------------*/
@@ -457,6 +459,66 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  * Default value: 6
  */
 #define FREQ_AUTOTUNE_COUNT_IN ${DEF_TOUCH_TUNE_IN_COUNT}
+</#if>
+</#if>
+
+<#if ENABLE_EVENT_LP == 1>
+	<#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")> 
+		<@eventlp.lowpower_SAML/>
+		<@eventlp.lowpower_params_saml/>
+	<#elseif (DEVICE_NAME == "SAMD20")||(DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")>
+		<@eventlp.lowpower_params_samdx/>
+	</#if>
+</#if>
+<#if ENABLE_SOFTWARE_LP == 1>
+	<#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")>
+		<@softwarelp.lowpower_SAML/>
+	</#if>
+    <@softwarelp.lowpower_params_noevs/>
+</#if>
+<#if (DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")>
+<#if (ENABLE_EVENT_LP == 1) || (ENABLE_SOFTWARE_LP == 1)>
+/* Sleep Modes */
+#define PM_SLEEP_IDLE_0		0u
+#define PM_SLEEP_IDLE_1		1u
+#define PM_SLEEP_IDLE_2		2u
+#define PM_SLEEP_STANDBY	3u
+
+/* Event system parameters */
+#define QTM_AUTOSCAN_TRIGGER_GENERATOR (QTM_AUTOSCAN_TRIGGER_PERIOD + 4u)
+#define QTM_AUTOSCAN_STCONV_USER 28u
+#define QTM_RTC_TO_PTC_EVSYS_CHANNEL 0u
+#define QTM_AUTOSCAN_TRIGGER_PERIOD_EVENT (1u << QTM_AUTOSCAN_TRIGGER_PERIOD)
+</#if>
+</#if>
+
+<#if (DEVICE_NAME == "SAMD20")>
+<#if (ENABLE_EVENT_LP == 1) || (ENABLE_SOFTWARE_LP == 1)>
+/* Sleep Modes */
+#define PM_SLEEP_IDLE_0		0u
+#define PM_SLEEP_IDLE_1		1u
+#define PM_SLEEP_IDLE_2		2u
+#define PM_SLEEP_STANDBY	3u
+
+/* Event system parameters */
+#define QTM_AUTOSCAN_TRIGGER_GENERATOR (QTM_AUTOSCAN_TRIGGER_PERIOD + 4u)
+#define QTM_AUTOSCAN_STCONV_USER 13u
+#define QTM_RTC_TO_PTC_EVSYS_CHANNEL 0u
+#define QTM_AUTOSCAN_TRIGGER_PERIOD_EVENT (1u << QTM_AUTOSCAN_TRIGGER_PERIOD)
+</#if>
+</#if>
+
+<#if (DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21")>
+<#if (ENABLE_EVENT_LP == 1) || (ENABLE_SOFTWARE_LP == 1)> 
+/* Sleep Modes */
+#define PM_SLEEP_IDLE 2u
+#define PM_SLEEP_STANDBY 4u
+
+/* Event system parameters */
+#define QTM_AUTOSCAN_TRIGGER_GENERATOR (QTM_AUTOSCAN_TRIGGER_PERIOD + 6u)
+#define QTM_AUTOSCAN_STCONV_USER 39u
+#define QTM_RTC_TO_PTC_EVSYS_CHANNEL 0u
+#define QTM_AUTOSCAN_TRIGGER_PERIOD_EVENT (1u << QTM_AUTOSCAN_TRIGGER_PERIOD)
 </#if>
 </#if>
 
