@@ -31,9 +31,21 @@ software_based_low_power = ["SAMD20","SAMD21","SAMDA1","SAMHA1","SAML11","SAML10
 def processBoostMode(symbol,event):
 	global touchNumChannel
 	if (getDeviceName.getDefaultValue() in boost_mode_supported_devices):
-		localComponent = symbol.getComponent()
 		# maximum number of boost mode group is limited to 32 in the script
 		touch4pMaxGroup = 32
+
+		localComponent = symbol.getComponent()
+		tempSymbol = localComponent.getSymbolByID("ENABLE_SURFACE")
+		surface_enabled = tempSymbol.getValue()
+		tempSymbol = localComponent.getSymbolByID("VERT_NUM_KEY")
+		surface_ver_num = int(tempSymbol.getValue())
+		tempSymbol = localComponent.getSymbolByID("VERT_START_KEY")
+		surface_ver_start = int(tempSymbol.getValue())
+		tempSymbol = localComponent.getSymbolByID("HORI_NUM_KEY")
+		surface_hor_num = int(tempSymbol.getValue())
+		tempSymbol = localComponent.getSymbolByID("HORI_START_KEY")
+		surface_hor_start = int(tempSymbol.getValue())
+
 		y_lines = []
 		x_lines = []
 		csd = []
@@ -42,6 +54,15 @@ def processBoostMode(symbol,event):
 		filterlevel = []
 		again = []
 		dgain = []
+
+		surface_y_lines = []
+		surface_x_lines = []
+		surface_csd = []
+		surface_resistor = []
+		surface_prsc = []
+		surface_filterlevel = []
+		surface_again = []
+		surface_dgain = []
 
 		y_lines_unique = []
 		x_lines_for_each_unique_y = []
@@ -99,6 +120,38 @@ def processBoostMode(symbol,event):
 			dgain.append(tempSymbol.getValue())
 			tempSymbol = localComponent.getSymbolByID("DEF_DIGI_FILT_OVERSAMPLING"+str(channel_num))
 			filterlevel.append(tempSymbol.getValue())
+
+		if surface_enabled == True:
+			for channel_num in range(0, touchNumChannel.getValue()):
+				if (channel_num < surface_ver_start) or (channel_num >= (surface_hor_start+surface_hor_num)):
+					surface_x_lines.append(x_lines[channel_num])
+					surface_y_lines.append(y_lines[channel_num])
+					surface_csd.append(csd[channel_num])
+					surface_resistor.append(resistor[channel_num])
+					surface_prsc.append(prsc[channel_num])
+					surface_again.append(again[channel_num])
+					surface_dgain.append(dgain[channel_num])
+					surface_filterlevel.append(filterlevel[channel_num])
+				elif channel_num == surface_ver_start:
+					for ver_num in range(0,surface_ver_num):
+						for hor_num in range(0,surface_hor_num):
+							surface_x_lines.append(x_lines[surface_hor_start+hor_num])
+							surface_y_lines.append(y_lines[surface_ver_start+ver_num])
+							surface_csd.append(csd[surface_ver_start+ver_num])
+							surface_resistor.append(resistor[surface_ver_start+ver_num])
+							surface_prsc.append(prsc[surface_ver_start+ver_num])
+							surface_again.append(again[surface_ver_start+ver_num])
+							surface_dgain.append(dgain[surface_ver_start+ver_num])
+							surface_filterlevel.append(filterlevel[surface_ver_start+ver_num])
+			#replace with surface computed
+			y_lines = surface_y_lines
+			x_lines = surface_x_lines
+			csd = surface_csd
+			resistor = surface_resistor
+			prsc = surface_prsc
+			again = surface_again
+			dgain = surface_dgain
+			filterlevel = surface_filterlevel
 		#identify unique Y lines
 		for each_y_line in y_lines:
 			if each_y_line not in y_lines_unique:
@@ -112,7 +165,7 @@ def processBoostMode(symbol,event):
 			again_for_this_y_line = []
 			dgain_for_this_y_line = []
 			filterlevel_for_this_y_line = []
-			for num in range(0,touchNumChannel.getValue()):
+			for num in range(0,len(x_lines)):
 				if each_unique_y_line == y_lines[num]:
 					key_to_node_map_temp.append(num)
 					x_lines_for_this_y_line.append(x_lines[num])

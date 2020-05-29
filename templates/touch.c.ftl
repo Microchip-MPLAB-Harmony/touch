@@ -176,9 +176,20 @@ qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNE
 
 /* Container */
 qtm_acquisition_control_t qtlib_acq_set1 = {&ptc_qtlib_acq_gen1, &ptc_seq_node_cfg1[0], &ptc_qtlib_node_stat1[0]};
+
 <#if ENABLE_4p?exists && ENABLE_4p == true>
+<#if ENABLE_SURFACE == true>
+touch_ret_t touch_surface_4p_acq_to_key(void * ptr);
+touch_ret_t touch_surface_4p_key_to_acq_update(void *ptr);
+/* extra array to store the consolidated row, cloumn signal and status value */
+qtm_acq_node_data_t ptc_qtlib_node_stat1_4p_sur[SURFACE_CS_NUM_KEYS_H + SURFACE_CS_NUM_KEYS_V];
+
+/* map node to key */
+uint8_t touch_key_node_mapping_4p[SURFACE_CS_START_KEY_V+SURFACE_CS_NUM_KEYS_V*SURFACE_CS_NUM_KEYS_H] = {${.vars["MUTL_4P_NODE_KEY_MAP"]}};
+<#else>
 /* map node to key */
 uint8_t touch_key_node_mapping_4p[DEF_NUM_SENSORS] = {${.vars["MUTL_4P_NODE_KEY_MAP"]}};
+</#if>
 </#if>
 <#if (ENABLE_EVENT_LP == 1)> 
 <@eventlp.lowpower_acq_param/>
@@ -189,7 +200,7 @@ uint8_t touch_key_node_mapping_4p[DEF_NUM_SENSORS] = {${.vars["MUTL_4P_NODE_KEY_
 /**********************************************************/
 
 /* Buffer used with various noise filtering functions */
-uint16_t noise_filter_buffer[DEF_NUM_SENSORS * NUM_FREQ_STEPS];
+uint16_t noise_filter_buffer[DEF_NUM_CHANNELS * NUM_FREQ_STEPS];
 uint8_t  freq_hop_delay_selection[NUM_FREQ_STEPS] = {DEF_MEDIAN_FILTER_FREQUENCIES};
 
 /* Configuration */
@@ -212,7 +223,7 @@ qtm_freq_hop_control_t qtm_freq_hop_control1 = {&qtm_freq_hop_data1, &qtm_freq_h
 /**********************************************************/
 
 /* Buffer used with various noise filtering functions */
-uint16_t noise_filter_buffer[DEF_NUM_SENSORS * NUM_FREQ_STEPS];
+uint16_t noise_filter_buffer[DEF_NUM_CHANNELS * NUM_FREQ_STEPS];
 uint8_t  freq_hop_delay_selection[NUM_FREQ_STEPS] = {DEF_MEDIAN_FILTER_FREQUENCIES};
 uint8_t  freq_hop_autotune_counters[NUM_FREQ_STEPS];
 
@@ -413,7 +424,9 @@ qtm_gestures_2d_control_t qtm_gestures_2d_control1 = {&qtm_gestures_2d_data, &qt
     {                                                                                                                  \
 		<#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>(module_proc_t)&qtm_freq_hop,                                \
 		<#elseif ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>(module_proc_t)&qtm_freq_hop_autotune,</#if>             \
+		<#if ENABLE_4p?exists && ENABLE_4p == true && ENABLE_SURFACE == true >(module_proc_t)&touch_surface_4p_acq_to_key,</#if>				\
 		(module_proc_t)&qtm_key_sensors_process,                                                                        \
+		<#if ENABLE_4p?exists && ENABLE_4p == true && ENABLE_SURFACE == true >(module_proc_t)&touch_surface_4p_key_to_acq_update,</#if>				\
 	 	<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>(module_proc_t)&qtm_scroller_process,</#if>                               \
 		<#if ENABLE_SURFACE1T==true>(module_proc_t)&qtm_surface_cs_process,</#if>                               \
 		<#if ENABLE_SURFACE2T==true>(module_proc_t)&qtm_surface_cs2t_process,</#if>                               \
@@ -430,7 +443,9 @@ qtm_gestures_2d_control_t qtm_gestures_2d_control1 = {&qtm_gestures_2d_data, &qt
     {                                                                                                                   \
 		<#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>(void *)&qtm_freq_hop_control1,                                  \
 		<#elseif ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>(void *)&qtm_freq_hop_autotune_control1, </#if>              \
+		<#if ENABLE_4p?exists && ENABLE_4p == true && ENABLE_SURFACE == true >(void *)&qtlib_key_set1,</#if>				\
 		(void *)&qtlib_key_set1,                                                                                           \
+		<#if ENABLE_4p?exists && ENABLE_4p == true && ENABLE_SURFACE == true >(void *)&qtlib_key_set1,</#if>				\
 		<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>(void *)&qtm_scroller_control1,</#if>                                         \
 		<#if ENABLE_SURFACE1T==true>(void *)&qtm_surface_cs_control1,</#if>                                      \
 		<#if ENABLE_SURFACE2T==true>(void *)&qtm_surface_cs_control1,</#if>                               \
@@ -464,6 +479,106 @@ module_arg_t library_module_proc_data_model[]       = LIB_DATA_MODELS_PROC_LIST;
 /*----------------------------------------------------------------------------
  *   function definitions
  *----------------------------------------------------------------------------*/
+
+<#if ENABLE_4p?exists && ENABLE_4p == true && ENABLE_SURFACE == true >
+/*============================================================================
+touch_ret_t touch_surface_4p_acq_to_key(void * ptr)
+------------------------------------------------------------------------------
+Purpose: from vertical*horizontal nodes, make vertical+horizontal to make it
+         compatible with surface module
+Input  : none
+Output : none
+Notes  :
+============================================================================*/
+touch_ret_t touch_surface_4p_acq_to_key(void * ptr)
+{
+	uint32_t    sum_signal = 0, comp_cap = 0;
+	uint8_t     status  = 0;
+	touch_ret_t ret_var = TOUCH_SUCCESS;
+
+	/*compute vertical node signal, compcap and status */
+	for (uint16_t cnt = 0; cnt < SURFACE_CS_NUM_KEYS_V; cnt++) {
+		sum_signal = 0;
+		comp_cap   = 0;
+		status     = 0;
+		for (uint16_t cnt1 = 0; cnt1 < SURFACE_CS_NUM_KEYS_H; cnt1++) {
+			sum_signal
+			    += ptc_qtlib_node_stat1[touch_key_node_mapping_4p[cnt * SURFACE_CS_NUM_KEYS_H + cnt1 + SURFACE_CS_START_KEY_V]].node_acq_signals;
+			comp_cap
+			    += ptc_qtlib_node_stat1[touch_key_node_mapping_4p[cnt * SURFACE_CS_NUM_KEYS_H + cnt1 + SURFACE_CS_START_KEY_V]].node_comp_caps;
+			status
+			    |= ptc_qtlib_node_stat1[touch_key_node_mapping_4p[cnt * SURFACE_CS_NUM_KEYS_H + cnt1 + SURFACE_CS_START_KEY_V]].node_acq_status;
+		}
+		ptc_qtlib_node_stat1_4p_sur[cnt].node_acq_signals = sum_signal / SURFACE_CS_NUM_KEYS_H;
+		ptc_qtlib_node_stat1_4p_sur[cnt].node_comp_caps   = comp_cap;
+		ptc_qtlib_node_stat1_4p_sur[cnt].node_acq_status  = status;
+	}
+
+	/*compute horizontal node signal, compcap and status */
+	for (uint16_t cnt1 = 0; cnt1 < SURFACE_CS_NUM_KEYS_H; cnt1++) {
+		sum_signal = 0;
+		comp_cap   = 0;
+		status     = 0;
+		for (uint16_t cnt = 0; cnt < SURFACE_CS_NUM_KEYS_V; cnt++) {
+			sum_signal
+			    += ptc_qtlib_node_stat1[touch_key_node_mapping_4p[cnt * SURFACE_CS_NUM_KEYS_V + cnt1 + SURFACE_CS_START_KEY_V]].node_acq_signals;
+			comp_cap
+			    += ptc_qtlib_node_stat1[touch_key_node_mapping_4p[cnt * SURFACE_CS_NUM_KEYS_V + cnt1 + SURFACE_CS_START_KEY_V]].node_comp_caps;
+			status
+			    |= ptc_qtlib_node_stat1[touch_key_node_mapping_4p[cnt * SURFACE_CS_NUM_KEYS_V + cnt1 + SURFACE_CS_START_KEY_V]].node_acq_status;
+		}
+		ptc_qtlib_node_stat1_4p_sur[cnt1 + SURFACE_CS_NUM_KEYS_V].node_acq_signals
+		= sum_signal / SURFACE_CS_NUM_KEYS_V;
+		ptc_qtlib_node_stat1_4p_sur[cnt1 + SURFACE_CS_NUM_KEYS_V].node_comp_caps  = comp_cap;
+		ptc_qtlib_node_stat1_4p_sur[cnt1 + SURFACE_CS_NUM_KEYS_V].node_acq_status = status;
+	}
+
+	return ret_var;
+}
+
+/*============================================================================
+touch_ret_t touch_surface_4p_key_to_acq_update(void * ptr)
+------------------------------------------------------------------------------
+Purpose: depends on key's module reburst,calibration request, update 4P nodes
+Input  : none
+Output : none
+Notes  :
+============================================================================*/
+touch_ret_t touch_surface_4p_key_to_acq_update(void * ptr)
+{
+	uint16_t temp_cnt = 0, calib_flag = 0;
+	touch_ret_t ret_var = TOUCH_SUCCESS;
+
+	for(uint16_t cnt = 0; cnt < (SURFACE_CS_NUM_KEYS_V+SURFACE_CS_NUM_KEYS_H); cnt++)	{
+		if(ptc_qtlib_node_stat1_4p_sur[cnt].node_acq_status & NODE_CAL_REQ) {
+			calib_flag = 1;
+			break;
+		}
+	}
+
+	if(calib_flag == 1)	{
+		for(uint16_t cnt = 0; cnt < (SURFACE_CS_NUM_KEYS_V+SURFACE_CS_NUM_KEYS_H); cnt++) {
+			qtm_init_sensor_key(
+			&qtlib_key_set1, cnt + SURFACE_CS_START_KEY_V, &ptc_qtlib_node_stat1_4p_sur[cnt]);
+
+			if(cnt < SURFACE_CS_NUM_KEYS_V) {
+				for(uint16_t hor_cnt = 0; hor_cnt < SURFACE_CS_NUM_KEYS_H; hor_cnt++){
+					temp_cnt = touch_key_node_mapping_4p[cnt*SURFACE_CS_NUM_KEYS_H+hor_cnt];
+					qtm_calibrate_sensor_node(&qtlib_acq_set1, temp_cnt);
+				}
+			}
+			else {
+				for(uint16_t ver_cnt = 0; ver_cnt < SURFACE_CS_NUM_KEYS_V; ver_cnt++) {
+					temp_cnt = touch_key_node_mapping_4p[ver_cnt*SURFACE_CS_NUM_KEYS_V+(cnt - SURFACE_CS_NUM_KEYS_V)];
+					qtm_calibrate_sensor_node(&qtlib_acq_set1, temp_cnt);
+				}
+			}
+			ptc_qtlib_node_stat1_4p_sur[cnt].node_acq_status &= ~(NODE_CAL_REQ);
+		}
+	}
+	return ret_var;
+}
+</#if>
 
 /*============================================================================
 static void build_qtm_config(qtm_control_t *qtm)
@@ -535,6 +650,19 @@ static touch_ret_t touch_sensors_config(void)
         qtm_calibrate_sensor_node(&qtlib_acq_set1, sensor_nodes);
     }
 
+
+<#if ENABLE_4p?exists && ENABLE_4p == true && ENABLE_SURFACE == true>
+		/* Enable sensor keys and assign nodes */
+		for(sensor_nodes = 0u; sensor_nodes < SURFACE_CS_START_KEY_V; sensor_nodes++)
+		{
+			qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[touch_key_node_mapping_4p[sensor_nodes]]);
+		}
+		/* For surface sensor configure separately */
+		for (sensor_nodes = 0u; sensor_nodes < SURFACE_CS_NUM_KEYS_V+SURFACE_CS_NUM_KEYS_H; sensor_nodes++) {
+			qtm_init_sensor_key(
+			&qtlib_key_set1, sensor_nodes + SURFACE_CS_START_KEY_V, &ptc_qtlib_node_stat1_4p_sur[sensor_nodes]);
+		}
+<#else>
     /* Enable sensor keys and assign nodes */
     for (sensor_nodes = 0u; sensor_nodes < DEF_NUM_SENSORS; sensor_nodes++) {
 		<#if ENABLE_4p?exists && ENABLE_4p == true>
@@ -543,6 +671,7 @@ static touch_ret_t touch_sensors_config(void)
 			qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[sensor_nodes]);
 		</#if>
     }
+</#if>
 
 <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>	
 	/* scroller init */

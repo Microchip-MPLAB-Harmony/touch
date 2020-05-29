@@ -69,12 +69,16 @@ extern qtm_gestures_2d_data_t    qtm_gestures_2d_data;
 #endif
 extern qtm_touch_key_data_t qtlib_key_data_set1[DEF_NUM_SENSORS];
 
+<#if ENABLE_4p?exists && ENABLE_4p == true>
+extern qtm_acq_4p_${DEVICE_NAME?lower_case}_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
+extern uint8_t touch_key_node_mapping_4p[SURFACE_CS_START_KEY_V + (SURFACE_CS_NUM_KEYS_V * SURFACE_CS_NUM_KEYS_H)];
+<#else>
 <#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
 extern qtm_acq_samd1x_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
 <#else>
 extern qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
 </#if>
-
+</#if>
 
 extern qtm_touch_key_config_t qtlib_key_configs_set1[DEF_NUM_SENSORS];
 <#if (ENABLE_GESTURE == true)>
@@ -176,8 +180,23 @@ void Krono_UpdateBuffer(void)
 			}
 			/* Write actual setting back to RAM Buffer */
 			cfgRam[CFGGRAM_OVRSMPLS_ADDR] = (uint8_t)(1u << new_setting);
-
 			/* Write oversampling to each node in config */
+<#if ENABLE_4p?exists && ENABLE_4p == true>
+			for (uint16_t cnt = 0; cnt < (SURFACE_CS_NUM_KEYS_V + SURFACE_CS_NUM_KEYS_H); cnt++) {
+				if (cnt < SURFACE_CS_NUM_KEYS_V) {
+					for (uint16_t hor_cnt = 0; hor_cnt < SURFACE_CS_NUM_KEYS_H; hor_cnt++) {
+						uint8_t temp_cnt = touch_key_node_mapping_4p[cnt * SURFACE_CS_NUM_KEYS_H + hor_cnt + SURFACE_CS_START_KEY_V];
+						ptc_seq_node_cfg1[(SURFACE_CS_START_KEY_V + temp_cnt)>>2].node_oversampling = new_setting;
+					}
+					} else {
+					for (uint16_t ver_cnt = 0; ver_cnt < SURFACE_CS_NUM_KEYS_V; ver_cnt++) {
+						uint8_t temp_cnt
+						= touch_key_node_mapping_4p[ver_cnt * SURFACE_CS_NUM_KEYS_V + (cnt - SURFACE_CS_NUM_KEYS_V) + SURFACE_CS_START_KEY_V];
+						ptc_seq_node_cfg1[(SURFACE_CS_START_KEY_V + temp_cnt)>>2].node_oversampling = new_setting;
+					}
+				}
+			}
+<#else>
 			for (temp_i_var = 0; temp_i_var < SURFACE_CS_NUM_KEYS_H; temp_i_var++) {
 				ptc_seq_node_cfg1[SURFACE_CS_START_KEY_H + temp_i_var].node_oversampling = new_setting;
 			}
@@ -185,6 +204,7 @@ void Krono_UpdateBuffer(void)
 			for (temp_i_var = 0; temp_i_var < SURFACE_CS_NUM_KEYS_V; temp_i_var++) {
 				ptc_seq_node_cfg1[SURFACE_CS_START_KEY_V + temp_i_var].node_oversampling = new_setting;
 			}
+</#if>
 			touch_init(); /* Re-initialize the touch library */
 		}
 		/* X Threshold */

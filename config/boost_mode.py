@@ -4,7 +4,7 @@ boostMenu.setVisible(False)
 #-------------- Boost Mode Related ---------------------#
 enable4pMenu = qtouchComponent.createBooleanSymbol("ENABLE_4p", boostMenu)
 enable4pMenu.setLabel("Enable 4p")
-enable4pMenu.setDefaultValue(True)
+enable4pMenu.setDefaultValue(False)
 touch4pNumGroup = qtouchComponent.createIntegerSymbol("MUTL_4P_NUM_GROUP", boostMenu)
 touch4pNumGroup.setVisible(True)
 touch4pNodeKeyMap = qtouchComponent.createStringSymbol("MUTL_4P_NODE_KEY_MAP", boostMenu)
