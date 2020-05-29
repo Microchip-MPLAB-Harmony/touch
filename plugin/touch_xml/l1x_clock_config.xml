@@ -12,20 +12,18 @@ This is for SAML1x Family
 		<clock index = "3_0" symbol="GCLK_INST_NUM1" value="True" component_id= "core" name="Select GCLK2" />
 		<clock index = "4_0" symbol="GCLK_1_SRC" value="1" component_id= "core" name="Select 16MHz OSC for GCLK1" />
 		<clock index = "5_0" symbol="GCLK_1_DIV" value="4" component_id= "core" name="Prescale 16MHz by 4 for PTC" />
-		<clock index = "6_0" symbol="GCLK_INST_NUM2" value="True" component_id= "core" name="Select GCLK2" />
-		<clock index = "7_0" symbol="GCLK_2_SRC" value="1" component_id= "core" name="Select 16MHz OSC for GCLK1" />
-		<clock index = "8_0" symbol="GCLK_2_DIV" value="40" component_id= "core" name="Prescale 16MHz by 4 for PTC" />
-		<clock index = "9_0" symbol="NVM_RWS" value="2" component_id= "nvmctrl" name="Configure wait state as 2" />
-		<clock index = "10_0" symbol="CONFIG_CLOCK_OSC16M_ENABLE" value="True" component_id= "core" name="Enable OSC16M" />
-		<clock index = "11_0" symbol="CONFIG_CLOCK_OSC16M_FREQSEL" value="3" component_id= "core" name="Enable 16MHz output" />
-		<clock index = "12_0" symbol="CONFIG_CLOCK_DFLL_ENABLE" value="False" component_id= "core" name="Disable DFLL" />
-		<clock index = "13_0" symbol="CONFIG_CLOCK_DPLL_ENABLE" value="False" component_id= "core" name="Disable DPLL" />
+		<clock index = "6_0" symbol="GCLK_1_RUNSTDBY" value="True" component_id= "core" name="Run in Standby" />
+		<clock index = "7_0" symbol="NVM_RWS" value="2" component_id= "nvmctrl" name="Configure wait state as 2" />
+		<clock index = "8_0" symbol="CONFIG_CLOCK_OSC16M_ENABLE" value="True" component_id= "core" name="Enable OSC16M" />
+		<clock index = "9_0" symbol="CONFIG_CLOCK_OSC16M_FREQSEL" value="3" component_id= "core" name="Enable 16MHz output" />
+		<clock index = "10_0" symbol="CONFIG_CLOCK_DFLL_ENABLE" value="False" component_id= "core" name="Disable DFLL" />
+		<clock index = "11_0" symbol="CONFIG_CLOCK_DPLL_ENABLE" value="False" component_id= "core" name="Disable DPLL" />
 	</all_clock_symbols_list>
 	<all_conditions_list>
 		<condition />
 	</all_conditions_list>
 	<common>
-		<default clock_update_index_list="0_0,1_0,2_0,3_0,4_0,5_0,6_0,7_0,8_0,9_0,10_0,11_0,12_0,13_0"/>
+		<default clock_update_index_list="0_0,1_0,2_0,3_0,4_0,5_0,6_0,7_0,8_0,9_0,10_0,11_0"/>
 	</common>
 </clock_settings>
 <description>
@@ -36,7 +34,7 @@ This is for SAML1x Family
 	<data>	{Generic clock(Peripherals)| Source | Frequency},
 					{GCLK0(CPU)|OSC16M| 16MHz}, 
 					{GCLK1(PTC, UART)|OSC16M(DIV 4)|4MHz},
-					{Timer(RTC)|OSCULP32K|32.768KHz}
+					{Timer(RTC)|OSCULP32K|1.024KHz}
 	</data>
 	<data>	{Wait states},
 					{NVM states| 2}
