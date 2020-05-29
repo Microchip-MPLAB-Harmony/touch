@@ -23,6 +23,235 @@ timer_based_driven_shield_supported_device = ["SAMD21","SAMDA1","SAMHA1","SAME54
 adc_based_touch_acqusition_device = ["SAME54","SAME53","SAME51","SAMD51"]
 lump_not_supported_device = []
 device_with_hardware_driven_shield_support = ["SAML10","SAML11","PIC32MZW"]
+boost_mode_supported_devices = ["SAML10","SAML1xE","SAML11"]
+
+
+def processBoostMode(symbol,event):
+	global touchNumChannel
+	if (getDeviceName.getDefaultValue() in boost_mode_supported_devices):
+		localComponent = symbol.getComponent()
+		# maximum number of boost mode group is limited to 32 in the script
+		touch4pMaxGroup = 32
+		y_lines = []
+		x_lines = []
+		csd = []
+		resistor = []
+		prsc = []
+		filterlevel = []
+		again = []
+		dgain = []
+
+		y_lines_unique = []
+		x_lines_for_each_unique_y = []
+		csd_for_each_unique_y = []
+		resistor_for_each_unique_y = []
+		prsc_for_each_unique_y = []
+		filterlevel_for_each_unique_y = []
+		again_for_each_unique_y = []
+		dgain_for_each_unique_y = []
+
+		y_lines_group_of_4 = []
+		x_lines_group_of_4 = []
+		csd_group_of_4 = []
+		resistor_group_of_4 = []
+		prsc_group_of_4 = []
+		filterlevel_group_of_4 = []
+		again_group_of_4 = []
+		dgain_group_of_4 = []
+
+		key_to_node_map_temp = []
+		key_to_node_map = []
+		node_count = 0
+		x_none_cnt = 0
+
+		tempSymbol = localComponent.getSymbolByID("MUTL_4P_X_LINE")
+		tempSymbol.setValue("")
+		tempSymbol = localComponent.getSymbolByID("MUTL_4P_Y_LINE")
+		tempSymbol.setValue("")
+		tempSymbol = localComponent.getSymbolByID("MUTL_4P_CSD")
+		tempSymbol.setValue("")
+		tempSymbol = localComponent.getSymbolByID("MUTL_4P_Y_RES")
+		tempSymbol.setValue("")
+		tempSymbol = localComponent.getSymbolByID("MUTL_4P_PRSC")
+		tempSymbol.setValue("")
+		tempSymbol = localComponent.getSymbolByID("MUTL_4P_AGAIN")
+		tempSymbol.setValue("")
+		tempSymbol = localComponent.getSymbolByID("MUTL_4P_DGAIN")
+		tempSymbol.setValue("")
+		tempSymbol = localComponent.getSymbolByID("MUTL_4P_FL")
+		tempSymbol.setValue("")
+		for channel_num in range(0, touchNumChannel.getValue()):
+			tempSymbol = localComponent.getSymbolByID("MUTL-X-INPUT_"+ str(channel_num))
+			x_lines.append(tempSymbol.getValue())
+			tempSymbol = localComponent.getSymbolByID("MUTL-Y-INPUT_"+ str(channel_num))
+			y_lines.append(tempSymbol.getValue())
+			tempSymbol = localComponent.getSymbolByID("DEF_TOUCH_CHARGE_SHARE_DELAY"+str(channel_num))
+			csd.append(tempSymbol.getValue())
+			tempSymbol = localComponent.getSymbolByID("DEF_NOD_SERIES_RESISTOR"+str(channel_num))
+			resistor.append(tempSymbol.getValue())
+			tempSymbol = localComponent.getSymbolByID("DEF_NOD_PTC_PRESCALER"+str(channel_num))
+			prsc.append(tempSymbol.getValue())
+			tempSymbol = localComponent.getSymbolByID("DEF_NOD_GAIN_ANA"+str(channel_num))
+			again.append(tempSymbol.getValue())
+			tempSymbol = localComponent.getSymbolByID("DEF_DIGI_FILT_GAIN"+str(channel_num))
+			dgain.append(tempSymbol.getValue())
+			tempSymbol = localComponent.getSymbolByID("DEF_DIGI_FILT_OVERSAMPLING"+str(channel_num))
+			filterlevel.append(tempSymbol.getValue())
+		#identify unique Y lines
+		for each_y_line in y_lines:
+			if each_y_line not in y_lines_unique:
+				y_lines_unique.append(each_y_line)
+		#for each unique Y line find the other parameters including x lines
+		for each_unique_y_line in y_lines_unique:
+			x_lines_for_this_y_line = []
+			csd_for_this_y_line = []
+			res_for_this_y_line = []
+			prsc_for_this_y_line = []
+			again_for_this_y_line = []
+			dgain_for_this_y_line = []
+			filterlevel_for_this_y_line = []
+			for num in range(0,touchNumChannel.getValue()):
+				if each_unique_y_line == y_lines[num]:
+					key_to_node_map_temp.append(num)
+					x_lines_for_this_y_line.append(x_lines[num])
+					csd_for_this_y_line.append(csd[num])
+					res_for_this_y_line.append(resistor[num])
+					prsc_for_this_y_line.append(prsc[num])
+					again_for_this_y_line.append(again[num])
+					dgain_for_this_y_line.append(dgain[num])
+					filterlevel_for_this_y_line.append(filterlevel[num])
+			x_lines_for_each_unique_y.append(x_lines_for_this_y_line)
+			csd_for_each_unique_y.append(csd_for_this_y_line)
+			resistor_for_each_unique_y.append(res_for_this_y_line)
+			prsc_for_each_unique_y.append(prsc_for_this_y_line)
+			filterlevel_for_each_unique_y.append(filterlevel_for_this_y_line)
+			again_for_each_unique_y.append(again_for_this_y_line)
+			dgain_for_each_unique_y.append(dgain_for_this_y_line)
+		# Now group them in 4 numbers
+		# if more than 4 elements, split them in to multiple groups
+		# if less than 4 elements, append X_NONE
+		for x_group_num in range(0,len(y_lines_unique)):
+			this_x_group = x_lines_for_each_unique_y[x_group_num]
+			if len(this_x_group) <= 4: # less than 4 elements
+				while len(this_x_group) < 4:
+					this_x_group.append("X_NONE")
+				x_lines_group_of_4.append(this_x_group)
+				y_lines_group_of_4.append(y_lines_unique[x_group_num])
+				csd_group_of_4.append(csd_for_each_unique_y[x_group_num])
+				resistor_group_of_4.append(resistor_for_each_unique_y[x_group_num])
+				prsc_group_of_4.append(prsc_for_each_unique_y[x_group_num])
+				again_group_of_4.append(again_for_each_unique_y[x_group_num])
+				dgain_group_of_4.append(dgain_for_each_unique_y[x_group_num])
+				filterlevel_group_of_4.append(filterlevel_for_each_unique_y[x_group_num])
+			else: # more than 4 elements
+				x_group_4 = []
+				for x_len in range(0,len(this_x_group)):
+					x_group_4.append(this_x_group[x_len])
+					if len(x_group_4) == 4:
+						x_lines_group_of_4.append(x_group_4)
+						y_lines_group_of_4.append(y_lines_unique[x_group_num])
+						csd_group_of_4.append(csd_for_each_unique_y[x_group_num])
+						resistor_group_of_4.append(resistor_for_each_unique_y[x_group_num])
+						prsc_group_of_4.append(prsc_for_each_unique_y[x_group_num])
+						again_group_of_4.append(again_for_each_unique_y[x_group_num])
+						dgain_group_of_4.append(dgain_for_each_unique_y[x_group_num])
+						filterlevel_group_of_4.append(filterlevel_for_each_unique_y[x_group_num])
+						x_group_4 = []
+				if len(x_group_4) != 0: # residual X lines. num of x line is < 4
+					while len(x_group_4) < 4:
+						x_group_4.append("X_NONE")
+					x_lines_group_of_4.append(x_group_4)
+					y_lines_group_of_4.append(y_lines_unique[x_group_num])
+					csd_group_of_4.append(csd_for_each_unique_y[x_group_num])
+					resistor_group_of_4.append(resistor_for_each_unique_y[x_group_num])
+					prsc_group_of_4.append(prsc_for_each_unique_y[x_group_num])
+					again_group_of_4.append(again_for_each_unique_y[x_group_num])
+					dgain_group_of_4.append(dgain_for_each_unique_y[x_group_num])
+					filterlevel_group_of_4.append(filterlevel_for_each_unique_y[x_group_num])
+		for j in range(0,len(x_lines_group_of_4)):
+			if j < touch4pMaxGroup:
+				temp_string = "{ "
+				for i in x_lines_group_of_4[j]:
+					if i != "X_NONE":
+						key_to_node_map.insert(key_to_node_map_temp[node_count], node_count+x_none_cnt)
+						node_count = node_count + 1
+						temp_string = temp_string + 'X(' + str(i) + '),'
+					else:
+						x_none_cnt = x_none_cnt + 1
+						temp_string = temp_string + "X_NONE,"
+				temp_string = temp_string[:-1] + ' }'
+				tempSymbol = localComponent.getSymbolByID("MUTL_4P_X_LINE")
+				temp_string1 = tempSymbol.getValue()
+				if temp_string1 != "":
+					temp_string1 = temp_string1 + '+'
+				temp_string1 = temp_string1 + temp_string
+				tempSymbol.setValue(temp_string1)
+
+				tempSymbol = localComponent.getSymbolByID("MUTL_4P_Y_LINE")
+				temp_string = tempSymbol.getValue()
+				if temp_string != "":
+					temp_string = temp_string + '+'
+				temp_string = temp_string + 'Y('+str(y_lines_group_of_4[j])+')'
+				tempSymbol.setValue(temp_string)
+
+				tempSymbol = localComponent.getSymbolByID("MUTL_4P_CSD")
+				temp_string = tempSymbol.getValue()
+				if temp_string != "":
+					temp_string = temp_string + '+'
+				temp_string = temp_string + str(max(csd_group_of_4[j]))
+				tempSymbol.setValue(temp_string)
+
+				tempSymbol = localComponent.getSymbolByID("MUTL_4P_Y_RES")
+				tempSymbol_1 = localComponent.getSymbolByID("DEF_NOD_SERIES_RESISTOR0")
+				temp_string = tempSymbol.getValue()
+				if temp_string != "":
+					temp_string = temp_string + '+'
+				temp_string = temp_string + str(tempSymbol_1.getKeyValue(max(resistor_group_of_4[j])))
+				tempSymbol.setValue(temp_string)
+
+				tempSmbol = localComponent.getSymbolByID("MUTL_4P_PRSC")
+				tempSymbol_1 = localComponent.getSymbolByID("DEF_NOD_PTC_PRESCALER0")
+				temp_string = tempSmbol.getValue()
+				if temp_string != "":
+					temp_string = temp_string + '+'
+				temp_string = temp_string + str(tempSymbol_1.getKeyValue(max(prsc_group_of_4[j])))
+				tempSmbol.setValue(temp_string)
+
+				tempSmbol = localComponent.getSymbolByID("MUTL_4P_AGAIN")
+				tempSymbol_1 = localComponent.getSymbolByID("DEF_NOD_GAIN_ANA0")
+				temp_string = tempSmbol.getValue()
+				if temp_string != "":
+					temp_string = temp_string + '+'
+				temp_string = temp_string + str(tempSymbol_1.getKeyValue(max(again_group_of_4[j])))
+				tempSmbol.setValue(temp_string)
+
+				tempSmbol = localComponent.getSymbolByID("MUTL_4P_DGAIN")
+				tempSymbol_1 = localComponent.getSymbolByID("DEF_DIGI_FILT_GAIN0")
+				temp_string = tempSmbol.getValue()
+				if temp_string != "":
+					temp_string = temp_string + '+'
+				temp_string = temp_string + str(tempSymbol_1.getKeyValue(max(dgain_group_of_4[j])))
+				tempSmbol.setValue(temp_string)
+
+				tempSmbol = localComponent.getSymbolByID("MUTL_4P_FL")
+				tempSymbol_1 = localComponent.getSymbolByID("DEF_DIGI_FILT_OVERSAMPLING0")
+				temp_string = tempSmbol.getValue()
+				if temp_string != "":
+					temp_string = temp_string + '+'
+				temp_string = temp_string + str(tempSymbol_1.getKeyValue(max(filterlevel_group_of_4[j])))
+				tempSmbol.setValue(temp_string)
+		# store total number of groups
+		tempSmbol = localComponent.getSymbolByID("MUTL_4P_NUM_GROUP")
+		tempSmbol.setValue(len(x_lines_group_of_4))
+		# combine the node to key map with commas
+		temp_string = ""
+		for i in key_to_node_map:
+			if temp_string == "":
+				temp_string = str(i)
+			else:
+				temp_string = temp_string + ',' + str(i)
+		tempSmbol = localComponent.getSymbolByID("MUTL_4P_NODE_KEY_MAP")
+		tempSmbol.setValue(temp_string)
 
 def searchqtouchFilesArray(idString):
     retVal = False
@@ -230,8 +459,8 @@ def enable2DSurfaceFtlFiles(symbol,event):
         component.getSymbolByID("TOUCH_KRONOCOMM_ADAPTOR_HEADER").setEnabled(False)
         component.getSymbolByID("TOUCH_KRONOCOMM_UART_SOURCE").setEnabled(False)
         component.getSymbolByID("TOUCH_KRONOCOMM_ADAPTOR_SOURCE").setEnabled(False)
-        
-def onGenerate(symbol,event):
+
+def processLump(symbol, event):
 	global touchNumChannel
 	global enableDrivenShieldAdjacent
 	global enableDrivenShieldDedicated
@@ -367,6 +596,10 @@ def onGenerate(symbol,event):
 				tchMutXPinSelection[int(i)].setValue(vals1)
 				tchMutYPinSelection[int(i)].setValue(vals2)
 
+def onGenerate(symbol,event):
+	processBoostMode(symbol,event)
+	processLump(symbol,event)
+
 autoComponentIDTable = ["rtc"]
 autoConnectTable = [["lib_qtouch", "Touch_timer","rtc", "RTC_TMR"]]
 
@@ -440,7 +673,10 @@ def instantiateComponent(qtouchComponent):
     
     if (getDeviceName.getDefaultValue() in timer_based_driven_shield_supported_device):
         execfile(Module.getPath() +"/config/drivenshield.py")
-        
+
+    if (getDeviceName.getDefaultValue() in boost_mode_supported_devices):
+        execfile(Module.getPath() +"/config/boost_mode.py")
+
     execfile(Module.getPath() +"/config/key.py")
     execfile(Module.getPath() +"/config/sensor.py")
 
@@ -456,12 +692,6 @@ def instantiateComponent(qtouchComponent):
     enableSurfaceMenu.setLabel("Enable Surface")
     enableSurfaceMenu.setDefaultValue(False)
     execfile(Module.getPath() +"/config/surface.py")
-
-    # Enable 4p 
-    global fourP
-    enable4pMenu = qtouchComponent.createBooleanSymbol("ENABLE_4p", touchMenu)
-    enable4pMenu.setLabel("Enable 4p")
-    enable4pMenu.setDefaultValue(False)
 
     # Enable Gesture 
     enableGestureMenu = qtouchComponent.createBooleanSymbol("ENABLE_GESTURE", touchMenu)

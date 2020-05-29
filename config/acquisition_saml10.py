@@ -28,6 +28,7 @@ elif ("L10E16" in getPinout):
 else:
     touchChannelSelf = 16
     touchChannelMutual = 64
+
 def autoTune4pFunc(symbol,event):
     global touchAcq4pLibraryFile
     global touchAcq4pAutoLibraryFile
@@ -53,6 +54,14 @@ global touchAcq4pLibraryFile
 global touchAcq4pAutoLibraryFile
 global touchAcqHeaderFile
 global touch4pHeaderFile
+
+def moduleIDFunc(symbol,event):
+	localComponent = symbol.getComponent()
+	plibUsed = localComponent.getSymbolByID("MODULE_ID")
+	if(event["value"] == 1):
+		plibUsed.setValue("0x0033")
+	else:
+		plibUsed.setValue("0x0027")
 
 def autoTuneFunc(symbol,event):
     global touchAcqLibraryFile
@@ -156,6 +165,7 @@ touchHeaderFile.setMarkup(False)
 getModuleID = qtouchComponent.createStringSymbol("MODULE_ID", touchMenu)
 getModuleID.setDefaultValue("0x0027")
 getModuleID.setVisible(False)
+getModuleID.setDependencies(moduleIDFunc,["ENABLE_4p"])
 
 #Set clock xml for the device
 clockXml = qtouchComponent.createStringSymbol("CLOCK_XML", touchMenu)

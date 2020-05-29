@@ -109,11 +109,7 @@ uint8_t module_error_code = 0;
 <#if DEVICE_NAME == "PIC32MZW">
 uint32_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 <#else>
-    <#if ENABLE_4p == true>
-        uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS << 2];
-    <#else>
-        uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
-    </#if>
+uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 </#if>
 /* Acquisition set 1 - General settings */
 qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
@@ -122,31 +118,29 @@ qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
 /* Node status, signal, calibration values */
 qtm_acq_node_data_t ptc_qtlib_node_stat1[DEF_NUM_CHANNELS];
 
-<#if TOUCH_CHAN_ENABLE_CNT&gt;=1>
 /* Node configurations */
+<#if ENABLE_4p?exists && ENABLE_4p == true>
+qtm_acq_4p_${DEVICE_NAME?lower_case}_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
+<#else>
+<#if TOUCH_CHAN_ENABLE_CNT&gt;=1>
 <#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
 qtm_acq_samd1x_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 <#elseif DEVICE_NAME= "SAML11" || DEVICE_NAME= "SAML1xE">
 qtm_acq_saml10_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 <#else>
 qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
-<#else>
-<#if ENABLE_4p == true>
-qtm_acq_4p_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
-<#else>
-qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 </#if>
-</#if>
-
 <#else>
 /* Node configurations */
 qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
 </#if>
+</#if>
 
 /* Container */
 qtm_acquisition_control_t qtlib_acq_set1 = {&ptc_qtlib_acq_gen1, &ptc_seq_node_cfg1[0], &ptc_qtlib_node_stat1[0]};
-<#if ENABLE_4p == true>
-uint8_t touch_key_node_mapping_4p[DEF_NUM_SENSORS] = {0};
+<#if ENABLE_4p?exists && ENABLE_4p == true>
+/* map node to key */
+uint8_t touch_key_node_mapping_4p[DEF_NUM_SENSORS] = {${.vars["MUTL_4P_NODE_KEY_MAP"]}};
 </#if>
 <#if ((ENABLE_FREQ_HOP==true) && (FREQ_AUTOTUNE!=true))>
 /**********************************************************/
@@ -492,21 +486,7 @@ static touch_ret_t touch_sensors_config(void)
 <#else>
     qtm_ptc_qtlib_assign_signal_memory(&touch_acq_signals_raw[0]);
 </#if>
-<#if ENABLE_4p == true>
-	/* Initialize sensor nodes */
 
-	for (sensor_nodes = 0u; sensor_nodes < (DEF_NUM_CHANNELS << 2u); sensor_nodes++) {
-		/* Enable each node for measurement and mark for calibration */
-		qtm_enable_sensor_node(&qtlib_acq_set1, sensor_nodes);
-		qtm_calibrate_sensor_node(&qtlib_acq_set1, sensor_nodes);
-	}
-
-	/* Enable sensor keys and assign nodes */
-	for (sensor_nodes = 0u; sensor_nodes < DEF_NUM_SENSORS; sensor_nodes++) {
-		qtm_init_sensor_key(
-		    &qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[touch_key_node_mapping_4p[sensor_nodes]]);
-	}
-<#else>
     /* Initialize sensor nodes */
     for (sensor_nodes = 0u; sensor_nodes < DEF_NUM_CHANNELS; sensor_nodes++) {
         /* Enable each node for measurement and mark for calibration */
@@ -515,10 +495,14 @@ static touch_ret_t touch_sensors_config(void)
     }
 
     /* Enable sensor keys and assign nodes */
-    for (sensor_nodes = 0u; sensor_nodes < DEF_NUM_CHANNELS; sensor_nodes++) {
-        qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[sensor_nodes]);
+    for (sensor_nodes = 0u; sensor_nodes < DEF_NUM_SENSORS; sensor_nodes++) {
+		<#if ENABLE_4p?exists && ENABLE_4p == true>
+			qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[touch_key_node_mapping_4p[sensor_nodes]]);
+    <#else>
+			qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[sensor_nodes]);
+		</#if>
     }
-</#if>
+
 <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>	
 	/* scroller init */
 	qtm_init_scroller_module(&qtm_scroller_control1);
@@ -833,7 +817,7 @@ void touch_timer_config(void)
 
 uint16_t get_sensor_node_signal(uint16_t sensor_node)
 {
-<#if ENABLE_4p == true>
+<#if ENABLE_4p?exists && ENABLE_4p == true>
     return (qtlib_key_data_set1[sensor_node].node_data_struct_ptr->node_acq_signals);
 <#else>
     return (ptc_qtlib_node_stat1[sensor_node].node_acq_signals);
@@ -842,7 +826,7 @@ uint16_t get_sensor_node_signal(uint16_t sensor_node)
 
 void update_sensor_node_signal(uint16_t sensor_node, uint16_t new_signal)
 {
-<#if ENABLE_4p == true>
+<#if ENABLE_4p?exists && ENABLE_4p == true>
     qtlib_key_data_set1[sensor_node].node_data_struct_ptr->node_acq_signals = new_signal;
 <#else>
     ptc_qtlib_node_stat1[sensor_node].node_acq_signals = new_signal;
@@ -861,16 +845,16 @@ void update_sensor_node_reference(uint16_t sensor_node, uint16_t new_reference)
 
 uint16_t get_sensor_cc_val(uint16_t sensor_node)
 {
-<#if ENABLE_4p == true>
+<#if ENABLE_4p?exists && ENABLE_4p == true>
     return (qtlib_key_data_set1[sensor_node].node_data_struct_ptr->node_comp_caps);
 <#else>
-    return (ptc_qtlib_node_stat1[sensor_node].node_comp_caps);\
+    return (ptc_qtlib_node_stat1[sensor_node].node_comp_caps);
 </#if>
 }
 
 void update_sensor_cc_val(uint16_t sensor_node, uint16_t new_cc_value)
 {
-<#if ENABLE_4p == true>
+<#if ENABLE_4p?exists && ENABLE_4p == true>
     qtlib_key_data_set1[sensor_node].node_data_struct_ptr->node_comp_caps = new_cc_value;
 <#else>
     ptc_qtlib_node_stat1[sensor_node].node_comp_caps = new_cc_value;

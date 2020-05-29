@@ -50,13 +50,16 @@ extern "C" {
  *     include files
  *----------------------------------------------------------------------------*/
 
-
 #include "qtm_common_components_api.h"
 #include "qtm_binding_layer_0x0005_api.h"
 <#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
 #include "qtm_acq_samd1x_0x0009_api.h"
 <#else>
+<#if ENABLE_4p?exists && ENABLE_4p == true>
+#include "qtm_acq_4p_${DEVICE_NAME?lower_case}_${MODULE_ID}_api.h"
+<#else>
 #include "qtm_acq_${DEVICE_NAME?lower_case}_${MODULE_ID}_api.h"
+</#if>
 </#if>
 #include "qtm_touch_key_0x0002_api.h"
 <#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>

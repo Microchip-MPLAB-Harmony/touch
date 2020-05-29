@@ -1,7 +1,18 @@
 ################################################################################
 #### Global Variables ####
 ################################################################################
-touchChannelCountMax =totalChannelCountMutl.getValue()
+
+global touchChannelCountMax
+global tchSelfPinSelection
+global tchMutXPinSelection
+global tchMutYPinSelection
+global touchNumChannel
+
+tchSelfPinSelection = []
+tchMutXPinSelection = []
+tchMutYPinSelection = []
+
+touchChannelCountMax = totalChannelCountMutl.getValue()
 
 ################################################################################
 #### Component ####
@@ -10,19 +21,11 @@ nodeMenu = qtouchComponent.createMenuSymbol("NODE_MENU", touchMenu)
 nodeMenu.setLabel("Node Configuration")
 
 # Touch Channel Enable Count
-global touchNumChannel
 touchNumChannel = qtouchComponent.createIntegerSymbol("TOUCH_CHAN_ENABLE_CNT", nodeMenu)
 touchNumChannel.setLabel("Number of Channels to enable")
 touchNumChannel.setDefaultValue(0)
 touchNumChannel.setMin(0)
 touchNumChannel.setMax(touchChannelCountMax)
-
-global tchSelfPinSelection
-global tchMutXPinSelection
-global tchMutYPinSelection
-tchSelfPinSelection = []
-tchMutXPinSelection = []
-tchMutYPinSelection = []
 
 for channelID in range(0, touchChannelCountMax):
 
@@ -43,7 +46,6 @@ for channelID in range(0, touchChannelCountMax):
             ptcPinValues[index].getAttribute("index"),ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
         ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
 
-
     tchMutXPinSelection.append(qtouchComponent.createKeyValueSetSymbol("MUTL-X-INPUT_"+ str(channelID), touchChEnable))
     tchMutXPinSelection[channelID].setLabel("Select X Pin for Channel "+ str(channelID))
     tchMutXPinSelection[channelID].setDefaultValue(0)
@@ -56,7 +58,6 @@ for channelID in range(0, touchChannelCountMax):
         if(ptcPinValues[index].getAttribute("group") == "X"):        
             tchMutXPinSelection[channelID].addKey(ptcPinValues[index].getAttribute("index"),ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
         ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
-
 
     tchMutYPinSelection.append(qtouchComponent.createKeyValueSetSymbol("MUTL-Y-INPUT_"+ str(channelID), touchChEnable))
     tchMutYPinSelection[channelID].setLabel("Select Y Pin for Channel "+ str(channelID))
@@ -143,3 +144,4 @@ for channelID in range(0, touchChannelCountMax):
     touchSym_DIGI_FILT_OVERSAMPLING_Val.setOutputMode("Value")
     touchSym_DIGI_FILT_OVERSAMPLING_Val.setDisplayMode("Description")
     touchSym_DIGI_FILT_OVERSAMPLING_Val.setDescription("Defines the number of samples taken for each measurement.Higher filter level settings, for each measurements more number of samples taken which helps to average out the noise.Higher filter level settings takes long time to do a touch measurement which affects response time.So, start with default value and increase depends on noise levels.")
+

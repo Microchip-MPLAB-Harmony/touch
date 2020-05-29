@@ -162,7 +162,7 @@ void datastreamer_output(void)
 	// Frame Start
 	datastreamer_transmit(sequence);
 
-	for (count_bytes_out = 0u; count_bytes_out < DEF_NUM_CHANNELS; count_bytes_out++) {
+	for (count_bytes_out = 0u; count_bytes_out < DEF_NUM_SENSORS; count_bytes_out++) {
 		/* Signals */
 		u16temp_output = get_sensor_node_signal(count_bytes_out);
 		datastreamer_transmit((uint8_t)u16temp_output);
