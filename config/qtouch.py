@@ -601,6 +601,33 @@ def processLump(symbol, event):
 def onGenerate(symbol,event):
 	processBoostMode(symbol,event)
 	processLump(symbol,event)
+    
+def onPTCClock(symbol,event):
+    component = symbol.getComponent()
+    if component.getSymbolValue("TOUCH_LOADED"):
+        frequency = event['symbol'].getValue()
+        channels = component.getSymbolValue("TOUCH_CHAN_ENABLE_CNT")
+        if frequency > 0 and channels > 0:   
+            symbol.setValue(symbol.getDefaultValue()+":sync")
+            sevent = component.getSymbolByID("TOUCH_SCRIPT_EVENT")
+            sevent.setValue("ptcclock")
+            sevent.setValue("")
+    
+    
+def onWarning(symbol,event):
+    if event['symbol'].getID() == "PTC_CLOCK_FREQ":
+        if "sync" in event['symbol'].getValue():
+            symbol.setLabel("!!!Warning PTC clock out of sync")
+            symbol.setDescription("Open touch configurator and save project")
+            symbol.setVisible(True)
+        elif "range" in event['symbol'].getValue():
+            symbol.setLabel("!!!Warning PTC clock out of range")
+            symbol.setDescription("Open clock configurator and adjust input clock")
+            symbol.setVisible(True)
+        else:
+            symbol.setLabel("")
+            symbol.setDescription("")
+            symbol.setVisible(False)
 
 autoComponentIDTable = ["rtc"]
 autoConnectTable = [["lib_qtouch", "Touch_timer","rtc", "RTC_TMR"]]
@@ -629,6 +656,7 @@ def instantiateComponent(qtouchComponent):
     
     touchInfoMenu = qtouchComponent.createMenuSymbol("TOUCH_INFO", None)
     touchInfoMenu.setLabel("Touch Configuration Helper")
+    #touchInfoMenu.setVisible(False)
     
     touchScriptEvent = qtouchComponent.createStringSymbol("TOUCH_SCRIPT_EVENT", touchInfoMenu)
     touchScriptEvent.setLabel("Script Event ")
@@ -641,11 +669,16 @@ def instantiateComponent(qtouchComponent):
     ptcFreqencyId.setLabel("PTC Freqency Id ")
     ptcFreqencyId.setReadOnly(True)
     ptcFreqencyId.setDefaultValue("GCLK_ID_"+ptcClockInfo.getAttribute("value")+"_FREQ")
+    ptcFreqencyId.setDependencies(onPTCClock,["core."+"GCLK_ID_"+ptcClockInfo.getAttribute("value")+"_FREQ"])
     
     enableGenerate = qtouchComponent.createBooleanSymbol("TOUCH_PRE_GENERATE", touchInfoMenu)
     enableGenerate.setLabel("Generate Project")
     enableGenerate.setDefaultValue(False)
     enableGenerate.setDependencies(onGenerate,["TOUCH_PRE_GENERATE"])
+    
+    enableLoaded = qtouchComponent.createBooleanSymbol("TOUCH_LOADED", touchInfoMenu)
+    enableLoaded.setLabel("Project Loaded")
+    enableLoaded.setDefaultValue(False)
 	
     execfile(Module.getPath() +"/config/interface.py")
     execfile(Module.getPath() +"/config/acquisition_"+getDeviceName.getDefaultValue().lower()+".py")
@@ -749,6 +782,11 @@ def instantiateComponent(qtouchComponent):
     qtouchSercomComponent.setVisible(False)
     qtouchSercomComponent.setDefaultValue("")
     
+    #keep it as last displayed tree config
+    touchWarning = qtouchComponent.createMenuSymbol("TOUCH_WARNING", None)
+    touchWarning.setLabel("")
+    touchWarning.setVisible(False)
+    touchWarning.setDependencies(onWarning,["PTC_CLOCK_FREQ"])
 ############################################################################
 #### Code Generation ####
 ############################################################################
