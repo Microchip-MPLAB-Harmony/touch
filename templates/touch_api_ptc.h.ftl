@@ -94,6 +94,18 @@ void     update_sensor_state(uint16_t sensor_node, uint8_t new_state);
 void     calibrate_node(uint16_t sensor_node);
 uint8_t  get_scroller_state(uint16_t sensor_node);
 uint16_t get_scroller_position(uint16_t sensor_node);
+<#if ENABLE_SURFACE1T == true >
+#define HOR_POS 0u
+#define VER_POS 1u
+uint8_t get_surface_status(void);
+uint8_t get_surface_position(uint8_t ver_or_hor);
+</#if>
+<#if ENABLE_SURFACE2T == true >
+#define HOR_POS 0u
+#define VER_POS 1u
+uint8_t get_surface_status(void);
+uint8_t get_surface_position(uint8_t ver_or_hor, uint8_t contact);
+</#if>
 
 void touch_timer_handler(void);
 void touch_init(void);

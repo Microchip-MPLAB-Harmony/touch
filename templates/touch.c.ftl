@@ -1353,6 +1353,56 @@ uint16_t get_scroller_position(uint16_t sensor_node)
 }
 </#if>
 
+<#if ENABLE_SURFACE1T == true >
+uint8_t get_surface_status(void)
+{
+  return (qtm_surface_cs_control1.qtm_surface_contact_data->qt_surface_status);
+}
+
+uint8_t get_surface_position(uint8_t ver_or_hor)
+{
+	uint8_t temp_pos = 0;
+/*
+*	ver_or_hor, 0 = hor, 1 = ver
+*/
+	if(ver_or_hor == VER_POS)
+	{
+		temp_pos = qtm_surface_cs_control1.qtm_surface_contact_data->v_position;
+	}
+	else
+	{
+		temp_pos = qtm_surface_cs_control1.qtm_surface_contact_data->h_position;
+	}
+  return temp_pos;
+}
+</#if>
+
+<#if ENABLE_SURFACE2T == true >
+uint8_t get_surface_status(void)
+{
+  return (qtm_surface_cs_control1.qtm_surface_cs2t_data->qt_surface_cs2t_status);
+}
+
+uint8_t get_surface_position(uint8_t ver_or_hor, uint8_t contact)
+{
+	uint8_t temp_pos = 0;
+	/*
+	*	ver_or_hor, 0 = hor, 1 = ver
+	* contact, determines which contact point,
+	*	0 is for the first contact point, and 1 is for the second contact point
+	*/
+	if(ver_or_hor == VER_POS)
+	{
+		temp_pos = qtm_surface_cs_control1.qtm_surface_contact_data[contact].v_position;
+	}
+	else
+	{
+		temp_pos = qtm_surface_cs_control1.qtm_surface_contact_data[contact].h_position;
+	}
+  return temp_pos;
+}
+</#if>
+
 <#if DEVICE_NAME != "PIC32MZW">
 /*============================================================================
 void PTC_Handler_EOC(void)
