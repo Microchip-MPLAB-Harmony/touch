@@ -30,21 +30,34 @@ else:
     touchChannelSelf = 16
     touchChannelMutual = 64
 
-
-def autoTuneFunc(symbol,event):
-    global touchAcqLibraryFile
-    global touchAcqAutoLibraryFile
-
-    if(event["value"] == 0):
-        touchAcqAutoLibraryFile.setEnabled(False)
-        touchAcqLibraryFile.setEnabled(True)
-    else:
-        touchAcqAutoLibraryFile.setEnabled(True)
-        touchAcqLibraryFile.setEnabled(False)
-
-
 global touchAcqLibraryFile
-global touchAcqAutoLibraryFile
+global touchAcq4pLibraryFile
+global touchAcqHeaderFile
+global touchAcq4pHeaderFile
+global touchAcq4pAdditionalHeaderFile
+
+def libChange4P(symbol,event):
+    if(event["value"] == False):
+        touchAcqLibraryFile.setEnabled(True)
+        touchAcqHeaderFile.setEnabled(True)
+        touchAcq4pLibraryFile.setEnabled(False)
+        touchAcq4pHeaderFile.setEnabled(False)
+        touchAcq4pAdditionalHeaderFile.setEnabled(False)
+    else:
+        touchAcqLibraryFile.setEnabled(False)
+        touchAcqHeaderFile.setEnabled(False)
+        touchAcq4pLibraryFile.setEnabled(True)
+        touchAcq4pHeaderFile.setEnabled(True)
+        touchAcq4pAdditionalHeaderFile.setEnabled(True)
+
+def moduleIDFunc(symbol,event):
+    localComponent = symbol.getComponent()
+    plibUsed = localComponent.getSymbolByID("MODULE_ID")
+    if(event["value"] == 1):
+        plibUsed.setValue("0x0033")
+    else:
+        plibUsed.setValue("0x0027")
+
 
 ############################################################################
 #### Code Generation ####
@@ -55,23 +68,12 @@ touchAcqLibraryFile.setSourcePath("/src/libraries/qtm_acq_saml10_0x0027.X.a")
 touchAcqLibraryFile.setOutputName("qtm_acq_saml10_0x0027.X.a")
 touchAcqLibraryFile.setDestPath("/touch/lib/")
 touchAcqLibraryFile.setEnabled(True)
-touchAcqLibraryFile.setDependencies(autoTuneFunc,["TUNE_MODE_SELECTED"])
-
-# Library File
-touchAcqAutoLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_ACQ_AUTO_LIB", None)
-touchAcqAutoLibraryFile.setSourcePath("/src/libraries/qtm_acq_saml10_0x0027.X.a")
-touchAcqAutoLibraryFile.setOutputName("qtm_acq_saml10_0x0027.X.a")
-touchAcqAutoLibraryFile.setDestPath("/touch/lib/")
-touchAcqAutoLibraryFile.setEnabled(False)
-touchAcqAutoLibraryFile.setDependencies(autoTuneFunc,["TUNE_MODE_SELECTED"])
-
 # Library File
 touchBindLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_BIND_LIB", None)
 touchBindLibraryFile.setSourcePath("/src/libraries/qtm_binding_layer_cm23_0x0005.X.a")
 touchBindLibraryFile.setOutputName("qtm_binding_layer_cm23_0x0005.X.a")
 touchBindLibraryFile.setDestPath("/touch/lib/")
 touchBindLibraryFile.setEnabled(True)
-
 # Header File
 touchAcqHeaderFile = qtouchComponent.createFileSymbol("TOUCH_ACQ_HEADER", None)
 touchAcqHeaderFile.setSourcePath("/src/qtm_acq_saml11_0x0027_api.h")
@@ -80,6 +82,33 @@ touchAcqHeaderFile.setDestPath("/touch/")
 touchAcqHeaderFile.setProjectPath("config/" + configName + "/touch/")
 touchAcqHeaderFile.setType("HEADER")
 touchAcqHeaderFile.setMarkup(False)
+
+# Library File
+touchAcq4pLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_ACQ_4P_LIB", None)
+touchAcq4pLibraryFile.setSourcePath("/src/libraries/qtm_acq_4p_saml11_0x0033.X.a")
+touchAcq4pLibraryFile.setOutputName("qtm_acq_4p_saml11_0x0033.X.a")
+touchAcq4pLibraryFile.setDestPath("/touch/lib/")
+touchAcq4pLibraryFile.setEnabled(False)
+touchAcq4pLibraryFile.setDependencies(libChange4P,["ENABLE_4p"])
+# Header File
+touchAcq4pHeaderFile = qtouchComponent.createFileSymbol("TOUCH_ACQ_4P_HEADER", None)
+touchAcq4pHeaderFile.setSourcePath("/src/qtm_acq_4p_saml11_0x0033_api.h")
+touchAcq4pHeaderFile.setOutputName("qtm_acq_4p_saml11_0x0033_api.h")
+touchAcq4pHeaderFile.setDestPath("/touch/")
+touchAcq4pHeaderFile.setProjectPath("config/" + configName + "/touch/")
+touchAcq4pHeaderFile.setType("HEADER")
+touchAcq4pHeaderFile.setMarkup(False)
+touchAcq4pHeaderFile.setDependencies(libChange4P,["ENABLE_4p"])
+
+# Header File
+touchAcq4pAdditionalHeaderFile = qtouchComponent.createFileSymbol("TOUCH_ACQ_4P_ADDITIONAL_HEADER", None)
+touchAcq4pAdditionalHeaderFile.setSourcePath("/src/qtm_acq_4p_saml10_0x0033_api.h")
+touchAcq4pAdditionalHeaderFile.setOutputName("qtm_acq_4p_saml10_0x0033_api.h")
+touchAcq4pAdditionalHeaderFile.setDestPath("/touch/")
+touchAcq4pAdditionalHeaderFile.setProjectPath("config/" + configName + "/touch/")
+touchAcq4pAdditionalHeaderFile.setType("HEADER")
+touchAcq4pAdditionalHeaderFile.setMarkup(False)
+
 
 # Header File
 touchBindHeaderFile = qtouchComponent.createFileSymbol("TOUCH_BIND_HEADER", None)
@@ -101,11 +130,13 @@ touchCommonHeaderFile.setMarkup(False)
 
 if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
     qtouchFilesArray.append(touchAcqLibraryFile)
-    qtouchFilesArray.append(touchAcqAutoLibraryFile)
     qtouchFilesArray.append(touchBindLibraryFile)
     qtouchFilesArray.append(touchAcqHeaderFile)
     qtouchFilesArray.append(touchBindHeaderFile)
     qtouchFilesArray.append(touchCommonHeaderFile)
+    qtouchFilesArray.append(touchAcq4pHeaderFile)
+    qtouchFilesArray.append(touchAcq4pLibraryFile)
+    qtouchFilesArray.append(touchAcq4pAdditionalHeaderFile)
 
 ################################################################################
 #### Component ####
@@ -115,6 +146,7 @@ if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_E
 getModuleID = qtouchComponent.createStringSymbol("MODULE_ID", touchMenu)
 getModuleID.setDefaultValue("0x0027")
 getModuleID.setVisible(False)
+getModuleID.setDependencies(moduleIDFunc,["ENABLE_4p"])
 
 #Set clock xml for the device
 clockXml = qtouchComponent.createStringSymbol("CLOCK_XML", touchMenu)
