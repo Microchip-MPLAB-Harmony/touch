@@ -118,7 +118,7 @@ getModuleID.setVisible(False)
 
 #Set clock xml for the device
 clockXml = qtouchComponent.createStringSymbol("CLOCK_XML", touchMenu)
-clockXml.setDefaultValue("d21_clock_config")
+clockXml.setDefaultValue("ha1_clock_config")
 clockXml.setVisible(False)
 
 #Set PTC INTERRUPT HANDLER
