@@ -9,8 +9,6 @@ deviceVariant = ATDF.getNode("/avr-tools-device-file/variants").getChildren()
 deviceChild = []
 deviceChild = deviceNode.getChildren()
 deviceName = deviceChild[0].getAttribute("series")
-print(deviceName)
-print(deviceVariant[0].getAttribute("pinout"))
 
 global getDeviceName
 getDeviceName = qtouchComponent.createStringSymbol("DEVICE_NAME", touchMenu)

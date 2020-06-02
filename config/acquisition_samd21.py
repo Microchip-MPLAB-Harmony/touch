@@ -10,11 +10,9 @@ try:
     touchChannelSelf = ptcPinValues[6].getAttribute("value")
     touchChannelMutual = ptcPinValues[7].getAttribute("value")
 except:
-    print("----Channel counts not in atdf file----")
     getVariant =  ATDF.getNode("/avr-tools-device-file/devices/device")
     getPinout = []
     getPinout = getVariant.getAttribute("name")
-    print("selected Device : " + getPinout)
     if ("D21J15" in getPinout):
         touchChannelSelf = 16
         touchChannelMutual = 60

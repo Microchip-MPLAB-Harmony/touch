@@ -321,11 +321,9 @@ def checkqtouchFilesArray(symbol,idString):
     if component.getSymbolByID(idString).getEnabled() == True:
         if searchqtouchFilesArray(idString) == False:
             qtouchFilesArray.append(component.getSymbolByID(idString))
-            print("------------------Added : " + idString)
     else:
         if searchqtouchFilesArray(idString) == True:
             qtouchFilesArray.remove(component.getSymbolByID(idString))
-            print("------------------Removed : " + idString)
     return     
  
 def securefileUpdate(symbol, event):
@@ -367,11 +365,6 @@ def checknonsecureStatus():
     else:
         nonSecureStatus = "NON_SECURE"    
         
-    
-    print("*** checknonsecureStatus Updated : "+ nonSecureStatus)
-    print("*** Number of entries in file array : " + str(len(qtouchFilesArray)))
-
-    
     for kx in range(len(qtouchFilesArray)):    
         checkname = str(qtouchFilesArray[kx].getID()).split('_')       
         if ("LIB" in checkname):
@@ -379,11 +372,8 @@ def checknonsecureStatus():
                 qtouchFilesArray[kx].setDestPath("../../../../../Secure/firmware/src/config/default/touch/lib/")
             else:
                 qtouchFilesArray[kx].setDestPath("../../../../../NonSecure/firmware/src/config/default/touch/lib/")
-            #print(str(qtouchFilesArray[kx].getDestPath()))
-        #else:
-            #print("--- lib NOT FOUND---")
+            
         qtouchFilesArray[kx].setSecurity(nonSecureStatus)
-        #print(str(checkname) + " = " + str(nonSecureStatus))
     
 def onAttachmentConnected(source,target):
     global nonSecureStatus
@@ -442,7 +432,6 @@ def onAttachmentDisconnected(source, target):
 def enableHopFiles(symbol,event):
     component = symbol.getComponent()
     hopAutoEnabled = enableFreqHopAutoTuneMenu.getValue()
-    print(hopAutoEnabled)
     if(event["value"] == True) and (hopAutoEnabled == True):
         component.getSymbolByID("TOUCH_HOP_LIB").setEnabled(False)
         component.getSymbolByID("TOUCH_HOP_HEADER").setEnabled(False)
@@ -891,18 +880,12 @@ def instantiateComponent(qtouchComponent):
         
         ptcSystemDefFile.setDependencies(securefileUpdate, ["core.PTC_IS_NON_SECURE"])
         ptcSystemDefFile.setDependencies(securefileUpdate, ["core.NVIC_42_0_SECURITY_TYPE"])
-        
-        print("***********PTC secure Dependency is setup*************")
-
         qtouchFilesArray.append(ptcSystemDefFile)
         qtouchFilesArray.append(ptcSystemInitFile)
         qtouchFilesArray.append(touchSourceFile)
         qtouchFilesArray.append(touchHeaderFile)
         qtouchFilesArray.append(touchHeaderFile1)
         checknonsecureStatus()
-
-    else:
-        print("TE ERROR")
 
     qtouchComponent.addPlugin("../touch/plugin/ptc_manager_c21.jar")
 
