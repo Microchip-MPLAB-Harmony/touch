@@ -462,7 +462,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 </#if>
 </#if>
 
-<#if ENABLE_EVENT_LP == 1>
+<#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == 1>
 	<#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")> 
 		<@eventlp.lowpower_SAML/>
 		<@eventlp.lowpower_params_saml/>
@@ -470,7 +470,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 		<@eventlp.lowpower_params_samdx/>
 	</#if>
 </#if>
-<#if ENABLE_SOFTWARE_LP == 1>
+<#if ENABLE_SOFTWARE_LP?exists && ENABLE_SOFTWARE_LP == 1>
 	<#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")>
 		<@softwarelp.lowpower_SAML/>
 	</#if>

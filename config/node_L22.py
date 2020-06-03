@@ -37,7 +37,7 @@ for channelID in range(0, touchChannelCountMax):
     ptcPinValues = []
     ptcPinValues = ptcPinNode.getChildren()
     for index in range(0, len(ptcPinValues)):
-         if(ptcPinValues[index].getAttribute("group") == "Y"):
+        if(ptcPinValues[index].getAttribute("group") == "Y"):
             tchSelfPinSelection[channelID].addKey(
             ptcPinValues[index].getAttribute("index"),ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
         ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
@@ -68,7 +68,7 @@ for channelID in range(0, touchChannelCountMax):
     ptcPinValues = []
     ptcPinValues = ptcPinNode.getChildren()
     for index in range(0, len(ptcPinValues)):
-            if(ptcPinValues[index].getAttribute("group") == "Y"):        
+        if(ptcPinValues[index].getAttribute("group") == "Y"):        
             tchMutYPinSelection[channelID].addKey(ptcPinValues[index].getAttribute("index"),ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
         ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")   
 
