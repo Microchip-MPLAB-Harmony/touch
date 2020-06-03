@@ -87,13 +87,16 @@ static void DFLL_Initialize( void )
 
     SYSCTRL_REGS->SYSCTRL_DFLLVAL = SYSCTRL_DFLLVAL_COARSE(calibCoarse) | SYSCTRL_DFLLVAL_FINE(calibFine);
 
+    GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_GEN(0x3)  | GCLK_CLKCTRL_CLKEN_Msk | GCLK_CLKCTRL_ID(0);
+    SYSCTRL_REGS->SYSCTRL_DFLLMUL = SYSCTRL_DFLLMUL_MUL(1500) | SYSCTRL_DFLLMUL_FSTEP(10) | SYSCTRL_DFLLMUL_CSTEP(10);
+
 
     /* Configure DFLL */
-    SYSCTRL_REGS->SYSCTRL_DFLLCTRL = SYSCTRL_DFLLCTRL_ENABLE_Msk ;
+    SYSCTRL_REGS->SYSCTRL_DFLLCTRL = SYSCTRL_DFLLCTRL_ENABLE_Msk | SYSCTRL_DFLLCTRL_MODE_Msk ;
 
-    while((SYSCTRL_REGS->SYSCTRL_PCLKSR & SYSCTRL_PCLKSR_DFLLRDY_Msk) != SYSCTRL_PCLKSR_DFLLRDY_Msk)
+    while((SYSCTRL_REGS->SYSCTRL_PCLKSR & SYSCTRL_PCLKSR_DFLLLCKF_Msk) != SYSCTRL_PCLKSR_DFLLLCKF_Msk)
     {
-        /* Waiting for DFLL to be ready */
+        /* Waiting for DFLL to fully lock to meet clock accuracy */
     }
 }
 
@@ -152,9 +155,9 @@ void CLOCK_Initialize( void )
     SYSCTRL_Initialize();
 
     GCLK3_Initialize();
-    DFLL_Initialize();
     GCLK1_Initialize();
     GCLK2_Initialize();
+    DFLL_Initialize();
     GCLK0_Initialize();
 
 

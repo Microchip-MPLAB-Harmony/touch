@@ -1,5 +1,5 @@
 /*******************************************************************************
-  Touch Library v3.6.0 Release
+  Touch Library v3.7.0 Release
 
   Company:
     Microchip Technology Inc.
@@ -73,6 +73,7 @@ static void qtm_post_process_complete();
  */
 static void qtm_error_callback(uint8_t error);
 
+
 /*----------------------------------------------------------------------------
  *     Global Variables
  *----------------------------------------------------------------------------*/
@@ -88,6 +89,7 @@ volatile uint8_t measurement_done_touch = 0;
 /* Error Handling */
 uint8_t module_error_code = 0;
 
+
 /* Acquisition module internal data - Size to largest acquisition set */
 uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 /* Acquisition set 1 - General settings */
@@ -100,7 +102,6 @@ qtm_acq_node_data_t ptc_qtlib_node_stat1[DEF_NUM_CHANNELS];
 /* Node configurations */
 qtm_acq_samd1x_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {NODE_0_PARAMS,NODE_1_PARAMS};
 
-
 /* Container */
 qtm_acquisition_control_t qtlib_acq_set1 = {&ptc_qtlib_acq_gen1, &ptc_seq_node_cfg1[0], &ptc_qtlib_node_stat1[0]};
 
@@ -109,7 +110,7 @@ qtm_acquisition_control_t qtlib_acq_set1 = {&ptc_qtlib_acq_gen1, &ptc_seq_node_c
 /**********************************************************/
 
 /* Buffer used with various noise filtering functions */
-uint16_t noise_filter_buffer[DEF_NUM_SENSORS * NUM_FREQ_STEPS];
+uint16_t noise_filter_buffer[DEF_NUM_CHANNELS * NUM_FREQ_STEPS];
 uint8_t  freq_hop_delay_selection[NUM_FREQ_STEPS] = {DEF_MEDIAN_FILTER_FREQUENCIES};
 uint8_t  freq_hop_autotune_counters[NUM_FREQ_STEPS];
 
@@ -170,7 +171,9 @@ qtm_touch_key_control_t qtlib_key_set1
 #define LIB_MODULES_PROC_LIST                                                                                          \
     {                                                                                                                  \
 		(module_proc_t)&qtm_freq_hop_autotune,             \
+						\
 		(module_proc_t)&qtm_key_sensors_process,                                                                        \
+						\
 	 	                               \
 		                               \
 		                               \
@@ -186,7 +189,9 @@ qtm_touch_key_control_t qtlib_key_set1
 #define LIB_DATA_MODELS_PROC_LIST                                                                                       \
     {                                                                                                                   \
 		(void *)&qtm_freq_hop_autotune_control1,               \
+						\
 		(void *)&qtlib_key_set1,                                                                                           \
+						\
 		                                         \
 		                                      \
 		                               \
@@ -216,6 +221,7 @@ module_arg_t library_module_proc_data_model[]       = LIB_DATA_MODELS_PROC_LIST;
 /*----------------------------------------------------------------------------
  *   function definitions
  *----------------------------------------------------------------------------*/
+
 
 /*============================================================================
 static void build_qtm_config(qtm_control_t *qtm)
@@ -283,9 +289,10 @@ static touch_ret_t touch_sensors_config(void)
         qtm_calibrate_sensor_node(&qtlib_acq_set1, sensor_nodes);
     }
 
+
     /* Enable sensor keys and assign nodes */
-    for (sensor_nodes = 0u; sensor_nodes < DEF_NUM_CHANNELS; sensor_nodes++) {
-        qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[sensor_nodes]);
+    for (sensor_nodes = 0u; sensor_nodes < DEF_NUM_SENSORS; sensor_nodes++) {
+			qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[sensor_nodes]);
     }
 
 
@@ -403,8 +410,7 @@ Notes  :
 ============================================================================*/
 void touch_init(void)
 {
-
-    touch_timer_config();
+	    touch_timer_config();
 
     build_qtm_config(&qtm_control);
 
@@ -433,7 +439,6 @@ volatile uint8_t time_to_measure_touch_var =0;
 void touch_process(void)
 {
     touch_ret_t touch_ret;
-
     /* check the time_to_measure_touch for Touch Acquisition */
     if (time_to_measure_touch_var)
 	{
@@ -474,6 +479,8 @@ void touch_process(void)
 	uart_process();
 #endif
 }
+
+
 /*============================================================================
 void touch_timer_handler(void)
 ------------------------------------------------------------------------------
@@ -487,7 +494,6 @@ void touch_timer_handler(void)
 {
     /* Count complete - Measure touch sensors */
 	time_to_measure_touch_var = 1;
-
     qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 }
 void rtc_cb( RTC_TIMER32_INT_MASK intCause, uintptr_t context )
@@ -551,6 +557,8 @@ void calibrate_node(uint16_t sensor_node)
     qtm_init_sensor_key(&qtlib_key_set1, sensor_node, &ptc_qtlib_node_stat1[sensor_node]);
 }
 
+
+
 /*============================================================================
 void PTC_Handler_EOC(void)
 ------------------------------------------------------------------------------
@@ -562,5 +570,5 @@ Notes  : none
 void PTC_Handler(void)
 {
 	qtm_ptc_clear_interrupt();
+	qtm_samd1x_ptc_handler_eoc();
 }
-

@@ -65,8 +65,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-
-
+  
 /*** Macros for LED_SLIDER_1 pin ***/
 #define LED_SLIDER_1_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 4)
 #define LED_SLIDER_1_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 4)

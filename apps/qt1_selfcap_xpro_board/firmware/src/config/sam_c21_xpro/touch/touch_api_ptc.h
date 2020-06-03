@@ -1,6 +1,6 @@
 
 /*******************************************************************************
-  Touch Library v3.6.0 Release
+  Touch Library v3.7.0 Release
 
   Company:
     Microchip Technology Inc.
@@ -49,7 +49,6 @@ extern "C" {
 /*----------------------------------------------------------------------------
  *     include files
  *----------------------------------------------------------------------------*/
-
 
 #include "qtm_common_components_api.h"
 #include "qtm_binding_layer_0x0005_api.h"

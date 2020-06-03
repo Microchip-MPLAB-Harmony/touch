@@ -4,7 +4,8 @@
     <Name dnOrder="0" value="sam_l10_xpro"/>
     <Processor dnOrder="1" value="ATSAML10E16A"/>
     <Harmony dnOrder="2" path="../../.."/>
-    <Manifest dnOrder="3">
+    <Folder_Name dnOrder="3" value=""/>
+    <Manifest dnOrder="4">
       <Files dnOrder="0">
         <File dnOrder="0">
           <Type dnOrder="0">SOURCE</Type>
@@ -12,8 +13,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_l10_xpro/touch/datastreamer/</LogicalPath>
           <PhysicalPath dnOrder="4">/touch/datastreamer/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">6BC8133512E8BB2C172D67B81774B2E3</GeneratedChecksum>
-          <UserChecksum dnOrder="6">6BC8133512E8BB2C172D67B81774B2E3</UserChecksum>
+          <GeneratedChecksum dnOrder="5">6BBBE0C6C77A6B04CE87487F4345B9D3</GeneratedChecksum>
+          <UserChecksum dnOrder="6">6BBBE0C6C77A6B04CE87487F4345B9D3</UserChecksum>
         </File>
         <File dnOrder="1">
           <Type dnOrder="0">SOURCE</Type>
@@ -147,8 +148,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_l10_xpro/touch/</LogicalPath>
           <PhysicalPath dnOrder="4">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">9C0CF4CB6AC33CB4D717EBADFCD39317</GeneratedChecksum>
-          <UserChecksum dnOrder="6">9C0CF4CB6AC33CB4D717EBADFCD39317</UserChecksum>
+          <GeneratedChecksum dnOrder="5">213169F2C388581261ADE66F3DB398DC</GeneratedChecksum>
+          <UserChecksum dnOrder="6">213169F2C388581261ADE66F3DB398DC</UserChecksum>
         </File>
         <File dnOrder="16">
           <Type dnOrder="0">SOURCE</Type>
@@ -210,8 +211,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">packs/ATSAML10E16A_DFP/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAML10E16A_DFP/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">5BEA52945221A0068A960BD812FBD75E</GeneratedChecksum>
-          <UserChecksum dnOrder="6">5BEA52945221A0068A960BD812FBD75E</UserChecksum>
+          <GeneratedChecksum dnOrder="5">6F7EC483DBCC1F4D9D49E52E6C9D70DE</GeneratedChecksum>
+          <UserChecksum dnOrder="6">6F7EC483DBCC1F4D9D49E52E6C9D70DE</UserChecksum>
         </File>
         <File dnOrder="23">
           <Type dnOrder="0">HEADER</Type>
@@ -543,8 +544,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_l10_xpro/peripheral/sercom/usart/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/sercom/usart/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">F26B38FA1088FD5D602A6772C48878C7</GeneratedChecksum>
-          <UserChecksum dnOrder="6">F26B38FA1088FD5D602A6772C48878C7</UserChecksum>
+          <GeneratedChecksum dnOrder="5">9B409E836AF212CD11C4BB20B1B7C26E</GeneratedChecksum>
+          <UserChecksum dnOrder="6">9B409E836AF212CD11C4BB20B1B7C26E</UserChecksum>
         </File>
         <File dnOrder="60">
           <Type dnOrder="0">HEADER</Type>
@@ -579,8 +580,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_l10_xpro/touch/</LogicalPath>
           <PhysicalPath dnOrder="4">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">7C2AC36970831DBBEC2033DFBB85016A</GeneratedChecksum>
-          <UserChecksum dnOrder="6">7C2AC36970831DBBEC2033DFBB85016A</UserChecksum>
+          <GeneratedChecksum dnOrder="5">9869E83BE741E9FF0D3A228BF3828E44</GeneratedChecksum>
+          <UserChecksum dnOrder="6">9869E83BE741E9FF0D3A228BF3828E44</UserChecksum>
         </File>
         <File dnOrder="64">
           <Type dnOrder="0">HEADER</Type>
@@ -597,8 +598,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_l10_xpro/touch/</LogicalPath>
           <PhysicalPath dnOrder="4">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">E4C11D411F15AC218FC492B34ACBFF5C</GeneratedChecksum>
-          <UserChecksum dnOrder="6">E4C11D411F15AC218FC492B34ACBFF5C</UserChecksum>
+          <GeneratedChecksum dnOrder="5">00EF9EB9B035544DDD12130FE372736B</GeneratedChecksum>
+          <UserChecksum dnOrder="6">00EF9EB9B035544DDD12130FE372736B</UserChecksum>
         </File>
         <File dnOrder="66">
           <Type dnOrder="0">HEADER</Type>
@@ -615,8 +616,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_l10_xpro/touch/</LogicalPath>
           <PhysicalPath dnOrder="4">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">1BCA5204880D2D9A662781D70D62217C</GeneratedChecksum>
-          <UserChecksum dnOrder="6">1BCA5204880D2D9A662781D70D62217C</UserChecksum>
+          <GeneratedChecksum dnOrder="5">FB86752FE87F6FFC05CA323960F53142</GeneratedChecksum>
+          <UserChecksum dnOrder="6">FB86752FE87F6FFC05CA323960F53142</UserChecksum>
         </File>
         <File dnOrder="68">
           <Type dnOrder="0">HEADER</Type>
@@ -687,8 +688,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_l10_xpro/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">121C643DD06A3ACE7D56658E0AF041A3</GeneratedChecksum>
-          <UserChecksum dnOrder="6">121C643DD06A3ACE7D56658E0AF041A3</UserChecksum>
+          <GeneratedChecksum dnOrder="5">5D5CDFD3AB0E678AACDD28A3276C8099</GeneratedChecksum>
+          <UserChecksum dnOrder="6">5D5CDFD3AB0E678AACDD28A3276C8099</UserChecksum>
         </File>
         <File dnOrder="76">
           <Type dnOrder="0">HEADER</Type>
@@ -696,8 +697,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_l10_xpro/touch/</LogicalPath>
           <PhysicalPath dnOrder="4">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">7578ED562DDE9F946BD944195D191A4A</GeneratedChecksum>
-          <UserChecksum dnOrder="6">7578ED562DDE9F946BD944195D191A4A</UserChecksum>
+          <GeneratedChecksum dnOrder="5">809E43BE862A2A1789F465260CB72935</GeneratedChecksum>
+          <UserChecksum dnOrder="6">809E43BE862A2A1789F465260CB72935</UserChecksum>
         </File>
         <File dnOrder="77">
           <Type dnOrder="0">HEADER</Type>
@@ -705,8 +706,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_l10_xpro/touch/</LogicalPath>
           <PhysicalPath dnOrder="4">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">7EBFD0A891424A9EE8DBBBE8CE54BFAC</GeneratedChecksum>
-          <UserChecksum dnOrder="6">7EBFD0A891424A9EE8DBBBE8CE54BFAC</UserChecksum>
+          <GeneratedChecksum dnOrder="5">30FBC9A84C9CCF19B6DC93396177017A</GeneratedChecksum>
+          <UserChecksum dnOrder="6">30FBC9A84C9CCF19B6DC93396177017A</UserChecksum>
         </File>
         <File dnOrder="78">
           <Type dnOrder="0">HEADER</Type>
@@ -753,15 +754,15 @@
         <Library dnOrder="4" name="qtm_freq_hop_auto_cm23_0x0004.X.a" path="/touch/lib/" security="NON_SECURE"/>
       </Libraries>
       <Settings dnOrder="2">
-        <Setting append="true" category="C32" delimiter=";" dnOrder="0" key="extra-include-directories" security="NON_SECURE" value="../src;../src/config/sam_l10_xpro;../src/packs/ATSAML10E16A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm"/>
+        <Setting append="true" category="C32" delimiter=";" dnOrder="0" key="extra-include-directories" security="NON_SECURE" value="../src;../src/config/sam_l10_xpro;../src/packs/ATSAML10E16A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/"/>
         <Setting category="C32-LD" dnOrder="1" key="heap-size" security="NON_SECURE" value="512"/>
         <Setting category="C32-LD" dnOrder="2" key="no-device-startup-code" security="NON_SECURE" value="true"/>
         <Setting append="true" category="C32-LD" delimiter=";" dnOrder="3" key="preprocessor-macros" security="NON_SECURE" value=""/>
       </Settings>
     </Manifest>
-    <Settings dnOrder="4">
+    <Settings dnOrder="5">
       <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.6.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAML10_DFP\3.1.62\atdf\ATSAML10E16A.atdf"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAML10_DFP\3.2.68\atdf\ATSAML10E16A.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>

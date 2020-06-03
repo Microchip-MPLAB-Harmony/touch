@@ -114,7 +114,6 @@ DB_TYPE_TABLE, // Element Type
 };
 
 
-
 {
 0:0:1, // Dashboard ID
 22, // Element ID
@@ -163,7 +162,6 @@ DB_TYPE_TABLE, // Element Type
 1, // Label Horizontal Alignment
 1, // Data Horizontal Alignment
 };
-
 
 
 {
@@ -519,7 +517,6 @@ DB_TYPE_TABLE, // Element Type
 };
 
 
-
 {
 0:0:3, // Dashboard ID
 36, // Element ID
@@ -568,7 +565,6 @@ DB_TYPE_TABLE, // Element Type
 1, // Label Horizontal Alignment
 1, // Data Horizontal Alignment
 };
-
 
 
 {

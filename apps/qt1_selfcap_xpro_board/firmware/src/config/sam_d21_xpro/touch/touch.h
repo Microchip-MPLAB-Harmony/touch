@@ -1,5 +1,5 @@
 /*******************************************************************************
-  Touch Library v3.6.0 Release
+  Touch Library v3.7.0 Release
 
   Company:
     Microchip Technology Inc.
@@ -52,7 +52,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // DOM-IGNORE-END
 
 
-
 /*----------------------------------------------------------------------------
  *     include files
  *----------------------------------------------------------------------------*/
@@ -71,7 +70,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /* Defines the Type of sensor
  * Default value: NODE_MUTUAL.
  */
-		#define DEF_SENSOR_TYPE NODE_SELFCAP
+#define DEF_SENSOR_TYPE NODE_SELFCAP
 
 
 /* Set sensor calibration mode for charge share delay ,Prescaler or series resistor.
@@ -119,23 +118,23 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 #define NODE_0_PARAMS                                                                                               \
 {                                                                                                                  \
-   X_NONE, Y(5), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
+   X_NONE, Y(5), PRSC_DIV_SEL_4, NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
 }
 #define NODE_1_PARAMS                                                                                               \
 {                                                                                                                  \
-   X_NONE, Y(4), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
+   X_NONE, Y(4), PRSC_DIV_SEL_4, NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
 }
 #define NODE_2_PARAMS                                                                                               \
 {                                                                                                                  \
-   X_NONE, Y(11), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
+   X_NONE, Y(11), PRSC_DIV_SEL_4, NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
 }
 #define NODE_3_PARAMS                                                                                               \
 {                                                                                                                  \
-   X_NONE, Y(10), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
+   X_NONE, Y(10), PRSC_DIV_SEL_4, NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
 }
 #define NODE_4_PARAMS                                                                                               \
 {                                                                                                                  \
-   X_NONE, Y(13), NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
+   X_NONE, Y(13), PRSC_DIV_SEL_4, NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
 }
 
 /**********************************************************/
@@ -234,7 +233,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 /* Defines scroller parameter setting
  * {touch_scroller_type, touch_start_key, touch_scroller_size,
- * SCR_RESOL_DEADBAND(touch_scroller_resolution,touch_scroller_deadband), touch_scroller_hysterisis,
+ * SCROLLER_RESOL_DEADBAND(touch_scroller_resolution,touch_scroller_deadband), touch_scroller_hysterisis,
  * touch_scr_detect_threshold}
  * Configuring scr_detect_threshold: By default, scr_detect_threshold parameter should be
  * set equal to threshold value of the underlying keys. Then the parameter has to be tuned based on the actual contact
@@ -244,7 +243,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define SCROLLER_0_PARAMS                                                                                       \
 {                                                                                                              \
     SCROLLER_TYPE_WHEEL, 2, 3,                            \
-		SCR_RESOL_DEADBAND(RESOL_8_BIT, DB_10_PERCENT),8,20\
+		SCROLLER_RESOL_DEADBAND(SCR_RESOL_8_BIT, SCR_DB_10_PERCENT),8,20\
 }
 
 
@@ -280,6 +279,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  * Default value: 6
  */
 #define FREQ_AUTOTUNE_COUNT_IN 6
+
+
+
 
 /**********************************************************/
 /***************** Communication - Data Streamer ******************/

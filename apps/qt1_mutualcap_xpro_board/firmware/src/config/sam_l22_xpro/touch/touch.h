@@ -1,5 +1,5 @@
 /*******************************************************************************
-  Touch Library v3.6.0 Release
+  Touch Library v3.7.0 Release
 
   Company:
     Microchip Technology Inc.
@@ -52,7 +52,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // DOM-IGNORE-END
 
 
-
 /*----------------------------------------------------------------------------
  *     include files
  *----------------------------------------------------------------------------*/
@@ -71,7 +70,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /* Defines the Type of sensor
  * Default value: NODE_MUTUAL.
  */
-	#define DEF_SENSOR_TYPE NODE_MUTUAL
+#define DEF_SENSOR_TYPE NODE_MUTUAL
 
 
 /* Set sensor calibration mode for charge share delay ,Prescaler or series resistor.
@@ -119,43 +118,43 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 #define NODE_0_PARAMS                                                                                               \
 {                                                                                                                  \
-  X(10), Y(6), 20, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
+   X(10), Y(6), 20, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
 }
 #define NODE_1_PARAMS                                                                                               \
 {                                                                                                                  \
-  X(11), Y(6), 20, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
+   X(11), Y(6), 20, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
 }
 #define NODE_2_PARAMS                                                                                               \
 {                                                                                                                  \
-  X(24), Y(16), 20, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64                   \
+   X(24), Y(16), 20, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64                   \
 }
 #define NODE_3_PARAMS                                                                                               \
 {                                                                                                                  \
-  X(25), Y(16), 20, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64                   \
+   X(25), Y(16), 20, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64                   \
 }
 #define NODE_4_PARAMS                                                                                               \
 {                                                                                                                  \
-  X(10), Y(16), 20, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64                   \
+   X(10), Y(16), 20, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64                   \
 }
 #define NODE_5_PARAMS                                                                                               \
 {                                                                                                                  \
-  X(11), Y(16), 20, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64                   \
+   X(11), Y(16), 20, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64                   \
 }
 #define NODE_6_PARAMS                                                                                               \
 {                                                                                                                  \
-  X(24), Y(17), 20, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64                   \
+   X(24), Y(17), 20, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64                   \
 }
 #define NODE_7_PARAMS                                                                                               \
 {                                                                                                                  \
-  X(25), Y(17), 20, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64                   \
+   X(25), Y(17), 20, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64                   \
 }
 #define NODE_8_PARAMS                                                                                               \
 {                                                                                                                  \
-  X(10), Y(17), 20, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64                   \
+   X(10), Y(17), 20, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64                   \
 }
 #define NODE_9_PARAMS                                                                                               \
 {                                                                                                                  \
-  X(11), Y(17), 20, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64                   \
+   X(11), Y(17), 20, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_64                   \
 }
 
 /**********************************************************/
@@ -274,7 +273,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 /* Defines scroller parameter setting
  * {touch_scroller_type, touch_start_key, touch_scroller_size,
- * SCR_RESOL_DEADBAND(touch_scroller_resolution,touch_scroller_deadband), touch_scroller_hysterisis,
+ * SCROLLER_RESOL_DEADBAND(touch_scroller_resolution,touch_scroller_deadband), touch_scroller_hysterisis,
  * touch_scr_detect_threshold}
  * Configuring scr_detect_threshold: By default, scr_detect_threshold parameter should be
  * set equal to threshold value of the underlying keys. Then the parameter has to be tuned based on the actual contact
@@ -284,12 +283,12 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define SCROLLER_0_PARAMS                                                                                       \
 {                                                                                                              \
     SCROLLER_TYPE_SLIDER, 2, 4,                            \
-		SCR_RESOL_DEADBAND(RESOL_8_BIT, DB_10_PERCENT),8,20\
+		SCROLLER_RESOL_DEADBAND(SCR_RESOL_8_BIT, SCR_DB_10_PERCENT),8,20\
 }
 #define SCROLLER_1_PARAMS                                                                                       \
 {                                                                                                              \
     SCROLLER_TYPE_WHEEL, 6, 4,                            \
-		SCR_RESOL_DEADBAND(RESOL_8_BIT, DB_10_PERCENT),8,20\
+		SCROLLER_RESOL_DEADBAND(SCR_RESOL_8_BIT, SCR_DB_10_PERCENT),8,20\
 }
 
 
@@ -325,6 +324,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  * Default value: 6
  */
 #define FREQ_AUTOTUNE_COUNT_IN 6
+
+
+
 
 /**********************************************************/
 /***************** Communication - Data Streamer ******************/

@@ -1,5 +1,5 @@
 /*******************************************************************************
-  Touch Library v3.6.0 Release
+  Touch Library v3.7.0 Release
 
   Company:
     Microchip Technology Inc.
@@ -52,7 +52,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // DOM-IGNORE-END
 
 
-
 /*----------------------------------------------------------------------------
  *     include files
  *----------------------------------------------------------------------------*/
@@ -71,7 +70,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /* Defines the Type of sensor
  * Default value: NODE_MUTUAL.
  */
-		#define DEF_SENSOR_TYPE NODE_SELFCAP
+#define DEF_SENSOR_TYPE NODE_SELFCAP
 
 
 /* Set sensor calibration mode for charge share delay ,Prescaler or series resistor.
@@ -119,7 +118,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 #define NODE_0_PARAMS                                                                                               \
 {                                                                                                                  \
-   X_NONE, Y(12), 0, NODE_RSEL_PRSC(RSEL_VAL_0, PRSC_DIV_SEL_4), NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
+   X(24), Y(12), 0,PRSC_DIV_SEL_4, NODE_GAIN(GAIN_1, GAIN_1), FILTER_LEVEL_16                   \
 }
 
 /**********************************************************/
@@ -227,6 +226,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  * Default value: 6
  */
 #define FREQ_AUTOTUNE_COUNT_IN 6
+
+
+
 
 /**********************************************************/
 /***************** Communication - Data Streamer ******************/

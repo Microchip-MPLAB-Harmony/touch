@@ -1,5 +1,5 @@
 /*******************************************************************************
-  Touch Library v3.6.0 Release
+  Touch Library v3.7.0 Release
 
   Company:
     Microchip Technology Inc.
@@ -132,7 +132,7 @@ void datastreamer_output(void)
 	// Frame Start
 	datastreamer_transmit(sequence);
 
-	for (count_bytes_out = 0u; count_bytes_out < DEF_NUM_CHANNELS; count_bytes_out++) {
+	for (count_bytes_out = 0u; count_bytes_out < DEF_NUM_SENSORS; count_bytes_out++) {
 		/* Signals */
 		u16temp_output = get_sensor_node_signal(count_bytes_out);
 		datastreamer_transmit((uint8_t)u16temp_output);
@@ -216,9 +216,9 @@ void datastreamer_output(void)
 	/* Frequency selection - from acq module */
 	datastreamer_transmit(qtlib_acq_set1.qtm_acq_node_group_config->freq_option_select);
 
-	for (uint8_t count = 0u; count < qtm_freq_hop_autotune_control1.qtm_freq_hop_autotune_config->num_freqs; count++) {
+	for (count_bytes_out = 0u; count_bytes_out < qtm_freq_hop_autotune_control1.qtm_freq_hop_autotune_config->num_freqs; count_bytes_out++) {
 		/* Frequencies */
-		datastreamer_transmit(qtm_freq_hop_autotune_control1.qtm_freq_hop_autotune_config->median_filter_freq[count]);
+		datastreamer_transmit(qtm_freq_hop_autotune_control1.qtm_freq_hop_autotune_config->median_filter_freq[count_bytes_out]);
 	}
 #endif
 

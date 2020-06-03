@@ -115,17 +115,9 @@ DB_TYPE_TABLE, // Element Type
 
 
 
-
-
-
  
-
-
  
-
-
  
-
 {
 0:0:1, // Dashboard ID
 50, // Element ID
@@ -177,17 +169,9 @@ DB_TYPE_TABLE, // Element Type
 
 
 
-
-
-
  
-
-
  
-
-
  
-
 {
 0:0:4, // Dashboard ID
 52, // Element ID
@@ -891,17 +875,9 @@ DB_TYPE_TABLE, // Element Type
 
 
 
-
-
-
  
-
-
  
-
-
  
-
 {
 0:0:3, // Dashboard ID
 72, // Element ID
@@ -953,17 +929,9 @@ DB_TYPE_TABLE, // Element Type
 
 
 
-
-
-
  
-
-
  
-
-
  
-
 {
 0:0:4, // Dashboard ID
 74, // Element ID

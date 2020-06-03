@@ -50,6 +50,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define NODE_SELFCAP 0x80u
 #define NODE_SELFCAP_SHIELD 0x81u
 #define NODE_MUTUAL 0x40u
+#define NODE_MUTUAL_4P 0x41u
 
 /* ---------------------------------------------------------------------------------------- */
 /* Touch Library functions return a touch_ret_t */

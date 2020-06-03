@@ -31,7 +31,7 @@
         </Integer>
         <KeyValueSet dnOrder="5" id="CONFIG_CLOCK_DFLL_OPMODE">
           <Values dnOrder="0">
-            <User dnOrder="0" value="0"/>
+            <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
         <Boolean dnOrder="6" id="CONFIG_CLOCK_OSC8M_ENABLE">
@@ -190,9 +190,9 @@
             <StringArray dnOrder="0" id="values">
               <Values dnOrder="0">
                 <Value dnOrder="0">&amp;#160;&amp;#160;&amp;#160;&amp;#160;GCLK3_Initialize();</Value>
-                <Value dnOrder="1">&amp;#160;&amp;#160;&amp;#160;&amp;#160;DFLL_Initialize();</Value>
-                <Value dnOrder="2">&amp;#160;&amp;#160;&amp;#160;&amp;#160;GCLK1_Initialize();</Value>
-                <Value dnOrder="3">&amp;#160;&amp;#160;&amp;#160;&amp;#160;GCLK2_Initialize();</Value>
+                <Value dnOrder="1">&amp;#160;&amp;#160;&amp;#160;&amp;#160;GCLK1_Initialize();</Value>
+                <Value dnOrder="2">&amp;#160;&amp;#160;&amp;#160;&amp;#160;GCLK2_Initialize();</Value>
+                <Value dnOrder="3">&amp;#160;&amp;#160;&amp;#160;&amp;#160;DFLL_Initialize();</Value>
                 <Value dnOrder="4">&amp;#160;&amp;#160;&amp;#160;&amp;#160;GCLK0_Initialize();</Value>
               </Values>
             </StringArray>
@@ -719,81 +719,124 @@
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <KeyValueSet dnOrder="3" id="SELFCAP-INPUT_0">
+        <KeyValueSet dnOrder="3" id="MUTL-X-INPUT_0">
+          <Attributes dnOrder="0">
+            <KeyValuePairList dnOrder="0" id="pairs">
+              <Pairs dnOrder="0">
+                <Pair description="X0  (PA14)" dnOrder="0" key="0" value="X_NONE"/>
+                <Pair description="X1  (PA15)" dnOrder="1" key="1" value="X(1)"/>
+                <Pair description="X2  (PA10)" dnOrder="2" key="2" value="X(2)"/>
+                <Pair description="X3  (PA11)" dnOrder="3" key="3" value="X(3)"/>
+                <Pair description="X4  (PA16)" dnOrder="4" key="4" value="X(4)"/>
+                <Pair description="X5  (PA17)" dnOrder="5" key="5" value="X(5)"/>
+                <Pair description="X6  (PA22)" dnOrder="6" key="6" value="X(6)"/>
+                <Pair description="X7  (PA23)" dnOrder="7" key="7" value="X(7)"/>
+                <Pair description="X8  (PA24)" dnOrder="8" key="8" value="X(8)"/>
+                <Pair description="X9  (PA25)" dnOrder="9" key="9" value="X(9)"/>
+                <Pair description="X10  (PA27)" dnOrder="10" key="10" value="X(10)"/>
+              </Pairs>
+            </KeyValuePairList>
+          </Attributes>
+          <Values dnOrder="1">
+            <Dynamic dnOrder="0" id="lib_qtouch" value="0"/>
+          </Values>
+        </KeyValueSet>
+        <String dnOrder="4" id="PTC_CLOCK_FREQ">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="lib_qtouch" value="GCLK_ID_23_FREQ"/>
+          </Values>
+        </String>
+        <KeyValueSet dnOrder="5" id="SELFCAP-INPUT_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="5"/>
           </Values>
         </KeyValueSet>
-        <Integer dnOrder="4" id="TOUCH_CHAN_ENABLE_CNT">
+        <Integer dnOrder="6" id="TOUCH_CHAN_ENABLE_CNT">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
         </Integer>
-        <File dnOrder="5" id="TOUCH_DATA_STREAMER_HEADER">
+        <File dnOrder="7" id="TOUCH_DATA_STREAMER_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="6" id="TOUCH_DATA_STREAMER_HEADER_db">
+        <File dnOrder="8" id="TOUCH_DATA_STREAMER_HEADER_db">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="7" id="TOUCH_DATA_STREAMER_HEADER_ds">
+        <File dnOrder="9" id="TOUCH_DATA_STREAMER_HEADER_ds">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="8" id="TOUCH_DATA_STREAMER_HEADER_sc">
+        <File dnOrder="10" id="TOUCH_DATA_STREAMER_HEADER_sc">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="9" id="TOUCH_DATA_STREAMER_SOURCE">
+        <File dnOrder="11" id="TOUCH_DATA_STREAMER_SOURCE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <Boolean dnOrder="10" id="TOUCH_ENABLE_CH_0">
+        <Boolean dnOrder="12" id="TOUCH_ENABLE_CH_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="11" id="TOUCH_ENABLE_KEY_0">
+        <Boolean dnOrder="13" id="TOUCH_ENABLE_KEY_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <File dnOrder="12" id="TOUCH_HOP_AUTO_HEADER">
+        <File dnOrder="14" id="TOUCH_HOP_AUTO_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <Library dnOrder="13" id="TOUCH_HOP_AUTO_LIB">
+        <Library dnOrder="15" id="TOUCH_HOP_AUTO_LIB">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Library>
-        <Integer dnOrder="14" id="TOUCH_KEY_ENABLE_CNT">
+        <Integer dnOrder="16" id="TOUCH_KEY_ENABLE_CNT">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
         </Integer>
-        <String dnOrder="15" id="TOUCH_SERCOM_INSTANCE">
+        <Boolean dnOrder="17" id="TOUCH_LOADED">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="TOUCH_LOADED" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="18" id="TOUCH_PRE_GENERATE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="TOUCH_PRE_GENERATE" value="true"/>
+            <User dnOrder="1" value="true"/>
+          </Values>
+        </Boolean>
+        <String dnOrder="19" id="TOUCH_SCRIPT_EVENT">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="lib_qtouch" value=""/>
+          </Values>
+        </String>
+        <String dnOrder="20" id="TOUCH_SERCOM_INSTANCE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -803,11 +846,24 @@
             <Dynamic dnOrder="0" id="lib_qtouch" value="SERCOM0"/>
           </Values>
         </String>
-        <String dnOrder="16" id="TOUCH_TIMER_INSTANCE">
+        <String dnOrder="21" id="TOUCH_TIMER_INSTANCE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="lib_qtouch" value="RTC"/>
           </Values>
         </String>
+        <Menu dnOrder="22" id="TOUCH_WARNING">
+          <Attributes dnOrder="0">
+            <String dnOrder="0" id="description">
+              <Value dnOrder="0"/>
+            </String>
+            <String dnOrder="1" id="label">
+              <Value dnOrder="0"/>
+            </String>
+            <Boolean dnOrder="2" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </Menu>
       </Symbols>
       <Attachments dnOrder="1">
         <DirectDependency dnOrder="0" id="Touch_sercom">
@@ -944,12 +1000,7 @@
           </Values>
         </String>
         <KeyValueSet dnOrder="2" id="SERCOM_MODE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="readOnly">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-          <Values dnOrder="1">
+          <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom0" value="0"/>
           </Values>
         </KeyValueSet>
@@ -999,43 +1050,36 @@
             <Dynamic dnOrder="0" id="lib_qtouch" value="false"/>
           </Values>
         </Boolean>
-        <KeyValueSet dnOrder="11" id="USART_RXPO">
+        <Boolean dnOrder="11" id="USART_RING_BUFFER_ENABLE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
+        <KeyValueSet dnOrder="12" id="USART_RXPO">
           <Values dnOrder="0">
             <User dnOrder="0" value="3"/>
           </Values>
         </KeyValueSet>
-        <Integer dnOrder="12" id="USART_SAMPLE_COUNT">
+        <Integer dnOrder="13" id="USART_SAMPLE_COUNT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom0" value="16"/>
           </Values>
         </Integer>
-        <Integer dnOrder="13" id="USART_SAMPLE_RATE">
+        <Integer dnOrder="14" id="USART_SAMPLE_RATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom0" value="0"/>
           </Values>
         </Integer>
-        <KeyValueSet dnOrder="14" id="USART_TXPO">
+        <KeyValueSet dnOrder="15" id="USART_TXPO">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
       </Symbols>
       <Attachments dnOrder="1">
-        <DirectCapability dnOrder="0" id="SERCOM0_I2C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </DirectCapability>
-        <DirectCapability dnOrder="1" id="SERCOM0_SPI">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </DirectCapability>
-        <DirectCapability dnOrder="2" id="SERCOM0_UART">
+        <DirectCapability dnOrder="0" id="SERCOM0_UART">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="targetComponentID">
               <Value dnOrder="0">lib_qtouch</Value>
@@ -1049,18 +1093,18 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="cmsis" x="660" y="20"/>
         <ElementPosition dnOrder="1" id="core" x="560" y="20"/>
         <ElementPosition dnOrder="2" id="dfp" x="340" y="20"/>
         <ElementPosition dnOrder="3" id="evsys" x="180" y="20"/>
-        <ElementPosition dnOrder="4" id="lib_qtouch" x="477" y="280"/>
+        <ElementPosition dnOrder="4" id="lib_qtouch" x="66" y="161"/>
         <ElementPosition dnOrder="5" id="nvmctrl" x="20" y="20"/>
         <ElementPosition dnOrder="6" id="rtc" x="288" y="287"/>
         <ElementPosition dnOrder="7" id="sercom0" x="305" y="126"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
