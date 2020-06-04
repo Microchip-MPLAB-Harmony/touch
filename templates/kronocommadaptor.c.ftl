@@ -69,7 +69,7 @@ extern qtm_gestures_2d_data_t    qtm_gestures_2d_data;
 #endif
 extern qtm_touch_key_data_t qtlib_key_data_set1[DEF_NUM_SENSORS];
 
-<#if ENABLE_4p?exists && ENABLE_4p == true>
+<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 extern qtm_acq_4p_${DEVICE_NAME?lower_case}_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
 extern uint8_t touch_key_node_mapping_4p[SURFACE_CS_START_KEY_V + (SURFACE_CS_NUM_KEYS_V * SURFACE_CS_NUM_KEYS_H)];
 <#else>
@@ -181,7 +181,7 @@ void Krono_UpdateBuffer(void)
 			/* Write actual setting back to RAM Buffer */
 			cfgRam[CFGGRAM_OVRSMPLS_ADDR] = (uint8_t)(1u << new_setting);
 			/* Write oversampling to each node in config */
-<#if ENABLE_4p?exists && ENABLE_4p == true>
+<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 			for (uint16_t cnt = 0; cnt < (SURFACE_CS_NUM_KEYS_V + SURFACE_CS_NUM_KEYS_H); cnt++) {
 				if (cnt < SURFACE_CS_NUM_KEYS_V) {
 					for (uint16_t hor_cnt = 0; hor_cnt < SURFACE_CS_NUM_KEYS_H; hor_cnt++) {

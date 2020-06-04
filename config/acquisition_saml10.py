@@ -34,7 +34,7 @@ global touchAcq4pLibraryFile
 global touchAcqHeaderFile
 global touchAcq4pHeaderFile
 
-def libChange4P(symbol,event):
+def libChangeBoostMode(symbol,event):
     if(event["value"] == False):
         touchAcqLibraryFile.setEnabled(True)
         touchAcqHeaderFile.setEnabled(True)
@@ -85,7 +85,7 @@ touchAcq4pLibraryFile.setSourcePath("/src/libraries/qtm_acq_4p_saml10_0x0033.X.a
 touchAcq4pLibraryFile.setOutputName("qtm_acq_4p_saml10_0x0033.X.a")
 touchAcq4pLibraryFile.setDestPath("/touch/lib/")
 touchAcq4pLibraryFile.setEnabled(False)
-touchAcq4pLibraryFile.setDependencies(libChange4P,["ENABLE_BOOST"])
+touchAcq4pLibraryFile.setDependencies(libChangeBoostMode,["ENABLE_BOOST"])
 # Header File
 touchAcq4pHeaderFile = qtouchComponent.createFileSymbol("TOUCH_ACQ_4P_HEADER", None)
 touchAcq4pHeaderFile.setSourcePath("/src/qtm_acq_4p_saml10_0x0033_api.h")
@@ -94,7 +94,7 @@ touchAcq4pHeaderFile.setDestPath("/touch/")
 touchAcq4pHeaderFile.setProjectPath("config/" + configName + "/touch/")
 touchAcq4pHeaderFile.setType("HEADER")
 touchAcq4pHeaderFile.setMarkup(False)
-touchAcq4pHeaderFile.setDependencies(libChange4P,["ENABLE_BOOST"])
+touchAcq4pHeaderFile.setDependencies(libChangeBoostMode,["ENABLE_BOOST"])
 
 
 # Header File

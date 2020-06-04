@@ -55,7 +55,7 @@ extern "C" {
 <#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
 #include "qtm_acq_samd1x_0x0009_api.h"
 <#else>
-<#if ENABLE_4p?exists && ENABLE_4p == true>
+<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 #include "qtm_acq_4p_${DEVICE_NAME?lower_case}_${MODULE_ID}_api.h"
 <#else>
 #include "qtm_acq_${DEVICE_NAME?lower_case}_${MODULE_ID}_api.h"

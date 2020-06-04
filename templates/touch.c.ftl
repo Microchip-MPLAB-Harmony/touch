@@ -157,7 +157,7 @@ qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
 qtm_acq_node_data_t ptc_qtlib_node_stat1[DEF_NUM_CHANNELS];
 
 /* Node configurations */
-<#if ENABLE_4p?exists && ENABLE_4p == true>
+<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 qtm_acq_4p_${DEVICE_NAME?lower_case}_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
 <#else>
 <#if TOUCH_CHAN_ENABLE_CNT&gt;=1>
@@ -177,7 +177,7 @@ qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNE
 /* Container */
 qtm_acquisition_control_t qtlib_acq_set1 = {&ptc_qtlib_acq_gen1, &ptc_seq_node_cfg1[0], &ptc_qtlib_node_stat1[0]};
 
-<#if ENABLE_4p?exists && ENABLE_4p == true>
+<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 <#if ENABLE_SURFACE == true>
 touch_ret_t touch_surface_4p_acq_to_key(void * ptr);
 touch_ret_t touch_surface_4p_key_to_acq_update(void *ptr);
@@ -424,9 +424,9 @@ qtm_gestures_2d_control_t qtm_gestures_2d_control1 = {&qtm_gestures_2d_data, &qt
     {                                                                                                                  \
 		<#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>(module_proc_t)&qtm_freq_hop,                                \
 		<#elseif ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>(module_proc_t)&qtm_freq_hop_autotune,</#if>             \
-		<#if ENABLE_4p?exists && ENABLE_4p == true && ENABLE_SURFACE == true >(module_proc_t)&touch_surface_4p_acq_to_key,</#if>				\
+		<#if ENABLE_BOOST?exists && ENABLE_BOOST == true && ENABLE_SURFACE == true >(module_proc_t)&touch_surface_4p_acq_to_key,</#if>				\
 		(module_proc_t)&qtm_key_sensors_process,                                                                        \
-		<#if ENABLE_4p?exists && ENABLE_4p == true && ENABLE_SURFACE == true >(module_proc_t)&touch_surface_4p_key_to_acq_update,</#if>				\
+		<#if ENABLE_BOOST?exists && ENABLE_BOOST == true && ENABLE_SURFACE == true >(module_proc_t)&touch_surface_4p_key_to_acq_update,</#if>				\
 	 	<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>(module_proc_t)&qtm_scroller_process,</#if>                               \
 		<#if ENABLE_SURFACE1T==true>(module_proc_t)&qtm_surface_cs_process,</#if>                               \
 		<#if ENABLE_SURFACE2T==true>(module_proc_t)&qtm_surface_cs2t_process,</#if>                               \
@@ -443,9 +443,9 @@ qtm_gestures_2d_control_t qtm_gestures_2d_control1 = {&qtm_gestures_2d_data, &qt
     {                                                                                                                   \
 		<#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>(void *)&qtm_freq_hop_control1,                                  \
 		<#elseif ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>(void *)&qtm_freq_hop_autotune_control1, </#if>              \
-		<#if ENABLE_4p?exists && ENABLE_4p == true && ENABLE_SURFACE == true >(void *)&qtlib_key_set1,</#if>				\
+		<#if ENABLE_BOOST?exists && ENABLE_BOOST == true && ENABLE_SURFACE == true >(void *)&qtlib_key_set1,</#if>				\
 		(void *)&qtlib_key_set1,                                                                                           \
-		<#if ENABLE_4p?exists && ENABLE_4p == true && ENABLE_SURFACE == true >(void *)&qtlib_key_set1,</#if>				\
+		<#if ENABLE_BOOST?exists && ENABLE_BOOST == true && ENABLE_SURFACE == true >(void *)&qtlib_key_set1,</#if>				\
 		<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>(void *)&qtm_scroller_control1,</#if>                                         \
 		<#if ENABLE_SURFACE1T==true>(void *)&qtm_surface_cs_control1,</#if>                                      \
 		<#if ENABLE_SURFACE2T==true>(void *)&qtm_surface_cs_control1,</#if>                               \
@@ -480,7 +480,7 @@ module_arg_t library_module_proc_data_model[]       = LIB_DATA_MODELS_PROC_LIST;
  *   function definitions
  *----------------------------------------------------------------------------*/
 
-<#if ENABLE_4p?exists && ENABLE_4p == true && ENABLE_SURFACE == true >
+<#if ENABLE_BOOST?exists && ENABLE_BOOST == true && ENABLE_SURFACE == true >
 /*============================================================================
 touch_ret_t touch_surface_4p_acq_to_key(void * ptr)
 ------------------------------------------------------------------------------
@@ -651,7 +651,7 @@ static touch_ret_t touch_sensors_config(void)
     }
 
 
-<#if ENABLE_4p?exists && ENABLE_4p == true && ENABLE_SURFACE == true>
+<#if ENABLE_BOOST?exists && ENABLE_BOOST == true && ENABLE_SURFACE == true>
 		/* Enable sensor keys and assign nodes */
 		for(sensor_nodes = 0u; sensor_nodes < SURFACE_CS_START_KEY_V; sensor_nodes++)
 		{
@@ -665,7 +665,7 @@ static touch_ret_t touch_sensors_config(void)
 <#else>
     /* Enable sensor keys and assign nodes */
     for (sensor_nodes = 0u; sensor_nodes < DEF_NUM_SENSORS; sensor_nodes++) {
-		<#if ENABLE_4p?exists && ENABLE_4p == true>
+		<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 			qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[touch_key_node_mapping_4p[sensor_nodes]]);
     <#else>
 			qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[sensor_nodes]);
@@ -1280,7 +1280,7 @@ void touch_timer_config(void)
 
 uint16_t get_sensor_node_signal(uint16_t sensor_node)
 {
-<#if ENABLE_4p?exists && ENABLE_4p == true>
+<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
     return (qtlib_key_data_set1[sensor_node].node_data_struct_ptr->node_acq_signals);
 <#else>
     return (ptc_qtlib_node_stat1[sensor_node].node_acq_signals);
@@ -1289,7 +1289,7 @@ uint16_t get_sensor_node_signal(uint16_t sensor_node)
 
 void update_sensor_node_signal(uint16_t sensor_node, uint16_t new_signal)
 {
-<#if ENABLE_4p?exists && ENABLE_4p == true>
+<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
     qtlib_key_data_set1[sensor_node].node_data_struct_ptr->node_acq_signals = new_signal;
 <#else>
     ptc_qtlib_node_stat1[sensor_node].node_acq_signals = new_signal;
@@ -1308,7 +1308,7 @@ void update_sensor_node_reference(uint16_t sensor_node, uint16_t new_reference)
 
 uint16_t get_sensor_cc_val(uint16_t sensor_node)
 {
-<#if ENABLE_4p?exists && ENABLE_4p == true>
+<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
     return (qtlib_key_data_set1[sensor_node].node_data_struct_ptr->node_comp_caps);
 <#else>
     return (ptc_qtlib_node_stat1[sensor_node].node_comp_caps);
@@ -1317,7 +1317,7 @@ uint16_t get_sensor_cc_val(uint16_t sensor_node)
 
 void update_sensor_cc_val(uint16_t sensor_node, uint16_t new_cc_value)
 {
-<#if ENABLE_4p?exists && ENABLE_4p == true>
+<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
     qtlib_key_data_set1[sensor_node].node_data_struct_ptr->node_comp_caps = new_cc_value;
 <#else>
     ptc_qtlib_node_stat1[sensor_node].node_comp_caps = new_cc_value;

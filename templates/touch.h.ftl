@@ -84,7 +84,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define DEF_SENSOR_TYPE ${SENSE_TECHNOLOGY}
 	</#if>
 <#else>
-<#if ENABLE_4p?exists && ENABLE_4p == true>
+<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 #define DEF_SENSOR_TYPE NODE_MUTUAL_4P
 	<#else>
 #define DEF_SENSOR_TYPE ${SENSE_TECHNOLOGY}
@@ -127,7 +127,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  * Range: 1 to 65535.
  * Default value: 1
  */
-<#if ENABLE_4p?exists && ENABLE_4p == true>
+<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 #define DEF_NUM_CHANNELS (${MUTL_4P_NUM_GROUP}<<2)
 <#else>
 #define DEF_NUM_CHANNELS (${TOUCH_CHAN_ENABLE_CNT})

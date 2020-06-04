@@ -22,7 +22,7 @@
 	</#list>
 
 <#elseif CSD == 1>
-<#if ENABLE_4p?exists && ENABLE_4p == true>
+<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 	<#list 0..MUTL_4P_NUM_GROUP-1 as i>
 	<#assign x_lines = .vars["MUTL_4P_X_LINE"]?split("+")[i]>
 	<#assign y_lines = .vars["MUTL_4P_Y_LINE"]?split("+")[i]>
