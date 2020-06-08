@@ -12,7 +12,7 @@
     QTouch Modular Library
 
   Description:
-    API for Acquisition module - SAME21/PTC
+    API for Acquisition module - SAME51/PTC
 	
 *******************************************************************************/
 
