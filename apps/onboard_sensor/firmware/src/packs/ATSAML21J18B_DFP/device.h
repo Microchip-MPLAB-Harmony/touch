@@ -43,6 +43,5 @@
 
 #include "atsaml21j18b.h"
 #include "device_cache.h"
-#include "atsaml21j18b_compat.h"
 #include "toolchain_specifics.h"
 
