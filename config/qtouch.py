@@ -4,9 +4,6 @@ InterruptHandler = "PTC" + "_INTERRUPT_HANDLER"
 global nonSecureStatus
 nonSecureStatus = "SECURE"
 
-global InterruptVectorSecurity
-InterruptVectorSecurity = []
-
 global qtouchFilesArray
 qtouchFilesArray = []
 
@@ -329,30 +326,13 @@ def checkqtouchFilesArray(symbol,idString):
 def securefileUpdate(symbol, event):
     global nonSecureStatus
     global qtouchFilesArray
-    global InterruptVectorSecurity
-    global IDArray
     
     component = symbol.getComponent()
-    
-    # for currID in IDArray:
-        # checkqtouchFilesArray(component,currID)
    
     if event["value"] == False:
         nonSecureStatus = "SECURE"
-
-        if len(InterruptVectorSecurity) != 1:
-            for vector in InterruptVectorSecurity:
-                Database.setSymbolValue("core", vector, False)
-        else:
-            Database.setSymbolValue("core", InterruptVectorSecurity, False)
     else:
         nonSecureStatus = "NON_SECURE"
-
-        if len(InterruptVectorSecurity) != 1:
-            for vector in InterruptVectorSecurity:
-                Database.setSymbolValue("core", vector, True)
-        else:
-            Database.setSymbolValue("core", InterruptVectorSecurity, True)
         
     checknonsecureStatus();
 
@@ -360,19 +340,34 @@ def checknonsecureStatus():
     global checkname
     global qtouchComponent
     ptcNonSecureState = Database.getSymbolValue("core", "PTC_IS_NON_SECURE")
+    
     if ptcNonSecureState == False:
         nonSecureStatus = "SECURE"
     else:
-        nonSecureStatus = "NON_SECURE"    
+        nonSecureStatus = "NON_SECURE"
         
     for kx in range(len(qtouchFilesArray)):    
-        checkname = str(qtouchFilesArray[kx].getID()).split('_')       
-        if ("LIB" in checkname):
+        entryname = qtouchFilesArray[kx].getID()
+        splitname = entryname.split('_')     
+        
+        if ("LIB" in splitname):
             if(nonSecureStatus == "SECURE"):
                 qtouchFilesArray[kx].setDestPath("../../../../../Secure/firmware/src/config/default/touch/lib/")
             else:
                 qtouchFilesArray[kx].setDestPath("../../../../../NonSecure/firmware/src/config/default/touch/lib/")
-            
+        
+        if "PTC_SYS_DEF" == entryname :
+            if (nonSecureStatus == "SECURE"):
+                qtouchFilesArray[kx].setOutputName("core.LIST_SYSTEM_DEFINITIONS_SECURE_H_INCLUDES")
+            else:
+                qtouchFilesArray[kx].setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
+        
+        if "PTC_SYS_INIT" == entryname:
+            if (nonSecureStatus == "SECURE"):
+                qtouchFilesArray[kx].setOutputName("core.LIST_SYSTEM_SECURE_INIT_C_SYS_INITIALIZE_PERIPHERALS")
+            else:
+                qtouchFilesArray[kx].setOutputName("core.LIST_SYSTEM_INIT_C_SYS_INITIALIZE_PERIPHERALS")
+        
         qtouchFilesArray[kx].setSecurity(nonSecureStatus)
     
 def onAttachmentConnected(source,target):
@@ -875,8 +870,14 @@ def instantiateComponent(qtouchComponent):
     ptcSystemDefFile.setSourcePath("../touch/templates/system/definitions.h.ftl")
     ptcSystemDefFile.setMarkup(True)
     
+    global enableTrustzoneUtility
+    enableTrustzoneUtility = qtouchComponent.createBooleanSymbol("TZ_ENABLED",touchMenu)
+    enableTrustzoneUtility.setDefaultValue(False)  
+    enableTrustzoneUtility.setVisible(False)
    
-    if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
+    if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":        
+        enableTrustzoneUtility.setDefaultValue(True)
+        ptcNonSecureState = Database.getSymbolValue("core", "PTC_IS_NON_SECURE")
         
         ptcSystemDefFile.setDependencies(securefileUpdate, ["core.PTC_IS_NON_SECURE"])
         ptcSystemDefFile.setDependencies(securefileUpdate, ["core.NVIC_42_0_SECURITY_TYPE"])

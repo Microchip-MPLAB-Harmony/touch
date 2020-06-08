@@ -39,11 +39,11 @@ elif(getDeviceName.getDefaultValue() in ["SAML10","SAML11"]):
     surface1TLibraryFile.setEnabled(False)
 elif (getDeviceName.getDefaultValue() in ["PIC32MZW"]):
     # Library File
-    scrollerLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SURFACE1T_LIB", None)
-    scrollerLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_pic32mz_0x0021.X.a")
-    scrollerLibraryFile.setOutputName("qtm_surface_cs_pic32mz_0x0021.X.a")
-    scrollerLibraryFile.setDestPath("/touch/lib/")
-    scrollerLibraryFile.setEnabled(False)
+    surface1TLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SURFACE1T_LIB", None)
+    surface1TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_pic32mz_0x0021.X.a")
+    surface1TLibraryFile.setOutputName("qtm_surface_cs_pic32mz_0x0021.X.a")
+    surface1TLibraryFile.setDestPath("/touch/lib/")
+    surface1TLibraryFile.setEnabled(False)
 else:
     # Library File
     surface1TLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SURFACE1T_LIB", None)
@@ -78,11 +78,11 @@ elif (getDeviceName.getDefaultValue() in ["SAML10","SAML11"]):
     surface2TLibraryFile.setEnabled(False)
 elif (getDeviceName.getDefaultValue() in ["PIC32MZW"]):
     # Library File
-    scrollerLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SURFACE2T_LIB", None)
-    scrollerLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_2t_pic32mz_0x0025.X.a")
-    scrollerLibraryFile.setOutputName("qtm_surface_cs_2t_pic32mz_0x0025.X.a")
-    scrollerLibraryFile.setDestPath("/touch/lib/")
-    scrollerLibraryFile.setEnabled(False)
+    surface2TLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SURFACE2T_LIB", None)
+    surface2TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_2t_pic32mz_0x0025.X.a")
+    surface2TLibraryFile.setOutputName("qtm_surface_cs_2t_pic32mz_0x0025.X.a")
+    surface2TLibraryFile.setDestPath("/touch/lib/")
+    surface2TLibraryFile.setEnabled(False)
 else:
     # Library File
     surface2TLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SURFACE2T_LIB", None)
@@ -99,6 +99,12 @@ surface2THeaderFile.setProjectPath("config/" + configName + "/touch/")
 surface2THeaderFile.setType("HEADER")
 surface2THeaderFile.setMarkup(False)
 surface2THeaderFile.setEnabled(False)
+
+if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
+    qtouchFilesArray.append(surface1THeaderFile)
+    qtouchFilesArray.append(surface1TLibraryFile)
+    qtouchFilesArray.append(surface2THeaderFile)
+    qtouchFilesArray.append(surface2TLibraryFile)
 
 ################################################################################
 #### Components ####
