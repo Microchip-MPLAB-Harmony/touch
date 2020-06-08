@@ -145,9 +145,9 @@ Database.setSymbolValue("core", InterruptHandler, "PTC_Handler", 2)
 
 #Set PTC PERIPHERAL CLOCK and Choose GCLK AS GCLK1
 Database.clearSymbolValue("core", "PTC" + "_CLOCK_ENABLE")
-Database.setSymbolValue("core", "PTC" + "_CLOCK_ENABLE", True, 2)
+Database.setSymbolValue("core", "PTC" + "_CLOCK_ENABLE", True)
 Database.clearSymbolValue("core", "GCLK_ID_27_GENSEL")
-Database.setSymbolValue("core", "GCLK_ID_27_GENSEL", 1, 2)
+Database.setSymbolValue("core", "GCLK_ID_27_GENSEL", 2)
 
 #Set GCLK FOR PTC - GCLK1 AT 4MHZ
 # Database.clearSymbolValue("core", "GCLK_INST_NUM1")

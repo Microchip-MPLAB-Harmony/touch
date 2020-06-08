@@ -27,13 +27,14 @@ This is for SAMD20, SAMD21 Family
 		<clock index = "19_0" symbol="GCLK_2_DIV" value="1" component_id= "core" name="GCLK2 Div" />
 		<clock index = "20_0" symbol="GCLK_1_DIV" value="32" component_id= "core" name="GCLK1 Div" />
 		<clock index = "21_0" symbol="CONFIG_CLOCK_OSC8M_RUNSTDY" value="True" component_id= "core" name="OSC8M Runinstandby" />
-		
+		<clock index = "22_0" symbol="GCLK_ID_2_GENSEL" value="1" component_id= "core" name="RTC Clock GCLK1" />
+
 	</all_clock_symbols_list>
 	<all_conditions_list>
 		<condition />
 	</all_conditions_list>
 	<common>
-		<default clock_update_index_list="0_0,1_0,2_0,3_0,4_0,5_0,6_0,7_0,8_0,9_0,10_0,11_0,12_0,13_0,14_0,15_0,16_0,17_0,18_0,19_0,20_0,21_0"/>
+		<default clock_update_index_list="0_0,1_0,2_0,3_0,4_0,5_0,6_0,7_0,8_0,9_0,10_0,11_0,12_0,13_0,14_0,15_0,16_0,17_0,18_0,19_0,20_0,21_0,22_0"/>
 	</common>
 </clock_settings>
 <description>
