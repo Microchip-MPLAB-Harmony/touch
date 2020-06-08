@@ -63,7 +63,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define CAL_CHRG_5TAU 3u
 
 #define RSEL_MAX_OPTION                 RSEL_VAL_100
-#define PRSC_MAX_OPTION                 PRSC_DIV_SEL_8
+#define PRSC_MAX_OPTION                 PRSC_DIV_SEL_32
 
 /* X line bit position */
 #define X_NONE 0u
