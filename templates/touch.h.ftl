@@ -164,14 +164,12 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 	<#assign DEF_SENSOR_DET_THRESHOLD = "DEF_SENSOR_DET_THRESHOLD" + i>
 	<#assign DEF_SENSOR_HYST = "DEF_SENSOR_HYST" + i>
 	<#assign DEF_NOD_AKS = "DEF_NOD_AKS" + i>
-	<#if .vars[TOUCH_ENABLE_KEY_]?has_content>
-	<#if (.vars[TOUCH_ENABLE_KEY_] != false)>
+
     <#lt>#define KEY_${i}_PARAMS                                                                                            \
 		<#lt>{                                                                                                              \
 		<#lt>    ${.vars[DEF_SENSOR_DET_THRESHOLD]}, ${.vars[DEF_SENSOR_HYST]}, ${.vars[DEF_NOD_AKS]}                       \
 		<#lt>}
-	</#if>
-	</#if>
+
  </#list>
 
 /* De-bounce counter for additional measurements to confirm touch detection
