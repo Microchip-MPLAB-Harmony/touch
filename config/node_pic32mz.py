@@ -21,6 +21,9 @@ touchNumChannel.setDefaultValue(0)
 touchNumChannel.setMin(0)
 touchNumChannel.setMax(touchChannelCountMax)
 
+global tchSelfPinSelection
+global tchMutXPinSelection
+global tchMutYPinSelection
 tchSelfPinSelection = []
 tchMutXPinSelection = []
 tchMutYPinSelection = []
@@ -93,8 +96,8 @@ for channelID in range(0, touchChannelCountMax):
     #Charge Share Delay
     touchSym_CSD_Val = qtouchComponent.createIntegerSymbol("DEF_TOUCH_CHARGE_SHARE_DELAY" + str(channelID), touchChEnable)
     touchSym_CSD_Val.setLabel("Additional Charge Share Delay")
-    touchSym_CSD_Val.setDefaultValue(0)
-    touchSym_CSD_Val.setMin(0)
+    touchSym_CSD_Val.setDefaultValue(10)
+    touchSym_CSD_Val.setMin(1)
     touchSym_CSD_Val.setMax(255)
     touchSym_CSD_Val.setDescription("Increase in Charge Share Delay increases sensor charging time and so the touch measurement time. It indicates the number of additional cycles that are inserted within a touch measurement cycle.")
 

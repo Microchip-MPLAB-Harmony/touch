@@ -114,43 +114,43 @@ static const uint8_t OVERSAMPLING_LUT[7] = {
     0, 1, 3, 7, 15, 31, 63
 };
 
-static uint32_t* CVD_Y_REG[16] = {
-    (uint32_t*) ((uint8_t*) & CVDRX0),
-    (uint32_t*) ((uint8_t*) & CVDRX0 + 1),
-    (uint32_t*) ((uint8_t*) & CVDRX0 + 2),
-    (uint32_t*) ((uint8_t*) & CVDRX0 + 3),
-    (uint32_t*) ((uint8_t*) & CVDRX1),
-    (uint32_t*) ((uint8_t*) & CVDRX1 + 1),
-    (uint32_t*) ((uint8_t*) & CVDRX1 + 2),
-    (uint32_t*) ((uint8_t*) & CVDRX1 + 3),
-    (uint32_t*) ((uint8_t*) & CVDRX2),
-    (uint32_t*) ((uint8_t*) & CVDRX2 + 1),
-    (uint32_t*) ((uint8_t*) & CVDRX2 + 2),
-    (uint32_t*) ((uint8_t*) & CVDRX2 + 3),
-    (uint32_t*) ((uint8_t*) & CVDRX3),
-    (uint32_t*) ((uint8_t*) & CVDRX3 + 1),
-    (uint32_t*) ((uint8_t*) & CVDRX3 + 2),
-    (uint32_t*) ((uint8_t*) & CVDRX3 + 3),
+static uint8_t* CVD_Y_REG[16] = {
+    (uint8_t*) ((uint8_t*) & CVDRX0),
+    (uint8_t*) ((uint8_t*) & CVDRX0 + 1),
+    (uint8_t*) ((uint8_t*) & CVDRX0 + 2),
+    (uint8_t*) ((uint8_t*) & CVDRX0 + 3),
+    (uint8_t*) ((uint8_t*) & CVDRX1),
+    (uint8_t*) ((uint8_t*) & CVDRX1 + 1),
+    (uint8_t*) ((uint8_t*) & CVDRX1 + 2),
+    (uint8_t*) ((uint8_t*) & CVDRX1 + 3),
+    (uint8_t*) ((uint8_t*) & CVDRX2),
+    (uint8_t*) ((uint8_t*) & CVDRX2 + 1),
+    (uint8_t*) ((uint8_t*) & CVDRX2 + 2),
+    (uint8_t*) ((uint8_t*) & CVDRX2 + 3),
+    (uint8_t*) ((uint8_t*) & CVDRX3),
+    (uint8_t*) ((uint8_t*) & CVDRX3 + 1),
+    (uint8_t*) ((uint8_t*) & CVDRX3 + 2),
+    (uint8_t*) ((uint8_t*) & CVDRX3 + 3),
 };
 
 
-static uint32_t* CVD_X_REG[16] = {
-    (uint32_t*) ((uint8_t*) & CVDTX0),
-    (uint32_t*) ((uint8_t*) & CVDTX0 + 1),
-    (uint32_t*) ((uint8_t*) & CVDTX0 + 2),
-    (uint32_t*) ((uint8_t*) & CVDTX0 + 3),
-    (uint32_t*) ((uint8_t*) & CVDTX1),
-    (uint32_t*) ((uint8_t*) & CVDTX1 + 1),
-    (uint32_t*) ((uint8_t*) & CVDTX1 + 2),
-    (uint32_t*) ((uint8_t*) & CVDTX1 + 3),
-    (uint32_t*) ((uint8_t*) & CVDTX2),
-    (uint32_t*) ((uint8_t*) & CVDTX2 + 1),
-    (uint32_t*) ((uint8_t*) & CVDTX2 + 2),
-    (uint32_t*) ((uint8_t*) & CVDTX2 + 3),
-    (uint32_t*) ((uint8_t*) & CVDTX3),
-    (uint32_t*) ((uint8_t*) & CVDTX3 + 1),
-    (uint32_t*) ((uint8_t*) & CVDTX3 + 2),
-    (uint32_t*) ((uint8_t*) & CVDTX3 + 3),
+static uint8_t* CVD_X_REG[16] = {
+    (uint8_t*) ((uint8_t*) & CVDTX0),
+    (uint8_t*) ((uint8_t*) & CVDTX0 + 1),
+    (uint8_t*) ((uint8_t*) & CVDTX0 + 2),
+    (uint8_t*) ((uint8_t*) & CVDTX0 + 3),
+    (uint8_t*) ((uint8_t*) & CVDTX1),
+    (uint8_t*) ((uint8_t*) & CVDTX1 + 1),
+    (uint8_t*) ((uint8_t*) & CVDTX1 + 2),
+    (uint8_t*) ((uint8_t*) & CVDTX1 + 3),
+    (uint8_t*) ((uint8_t*) & CVDTX2),
+    (uint8_t*) ((uint8_t*) & CVDTX2 + 1),
+    (uint8_t*) ((uint8_t*) & CVDTX2 + 2),
+    (uint8_t*) ((uint8_t*) & CVDTX2 + 3),
+    (uint8_t*) ((uint8_t*) & CVDTX3),
+    (uint8_t*) ((uint8_t*) & CVDTX3 + 1),
+    (uint8_t*) ((uint8_t*) & CVDTX3 + 2),
+    (uint8_t*) ((uint8_t*) & CVDTX3 + 3),
 };
 
 /* Container for tau constant scale factors */
@@ -867,9 +867,8 @@ static uint8_t qtm_load_group_config(qtm_acquisition_control_t* qtm_acq_control_
 
     if (param_ok_status == TOUCH_SUCCESS)
     {
-        CVDADCbits.DIFFPEN = 0u;
-        CVDADCbits.DIGEN7 = 1u;
-        CVDADCbits.SELRES = 0b10u;
+
+        CVDADC = 0x0000000B;
         CVDSD0C3bits.SD0BUF = 1u;
 
         if (qtm_acquisition_control_working_set_ptr->qtm_acq_node_group_config->freq_option_select < FREQ_SEL_SPREAD)
@@ -990,10 +989,8 @@ static void qtm_measure_node(uint16_t channel_number)
     /* Oversampling - Digital (2^n) */
     CVDSD0C1bits.SD0OVRSAMP = OVERSAMPLING_LUT[qtm_acquisition_control_working_set_ptr->qtm_acq_node_config[channel_number].node_oversampling];
 
-
-    CVDSD0T2bits.SD0CHNTIME = 1u;
-    //CVDSD0T2bits.SD0OVRTIME = sample_delay<<3;
-    //CVDSD0T2bits.SD0POLTIME = sample_delay<<3;
+    /* SD0OVRTIME = 1; SD0POLTIME = 1; These registers cannot be 0, otherwise, CVD doesn't work */
+    CVDSD0T2 = 0x00010100;
 
     /* Apply additional delay for the frequency hopping */
     CVDSD0T2bits.SD0CONTIME = 20u + (sample_delay << 2u);

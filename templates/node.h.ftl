@@ -8,10 +8,15 @@
 </#list>
 <#if CSD == 1 && DEVICE_NAME == "PIC32MZW">
 	<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i>
-		<#if (SENSE_TECHNOLOGY == "NODE_SELFCAP")||(SENSE_TECHNOLOGY == "NODE_SELFCAP_SHIELD")>
+		<#if SENSE_TECHNOLOGY == "NODE_SELFCAP">
 					<#lt>#define NODE_${i}_PARAMS                                                                                               \
 					<#lt>{                                                                                                                  \
 					<#lt>   ${.vars["MUTL-X-INPUT_" + i]}, ${.vars["SELFCAP-INPUT_" + i]}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]},0, NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
+					<#lt>}
+		<#elseif SENSE_TECHNOLOGY == "NODE_SELFCAP_SHIELD">
+					<#lt>#define NODE_${i}_PARAMS                                                                                               \
+					<#lt>{                                                                                                                  \
+					<#lt>   ${.vars["DS_DEDICATED_PIN"]}, ${.vars["SELFCAP-INPUT_" + i]}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]},0, NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
 					<#lt>}
 		<#else>
 					<#lt>#define NODE_${i}_PARAMS                                                                                               \

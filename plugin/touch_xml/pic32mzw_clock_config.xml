@@ -3,6 +3,7 @@
 This is for SAMC21, SAMC20 Family
 -->
 
+<info>
 <clock_settings>
 	<all_clock_symbols_list>
 		<clock index = "0_0" symbol="ADCHS_7_ENABLE" value="True" component_id= "adchs" name="Enable Shared ADC module" />
@@ -26,3 +27,4 @@ This is for SAMC21, SAMC20 Family
 		<default clock_update_index_list="0_0,1_0,4_0,5_0,7_0,8_0,9_0,10_0,11_0,12_0,13_0"/>
 	</common>
 </clock_settings>
+</info>

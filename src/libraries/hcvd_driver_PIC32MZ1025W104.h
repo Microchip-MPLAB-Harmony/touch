@@ -47,6 +47,9 @@ Purpose : Acquisition module - hcvd_driver_PIC32MZ1025W104/HCVD
 Revision 0.1 - New build 
 Revision 0.2 - removed all the timer code for interrupt workaround
 Revision 1.0 - Baselining revision for release
+Revision 1.1 - QTMODLIB-205: Fixed pointer casting issue
+               QTMODLIB-206: Fixed CVD Timing register value assignment
+               QTMODLIB-207: Assigned the correct value to CVDADC register
 ============================================================================*/
 
 #ifndef __HCVD_PIC32MZ__
@@ -67,9 +70,9 @@ manifest constants
 
 #define QTM_MODULE_ID_PIC32MZW_ACQ        0x003eu
 
-/* Version 0.3:  */ 
+/* Version 1.1:  */ 
 
-#define QTM_MODULE_VERSION                  0x10u
+#define QTM_MODULE_VERSION                  0x11u
 
 /* CSD Limit is 7 bits, otherwise overflow at acquisition status bit */
 #define NUM_BITS_CSD                          7u

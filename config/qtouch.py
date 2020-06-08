@@ -18,7 +18,7 @@ IDArray = ["TOUCH_ACQ_LIB","TOUCH_ACQ_AUTO_LIB","TOUCH_ACQ_HEADER",
 
 timer_based_driven_shield_supported_device = ["SAMD21","SAMDA1","SAMHA1","SAME54","SAME53","SAME51","SAMD51","SAMC21","SAMC20","SAML21","SAML22"]
 adc_based_touch_acqusition_device = ["SAME54","SAME53","SAME51","SAMD51"]
-lump_not_supported_device = []
+lump_not_supported_device = ["PIC32MZW"]
 device_with_hardware_driven_shield_support = ["SAML10","SAML11","PIC32MZW"]
 boost_mode_supported_devices = ["SAML10","SAML1xE","SAML11"]
 event_system_based_low_power = ["SAMD20","SAMD21","SAMDA1","SAMHA1","SAML11","SAML10","SAMC21","SAMC20"]
@@ -685,7 +685,6 @@ def instantiateComponent(qtouchComponent):
     global IDArray
     
     qtouchFilesArray = []
-	
     configName = Variables.get("__CONFIGURATION_NAME")
 
     touchMenu = qtouchComponent.createMenuSymbol("TOUCH_MENU", None)
@@ -698,16 +697,8 @@ def instantiateComponent(qtouchComponent):
     touchScriptEvent = qtouchComponent.createStringSymbol("TOUCH_SCRIPT_EVENT", touchInfoMenu)
     touchScriptEvent.setLabel("Script Event ")
     touchScriptEvent.setReadOnly(True)
-	
-    ptcClockInfo = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PTC\"]/instance@[name=\"PTC\"]/parameters/param@[name=\"GCLK_ID\"]")
-    if ptcClockInfo is None:
-        ptcClockInfo = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"ADC\"]/instance@[name=\"ADC0\"]/parameters/param@[name=\"GCLK_ID\"]")
-    ptcFreqencyId= qtouchComponent.createStringSymbol("PTC_CLOCK_FREQ", touchInfoMenu)
-    ptcFreqencyId.setLabel("PTC Freqency Id ")
-    ptcFreqencyId.setReadOnly(True)
-    ptcFreqencyId.setDefaultValue("GCLK_ID_"+ptcClockInfo.getAttribute("value")+"_FREQ")
-    ptcFreqencyId.setDependencies(onPTCClock,["core."+"GCLK_ID_"+ptcClockInfo.getAttribute("value")+"_FREQ"])
     
+
     enableGenerate = qtouchComponent.createBooleanSymbol("TOUCH_PRE_GENERATE", touchInfoMenu)
     enableGenerate.setLabel("Generate Project")
     enableGenerate.setDefaultValue(False)
@@ -718,6 +709,16 @@ def instantiateComponent(qtouchComponent):
     enableLoaded.setDefaultValue(False)
 	
     execfile(Module.getPath() +"/config/interface.py")
+    if getDeviceName.getDefaultValue() not in ["PIC32MZW"]:
+        ptcClockInfo = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PTC\"]/instance@[name=\"PTC\"]/parameters/param@[name=\"GCLK_ID\"]")
+        if ptcClockInfo is None:
+            ptcClockInfo = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"ADC\"]/instance@[name=\"ADC0\"]/parameters/param@[name=\"GCLK_ID\"]")
+        ptcFreqencyId= qtouchComponent.createStringSymbol("PTC_CLOCK_FREQ", touchInfoMenu)
+        ptcFreqencyId.setLabel("PTC Freqency Id ")
+        ptcFreqencyId.setReadOnly(True)
+        ptcFreqencyId.setDefaultValue("GCLK_ID_"+ptcClockInfo.getAttribute("value")+"_FREQ")
+        ptcFreqencyId.setDependencies(onPTCClock,["core."+"GCLK_ID_"+ptcClockInfo.getAttribute("value")+"_FREQ"])
+
     execfile(Module.getPath() +"/config/acquisition_"+getDeviceName.getDefaultValue().lower()+".py")
     if (getDeviceName.getDefaultValue() not in lump_not_supported_device):
         lumpSymbol = qtouchComponent.createStringSymbol("LUMP_CONFIG", touchMenu)
@@ -819,11 +820,12 @@ def instantiateComponent(qtouchComponent):
     qtouchSercomComponent.setVisible(False)
     qtouchSercomComponent.setDefaultValue("")
     
-    #keep it as last displayed tree config
-    touchWarning = qtouchComponent.createMenuSymbol("TOUCH_WARNING", None)
-    touchWarning.setLabel("")
-    touchWarning.setVisible(False)
-    touchWarning.setDependencies(onWarning,["PTC_CLOCK_FREQ"])
+    if getDeviceName.getDefaultValue() not in ["PIC32MZW"]:
+        #keep it as last displayed tree config
+        touchWarning = qtouchComponent.createMenuSymbol("TOUCH_WARNING", None)
+        touchWarning.setLabel("")
+        touchWarning.setVisible(False)
+        touchWarning.setDependencies(onWarning,["PTC_CLOCK_FREQ"])
 ############################################################################
 #### Code Generation ####
 ############################################################################

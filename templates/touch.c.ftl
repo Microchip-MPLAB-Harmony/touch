@@ -1234,9 +1234,13 @@ uintptr_t tmr_context;
 void touch_timer_config(void)
 {
 	<#if TOUCH_TIMER_INSTANCE != "">
-		 ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].CALLBACK_API_NAME}(timer_handler,tmr_context);
-		 ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].TIMER_START_API_NAME}();
-		${TOUCH_TIMER_INSTANCE}_PeriodSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS*(TMR2_FrequencyGet()/1000));
+	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].CALLBACK_API_NAME}(timer_handler,tmr_context);
+	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].TIMER_START_API_NAME}();
+	<#if ENABLE_GESTURE==true>
+	${TOUCH_TIMER_INSTANCE}_PeriodSet(1*(TMR2_FrequencyGet()/1000));
+	<#else>
+	${TOUCH_TIMER_INSTANCE}_PeriodSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS*(TMR2_FrequencyGet()/1000));
+	</#if>
 	<#else>
 	<#if ENABLE_GESTURE==true>
 	#warning "Timer for periodic touch measurement not defined; Call touch_timer_handler() every 1 millisecond."
