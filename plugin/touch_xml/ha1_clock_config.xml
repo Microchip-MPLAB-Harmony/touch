@@ -38,7 +38,7 @@ This is for SAMD20, SAMD21 Family
 	</data>
 	<data>	{Generic clock(Peripherals)| Source | Frequency},
 					{GCLK0(CPU)|OSC8M|8MHz},
-					{GCLK1(Timer)|OSCULP32K|32.768KHz},
+					{GCLK1(Timer)|OSCULP32K|1KHz},
 					{GCLK2(PTC)|OSC8M|4MHz}
 	</data>
 </description>

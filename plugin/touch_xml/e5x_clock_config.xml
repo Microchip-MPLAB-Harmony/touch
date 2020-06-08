@@ -40,7 +40,7 @@ This is for SAME51, SAME53, SAME54, SAMD51 Family
 	<data>	{Generic clock(Peripherals)| Source | Frequency},
 					{GCLK0(CPU)|DFLL48M| 48MHz}, 
 					{GCLK1(PTC, UART)|DFLL48M(DIV 6)|8MHz},
-					{GCLK3(RTC)|ULP32K|32.768KHz}
+					{GCLK3(RTC)|ULP32K|1KHz}
 	</data>
 	<data>	{Wait states},
 					{NVM states| 2}

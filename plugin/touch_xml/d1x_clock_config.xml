@@ -5,7 +5,7 @@ This is for SAMD1x Family
 <info>
 <clock_settings>
 	<all_clock_symbols_list>
-		<clock index = "0_0" symbol="CONFIG_CLOCK_DFLL_OPMODE" value="0" component_id= "core" name="DFLL Open mode" />
+		<clock index = "0_0" symbol="CONFIG_CLOCK_DFLL_OPMODE" value="1" component_id= "core" name="DFLL Closed mode" />
 		<clock index = "1_0" symbol="CONFIG_CLOCK_DFLL_COARSE" value="10" component_id= "core" name="DFLL Course value" />
 		<clock index = "2_0" symbol="CONFIG_CLOCK_DFLL_FINE" value="10" component_id= "core" name="DFLL Fine value" />
 		<clock index = "3_0" symbol="CONFIG_CLOCK_DFLL_MUL" value="1500" component_id= "core" name="DFLL Mul value" />
@@ -42,7 +42,7 @@ This is for SAMD1x Family
 	</data>
 	<data>	{Generic clock(Peripherals)| Source | Frequency},
 					{GCLK0(CPU)|DFLL48M| 48MHz},
-					{GCLK1(Timer)|OSCULP32K|32.768KHz},
+					{GCLK1(Timer)|OSCULP32K|1KHz},
 					{GCLK2(PTC,UART)| OSC8M| 4MHz},
 					{GCLK3(DFLL Ref.) |OSC8M(DIV 125)| 32KHz}
 	</data>

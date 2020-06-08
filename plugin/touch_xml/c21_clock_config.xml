@@ -25,7 +25,7 @@ This is for SAMC21, SAMC20 Family
 	<data>	{Generic clock(Peripherals)| Source | Frequency},
 					{GCLK0(CPU)|OSC48M| 48MHz}, 
 					{GCLK1(PTC, UART)|OSC48M(DIV 12)|4MHz},
-					{Timer (RTC)|OSCULP32K|32.768KHz}
+					{Timer (RTC)|OSCULP32K|1KHz}
 	</data>
 	<data>	{Wait states},
 					{NVM states| 2}
