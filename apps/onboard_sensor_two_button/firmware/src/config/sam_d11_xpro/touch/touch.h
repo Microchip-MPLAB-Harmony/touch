@@ -137,14 +137,18 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /* Defines Key Sensor setting
  * {Sensor Threshold, Sensor Hysterisis, Sensor AKS}
  */
+
 #define KEY_0_PARAMS                                                                                            \
 {                                                                                                              \
     20, HYST_25, NO_AKS_GROUP                       \
 }
+
+
 #define KEY_1_PARAMS                                                                                            \
 {                                                                                                              \
     20, HYST_25, NO_AKS_GROUP                       \
 }
+
 
 /* De-bounce counter for additional measurements to confirm touch detection
  * Range: 0 to 255.

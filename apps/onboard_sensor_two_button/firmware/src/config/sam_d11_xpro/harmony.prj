@@ -320,7 +320,7 @@
           <LogicalPath dnOrder="3">packs/ATSAMD11D14AM_DFP/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAMD11D14AM_DFP/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">64ECD17B727EBF289A42E98BEA9A1389</GeneratedChecksum>
-          <UserChecksum dnOrder="6">64ECD17B727EBF289A42E98BEA9A1389</UserChecksum>
+          <UserChecksum dnOrder="6">BE53B4BA09D810A5004D4B62693CA84E</UserChecksum>
         </File>
         <File dnOrder="35">
           <Type dnOrder="0">HEADER</Type>
@@ -526,8 +526,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d11_xpro/touch/</LogicalPath>
           <PhysicalPath dnOrder="4">/touch/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">F700E6D46C87A9A6D6D3D14B1A81BCCD</GeneratedChecksum>
-          <UserChecksum dnOrder="6">F700E6D46C87A9A6D6D3D14B1A81BCCD</UserChecksum>
+          <GeneratedChecksum dnOrder="5">50442CD77906A8E47B90ED5749D5AEB7</GeneratedChecksum>
+          <UserChecksum dnOrder="6">50442CD77906A8E47B90ED5749D5AEB7</UserChecksum>
         </File>
         <File dnOrder="58">
           <Type dnOrder="0">HEADER</Type>
@@ -684,7 +684,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="csp;touch;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;csp;touch;"/>
     </Settings>
   </Configurator>
 </Configuration>
