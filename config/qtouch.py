@@ -21,8 +21,8 @@ adc_based_touch_acqusition_device = ["SAME54","SAME53","SAME51","SAMD51"]
 lump_not_supported_device = ["PIC32MZW"]
 device_with_hardware_driven_shield_support = ["SAML10","SAML11","PIC32MZW"]
 boost_mode_supported_devices = ["SAML10","SAML1xE","SAML11"]
-event_system_based_low_power = ["SAML11","SAML10"]
-software_based_low_power = ["SAML11","SAML10"]
+event_system_based_low_power = ["SAMD20","SAMD21","SAMDA1","SAMHA1","SAML11","SAML10","SAMC21","SAMC20"]
+software_based_low_power = ["SAMD20","SAMD21","SAMDA1","SAMHA1","SAML11","SAML10","SAMC21","SAMC20"]
 
 
 def processBoostMode(symbol,event):
@@ -505,10 +505,11 @@ def processLump(symbol, event):
 	global enableDrivenShieldDedicated
 	global drivenShieldDedicatedPin
 	totalChannelCount = touchNumChannel.getValue()
-	for i in range(0,totalChannelCount):
-		if(touchSenseTechnology.getValue() == 0):
-			tchMutXPinSelection[int(i)].setKeyValue(str(i),"X_NONE")
-			tchMutXPinSelection[int(i)].setValue(int(i))
+	if getDeviceName.getDefaultValue() not in ["PIC32MZW"]:
+		for i in range(0,totalChannelCount):
+			if(touchSenseTechnology.getValue() == 0):
+				tchMutXPinSelection[int(i)].setKeyValue(str(i),"X_NONE")
+				tchMutXPinSelection[int(i)].setValue(int(i))
 	if (getDeviceName.getDefaultValue() not in lump_not_supported_device):
 		global lumpSymbol
 		lump_feature = lumpSymbol.getValue()
