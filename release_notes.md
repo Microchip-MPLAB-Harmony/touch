@@ -18,7 +18,7 @@
 * [MPLAB X IDE v5.40](https://www.microchip.com/mplabx-ide-windows-installer)
 * [MPLAB XC32 C/C++ Compiler v2.41](https://www.microchip.com/mplab/compilers)
 * MPLAB X IDE plug-ins:
-  * MPLAB Harmony Configurator (MHC) v3.4.2 
+  * MPLAB Harmony Configurator (MHC) v3.5 
 
 ### Required MPLAB Harmony v3.x.x Modules 
 
