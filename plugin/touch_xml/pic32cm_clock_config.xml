@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!-- 
+This is for PIC32CM Family
+-->
+<info>
+<clock_settings>
+<all_clock_symbols_list>
+
+		<clock index = "0_0" symbol="GCLK_INST_NUM1" value="True" component_id= "core" name="Select GCLK1" />
+		<clock index = "1_0" symbol="CONFIG_CLOCK_OSC16M_FREQSEL" value="16MHz" component_id= "core" name="Select 16MHz OSC as main clock" />
+		<clock index = "2_0" symbol="GCLK_0_SRC" value="5" component_id= "core" name="OSC16 as Main" />
+		<clock index = "3_0" symbol="GCLK_INST_NUM1" value="True" component_id= "core" name="Select GCLK2" />
+		<clock index = "4_0" symbol="GCLK_1_SRC" value="5" component_id= "core" name="Select 16MHz OSC for GCLK1" />
+		<clock index = "5_0" symbol="GCLK_1_DIV" value="4" component_id= "core" name="Prescale 16MHz by 4 for PTC" />
+		<clock index = "6_0" symbol="GCLK_1_ENABLE" value="True" component_id= "core" name="Run in Standby" />
+		<clock index = "7_0" symbol="NVM_RWS" value="2" component_id= "nvmctrl" name="Configure wait state as 2" />
+		<clock index = "8_0" symbol="CONFIG_CLOCK_OSC16M_ENABLE" value="True" component_id= "core" name="Enable OSC16M" />
+		<clock index = "9_0" symbol="CONFIG_CLOCK_OSC16M_FREQSEL" value="3" component_id= "core" name="Enable 16MHz output" />
+		<clock index = "10_0" symbol="CONFIG_CLOCK_DFLL_ENABLE" value="False" component_id= "core" name="Disable DFLL" />
+		<clock index = "11_0" symbol="CONFIG_CLOCK_DPLL_ENABLE" value="False" component_id= "core" name="Disable DPLL" />
+	</all_clock_symbols_list>
+	<all_conditions_list>
+		<condition />
+	</all_conditions_list>
+	<common>
+		<default clock_update_index_list="0_0,1_0,2_0"/>
+	</common>
+</clock_settings>
+<description>
+	<!-- first {} considered as heading-->
+	<data>	{Oscillator| Prescaler Divisor | Frequency},
+					{OSC16M| 4 | 16MHz}
+	</data>
+	<data>	{Generic clock(Peripherals)| Source | Frequency},
+					{GCLK0(CPU)|OSC16M| 16MHz}, 
+					{GCLK1(PTC, UART)|OSC16M(DIV 4)|4MHz},
+					{Timer(RTC)|OSCULP32K|1.024KHz}
+	</data>
+	<data>	{Wait states},
+					{NVM states| 2}
+	</data>
+</description>
+</info>

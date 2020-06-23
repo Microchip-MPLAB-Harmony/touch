@@ -94,6 +94,10 @@ This is for device feature and library version information
                 <manual>1.0</manual>
                 <auto>1.0</auto>
             </device>
+            <device name="PIC32CMLE00">
+                <manual>1.4</manual>
+                <auto>1.4</auto>
+            </device>
         </acquisition>
     </version>
     <clock>

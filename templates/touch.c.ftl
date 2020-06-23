@@ -99,7 +99,7 @@ static void touch_measure_wcomp_match(void);
 /* Cancel low-power measurement */
 static void touch_cancel_autoscan(void);
 </#if>
-<#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")>
+<#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")>
 /* configure voltage regulator */
 static void touch_enable_vreg_in_standby(void);
 </#if>
@@ -159,13 +159,19 @@ qtm_acq_node_data_t ptc_qtlib_node_stat1[DEF_NUM_CHANNELS];
 
 /* Node configurations */
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
+<#if DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00">
+qtm_acq_4p_pic32cm_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
+<#else>
 qtm_acq_4p_${DEVICE_NAME?lower_case}_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
+</#if>
 <#else>
 <#if TOUCH_CHAN_ENABLE_CNT&gt;=1>
 <#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
 qtm_acq_samd1x_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 <#elseif DEVICE_NAME= "SAML11" || DEVICE_NAME= "SAML1xE">
 qtm_acq_saml10_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
+<#elseif  DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00">
+qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 <#else>
 qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 </#if>
@@ -1003,8 +1009,8 @@ Notes  :
 ============================================================================*/
 static void touch_enable_lowpower_measurement(void)
 {
-    <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")>
-	<#if ENABLE_EVENT_LP == false>
+    <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")>
+	<#if ENABLE_SOFTWARE_LP == 1>
 		lp_mesurement = 1;
 		time_drift_wakeup_counter = 0;
 	<@softwarelp.lowpwer_enableevsys_saml_no_evs/>
@@ -1166,7 +1172,7 @@ Notes  :
 ============================================================================*/
 static void touch_cancel_autoscan(void)
 {
-		 <#if ((DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")) && ((ENABLE_EVENT_LP == true))> 
+		 <#if ((DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")) && ((ENABLE_EVENT_LP == 1))> 
         /* disable event system measurement */
         touch_disable_lowpower_measurement();
 		<#else>				
@@ -1472,6 +1478,8 @@ void PTC_Handler(void)
 	qtm_samd1x_ptc_handler_eoc();
 <#elseif DEVICE_NAME=="SAML11">
     qtm_saml10_ptc_handler_eoc();
+<#elseif DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00">
+    qtm_pic32cm_ptc_handler_eoc();
 <#else>
 	qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();
 </#if>

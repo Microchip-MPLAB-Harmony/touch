@@ -19,7 +19,7 @@ IDArray = ["TOUCH_ACQ_LIB","TOUCH_ACQ_AUTO_LIB","TOUCH_ACQ_HEADER",
 timer_based_driven_shield_supported_device = ["SAMD21","SAMDA1","SAMHA1","SAME54","SAME53","SAME51","SAMD51","SAMC21","SAMC20","SAML21","SAML22"]
 adc_based_touch_acqusition_device = ["SAME54","SAME53","SAME51","SAMD51"]
 lump_not_supported_device = ["PIC32MZW"]
-device_with_hardware_driven_shield_support = ["SAML10","SAML11","PIC32MZW"]
+device_with_hardware_driven_shield_support = ["SAML10","SAML11","PIC32MZW","PIC32CMLE00","PIC32CMLS00"]
 boost_mode_supported_devices = ["SAML10","SAML1xE","SAML11"]
 surface_rearrangement_macro = ["SAML10","SAML1xE","SAML11"]
 low_power = ["SAMD20","SAMD21","SAMDA1","SAMHA1","SAML11","SAML10","SAMC21","SAMC20"]
@@ -349,11 +349,11 @@ def checknonsecureStatus():
         entryname = qtouchFilesArray[kx].getID()
         splitname = entryname.split('_')     
         
-        if ("LIB" in splitname):
-            if(nonSecureStatus == "SECURE"):
-                qtouchFilesArray[kx].setDestPath("../../../../../Secure/firmware/src/config/default/touch/lib/")
-            else:
-                qtouchFilesArray[kx].setDestPath("../../../../../NonSecure/firmware/src/config/default/touch/lib/")
+        # if ("LIB" in splitname):
+        #     if(nonSecureStatus == "SECURE"):
+        #         qtouchFilesArray[kx].setDestPath("../../../../../Secure/firmware/src/config/default/touch/lib/")
+        #     else:
+        #         qtouchFilesArray[kx].setDestPath("../../../../../NonSecure/firmware/src/config/default/touch/lib/")
         
         if "PTC_SYS_DEF" == entryname :
             if (nonSecureStatus == "SECURE"):
@@ -819,6 +819,8 @@ def instantiateComponent(qtouchComponent):
         execfile(Module.getPath() +"/config/node_pic32mz.py")
         autoComponentIDTable = ["adchs","tmr2"]
         autoConnectTable = [["lib_qtouch", "Touch_timer","tmr2","TMR2_TMR"]]
+    elif (getDeviceName.getDefaultValue() in ["PIC32CMLE00","PIC32CMLS00"]):
+        execfile(Module.getPath() +"/config/node_pic32cmle00.py")
     else:
         execfile(Module.getPath() +"/config/node_C2X.py")
     
