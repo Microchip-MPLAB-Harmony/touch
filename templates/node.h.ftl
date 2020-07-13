@@ -11,7 +11,7 @@
 		<#if SENSE_TECHNOLOGY == "NODE_SELFCAP">
 					<#lt>#define NODE_${i}_PARAMS                                                                                               \
 					<#lt>{                                                                                                                  \
-					<#lt>   ${.vars["MUTL-X-INPUT_" + i]}, ${.vars["SELFCAP-INPUT_" + i]}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]},0, NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
+					<#lt>   X_NONE, ${.vars["SELFCAP-INPUT_" + i]}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]},0, NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
 					<#lt>}
 		<#elseif SENSE_TECHNOLOGY == "NODE_SELFCAP_SHIELD">
 					<#lt>#define NODE_${i}_PARAMS                                                                                               \
