@@ -23,7 +23,7 @@ device_with_hardware_driven_shield_support = ["SAML10","SAML11","PIC32MZW"]
 boost_mode_supported_devices = ["SAML10","SAML1xE","SAML11"]
 event_system_based_low_power = ["SAMD20","SAMD21","SAMDA1","SAMHA1","SAML11","SAML10","SAMC21","SAMC20"]
 software_based_low_power = ["SAMD20","SAMD21","SAMDA1","SAMHA1","SAML11","SAML10","SAMC21","SAMC20"]
-
+surface_rearrangement_macro = ["SAML10","SAML1xE","SAML11"]
 
 def processBoostMode(symbol,event):
 	global touchNumChannel
@@ -595,51 +595,124 @@ def processLump(symbol, event):
 			elif(touchSenseTechnology.getValue() == 0):
 				tchMutXPinSelection[int(i)].setKeyValue(str(i),"X_NONE")
 				tchMutXPinSelection[int(i)].setValue(int(i))
+	if getDeviceName.getDefaultValue() not in surface_rearrangement_macro:
+		if (touchSenseTechnology.getValue() == 1) and (enableSurfaceMenu.getValue() == True):
+			MUTL_SURFACE_X = []
+			MUTL_SURFACE_Y = []
+			HORI_START_KEY = horiStartKey.getValue()
+			HORI_NUM_KEY = horiNumKey.getValue()
+			VERT_START_KEY = vertStartKey.getValue()
+			VERT_NUM_KEY = vertNumKey.getValue()
+			for i in range(HORI_START_KEY,(HORI_START_KEY+HORI_NUM_KEY)):
+				vals = tchMutXPinSelection[int(i)].getValue()
+				MUTL_SURFACE_X.append(tchMutXPinSelection[int(i)].getKeyValue(vals))
+			MUTL_SURFACE_X = "|".join(MUTL_SURFACE_X)
+			for j in range(VERT_START_KEY,(VERT_START_KEY+VERT_NUM_KEY)):
+				vals = tchMutYPinSelection[int(j)].getValue()
+				MUTL_SURFACE_Y.append(tchMutYPinSelection[int(j)].getKeyValue(vals))
+			MUTL_SURFACE_Y = "|".join(MUTL_SURFACE_Y)
+			if (VERT_START_KEY >0):
+				for i in range(0,VERT_START_KEY):
+					vals1 = tchMutXPinSelection[int(i)].getValue()
+					vals2 = tchMutYPinSelection[int(i)].getValue()
+					tchMutXPinSelection[int(i)].setValue(vals1)
+					tchMutYPinSelection[int(i)].setValue(vals2)
+			for i in range(VERT_START_KEY,(VERT_START_KEY+VERT_NUM_KEY)):
+				vals1 = tchMutXPinSelection[int(i)].getValue()
+				vals2 = tchMutYPinSelection[int(i)].getValue()
+				tchMutXPinSelection[int(i)].setKeyValue(str(vals1),MUTL_SURFACE_X)
+				tchMutXPinSelection[int(i)].setValue(vals1)
+				tchMutYPinSelection[int(i)].setValue(vals2)
+			for i in range(HORI_START_KEY,(HORI_START_KEY+HORI_NUM_KEY)):
+				vals1 = tchMutXPinSelection[int(i)].getValue()
+				vals2 = tchMutYPinSelection[int(i)].getValue()
+				tchMutYPinSelection[int(i)].setKeyValue(str(vals2),MUTL_SURFACE_Y)
+				tchMutXPinSelection[int(i)].setValue(vals1)
+				tchMutYPinSelection[int(i)].setValue(vals2)
+			if (totalChannelCount - (VERT_START_KEY + VERT_NUM_KEY + HORI_NUM_KEY ) >0):
+				for i in range((VERT_START_KEY + VERT_NUM_KEY + HORI_NUM_KEY),totalChannelCount):
+					vals1 = tchMutXPinSelection[int(i)].getValue()
+					vals2 = tchMutYPinSelection[int(i)].getValue()
+					tchMutXPinSelection[int(i)].setValue(vals1)
+					tchMutYPinSelection[int(i)].setValue(vals2)
 
-	if (touchSenseTechnology.getValue() == 1) and (enableSurfaceMenu.getValue() == True):
-		MUTL_SURFACE_X = []
-		MUTL_SURFACE_Y = []
-		HORI_START_KEY = horiStartKey.getValue()
-		HORI_NUM_KEY = horiNumKey.getValue()
-		VERT_START_KEY = vertStartKey.getValue()
-		VERT_NUM_KEY = vertNumKey.getValue()
-		for i in range(HORI_START_KEY,(HORI_START_KEY+HORI_NUM_KEY)):
-			vals = tchMutXPinSelection[int(i)].getValue()
-			MUTL_SURFACE_X.append(tchMutXPinSelection[int(i)].getKeyValue(vals))
-		MUTL_SURFACE_X = "|".join(MUTL_SURFACE_X)
-		for j in range(VERT_START_KEY,(VERT_START_KEY+VERT_NUM_KEY)):
-			vals = tchMutYPinSelection[int(j)].getValue()
-			MUTL_SURFACE_Y.append(tchMutYPinSelection[int(j)].getKeyValue(vals))
-		MUTL_SURFACE_Y = "|".join(MUTL_SURFACE_Y)
-		if (VERT_START_KEY >0):
-			for i in range(0,VERT_START_KEY):
-				vals1 = tchMutXPinSelection[int(i)].getValue()
-				vals2 = tchMutYPinSelection[int(i)].getValue()
-				tchMutXPinSelection[int(i)].setValue(vals1)
-				tchMutYPinSelection[int(i)].setValue(vals2)
-		for i in range(VERT_START_KEY,(VERT_START_KEY+VERT_NUM_KEY)):
-			vals1 = tchMutXPinSelection[int(i)].getValue()
-			vals2 = tchMutYPinSelection[int(i)].getValue()
-			tchMutXPinSelection[int(i)].setKeyValue(str(vals1),MUTL_SURFACE_X)
-			tchMutXPinSelection[int(i)].setValue(vals1)
-			tchMutYPinSelection[int(i)].setValue(vals2)
-		for i in range(HORI_START_KEY,(HORI_START_KEY+HORI_NUM_KEY)):
-			vals1 = tchMutXPinSelection[int(i)].getValue()
-			vals2 = tchMutYPinSelection[int(i)].getValue()
-			tchMutYPinSelection[int(i)].setKeyValue(str(vals2),MUTL_SURFACE_Y)
-			tchMutXPinSelection[int(i)].setValue(vals1)
-			tchMutYPinSelection[int(i)].setValue(vals2)
-		if (totalChannelCount - (VERT_START_KEY + VERT_NUM_KEY + HORI_NUM_KEY ) >0):
-			for i in range((VERT_START_KEY + VERT_NUM_KEY + HORI_NUM_KEY),totalChannelCount):
-				vals1 = tchMutXPinSelection[int(i)].getValue()
-				vals2 = tchMutYPinSelection[int(i)].getValue()
-				tchMutXPinSelection[int(i)].setValue(vals1)
-				tchMutYPinSelection[int(i)].setValue(vals2)
+def surface_rearrangement(symbol,event):
+	if getDeviceName.getDefaultValue() in surface_rearrangement_macro and (touchSenseTechnology.getValue() == 1) and (enableSurfaceMenu.getValue() == True):
+		x_append_x_x = []
+		x_append_x_y = []
+		y_append_y_x = []
+		y_append_y_y = []
+		list_x = []
+		list_y = []
+		y_surface = []
+		x_surface = []
+		y_append = []
+		x_append = []
+
+		HORI_START_KEY1 = horiStartKey.getValue() 
+		HORI_NUM_KEY1 = horiNumKey.getValue()
+		VERT_START_KEY1 = vertStartKey.getValue()
+		VERT_NUM_KEY1 = vertNumKey.getValue()
+		localComponent = symbol.getComponent()
+		for i in range(HORI_START_KEY1,(HORI_START_KEY1+HORI_NUM_KEY1)):
+			tempSymbol = localComponent.getSymbolByID("MUTL-X-INPUT_"+ str(i))
+			x_surface.append(tempSymbol.getValue())
+		for j in range(VERT_START_KEY1,(VERT_START_KEY1+VERT_NUM_KEY1)):
+			tempSymbol = localComponent.getSymbolByID("MUTL-Y-INPUT_"+ str(j))
+			y_surface.append(tempSymbol.getValue())
+		len_x = len(x_surface)
+		len_y = len(y_surface)
+		x_append1 = []
+		y_append = []
+		for i in range(len_x):
+			temp_symbol_x_y = 'Y('+str(x_surface[i])+')'
+			temp_symbol_x_x = 'X('+str(x_surface[i])+')'
+			x_append_x_y.append(temp_symbol_x_y)
+			x_append_x_x.append(temp_symbol_x_x)
+		x_append1 = "|".join(x_append_x_x)
+		for j in range(len_y):
+			temp_symbol1_y_x = 'X(' +str(y_surface[j])+ ')'
+			temp_symbol1_y_y = 'Y(' +str(y_surface[j])+ ')'
+			y_append_y_x.append(temp_symbol1_y_x)
+			y_append_y_y.append(temp_symbol1_y_y)
+		y_append1 = "|".join(y_append_y_x)
+		for item in range(len_y):
+			if (temp_symbol1_y_x != ""):
+				temp_symbol1_y_x = y_append1
+				if item < len_y-1:
+					temp_symbol1_y_x = temp_symbol1_y_x +'+'
+				list_y.append(temp_symbol1_y_x)
+		list_y= ''.join(list_y)
+		for item1 in range(len_x):
+			if (temp_symbol_x_x != ""):
+				temp_symbol_x_x= x_append1
+				if item1 < len_x-1:
+					temp_symbol_x_x = temp_symbol_x_x +'+'
+				list_x.append(temp_symbol_x_x)
+		list_x= ''.join(list_x)
+		list_y = list_y + '+'
+		list_y = ''.join(list_y)
+		list_x = list_x + str('+')
+		list_x = list_x + list_y
+		list_x = list_x[:-1]
+		y_append_y_y = "+".join(y_append_y_y)
+		x_append_x_y = "+".join(x_append_x_y)
+		y_append_y_y = y_append_y_y + '+'
+		y_append_y_y = y_append_y_y + x_append_x_y
+		tempSymbol = localComponent.getSymbolByID("TOUCH_CH_SURFACE_X_LINES")
+		temp_string = tempSymbol.getValue()
+		temp_string = list_x
+		tempSymbol.setValue(temp_string)
+		tempSymbol = localComponent.getSymbolByID("TOUCH_CH_SURFACE_Y_LINES")
+		temp_string = tempSymbol.getValue()
+		temp_string = y_append_y_y
+		tempSymbol.setValue(temp_string)
 
 def onGenerate(symbol,event):
 	processBoostMode(symbol,event)
 	processLump(symbol,event)
-    
+	surface_rearrangement(symbol,event)
+
 def onPTCClock(symbol,event):
     component = symbol.getComponent()
     if component.getSymbolValue("TOUCH_LOADED"):

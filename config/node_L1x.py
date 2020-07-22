@@ -26,7 +26,10 @@ touchNumChannel.setLabel("Number of Channels to enable")
 touchNumChannel.setDefaultValue(0)
 touchNumChannel.setMin(0)
 touchNumChannel.setMax(touchChannelCountMax)
-
+touchChSurafceX = qtouchComponent.createStringSymbol("TOUCH_CH_SURFACE_X_LINES", nodeMenu)
+touchChSurafceX.setVisible(False)
+touchChSurafceY = qtouchComponent.createStringSymbol("TOUCH_CH_SURFACE_Y_LINES", nodeMenu)
+touchChSurafceY.setVisible(False)
 for channelID in range(0, touchChannelCountMax):
 
     touchChEnable = qtouchComponent.createBooleanSymbol("TOUCH_ENABLE_CH_" + str(channelID), nodeMenu)
