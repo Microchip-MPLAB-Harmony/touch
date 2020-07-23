@@ -129,13 +129,13 @@
  * Range: 0 or 1.
  * Default value: 1
 */
-#define DEF_TOUCH_LOWPOWER_ENABLE ${ENABLE_EVENT_LP}
+#define DEF_TOUCH_LOWPOWER_ENABLE ${(LOW_POWER_KEYS!="")?then("1", "0")}
 
 /* Node selection for Low-power scan. 
  * Range: 0 to (DEF_NUM_CHANNELS-1).
  * Default value: 0
 */
-#define QTM_AUTOSCAN_NODE			 ${LOW_POWER_NODE}
+#define QTM_AUTOSCAN_NODE			 ${LOW_POWER_KEYS}
 
 /* Touch detection threshold for Low-power node. 
  * Range: 0 to 255.

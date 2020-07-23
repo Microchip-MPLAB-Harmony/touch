@@ -68,7 +68,7 @@
  * Range: 0 or 1.
  * Default value: 1
 */
-#define DEF_TOUCH_LOWPOWER_ENABLE ${ENABLE_SOFTWARE_LP}
+#define DEF_TOUCH_LOWPOWER_ENABLE ${(LOW_POWER_KEYS!="")?then("1", "0")}
 
 /* Lowpower Key Information 
  * Bit-mask of the keys which are enabled in low-power mode
@@ -87,7 +87,7 @@
  * Range : 1 to 65535
  * Default: 5000
 */
-#define DEF_TOUCH_TIMEOUT	${SW_TCH_INACTIVE_TIME}
+#define DEF_TOUCH_TIMEOUT	${TCH_INACTIVE_TIME}
 
 /* Defines drift measurement period
  * If drift period is not a multiple of Low-power measurement period,
@@ -96,6 +96,6 @@
  * Range: 1 to 65535 (should be more than QTM_LOWPOWER_TRIGGER_PERIOD)
  * Default: 2000
 */
-#define DEF_TOUCH_DRIFT_PERIOD_MS	${SW_DRIFT_WAKE_UP_PERIOD}
+#define DEF_TOUCH_DRIFT_PERIOD_MS	${DRIFT_WAKE_UP_PERIOD}
 
 </#macro>

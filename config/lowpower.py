@@ -2,22 +2,18 @@
 #### Component ####
 ################################################################################
 LowPowerEvntMenu = qtouchComponent.createMenuSymbol("LOW_POWER_EVENT_MENU", touchMenu)
-LowPowerEvntMenu.setLabel("Event Low Power Configuration")
+LowPowerEvntMenu.setLabel("Low Power Configuration")
 
 # Enable Event based Low power 
-enableEventLowPower = qtouchComponent.createIntegerSymbol("ENABLE_EVENT_LP", LowPowerEvntMenu)
-enableEventLowPower.setLabel("Enable Event based Low Power")
-enableEventLowPower.setMin(0)
-enableEventLowPower.setMax(1)
-enableEventLowPower.setDefaultValue(0)
+enableEventLowPower = qtouchComponent.createBooleanSymbol("ENABLE_EVENT_LP", LowPowerEvntMenu)
+enableEventLowPower.setLabel("Event based Low Power")
+enableEventLowPower.setDefaultValue(False)
 
 #Low-power Node Selection
-lowPowerNode = qtouchComponent.createIntegerSymbol("LOW_POWER_NODE", LowPowerEvntMenu)
-lowPowerNode.setLabel("Low-power Node Selection")
-lowPowerNode.setDefaultValue(0)
-lowPowerNode.setMin(0)
-lowPowerNode.setMax(255)
-lowPowerNode.setDescription("Low-power measurement node number")
+lowPowerKey = qtouchComponent.createStringSymbol("LOW_POWER_KEYS", LowPowerEvntMenu)
+lowPowerKey.setLabel("Low-power Keys Selection")
+lowPowerKey.setDefaultValue("")
+lowPowerKey.setDescription("Series of low-power key numbers separated by ,")
 
 #Low-power Detect Threshold
 lowPowerDetThreshold = qtouchComponent.createIntegerSymbol("LOW_POWER_DET_THRESHOLD", LowPowerEvntMenu)
@@ -42,6 +38,15 @@ lowPowerPeriod.setDefaultValue(3)
 lowPowerPeriod.setOutputMode("Value")
 lowPowerPeriod.setDisplayMode("Description")
 lowPowerPeriod.setDescription("The Low-power measurement period determine the interval between low-power touch measurement")
+
+#Low-power Trigger Period
+lowPowerTriggerPeriod = qtouchComponent.createIntegerSymbol("LOW_POWER_TRIGGER_PERIOD", LowPowerEvntMenu)
+lowPowerTriggerPeriod.setLabel("Low-power Trigger Period")
+lowPowerTriggerPeriod.setDefaultValue(100)
+lowPowerTriggerPeriod.setMin(1)
+lowPowerTriggerPeriod.setMax(65535)
+lowPowerTriggerPeriod.setDescription("The Lowpower measurement period defines the interval between low-power touch measurement")
+
 #Touch Inactivity Timeout
 touchInactivityTime = qtouchComponent.createIntegerSymbol("TCH_INACTIVE_TIME", LowPowerEvntMenu)
 touchInactivityTime.setLabel("Touch Inactivity Timeout")

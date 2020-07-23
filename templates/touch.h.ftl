@@ -460,7 +460,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 </#if>
 </#if>
 
-<#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == 1>
+<#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == true>
 	<#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")> 
 		<@eventlp.lowpower_SAML/>
 		<@eventlp.lowpower_params_saml/>
@@ -468,14 +468,14 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 		<@eventlp.lowpower_params_samdx/>
 	</#if>
 </#if>
-<#if ENABLE_SOFTWARE_LP?exists && ENABLE_SOFTWARE_LP == 1>
+<#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false>
 	<#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")>
 		<@softwarelp.lowpower_SAML/>
 	</#if>
     <@softwarelp.lowpower_params_noevs/>
 </#if>
 <#if (DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")>
-<#if (ENABLE_EVENT_LP == 1) || (ENABLE_SOFTWARE_LP == 1)>
+<#if (ENABLE_EVENT_LP == true) || (ENABLE_EVENT_LP == false)>
 /* Sleep Modes */
 #define PM_SLEEP_IDLE_0		0u
 #define PM_SLEEP_IDLE_1		1u
@@ -491,7 +491,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 </#if>
 
 <#if (DEVICE_NAME == "SAMD20")>
-<#if (ENABLE_EVENT_LP == 1) || (ENABLE_SOFTWARE_LP == 1)>
+<#if (ENABLE_EVENT_LP == true) || (ENABLE_EVENT_LP == false)>
 /* Sleep Modes */
 #define PM_SLEEP_IDLE_0		0u
 #define PM_SLEEP_IDLE_1		1u
@@ -507,7 +507,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 </#if>
 
 <#if (DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21")>
-<#if (ENABLE_EVENT_LP == 1) || (ENABLE_SOFTWARE_LP == 1)> 
+<#if (ENABLE_EVENT_LP == true) || (ENABLE_EVENT_LP == false)> 
 /* Sleep Modes */
 #define PM_SLEEP_IDLE 2u
 #define PM_SLEEP_STANDBY 4u

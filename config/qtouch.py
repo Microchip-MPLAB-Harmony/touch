@@ -21,9 +21,8 @@ adc_based_touch_acqusition_device = ["SAME54","SAME53","SAME51","SAMD51"]
 lump_not_supported_device = ["PIC32MZW"]
 device_with_hardware_driven_shield_support = ["SAML10","SAML11","PIC32MZW"]
 boost_mode_supported_devices = ["SAML10","SAML1xE","SAML11"]
-event_system_based_low_power = ["SAMD20","SAMD21","SAMDA1","SAMHA1","SAML11","SAML10","SAMC21","SAMC20"]
-software_based_low_power = ["SAMD20","SAMD21","SAMDA1","SAMHA1","SAML11","SAML10","SAMC21","SAMC20"]
 surface_rearrangement_macro = ["SAML10","SAML1xE","SAML11"]
+low_power = ["SAMD20","SAMD21","SAMDA1","SAMHA1","SAML11","SAML10","SAMC21","SAMC20"]
 
 def processBoostMode(symbol,event):
 	global touchNumChannel
@@ -828,10 +827,9 @@ def instantiateComponent(qtouchComponent):
     execfile(Module.getPath() +"/config/sensor.py")
 
 	#Low power
-    if (getDeviceName.getDefaultValue() in event_system_based_low_power):
-        execfile(Module.getPath() +"/config/eventlowpower.py")
-    if (getDeviceName.getDefaultValue() in software_based_low_power):
-        execfile(Module.getPath() +"/config/softwarelowpower.py")
+    if (getDeviceName.getDefaultValue() in low_power):
+        execfile(Module.getPath() +"/config/lowpower.py")
+        
     # Enable Scroller 
     enableScrollerMenu = qtouchComponent.createBooleanSymbol("ENABLE_SCROLLER", touchMenu)
     enableScrollerMenu.setLabel("Enable Scroller")
