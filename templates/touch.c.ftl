@@ -105,7 +105,7 @@ static void touch_enable_vreg_in_standby(void);
 </#if>
 static void touch_enable_lowpower_measurement(void);
 static void touch_disable_lowpower_measurement(void);
-<#if (ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false)> 
+<#if (ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false)>
 static void touch_seq_lp_sensor(void);
 static void touch_enable_nonlp_sensors(void);
 static void touch_disable_nonlp_sensors(void);
@@ -135,6 +135,7 @@ static uint8_t all_measure_complete = 0;
 
 /* Error Handling */
 uint8_t module_error_code = 0;
+
 
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
 /* Low-power measurement variables */
@@ -867,6 +868,7 @@ volatile uint8_t time_to_measure_touch_var =0;
 void touch_process(void)
 {
     touch_ret_t touch_ret;
+<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
 <#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false>
 #if DEF_TOUCH_DRIFT_PERIOD_MS != 0u && DEF_TOUCH_LOWPOWER_ENABLE == 1u
 	if (time_drift_wakeup_counter >= DEF_TOUCH_DRIFT_PERIOD_MS && lp_mesurement == 1u) {
@@ -874,6 +876,7 @@ void touch_process(void)
 		touch_enable_nonlp_sensors();
 	}
 #endif
+</#if>
 </#if>
     /* check the time_to_measure_touch for Touch Acquisition */
     if (time_to_measure_touch_var)
@@ -913,7 +916,7 @@ void touch_process(void)
 		time_to_measure_touch_var = 1;
         p_qtm_control->binding_layer_flags &= ~(1u << reburst_request);
 		}
-<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>
+<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
     #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
 	else
 	{
@@ -928,7 +931,7 @@ void touch_process(void)
     #endif
 </#if>
     }
-<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>
+<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
     #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
 	if(time_to_measure_touch_var != 1u)
 	{
@@ -1029,7 +1032,7 @@ static void touch_enable_lowpower_measurement(void)
     </#if>
 	</#if>
 }
-
+<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
 /*============================================================================
 static void touch_process_lowpower(void)
 ------------------------------------------------------------------------------
@@ -1172,7 +1175,7 @@ static void touch_cancel_autoscan(void)
 </#if>
 #endif
 </#if>
-
+</#if>
 <#if ENABLE_GESTURE==true>
 uint8_t interrupt_cnt;
 </#if>
@@ -1196,7 +1199,7 @@ void touch_timer_handler(void)
 		interrupt_cnt = 0;
 		/* Count complete - Measure touch sensors */
 		time_to_measure_touch_var = 1;
-<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>
+<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
 #if DEF_TOUCH_LOWPOWER_ENABLE == 1u
 	if (time_since_touch < (65535u - measurement_period_store)) {
 		time_since_touch += measurement_period_store;
@@ -1210,7 +1213,7 @@ void touch_timer_handler(void)
 <#else>
     /* Count complete - Measure touch sensors */
 	time_to_measure_touch_var = 1;
-<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>
+<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
 #if DEF_TOUCH_LOWPOWER_ENABLE == 1u
 	if (time_since_touch < (65535u - measurement_period_store)) {
 		time_since_touch += measurement_period_store;

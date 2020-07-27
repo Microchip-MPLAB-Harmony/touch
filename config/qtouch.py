@@ -757,15 +757,20 @@ def instantiateComponent(qtouchComponent):
     global InterruptVector
     global IDArray
     
+    showConfiguration = False
     qtouchFilesArray = []
     configName = Variables.get("__CONFIGURATION_NAME")
+    
+    touchConfigurator = qtouchComponent.createMenuSymbol("TOUCH_CONFIGURATOR", None)
+    touchConfigurator.setLabel("Goto Menu, MHC > Tools > Touch Configuration")    
 
     touchMenu = qtouchComponent.createMenuSymbol("TOUCH_MENU", None)
     touchMenu.setLabel("Touch Configuration")
+    touchMenu.setVisible(showConfiguration)
     
     touchInfoMenu = qtouchComponent.createMenuSymbol("TOUCH_INFO", None)
     touchInfoMenu.setLabel("Touch Configuration Helper")
-    #touchInfoMenu.setVisible(False)
+    touchInfoMenu.setVisible(showConfiguration)
     
     touchScriptEvent = qtouchComponent.createStringSymbol("TOUCH_SCRIPT_EVENT", touchInfoMenu)
     touchScriptEvent.setLabel("Script Event ")
@@ -878,6 +883,7 @@ def instantiateComponent(qtouchComponent):
     qtouchTimerComponent = qtouchComponent.createStringSymbol("TOUCH_TIMER_INSTANCE", None)
     qtouchTimerComponent.setLabel("Timer Component Chosen for Touch middleware")
     qtouchTimerComponent.setReadOnly(True)
+    qtouchTimerComponent.setVisible(False)
     qtouchTimerComponent.setDefaultValue("")
     
     qtouchSercomComponent = qtouchComponent.createStringSymbol("TOUCH_SERCOM_INSTANCE", None)

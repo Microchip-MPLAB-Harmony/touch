@@ -459,7 +459,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define FREQ_AUTOTUNE_COUNT_IN ${DEF_TOUCH_TUNE_IN_COUNT}
 </#if>
 </#if>
-
+<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
 <#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == true>
 	<#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")> 
 		<@eventlp.lowpower_SAML/>
@@ -475,7 +475,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
     <@softwarelp.lowpower_params_noevs/>
 </#if>
 <#if (DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")>
-<#if (ENABLE_EVENT_LP == true) || (ENABLE_EVENT_LP == false)>
+
 /* Sleep Modes */
 #define PM_SLEEP_IDLE_0		0u
 #define PM_SLEEP_IDLE_1		1u
@@ -488,10 +488,10 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define QTM_RTC_TO_PTC_EVSYS_CHANNEL 0u
 #define QTM_AUTOSCAN_TRIGGER_PERIOD_EVENT (1u << QTM_AUTOSCAN_TRIGGER_PERIOD)
 </#if>
-</#if>
+
 
 <#if (DEVICE_NAME == "SAMD20")>
-<#if (ENABLE_EVENT_LP == true) || (ENABLE_EVENT_LP == false)>
+
 /* Sleep Modes */
 #define PM_SLEEP_IDLE_0		0u
 #define PM_SLEEP_IDLE_1		1u
@@ -503,11 +503,11 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define QTM_AUTOSCAN_STCONV_USER 13u
 #define QTM_RTC_TO_PTC_EVSYS_CHANNEL 0u
 #define QTM_AUTOSCAN_TRIGGER_PERIOD_EVENT (1u << QTM_AUTOSCAN_TRIGGER_PERIOD)
-</#if>
+
 </#if>
 
 <#if (DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21")>
-<#if (ENABLE_EVENT_LP == true) || (ENABLE_EVENT_LP == false)> 
+
 /* Sleep Modes */
 #define PM_SLEEP_IDLE 2u
 #define PM_SLEEP_STANDBY 4u
@@ -517,13 +517,14 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define QTM_AUTOSCAN_STCONV_USER 39u
 #define QTM_RTC_TO_PTC_EVSYS_CHANNEL 0u
 #define QTM_AUTOSCAN_TRIGGER_PERIOD_EVENT (1u << QTM_AUTOSCAN_TRIGGER_PERIOD)
-</#if>
-</#if>
 
+</#if>
+</#if>
 /**********************************************************/
 /***************** Communication - Data Streamer ******************/
 /**********************************************************/
 #define DEF_TOUCH_DATA_STREAMER_ENABLE ${(ENABLE_DATA_STREAMER)?then('1u', '0u')}
+
 
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
 <#if ((DS_DEDICATED_ENABLE == true) || (DS_PLUS_ENABLE == true)) >
