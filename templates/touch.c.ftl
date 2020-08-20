@@ -65,25 +65,13 @@ extern qtm_drivenshield_config_t qtm_drivenshield_config;
  *   prototypes
  *----------------------------------------------------------------------------*/
 
-/*! \brief configure binding layer config parameter
- */
-static void build_qtm_config(qtm_control_t *qtm);
-
 /*! \brief configure keys, wheels and sliders.
  */
 static touch_ret_t touch_sensors_config(void);
 
-/*! \brief Init complete callback function prototype.
- */
-static void init_complete_callback();
-
 /*! \brief Touch measure complete callback function example prototype.
  */
 static void qtm_measure_complete_callback(void);
-
-/*! \brief Touch post process complete callback function prototype.
- */
-static void qtm_post_process_complete();
 
 /*! \brief Touch Error callback function prototype.
  */
@@ -122,10 +110,10 @@ uint8_t lp_mesurement;
  *     Global Variables
  *----------------------------------------------------------------------------*/
 
-/* Binding layer control */
-qtm_control_t  qtm_control;
-qtm_control_t *p_qtm_control;
-qtm_state_t    qstate;
+/* Flag to indicate time for touch measurement */
+volatile uint8_t time_to_measure_touch_var = 0;
+/* postporcess request flag */
+volatile uint8_t touch_postprocess_request = 0;
 
 /* Measurement Done Touch Flag  */
 volatile uint8_t measurement_done_touch = 0;
@@ -415,74 +403,6 @@ qtm_gestures_2d_data_t qtm_gestures_2d_data;
 qtm_gestures_2d_control_t qtm_gestures_2d_control1 = {&qtm_gestures_2d_data, &qtm_gestures_2d_config};
 </#if>
 
-/**********************************************************/
-/****************  Binding Layer Module  ******************/
-/**********************************************************/
-#define LIB_MODULES_INIT_LIST                                                                                          \
-    {                                                                                                                  \
-<#if DEVICE_NAME == "PIC32MZW">
-        (module_init_t) & qtm_cvd_init_acquisition_module, null                                                        \
-<#else>
-        (module_init_t) & qtm_ptc_init_acquisition_module, null                                                        \
-</#if>
-    }
-
-#define LIB_MODULES_PROC_LIST                                                                                          \
-    {                                                                                                                  \
-		<#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>(module_proc_t)&qtm_freq_hop,                                \
-		<#elseif ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>(module_proc_t)&qtm_freq_hop_autotune,</#if>             \
-		<#if ENABLE_BOOST?exists && ENABLE_BOOST == true && ENABLE_SURFACE == true >(module_proc_t)&touch_surface_4p_acq_to_key,</#if>				\
-		(module_proc_t)&qtm_key_sensors_process,                                                                        \
-		<#if ENABLE_BOOST?exists && ENABLE_BOOST == true && ENABLE_SURFACE == true >(module_proc_t)&touch_surface_4p_key_to_acq_update,</#if>				\
-	 	<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>(module_proc_t)&qtm_scroller_process,</#if>                               \
-		<#if ENABLE_SURFACE1T==true>(module_proc_t)&qtm_surface_cs_process,</#if>                               \
-		<#if ENABLE_SURFACE2T==true>(module_proc_t)&qtm_surface_cs2t_process,</#if>                               \
-		<#if ENABLE_GESTURE==true>(module_proc_t)&qtm_gestures_2d_process,</#if>                               \
-		null                                                                                                           \
-    }
-
-#define LIB_INIT_DATA_MODELS_LIST                                                                                      \
-    {                                                                                                                  \
-        (void *)&qtlib_acq_set1, null                                                                                  \
-    }
-
-#define LIB_DATA_MODELS_PROC_LIST                                                                                       \
-    {                                                                                                                   \
-		<#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>(void *)&qtm_freq_hop_control1,                                  \
-		<#elseif ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>(void *)&qtm_freq_hop_autotune_control1, </#if>              \
-		<#if ENABLE_BOOST?exists && ENABLE_BOOST == true && ENABLE_SURFACE == true >(void *)&qtlib_key_set1,</#if>				\
-		(void *)&qtlib_key_set1,                                                                                           \
-		<#if ENABLE_BOOST?exists && ENABLE_BOOST == true && ENABLE_SURFACE == true >(void *)&qtlib_key_set1,</#if>				\
-		<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>(void *)&qtm_scroller_control1,</#if>                                         \
-		<#if ENABLE_SURFACE1T==true>(void *)&qtm_surface_cs_control1,</#if>                                      \
-		<#if ENABLE_SURFACE2T==true>(void *)&qtm_surface_cs_control1,</#if>                               \
-		<#if ENABLE_GESTURE==true> (void *)&qtm_gestures_2d_control1,</#if>                               \
-		null                                                                                                               \
-    }
-
-#define LIB_MODULES_ACQ_ENGINES_LIST                                                                                   \
-    {                                                                                                                  \
-<#if DEVICE_NAME == "PIC32MZW">
-        (module_acq_t) & qtm_cvd_start_measurement_seq, null                                                           \
-<#else>
-        (module_acq_t) & qtm_ptc_start_measurement_seq, null                                                           \
-</#if>
-    }
-
-#define LIB_MODULES_ACQ_ENGINES_LIST_DM                                                                                \
-    {                                                                                                                  \
-        (void *)&qtlib_acq_set1, null                                                                                  \
-    }
-
-/* QTM run time options */
-module_init_t library_modules_init[]            = LIB_MODULES_INIT_LIST;
-module_proc_t library_modules_proc[]            = LIB_MODULES_PROC_LIST;
-module_arg_t  library_module_init_data_models[] = LIB_INIT_DATA_MODELS_LIST;
-module_acq_t  library_modules_acq_engines[]     = LIB_MODULES_ACQ_ENGINES_LIST;
-
-module_arg_t library_module_acq_engine_data_model[] = LIB_MODULES_ACQ_ENGINES_LIST_DM;
-module_arg_t library_module_proc_data_model[]       = LIB_DATA_MODELS_PROC_LIST;
-
 /*----------------------------------------------------------------------------
  *   function definitions
  *----------------------------------------------------------------------------*/
@@ -588,48 +508,6 @@ touch_ret_t touch_surface_4p_key_to_acq_update(void * ptr)
 </#if>
 
 /*============================================================================
-static void build_qtm_config(qtm_control_t *qtm)
-------------------------------------------------------------------------------
-Purpose: Initialization of binding layer module
-Input  : Pointer of binding layer container data structure
-Output : none
-Notes  :
-============================================================================*/
-static void build_qtm_config(qtm_control_t *qtm)
-{
-    /* Initialise the Flags by clearing them */
-    qtm->binding_layer_flags = 0x00u;
-
-    /*!< List of function pointers to acquisition sets */
-    qtm->library_modules_init = library_modules_init;
-
-    /*!< List of function pointers to post processing modules  */
-    qtm->library_modules_proc = library_modules_proc;
-
-    /*!< List of Acquisition Engines (Acq Modules one per AcqSet */
-    qtm->library_modules_acq = library_modules_acq_engines;
-
-    /*!< Data Model for Acquisition modules  */
-    qtm->library_module_init_data_model = library_module_init_data_models;
-
-    /*!< Data Model for post processing modules  */
-    qtm->library_module_proc_data_model = library_module_proc_data_model;
-
-    /*!< Data model for inline module processes  */
-    qtm->library_modules_acq_dm = library_module_acq_engine_data_model;
-
-    /*!< Post porcessing pointer */
-    qtm->qtm_acq_pp = qtm_acquisition_process;
-
-    /* Register Binding layer callbacks */
-    qtm->qtm_init_complete_callback    = init_complete_callback;
-    qtm->qtm_error_callback            = qtm_error_callback;
-    qtm->qtm_measure_complete_callback = qtm_measure_complete_callback;
-    qtm->qtm_pre_process_callback      = null;
-    qtm->qtm_post_process_callback     = qtm_post_process_complete;
-}
-
-/*============================================================================
 static touch_ret_t touch_sensors_config(void)
 ------------------------------------------------------------------------------
 Purpose: Initialization of touch key sensors
@@ -642,7 +520,8 @@ static touch_ret_t touch_sensors_config(void)
 {
     uint16_t    sensor_nodes;
     touch_ret_t touch_ret = TOUCH_SUCCESS;
-
+    /* Init acquisition module */
+    qtm_ptc_init_acquisition_module(&qtlib_acq_set1);
     /* Init pointers to DMA sequence memory */
 <#if DEVICE_NAME == "PIC32MZW">
     qtm_cvd_qtlib_assign_signal_memory(&touch_acq_signals_raw[0]);
@@ -699,24 +578,9 @@ static touch_ret_t touch_sensors_config(void)
 }
 
 /*============================================================================
-static void init_complete_callback(void)
-------------------------------------------------------------------------------
-Purpose: Callback function from binding layer called after the completion of
-         acquisition module initialization.
-Input  : none
-Output : none
-Notes  :
-============================================================================*/
-static void init_complete_callback(void)
-{
-    /* Configure touch sensors with Application specific settings */
-    touch_sensors_config();
-}
-
-/*============================================================================
 static void qtm_measure_complete_callback( void )
 ------------------------------------------------------------------------------
-Purpose: Callback function from binding layer called after the completion of
+Purpose: Callback function called after the completion of
          measurement cycle. This function sets the post processing request
          flag to trigger the post processing.
 Input  : none
@@ -725,68 +589,21 @@ Notes  :
 ============================================================================*/
 static void qtm_measure_complete_callback(void)
 {
-    qtm_control.binding_layer_flags |= (1 << node_pp_request);
+    touch_postprocess_request = 1u;
 <#if DEVICE_NAME=="PIC32MZW">
 	all_measure_complete = 1;
 </#if>
 }
 
-/*============================================================================
-static void qtm_post_process_complete(void)
-------------------------------------------------------------------------------
-Purpose: Callback function from binding layer called after the completion of
-         post processing. This function sets the reburst flag based on the
-         key sensor group status, calls the datastreamer output function to
-         display the module data.
-Input  : none
-Output : none
-Notes  :
-============================================================================*/
-static void qtm_post_process_complete(void)
-{
-    if ((0u != (qtlib_key_set1.qtm_touch_key_group_data->qtm_keys_status & 0x80u))) {
-        p_qtm_control->binding_layer_flags |= (1u << reburst_request);
-    } else {
-        measurement_done_touch = 1;
-    }
-<#if ENABLE_DATA_STREAMER = true>
-#if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
-    datastreamer_output();
-#endif
-</#if>
-
-<#if ENABLE_KRONOCOMM = true>
-
-#if KRONOCOMM_ENABLE == 1u
-	Krono_UpdateBuffer();
-#endif
-</#if>
-}
 
 /*============================================================================
 static void qtm_error_callback(uint8_t error)
 ------------------------------------------------------------------------------
-Purpose: Callback function from binding layer called after the completion of
+Purpose: Callback function called after the completion of
          post processing. This function is called only when there is error.
 Input  : error code
 Output : decoded module error code
 Notes  :
-Error Handling supported by Binding layer module:
-    Acquisition Module Error codes: 0x8<error code>
-    0x81 - Qtm init
-    0x82 - start acq
-    0x83 - cal sensors
-    0x84 - cal hardware
-
-    Post processing Modules error codes: 0x4<process_id>
-    0x40, 0x41, 0x42, ...
-    process_id is the sequence of process IDs listed in #define LIB_MODULES_PROC_LIST macro.
-    Process IDs start from zero and maximum is 15
-
-    Examples:
-    0x40 -> error in post processing module 1
-    0x42 -> error in post processing module 3
-
 Derived Module_error_codes:
     Acquisition module error =1
     post processing module1 error = 2
@@ -796,24 +613,19 @@ Derived Module_error_codes:
 ============================================================================*/
 static void qtm_error_callback(uint8_t error)
 {
-    module_error_code = 0;
-    if (error & 0x80) {
-        module_error_code = 1;
-    } else if (error & 0x40) {
-        module_error_code = (error & 0x0F) + 2;
-    }
+	module_error_code = error + 1u;
 
 <#if ENABLE_DATA_STREAMER = true>
-#if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
-    datastreamer_output();
-#endif
+	#if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
+	    datastreamer_output();
+	#endif
 </#if>
 }
 
 /*============================================================================
 void touch_init(void)
 ------------------------------------------------------------------------------
-Purpose: Initialization of touch library. PTC, timer, binding layer and
+Purpose: Initialization of touch library. PTC, timer, and
          datastreamer modules are initialized in this function.
 Input  : none
 Output : none
@@ -838,12 +650,8 @@ void touch_init(void)
 	    touch_timer_config();
  </#if>
 
-    build_qtm_config(&qtm_control);
-
-    qtm_binding_layer_init(&qtm_control);
-
-    /* get a pointer to the binding layer control */
-    p_qtm_control = qmt_get_binding_layer_ptr();
+    /* Configure touch sensors with Application specific settings */
+    touch_sensors_config();
 
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
 <#if DS_DEDICATED_ENABLE == true || DS_PLUS_ENABLE == true>
@@ -870,7 +678,6 @@ Input  : none
 Output : none
 Notes  :
 ============================================================================*/
-volatile uint8_t time_to_measure_touch_var =0;
 void touch_process(void)
 {
     touch_ret_t touch_ret;
@@ -888,7 +695,7 @@ void touch_process(void)
     if (time_to_measure_touch_var)
 	{
         /* Do the acquisition */
-        touch_ret = qtm_lib_start_acquisition(0);
+         touch_ret = qtm_ptc_start_measurement_seq(&qtlib_acq_set1, qtm_measure_complete_callback);
 
         /* if the Acquistion request was successful then clear the request flag */
         if (TOUCH_SUCCESS == touch_ret) {
@@ -901,28 +708,80 @@ void touch_process(void)
     }
 
     /* check the flag for node level post processing */
-    if (p_qtm_control->binding_layer_flags & (1u << node_pp_request)) {
+    if (touch_postprocess_request == 1u){
+        /* Reset the flags for node_level_post_processing */
+        touch_postprocess_request = 0u;
         /* Run Acquisition module level post pocessing*/
-        touch_ret = qtm_lib_acq_process();
+        touch_ret = qtm_acquisition_process();
 
         /* Check the return value */
         if (TOUCH_SUCCESS == touch_ret) {
             /* Returned with success: Start module level post processing */
-            qtm_lib_post_process();
+<#assign i = 0>
+            <#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>
+            touch_ret = qtm_freq_hop(&qtm_freq_hop_control1);
+            if (TOUCH_SUCCESS != touch_ret) {
+                qtm_error_callback(${i});
+<#assign i =i+1>
+		}</#if>
+            <#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>
+            touch_ret = qtm_freq_hop_autotune(&qtm_freq_hop_autotune_control1);
+            if (TOUCH_SUCCESS != touch_ret) {
+                qtm_error_callback(${i});
+<#assign i =i+1>
+		}</#if>
+            touch_ret = qtm_key_sensors_process(&qtlib_key_set1);
+            if (TOUCH_SUCCESS != touch_ret) {
+                qtm_error_callback(${i});
+            <#assign i =i+1>
+            <#if ENABLE_BOOST?exists && ENABLE_BOOST==true && ENABLE_SURFACE == true>
+            touch_ret = touch_surface_4p_acq_to_key(&qtlib_key_set1);
+            if (TOUCH_SUCCESS != touch_ret) {
+                qtm_error_callback(${i});
+<#assign i =i+1>
+		}</#if>
+            <#if ENABLE_BOOST?exists && ENABLE_BOOST==true && ENABLE_SURFACE == true>
+            touch_ret = touch_surface_4p_key_to_acq_update(&qtlib_key_set1);
+            if (TOUCH_SUCCESS != touch_ret) {
+                qtm_error_callback(${i});
+<#assign i =i+1>
+		}</#if>
+            <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
+            touch_ret = qtm_scroller_process(&qtm_scroller_control1);
+            if (TOUCH_SUCCESS != touch_ret) {
+                qtm_error_callback(${i});
+<#assign i =i+1>
+		}</#if>
+			<#if ENABLE_SURFACE1T==true >
+            touch_ret = qtm_surface_cs_process(&qtm_surface_cs_control1);
+            if (TOUCH_SUCCESS != touch_ret) {
+                qtm_error_callback(${i});
+<#assign i =i+1>
+		}</#if>
+			<#if ENABLE_SURFACE2T==true >
+            touch_ret = qtm_surface_cs2t_process(&qtm_surface_cs_control1);
+            if (TOUCH_SUCCESS != touch_ret) {
+                qtm_error_callback(${i});
+<#assign i =i+1>
+		}</#if>
+            <#if ENABLE_GESTURE==true >
+            touch_ret = qtm_gestures_2d_process(&qtm_gestures_2d_control1);
+            if (TOUCH_SUCCESS != touch_ret) {
+                qtm_error_callback(${i});
+<#assign i =i+1>
+		}</#if>
+<#assign i =0>
+         }
         } else {
-            /* Acq module Eror Detected: Issue an Acq module common error code 0x80 */
-            qtm_error_callback(0x80);
+           /* Acq module Eror Detected: Issue an Acq module common error code 0x80 */
+            qtm_error_callback(0);
         }
+	if((0u != (qtlib_key_set1.qtm_touch_key_group_data->qtm_keys_status & 0x80u)))
+	{
+		time_to_measure_touch_var = 1u;
+	}
 
-        /* Reset the flags for node_level_post_processing */
-        p_qtm_control->binding_layer_flags &= (uint8_t) ~(1u << node_pp_request);
-    
-
-    if (p_qtm_control->binding_layer_flags & (1u << reburst_request)) {
-		time_to_measure_touch_var = 1;
-        p_qtm_control->binding_layer_flags &= ~(1u << reburst_request);
-		}
-<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
+<#if (ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == true)||(ENABLE_SOFTWARE_LP?exists && ENABLE_SOFTWARE_LP == true)>
     #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
 	else
 	{
@@ -947,9 +806,16 @@ void touch_process(void)
 	}
     #endif
 </#if>
+<#if ENABLE_KRONOCOMM = true>
 #if KRONOCOMM_ENABLE == 1u
 	uart_process();
 #endif
+</#if>
+<#if ENABLE_DATA_STREAMER = true>
+	#if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
+	    datastreamer_output();
+	#endif
+</#if>
 }
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
 	<#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")>
@@ -1172,7 +1038,7 @@ Notes  :
 ============================================================================*/
 static void touch_cancel_autoscan(void)
 {
-		 <#if ((DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")) && ((ENABLE_EVENT_LP == 1))> 
+		 <#if ((DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")) && ((ENABLE_EVENT_LP == true))> 
         /* disable event system measurement */
         touch_disable_lowpower_measurement();
 		<#else>				

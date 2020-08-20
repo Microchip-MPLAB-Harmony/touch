@@ -73,7 +73,7 @@ touchBindLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_BIND_LIB", Non
 touchBindLibraryFile.setSourcePath("/src/libraries/qtm_binding_layer_cm23_0x0005.X.a")
 touchBindLibraryFile.setOutputName("qtm_binding_layer_cm23_0x0005.X.a")
 touchBindLibraryFile.setDestPath("/touch/lib/")
-touchBindLibraryFile.setEnabled(True)
+touchBindLibraryFile.setEnabled(False)
 # Header File
 touchAcqHeaderFile = qtouchComponent.createFileSymbol("TOUCH_ACQ_HEADER", None)
 touchAcqHeaderFile.setSourcePath("/src/qtm_acq_saml11_0x0027_api.h")
@@ -118,6 +118,7 @@ touchBindHeaderFile.setDestPath("/touch/")
 touchBindHeaderFile.setProjectPath("config/" + configName + "/touch/")
 touchBindHeaderFile.setType("HEADER")
 touchBindHeaderFile.setMarkup(False)
+touchHeaderFile.setEnabled(False)
 
 # Header File
 touchCommonHeaderFile = qtouchComponent.createFileSymbol("TOUCH_COMMON_HEADER", None)

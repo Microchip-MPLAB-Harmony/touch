@@ -51,7 +51,6 @@ extern "C" {
  *----------------------------------------------------------------------------*/
 
 #include "qtm_common_components_api.h"
-#include "qtm_binding_layer_0x0005_api.h"
 <#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
 #include "qtm_acq_samd1x_0x0009_api.h"
 <#else>
