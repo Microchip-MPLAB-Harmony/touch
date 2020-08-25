@@ -86,6 +86,16 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /* Combine Resistor / Prescaler */
 #define NODE_RSEL_PRSC(r, p) (uint8_t)(((r) << 4u) | (p))
 
+/* Auto scan trigger Periods */
+#define NODE_SCAN_8MS		0u
+#define NODE_SCAN_16MS		1u
+#define NODE_SCAN_32MS		2u
+#define NODE_SCAN_64MS		3u
+#define NODE_SCAN_128MS		4u
+#define NODE_SCAN_256MS		5u
+#define NODE_SCAN_512MS		6u
+#define NODE_SCAN_1024MS	7u
+
 typedef enum tag_filter_level_t {
 	FILTER_LEVEL_1,
 	FILTER_LEVEL_2,

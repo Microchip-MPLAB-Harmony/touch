@@ -781,10 +781,11 @@ void touch_process(void)
 		time_to_measure_touch_var = 1u;
 	}
 
-<#if (ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == true)||(ENABLE_SOFTWARE_LP?exists && ENABLE_SOFTWARE_LP == true)>
-    #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
 	else
-	{
+	{   
+        measurement_done_touch = 1u;
+<#if (ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == true)||(ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false)>
+    #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
         if (0u != (qtlib_key_grp_data_set1.qtm_keys_status & QTM_KEY_DETECT)) 
         {
             /* Something in detect */
@@ -792,9 +793,12 @@ void touch_process(void)
         }
         /* process lowpower touch measurement */
         touch_process_lowpower();
-	}
     #endif
+	}
 </#if>
+#if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
+		datastreamer_output();
+#endif
     }
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
     #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
@@ -876,7 +880,7 @@ Notes  :
 static void touch_enable_lowpower_measurement(void)
 {
     <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")>
-	<#if ENABLE_SOFTWARE_LP == 1>
+	<#if ENABLE_EVENT_LP == false>
 		lp_mesurement = 1;
 		time_drift_wakeup_counter = 0;
 	<@softwarelp.lowpwer_enableevsys_saml_no_evs/>
@@ -1024,7 +1028,8 @@ Notes  :
 void touch_measure_wcomp_match(void)
 {
     if(measurement_period_store != DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
-        touch_cancel_autoscan();	
+        touch_cancel_autoscan();
+        time_to_measure_touch_var = 1u;		
         time_since_touch = 0u;
     }
 }

@@ -141,9 +141,10 @@ typedef enum tag_touch_lib_state_t {
 #define NODE_STATUS_MASK 0x1Cu
 #define NODE_STATUS_POS 0x02u
 
-#define NODE_ENABLED 0x01u
-#define NODE_CAL_REQ 0x02u
-#define TAU_CAL_DONE 0x40u
+#define NODE_ENABLED    0x01u
+#define NODE_CAL_REQ    0x02u
+#define CAL_STATE_SET   0x20u
+#define TAU_CAL_DONE    0x40u
 #define NODE_CAL_ERROR 0x80u
 
 /* Node state - 3 bits */
@@ -180,7 +181,7 @@ typedef struct {
 #define QTM_KEY_STATE_ANTI_TCH 0x07u
 #define QTM_KEY_STATE_SUSPEND 0x08u
 #define QTM_KEY_STATE_CAL_ERR 0x09u
-
+#define KEY_TOUCHED_MASK 0x80u
 /* ---------------------------------------------------------------------------------------- */
 /* Key sensor run-time data */
 /* ---------------------------------------------------------------------------------------- */

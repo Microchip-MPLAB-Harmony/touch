@@ -124,11 +124,9 @@ typedef enum tag_gain_t
 }
 gain_t;
 /* PTC clock prescale setting.
-* Example: if Generic clock input to PTC = 4MHz, then:
-* PRSC_DIV_SEL_1 sets PTC Clock to 4MHz
+* For Example: if Generic clock input to PTC = 4MHz, then:
 * PRSC_DIV_SEL_2 sets PTC Clock to 2MHz
 * PRSC_DIV_SEL_4 sets PTC Clock to 1MHz
-* PRSC_DIV_SEL_8 sets PTC Clock to 500KHz
 *
 */
 typedef enum tag_prsc_div_sel_t 
