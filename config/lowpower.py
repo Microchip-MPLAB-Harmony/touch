@@ -1,3 +1,16 @@
+def enablePM(symbol,event):
+	pmComponentID = ["pm"]
+	supcComponentID = ["supc"]
+	if(lowPowerKey.getValue()!= ""):
+		Database.activateComponents(pmComponentID)
+		if (getDeviceName.getDefaultValue() in ["SAML10","SAML11"]):
+			Database.activateComponents(supcComponentID)
+	else:
+		if(getDeviceName.getDefaultValue() in ["SAML10","SAML11"]):
+			Database.deactivateComponents(supcComponentID)
+		if(getDeviceName.getDefaultValue() not in ["SAML10","SAML11"]):
+			Database.deactivateComponents(pmComponentID)
+
 ################################################################################
 #### Component ####
 ################################################################################
@@ -10,10 +23,12 @@ enableEventLowPower.setLabel("Event based Low Power")
 enableEventLowPower.setDefaultValue(False)
 
 #Low-power Node Selection
+global lowPowerKey
 lowPowerKey = qtouchComponent.createStringSymbol("LOW_POWER_KEYS", LowPowerEvntMenu)
 lowPowerKey.setLabel("Low-power Keys Selection")
 lowPowerKey.setDefaultValue("")
 lowPowerKey.setDescription("Series of low-power key numbers separated by ,")
+lowPowerKey.setDependencies(enablePM,["LOW_POWER_KEYS"])
 
 #Low-power Detect Threshold
 lowPowerDetThreshold = qtouchComponent.createIntegerSymbol("LOW_POWER_DET_THRESHOLD", LowPowerEvntMenu)

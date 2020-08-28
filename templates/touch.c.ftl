@@ -84,8 +84,6 @@ static void touch_process_lowpower();
 <#if (ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == true)>
 /* low power touch detection callback */
 static void touch_measure_wcomp_match(void);
-/* Cancel low-power measurement */
-static void touch_cancel_autoscan(void);
 </#if>
 <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")>
 /* configure voltage regulator */
@@ -112,7 +110,7 @@ uint8_t lp_mesurement;
 
 /* Flag to indicate time for touch measurement */
 volatile uint8_t time_to_measure_touch_var = 0;
-/* postporcess request flag */
+/* post-process request flag */
 volatile uint8_t touch_postprocess_request = 0;
 
 /* Measurement Done Touch Flag  */
@@ -633,6 +631,7 @@ Notes  :
 ============================================================================*/
 void touch_init(void)
 {
+<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>
  <#if ((DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")) && ((ENABLE_EVENT_LP == true)||(ENABLE_EVENT_LP == false))> 
    touch_timer_config();
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
@@ -646,9 +645,10 @@ void touch_init(void)
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
 	touch_disable_lowpower_measurement();
 #endif
- <#else>
-	    touch_timer_config();
  </#if>
+<#else>
+    touch_timer_config();
+</#if>
 
     /* Configure touch sensors with Application specific settings */
     touch_sensors_config();
@@ -706,84 +706,67 @@ void touch_process(void)
 </#if>
         }
     }
-
     /* check the flag for node level post processing */
     if (touch_postprocess_request == 1u){
         /* Reset the flags for node_level_post_processing */
         touch_postprocess_request = 0u;
-        /* Run Acquisition module level post pocessing*/
+        /* Run Acquisition module level post processing*/
         touch_ret = qtm_acquisition_process();
-
         /* Check the return value */
         if (TOUCH_SUCCESS == touch_ret) {
             /* Returned with success: Start module level post processing */
-<#assign i = 0>
-            <#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>
+<#assign i = 0><#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>
             touch_ret = qtm_freq_hop(&qtm_freq_hop_control1);
             if (TOUCH_SUCCESS != touch_ret) {
                 qtm_error_callback(${i});
 <#assign i =i+1>
-		}</#if>
-            <#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>
+        }</#if><#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>
             touch_ret = qtm_freq_hop_autotune(&qtm_freq_hop_autotune_control1);
             if (TOUCH_SUCCESS != touch_ret) {
                 qtm_error_callback(${i});
 <#assign i =i+1>
-		}</#if>
+        }</#if>
             touch_ret = qtm_key_sensors_process(&qtlib_key_set1);
             if (TOUCH_SUCCESS != touch_ret) {
                 qtm_error_callback(${i});
-            <#assign i =i+1>
-            <#if ENABLE_BOOST?exists && ENABLE_BOOST==true && ENABLE_SURFACE == true>
+            <#assign i =i+1><#if ENABLE_BOOST?exists && ENABLE_BOOST==true && ENABLE_SURFACE == true>
             touch_ret = touch_surface_4p_acq_to_key(&qtlib_key_set1);
             if (TOUCH_SUCCESS != touch_ret) {
                 qtm_error_callback(${i});
-<#assign i =i+1>
-		}</#if>
-            <#if ENABLE_BOOST?exists && ENABLE_BOOST==true && ENABLE_SURFACE == true>
+<#assign i =i+1>}</#if><#if ENABLE_BOOST?exists && ENABLE_BOOST==true && ENABLE_SURFACE == true>
             touch_ret = touch_surface_4p_key_to_acq_update(&qtlib_key_set1);
             if (TOUCH_SUCCESS != touch_ret) {
                 qtm_error_callback(${i});
-<#assign i =i+1>
-		}</#if>
-            <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
+<#assign i =i+1>}</#if><#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
             touch_ret = qtm_scroller_process(&qtm_scroller_control1);
             if (TOUCH_SUCCESS != touch_ret) {
                 qtm_error_callback(${i});
-<#assign i =i+1>
-		}</#if>
-			<#if ENABLE_SURFACE1T==true >
+<#assign i =i+1>}</#if><#if ENABLE_SURFACE1T==true >
             touch_ret = qtm_surface_cs_process(&qtm_surface_cs_control1);
             if (TOUCH_SUCCESS != touch_ret) {
                 qtm_error_callback(${i});
-<#assign i =i+1>
-		}</#if>
-			<#if ENABLE_SURFACE2T==true >
+<#assign i =i+1>}</#if><#if ENABLE_SURFACE2T==true >
             touch_ret = qtm_surface_cs2t_process(&qtm_surface_cs_control1);
             if (TOUCH_SUCCESS != touch_ret) {
                 qtm_error_callback(${i});
-<#assign i =i+1>
-		}</#if>
-            <#if ENABLE_GESTURE==true >
+<#assign i =i+1>}</#if><#if ENABLE_GESTURE==true >
             touch_ret = qtm_gestures_2d_process(&qtm_gestures_2d_control1);
             if (TOUCH_SUCCESS != touch_ret) {
                 qtm_error_callback(${i});
-<#assign i =i+1>
-		}</#if>
-<#assign i =0>
-         }
-        } else {
-           /* Acq module Eror Detected: Issue an Acq module common error code 0x80 */
+<#assign i =i+1>        }</#if><#assign i =0>        }
+         }else {
+           /* Acq module Error Detected: Issue an Acq module common error code 0x80 */
             qtm_error_callback(0);
         }
-	if((0u != (qtlib_key_set1.qtm_touch_key_group_data->qtm_keys_status & 0x80u)))
-	{
-		time_to_measure_touch_var = 1u;
-	}
-
-	else
-	{   
-        measurement_done_touch = 1u;
+        if((0u != (qtlib_key_set1.qtm_touch_key_group_data->qtm_keys_status & 0x80u)))
+        {
+        time_to_measure_touch_var = 1u;
+        }
+        else
+        {   
+            measurement_done_touch = 1u;
+        }
+<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>
 <#if (ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == true)||(ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false)>
     #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
         if (0u != (qtlib_key_grp_data_set1.qtm_keys_status & QTM_KEY_DETECT)) 
@@ -794,43 +777,40 @@ void touch_process(void)
         /* process lowpower touch measurement */
         touch_process_lowpower();
     #endif
-	}
 </#if>
-#if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
-		datastreamer_output();
-#endif
-    }
+</#if>
+
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
     #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
-	if(time_to_measure_touch_var != 1u)
-	{
-	  <#if ((DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21")|| (DEVICE_NAME == "SAMD20")||(DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")||(DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11"))>
-		PM_StandbyModeEnter();
+    if(time_to_measure_touch_var != 1u)
+    {
+    <#if ((DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21")|| (DEVICE_NAME == "SAMD20")||(DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")||(DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11"))>
+        PM_StandbyModeEnter();
       </#if>
-	}
+    }
     #endif
 </#if>
 <#if ENABLE_KRONOCOMM = true>
 #if KRONOCOMM_ENABLE == 1u
-	uart_process();
+    uart_process();
 #endif
 </#if>
 <#if ENABLE_DATA_STREAMER = true>
-	#if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
-	    datastreamer_output();
-	#endif
+    #if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
+        datastreamer_output();
+    #endif
 </#if>
 }
+}
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
-	<#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")>
+    <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")>
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
 static void touch_enable_vreg_in_standby(void)
 {
 }
 #endif
-	</#if>
+    </#if>
 </#if>
-
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
 /*============================================================================
@@ -1028,26 +1008,11 @@ Notes  :
 void touch_measure_wcomp_match(void)
 {
     if(measurement_period_store != DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
-        touch_cancel_autoscan();
+        /* disable event system measurement */
+        touch_disable_lowpower_measurement();
         time_to_measure_touch_var = 1u;		
         time_since_touch = 0u;
     }
-}
-/*============================================================================
-static void touch_cancel_autoscan(void)
-------------------------------------------------------------------------------
-Purpose: cancelling of autoscan functionality
-Input  : none
-Output : none
-Notes  :
-============================================================================*/
-static void touch_cancel_autoscan(void)
-{
-		 <#if ((DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")) && ((ENABLE_EVENT_LP == true))> 
-        /* disable event system measurement */
-        touch_disable_lowpower_measurement();
-		<#else>				
-	</#if>				
 }
 </#if>
 #endif
@@ -1097,9 +1062,11 @@ void touch_timer_handler(void)
 	} else {
 		time_since_touch = 65535;
 	}
+    qtm_update_qtlib_timer(measurement_period_store);
+#else
+    qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 #endif
 </#if>
-    qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 </#if>
 }
 <#if DEVICE_NAME == "PIC32MZW">
