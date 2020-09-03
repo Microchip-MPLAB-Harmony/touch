@@ -22,7 +22,7 @@ lump_not_supported_device = ["PIC32MZW"]
 device_with_hardware_driven_shield_support = ["SAML10","SAML11","PIC32MZW","PIC32CMLE00","PIC32CMLS00"]
 boost_mode_supported_devices = ["SAML10","SAML1xE","SAML11"]
 surface_rearrangement_macro = ["SAML10","SAML1xE","SAML11"]
-low_power = ["SAMD20","SAMD21","SAMDA1","SAMHA1","SAML11","SAML10","SAMC21","SAMC20"]
+low_power = ["SAMD20","SAMD21","SAMDA1","SAMHA1","SAML11","SAML10","SAMC21","SAMC20","PIC32CMLE00","PIC32CMLS00"]
 
 def processBoostMode(symbol,event):
 	global touchNumChannel

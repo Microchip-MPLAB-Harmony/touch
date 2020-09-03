@@ -559,7 +559,7 @@ static touch_ret_t touch_sensors_config(void)
 
 <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>	
 	/* scroller init */
-	qtm_init_scroller_module(&qtm_scroller_control1);
+	touch_ret |= qtm_init_scroller_module(&qtm_scroller_control1);
 </#if>
 
 <#if ENABLE_SURFACE1T==true>	
@@ -715,7 +715,7 @@ void touch_process(void)
         /* Check the return value */
         if (TOUCH_SUCCESS == touch_ret) {
             /* Returned with success: Start module level post processing */
-<#assign i = 0><#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>
+<#assign i = 1><#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>
             touch_ret = qtm_freq_hop(&qtm_freq_hop_control1);
             if (TOUCH_SUCCESS != touch_ret) {
                 qtm_error_callback(${i});
@@ -729,7 +729,7 @@ void touch_process(void)
             touch_ret = qtm_key_sensors_process(&qtlib_key_set1);
             if (TOUCH_SUCCESS != touch_ret) {
                 qtm_error_callback(${i});
-            <#assign i =i+1><#if ENABLE_BOOST?exists && ENABLE_BOOST==true && ENABLE_SURFACE == true>
+            <#assign i =i+1>}<#if ENABLE_BOOST?exists && ENABLE_BOOST==true && ENABLE_SURFACE == true>
             touch_ret = touch_surface_4p_acq_to_key(&qtlib_key_set1);
             if (TOUCH_SUCCESS != touch_ret) {
                 qtm_error_callback(${i});
@@ -753,7 +753,7 @@ void touch_process(void)
             touch_ret = qtm_gestures_2d_process(&qtm_gestures_2d_control1);
             if (TOUCH_SUCCESS != touch_ret) {
                 qtm_error_callback(${i});
-<#assign i =i+1>        }</#if><#assign i =0>        }
+<#assign i =i+1>        }</#if><#assign i =0>        
          }else {
            /* Acq module Error Detected: Issue an Acq module common error code 0x80 */
             qtm_error_callback(0);
@@ -792,21 +792,34 @@ void touch_process(void)
 </#if>
 <#if ENABLE_KRONOCOMM = true>
 #if KRONOCOMM_ENABLE == 1u
-    uart_process();
+		Krono_UpdateBuffer();
 #endif
 </#if>
+
 <#if ENABLE_DATA_STREAMER = true>
     #if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
         datastreamer_output();
     #endif
 </#if>
 }
+<#if ENABLE_KRONOCOMM = true>
+#if KRONOCOMM_ENABLE == 1u
+    uart_process();
+#endif
+</#if>
 }
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
     <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")>
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
 static void touch_enable_vreg_in_standby(void)
 {
+    SUPC_SelectVoltageRegulator(SUPC_VREGSEL_BUCK);
+
+    PM_REGS->PM_STDBYCFG = PM_STDBYCFG_BBIASHS_Msk| PM_STDBYCFG_VREGSMOD(0)| PM_STDBYCFG_DPGPDSW_Msk;
+
+    PM_REGS->PM_PLCFG = PM_PLCFG_PLDIS_Msk;
+
+    SUPC_REGS->SUPC_VREG |= SUPC_VREG_LPEFF_Msk | SUPC_VREG_STDBYPL0_Msk | SUPC_VREG_VREFSEL_Msk ;
 }
 #endif
     </#if>
@@ -1048,6 +1061,9 @@ void touch_timer_handler(void)
 	} else {
 		time_since_touch = 65535;
 	}
+    qtm_update_qtlib_timer(measurement_period_store);
+#else
+    qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 #endif
 </#if>
 		qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
@@ -1066,6 +1082,8 @@ void touch_timer_handler(void)
 #else
     qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 #endif
+<#else>
+    qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 </#if>
 </#if>
 }
