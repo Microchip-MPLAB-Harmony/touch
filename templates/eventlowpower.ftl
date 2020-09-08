@@ -121,6 +121,19 @@
 #define QTM_AUTOSCAN_TRIGGER_PERIOD_EVENT		(1u << QTM_AUTOSCAN_TRIGGER_PERIOD)
 </#macro>
 
+<#macro lowpower_PIC32CM>
+/* Sleep Modes */
+#define PM_SLEEP_IDLE			2u
+#define PM_SLEEP_STANDBY		4u
+#define PM_SLEEP_OFF			6u
+
+/* Event system parameters */
+#define QTM_AUTOSCAN_TRIGGER_GENERATOR			(QTM_AUTOSCAN_TRIGGER_PERIOD+4u)
+#define QTM_AUTOSCAN_STCONV_USER				46u
+#define QTM_RTC_TO_PTC_EVSYS_CHANNEL			0u
+#define QTM_AUTOSCAN_TRIGGER_PERIOD_EVENT		(1u << QTM_AUTOSCAN_TRIGGER_PERIOD)
+</#macro>
+
 <#macro lowpower_params_saml>
 /**********************************************************/
 /******************* Low-power parameters *****************/

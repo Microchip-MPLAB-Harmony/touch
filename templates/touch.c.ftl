@@ -86,8 +86,8 @@ static void touch_process_lowpower();
 static void touch_measure_wcomp_match(void);
 </#if>
 <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")>
-/* configure voltage regulator */
-static void touch_enable_vreg_in_standby(void);
+/* configure pm, supc */
+static void touch_configure_pm_supc(void);
 </#if>
 static void touch_enable_lowpower_measurement(void);
 static void touch_disable_lowpower_measurement(void);
@@ -631,27 +631,23 @@ Notes  :
 ============================================================================*/
 void touch_init(void)
 {
-<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>
- <#if ((DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")) && ((ENABLE_EVENT_LP == true)||(ENABLE_EVENT_LP == false))> 
-   touch_timer_config();
+<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
+	touch_timer_config();
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
-	<#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")>
-    /* configure voltage regulator to run in standby sleep mode */
-    touch_enable_vreg_in_standby();
-	</#if>
+<#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")>
+	/* configure voltage regulator to run in standby sleep mode */
+	touch_configure_pm_supc();
 	touch_disable_lowpower_measurement();
-#endif
- <#elseif ((DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21")||(DEVICE_NAME == "SAMD20")||(DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")) && ((ENABLE_EVENT_LP == true)||(ENABLE_EVENT_LP == false))>
-#if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
-	touch_disable_lowpower_measurement();
-#endif
- </#if>
 <#else>
-    touch_timer_config();
+	touch_disable_lowpower_measurement();
+</#if>
+#endif
+<#else>
+	touch_timer_config();
 </#if>
 
-    /* Configure touch sensors with Application specific settings */
-    touch_sensors_config();
+	/* Configure touch sensors with Application specific settings */
+	touch_sensors_config();
 
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
 <#if DS_DEDICATED_ENABLE == true || DS_PLUS_ENABLE == true>
@@ -663,7 +659,7 @@ void touch_init(void)
 	
 <#if ENABLE_DATA_STREAMER = true>	
 #if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
-    datastreamer_init();
+	datastreamer_init();
 #endif
 </#if>
 }
@@ -784,9 +780,7 @@ void touch_process(void)
     #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
     if(time_to_measure_touch_var != 1u)
     {
-    <#if ((DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21")|| (DEVICE_NAME == "SAMD20")||(DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")||(DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11"))>
         PM_StandbyModeEnter();
-      </#if>
     }
     #endif
 </#if>
@@ -809,17 +803,18 @@ void touch_process(void)
 </#if>
 }
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
-    <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")>
+    <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")>
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
-static void touch_enable_vreg_in_standby(void)
+static void touch_configure_pm_supc(void)
 {
-    SUPC_SelectVoltageRegulator(SUPC_VREGSEL_BUCK);
+    /* Configure PM */
+    PM_REGS->PM_STDBYCFG = PM_STDBYCFG_BBIASHS_Msk| PM_STDBYCFG_VREGSMOD(0)| PM_STDBYCFG_DPGPDSW_Msk| PM_STDBYCFG_BBIASTR_Msk;
 
-    PM_REGS->PM_STDBYCFG = PM_STDBYCFG_BBIASHS_Msk| PM_STDBYCFG_VREGSMOD(0)| PM_STDBYCFG_DPGPDSW_Msk;
+    PM_ConfigurePerformanceLevel(PM_PLCFG_PLSEL_PL0);
 
-    PM_REGS->PM_PLCFG = PM_PLCFG_PLDIS_Msk;
+    /* Configure VREG. Mask the values loaded from NVM during reset.*/
+    SUPC_REGS->SUPC_VREG = SUPC_VREG_ENABLE_Msk | SUPC_VREG_SEL_BUCK | SUPC_VREG_RUNSTDBY_Msk | SUPC_VREG_VSVSTEP(0) | SUPC_VREG_VSPER(0) | SUPC_VREG_STDBYPL0_Msk;
 
-    SUPC_REGS->SUPC_VREG |= SUPC_VREG_LPEFF_Msk | SUPC_VREG_STDBYPL0_Msk | SUPC_VREG_VREFSEL_Msk ;
 }
 #endif
     </#if>
@@ -836,7 +831,7 @@ Notes  :
 ============================================================================*/
 static void touch_disable_lowpower_measurement(void)
 {
-	<#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")>
+	<#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")>
 		<#if ENABLE_EVENT_LP == false>
 		lp_mesurement = 0;
 		<@softwarelp.lowpwer_disableevsys_saml_no_evs/>
@@ -845,7 +840,7 @@ static void touch_disable_lowpower_measurement(void)
 		</#if>
 	</#if>
 	<#if (DEVICE_NAME == "SAMD20")||(DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")>
-	<#if ENABLE_EVENT_LP == false>
+		<#if ENABLE_EVENT_LP == false>
 		lp_mesurement = 0;
 		<@softwarelp.lowpwer_disableevsys_samd20_d21_no_evs/>
 		<#else>
@@ -853,7 +848,7 @@ static void touch_disable_lowpower_measurement(void)
 		</#if>
 	</#if>
 	<#if (DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21")>
-	<#if ENABLE_EVENT_LP == false>
+		<#if ENABLE_EVENT_LP == false>
 		lp_mesurement = 0;
 		<@softwarelp.lowpwer_disableevsys_samc20_c21_no_evs/>
 		<#else>
@@ -873,32 +868,32 @@ Notes  :
 static void touch_enable_lowpower_measurement(void)
 {
     <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")>
-	<#if ENABLE_EVENT_LP == false>
+		<#if ENABLE_EVENT_LP == false>
 		lp_mesurement = 1;
 		time_drift_wakeup_counter = 0;
-	<@softwarelp.lowpwer_enableevsys_saml_no_evs/>
-	<#else>
-    <@eventlp.lowpwer_enableevsys_saml/>
-    </#if>
+		<@softwarelp.lowpwer_enableevsys_saml_no_evs/>
+		<#else>
+		<@eventlp.lowpwer_enableevsys_saml/>
+		</#if>
 	</#if>
 
 	<#if (DEVICE_NAME == "SAMD20")||(DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")>
-	<#if ENABLE_EVENT_LP == false>
+		<#if ENABLE_EVENT_LP == false>
 		lp_mesurement = 1;
 		time_drift_wakeup_counter = 0;
-	<@softwarelp.lowpwer_enableevsys_samd20_d21_no_evs/>
-	<#else>
-    <@eventlp.lowpwer_enableevsys_samd20_d21/>
-    </#if>
+		<@softwarelp.lowpwer_enableevsys_samd20_d21_no_evs/>
+		<#else>
+		<@eventlp.lowpwer_enableevsys_samd20_d21/>
+		</#if>
 	</#if>
 	<#if (DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21")>
-	<#if ENABLE_EVENT_LP == false>
+		<#if ENABLE_EVENT_LP == false>
 		lp_mesurement = 1;
 		time_drift_wakeup_counter = 0;
-	<@softwarelp.lowpwer_enableevsys_samc20_c21_no_evs/>
-	<#else>
-    <@eventlp.lowpwer_enableevsys_samc20_c21/>
-    </#if>
+		<@softwarelp.lowpwer_enableevsys_samc20_c21_no_evs/>
+		<#else>
+		<@eventlp.lowpwer_enableevsys_samc20_c21/>
+		</#if>
 	</#if>
 }
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  

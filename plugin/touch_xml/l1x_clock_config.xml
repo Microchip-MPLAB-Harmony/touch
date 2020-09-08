@@ -11,29 +11,34 @@ This is for SAML1x Family
 		<clock index = "2_0" symbol="GCLK_0_DIV" value="1" component_id= "core" name="Div GCLK0 by 16" />
 		<clock index = "3_0" symbol="GCLK_INST_NUM1" value="True" component_id= "core" name="Select GCLK2" />
 		<clock index = "4_0" symbol="GCLK_1_SRC" value="1" component_id= "core" name="Select 16MHz OSC for GCLK1" />
-		<clock index = "5_0" symbol="GCLK_1_DIV" value="4" component_id= "core" name="Prescale 16MHz by 4 for PTC" />
+		<clock index = "5_0" symbol="GCLK_1_DIV" value="2" component_id= "core" name="Prescale 16MHz by 4 for PTC" />
 		<clock index = "6_0" symbol="GCLK_1_RUNSTDBY" value="True" component_id= "core" name="Run in Standby" />
 		<clock index = "7_0" symbol="NVM_RWS" value="2" component_id= "nvmctrl" name="Configure wait state as 2" />
 		<clock index = "8_0" symbol="CONFIG_CLOCK_OSC16M_ENABLE" value="True" component_id= "core" name="Enable OSC16M" />
-		<clock index = "9_0" symbol="CONFIG_CLOCK_OSC16M_FREQSEL" value="3" component_id= "core" name="Enable 16MHz output" />
-		<clock index = "10_0" symbol="CONFIG_CLOCK_DFLL_ENABLE" value="False" component_id= "core" name="Disable DFLL" />
-		<clock index = "11_0" symbol="CONFIG_CLOCK_DPLL_ENABLE" value="False" component_id= "core" name="Disable DPLL" />
+		<clock index = "9_0" symbol="CONFIG_CLOCK_OSC16M_FREQSEL" value="3" component_id= "core" name="Enable 8MHz output" />
+		<clock index = "10_0" symbol="CONFIG_CLOCK_OSC16M_RUNSTDBY" value="True" component_id= "core" name="OSC16 Run in standby" />
+		<clock index = "11_0" symbol="CONFIG_CLOCK_OSC16M_ONDEMAND" value="1" component_id= "core" name="OSC16 ondemand" />
+		<clock index = "12_0" symbol="CONFIG_CLOCK_OSC16M_FREQSEL" value="1" component_id= "core" name="OSC16 - 8MHz" />
+		<clock index = "13_0" symbol="CONFIG_CLOCK_DFLL_ENABLE" value="False" component_id= "core" name="Disable DFLL" />
+		<clock index = "14_0" symbol="CONFIG_CLOCK_DPLL_ENABLE" value="False" component_id= "core" name="Disable DPLL" />
+		<clock index = "15_0" symbol="GCLK_ID_6_CHEN" value="True" component_id= "core" name="Enable evsys clock" />
+		<clock index = "16_0" symbol="GCLK_ID_6_GENSEL" value="1" component_id= "core" name="evsys - GCLK1" />
 	</all_clock_symbols_list>
 	<all_conditions_list>
 		<condition />
 	</all_conditions_list>
 	<common>
-		<default clock_update_index_list="0_0,1_0,2_0,3_0,4_0,5_0,6_0,7_0,8_0,9_0,10_0,11_0"/>
+		<default clock_update_index_list="0_0,1_0,2_0,3_0,4_0,5_0,7_0,8_0,9_0,11_0,12_0,13_0,14_0,15_0,16_0"/>
 	</common>
 </clock_settings>
 <description>
 	<!-- first {} considered as heading-->
 	<data>	{Oscillator| Prescaler Divisor | Frequency},
-					{OSC16M| 1 | 16MHz}
+					{OSC16M| 2 | 8MHz}
 	</data>
 	<data>	{Generic clock(Peripherals)| Source | Frequency},
-					{GCLK0(CPU)|OSC16M| 16MHz}, 
-					{GCLK1(PTC, UART)|OSC16M(DIV 4)|4MHz},
+					{GCLK0(CPU)|OSC16M| 8MHz}, 
+					{GCLK1(PTC, UART)|OSC16M(DIV 2)|4MHz},
 					{Timer(RTC)|OSCULP32K|1.024KHz}
 	</data>
 	<data>	{Wait states},

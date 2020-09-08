@@ -129,8 +129,8 @@ Database.setSymbolValue("core", InterruptHandler, "PTC_Handler")
 #Set PTC PERIPHERAL CLOCK and Choose GCLK AS GCLK1
 Database.clearSymbolValue("core", "PTC" + "_CLOCK_ENABLE")
 Database.setSymbolValue("core", "PTC" + "_CLOCK_ENABLE", True)
-Database.clearSymbolValue("core", "GCLK_ID_19_GENSEL")
-Database.setSymbolValue("core", "GCLK_ID_19_GENSEL", 1)
+Database.clearSymbolValue("core", "GCLK_ID_31_GENSEL")
+Database.setSymbolValue("core", "GCLK_ID_31_GENSEL", 1)
 
 acquisitionMenu = qtouchComponent.createMenuSymbol("ACQUISITION_MENU", touchMenu)
 acquisitionMenu.setLabel("Acquisition Configuration")
