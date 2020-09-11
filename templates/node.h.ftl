@@ -44,7 +44,12 @@
 	</#list>
 <#else>
 	<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i>
-		<#if (SENSE_TECHNOLOGY == "NODE_SELFCAP")||(SENSE_TECHNOLOGY == "NODE_SELFCAP_SHIELD")>
+		<#if (SENSE_TECHNOLOGY == "NODE_SELFCAP")>
+					<#lt>#define NODE_${i}_PARAMS                                                                                               \
+					<#lt>{                                                                                                                  \
+					<#lt>   X_NONE, ${.vars["SELFCAP-INPUT_" + i]}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]},${.vars["DEF_NOD_PTC_PRESCALER" + i]}, NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
+					<#lt>}
+		<#elseif (SENSE_TECHNOLOGY == "NODE_SELFCAP_SHIELD")>
 					<#lt>#define NODE_${i}_PARAMS                                                                                               \
 					<#lt>{                                                                                                                  \
 					<#lt>   ${.vars["MUTL-X-INPUT_" + i]}, ${.vars["SELFCAP-INPUT_" + i]}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]},${.vars["DEF_NOD_PTC_PRESCALER" + i]}, NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
@@ -76,7 +81,12 @@
 </#if>
 <#else>
 	<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i>
-		<#if (SENSE_TECHNOLOGY == "NODE_SELFCAP")||(SENSE_TECHNOLOGY == "NODE_SELFCAP_SHIELD")>
+		<#if (SENSE_TECHNOLOGY == "NODE_SELFCAP")>
+					<#lt>#define NODE_${i}_PARAMS                                                                                               \
+					<#lt>{                                                                                                                  \
+					<#lt>   X_NONE, ${.vars["SELFCAP-INPUT_" + i]}, ${.vars["DEF_NOD_PTC_PRESCALER" + i]}, NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
+					<#lt>}
+		<#elseif (SENSE_TECHNOLOGY == "NODE_SELFCAP_SHIELD")>
 					<#lt>#define NODE_${i}_PARAMS                                                                                               \
 					<#lt>{                                                                                                                  \
 					<#lt>   ${.vars["MUTL-X-INPUT_" + i]}, ${.vars["SELFCAP-INPUT_" + i]}, ${.vars["DEF_NOD_PTC_PRESCALER" + i]}, NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \

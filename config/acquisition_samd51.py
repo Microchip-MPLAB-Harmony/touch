@@ -9,14 +9,14 @@ getVariant =  ATDF.getNode("/avr-tools-device-file/variants/variant")
 getPinout = []
 getPinout = getVariant.getAttribute("ordercode")
 if ("D51G18A" in getPinout):
-    touchChannelSelf = 22
-    touchChannelMutual = 121
+    touchChannelSelf = 22+16
+    touchChannelMutual = 121+16
 elif ("D51G19A" in getPinout):
-    touchChannelSelf = 22
-    touchChannelMutual = 121
+    touchChannelSelf = 22+16
+    touchChannelMutual = 121+16
 else:
-    touchChannelSelf = 32
-    touchChannelMutual = 256
+    touchChannelSelf = 32+16
+    touchChannelMutual = 256+16
 
 def autoTuneFunc(symbol,event):
     global touchAcqLibraryFile

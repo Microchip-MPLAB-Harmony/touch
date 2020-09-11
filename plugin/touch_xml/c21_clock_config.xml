@@ -9,12 +9,14 @@ This is for SAMC21, SAMC20 Family
 		<clock index = "1_0" symbol="GCLK_1_DIV" value="12" component_id= "core" name="Div 48MHz by 12" />
 		<clock index = "2_0" symbol="CONFIG_CLOCK_OSC48M_RUNSTDY" value="True" component_id= "core" name="48MHz Runinstandby" />
 		<clock index = "3_0" symbol="GCLK_1_RUNSTDBY" value="True" component_id= "core" name="GCLK1 Runinstandby" />
+		<clock index = "4_0" symbol="GCLK_ID_6_CHEN" value="True" component_id= "core" name="enable evsys" />
+		<clock index = "5_0" symbol="GCLK_ID_6_GENSEL" value="1" component_id= "core" name="GCLK1 - evsys clk" />
 	</all_clock_symbols_list>
 	<all_conditions_list>
 		<condition />
 	</all_conditions_list>
 	<common>
-		<default clock_update_index_list="0_0,1_0,2_0,3_0"/>
+		<default clock_update_index_list="0_0,1_0,2_0,3_0,4_0,5_0"/>
 	</common>
 </clock_settings>
 <description>

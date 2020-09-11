@@ -2,8 +2,8 @@
 #### Global Variables ####
 ################################################################################
 
-touchChannelSelf = 32
-touchChannelMutual = 256
+touchChannelSelf = 32+16
+touchChannelMutual = 256+16
 
 
 def autoTuneFunc(symbol,event):

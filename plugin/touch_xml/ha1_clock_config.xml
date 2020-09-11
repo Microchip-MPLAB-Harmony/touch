@@ -15,20 +15,25 @@ This is for SAMD20, SAMD21 Family
 		<clock index = "7_0" symbol="GCLK_2_SRC" value="6" component_id= "core" name="GCLK2 Source" />
 		<clock index = "8_0" symbol="GCLK_3_SRC" value="6" component_id= "core" name="GCLK3 Source" />
 		<clock index = "9_0" symbol="GCLK_3_DIV" value="1" component_id= "core" name="GCLK3 division factor" />
-		<clock index = "10_0" symbol="RTC_MODE0_PRESCALER" value="0" component_id= "rtc" name="RTC pre-scaled by 1" />
-		<clock index = "11_0" symbol="NVM_RWS" value="4" component_id= "nvmctrl" name="Wait state - 4" />		
+		<clock index = "10_0" symbol="RTC_MODE0_PRESCALER" value="1" component_id= "rtc" name="RTC pre-scaled by 2" />
+		<clock index = "11_0" symbol="NVM_RWS" value="1" component_id= "nvmctrl" name="Wait state - 1" />		
 		<clock index = "12_0" symbol="GCLK_2_DIV" value="1" component_id= "core" name="GCLK2 Div" />
 		<clock index = "13_0" symbol="GCLK_1_DIV" value="32" component_id= "core" name="GCLK1 Div" />
-		<clock index = "14_0" symbol="GCLK_ID_0_CHEN" value="True" component_id= "core" name="Select reference clock for DFLL" />
-		<clock index = "15_0" symbol="GCLK_ID_0_GENSEL" value="6" component_id= "core" name="Select GCLK1 as ref clock" />
+		<clock index = "14_0" symbol="GCLK_1_RUNSTDBY" value="True" component_id= "core" name="gclk1 runinstandby" />
+		<clock index = "15_0" symbol="CONFIG_CLOCK_OSC8M_RUNSTDY" value="True" component_id= "core" name="OSC8M Runinstandby" />
 		<clock index = "16_0" symbol="GCLK_0_SRC" value="6" component_id= "core" name="GCLK0 Source" />
 		<clock index = "17_0" symbol="GCLK_2_DIV" value="2" component_id= "core" name="GCLK2 division factor" />
+		<clock index = "18_0" symbol="GCLK_ID_7_CHEN" value="True" component_id= "core" name="EVSYS clock" />
+		<clock index = "19_0" symbol="GCLK_ID_7_GENSEL" value="2" component_id= "core" name="EVSYS set GCLK - 2" />
+		<clock index = "20_0" symbol="EVSYS_CHANNEL_0" value="True" component_id= "evsys" name="EVSYS 0" />
+		<clock index = "21_0" symbol="RTC_MODE0_EVCTRL_PEREO0_ENABLE" value="True" component_id= "rtc" name="EVSYS 0" />
+		<clock index = "22_0" symbol="EVSYS_CHANNEL_ONDEMAND" value="True" component_id= "evsys" name="EVSYS 0" />
 	</all_clock_symbols_list>
 	<all_conditions_list>
 		<condition />
 	</all_conditions_list>
 	<common>
-		<default clock_update_index_list="0_0,1_0,2_0,3_0,4_0,6_0,7_0,10_0,11_0,12_0,13_0,14_0,15_0,16_0,17_0"/>
+		<default clock_update_index_list="0_0,1_0,2_0,3_0,4_0,6_0,7_0,10_0,11_0,12_0,13_0,14_0,15_0,16_0,17_0,18_0,19_0,20_0,21_0,22_0"/>
 	</common>
 </clock_settings>
 <description>

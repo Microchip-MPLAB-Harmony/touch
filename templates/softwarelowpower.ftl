@@ -18,7 +18,7 @@
 
 <#macro lowpwer_disableevsys_samd20_d21_no_evs>
 	RTC_Timer32Stop();  
-    RTC_Timer32CompareSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
+    RTC_Timer32CompareSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS>>1);
     RTC_Timer32Start();
 	/* Store the measurement period */
 	measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
@@ -46,7 +46,7 @@
 
 <#macro lowpwer_enableevsys_samd20_d21_no_evs>
 	RTC_Timer32Stop();  
-    RTC_Timer32CompareSet(QTM_LOWPOWER_TRIGGER_PERIOD);
+    RTC_Timer32CompareSet(QTM_LOWPOWER_TRIGGER_PERIOD>>1);
     RTC_Timer32Start();
 	/* Store the measurement period */
 	measurement_period_store = QTM_LOWPOWER_TRIGGER_PERIOD;

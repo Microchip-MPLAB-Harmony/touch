@@ -255,6 +255,7 @@ ${columns}, // Number of Columns
 <#assign sen_type_scr_cnt = [] >
 <#assign sen_type_sli_cnt = [] >
 <#assign sen_type_whe_cnt = [] >
+<#assign sen_type_lump_but_cnt = [] >
 <#list 0..(debug_table_title?size-1) as cnt >
 <#assign temp_string = temp_string + [((cnt)+":0"+":"+(debug_table_title[cnt])+";")]>
 </#list>
@@ -270,73 +271,100 @@ ${columns}, // Number of Columns
 <#assign surface_hor_channels = [] >
 <#assign scr_channels = [] >
 <#if scr_cnt != 0 >
-<#list 0..TOUCH_SCROLLER_ENABLE_CNT-1 as i >
-<#assign TOUCH_SCR_START_KEY = "TOUCH_SCR_START_KEY" + i>
-<#assign DEF_SCR_TYPE = "DEF_SCR_TYPE" + i>
-<#assign TOUCH_SCR_SIZE = "TOUCH_SCR_SIZE" + i>
-<#assign scr_from_ch_info += [.vars[TOUCH_SCR_START_KEY]] >
-<#assign scr_num_ch_info += [.vars[TOUCH_SCR_SIZE]]>
-<#assign scr_txt += [.vars[DEF_SCR_TYPE]] >
-</#list>
+    <#list 0..TOUCH_SCROLLER_ENABLE_CNT-1 as i >
+        <#assign TOUCH_SCR_START_KEY = "TOUCH_SCR_START_KEY" + i>
+        <#assign DEF_SCR_TYPE = "DEF_SCR_TYPE" + i>
+        <#assign TOUCH_SCR_SIZE = "TOUCH_SCR_SIZE" + i>
+        <#assign scr_from_ch_info += [.vars[TOUCH_SCR_START_KEY]] >
+        <#assign scr_num_ch_info += [.vars[TOUCH_SCR_SIZE]]>
+        <#assign scr_txt += [.vars[DEF_SCR_TYPE]] >
+    </#list>
 </#if>
 <#if (ENABLE_SURFACE == true) >
 	<#list VERT_START_KEY..(VERT_START_KEY+VERT_NUM_KEY-1) as i>
-	<#assign surface_ver_channels = surface_ver_channels + [i]>
+	    <#assign surface_ver_channels = surface_ver_channels + [i]>
 	</#list>
 	<#list HORI_START_KEY..(HORI_START_KEY+HORI_NUM_KEY-1) as i>
-	<#assign surface_hor_channels = surface_hor_channels + [i]>
+	    <#assign surface_hor_channels = surface_hor_channels + [i]>
 	</#list>
 </#if>
-
 <#list 0..(node_cnt-1) as cnt >
-<#assign temp_string = temp_string + [("0:"+(cnt)+":"+(cnt)+";")] >
-<#if (sen_type_scr_cnt?size) < scr_cnt >
-<#if (scr_cnt > 0) && (cnt == (scr_from_ch_info[sen_type_scr_cnt?size]+scr_num_ch_info[sen_type_scr_cnt?size])) >
-<#assign tmp_txt = scr_txt[sen_type_scr_cnt?size] >
-<#if tmp_txt == "SCROLLER_TYPE_SLIDER" > <#assign sen_type_sli_cnt=sen_type_sli_cnt + [1] >
-<#elseif tmp_txt == "SCROLLER_TYPE_WHEEL" > <#assign sen_type_whe_cnt=sen_type_whe_cnt + [1] >
-</#if>
-<#assign sen_type_scr_cnt=sen_type_scr_cnt +[1]>
-</#if>
-</#if>
-<#if (sen_type_scr_cnt?size) < scr_cnt >
-<#if (scr_cnt > 0) && (cnt >= (scr_from_ch_info[sen_type_scr_cnt?size])) && (cnt <= scr_from_ch_info[sen_type_scr_cnt?size]+scr_num_ch_info[sen_type_scr_cnt?size]) >
-<#assign tmp_txt = scr_txt[sen_type_scr_cnt?size] >
-<#assign temp_val = cnt - scr_from_ch_info[sen_type_scr_cnt?size] >
-<#if tmp_txt == "SCROLLER_TYPE_SLIDER" > <#assign scr_channels = scr_channels + [cnt] >
- <#assign temp_string= temp_string + [("1:"+(cnt)+":"+("Slider")+" "+(sen_type_sli_cnt?size)+"["+(temp_val)+"];")] >
-<#elseif tmp_txt == "SCROLLER_TYPE_WHEEL" > <#assign scr_channels = scr_channels + [cnt] > <#assign temp_string = temp_string + [("1:"+(cnt)+":"+("Wheel")+" "+(sen_type_whe_cnt?size)+"["+(temp_val)+"];")] >
-</#if>
-<#elseif (ENABLE_SURFACE == false)>
-<#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Button"+" "+(sen_type_but_cnt?size)+";")] > <#assign sen_type_but_cnt = sen_type_but_cnt +[1]>
-</#if>
-<#elseif (ENABLE_SURFACE == false)>
-<#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Button"+" "+(sen_type_but_cnt?size)+";")] > <#assign sen_type_but_cnt = sen_type_but_cnt +[1]>
-</#if>
+    <#assign temp_string = temp_string + [("0:"+(cnt)+":"+(cnt)+";")] >
+    <#if (sen_type_scr_cnt?size) < scr_cnt >
+        <#if (scr_cnt > 0) && (cnt == (scr_from_ch_info[sen_type_scr_cnt?size]+scr_num_ch_info[sen_type_scr_cnt?size])) >
+            <#assign tmp_txt = scr_txt[sen_type_scr_cnt?size] >
+            <#if tmp_txt == "SCROLLER_TYPE_SLIDER" > <#assign sen_type_sli_cnt=sen_type_sli_cnt + [1] >
+                <#elseif tmp_txt == "SCROLLER_TYPE_WHEEL" > <#assign sen_type_whe_cnt=sen_type_whe_cnt + [1] >
+            </#if>
+            <#assign sen_type_scr_cnt=sen_type_scr_cnt +[1]>
+        </#if>
+    </#if>
+    <#if (sen_type_scr_cnt?size) < scr_cnt >
+        <#if (scr_cnt > 0) && (cnt >= (scr_from_ch_info[sen_type_scr_cnt?size])) && (cnt <= scr_from_ch_info[sen_type_scr_cnt?size]+scr_num_ch_info[sen_type_scr_cnt?size]) >
+            <#assign tmp_txt = scr_txt[sen_type_scr_cnt?size] >
+            <#assign temp_val = cnt - scr_from_ch_info[sen_type_scr_cnt?size] >
+            <#if tmp_txt == "SCROLLER_TYPE_SLIDER" > <#assign scr_channels = scr_channels + [cnt] >
+                <#assign temp_string= temp_string + [("1:"+(cnt)+":"+("Slider")+" "+(sen_type_sli_cnt?size)+"["+(temp_val)+"];")] >
+            <#elseif tmp_txt == "SCROLLER_TYPE_WHEEL" > <#assign scr_channels = scr_channels + [cnt] > <#assign temp_string = temp_string + [("1:"+(cnt)+":"+("Wheel")+" "+(sen_type_whe_cnt?size)+"["+(temp_val)+"];")] >
+            </#if>
+        <#elseif (ENABLE_SURFACE == false)>
+            <#if (LUMP_CONFIG != "")>
+                <#if (.vars["SELFCAP-INPUT_" + cnt]?contains("|"))>
+                    <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"LumpButton"+" "+(sen_type_lump_but_cnt?size)+";")] > <#assign sen_type_lump_but_cnt = sen_type_lump_but_cnt +[1]>
+                <#elseif (.vars["MUTL-Y-INPUT_" + cnt]?contains("|"))>
+                    <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"LumpButton"+" "+(sen_type_lump_but_cnt?size)+";")] > <#assign sen_type_lump_but_cnt = sen_type_lump_but_cnt +[1]>
+                <#elseif (.vars["MUTL-X-INPUT_" + cnt]?contains("|"))>
+                    <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"LumpButton"+" "+(sen_type_lump_but_cnt?size)+";")] > <#assign sen_type_lump_but_cnt = sen_type_lump_but_cnt +[1]>
+                <#else>
+                    <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Button"+" "+(sen_type_but_cnt?size)+";")] > <#assign sen_type_but_cnt = sen_type_but_cnt +[1]>
+                </#if>
+            </#if>
+        </#if>
+    <#elseif (ENABLE_SURFACE == false)>
+        <#if (LUMP_CONFIG != "")>
+                <#if (.vars["SELFCAP-INPUT_" + cnt]?contains("|"))>
+                    <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"LumpButton"+" "+(sen_type_lump_but_cnt?size)+";")] > <#assign sen_type_lump_but_cnt = sen_type_lump_but_cnt +[1]>
+                <#elseif (.vars["MUTL-Y-INPUT_" + cnt]?contains("|"))>
+                    <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"LumpButton"+" "+(sen_type_lump_but_cnt?size)+";")] > <#assign sen_type_lump_but_cnt = sen_type_lump_but_cnt +[1]>
+                <#elseif (.vars["MUTL-X-INPUT_" + cnt]?contains("|"))>
+                    <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"LumpButton"+" "+(sen_type_lump_but_cnt?size)+";")] > <#assign sen_type_lump_but_cnt = sen_type_lump_but_cnt +[1]>
+                <#else>
+                    <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Button"+" "+(sen_type_but_cnt?size)+";")] > <#assign sen_type_but_cnt = sen_type_but_cnt +[1]>
+                </#if>
+            </#if>
+    </#if>
 
-<#if (ENABLE_SURFACE == true)>
+    <#if (ENABLE_SURFACE == true)>
+        <#list VERT_START_KEY..(VERT_START_KEY+VERT_NUM_KEY-1) as i>
+            <#assign surface_ver_channels = surface_ver_channels + [i]>
+        </#list>
+        <#list HORI_START_KEY..(HORI_START_KEY+HORI_NUM_KEY-1) as i>
+            <#assign surface_hor_channels = surface_hor_channels + [i]>
+        </#list>
 
-<#list VERT_START_KEY..(VERT_START_KEY+VERT_NUM_KEY-1) as i>
-<#assign surface_ver_channels = surface_ver_channels + [i]>
-</#list>
-<#list HORI_START_KEY..(HORI_START_KEY+HORI_NUM_KEY-1) as i>
-<#assign surface_hor_channels = surface_hor_channels + [i]>
-</#list>
-
-<#if surface_ver_channels?seq_contains(cnt) >
-<#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Surface V"+" ["+(sen_type_surv_cnt?size)+"];")]>
-<#assign sen_type_surv_cnt= sen_type_surv_cnt +[1] >
-<#elseif surface_hor_channels?seq_contains(cnt)>
-<#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Surface H"+" ["+(sen_type_surh_cnt?size)+"];")]> 
-<#assign sen_type_surh_cnt= sen_type_surh_cnt +[1] >
-<#else>
-<#if scr_channels?seq_contains(cnt) >
-<#else>
-<#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Button"+" "+(sen_type_but_cnt?size)+";")] > <#assign sen_type_but_cnt = sen_type_but_cnt +[1]>
-</#if>
-</#if>
-
-</#if>
+        <#if surface_ver_channels?seq_contains(cnt) >
+            <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Surface V"+" ["+(sen_type_surv_cnt?size)+"];")]>
+            <#assign sen_type_surv_cnt= sen_type_surv_cnt +[1] >
+        <#elseif surface_hor_channels?seq_contains(cnt)>
+            <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Surface H"+" ["+(sen_type_surh_cnt?size)+"];")]> 
+            <#assign sen_type_surh_cnt= sen_type_surh_cnt +[1] >
+        <#else>
+            <#if scr_channels?seq_contains(cnt) >
+            <#else>
+                <#if (LUMP_CONFIG != "")>
+                <#if (.vars["SELFCAP-INPUT_" + cnt]?contains("|"))>
+                    <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"LumpButton"+" "+(sen_type_lump_but_cnt?size)+";")] > <#assign sen_type_lump_but_cnt = sen_type_lump_but_cnt +[1]>
+                <#elseif (.vars["MUTL-Y-INPUT_" + cnt]?contains("|"))>
+                    <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"LumpButton"+" "+(sen_type_lump_but_cnt?size)+";")] > <#assign sen_type_lump_but_cnt = sen_type_lump_but_cnt +[1]>
+                <#elseif (.vars["MUTL-X-INPUT_" + cnt]?contains("|"))>
+                    <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"LumpButton"+" "+(sen_type_lump_but_cnt?size)+";")] > <#assign sen_type_lump_but_cnt = sen_type_lump_but_cnt +[1]>
+                <#else>
+                    <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Button"+" "+(sen_type_but_cnt?size)+";")] > <#assign sen_type_but_cnt = sen_type_but_cnt +[1]>
+                </#if>
+            </#if>
+            </#if>
+        </#if>
+    </#if>
 </#list>
 <@db_build_table_element_new_table temp_string, tab, element_num+1,x_pos,y_pos,temp_width1, temp_height1,temp_lable_w, temp_lable_w,row_height,node_cnt, column_cnt />
 </#macro>

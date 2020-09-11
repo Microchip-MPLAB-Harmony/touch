@@ -5,7 +5,7 @@ This is for SAMD20, SAMD21 Family
 <info>
 <clock_settings>
 	<all_clock_symbols_list>
-		<clock index = "0_0" symbol="CONFIG_CLOCK_DFLL_OPMODE" value="1" component_id= "core" name="DFLL Closed mode" />
+		<clock index = "0_0" symbol="CONFIG_CLOCK_DFLL_OPMODE" value="0" component_id= "core" name="DFLL Closed mode" />
 		<clock index = "1_0" symbol="CONFIG_CLOCK_DFLL_COARSE" value="10" component_id= "core" name="DFLL Course value" />
 		<clock index = "2_0" symbol="CONFIG_CLOCK_DFLL_FINE" value="10" component_id= "core" name="DFLL Fine value" />
 		<clock index = "3_0" symbol="CONFIG_CLOCK_DFLL_MUL" value="1500" component_id= "core" name="DFLL Mul value" />
@@ -21,33 +21,36 @@ This is for SAMD20, SAMD21 Family
 		<clock index = "13_0" symbol="CONFIG_CLOCK_OSC8M_ENABLE" value="True" component_id= "core" name="Enable OSC8M" />
 		<clock index = "14_0" symbol="CONFIG_CLOCK_OSC8M_PRES" value="1" component_id= "core" name="OSC8M Prescaler - 2" />
 		<clock index = "15_0" symbol="GCLK_1_RUNSTDBY" value="True" component_id= "core" name="GCLK1 Runinstandby" />
-		<clock index = "16_0" symbol="GCLK_2_RUNSTDBY" value="True" component_id= "core" name="GCLK2 Runinstandby" />
-		<clock index = "17_0" symbol="RTC_MODE0_PRESCALER" value="0" component_id= "rtc" name="RTC pre-scaled by 1" />
+		<clock index = "16_0" symbol="CONFIG_CLOCK_OSC8M_ONDEMAND" value="1" component_id= "core" name="on demand - on request" />
+		<clock index = "17_0" symbol="RTC_MODE0_PRESCALER" value="1" component_id= "rtc" name="RTC pre-scaled by 2" />
 		<clock index = "18_0" symbol="NVM_RWS" value="3" component_id= "nvmctrl" name="Wait state - 4" />		
 		<clock index = "19_0" symbol="GCLK_2_DIV" value="1" component_id= "core" name="GCLK2 Div" />
 		<clock index = "20_0" symbol="GCLK_1_DIV" value="32" component_id= "core" name="GCLK1 Div" />
 		<clock index = "21_0" symbol="CONFIG_CLOCK_OSC8M_RUNSTDY" value="True" component_id= "core" name="OSC8M Runinstandby" />
 		<clock index = "22_0" symbol="GCLK_ID_2_GENSEL" value="1" component_id= "core" name="RTC Clock GCLK1" />
-
+		<clock index = "23_0" symbol="GCLK_ID_7_CHEN" value="True" component_id= "core" name="EVSYS clock" />
+		<clock index = "24_0" symbol="GCLK_ID_7_GENSEL" value="2" component_id= "core" name="EVSYS set GCLK - 2" />
+		<clock index = "25_0" symbol="EVSYS_CHANNEL_0" value="True" component_id= "evsys" name="EVSYS 0" />
+		<clock index = "26_0" symbol="RTC_MODE0_EVCTRL_PEREO0_ENABLE" value="True" component_id= "rtc" name="EVSYS 0" />
+		<clock index = "27_0" symbol="EVSYS_CHANNEL_ONDEMAND" value="True" component_id= "evsys" name="EVSYS 0" />
 	</all_clock_symbols_list>
 	<all_conditions_list>
 		<condition />
 	</all_conditions_list>
 	<common>
-		<default clock_update_index_list="0_0,1_0,2_0,3_0,4_0,5_0,6_0,7_0,8_0,9_0,10_0,11_0,12_0,13_0,14_0,15_0,16_0,17_0,18_0,19_0,20_0,21_0,22_0"/>
+		<default clock_update_index_list="0_0,1_0,2_0,3_0,4_0,5_0,7_0,8_0,13_0,14_0,15_0,16_0,17_0,18_0,19_0,20_0,21_0,22_0,23_0,24_0,25_0,26_0,27_0"/>
 	</common>
 </clock_settings>
 <description>
 	<!-- first {} considered as heading-->
 	<data>	{Oscillator| Prescaler Divisor | Frequency},
 					{OSC8M| 2 | 4MHz}, 
-					{DFLL48M| 1 | 48MHz(GCLK3, closed loop, multi factor 1500)} 
+					{DFLL48M| 1 | 48MHz(GCLK3, open loop, multi factor 1500)} 
 	</data>
 	<data>	{Generic clock(Peripherals)| Source | Frequency},
 					{GCLK0(CPU)|DFLL48M| 48MHz},
 					{GCLK1(Timer)|OSCULP32K|1.024KHz},
 					{GCLK2(PTC,UART)| OSC8M| 4MHz},
-					{GCLK3(DFLL Ref.) |OSC8M(DIV 125)| 32KHz}
 	</data>
 	<data>	{Wait states},
 					{NVM states| 3}

@@ -8,26 +8,26 @@ getVariant =  ATDF.getNode("/avr-tools-device-file/variants/variant")
 getPinout = []
 getPinout = getVariant.getAttribute("ordercode")
 if ("HA1G14" in getPinout):
-    touchChannelSelf = 9
-    touchChannelMutual = 90
+    touchChannelSelf = 9+16
+    touchChannelMutual = 90+16
 elif ("HA1G15" in getPinout):
-    touchChannelSelf = 9
-    touchChannelMutual = 90
+    touchChannelSelf = 9+16
+    touchChannelMutual = 90+16
 elif ("HA1G16" in getPinout):
-    touchChannelSelf = 9
-    touchChannelMutual = 90
+    touchChannelSelf = 9+16
+    touchChannelMutual = 90+16
 elif ("HA1E14" in getPinout):
-    touchChannelSelf = 4
-    touchChannelMutual = 24
+    touchChannelSelf = 4+16
+    touchChannelMutual = 24+16
 elif ("HA1E15" in getPinout):
-    touchChannelSelf = 4
-    touchChannelMutual = 24
+    touchChannelSelf = 4+16
+    touchChannelMutual = 24+16
 elif ("HA1E16" in getPinout):
-    touchChannelSelf = 4
-    touchChannelMutual = 24
+    touchChannelSelf = 4+16
+    touchChannelMutual = 24+16
 else:
-    touchChannelSelf = 4
-    touchChannelMutual = 24
+    touchChannelSelf = 4+16
+    touchChannelMutual = 24+16
 
 
 def autoTuneFunc(symbol,event):

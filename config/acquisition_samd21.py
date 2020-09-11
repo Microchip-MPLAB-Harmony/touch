@@ -14,44 +14,44 @@ except:
     getPinout = []
     getPinout = getVariant.getAttribute("name")
     if ("D21J15" in getPinout):
-        touchChannelSelf = 16
-        touchChannelMutual = 60
+        touchChannelSelf = 16+16
+        touchChannelMutual = 60+16
     elif ("D21J16" in getPinout):
-        touchChannelSelf = 16
-        touchChannelMutual = 130
+        touchChannelSelf = 16+16
+        touchChannelMutual = 130+16
     elif ("D21J17" in getPinout):
-        touchChannelSelf = 16
-        touchChannelMutual = 256
+        touchChannelSelf = 16+16
+        touchChannelMutual = 256+16
     elif ("D21J18" in getPinout):
-        touchChannelSelf = 16
-        touchChannelMutual = 256
+        touchChannelSelf = 16+16
+        touchChannelMutual = 256+16
     elif ("D21G15" in getPinout):
-        touchChannelSelf = 10
-        touchChannelMutual = 60
+        touchChannelSelf = 10+16
+        touchChannelMutual = 60+16
     elif ("D21G16" in getPinout):
-        touchChannelSelf = 10
-        touchChannelMutual = 120
+        touchChannelSelf = 10+16
+        touchChannelMutual = 120+16
     elif ("D21G17" in getPinout):
-        touchChannelSelf = 10
-        touchChannelMutual = 120
+        touchChannelSelf = 10+16
+        touchChannelMutual = 120+16
     elif ("D21G18" in getPinout):
-        touchChannelSelf = 10
-        touchChannelMutual = 120
+        touchChannelSelf = 10+16
+        touchChannelMutual = 120+16
     elif ("D21E15" in getPinout):
-        touchChannelSelf = 6
-        touchChannelMutual = 60
+        touchChannelSelf = 6+16
+        touchChannelMutual = 60+16
     elif ("D21E16" in getPinout):
-        touchChannelSelf = 6
-        touchChannelMutual = 60
+        touchChannelSelf = 6+16
+        touchChannelMutual = 60+16
     elif ("D21E17" in getPinout):
-        touchChannelSelf = 6
-        touchChannelMutual = 60
+        touchChannelSelf = 6+16
+        touchChannelMutual = 60+16
     elif ("D21E18" in getPinout):
-        touchChannelSelf = 6
-        touchChannelMutual = 60
+        touchChannelSelf = 6+16
+        touchChannelMutual = 60+16
     else:
-        touchChannelSelf = 16
-        touchChannelMutual = 256
+        touchChannelSelf = 16+16
+        touchChannelMutual = 256+16
 
 
 def autoTuneFunc(symbol,event):

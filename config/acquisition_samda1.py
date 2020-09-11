@@ -8,35 +8,35 @@ getVariant =  ATDF.getNode("/avr-tools-device-file/variants/variant")
 getPinout = []
 getPinout = getVariant.getAttribute("ordercode")
 if ("DA1J14" in getPinout):
-    touchChannelSelf = 16
-    touchChannelMutual = 256
+    touchChannelSelf = 16+16
+    touchChannelMutual = 256+16
 elif ("DA1J15" in getPinout):
-    touchChannelSelf = 16
-    touchChannelMutual = 256
+    touchChannelSelf = 16+16
+    touchChannelMutual = 256+16
 elif ("DA1J16" in getPinout):
-    touchChannelSelf = 16
-    touchChannelMutual = 256
+    touchChannelSelf = 16+16
+    touchChannelMutual = 256+16
 elif ("DA1G14" in getPinout):
-    touchChannelSelf = 10
-    touchChannelMutual = 120
+    touchChannelSelf = 10+16
+    touchChannelMutual = 120+16
 elif ("DA1G15" in getPinout):
-    touchChannelSelf = 10
-    touchChannelMutual = 120
+    touchChannelSelf = 10+16
+    touchChannelMutual = 120+16
 elif ("DA1G16" in getPinout):
-    touchChannelSelf = 10
-    touchChannelMutual = 120
+    touchChannelSelf = 10+16
+    touchChannelMutual = 120+16
 elif ("DA1E14" in getPinout):
-    touchChannelSelf = 6
-    touchChannelMutual = 60
+    touchChannelSelf = 6+16
+    touchChannelMutual = 60+16
 elif ("DA1E15" in getPinout):
-    touchChannelSelf = 6
-    touchChannelMutual = 60
+    touchChannelSelf = 6+16
+    touchChannelMutual = 60+16
 elif ("DA1E16" in getPinout):
-    touchChannelSelf = 6
-    touchChannelMutual = 60
+    touchChannelSelf = 6+16
+    touchChannelMutual = 60+16
 else:
-    touchChannelSelf = 16
-    touchChannelMutual = 256
+    touchChannelSelf = 16+16
+    touchChannelMutual = 256+16
 
 
 def autoTuneFunc(symbol,event):

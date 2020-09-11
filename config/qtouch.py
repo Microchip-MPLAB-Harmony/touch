@@ -504,11 +504,6 @@ def processLump(symbol, event):
 	global enableDrivenShieldDedicated
 	global drivenShieldDedicatedPin
 	totalChannelCount = touchNumChannel.getValue()
-	if getDeviceName.getDefaultValue() not in ["PIC32MZW"]:
-		for i in range(0,totalChannelCount):
-			if(touchSenseTechnology.getValue() == 0):
-				tchMutXPinSelection[int(i)].setKeyValue(str(i),"X_NONE")
-				tchMutXPinSelection[int(i)].setValue(int(i))
 	if (getDeviceName.getDefaultValue() not in lump_not_supported_device):
 		global lumpSymbol
 		lump_feature = lumpSymbol.getValue()
@@ -591,9 +586,7 @@ def processLump(symbol, event):
 					drivenPin = "X_NONE"
 				tchMutXPinSelection[int(i)].setKeyValue(str(i),drivenPin)
 				tchMutXPinSelection[int(i)].setValue(int(i))
-			elif(touchSenseTechnology.getValue() == 0):
-				tchMutXPinSelection[int(i)].setKeyValue(str(i),"X_NONE")
-				tchMutXPinSelection[int(i)].setValue(int(i))
+
 	if getDeviceName.getDefaultValue() not in surface_rearrangement_macro:
 		if (touchSenseTechnology.getValue() == 1) and (enableSurfaceMenu.getValue() == True):
 			MUTL_SURFACE_X = []

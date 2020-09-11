@@ -9,17 +9,17 @@ getVariant =  ATDF.getNode("/avr-tools-device-file/variants/variant")
 getPinout = []
 getPinout = getVariant.getAttribute("ordercode")
 if ("LS00048" in getPinout):
-    touchChannelSelf = 16
-    touchChannelMutual = 64
+    touchChannelSelf = 16+16
+    touchChannelMutual = 64+16
 elif ("LS00048" in getPinout):
-    touchChannelSelf = 16
-    touchChannelMutual = 64
+    touchChannelSelf = 16+16
+    touchChannelMutual = 64+16
 elif ("LS000100" in getPinout):
-    touchChannelSelf = 31
-    touchChannelMutual = 31
+    touchChannelSelf = 31+16
+    touchChannelMutual = 31+16
 else:
-    touchChannelSelf = 31
-    touchChannelMutual = 31
+    touchChannelSelf = 31+16
+    touchChannelMutual = 31+16
 
 global touchAcqLibraryFile
 global touchAcq4pLibraryFile
@@ -107,7 +107,7 @@ touchBindHeaderFile.setDestPath("/touch/")
 touchBindHeaderFile.setProjectPath("config/" + configName + "/touch/")
 touchBindHeaderFile.setType("HEADER")
 touchBindHeaderFile.setMarkup(False)
-touchHeaderFile.setEnabled(False)
+touchBindHeaderFile.setEnabled(False)
 
 # Header File
 touchCommonHeaderFile = qtouchComponent.createFileSymbol("TOUCH_COMMON_HEADER", None)

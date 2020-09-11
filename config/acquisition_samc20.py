@@ -8,7 +8,8 @@ ptcPinValues = []
 ptcPinValues = ptcPinNode.getChildren()
 touchChannelSelf = ptcPinValues[6].getAttribute("value")
 touchChannelMutual = ptcPinValues[7].getAttribute("value")
-
+touchChannelSelf = int(touchChannelSelf) + 16
+touchChannelMutual = int(touchChannelMutual) +16
 
 def autoTuneFunc(symbol,event):
     global touchAcqLibraryFile

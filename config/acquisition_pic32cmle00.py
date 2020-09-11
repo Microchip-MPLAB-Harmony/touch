@@ -8,17 +8,17 @@ getVariant =  ATDF.getNode("/avr-tools-device-file/variants/variant")
 getPinout = []
 getPinout = getVariant.getAttribute("ordercode")
 if ("LE00048" in getPinout):
-    touchChannelSelf = 16
-    touchChannelMutual = 64
+    touchChannelSelf = 16+16
+    touchChannelMutual = 64+16
 elif ("LE00048" in getPinout):
-    touchChannelSelf = 16
-    touchChannelMutual = 64
+    touchChannelSelf = 16+16
+    touchChannelMutual = 64+16
 elif ("LE000100" in getPinout):
-    touchChannelSelf = 31
-    touchChannelMutual = 31
+    touchChannelSelf = 31+16
+    touchChannelMutual = 31+16
 else:
-    touchChannelSelf = 31
-    touchChannelMutual = 31
+    touchChannelSelf = 31+16
+    touchChannelMutual = 31+16
 
 global touchAcqLibraryFile
 global touchAcq4pLibraryFile

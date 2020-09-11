@@ -803,7 +803,7 @@ void touch_process(void)
 </#if>
 }
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
-    <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")>
+    <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")>
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
 static void touch_configure_pm_supc(void)
 {
@@ -815,6 +815,19 @@ static void touch_configure_pm_supc(void)
     /* Configure VREG. Mask the values loaded from NVM during reset.*/
     SUPC_REGS->SUPC_VREG = SUPC_VREG_ENABLE_Msk | SUPC_VREG_SEL_BUCK | SUPC_VREG_RUNSTDBY_Msk | SUPC_VREG_VSVSTEP(0) | SUPC_VREG_VSPER(0) | SUPC_VREG_STDBYPL0_Msk;
 
+}
+#endif
+    <#elseif ((DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00"))>
+#if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
+static void touch_configure_pm_supc(void)
+{
+    /* Configure PM */
+    PM_REGS->PM_STDBYCFG = PM_STDBYCFG_BBIASHS_Msk| PM_STDBYCFG_VREGSMOD(2)| PM_STDBYCFG_DPGPDSW_Msk| PM_STDBYCFG_BBIASTR_Msk;
+
+    while(PM_ConfigurePerformanceLevel(PM_PLCFG_PLSEL_PL0) != true);
+
+    /* Configure VREG. Mask the values loaded from NVM during reset.*/
+    SUPC_REGS->SUPC_VREG = SUPC_VREG_ENABLE_Msk | SUPC_VREG_SEL_BUCK | SUPC_VREG_RUNSTDBY_Msk | SUPC_VREG_VSVSTEP(0) | SUPC_VREG_VSPER(0) | SUPC_VREG_STDBYPL0_Msk;
 }
 #endif
     </#if>
@@ -1127,10 +1140,18 @@ void touch_timer_config(void)
 #if ((KRONO_GESTURE_ENABLE == 1u) || (DEF_TOUCH_DATA_STREAMER_ENABLE == 1u))
 	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}(1);
 #else
-	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
-#endif
+<#if (DEVICE_NAME == "SAMD20")||(DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")>
+	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}(DEF_TOUCH_MEASUREMENT_PERIOD_MS >>1);
 <#else>
 	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
+</#if>
+#endif
+<#else>
+<#if (DEVICE_NAME == "SAMD20")||(DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")>
+	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}(DEF_TOUCH_MEASUREMENT_PERIOD_MS >>1);
+<#else>
+	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
+</#if>
 </#if>
 <#else>
 	<#if ENABLE_GESTURE==true>
