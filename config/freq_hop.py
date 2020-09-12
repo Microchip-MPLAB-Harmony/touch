@@ -47,7 +47,7 @@ if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
     freqHopAutoLibraryFile.setDestPath("/touch/lib/")
     freqHopAutoLibraryFile.setEnabled(False)
     freqHopAutoLibraryFile.setDependencies(freqAutoTuneFunc,["FREQ_AUTOTUNE"])
-elif(getDeviceName.getDefaultValue() in ["SAML10","SAML11"]):
+elif(getDeviceName.getDefaultValue() in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]):
     # Library File
     freqHopLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_HOP_LIB", None)
     freqHopLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_cm23_0x0006.X.a")

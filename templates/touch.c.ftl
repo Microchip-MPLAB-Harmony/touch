@@ -80,7 +80,7 @@ static void qtm_error_callback(uint8_t error);
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
 /* low power processing function */
-static void touch_process_lowpower();
+static void touch_process_lowpower(void);
 <#if (ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == true)>
 /* low power touch detection callback */
 static void touch_measure_wcomp_match(void);
@@ -1035,12 +1035,14 @@ void touch_measure_wcomp_match(void)
         time_since_touch = 0u;
     }
 }
+
 </#if>
 #endif
 </#if>
 </#if>
-<#if ENABLE_GESTURE==true>
 uint8_t interrupt_cnt;
+<#if ENABLE_GESTURE==true>
+uint8_t touch_gesture_time_cnt;
 </#if>
 /*============================================================================
 void touch_timer_handler(void)
@@ -1054,10 +1056,13 @@ Notes  :
 void touch_timer_handler(void)
 {
 <#if ENABLE_GESTURE==true>
-	interrupt_cnt++;
-	if (interrupt_cnt % DEF_GESTURE_TIME_BASE_MS == 0) {
-		qtm_update_gesture_2d_timer(1);
+	touch_gesture_time_cnt++;
+	if (touch_gesture_time_cnt >= DEF_GESTURE_TIME_BASE_MS) {
+		qtm_update_gesture_2d_timer(touch_gesture_time_cnt / DEF_GESTURE_TIME_BASE_MS);
+		touch_gesture_time_cnt = touch_gesture_time_cnt % DEF_GESTURE_TIME_BASE_MS;
 	}
+</#if>
+	interrupt_cnt++;
 	if (interrupt_cnt >= DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
 		interrupt_cnt = 0;
 		/* Count complete - Measure touch sensors */
@@ -1076,7 +1081,6 @@ void touch_timer_handler(void)
 </#if>
 		qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 	}
-<#else>
     /* Count complete - Measure touch sensors */
 	time_to_measure_touch_var = 1;
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
@@ -1092,7 +1096,6 @@ void touch_timer_handler(void)
 #endif
 <#else>
     qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
-</#if>
 </#if>
 }
 <#if DEVICE_NAME == "PIC32MZW">

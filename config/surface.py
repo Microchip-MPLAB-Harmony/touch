@@ -31,7 +31,7 @@ if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
     surface1TLibraryFile.setOutputName("qtm_surface_cs_cm4_0x0021.X.a")
     surface1TLibraryFile.setDestPath("/touch/lib/")
     surface1TLibraryFile.setEnabled(False)
-elif(getDeviceName.getDefaultValue() in ["SAML10","SAML11"]):
+elif(getDeviceName.getDefaultValue() in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]):
     surface1TLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SURFACE1T_LIB", None)
     surface1TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_cm23_0x0021.X.a")
     surface1TLibraryFile.setOutputName("qtm_surface_cs_cm23_0x0021.X.a")
@@ -69,7 +69,7 @@ if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
     surface2TLibraryFile.setOutputName("qtm_surface_cs_2t_cm4_0x0025.X.a")
     surface2TLibraryFile.setDestPath("/touch/lib/")
     surface2TLibraryFile.setEnabled(False)
-elif (getDeviceName.getDefaultValue() in ["SAML10","SAML11"]):
+elif (getDeviceName.getDefaultValue() in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]):
     # Library File
     surface2TLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SURFACE2T_LIB", None)
     surface2TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_2t_cm23_0x0025.X.a")

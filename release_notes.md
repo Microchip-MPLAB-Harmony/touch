@@ -2,6 +2,36 @@
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 #  Microchip MPLAB� Harmony 3 Touch Library Release Notes
+## Touch Library v3.8.0 Release
+
+### NEW DEVICES SUPPORTED
+
+* Device Support for PIC32CMLE
+* DEVICE Support for PIC32CMLS
+
+### NEW FEATURE SUPPORTED
+
+* Low Power Support in GUI
+* Lump Support in GUI
+* Binding Layer disabled 
+  
+### DEVELOPMENT TOOLS 
+
+* [MPLAB X IDE v5.40](https://www.microchip.com/mplabx-ide-windows-installer)
+* [MPLAB XC32 C/C++ Compiler v2.41](https://www.microchip.com/mplab/compilers)
+* MPLAB X IDE plug-ins:
+  * MPLAB Harmony Configurator (MHC) v3.6.0 
+
+### Required MPLAB Harmony v3.x.x Modules 
+
+* csp v3.8.0
+* bsp v3.8.0
+* dev_packs v3.8.0
+* mhc v3.5.1 
+
+### KNOWN ISSUES
+* Lump mode mouse drag operation in Touch config GUI only operates from top Left ot bottom right.
+
 ## Touch Library v3.7.0 Release
 
 ### NEW DEVICES SUPPORTED

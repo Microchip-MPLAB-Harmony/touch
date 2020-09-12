@@ -10,7 +10,7 @@ if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
     scrollerLibraryFile.setOutputName("qtm_scroller_cm4_0x000b.X.a")
     scrollerLibraryFile.setDestPath("/touch/lib/")
     scrollerLibraryFile.setEnabled(False)
-elif (getDeviceName.getDefaultValue() in ["SAML10","SAML11"]):
+elif (getDeviceName.getDefaultValue() in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]):
     # Library File
     scrollerLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SCR_LIB", None)
     scrollerLibraryFile.setSourcePath("/src/libraries/qtm_scroller_cm23_0x000b.X.a")

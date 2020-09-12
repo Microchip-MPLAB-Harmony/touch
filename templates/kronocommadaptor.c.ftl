@@ -75,6 +75,8 @@ extern uint8_t touch_key_node_mapping_4p[SURFACE_CS_START_KEY_V + (SURFACE_CS_NU
 <#else>
 <#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
 extern qtm_acq_samd1x_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
+<#elseif DEVICE_NAME=="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00">
+extern qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
 <#else>
 extern qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
 </#if>

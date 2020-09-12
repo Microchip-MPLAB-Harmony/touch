@@ -10,7 +10,7 @@ if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
     touchLibraryFile.setOutputName("qtm_touch_key_cm4_0x0002.X.a")
     touchLibraryFile.setDestPath("/touch/lib/")
     touchLibraryFile.setEnabled(True)
-elif (getDeviceName.getDefaultValue() in ["SAML10","SAML11"]):
+elif (getDeviceName.getDefaultValue() in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]):
     # Library File
     touchLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_KEY_LIB", None)
     touchLibraryFile.setSourcePath("/src/libraries/qtm_touch_key_cm23_0x0002.X.a")
