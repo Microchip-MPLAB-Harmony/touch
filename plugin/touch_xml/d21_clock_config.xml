@@ -25,7 +25,7 @@ This is for SAMD20, SAMD21 Family
 		<clock index = "17_0" symbol="RTC_MODE0_PRESCALER" value="1" component_id= "rtc" name="RTC pre-scaled by 2" />
 		<clock index = "18_0" symbol="NVM_RWS" value="3" component_id= "nvmctrl" name="Wait state - 4" />		
 		<clock index = "19_0" symbol="GCLK_2_DIV" value="1" component_id= "core" name="GCLK2 Div" />
-		<clock index = "20_0" symbol="GCLK_1_DIV" value="32" component_id= "core" name="GCLK1 Div" />
+		<clock index = "20_0" symbol="GCLK_1_DIV" value="16" component_id= "core" name="GCLK1 Div" />
 		<clock index = "21_0" symbol="CONFIG_CLOCK_OSC8M_RUNSTDY" value="True" component_id= "core" name="OSC8M Runinstandby" />
 		<clock index = "22_0" symbol="GCLK_ID_2_GENSEL" value="1" component_id= "core" name="RTC Clock GCLK1" />
 		<clock index = "23_0" symbol="GCLK_ID_7_CHEN" value="True" component_id= "core" name="EVSYS clock" />
@@ -49,7 +49,7 @@ This is for SAMD20, SAMD21 Family
 	</data>
 	<data>	{Generic clock(Peripherals)| Source | Frequency},
 					{GCLK0(CPU)|DFLL48M| 48MHz},
-					{GCLK1(Timer)|OSCULP32K|1.024KHz},
+					{GCLK1(Timer)|OSCULP32K|2.048KHz},
 					{GCLK2(PTC,UART)| OSC8M| 4MHz},
 	</data>
 	<data>	{Wait states},

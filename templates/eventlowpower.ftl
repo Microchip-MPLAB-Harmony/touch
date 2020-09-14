@@ -39,7 +39,7 @@
 	RTC_Timer32Stop();
     RTC_Timer32CounterSet(0);
     RTC_REGS->MODE0.RTC_EVCTRL = QTM_AUTOSCAN_TRIGGER_PERIOD_EVENT;
-    RTC_Timer32CompareSet(DEF_TOUCH_DRIFT_PERIOD_MS>>1);
+    RTC_Timer32CompareSet(DEF_TOUCH_DRIFT_PERIOD_MS);
     RTC_Timer32Start();
 	/* Store the measurement period */
 	measurement_period_store = DEF_TOUCH_DRIFT_PERIOD_MS;
@@ -102,7 +102,7 @@
     RTC_Timer32Stop();
     RTC_Timer32CounterSet(0);
     RTC_REGS->MODE0.RTC_EVCTRL = 0;
-    RTC_Timer32CompareSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS>>1);
+    RTC_Timer32CompareSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
     RTC_Timer32Start();
 	/* Store the measurement period */
 	measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
