@@ -7,13 +7,13 @@
 ### NEW DEVICES SUPPORTED
 
 * Device Support for PIC32CMLE
-* DEVICE Support for PIC32CMLS
+* Device Support for PIC32CMLS
 
-### NEW FEATURE SUPPORTED
+### NEW FEATURES SUPPORTED
 
-* Low Power Support in GUI
-* Lump Support in GUI
-* Binding Layer disabled 
+* Low Power Support
+* Lump Support
+* Binding Layer is disabled 
   
 ### DEVELOPMENT TOOLS 
 
@@ -30,7 +30,7 @@
 * mhc v3.5.1 
 
 ### KNOWN ISSUES
-* Lump mode mouse drag operation in Touch config GUI only operates from top Left ot bottom right.
+* Lump mode mouse drag operation in Touch configurator GUI only operates from top left to bottom right.
 
 ## Touch Library v3.7.0 Release
 

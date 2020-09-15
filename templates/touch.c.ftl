@@ -1040,8 +1040,8 @@ void touch_measure_wcomp_match(void)
 #endif
 </#if>
 </#if>
-uint8_t interrupt_cnt;
 <#if ENABLE_GESTURE==true>
+uint8_t interrupt_cnt;
 uint8_t touch_gesture_time_cnt;
 </#if>
 /*============================================================================
@@ -1061,7 +1061,6 @@ void touch_timer_handler(void)
 		qtm_update_gesture_2d_timer(touch_gesture_time_cnt / DEF_GESTURE_TIME_BASE_MS);
 		touch_gesture_time_cnt = touch_gesture_time_cnt % DEF_GESTURE_TIME_BASE_MS;
 	}
-</#if>
 	interrupt_cnt++;
 	if (interrupt_cnt >= DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
 		interrupt_cnt = 0;
@@ -1078,9 +1077,11 @@ void touch_timer_handler(void)
 #else
     qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 #endif
+<#else>
+    qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 </#if>
-		qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 	}
+<#else>
     /* Count complete - Measure touch sensors */
 	time_to_measure_touch_var = 1;
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
@@ -1096,6 +1097,7 @@ void touch_timer_handler(void)
 #endif
 <#else>
     qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
+</#if>
 </#if>
 }
 <#if DEVICE_NAME == "PIC32MZW">
