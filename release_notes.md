@@ -4,11 +4,6 @@
 #  Microchip MPLAB� Harmony 3 Touch Library Release Notes
 ## Touch Library v3.8.0 Release
 
-### NEW DEVICES SUPPORTED
-
-* Device Support for PIC32CMLE
-* Device Support for PIC32CMLS
-
 ### NEW FEATURES SUPPORTED
 
 * Low Power Support
