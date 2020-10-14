@@ -2,6 +2,26 @@
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 #  Microchip MPLAB� Harmony 3 Touch Library Release Notes
+## Touch Library v3.9.0 Release
+
+### NEW FEATURES SUPPORTED
+  
+### DEVELOPMENT TOOLS 
+
+* [MPLAB X IDE v5.40](https://www.microchip.com/mplabx-ide-windows-installer)
+* [MPLAB XC32 C/C++ Compiler v2.41](https://www.microchip.com/mplab/compilers)
+* MPLAB X IDE plug-ins:
+  * MPLAB Harmony Configurator (MHC) v3.6.0 
+
+### Required MPLAB Harmony v3.x.x Modules 
+
+* csp v3.x.x
+* bsp v3.x.x
+* dev_packs v3.x.x
+* mhc v3.x.x
+
+
+#  Microchip MPLAB� Harmony 3 Touch Library Release Notes
 ## Touch Library v3.8.0 Release
 
 ### NEW FEATURES SUPPORTED
