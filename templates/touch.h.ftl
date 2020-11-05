@@ -459,69 +459,59 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define FREQ_AUTOTUNE_COUNT_IN ${DEF_TOUCH_TUNE_IN_COUNT}
 </#if>
 </#if>
+
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
-<#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == true>
-	<#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")> 
-		<@eventlp.lowpower_SAML/>
-		<@eventlp.lowpower_params_saml/>
-	<#elseif ((DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00"))>
-		<@eventlp.lowpower_PIC32CM/>
-		<@eventlp.lowpower_params_saml/>
-	<#elseif (DEVICE_NAME == "SAMD20")||(DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1") || (DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21")>
-		<@eventlp.lowpower_params_samdx/>
-	</#if>
-</#if>
-<#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false>
-	<#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")>
-		<@softwarelp.lowpower_SAML/>
-	</#if>
-    <@softwarelp.lowpower_params_noevs/>
-</#if>
-<#if (DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")>
-
-/* Sleep Modes */
-#define PM_SLEEP_IDLE_0		0u
-#define PM_SLEEP_IDLE_1		1u
-#define PM_SLEEP_IDLE_2		2u
-#define PM_SLEEP_STANDBY	3u
-
-/* Event system parameters */
-#define QTM_AUTOSCAN_TRIGGER_GENERATOR (QTM_AUTOSCAN_TRIGGER_PERIOD + 4u)
-#define QTM_AUTOSCAN_STCONV_USER 28u
-#define QTM_RTC_TO_PTC_EVSYS_CHANNEL 0u
-#define QTM_AUTOSCAN_TRIGGER_PERIOD_EVENT (1u << QTM_AUTOSCAN_TRIGGER_PERIOD)
-</#if>
-
-
-<#if (DEVICE_NAME == "SAMD20")>
-
-/* Sleep Modes */
-#define PM_SLEEP_IDLE_0		0u
-#define PM_SLEEP_IDLE_1		1u
-#define PM_SLEEP_IDLE_2		2u
-#define PM_SLEEP_STANDBY	3u
-
-/* Event system parameters */
-#define QTM_AUTOSCAN_TRIGGER_GENERATOR (QTM_AUTOSCAN_TRIGGER_PERIOD + 4u)
-#define QTM_AUTOSCAN_STCONV_USER 13u
-#define QTM_RTC_TO_PTC_EVSYS_CHANNEL 0u
-#define QTM_AUTOSCAN_TRIGGER_PERIOD_EVENT (1u << QTM_AUTOSCAN_TRIGGER_PERIOD)
-
-</#if>
-
-<#if (DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21")>
-
-/* Sleep Modes */
-#define PM_SLEEP_IDLE 2u
-#define PM_SLEEP_STANDBY 4u
-
-/* Event system parameters */
-#define QTM_AUTOSCAN_TRIGGER_GENERATOR (QTM_AUTOSCAN_TRIGGER_PERIOD + 6u)
-#define QTM_AUTOSCAN_STCONV_USER 39u
-#define QTM_RTC_TO_PTC_EVSYS_CHANNEL 0u
-#define QTM_AUTOSCAN_TRIGGER_PERIOD_EVENT (1u << QTM_AUTOSCAN_TRIGGER_PERIOD)
-
-</#if>
+    <#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == true>
+        <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")> 
+            <@eventlp.lowpower_SAML/>
+            <@eventlp.lowpower_params_saml/>
+        <#elseif (DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")>
+            <@eventlp.lowpower_PIC32CM/>
+            <@eventlp.lowpower_params_saml/>
+        <#elseif (DEVICE_NAME == "SAMD20")||(DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")>
+            <@eventlp.lowpower_samd21_da1_ha1/>
+            <@eventlp.lowpower_params_samdx/>
+        <#elseif (DEVICE_NAME == "SAMD20")>
+            <@eventlp.lowpower_samd20/>
+            <@eventlp.lowpower_params_samdx/>
+        <#elseif (DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21")>
+            <@eventlp.lowpower_samc20_c21/>
+            <@eventlp.lowpower_params_samc2x/>
+        <#elseif (DEVICE_NAME == "SAML21") || (DEVICE_NAME == "SAML22")>
+            <@eventlp.lowpower_SAML21_SAML22/>
+            <@eventlp.lowpower_params_saml2x/>    
+        <#elseif (DEVICE_NAME == "SAME54")>
+            <@eventlp.lowpower_SAME5x/>
+            <@eventlp.lowpower_params_samE5x/>
+        <#elseif (DEVICE_NAME == "SAMD10") || (DEVICE_NAME == "SAMD11")>
+        </#if>
+    </#if>
+    <#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false>
+        <#--  <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")>
+            <@softwarelp.lowpower_SAML/>
+        <#elseif (DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")>
+            <@softwarelp.lowpower_PIC32CM/>
+            <@eventlp.lowpower_params_saml/>
+        <#elseif (DEVICE_NAME == "SAMD20")||(DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")>
+            <@softwarelp.lowpower_samd21_da1_ha1/>
+            <@eventlp.lowpower_params_samdx/>
+        <#elseif (DEVICE_NAME == "SAMD20")>
+            <@softwarelp.lowpower_samd20/>
+            <@eventlp.lowpower_params_samdx/>
+        <#elseif (DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21")>
+            <@softwarelp.lowpower_samc20_c21/>
+            <@eventlp.lowpower_params_samc2x/>
+        <#elseif (DEVICE_NAME == "SAML21") || (DEVICE_NAME == "SAML22")>
+            <@softwarelp.lowpower_SAML21_SAML22/>
+            <@eventlp.lowpower_params_saml2x/>    
+        <#elseif (DEVICE_NAME == "SAME54")>
+            <@softwarelp.lowpower_SAME5x/>
+            <@eventlp.lowpower_params_samE5x/>
+        <#elseif (DEVICE_NAME == "SAMD10") || (DEVICE_NAME == "SAMD11")>
+            <@softwarelp.lowpower_params_samdx/>
+        </#if>  -->
+        <@softwarelp.lowpower_params_noevs/>
+    </#if>
 </#if>
 /**********************************************************/
 /***************** Communication - Data Streamer ******************/

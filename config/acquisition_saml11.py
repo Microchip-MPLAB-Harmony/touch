@@ -118,7 +118,7 @@ touchBindHeaderFile.setDestPath("/touch/")
 touchBindHeaderFile.setProjectPath("config/" + configName + "/touch/")
 touchBindHeaderFile.setType("HEADER")
 touchBindHeaderFile.setMarkup(False)
-touchHeaderFile.setEnabled(False)
+touchBindHeaderFile.setEnabled(False)
 
 # Header File
 touchCommonHeaderFile = qtouchComponent.createFileSymbol("TOUCH_COMMON_HEADER", None)
