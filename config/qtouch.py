@@ -752,7 +752,7 @@ def instantiateComponent(qtouchComponent):
     global InterruptVector
     global IDArray
     
-    showConfiguration = False
+    showConfiguration = True
     qtouchFilesArray = []
     configName = Variables.get("__CONFIGURATION_NAME")
     

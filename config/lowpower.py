@@ -1,3 +1,5 @@
+global low_power_events_supported
+
 def enablePM(symbol,event):
 	pmComponentID = ["pm"]
 	supcComponentID = ["supc"]
@@ -18,9 +20,10 @@ LowPowerEvntMenu = qtouchComponent.createMenuSymbol("LOW_POWER_EVENT_MENU", touc
 LowPowerEvntMenu.setLabel("Low Power Configuration")
 
 # Enable Event based Low power 
-enableEventLowPower = qtouchComponent.createBooleanSymbol("ENABLE_EVENT_LP", LowPowerEvntMenu)
-enableEventLowPower.setLabel("Event based Low Power")
-enableEventLowPower.setDefaultValue(False)
+if (getDeviceName.getDefaultValue() in low_power_events_supported):
+	enableEventLowPower = qtouchComponent.createBooleanSymbol("ENABLE_EVENT_LP", LowPowerEvntMenu)
+	enableEventLowPower.setLabel("Event based Low Power")
+	enableEventLowPower.setDefaultValue(False)
 
 #Low-power Node Selection
 global lowPowerKey
