@@ -37,7 +37,6 @@ CONSEQUENTIAL DAMAGES, LOST  PROFITS  OR  LOST  DATA,  COST  OF  PROCUREMENT  OF
 SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
-
 #ifndef TOUCH_H
 #define TOUCH_H
 
@@ -464,29 +463,27 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
     <#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == true>
         <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")> 
             <@eventlp.lowpower_SAML/>
-            <@eventlp.lowpower_params_saml/>
+            <@eventlp.lowpower_params_common/>
         <#elseif (DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")>
             <@eventlp.lowpower_PIC32CM/>
-            <@eventlp.lowpower_params_saml/>
+            <@eventlp.lowpower_params_common/>
         <#elseif (DEVICE_NAME == "SAMD20")||(DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")>
             <@eventlp.lowpower_samd21_da1_ha1/>
-            <@eventlp.lowpower_params_samdx/>
+            <@eventlp.lowpower_params_common/>
         <#elseif (DEVICE_NAME == "SAMD20")>
             <@eventlp.lowpower_samd20/>
-            <@eventlp.lowpower_params_samdx/>
+            <@eventlp.lowpower_params_common/>
         <#elseif (DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21")>
             <@eventlp.lowpower_samc20_c21/>
-            <@eventlp.lowpower_params_samc2x/>
+            <@eventlp.lowpower_params_common/>
         <#elseif (DEVICE_NAME == "SAML21") || (DEVICE_NAME == "SAML22")>
             <@eventlp.lowpower_SAML21_SAML22/>
-            <@eventlp.lowpower_params_saml2x/>    
-        <#elseif (DEVICE_NAME == "SAME54")>
-            <@eventlp.lowpower_SAME5x/>
-            <@eventlp.lowpower_params_samE5x/>
+            <@eventlp.lowpower_params_common/>   
         <#elseif (DEVICE_NAME == "SAMD10") || (DEVICE_NAME == "SAMD11")>
         </#if>
     </#if>
-    <#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false>
+    <#if ENABLE_EVENT_LP?exists>
+    <#if ENABLE_EVENT_LP == false>
         <#--  <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")>
             <@softwarelp.lowpower_SAML/>
         <#elseif (DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")>
@@ -504,13 +501,14 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
         <#elseif (DEVICE_NAME == "SAML21") || (DEVICE_NAME == "SAML22")>
             <@softwarelp.lowpower_SAML21_SAML22/>
             <@eventlp.lowpower_params_saml2x/>    
-        <#elseif (DEVICE_NAME == "SAME54")>
-            <@softwarelp.lowpower_SAME5x/>
-            <@eventlp.lowpower_params_samE5x/>
         <#elseif (DEVICE_NAME == "SAMD10") || (DEVICE_NAME == "SAMD11")>
             <@softwarelp.lowpower_params_samdx/>
         </#if>  -->
         <@softwarelp.lowpower_params_noevs/>
+    </#if>
+    <#else>
+    <@softwarelp.lowpower_params_noevs/> 
+    <@softwarelp.lowpower_params_autoscan/>
     </#if>
 </#if>
 /**********************************************************/

@@ -389,6 +389,8 @@ def onAttachmentConnected(source,target):
             if (Database.getSymbolValue(remoteID, "RTC_MODE0_INTENSET_CMP0_ENABLE") == False):
                 Database.setSymbolValue(remoteID, "RTC_MODE0_INTENSET_CMP0_ENABLE", True)
                 Database.setSymbolValue(remoteID, "RTC_MODULE_SELECTION", 0)
+            if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
+                Database.setSymbolValue(remoteID, "RTC_MODE0_PRESCALER", 6)
         else:
             Database.setSymbolValue(remoteID, "TIMER_PRE_SCALER", 0)
             Database.setSymbolValue(remoteID, "TMR_INTERRUPT_MODE", True)
@@ -702,10 +704,47 @@ def surface_rearrangement(symbol,event):
 		temp_string = y_append_y_y
 		tempSymbol.setValue(temp_string)
 
+
+def processSoftwareLP(symbol, event):
+	localComponent = symbol.getComponent()
+	tempSymbol = localComponent.getSymbolByID("LOW_POWER_KEYS")
+	low_power_mask = tempSymbol.getValue()
+	tempSymbol = localComponent.getSymbolByID("TOUCH_CHAN_ENABLE_CNT")
+	total_num_channel = tempSymbol.getValue()
+	lp_mask = []
+	low_power_keys = []
+	lp_mask_of_8 = []
+	for i in low_power_mask.split(","):
+		low_power_keys.append(int(i))
+	for i in range(total_num_channel):
+		if i in low_power_keys:
+			lp_mask.append(1)
+		else:
+			lp_mask.append(0)
+	# make the total number of channel is multipe of 8
+	for i in range(1000):
+		if len(lp_mask)%8 != 0:
+			#print(len(lp_mask), len(lp_mask)%8)
+			lp_mask.append(0)
+		else:
+			break
+	for i in range(int(len(lp_mask)/8)):
+		sum = 0
+		for loop_cnt in range(8):
+			index = i*8 + loop_cnt
+			if lp_mask[index] == 1:
+				sum = sum + pow(2,loop_cnt)
+		lp_mask_of_8.append(hex(sum))
+	print "Kamal"
+	print ",".join(lp_mask_of_8)
+	tempSymbol = localComponent.getSymbolByID("LOW_POWER_KEYS_MASK")
+	tempSymbol.setValue(",".join(lp_mask_of_8))
+
 def onGenerate(symbol,event):
 	processBoostMode(symbol,event)
 	processLump(symbol,event)
 	surface_rearrangement(symbol,event)
+	processSoftwareLP(symbol,event)
 
 def onPTCClock(symbol,event):
     component = symbol.getComponent()

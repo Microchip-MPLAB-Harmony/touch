@@ -318,6 +318,8 @@ ${columns}, // Number of Columns
                 <#else>
                     <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Button"+" "+(sen_type_but_cnt?size)+";")] > <#assign sen_type_but_cnt = sen_type_but_cnt +[1]>
                 </#if>
+                <#else>
+                    <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Button"+" "+(sen_type_but_cnt?size)+";")] > <#assign sen_type_but_cnt = sen_type_but_cnt +[1]>
             </#if>
         </#if>
     <#elseif (ENABLE_SURFACE == false)>
@@ -331,6 +333,8 @@ ${columns}, // Number of Columns
                 <#else>
                     <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Button"+" "+(sen_type_but_cnt?size)+";")] > <#assign sen_type_but_cnt = sen_type_but_cnt +[1]>
                 </#if>
+                <#else>
+                    <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Button"+" "+(sen_type_but_cnt?size)+";")] > <#assign sen_type_but_cnt = sen_type_but_cnt +[1]>
             </#if>
     </#if>
 
@@ -361,6 +365,8 @@ ${columns}, // Number of Columns
                 <#else>
                     <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Button"+" "+(sen_type_but_cnt?size)+";")] > <#assign sen_type_but_cnt = sen_type_but_cnt +[1]>
                 </#if>
+                <#else>
+                    <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"Button"+" "+(sen_type_but_cnt?size)+";")] > <#assign sen_type_but_cnt = sen_type_but_cnt +[1]>
             </#if>
             </#if>
         </#if>
