@@ -48,7 +48,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#assign sam_l2x_devices = ["SAML21","SAML22"]>
 <#assign sam_l1x_devices = ["SAML10"]>
 <#assign supc_devices = ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00","SAML21","SAML22"]>
-<#assign no_standby_devices = ["SAMD10","SAMD11"]>
+<#assign no_standby_devices = ["SAMD10","SAMD11","SAML21","SAML22"]>
 
 /*----------------------------------------------------------------------------
  *     include files
