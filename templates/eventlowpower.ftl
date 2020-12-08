@@ -305,19 +305,7 @@
 </#macro>
 
 <#macro lowpwer_disable_samd1x_evsys>
-	/* Enable event trigger during startup */
-	/* Disable RTC to PTC event system for now */
-    EVSYS_REGS->EVSYS_CTRL = EVSYS_CTRL_GCLKREQ_Msk;
- 	EVSYS_REGS->EVSYS_CHANNEL =  EVSYS_CHANNEL_CHANNEL(QTM_RTC_TO_PTC_EVSYS_CHANNEL) | EVSYS_CHANNEL_EVGEN(QTM_AUTOSCAN_TRIGGER_GENERATOR) | EVSYS_CHANNEL_PATH(2) | EVSYS_CHANNEL_EDGSEL(0);
-    EVSYS_REGS->EVSYS_USER = 0; //EVSYS_USER_CHANNEL(QTM_RTC_TO_PTC_EVSYS_CHANNEL+1u) | EVSYS_USER_USER(QTM_AUTOSCAN_STCONV_USER);
-
-    RTC_Timer32Stop();
-    RTC_Timer32CounterSet(0);
-    RTC_REGS->MODE0.RTC_EVCTRL = 0;
-    RTC_Timer32CompareSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
-    RTC_Timer32Start();
-	/* Store the measurement period */
-	measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
+/*Events not supported with d1x device*/
 </#macro>
 
 <#-- ========================================================================================== -->

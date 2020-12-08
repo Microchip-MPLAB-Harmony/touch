@@ -829,6 +829,11 @@ void touch_process(void)
         if (time_to_measure_touch_var != 1u) {
             PM_StandbyModeEnter();
         }
+<#if no_standby_devices?seq_contains(DEVICE_NAME)>
+        else{
+            PM_IdleModeEnter();
+        }
+</#if>
 #endif
 
 </#if>
@@ -920,8 +925,6 @@ static void touch_disable_lowpower_measurement(void)
 	<#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false>
     lp_measurement = 0;
 	<@softwarelp.lowpwer_disable_saml21_l22_no_evs/>
-	<#else>
-	<@eventlp.lowpwer_disable_saml21_l22_evsys/>
 	</#if>
 </#if>
 <#if sam_d1x_devices?seq_contains(DEVICE_NAME)>
@@ -972,7 +975,6 @@ static void touch_enable_lowpower_measurement(void)
     lp_measurement = 1;
 	<@softwarelp.lowpwer_enable_saml21_l22_no_evs/>
 	<#else>
-	<@eventlp.lowpwer_enable_saml21_l22_evsys/>
     </#if>
 </#if>
 <#if sam_d1x_devices?seq_contains(DEVICE_NAME)>

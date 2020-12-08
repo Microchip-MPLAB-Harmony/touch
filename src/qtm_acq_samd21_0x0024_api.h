@@ -207,7 +207,7 @@ typedef struct
   qtm_acquisition_control_t* qtm_acq_control;
   uint16_t auto_scan_node_number;
   uint8_t auto_scan_node_threshold;
-  uint16_t auto_scan_trigger;  
+  uint8_t auto_scan_trigger;  
 }qtm_auto_scan_config_t;
 
 
