@@ -48,7 +48,7 @@
 * Range: 0 or 1
 * Default value: 1
 */
-#define DEF_TOUCH_LOWPOWER_ENABLE ${(LOW_POWER_KEYS!="")?then("1", "0")}
+#define DEF_TOUCH_LOWPOWER_ENABLE ${(LOW_POWER_KEYS!="")?then("1u", "0u")}
 
 /* Node selection for Low-power scan. 
 * Range: 0 to (DEF_NUM_CHANNELS-1).
@@ -60,7 +60,7 @@
 * Range: 10 to 255
 * Default value: 10
 */
-#define QTM_AUTOSCAN_THRESHOLD		 ${LOW_POWER_DET_THRESHOLD}
+#define QTM_AUTOSCAN_THRESHOLD		 ${LOW_POWER_DET_THRESHOLD}u
 
 /* Defines the Auto scan trigger period.
  * The Low-power measurement period determine the interval between low-power touch measurement.
@@ -73,7 +73,7 @@
 * Range: 1 to 65535
 * Default value: 5000
 */
-#define DEF_TOUCH_TIMEOUT                       ${TCH_INACTIVE_TIME}
+#define DEF_TOUCH_TIMEOUT                       ${TCH_INACTIVE_TIME}u
 
 /* Defines drift measurement period
 * During low-power measurement, it is recommended to perform periodic active measurement to perform drifting.
@@ -81,7 +81,7 @@
 * Range: 1 to 65535 ( should be more than QTM_AUTOSCAN_TRIGGER_PERIOD)
 * Default value: 2000
 */
-#define DEF_TOUCH_DRIFT_PERIOD_MS               ${DRIFT_WAKE_UP_PERIOD}
+#define DEF_TOUCH_DRIFT_PERIOD_MS               ${DRIFT_WAKE_UP_PERIOD}u
 </#macro>
 
 
@@ -89,30 +89,17 @@
 <#-- =======================================SAMD21============================================= -->
 
 <#macro lowpower_touch_timer_handler_samd21_evsys>
-    if (measurement_period_store == DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
-        /* Count complete - Measure touch sensors */
-        time_to_measure_touch_var = 1u;
-
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
-        qtm_update_qtlib_timer(measurement_period_store);
+    time_to_measure_touch_var = 1u;
         if (time_since_touch < (65535u - measurement_period_store)) {
             time_since_touch += measurement_period_store;
         } else {
             time_since_touch = 65535;
         }
+        qtm_update_qtlib_timer(measurement_period_store);
 #else
         qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 #endif
-    } else {
-        count_timeout += measurement_period_store;
-        if (count_timeout >= DEF_TOUCH_DRIFT_PERIOD_MS) {
-            count_timeout = 0;
-            qtm_autoscan_node_cancel();
-            time_to_measure_touch_var = 1;
-        } else {
-            qtm_autoscan_sensor_node(&auto_scan_setup, touch_measure_wcomp_match);
-        }
-    }
 </#macro>
 
 <#macro lowpwer_enableevsys_samd20_d21>
@@ -223,29 +210,17 @@
 <#-- ========================================================================================== -->
 <#-- =======================================SAMC2x============================================= -->
 <#macro lowpower_touch_timer_handler_samc20_c21_evsys>
-    if (measurement_period_store == DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
-        /* Count complete - Measure touch sensors */
-        time_to_measure_touch_var = 1u;
-
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
-        qtm_update_qtlib_timer(measurement_period_store);
+    time_to_measure_touch_var = 1u;
         if (time_since_touch < (65535u - measurement_period_store)) {
             time_since_touch += measurement_period_store;
         } else {
             time_since_touch = 65535;
         }
+        qtm_update_qtlib_timer(measurement_period_store);
 #else
         qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 #endif
-    } else {
-        count_timeout += measurement_period_store;
-        if (count_timeout >= DEF_TOUCH_DRIFT_PERIOD_MS) {
-            count_timeout = 0;
-            qtm_autoscan_node_cancel();
-        } else {
-            qtm_autoscan_sensor_node(&auto_scan_setup, touch_measure_wcomp_match);
-        }
-    }
 </#macro>
 <#macro lowpwer_enable_samc20_c21_evsys>
 	/* Enable event trigger during startup */
@@ -501,29 +476,16 @@
 </#macro>
 
 
-<#macro lowpower_touch_timer_handler_samdl1x_evsys>
-if (measurement_period_store == DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
-        /* Count complete - Measure touch sensors */
-        time_to_measure_touch_var = 1u;
-
+<#macro lowpower_touch_timer_handler_saml1x_evsys>
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
-        qtm_update_qtlib_timer(measurement_period_store);
+    time_to_measure_touch_var = 1u;
         if (time_since_touch < (65535u - measurement_period_store)) {
             time_since_touch += measurement_period_store;
         } else {
             time_since_touch = 65535;
         }
+        qtm_update_qtlib_timer(measurement_period_store);
 #else
         qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 #endif
-    } else {
-        count_timeout += measurement_period_store;
-        if (count_timeout >= DEF_TOUCH_DRIFT_PERIOD_MS) {
-            count_timeout = 0;
-            qtm_autoscan_node_cancel();
-        } else {
-            qtm_autoscan_sensor_node(&auto_scan_setup, touch_measure_wcomp_match);
-
-        }
-    }
 </#macro>

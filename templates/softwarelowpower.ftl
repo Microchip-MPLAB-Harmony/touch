@@ -102,7 +102,6 @@
     RTC_Timer32Compare0Set(QTM_LOWPOWER_TRIGGER_PERIOD);
 	/* Store the measurement period */
 	measurement_period_store = QTM_LOWPOWER_TRIGGER_PERIOD;
-    qtm_autoscan_sensor_node(&auto_scan_setup, touch_measure_wcomp_match);
     lp_measurement = 1;
     RTC_Timer32Start();
 </#macro>
@@ -148,7 +147,7 @@
  * Range: 0 or 1.
  * Default value: 1
 */
-#define DEF_TOUCH_LOWPOWER_ENABLE ${(LOW_POWER_KEYS!="")?then("1", "0")}
+#define DEF_TOUCH_LOWPOWER_ENABLE ${(LOW_POWER_KEYS!="")?then("1u", "0u")}
 
 /* Lowpower Key Information 
  * Bit-mask of the keys which are enabled in low-power mode
@@ -160,14 +159,14 @@
  * Range : 1 to 65535
  * Default: 100
 */
-#define QTM_LOWPOWER_TRIGGER_PERIOD       ${LOW_POWER_TRIGGER_PERIOD}
+#define QTM_LOWPOWER_TRIGGER_PERIOD       ${LOW_POWER_TRIGGER_PERIOD}u
 
 /* Defines the touch timeout to enable auto scan
  * Waiting time for the application to switch to low-power measurement after the last touch.
  * Range : 1 to 65535
  * Default: 5000
 */
-#define DEF_TOUCH_TIMEOUT	${TCH_INACTIVE_TIME}
+#define DEF_TOUCH_TIMEOUT	${TCH_INACTIVE_TIME}u
 
 /* Defines drift measurement period
  * If drift period is not a multiple of Low-power measurement period,
@@ -176,7 +175,7 @@
  * Range: 1 to 65535 (should be more than QTM_LOWPOWER_TRIGGER_PERIOD)
  * Default: 2000
 */
-#define DEF_TOUCH_DRIFT_PERIOD_MS	${DRIFT_WAKE_UP_PERIOD}
+#define DEF_TOUCH_DRIFT_PERIOD_MS	${DRIFT_WAKE_UP_PERIOD}u
 
 </#macro>
 <#macro lowpower_params_autoscan>

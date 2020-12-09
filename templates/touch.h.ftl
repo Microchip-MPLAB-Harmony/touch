@@ -476,10 +476,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
         <#elseif (DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21")>
             <@eventlp.lowpower_samc20_c21/>
             <@eventlp.lowpower_params_common/>
-        <#elseif (DEVICE_NAME == "SAML21") || (DEVICE_NAME == "SAML22")>
-            <@eventlp.lowpower_SAML21_SAML22/>
-            <@eventlp.lowpower_params_common/>   
-        <#elseif (DEVICE_NAME == "SAMD10") || (DEVICE_NAME == "SAMD11")>
         </#if>
     </#if>
     <#if ENABLE_EVENT_LP?exists>
@@ -498,17 +494,11 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
         <#elseif (DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21")>
             <@softwarelp.lowpower_samc20_c21/>
             <@eventlp.lowpower_params_samc2x/>
-        <#elseif (DEVICE_NAME == "SAML21") || (DEVICE_NAME == "SAML22")>
-            <@softwarelp.lowpower_SAML21_SAML22/>
-            <@eventlp.lowpower_params_saml2x/>    
-        <#elseif (DEVICE_NAME == "SAMD10") || (DEVICE_NAME == "SAMD11")>
-            <@softwarelp.lowpower_params_samdx/>
         </#if>  -->
         <@softwarelp.lowpower_params_noevs/>
     </#if>
     <#else>
     <@softwarelp.lowpower_params_noevs/> 
-    <@softwarelp.lowpower_params_autoscan/>
     </#if>
 </#if>
 /**********************************************************/
