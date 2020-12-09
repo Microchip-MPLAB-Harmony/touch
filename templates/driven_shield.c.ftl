@@ -302,9 +302,11 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	<#if DEVICE_NAME == "SAML22">
 	count = count - 2;
 	<#else>
+	<#if DEVICE_VARIANT == "SAMC21N">
 	period = period - 4;
 	count = count - 2;
-	</#if>	
+	</#if>
+	</#if>
 	<#break>
 </#if>
 </#list>
