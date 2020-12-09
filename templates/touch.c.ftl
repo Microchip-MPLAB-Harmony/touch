@@ -50,6 +50,12 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#assign supc_devices = ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]>
 <#assign no_standby_devices = ["SAMD10","SAMD11","SAML21","SAML22"]>
 
+<#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
+<#if (DS_DEDICATED_ENABLE == true) || (DS_PLUS_ENABLE == true) || no_standby_devices?seq_contains(DEVICE_NAME)>
+<#assign no_standby_during_measurement = 1>
+</#if>
+</#if>
+
 /*----------------------------------------------------------------------------
  *     include files
  *----------------------------------------------------------------------------*/
@@ -88,7 +94,7 @@ static void qtm_error_callback(uint8_t error);
 
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
-<#if no_standby_devices?seq_contains(DEVICE_NAME)>
+<#if no_standby_during_measurement == 1>
 static uint8_t measurement_in_progress = 0u;
 </#if>
 /* low power processing function */
@@ -633,7 +639,7 @@ static void qtm_measure_complete_callback(void)
 	all_measure_complete = 1;
 </#if>
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
-<#if no_standby_devices?seq_contains(DEVICE_NAME)>
+<#if no_standby_during_measurement == 1>
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
 measurement_in_progress = 0;
 #endif
@@ -745,7 +751,7 @@ void touch_process(void)
             /* Clear the Measure request flag */
 			time_to_measure_touch_var = 0;
             <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
-            <#if no_standby_devices?seq_contains(DEVICE_NAME)>
+            <#if no_standby_during_measurement == 1>
             #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
             measurement_in_progress = 1;
             #endif
@@ -835,7 +841,7 @@ void touch_process(void)
         </#if>
     }
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>
-<#if no_standby_devices?seq_contains(DEVICE_NAME)>
+<#if no_standby_during_measurement == 1 >
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
     if ((time_to_measure_touch_var != 1u)) {
         if(measurement_in_progress == 0u) {
