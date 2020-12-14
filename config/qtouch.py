@@ -389,8 +389,10 @@ def onAttachmentConnected(source,target):
             if (Database.getSymbolValue(remoteID, "RTC_MODE0_INTENSET_CMP0_ENABLE") == False):
                 Database.setSymbolValue(remoteID, "RTC_MODE0_INTENSET_CMP0_ENABLE", True)
                 Database.setSymbolValue(remoteID, "RTC_MODULE_SELECTION", 0)
+                Database.setSymbolValue(remoteID, "RTC_MODE0_TIMER_COMPARE",long(1))
             if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
                 Database.setSymbolValue(remoteID, "RTC_MODE0_PRESCALER", 6)
+                Database.setSymbolValue(remoteID, "RTC_MODE0_TIMER_COMPARE0",long(1))
         else:
             Database.setSymbolValue(remoteID, "TIMER_PRE_SCALER", 0)
             Database.setSymbolValue(remoteID, "TMR_INTERRUPT_MODE", True)
