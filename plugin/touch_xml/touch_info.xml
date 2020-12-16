@@ -21,7 +21,7 @@ This is for device feature and library version information
 	</clock>
     <version>
         <!-- module version information -->
-        <key>1.3</key>
+        <key>1.4</key>
         <binding>1.4</binding>
         <scroller>1.0</scroller>
         <frequencyhop>                

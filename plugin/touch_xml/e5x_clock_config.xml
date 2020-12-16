@@ -7,24 +7,27 @@ This is for SAME51, SAME53, SAME54, SAMD51 Family
 	<all_clock_symbols_list>
 		<clock index = "0_0" symbol="CONFIG_CLOCK_DFLL_ENABLE" value="True" component_id= "core" name="DFLL Enable" />
 		<clock index = "1_0" symbol="CONFIG_CLOCK_DFLL_OPMODE" value="0" component_id= "core" name="DFLL Open mode" />
+		<clock index = "2_0" symbol="CONFIG_CLOCK_DFLL_RUNSTDY" value="True" component_id= "core" name="DFLL To run in standby" />
+		<clock index = "3_0" symbol="CONFIG_CLOCK_DPLL0_ENABLE" value="False" component_id= "core" name="Disable DPLL0" />
 		<clock index = "8_0" symbol="GCLK_0_SRC" value="6" component_id= "core" name="Select GCLK0 source" />
 		<clock index = "9_0" symbol="GCLK_0_DIV" value="1" component_id= "core" name="Select GCLK0 div" />
 		<clock index = "10_0" symbol="GCLK_INST_NUM1" value="True" component_id= "core" name="Select GCLK1" />
 		<clock index = "11_0" symbol="GCLK_1_SRC" value="5" component_id= "core" name="GCLK1 Source" />
 		<clock index = "12_0" symbol="GCLK_1_DIV" value="6" component_id= "core" name="GCLK1 Div" />
+		<clock index = "13_0" symbol="GCLK_1_RUNSTDBY" value="False" component_id= "core" name="GCLK1 Div" />
 		<clock index = "18_0" symbol="NVM_RWS" value="1" component_id= "nvmctrl" name="Wait state -4" />		
 	</all_clock_symbols_list>
 	<all_conditions_list>
 		<condition />
 	</all_conditions_list>
 	<common>
-		<default clock_update_index_list="0_0,1_0,8_0,9_0,10_0,11_0,12_0,18_0"/>
+		<default clock_update_index_list="0_0,1_0,2_0,3_0,8_0,9_0,10_0,11_0,12_0,13_0,18_0"/>
 	</common>
 </clock_settings>
 <description>
 	<!-- first {} considered as heading-->
 	<data>	{Oscillator| Prescaler Divisor | Frequency},
-					{DFLL48M| 1 | 48MHz(GCLK3, closed loop, multi factor 1464)}
+					{DFLL48M| 1 | 48MHz(Open loop)}
 	</data>
 	<data>	{Generic clock(Peripherals)| Source | Frequency},
 					{GCLK0(CPU)|DFLL48M| 48MHz}, 

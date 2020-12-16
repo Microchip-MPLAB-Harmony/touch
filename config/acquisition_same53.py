@@ -134,7 +134,7 @@ Database.clearSymbolValue("core", "ADC0_CLOCK_ENABLE")
 Database.setSymbolValue("core", "GCLK_ID_40_CHEN", True)
 Database.setSymbolValue("core", "ADC0_CLOCK_ENABLE", True)
 Database.clearSymbolValue("core", "GCLK_ID_40_GENSEL")
-Database.setSymbolValue("core", "GCLK_ID_40_GENSEL", 4)
+Database.setSymbolValue("core", "GCLK_ID_40_GENSEL", 1)
 
 acquisitionMenu = qtouchComponent.createMenuSymbol("ACQUISITION_MENU", touchMenu)
 acquisitionMenu.setLabel("Acquisition Configuration")

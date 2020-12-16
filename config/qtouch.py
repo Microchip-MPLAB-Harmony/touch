@@ -391,7 +391,7 @@ def onAttachmentConnected(source,target):
                 Database.setSymbolValue(remoteID, "RTC_MODULE_SELECTION", 0)
                 Database.setSymbolValue(remoteID, "RTC_MODE0_TIMER_COMPARE",long(1))
             if (getDeviceName.getDefaultValue() in ["SAME51","SAME53","SAME54","SAMD51"]):
-                Database.setSymbolValue(remoteID, "RTC_MODE0_PRESCALER", 6)
+                Database.setSymbolValue(remoteID, "RTC_MODE0_PRESCALER", 1)
                 Database.setSymbolValue(remoteID, "RTC_MODE0_TIMER_COMPARE0",long(1))
         else:
             Database.setSymbolValue(remoteID, "TIMER_PRE_SCALER", 0)
