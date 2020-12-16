@@ -5,21 +5,29 @@
 ## Touch Library v3.9.0 Release
 
 ### NEW FEATURES SUPPORTED
+* Low Power Support extended for - SAMC2x, SAM D1x, SAM E5x, SAM D5x, SAM L2x.
+
+### BUG FIXES
+* Driven shield waveform for C2x was not in sync - Corrected.
+* Calibration trigger does not automatically trigger corresponding button's calibration in boost mode - Corrected.
+  
   
 ### DEVELOPMENT TOOLS 
 
-* [MPLAB X IDE v5.40](https://www.microchip.com/mplabx-ide-windows-installer)
-* [MPLAB XC32 C/C++ Compiler v2.41](https://www.microchip.com/mplab/compilers)
+* [MPLAB X IDE v5.45](https://www.microchip.com/mplabx-ide-windows-installer)
+* [MPLAB XC32 C/C++ Compiler v2.50](https://www.microchip.com/mplab/compilers)
 * MPLAB X IDE plug-ins:
-  * MPLAB Harmony Configurator (MHC) v3.6.0 
+  * MPLAB Harmony Configurator (MHC) v3.6.4 
 
 ### Required MPLAB Harmony v3.x.x Modules 
 
-* csp v3.x.x
-* bsp v3.x.x
-* dev_packs v3.x.x
-* mhc v3.x.x
+* csp v3.8.3
+* bsp v3.8.2
+* dev_packs v3.8.0
+* mhc v3.6.4
 
+### KNOWN ISSUES
+* SAM L2x - Event system based low-power support in later release. 
 
 #  Microchip MPLAB� Harmony 3 Touch Library Release Notes
 ## Touch Library v3.8.0 Release
