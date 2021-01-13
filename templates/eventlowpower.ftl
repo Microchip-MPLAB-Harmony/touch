@@ -274,6 +274,10 @@
     EVSYS_REGS->EVSYS_USER[QTM_AUTOSCAN_STCONV_USER] = QTM_RTC_TO_PTC_EVSYS_CHANNEL+1u;
 
     /* Set up timer with periodic event output and drift period */
+    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    {
+        /* Wait for Synchronization before Disabling RTC */
+    }
     RTC_Timer32Stop();
     RTC_Timer32CounterSet(0);
     RTC_REGS->MODE0.RTC_EVCTRL = QTM_AUTOSCAN_TRIGGER_PERIOD_EVENT;
@@ -289,6 +293,10 @@
  	EVSYS_REGS->EVSYS_CHANNEL[QTM_RTC_TO_PTC_EVSYS_CHANNEL] = EVSYS_CHANNEL_EVGEN(0) | EVSYS_CHANNEL_PATH(2) | EVSYS_CHANNEL_EDGSEL(0) \
 									 | EVSYS_CHANNEL_ONDEMAND_Msk | EVSYS_CHANNEL_RUNSTDBY(1);
 
+    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    {
+        /* Wait for Synchronization before Disabling RTC */
+    }
     RTC_Timer32Stop();
     RTC_Timer32CounterSet(0);
     RTC_REGS->MODE0.RTC_EVCTRL = 0;
@@ -354,7 +362,26 @@
 <#-- ========================================================================================== -->
 <#-- =======================================SAML2x============================================= -->
 
-<#macro lowpower_SAML21_SAML22>
+<#macro lowpower_SAML22>
+/* Auto scan trigger Periods */
+#define NODE_SCAN_8MS		0u
+#define NODE_SCAN_16MS		1u
+#define NODE_SCAN_32MS		2u
+#define NODE_SCAN_64MS		3u
+#define NODE_SCAN_128MS		4u
+#define NODE_SCAN_256MS		5u
+#define NODE_SCAN_512MS		6u
+#define NODE_SCAN_1024MS	7u
+
+/* Event system parameters */
+#define QTM_AUTOSCAN_TRIGGER_GENERATOR			(QTM_AUTOSCAN_TRIGGER_PERIOD+7u)
+#define QTM_AUTOSCAN_STCONV_USER				23u
+#define QTM_RTC_TO_PTC_EVSYS_CHANNEL			0u
+#define QTM_AUTOSCAN_TRIGGER_PERIOD_EVENT		(1u << QTM_AUTOSCAN_TRIGGER_PERIOD)
+</#macro>
+
+
+<#macro lowpower_SAML21>
 /* Auto scan trigger Periods */
 #define NODE_SCAN_8MS		0u
 #define NODE_SCAN_16MS		1u
@@ -434,6 +461,20 @@
 
 
 <#macro lowpower_touch_timer_handler_saml1x_evsys>
+#if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
+    time_to_measure_touch_var = 1u;
+        if (time_since_touch < (65535u - measurement_period_store)) {
+            time_since_touch += measurement_period_store;
+        } else {
+            time_since_touch = 65535;
+        }
+        qtm_update_qtlib_timer(measurement_period_store);
+#else
+        qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
+#endif
+</#macro>
+
+<#macro lowpower_touch_timer_handler_saml2x_evsys>
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
     time_to_measure_touch_var = 1u;
         if (time_since_touch < (65535u - measurement_period_store)) {

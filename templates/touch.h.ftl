@@ -473,6 +473,12 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
         <#elseif (DEVICE_NAME == "SAMD20")>
             <@eventlp.lowpower_samd20/>
             <@eventlp.lowpower_params_common/>
+        <#elseif (DEVICE_NAME == "SAML22")>
+            <@eventlp.lowpower_SAML22/>
+            <@eventlp.lowpower_params_common/>
+        <#elseif (DEVICE_NAME == "SAML21")>
+            <@eventlp.lowpower_SAML21/>
+            <@eventlp.lowpower_params_common/>
         <#elseif (DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21")>
             <@eventlp.lowpower_samc20_c21/>
             <@eventlp.lowpower_params_common/>

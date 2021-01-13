@@ -48,7 +48,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#assign sam_l2x_devices = ["SAML21","SAML22"]>
 <#assign sam_l1x_devices = ["SAML10"]>
 <#assign supc_devices = ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]>
-<#assign no_standby_devices = ["SAMD10","SAMD11","SAML21","SAML22"]>
+<#assign no_standby_devices = ["SAMD10","SAMD11"]>
 <#assign no_standby_during_measurement = 0>
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
 <#if (DS_DEDICATED_ENABLE == true) || (DS_PLUS_ENABLE == true) || no_standby_devices?seq_contains(DEVICE_NAME)>
@@ -949,6 +949,7 @@ static void touch_disable_lowpower_measurement(void)
 </#if>
 <#if sam_l2x_devices?seq_contains(DEVICE_NAME)>
 	<#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == true>
+    <@eventlp.lowpwer_disable_saml21_l22_evsys/>
     <#else>
     lp_measurement = 0;
 	<@softwarelp.lowpwer_disable_saml21_l22_no_evs/>
@@ -999,6 +1000,7 @@ static void touch_enable_lowpower_measurement(void)
 </#if>
 <#if sam_l2x_devices?seq_contains(DEVICE_NAME)>
 	<#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == true>
+    <@eventlp.lowpwer_enable_saml21_l22_evsys />
 	<#else>
     lp_measurement = 1;
 	<@softwarelp.lowpwer_enable_saml21_l22_no_evs/>
@@ -1034,7 +1036,7 @@ static void touch_process_lowpower(void) {
 		/* Start Autoscan */
 		touch_ret = qtm_autoscan_sensor_node(&auto_scan_setup, touch_measure_wcomp_match);
 
-        if (touch_ret == TOUCH_SUCCESS){
+        if ((touch_ret == TOUCH_SUCCESS) && (measurement_period_store != DEF_TOUCH_DRIFT_PERIOD_MS)){
 
             /* Enable Event System */
             touch_enable_lowpower_measurement();
@@ -1095,7 +1097,7 @@ static void touch_process_lowpower(void) {
 }
 </#if>
 
-<#if (ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false) || sam_d1x_devices?seq_contains(DEVICE_NAME) || sam_l2x_devices?seq_contains(DEVICE_NAME) || sam_e5x_devices?seq_contains(DEVICE_NAME) >
+<#if (ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false) || sam_d1x_devices?seq_contains(DEVICE_NAME) || sam_e5x_devices?seq_contains(DEVICE_NAME) >
 static void touch_seq_lp_sensor(void)
 {
 	uint8_t lp_sensor_found = 0;
@@ -1164,7 +1166,6 @@ static void touch_measure_wcomp_match(void)
         touch_disable_lowpower_measurement();
         time_to_measure_touch_var = 1u;	
         time_since_touch = 0u;
-        count_timeout =0;
         </#if>
     }
 }
@@ -1222,6 +1223,8 @@ void touch_timer_handler(void)
     <@eventlp.lowpower_touch_timer_handler_samc20_c21_evsys/>
     <#elseif sam_l1x_devices?seq_contains(DEVICE_NAME)>
     <@eventlp.lowpower_touch_timer_handler_saml1x_evsys/>
+    <#elseif sam_l2x_devices?seq_contains(DEVICE_NAME)>
+    <@eventlp.lowpower_touch_timer_handler_saml2x_evsys/>
     </#if>
 
 <#elseif (ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false) || (sam_e5x_devices?seq_contains(DEVICE_NAME)) || (sam_d1x_devices?seq_contains(DEVICE_NAME)) || (sam_l2x_devices?seq_contains(DEVICE_NAME)) >  <#-- No event system -->

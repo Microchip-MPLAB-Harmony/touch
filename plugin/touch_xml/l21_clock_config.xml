@@ -12,7 +12,7 @@ This is for SAML21 Family
 		<clock index = "4_0" symbol="GCLK_0_SRC" value="1" component_id= "core" name="Set source as OSC16M" />
 		<clock index = "5_0" symbol="GCLK_1_SRC" value="1" component_id= "core" name="Set source as OSC16M" />
 		<clock index = "6_0" symbol="GCLK_1_DIV" value="4" component_id= "core" name="Set division factor as 4" />
-		<clock index = "7_0" symbol="RTC_MODE0_PRESCALER" value="0" component_id= "rtc" name="RTC Prescaler OFF" />
+		<clock index = "7_0" symbol="RTC_MODE0_PRESCALER" value="1" component_id= "rtc" name="RTC Prescaler 1" />
 		<clock index = "8_0" symbol="NVM_RWS" value="2" component_id= "nvmctrl" name="Wait state - 2" />
 	</all_clock_symbols_list>
 	<all_conditions_list>

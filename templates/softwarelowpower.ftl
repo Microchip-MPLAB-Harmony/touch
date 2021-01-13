@@ -73,6 +73,10 @@
 </#macro>
 
 <#macro lowpwer_disable_saml21_l22_no_evs>
+    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    {
+        /* Wait for Synchronization before Disabling RTC */
+    }
 	RTC_Timer32Stop();  
     RTC_Timer32CompareSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 	/* Store the measurement period */
@@ -81,6 +85,10 @@
 </#macro>
 
 <#macro lowpwer_enable_saml21_l22_no_evs>
+    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    {
+        /* Wait for Synchronization before Disabling RTC */
+    }
 	RTC_Timer32Stop();  
     RTC_Timer32CompareSet(QTM_LOWPOWER_TRIGGER_PERIOD);
 	/* Store the measurement period */
