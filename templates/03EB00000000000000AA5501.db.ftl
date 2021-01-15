@@ -308,7 +308,7 @@ ${columns}, // Number of Columns
             <#elseif tmp_txt == "SCROLLER_TYPE_WHEEL" > <#assign scr_channels = scr_channels + [cnt] > <#assign temp_string = temp_string + [("1:"+(cnt)+":"+("Wheel")+" "+(sen_type_whe_cnt?size)+"["+(temp_val)+"];")] >
             </#if>
         <#elseif (ENABLE_SURFACE == false)>
-            <#if (LUMP_CONFIG != "")>
+            <#if LUMP_CONFIG?exists && (LUMP_CONFIG != "")>
                 <#if (.vars["SELFCAP-INPUT_" + cnt]?contains("|"))>
                     <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"LumpButton"+" "+(sen_type_lump_but_cnt?size)+";")] > <#assign sen_type_lump_but_cnt = sen_type_lump_but_cnt +[1]>
                 <#elseif (.vars["MUTL-Y-INPUT_" + cnt]?contains("|"))>
@@ -323,7 +323,7 @@ ${columns}, // Number of Columns
             </#if>
         </#if>
     <#elseif (ENABLE_SURFACE == false)>
-        <#if (LUMP_CONFIG != "")>
+        <#if LUMP_CONFIG?exists && (LUMP_CONFIG != "")>
                 <#if (.vars["SELFCAP-INPUT_" + cnt]?contains("|"))>
                     <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"LumpButton"+" "+(sen_type_lump_but_cnt?size)+";")] > <#assign sen_type_lump_but_cnt = sen_type_lump_but_cnt +[1]>
                 <#elseif (.vars["MUTL-Y-INPUT_" + cnt]?contains("|"))>
@@ -355,7 +355,7 @@ ${columns}, // Number of Columns
         <#else>
             <#if scr_channels?seq_contains(cnt) >
             <#else>
-                <#if (LUMP_CONFIG != "")>
+                <#if LUMP_CONFIG?exists && (LUMP_CONFIG != "")>
                 <#if (.vars["SELFCAP-INPUT_" + cnt]?contains("|"))>
                     <#assign temp_string=temp_string + [("1:"+(cnt)+":"+"LumpButton"+" "+(sen_type_lump_but_cnt?size)+";")] > <#assign sen_type_lump_but_cnt = sen_type_lump_but_cnt +[1]>
                 <#elseif (.vars["MUTL-Y-INPUT_" + cnt]?contains("|"))>

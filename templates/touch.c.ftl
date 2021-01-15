@@ -565,12 +565,13 @@ static touch_ret_t touch_sensors_config(void)
 {
     uint16_t    sensor_nodes;
     touch_ret_t touch_ret = TOUCH_SUCCESS;
+
     /* Init acquisition module */
-    qtm_ptc_init_acquisition_module(&qtlib_acq_set1);
-    /* Init pointers to DMA sequence memory */
 <#if DEVICE_NAME == "PIC32MZW">
+    qtm_cvd_init_acquisition_module(&qtlib_acq_set1);
     qtm_cvd_qtlib_assign_signal_memory(&touch_acq_signals_raw[0]);
 <#else>
+    qtm_ptc_init_acquisition_module(&qtlib_acq_set1);
     qtm_ptc_qtlib_assign_signal_memory(&touch_acq_signals_raw[0]);
 </#if>
 
@@ -744,7 +745,11 @@ void touch_process(void)
     if (time_to_measure_touch_var == 1u) {
 
         /* Do the acquisition */
+        <#if DEVICE_NAME == "PIC32MZW">
+        touch_ret = qtm_cvd_start_measurement_seq(&qtlib_acq_set1, qtm_measure_complete_callback);
+        <#else>
          touch_ret = qtm_ptc_start_measurement_seq(&qtlib_acq_set1, qtm_measure_complete_callback);
+         </#if>
 
         /* if the Acquistion request was successful then clear the request flag */
         if (TOUCH_SUCCESS == touch_ret) {
