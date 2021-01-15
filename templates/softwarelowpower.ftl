@@ -17,7 +17,11 @@
 </#macro>
 
 <#macro lowpwer_disable_samc20_c21_no_evs>
-	RTC_Timer32Stop();  
+    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    {
+        /* Wait for Synchronization after writing value to Count Register */
+    }
+	RTC_Timer32Stop();
     RTC_Timer32CompareSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
     RTC_Timer32Start();
 	/* Store the measurement period */
@@ -26,6 +30,10 @@
 </#macro>
 
 <#macro lowpwer_enable_samc20_c21_no_evs>
+    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    {
+        /* Wait for Synchronization after writing value to Count Register */
+    }
     RTC_Timer32Stop();  
     RTC_Timer32CompareSet(QTM_LOWPOWER_TRIGGER_PERIOD);
     /* Store the measurement period */
@@ -77,7 +85,8 @@
     {
         /* Wait for Synchronization before Disabling RTC */
     }
-	RTC_Timer32Stop();  
+	RTC_Timer32Stop();
+    RTC_REGS->MODE0.RTC_CTRLA &= ~RTC_MODE0_CTRLA_COUNTSYNC_Msk;
     RTC_Timer32CompareSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 	/* Store the measurement period */
 	measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
@@ -89,7 +98,8 @@
     {
         /* Wait for Synchronization before Disabling RTC */
     }
-	RTC_Timer32Stop();  
+	RTC_Timer32Stop();
+    RTC_REGS->MODE0.RTC_CTRLA &= ~RTC_MODE0_CTRLA_COUNTSYNC_Msk;
     RTC_Timer32CompareSet(QTM_LOWPOWER_TRIGGER_PERIOD);
 	/* Store the measurement period */
 	measurement_period_store = QTM_LOWPOWER_TRIGGER_PERIOD;
@@ -97,7 +107,11 @@
 </#macro>
 
 <#macro lowpwer_disable_same5x_no_evs>
-	RTC_Timer32Stop();  
+    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    {
+        /* Wait for Synchronization before reading value from Count Register */
+    }
+	RTC_Timer32Stop();
     RTC_Timer32Compare0Set(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 	/* Store the measurement period */
 	measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
@@ -106,6 +120,10 @@
 </#macro>
 
 <#macro lowpwer_enable_same5x_no_evs>
+    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    {
+        /* Wait for Synchronization before reading value from Count Register */
+    }
 	RTC_Timer32Stop();  
     RTC_Timer32Compare0Set(QTM_LOWPOWER_TRIGGER_PERIOD);
 	/* Store the measurement period */

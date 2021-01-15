@@ -119,7 +119,7 @@
 </#macro>
 
 <#macro lowpwer_disableevsys_samd20_d21>
-	/* Disable RTC to PTC event system for now */
+	/* Disable RTC to PTC event system */
 
 	EVSYS_REGS->EVSYS_CTRL = EVSYS_CTRL_GCLKREQ_Msk;
  	EVSYS_REGS->EVSYS_CHANNEL =  EVSYS_CHANNEL_CHANNEL(QTM_RTC_TO_PTC_EVSYS_CHANNEL) | EVSYS_CHANNEL_EVGEN(0) | EVSYS_CHANNEL_PATH(2) | EVSYS_CHANNEL_EDGSEL(0);
@@ -139,12 +139,15 @@
 
 <#macro lowpwer_enable_same5x_evsys>
 	/* Enable event trigger */
-	/* Disable RTC to PTC event system for now */
  	EVSYS_REGS->CHANNEL[QTM_RTC_TO_PTC_EVSYS_CHANNEL].EVSYS_CHANNEL = EVSYS_CHANNEL_EVGEN(QTM_AUTOSCAN_TRIGGER_GENERATOR) | EVSYS_CHANNEL_PATH(2) | EVSYS_CHANNEL_EDGSEL(0) \
 									 | EVSYS_CHANNEL_ONDEMAND_Msk | EVSYS_CHANNEL_RUNSTDBY(1);
     EVSYS_REGS->EVSYS_USER[QTM_AUTOSCAN_STCONV_USER] = QTM_RTC_TO_PTC_EVSYS_CHANNEL+1u;
 
     /* Set up timer with periodic event output and drift period */
+    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    {
+        /* Wait for Synchronization after writing value to Count Register */
+    }
 	RTC_Timer32Stop();
     RTC_Timer32CounterSet(0);
     RTC_REGS->MODE0.RTC_EVCTRL = QTM_AUTOSCAN_TRIGGER_PERIOD_EVENT;
@@ -210,6 +213,10 @@
     EVSYS_REGS->EVSYS_USER[QTM_AUTOSCAN_STCONV_USER] = QTM_RTC_TO_PTC_EVSYS_CHANNEL+1u;
 
     /* Set up timer with periodic event output and drift period */
+    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    {
+        /* Wait for Synchronization after writing value to Count Register */
+    }
 	RTC_Timer32Stop();
     RTC_Timer32CounterSet(0);
     RTC_REGS->MODE0.RTC_EVCTRL = QTM_AUTOSCAN_TRIGGER_PERIOD_EVENT;
@@ -220,11 +227,14 @@
 </#macro>
 
 <#macro lowpwer_disable_samc20_c21_evsys>
-	/* Disable RTC to PTC event system for now */
+	/* Disable RTC to PTC event system */
     EVSYS_REGS->EVSYS_USER[QTM_AUTOSCAN_STCONV_USER] = 0;
  	EVSYS_REGS->EVSYS_CHANNEL[QTM_RTC_TO_PTC_EVSYS_CHANNEL] = EVSYS_CHANNEL_EVGEN(0) | EVSYS_CHANNEL_PATH(2) | EVSYS_CHANNEL_EDGSEL(0) \
 									 | EVSYS_CHANNEL_ONDEMAND_Msk | EVSYS_CHANNEL_RUNSTDBY(1);
-
+    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    {
+        /* Wait for Synchronization after writing value to Count Register */
+    }
     RTC_Timer32Stop();
     RTC_Timer32CounterSet(0);
     RTC_REGS->MODE0.RTC_EVCTRL = 0;
@@ -279,6 +289,7 @@
         /* Wait for Synchronization before Disabling RTC */
     }
     RTC_Timer32Stop();
+    RTC_REGS->MODE0.RTC_CTRLA &= ~RTC_MODE0_CTRLA_COUNTSYNC_Msk;
     RTC_Timer32CounterSet(0);
     RTC_REGS->MODE0.RTC_EVCTRL = QTM_AUTOSCAN_TRIGGER_PERIOD_EVENT;
     RTC_Timer32CompareSet(DEF_TOUCH_DRIFT_PERIOD_MS);
@@ -288,7 +299,7 @@
 </#macro>
 
 <#macro lowpwer_disable_saml21_l22_evsys>
-	/* Disable RTC to PTC event system for now */
+	/* Disable RTC to PTC event system */
     EVSYS_REGS->EVSYS_USER[QTM_AUTOSCAN_STCONV_USER] = 0;
  	EVSYS_REGS->EVSYS_CHANNEL[QTM_RTC_TO_PTC_EVSYS_CHANNEL] = EVSYS_CHANNEL_EVGEN(0) | EVSYS_CHANNEL_PATH(2) | EVSYS_CHANNEL_EDGSEL(0) \
 									 | EVSYS_CHANNEL_ONDEMAND_Msk | EVSYS_CHANNEL_RUNSTDBY(1);
@@ -298,6 +309,7 @@
         /* Wait for Synchronization before Disabling RTC */
     }
     RTC_Timer32Stop();
+    RTC_REGS->MODE0.RTC_CTRLA &= ~RTC_MODE0_CTRLA_COUNTSYNC_Msk;
     RTC_Timer32CounterSet(0);
     RTC_REGS->MODE0.RTC_EVCTRL = 0;
     RTC_Timer32CompareSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
@@ -310,7 +322,6 @@
 
 <#macro lowpwer_enable_saml_evsys>
 	/* Enable event trigger */
-	/* Disable RTC to PTC event system for now */
  	EVSYS_REGS->CHANNEL[QTM_RTC_TO_PTC_EVSYS_CHANNEL].EVSYS_CHANNEL = EVSYS_CHANNEL_EVGEN(QTM_AUTOSCAN_TRIGGER_GENERATOR) | EVSYS_CHANNEL_PATH(2) | EVSYS_CHANNEL_EDGSEL(0) \
 									 | EVSYS_CHANNEL_ONDEMAND_Msk | EVSYS_CHANNEL_RUNSTDBY(1);
     EVSYS_REGS->EVSYS_USER[QTM_AUTOSCAN_STCONV_USER] = QTM_RTC_TO_PTC_EVSYS_CHANNEL+1u;
@@ -326,7 +337,7 @@
 </#macro>
 
 <#macro lowpwer_disable_saml_evsys>
-	/* Disable RTC to PTC event system for now */
+	/* Disable RTC to PTC event */
 	EVSYS_REGS->EVSYS_USER[QTM_AUTOSCAN_STCONV_USER] = 0;
  	EVSYS_REGS->CHANNEL[QTM_RTC_TO_PTC_EVSYS_CHANNEL].EVSYS_CHANNEL = EVSYS_CHANNEL_EVGEN(0) | EVSYS_CHANNEL_PATH(2) | EVSYS_CHANNEL_EDGSEL(0) \
 									 | EVSYS_CHANNEL_ONDEMAND_Msk | EVSYS_CHANNEL_RUNSTDBY(1);
