@@ -1,3 +1,5 @@
+<#assign pic_devices = ["PIC32MZW"]>
+
 <#assign doubleCompensation= 0>
 <#list ["SAME51","SAME53","SAME54","SAMD51","SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"] as i>
 <#if DEVICE_NAME == i>
@@ -13,10 +15,14 @@ B,1,1,FrameCounter
 D,${2},${i+1},Signal${i}
 D,${3},${i+1},Reference${i}
 -D,${4},${i+1},Delta${i}
+<#if pic_devices?seq_contains(DEVICE_NAME) >
+D,${5},${i+1},Compensation${i},F,(variable * 2.5)
+<#else>
 <#if ((SENSE_TECHNOLOGY == "NODE_SELFCAP") && (doubleCompensation ==1))>
 D,${5},${i+1},Compensation${i},F,((variable & 0x0F)*0.00675+((variable >> 4) & 0x0F)*0.0675+((variable >> 8) & 0x0F)*0.675+((variable >> 12) & 0x3) * 6.75)*2
 <#else>
 D,${5},${i+1},Compensation${i},F,(variable & 0x0F)*0.00675+((variable >> 4) & 0x0F)*0.0675+((variable >> 8) & 0x0F)*0.675+((variable >> 12) & 0x3) * 6.75
+</#if>
 </#if>
 <#if TUNE_MODE_SELECTED != "CAL_AUTO_TUNE_NONE">
 B,${6},${i+1},CSD${i}

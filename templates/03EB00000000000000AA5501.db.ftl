@@ -21,6 +21,17 @@
 <#assign debug_data_node = ['Signal', 'Reference' , 'Delta', 'Compensation', 'CSD'] >
 </#if>
 
+<#assign pic_devices = ["PIC32MZW"]>
+<#if pic_devices?seq_contains(DEVICE_NAME)>
+<#if TUNE_MODE_SELECTED != "CAL_AUTO_TUNE_NONE">
+<#assign debug_data_node_title = ['Signal', 'Reference' , 'Delta', 'added S/H cap pF', 'Acq Time'] >
+<#assign debug_data_node = ['Signal', 'Reference' , 'Delta', 'Compensation', 'CSD'] >
+<#else>
+<#assign debug_data_node_title = ['Signal', 'Reference' , 'Delta', 'added S/H cap pF'] >
+<#assign debug_data_node = ['Signal', 'Reference' , 'Delta', 'Compensation'] >
+</#if>
+</#if>
+
 <#assign all_data_tab = '4'>
 <#assign sensor_tab = '1'>
 <#assign debug_tab = '1'>
@@ -742,6 +753,8 @@ ${(dashboard_height+3) * 300}
 <#assign y_pos = y_pos + temp_height>
 <#assign ele_num = ele_num + 1>
 
+<#if pic_devices?seq_contains(DEVICE_NAME)>
+<#else>
 <#assign temp_string = "Compensation: Represents PTC compensation circuit value which is equivalent to sensor capacitance">
 <@db_buid_label_colourless node_tab,25, label_ele, x_pos, temp_y_pos, temp_string, 800 />
 <#assign label_ele = label_ele + 1 >
@@ -758,12 +771,13 @@ ${(dashboard_height+3) * 300}
 <#assign label_ele = label_ele + 1 >
 <#assign y_pos = y_pos + 25 >
 <#assign x_pos = 0>
+</#if>
 
 <#if TUNE_MODE_SELECTED != "CAL_AUTO_TUNE_NONE">
 <#if TUNE_MODE_SELECTED=='CAL_AUTO_TUNE_CSD'>
-<#assign temp_string = "Charge Share Delay (CSD): displayed values are auto-tuned by QTouch Library">
+<#assign temp_string = "Charge Share Delay (CSD) or Acq Time: displayed values are auto-tuned by Library">
 <#else>
-<#assign temp_string = "Prescaler: displayed values are auto-tuned by QTouch Library">
+<#assign temp_string = "Prescaler: displayed values are auto-tuned by Library">
 </#if>
 <@db_buid_label_colourless node_tab, temp_row_height, label_ele, x_pos, y_pos, temp_string, 800/>
 <#assign label_ele = label_ele + 1>
