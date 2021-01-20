@@ -2,6 +2,31 @@
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 #  Microchip MPLAB� Harmony 3 Touch Library Release Notes
+## Touch Library v3.9.1 Release
+
+### BUG FIXES
+* Event system low-power support added for SAML2x.
+* Project generation for PIC32MZW fixed.
+* Updating RTC period value halts the CPU due to count sync. Count sync is disabled.
+* Optimzied low-power touch code for one button project.
+  
+### DEVELOPMENT TOOLS 
+
+* [MPLAB X IDE v5.45](https://www.microchip.com/mplabx-ide-windows-installer)
+* [MPLAB XC32 C/C++ Compiler v2.50](https://www.microchip.com/mplab/compilers)
+* MPLAB X IDE plug-ins:
+  * MPLAB Harmony Configurator (MHC) v3.6.5 
+
+### Required MPLAB Harmony v3.x.x Modules 
+
+* csp v3.8.3
+* bsp v3.8.2
+* dev_packs v3.8.0
+* mhc v3.6.5
+
+### KNOWN ISSUES
+* None.
+
 ## Touch Library v3.9.0 Release
 
 ### NEW FEATURES SUPPORTED
