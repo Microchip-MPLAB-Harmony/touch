@@ -55,6 +55,10 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#assign no_standby_during_measurement = 1>
 </#if>
 </#if>
+<#assign num_of_channel_more_than_one = 0 >
+<#if (TOUCH_CHAN_ENABLE_CNT > 1) >
+<#assign num_of_channel_more_than_one = 1 >
+</#if>
 
 /*----------------------------------------------------------------------------
  *     include files
@@ -110,17 +114,21 @@ static void touch_configure_pm_supc(void);
 /* low power touch detection callback */
 static void touch_measure_wcomp_match(void);
     <#elseif ENABLE_EVENT_LP == false>
+<#if num_of_channel_more_than_one == 1>
 static void touch_seq_lp_sensor(void);
 static void touch_enable_nonlp_sensors(void);
 static void touch_disable_nonlp_sensors(void);
 uint16_t time_drift_wakeup_counter;
 </#if>
+</#if>
 <#else>
-<#if sam_d1x_devices?seq_contains(DEVICE_NAME) || sam_l2x_devices?seq_contains(DEVICE_NAME) || sam_e5x_devices?seq_contains(DEVICE_NAME)>
+<#if sam_d1x_devices?seq_contains(DEVICE_NAME) || sam_e5x_devices?seq_contains(DEVICE_NAME)>
+<#if num_of_channel_more_than_one == 1>
 static void touch_seq_lp_sensor(void);
 static void touch_enable_nonlp_sensors(void);
 static void touch_disable_nonlp_sensors(void);
 uint16_t time_drift_wakeup_counter;
+</#if>
 <#elseif sam_e5x_devices?seq_contains(DEVICE_NAME)>
 static void touch_measure_wcomp_match(void);
 </#if>
@@ -136,18 +144,22 @@ static void touch_measure_wcomp_match(void);
         <#if ENABLE_EVENT_LP == false>
 #if DEF_TOUCH_LOWPOWER_ENABLE == 1u
 static uint8_t lp_measurement = 0u;
+ <#if num_of_channel_more_than_one == 1>
 #define get_lowpower_mask(x) lowpower_key_mask[x>>3]
 uint8_t lowpower_key_mask[(DEF_NUM_CHANNELS+7)>>3] = {DEF_LOWPOWER_KEYS};
 uint8_t current_lp_sensor = 0;
+</#if>
 #endif
         </#if>
     <#else>
-        <#if sam_d1x_devices?seq_contains(DEVICE_NAME) || sam_l2x_devices?seq_contains(DEVICE_NAME) || sam_e5x_devices?seq_contains(DEVICE_NAME)>
+        <#if sam_d1x_devices?seq_contains(DEVICE_NAME) || sam_e5x_devices?seq_contains(DEVICE_NAME)>
 #if DEF_TOUCH_LOWPOWER_ENABLE == 1u
-uint8_t current_lp_sensor = 0;
 static uint8_t lp_measurement = 0u;
+<#if num_of_channel_more_than_one == 1>
+uint8_t current_lp_sensor = 0;
 #define get_lowpower_mask(x) lowpower_key_mask[x>>3]
 uint8_t lowpower_key_mask[(DEF_NUM_CHANNELS+7)>>3] = {DEF_LOWPOWER_KEYS};
+</#if>
 #endif
         </#if>
     </#if> 
@@ -732,12 +744,14 @@ void touch_process(void)
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
 <#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == true> 
 <#else>
+<#if num_of_channel_more_than_one == 1>
 #if DEF_TOUCH_DRIFT_PERIOD_MS != 0u && DEF_TOUCH_LOWPOWER_ENABLE == 1u
 	if ((time_drift_wakeup_counter >= DEF_TOUCH_DRIFT_PERIOD_MS) && (measurement_period_store != DEF_TOUCH_MEASUREMENT_PERIOD_MS)) {
 		time_drift_wakeup_counter = 0u;
 		touch_enable_nonlp_sensors();
 	}
 #endif
+</#if>
 </#if>
 </#if>
 
@@ -981,7 +995,9 @@ static void touch_enable_lowpower_measurement(void)
 {
 <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")>
 	<#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false>
+    <#if num_of_channel_more_than_one == 1>
 	time_drift_wakeup_counter = 0;
+    </#if>
 	<@softwarelp.lowpwer_enableevsys_saml_no_evs/>
 	<#else>
 	<@eventlp.lowpwer_enable_saml_evsys/>
@@ -1051,41 +1067,53 @@ static void touch_process_lowpower(void) {
         /* Cancel node auto scan */
         qtm_autoscan_node_cancel();
 
-        /* disable event system measurement */
+        /* disable event system low-power measurement */
         touch_disable_lowpower_measurement();
     }
 }
     <#elseif ENABLE_EVENT_LP == false>
     if (time_since_touch >= DEF_TOUCH_TIMEOUT) {
+        <#if num_of_channel_more_than_one == 1>
 		touch_disable_nonlp_sensors();
+        </#if>
         if (measurement_period_store != QTM_LOWPOWER_TRIGGER_PERIOD) {
             touch_enable_lowpower_measurement();
         }
+        <#if num_of_channel_more_than_one == 1>
         if(lp_measurement) {
 			touch_seq_lp_sensor();
 		}
+        </#if>
     } 
     else if(measurement_period_store != DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
+        <#if num_of_channel_more_than_one == 1>
         touch_enable_nonlp_sensors();
-        /* disable event system measurement */
+        </#if>
+        /* disable low-power measurement */
         touch_disable_lowpower_measurement();
     }
 }
         </#if>
 <#else>
-    <#if sam_d1x_devices?seq_contains(DEVICE_NAME) || sam_l2x_devices?seq_contains(DEVICE_NAME) || sam_e5x_devices?seq_contains(DEVICE_NAME)>
+    <#if sam_d1x_devices?seq_contains(DEVICE_NAME) || sam_e5x_devices?seq_contains(DEVICE_NAME)>
     if (time_since_touch >= DEF_TOUCH_TIMEOUT) {
+        <#if num_of_channel_more_than_one == 1>
         touch_disable_nonlp_sensors();
+        </#if>
         if (measurement_period_store != QTM_LOWPOWER_TRIGGER_PERIOD) {
 			touch_enable_lowpower_measurement();
         }
+        <#if num_of_channel_more_than_one == 1>
         if (lp_measurement) {
             touch_seq_lp_sensor();
         }
+        </#if>
 	}
 	else if(measurement_period_store != DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
+        <#if num_of_channel_more_than_one == 1>
 		touch_enable_nonlp_sensors();
-        /* disable event system measurement */
+        </#if>
+        /* disable low-power measurement */
         touch_disable_lowpower_measurement();
     }
 }    
@@ -1096,13 +1124,14 @@ static void touch_process_lowpower(void) {
     {
         touch_enable_lowpower_measurement();
     } else {
-		/* disable event system measurement */
+		/* disable low-power measurement */
 		touch_disable_lowpower_measurement();
 	}
 }
 </#if>
 
 <#if (ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false) || sam_d1x_devices?seq_contains(DEVICE_NAME) || sam_e5x_devices?seq_contains(DEVICE_NAME) >
+<#if num_of_channel_more_than_one == 1>
 static void touch_seq_lp_sensor(void)
 {
 	uint8_t lp_sensor_found = 0;
@@ -1150,6 +1179,7 @@ static void touch_enable_nonlp_sensors(void)
 	}
 }
 </#if>
+</#if>
 
 <#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == true>
 /*============================================================================
@@ -1163,7 +1193,7 @@ Notes  :
 static void touch_measure_wcomp_match(void)
 {
     if(measurement_period_store != DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
-        <#if sam_c2x_devices?seq_contains(DEVICE_NAME) || sam_d2x_devices?seq_contains(DEVICE_NAME)>
+        <#if sam_c2x_devices?seq_contains(DEVICE_NAME) || sam_l2x_devices?seq_contains(DEVICE_NAME) || sam_d2x_devices?seq_contains(DEVICE_NAME)>
         qtm_autoscan_node_cancel();
         time_since_touch = 0u;
         time_to_measure_touch_var =1; 
@@ -1232,7 +1262,7 @@ void touch_timer_handler(void)
     <@eventlp.lowpower_touch_timer_handler_saml2x_evsys/>
     </#if>
 
-<#elseif (ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false) || (sam_e5x_devices?seq_contains(DEVICE_NAME)) || (sam_d1x_devices?seq_contains(DEVICE_NAME)) || (sam_l2x_devices?seq_contains(DEVICE_NAME)) >  <#-- No event system -->
+<#elseif (ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false) || (sam_e5x_devices?seq_contains(DEVICE_NAME)) || (sam_d1x_devices?seq_contains(DEVICE_NAME)) >  <#-- No event system -->
 	/* Count complete - Measure touch sensors */
 	time_to_measure_touch_var = 1u;
 
@@ -1245,11 +1275,13 @@ void touch_timer_handler(void)
 	{
 		time_since_touch = 65535;
 	}
+    <#if num_of_channel_more_than_one == 1>
 	if (time_drift_wakeup_counter < (65535u - measurement_period_store)) {
 		time_drift_wakeup_counter += measurement_period_store;
 		} else {
 		time_drift_wakeup_counter = 65535;
 	}
+    </#if>
     #endif
 <#else>
     <#if sam_e5x_devices?seq_contains(DEVICE_NAME)>
