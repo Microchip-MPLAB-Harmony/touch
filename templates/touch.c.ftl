@@ -1346,6 +1346,7 @@ void touch_timer_config(void)
     ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}((uint32_t) DEF_TOUCH_MEASUREMENT_PERIOD_MS);
     </#if>    
 #endif
+    ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].TIMER_START_API_NAME}(); 
 <#else>
     <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
     ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}((uint32_t) measurement_period_store);

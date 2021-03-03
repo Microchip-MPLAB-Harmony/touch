@@ -169,7 +169,7 @@ for freqID in range(0, freqHopStepsMax):
 global enableFreqHopAutoTuneMenu
 enableFreqHopAutoTuneMenu = qtouchComponent.createBooleanSymbol("FREQ_AUTOTUNE", enableFreqHopMenu)
 enableFreqHopAutoTuneMenu.setLabel("Enable Frequency Auto Tuning")
-enableFreqHopAutoTuneMenu.setDefaultValue(False)
+enableFreqHopAutoTuneMenu.setDefaultValue(True)
 
 #Frequency Auto Tuning - Maximum Variance
 touchSym_VARIANCE_Val = qtouchComponent.createIntegerSymbol("DEF_TOUCH_MAX_VARIANCE", enableFreqHopAutoTuneMenu)

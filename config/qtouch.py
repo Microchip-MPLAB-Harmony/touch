@@ -792,7 +792,7 @@ def instantiateComponent(qtouchComponent):
     global qtouchFilesArray
     global InterruptVector
     global IDArray
-    
+
     showConfiguration = True
     qtouchFilesArray = []
     configName = Variables.get("__CONFIGURATION_NAME")
@@ -897,7 +897,7 @@ def instantiateComponent(qtouchComponent):
     # Enable Frequency Hop  
     enableFreqHopMenu = qtouchComponent.createBooleanSymbol("ENABLE_FREQ_HOP", touchMenu)
     enableFreqHopMenu.setLabel("Enable Frequency Hop")
-    enableFreqHopMenu.setDefaultValue(False)
+    enableFreqHopMenu.setDefaultValue(True)
     enableFreqHopMenu.setDescription("Frequency Hop is a mechanism used in touch measurement to avoid noisy signal value. In Frequency Hop, more than one bursting frequency (user configurable) is used. Refer QTouch Modular Library Userguide for more details on Frequency Hop.")
     execfile(Module.getPath() +"/config/freq_hop.py")
     enableFreqHopMenu.setDependencies(enableHopFiles,["ENABLE_FREQ_HOP"])
