@@ -2,6 +2,31 @@
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 #  Microchip MPLAB� Harmony 3 Touch Library Release Notes
+
+## Touch Library v3.9.2 Release
+
+### BUG FIXES
+* Touch configuration panel cannot open when MHC upgrades to 3.7.0
+* Gesture disables timer start
+* SAMD5x-E5x driven shield prescaler offset value
+* Keys module for boost mode calibration issue
+  
+### DEVELOPMENT TOOLS 
+
+* [MPLAB X IDE v5.45](https://www.microchip.com/mplabx-ide-windows-installer)
+* [MPLAB XC32 C/C++ Compiler v2.50](https://www.microchip.com/mplab/compilers)
+* MPLAB X IDE plug-ins:
+  * MPLAB Harmony Configurator (MHC) v3.6.5 
+
+### Required MPLAB Harmony v3.x.x Modules 
+
+* csp v3.9.0
+* bsp v3.9.0
+* dev_packs v3.9.0
+* mhc v3.7.0
+
+### KNOWN ISSUES
+* None.
 ## Touch Library v3.9.1 Release
 
 ### BUG FIXES
