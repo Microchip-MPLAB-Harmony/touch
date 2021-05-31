@@ -3,8 +3,11 @@
 <#if (TOUCH_CHAN_ENABLE_CNT > 0) >
 <#assign total_channels = TOUCH_CHAN_ENABLE_CNT-1>
 
-<#if (TOUCH_SCROLLER_ENABLE_CNT > 0)> 
-<#assign total_scr = TOUCH_SCROLLER_ENABLE_CNT>
+
+<#if ENABLE_SCROLLER ==true>
+<#assign scr_cnt = TOUCH_SCROLLER_ENABLE_CNT>
+<#else>
+<#assign scr_cnt = 0>
 </#if>
 
 <#assign offset = 0>
@@ -30,15 +33,15 @@ State${i}, ${total_channels+i+offset}
 </#list>
 
 <#assign offset = total_channels+offset +1>
-<#if (TOUCH_SCROLLER_ENABLE_CNT > 0)> 
-<#list 0..total_scr-1 as y>
+<#if (scr_cnt > 0)> 
+<#list 0..scr_cnt-1 as y>
 SWState${y}, ${total_channels+offset} (Column:0;Row:${y})
 SWDelta${y}, ${total_channels+offset}(Column:1;Row:${y})
 SWThreshold${y}, ${total_channels+offset} (Column:2;Row:${y})
 SWPosition${y}, ${total_channels+offset} (Column:3;Row:${y})
 </#list>
 <#assign offset = offset +1>
-<#list 0..total_scr-1 as y>
+<#list 0..scr_cnt-1 as y>
 SWState${y}, ${total_channels+offset} (Column:0;Row:${y})
 SWDelta${y}, ${total_channels+offset}(Column:1;Row:${y})
 SWThreshold${y}, ${total_channels+offset} (Column:2;Row:${y})
@@ -46,14 +49,14 @@ SWPosition${y}, ${total_channels+offset} (Column:3;Row:${y})
 </#list>
 
 <#assign offset = offset +1>
-<#list 0..total_scr-1 as y>
+<#list 0..scr_cnt-1 as y>
 SWState${y}, ${total_channels+offset+y}
 </#list>
-<#assign offset = offset +total_scr>
-<#list 0..total_scr-1 as y>
+<#assign offset = offset +scr_cnt>
+<#list 0..scr_cnt-1 as y>
 SWState${y}, ${total_channels+offset+y}
 </#list>
-<#assign offset = offset +total_scr>
+<#assign offset = offset +scr_cnt>
 </#if>
 
 <#if ENABLE_SURFACE == true>
@@ -98,11 +101,11 @@ Delta${i},${total_channels+offset}(visible:1)
 Threshold${i},${total_channels+offset}(visible:1)
 </#list>
 
-<#if (TOUCH_SCROLLER_ENABLE_CNT > 0)> 
-<#list 0..total_scr-1 as y>
+<#if (scr_cnt > 0)> 
+<#list 0..scr_cnt-1 as y>
 SWDelta${y},${total_channels+offset}(visible:1)
 </#list>
-<#list 0..total_scr-1 as y>
+<#list 0..scr_cnt-1 as y>
 SWThreshold${y},${total_channels+offset}(visible:1)
 </#list>
 </#if>
@@ -121,11 +124,11 @@ Delta${i},${total_channels+offset}(visible:1)
 Threshold${i},${total_channels+offset}(visible:1)
 </#list>
 
-<#if (TOUCH_SCROLLER_ENABLE_CNT > 0)> 
-<#list 0..total_scr-1 as y>
+<#if (scr_cnt > 0)> 
+<#list 0..scr_cnt-1 as y>
 SWDelta${y},${total_channels+offset}(visible:1)
 </#list>
-<#list 0..total_scr-1 as y>
+<#list 0..scr_cnt-1 as y>
 SWThreshold${y},${total_channels+offset}(visible:1)
 </#list>
 </#if>
@@ -161,6 +164,7 @@ Threshold${i},${total_channels+offset} (Column:5;Row:${i})
 </#if>
 </#list>
 
+<#if ENABLE_FREQ_HOP==true>
 <#if FREQ_AUTOTUNE>
 <#assign offset = offset +1>
 CurrentFrequency, ${total_channels+offset} (Column:0;Row:0)
@@ -172,6 +176,7 @@ CurrentFrequency, ${total_channels+offset} (Column:0;Row:0)
 <#list 0..FREQ_HOP_STEPS-1 as i>
 HopFrequency${i},${total_channels+offset} (Column:${i+1};Row:0)
 </#list>
+</#if>
 </#if>
 
 <#assign offset = offset +1>

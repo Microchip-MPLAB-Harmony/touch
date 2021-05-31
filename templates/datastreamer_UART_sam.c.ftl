@@ -55,13 +55,17 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#else>
 #define ACQ_MODULE_AUTOTUNE_OUTPUT 0
 </#if>
+<#if ENABLE_FREQ_HOP==true>
 <#if FREQ_AUTOTUNE != false>
 #define FREQ_HOP_AUTO_MODULE_OUTPUT 1
 <#else>
 #define FREQ_HOP_AUTO_MODULE_OUTPUT 0
 </#if>
+</#if>
+<#if ENABLE_SCROLLER == true>
 <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
 #define SCROLLER_MODULE_OUTPUT 1
+</#if>
 <#else>
 #define SCROLLER_MODULE_OUTPUT 0
 </#if>
@@ -79,11 +83,15 @@ extern qtm_acquisition_control_t qtlib_acq_set1;
 extern qtm_touch_key_control_t   qtlib_key_set1;
 extern qtm_touch_key_config_t    qtlib_key_configs_set1[DEF_NUM_SENSORS];
 </#if>
+<#if ENABLE_FREQ_HOP==true>
 <#if FREQ_AUTOTUNE != false>
 extern qtm_freq_hop_autotune_control_t qtm_freq_hop_autotune_control1;
 </#if>
+</#if>
+<#if ENABLE_SCROLLER == true>
 <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
 extern qtm_scroller_control_t qtm_scroller_control1;
+</#if>
 </#if>
 <#if ENABLE_SURFACE == true>
 <#if ENABLE_SURFACE1T == true>

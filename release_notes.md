@@ -3,7 +3,7 @@
 
 #  Microchip MPLAB� Harmony 3 Touch Library Release Notes
 
-## Touch Library v3.9.2 Release
+## Touch Library v3.. Release -- WIP
 
 ### BUG FIXES
 * Touch configuration panel cannot open when MHC upgrades to 3.7.0

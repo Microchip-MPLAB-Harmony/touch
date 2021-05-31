@@ -9,7 +9,11 @@
 <#assign debug_data_hop_label = 'Frequency Hop Data' >
 <#assign node_cnt = TOUCH_CHAN_ENABLE_CNT>
 <#assign key_cnt = TOUCH_KEY_ENABLE_CNT>
+<#if ENABLE_SCROLLER ==true>
 <#assign scr_cnt = TOUCH_SCROLLER_ENABLE_CNT>
+<#else>
+<#assign scr_cnt = 0>
+</#if>
 <#assign debug_data_others_label = 'Debug Data' >
 <#assign debug_data_others = ['FrameCounter', 'QTouchLibError'] >
 <#assign blank = [" "]>
@@ -39,12 +43,13 @@
 <#assign freq_hop_tab = '3'>
 <#assign graph_tab = '2'>
 
+<#if ENABLE_FREQ_HOP==true>
 <#if FREQ_AUTOTUNE==true>
-<#--if ENABLE_FREQ_HOP==true-->
 <#assign debug_data_hop = ['CurrentFrequency']>
 <#list 0..FREQ_HOP_STEPS-1 as i>
 <#assign debug_data_hop = debug_data_hop + [('HopFrequency+(i)')]>
 </#list>
+</#if>
 </#if>
 
 <#if scr_cnt != 0 >
@@ -790,7 +795,7 @@ ${(dashboard_height+3) * 300}
 <#else>
 <#assign y_pos = y_pos + y_offset>
 </#if>
-
+<#if ENABLE_FREQ_HOP==true>
 <#if FREQ_AUTOTUNE==true >
 <#assign temp_rows = 1 >
 <#assign temp_column = debug_data_hop?size >
@@ -824,7 +829,7 @@ ${(dashboard_height+3) * 300}
 <#assign x_pos = 0 >
 <#assign temp_y_pos = temp_y_pos + y_offset >
 <#assign y_pos = y_pos + y_offset >
-
+</#if >
 </#if >
 
 

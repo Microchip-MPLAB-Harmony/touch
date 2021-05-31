@@ -1,0 +1,221 @@
+"""
+MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
+"""
+maxGroups = 4 # defaultValue
+
+def getMaxGroups():
+    """Get maximum frequency hop groups
+    Arguments:
+        :none
+    Returns:
+        :number of frequency hop  as (int)
+    """
+    global maxGroups
+    return int(maxGroups)
+
+def setMaxGroups(newMax):
+    """Set maximum frequency hop groups
+    Arguments:
+        :newMax - new maximum (int)
+    Returns:
+        :none
+    """
+    global maxGroups
+    maxGroups = newMax
+
+
+#instance
+def initFreqHopGroupInstance(qtouchComponent,groupNumber,parentLabel):
+    """Initialise frequency hop Group Instance
+    Arguments:
+        :qtouchComponent : touchModule
+        :groupNumber : index of the group instance
+        :parentLabel : parent symbol for added menu items
+    Returns:
+        :none
+    """
+    freqHopStepsMax = 7
+    freqHopStepsDefault = 3
+
+    if int(groupNumber) == 1:
+        freqSteps = qtouchComponent.createIntegerSymbol("FREQ_HOP_STEPS", parentLabel)
+        enableFreqHopAutoTuneMenu = qtouchComponent.createBooleanSymbol("FREQ_AUTOTUNE", parentLabel)
+        maxVariance = qtouchComponent.createIntegerSymbol("DEF_TOUCH_MAX_VARIANCE", enableFreqHopAutoTuneMenu)
+        tuneInCount = qtouchComponent.createIntegerSymbol("DEF_TOUCH_TUNE_IN_COUNT", enableFreqHopAutoTuneMenu)
+    else:
+        freqSteps = qtouchComponent.createIntegerSymbol("GROUP_"+str(groupNumber)+"FREQ_HOP_STEPS", parentLabel)
+        enableFreqHopAutoTuneMenu = qtouchComponent.createBooleanSymbol("GROUP_"+str(groupNumber)+"FREQ_AUTOTUNE", parentLabel)
+        maxVariance = qtouchComponent.createIntegerSymbol("GROUP_"+str(groupNumber)+"DEF_TOUCH_MAX_VARIANCE", enableFreqHopAutoTuneMenu)
+        tuneInCount = qtouchComponent.createIntegerSymbol("GROUP_"+str(groupNumber)+"DEF_TOUCH_TUNE_IN_COUNT", enableFreqHopAutoTuneMenu)
+
+    #parameter assignment
+    enableFreqHopAutoTuneMenu.setLabel("Enable Frequency Auto Tuning")
+    enableFreqHopAutoTuneMenu.setDefaultValue(True)
+    setFreqHopValues(qtouchComponent,freqHopStepsDefault,groupNumber,parentLabel)
+    setFreqStepsValues(freqSteps,freqHopStepsDefault,freqHopStepsMax)
+    setMaxVarianceValues(maxVariance)
+    setTuneInCountValues(tuneInCount)
+
+#group
+def initFreqHopGroup(qtouchComponent, parentMenu, minVal, maxVal, targetDevice):
+    """Initialise Frequency Hop Groups and add to touch Module
+    Arguments:
+        :qtouchComponent : touchModule
+        :parentMenu : parent menu symbol for added menu items
+        :minVal : see acquisitionGroupCountMenu.getMin()
+        :maxVal : see acquisitionGroupCountMenu.getMax()
+        :targetDevice : see interface.getDeviceSeries()
+    Returns:
+        :none
+    """
+    global maxGroups
+    maxGroups = maxVal
+    enableFreqHopMenu = qtouchComponent.createBooleanSymbol("ENABLE_FREQ_HOP",  parentMenu)
+    enableFreqHopMenu.setLabel("Enable Frequency Hop")
+    enableFreqHopMenu.setDefaultValue(True)
+    enableFreqHopMenu.setDescription("Frequency Hop is a mechanism used in touch measurement to avoid noisy signal value. In Frequency Hop, more than one bursting frequency (user configurable) is used. Refer QTouch Modular Library Userguide for more details on Frequency Hop.")
+    enableFreqHopMenu.setVisible(True)
+    enableFreqHopMenu.setEnabled(True)
+    enableFreqHopMenu.setDependencies(freqHopUdateEnabled,["ENABLE_FREQ_HOP"])
+
+    for groupNum in range (minVal,maxVal+1):
+        if groupNum ==1:
+            freqHopcfg = qtouchComponent.createMenuSymbol("FREQ_HOP_MENU", enableFreqHopMenu)
+            freqHopcfg.setLabel("Frequency Hop Configuration")
+            freqHopcfg.setDescription("Frequency Hop is a mechanism used in touch measurement to avoid noisy signal value. In Frequency Hop, more than one bursting frequency (user configurable) is used. Refer QTouch Modular Library Userguide for more details on Frequency Hop.")
+            freqHopcfg.setVisible(True)
+            freqHopcfg.setEnabled(True)
+            initFreqHopGroupInstance(qtouchComponent,groupNum,freqHopcfg)
+        else:
+            dynamicName = "freqHopcfg_" +str(groupNum) 
+            dynamicId = "FREQ_HOP_MENU_" +str(groupNum) 
+            vars()[dynamicName] = qtouchComponent.createMenuSymbol(dynamicId, enableFreqHopMenu)
+            vars()[dynamicName].setLabel("Frequency Hop Configuration Group"+str(groupNum))
+            vars()[dynamicName].setDescription("Frequency Hop is a mechanism used in touch measurement to avoid noisy signal value. In Frequency Hop, more than one bursting frequency (user configurable) is used. Refer QTouch Modular Library Userguide for more details on Frequency Hop.")
+            vars()[dynamicName].setVisible(False)
+            vars()[dynamicName].setEnabled(False)
+            initFreqHopGroupInstance(qtouchComponent,groupNum,vars()[dynamicName])
+
+#
+def updateFreqHopGroups(symbol,event):
+    """Handler for number of frequency hop groups being used. 
+    Triggered by qtouch.updateGroupsCounts(symbol,event)
+    Arguments:
+        :symbol : the symbol that triggered the callback
+        :event : the new value. 
+    Returns:
+        :none
+    """
+    component= symbol.getComponent()
+    currentVal = int(event['symbol'].getValue())
+    maxVal = component.getSymbolByID("NUM_ACQUISITION_GROUPS").getMax()
+    minVal = component.getSymbolByID("NUM_ACQUISITION_GROUPS").getMin()
+    for x in range(minVal+1,maxVal+1):
+        grpId = "FREQ_HOP_MENU_" +str(x)
+        component.getSymbolByID(grpId).setEnabled(False)
+        component.getSymbolByID(grpId).setVisible(False)
+        if(currentVal >= x):
+            component.getSymbolByID(grpId).setEnabled(True)
+            component.getSymbolByID(grpId).setVisible(True)
+
+def freqHopUdateEnabled(symbol,event):
+    """Enables frequency hop functionality.
+    Arguments:
+        :symbol : the symbol that triggered the callback
+        :event : the new value. 
+    Returns:
+        :none
+    """
+    component= symbol.getComponent()
+    currentVal = bool(event['symbol'].getValue())
+    maxVal = component.getSymbolByID("NUM_ACQUISITION_GROUPS").getValue()
+    minVal = component.getSymbolByID("NUM_ACQUISITION_GROUPS").getMin()
+
+    for x in range(minVal,maxVal+1):
+        if(x == minVal):
+            fhMenu = "FREQ_HOP_MENU"
+        else:
+            fhMenu = "FREQ_HOP_MENU_" +str(x) 
+        
+        component.getSymbolByID(fhMenu).setEnabled(currentVal)
+        component.getSymbolByID(fhMenu).setVisible(currentVal)
+
+#parameter assignment
+def setFreqStepsValues(freqSteps, stepsDefault,stepsMax):
+    """Populate the frequency hop steps symbol 
+    Arguments:
+        :freqSteps : symbol to be populated
+        :stepsDefault : default value
+        :stepsMax : Maximum Value
+    Returns:
+        none
+    """
+    freqSteps.setLabel("Frequency Hop Steps")
+    freqSteps.setDefaultValue(stepsDefault)
+    freqSteps.setMin(3)
+    freqSteps.setMax(stepsMax)
+    freqSteps.setDescription("Defines the number of frequencies used for touch measurement. Noise performance will be good if more number of frequencies are used - but increases response time and RAM usage. If higher number of frequencies needs to be used (to tackle noise), consider enabling frequency auto-tune option.")
+
+def setFreqHopValues(qtouchComponent,steps,groupNumber,parentLabel):
+    """Populate the frequency hop Values symbol 
+    Arguments:
+        :qtouchComponent : touchModule
+        :steps : the number of steps to add
+        :groupNumber : index of the frequency hop group
+        :parentLabel : parent  symbol for added menu items
+    Returns:
+        none
+    """
+    for freqID in range(0, steps):
+        if(groupNumber ==1):
+            freqHopValues = qtouchComponent.createKeyValueSetSymbol("HOP_FREQ"+ str(freqID), parentLabel)
+        else:
+            freqHopValues = qtouchComponent.createKeyValueSetSymbol("GROUP_"+str(groupNumber)+"_HOP_FREQ"+ str(freqID), parentLabel)
+        
+        freqHopValues.setLabel("Hop Frequency "+ str(freqID)) 
+        freqHopValues.addKey("FREQ_SEL0", "FREQ_SEL_0", "Frequency 0")
+        freqHopValues.addKey("FREQ_SEL1", "FREQ_SEL_1", "Frequency 1")
+        freqHopValues.addKey("FREQ_SEL2", "FREQ_SEL_2", "Frequency 2")
+        freqHopValues.addKey("FREQ_SEL3", "FREQ_SEL_3", "Frequency 3")
+        freqHopValues.addKey("FREQ_SEL4", "FREQ_SEL_4", "Frequency 4")
+        freqHopValues.addKey("FREQ_SEL5", "FREQ_SEL_5", "Frequency 5")
+        freqHopValues.addKey("FREQ_SEL6", "FREQ_SEL_6", "Frequency 6")
+        freqHopValues.addKey("FREQ_SEL7", "FREQ_SEL_7", "Frequency 7")
+        freqHopValues.addKey("FREQ_SEL8", "FREQ_SEL_8", "Frequency 8")
+        freqHopValues.addKey("FREQ_SEL9", "FREQ_SEL_9", "Frequency 9")
+        freqHopValues.addKey("FREQ_SEL10", "FREQ_SEL_10", "Frequency 10")
+        freqHopValues.addKey("FREQ_SEL11", "FREQ_SEL_11", "Frequency 11")
+        freqHopValues.addKey("FREQ_SEL12", "FREQ_SEL_12", "Frequency 12")
+        freqHopValues.addKey("FREQ_SEL13", "FREQ_SEL_13", "Frequency 13")
+        freqHopValues.addKey("FREQ_SEL14", "FREQ_SEL_14", "Frequency 14")
+        freqHopValues.addKey("FREQ_SEL15", "FREQ_SEL_15", "Frequency 15")
+        freqHopValues.setOutputMode("Value")
+        freqHopValues.setDisplayMode("Description")
+        freqHopValues.setDefaultValue(freqID)
+        freqHopValues.setDescription("Sets the Hop Frequencies")
+
+def setMaxVarianceValues(maxVariance):
+    """Populate the maximum variance symbol 
+    Arguments:
+        :maxVariance : symbol to be updated
+    Returns:
+        none
+    """
+    maxVariance.setLabel("Maximum Variance")
+    maxVariance.setDefaultValue(25)
+    maxVariance.setMin(1)
+    maxVariance.setMax(255)
+    maxVariance.setDescription("When frequency auto tune is enabled, the touch measurement frequencies are automatically changed based on noise levels.This parameter sets the threshold for noise level in touch data.If noise level is more than this threshold, then the noisy frequency will be replaced.")
+
+def setTuneInCountValues(tuneInCount):
+    """Populate the tune in count symbol 
+    Arguments:
+        :tuneInCount : symbol to be updated
+    Returns:
+        none
+    """
+    tuneInCount.setLabel("Maximum Tune-in count")
+    tuneInCount.setDefaultValue(6)
+    tuneInCount.setMin(1)
+    tuneInCount.setMax(255)
+    tuneInCount.setDescription("This parameter acts as an integrator to confirm the noise.The measurement frequency is changed ONLY if noise levels is more than Maximum Variance for Tune In Count measurement cycles. Configuring higher value for Tune in Count might take longer duration to replace a bad frequency. Configuring lower value for Tune in Count might unnecessarily replace frequency.")

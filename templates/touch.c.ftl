@@ -59,7 +59,17 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#if (TOUCH_CHAN_ENABLE_CNT > 1) >
 <#assign num_of_channel_more_than_one = 1 >
 </#if>
-
+<#--  
+<#import "/selfmutual.ftl" as selfMutual>
+<#if SELF_SCROLLER_NUM??><#assign self_scroller = SELF_SCROLLER_NUM></#if>
+<#if MUTL_SCROLLER_NUM??><#assign mutl_scroller = MUTL_SCROLLER_NUM></#if>
+<#if SELF_SURFACE_NUM??><#assign self_surface = SELF_SURFACE_NUM></#if>
+<#if MUTL_SURFACE_NUM??><#assign mutl_surface = MUTL_SURFACE_NUM></#if>
+<#if T2_SLIDER_MUTL_NUM??><#assign t2_slider_mutl = T2_SLIDER_MUTL_NUM></#if>
+<#if T2_SLIDER_SELF_NUM??><#assign t2_slider_self = T2_SLIDER_SELF_NUM></#if>
+<#if SELF_SENSOR_NUM??><#assign self_sensor = SELF_SENSOR_NUM ></#if>
+<#if MUTL_SENSOR_NUM??><#assign mutl_sensor = MUTL_SENSOR_NUM ></#if>
+-->
 /*----------------------------------------------------------------------------
  *     include files
  *----------------------------------------------------------------------------*/
@@ -80,6 +90,7 @@ extern qtm_drivenshield_config_t qtm_drivenshield_config;
 #endif
 </#if>
 </#if>
+
 /*----------------------------------------------------------------------------
  *   prototypes
  *----------------------------------------------------------------------------*/
@@ -328,6 +339,7 @@ qtm_touch_key_config_t qtlib_key_configs_set1[DEF_NUM_SENSORS];
 qtm_touch_key_control_t qtlib_key_set1
     = {&qtlib_key_grp_data_set1, &qtlib_key_grp_config_set1, &qtlib_key_data_set1[0], &qtlib_key_configs_set1[0]};
 
+<#if ENABLE_SCROLLER == true>
 <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
 /**********************************************************/
 /***************** Scroller Module ********************/
@@ -349,7 +361,8 @@ qtm_scroller_config_t qtm_scroller_config1[DEF_NUM_SCROLLERS] = {<#list 0..TOUCH
 qtm_scroller_control_t qtm_scroller_control1
     = {&qtm_scroller_group_data1, &qtm_scroller_group_config1, &qtm_scroller_data1[0], &qtm_scroller_config1[0]};
 </#if>
-<#if ENABLE_SURFACE1T==true>
+</#if>
+<#if ENABLE_SURFACE1T?exists && ENABLE_SURFACE1T== true>
 /**********************************************************/
 /***************** Surface 1t Module ********************/
 /**********************************************************/
@@ -373,7 +386,7 @@ qtm_surface_contact_data_t qtm_surface_cs_data1;
 qtm_surface_cs_control_t qtm_surface_cs_control1 = {&qtm_surface_cs_data1, &qtm_surface_cs_config1};
 </#if>
 
-<#if ENABLE_SURFACE2T==true>
+<#if ENABLE_SURFACE2T?exists && ENABLE_SURFACE2T== true>
 /**********************************************************/
 /***************** Surface 2t Module ********************/
 /**********************************************************/
@@ -617,18 +630,20 @@ static touch_ret_t touch_sensors_config(void)
     }
 </#if>
 
+<#if ENABLE_SCROLLER?exists && ENABLE_SCROLLER == true>
 <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>	
 	/* scroller init */
 	touch_ret |= qtm_init_scroller_module(&qtm_scroller_control1);
 </#if>
+</#if>
 
-<#if ENABLE_SURFACE1T==true>	
+<#if ENABLE_SURFACE1T?exists && ENABLE_SURFACE1T== true>	
 	touch_ret |= qtm_init_surface_cs(&qtm_surface_cs_control1);
 </#if>
-<#if ENABLE_SURFACE2T==true>	
+<#if ENABLE_SURFACE2T?exists && ENABLE_SURFACE2T== true>	
 	touch_ret |= qtm_init_surface_cs2t(&qtm_surface_cs_control1);
 </#if>
-<#if ENABLE_GESTURE==true>	
+<#if ENABLE_GESTURE?exists && ENABLE_GESTURE==true>	
 	touch_ret |= qtm_init_gestures_2d();
 </#if>
 
@@ -814,22 +829,22 @@ void touch_process(void)
             if (TOUCH_SUCCESS != touch_ret) {
                 qtm_error_callback(${i});
 <#assign i =i+1>
-            }</#if><#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
+            }</#if><#if ENABLE_SCROLLER?exists && ENABLE_SCROLLER == true><#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
             touch_ret = qtm_scroller_process(&qtm_scroller_control1);
             if (TOUCH_SUCCESS != touch_ret) {
                 qtm_error_callback(${i});
 <#assign i =i+1>
-            }</#if><#if ENABLE_SURFACE1T==true >
+            }</#if></#if><#if ENABLE_SURFACE1T?exists && ENABLE_SURFACE1T== true>
             touch_ret = qtm_surface_cs_process(&qtm_surface_cs_control1);
             if (TOUCH_SUCCESS != touch_ret) {
                 qtm_error_callback(${i});
 <#assign i =i+1>
-            }</#if><#if ENABLE_SURFACE2T==true >
+            }</#if><#if ENABLE_SURFACE2T?exists && ENABLE_SURFACE2T== true>
             touch_ret = qtm_surface_cs2t_process(&qtm_surface_cs_control1);
             if (TOUCH_SUCCESS != touch_ret) {
                 qtm_error_callback(${i});
 <#assign i =i+1>
-            }</#if><#if ENABLE_GESTURE==true >
+            }</#if><#if ENABLE_GESTURE?exists && ENABLE_GESTURE==true>
             touch_ret = qtm_gestures_2d_process(&qtm_gestures_2d_control1);
             if (TOUCH_SUCCESS != touch_ret) {
                 qtm_error_callback(${i});
@@ -1335,7 +1350,6 @@ void touch_timer_config(void)
 {  
 <#if TOUCH_TIMER_INSTANCE != "">
     ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].CALLBACK_API_NAME}(rtc_cb, rtc_context);
-    RTC_Timer32CounterSet((uint32_t) 0);
 <#if ENABLE_GESTURE==true>
 #if ((KRONO_GESTURE_ENABLE == 1u) || (DEF_TOUCH_DATA_STREAMER_ENABLE == 1u))
     ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}(1);
@@ -1428,6 +1442,7 @@ void calibrate_node(uint16_t sensor_node)
     /* Initialize key */
     qtm_init_sensor_key(&qtlib_key_set1, sensor_node, &ptc_qtlib_node_stat1[sensor_node]);
 }
+<#if ENABLE_SCROLLER?exists && ENABLE_SCROLLER == true>
 <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
 
 uint8_t get_scroller_state(uint16_t sensor_node)
@@ -1440,8 +1455,9 @@ uint16_t get_scroller_position(uint16_t sensor_node)
 	return (qtm_scroller_control1.qtm_scroller_data[sensor_node].position);
 }
 </#if>
+</#if>
 
-<#if ENABLE_SURFACE1T == true >
+<#if ENABLE_SURFACE1T?exists && ENABLE_SURFACE1T== true>
 uint8_t get_surface_status(void)
 {
   return (qtm_surface_cs_control1.qtm_surface_contact_data->qt_surface_status);
@@ -1465,7 +1481,7 @@ uint8_t get_surface_position(uint8_t ver_or_hor)
 }
 </#if>
 
-<#if ENABLE_SURFACE2T == true >
+<#if ENABLE_SURFACE2T?exists && ENABLE_SURFACE2T== true>
 uint8_t get_surface_status(void)
 {
   return (qtm_surface_cs_control1.qtm_surface_cs2t_data->qt_surface_cs2t_status);
@@ -1504,8 +1520,8 @@ Notes  : none
 void ADC0_1_Handler(void)
 {
     ADC0_REGS->ADC_INTFLAG |=1u;
-<#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
-<#if DS_DEDICATED_ENABLE == true || DS_PLUS_ENABLE == true>
+    <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
+        <#if DS_DEDICATED_ENABLE == true || DS_PLUS_ENABLE == true>
 #if (DEF_ENABLE_DRIVEN_SHIELD == 1u)
 	if (qtm_drivenshield_config.flags & (1u << DRIVEN_SHIELD_DUMMY_ACQ)) {
 		/* Clear the flag */
@@ -1517,10 +1533,12 @@ void ADC0_1_Handler(void)
 #else
 	qtm_same54_ptc_handler();
 #endif
-<#else>
+        <#else>
+    qtm_same54_ptc_handler();
+        </#if>
 	qtm_same54_ptc_handler();
-</#if>
-</#if>
+    </#if>
+    qtm_same54_ptc_handler();
 }
 <#else>
 void PTC_Handler(void)

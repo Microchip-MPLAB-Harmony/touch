@@ -50,10 +50,13 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #endif
 // DOM-IGNORE-END
 
+<#if LOW_POWER_KEYS?exists && LOW_POWER_KEYS !=""> <!-- LOW Power -->
+    <#import "/eventlowpower.ftl" as eventlp>
+    <#import "/softwarelowpower.ftl" as softwarelp>
+</#if>
 
 <#import "/node.h.ftl" as node>
-<#import "/eventlowpower.ftl" as eventlp>
-<#import "/softwarelowpower.ftl" as softwarelp>
+
 /*----------------------------------------------------------------------------
  *     include files
  *----------------------------------------------------------------------------*/
@@ -72,23 +75,23 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /* Defines the Type of sensor
  * Default value: NODE_MUTUAL.
  */
-<#if SENSE_TECHNOLOGY == "NODE_SELFCAP">
-	<#if ((DS_ADJACENT_SENSE_LINE_AS_SHIELD?exists)&&(DS_DEDICATED_PIN_ENABLE?exists))>
-		<#if (DS_ADJACENT_SENSE_LINE_AS_SHIELD == true) || (DS_DEDICATED_PIN_ENABLE == true)> 
+    <#if SENSE_TECHNOLOGY == "NODE_SELFCAP">
+        <#if ((DS_ADJACENT_SENSE_LINE_AS_SHIELD?exists)&&(DS_DEDICATED_PIN_ENABLE?exists))>
+            <#if (DS_ADJACENT_SENSE_LINE_AS_SHIELD == true) || (DS_DEDICATED_PIN_ENABLE == true)> 
 #define DEF_SENSOR_TYPE NODE_SELFCAP_SHIELD
-		<#else>
+            <#else>
 #define DEF_SENSOR_TYPE ${SENSE_TECHNOLOGY}
-		</#if>
-	<#else>
+            </#if>
+        <#else>
 #define DEF_SENSOR_TYPE ${SENSE_TECHNOLOGY}
-	</#if>
-<#else>
-<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
+        </#if>
+    <#else>
+        <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 #define DEF_SENSOR_TYPE NODE_MUTUAL_4P
-	<#else>
+        <#else>
 #define DEF_SENSOR_TYPE ${SENSE_TECHNOLOGY}
-	</#if>
-</#if>
+        </#if>
+    </#if>
 
 
 /* Set sensor calibration mode for charge share delay ,Prescaler or series resistor.
@@ -137,18 +140,20 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  * {X-line, Y-line, Charge Share Delay, 0, NODE_G(Analog Gain , Digital Gain),
  * filter level}
  */
-<#else>
+    <#else>
 /* Defines node parameter setting
  * {X-line, Y-line, Charge Share Delay, NODE_RSEL_PRSC(series resistor, prescaler), NODE_G(Analog Gain , Digital Gain),
  * filter level}
  */
-</#if>
-<#import "/node.h.ftl" as node>	
-	
+    </#if>
 <@node.nodeComponent/>
+
 /**********************************************************/
 /***************** Key Params   ******************/
 /**********************************************************/
+<#if ENABLE_SELF_MUTUAL?exists && ENABLE_SELF_MUTUAL == true>
+
+<#else>
 /* Defines the number of key sensors
  * Range: 1 to 65535.
  * Default value: 1
@@ -160,7 +165,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  */
  <#list 0..TOUCH_KEY_ENABLE_CNT-1 as i>
 	<#assign TOUCH_ENABLE_KEY_ = "TOUCH_ENABLE_KEY_" + i>
-	<#assign DEF_SENSOR_DET_THRESHOLD = "DEF_SENSOR_DET_THRESHOLD" + i>
+	<#assign DEF_SENSOR_DET_THRESHOLD = ("DEF_SENSOR_DET_THRESHOLD" + i)>
 	<#assign DEF_SENSOR_HYST = "DEF_SENSOR_HYST" + i>
 	<#assign DEF_NOD_AKS = "DEF_NOD_AKS" + i>
 
@@ -225,6 +230,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  */
 #define DEF_MAX_ON_DURATION ${DEF_MAX_ON_DURATION}
 
+</#if>
+<#if ENABLE_SCROLLER == true>
 <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
 /**********************************************************/
 /***************** Slider/Wheel Parameters ****************/
@@ -261,6 +268,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 	</#if>
 	</#if>
  </#list>
+</#if>
 </#if>
 
 <#if ENABLE_SURFACE==true>
@@ -306,7 +314,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  *  2 - 50%
  *  3 - 75%
  */
-#define SURFACE_CS_FILT_CFG SCR_MEDIAN_IIR(${EANBLE_MED_FILTER}, ${EANBLE_IIR_FILTER})
+#define SURFACE_CS_FILT_CFG SCR_MEDIAN_IIR(${ENABLE_MED_FILTER}, ${ENABLE_IIR_FILTER})
 /* Position Hystersis <0-255>
  * The minimum travel distance to be reported after contact or direction change
  * Applicable to Horizontal and Vertical directions

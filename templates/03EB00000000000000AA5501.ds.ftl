@@ -33,9 +33,13 @@ B,${8},${i+1},Threshold${i}
 </#list>
 
 <#assign temp = 0>
-
-<#if (TOUCH_SCROLLER_ENABLE_CNT > 0)> 
-<#list 0..TOUCH_SCROLLER_ENABLE_CNT-1 as y>
+<#if ENABLE_SCROLLER ==true>
+<#assign scr_cnt = TOUCH_SCROLLER_ENABLE_CNT>
+<#else>
+<#assign scr_cnt = 0>
+</#if>
+<#if (scr_cnt > 0)> 
+<#list 0..scr_cnt-1 as y>
 B,${9+temp},${1+y},SWState${y}
 D,${10+temp},${1+y},SWDelta${y}
 D,${11+temp},${1+y},SWThreshold${y}
@@ -62,12 +66,13 @@ D,${12+temp},1,conctsize0
 <#assign temp = temp+4>
 </#if>
 </#if>
-
+<#if ENABLE_FREQ_HOP==true>
 <#if FREQ_AUTOTUNE>
 B,${9+temp},${1},CurrentFrequency
 <#list 0..FREQ_HOP_STEPS-1 as j>
 B,${10+temp+j},${1},HopFrequency${j}
 </#list>
+</#if>
 </#if>
 </#if>
 

@@ -54,19 +54,19 @@ extern "C" {
 <#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
 #include "qtm_acq_samd1x_0x0009_api.h"
 <#else>
-<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
-<#if DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00">
+    <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
+        <#if DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00">
 #include "qtm_acq_4p_pic32cm_le_0x0041_api.h"
-<#else>
+        <#else>
 #include "qtm_acq_4p_${DEVICE_NAME?lower_case}_${MODULE_ID}_api.h"
-</#if>
-<#else>
-<#if DEVICE_NAME == "PIC32CMLE00" || DEVICE_NAME == "PIC32CMLS00">
+        </#if>
+    <#else>
+        <#if DEVICE_NAME == "PIC32CMLE00" || DEVICE_NAME == "PIC32CMLS00">
 #include "qtm_acq_pic32cm_le_0x0040_api.h"
-<#else>
+        <#else>
 #include "qtm_acq_${DEVICE_NAME?lower_case}_${MODULE_ID}_api.h"
-</#if>
-</#if>
+        </#if>
+    </#if>
 </#if>
 #include "qtm_touch_key_0x0002_api.h"
 <#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>
@@ -74,17 +74,21 @@ extern "C" {
 <#elseif ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>
 #include "qtm_freq_hop_auto_0x0004_api.h"
 </#if>
+<#if ENABLE_SCROLLER == true>
 <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
 #include "qtm_scroller_0x000b_api.h"
 </#if>
-<#if ENABLE_SURFACE1T==true>
+</#if>
+<#if ENABLE_SURFACE==true>
+    <#if ENABLE_SURFACE1T== true>
 #include "qtm_surface_cs_0x0021_api.h"
-</#if>
-<#if ENABLE_SURFACE2T==true>
+    </#if>
+    <#if ENABLE_SURFACE2T== true>
 #include "qtm_surface_cs2t_0x0025_api.h"
-</#if>
-<#if ENABLE_GESTURE==true>
+    </#if>
+    <#if ENABLE_GESTURE == true>
 #include "qtm_gestures_2d_0x0023_api.h"
+    </#if>
 </#if>
 /*----------------------------------------------------------------------------
  *   prototypes
@@ -101,17 +105,19 @@ void     update_sensor_state(uint16_t sensor_node, uint8_t new_state);
 void     calibrate_node(uint16_t sensor_node);
 uint8_t  get_scroller_state(uint16_t sensor_node);
 uint16_t get_scroller_position(uint16_t sensor_node);
-<#if ENABLE_SURFACE1T == true >
+<#if ENABLE_SURFACE==true>
+<#if ENABLE_SURFACE1T== true>
 #define HOR_POS 0u
 #define VER_POS 1u
 uint8_t get_surface_status(void);
 uint8_t get_surface_position(uint8_t ver_or_hor);
 </#if>
-<#if ENABLE_SURFACE2T == true >
+<#if ENABLE_SURFACE2T== true>
 #define HOR_POS 0u
 #define VER_POS 1u
 uint8_t get_surface_status(void);
 uint8_t get_surface_position(uint8_t ver_or_hor, uint8_t contact);
+</#if>
 </#if>
 
 void touch_timer_handler(void);
