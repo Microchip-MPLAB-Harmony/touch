@@ -1,7 +1,7 @@
 """
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
-def setDrivenShieldFiles(configName, qtouchComponent):
+def setDrivenShieldFiles(configName, qtouchComponent,useTrustZone):
     """
     Generates as List of source files required for Driven shield support
     Arguments:
@@ -15,6 +15,8 @@ def setDrivenShieldFiles(configName, qtouchComponent):
     fileList.append(setDrivenShieldHeaderFile(configName, qtouchComponent))
     # freqHopAutoHeaderFile
     fileList.append(setDrivenShieldSourceile(configName, qtouchComponent))
+    if(useTrustZone ==  False):
+        del fileList[:]
     return fileList
 
 def setDrivenShieldHeaderFile(configName, qtouchComponent):

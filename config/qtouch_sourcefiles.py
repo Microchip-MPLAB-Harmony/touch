@@ -2,7 +2,7 @@
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
 
-def setTouchFiles(configName, qtouchComponent):
+def setTouchFiles(configName, qtouchComponent,useTrustZone):
     """
     Generates as List of touch source files
     Arguments:
@@ -17,6 +17,8 @@ def setTouchFiles(configName, qtouchComponent):
     fileList.append(setTouchSourceFile(configName, qtouchComponent))
     fileList.append(setPTCSystemInitFile(configName, qtouchComponent))
     fileList.append(setPTCSystemDefFile(configName, qtouchComponent))
+    if(useTrustZone == False):
+        del fileList[:]
     return fileList
 
 def setTouchHeaderFile(configName, qtouchComponent):

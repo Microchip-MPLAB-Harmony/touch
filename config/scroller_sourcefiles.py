@@ -1,7 +1,7 @@
 """
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
-def setScrollerFiles(configName, qtouchComponent, targetDevice):
+def setScrollerFiles(configName, qtouchComponent, targetDevice,useTrustZone):
     """
     Generates as List of source files required for Scroller support
     Arguments:
@@ -14,6 +14,8 @@ def setScrollerFiles(configName, qtouchComponent, targetDevice):
     fileList = []
     fileList.append(setScrollerLibraryFile(configName, qtouchComponent, targetDevice))
     fileList.append(setScrollerHeaderFile(configName, qtouchComponent))
+    if(useTrustZone == False):
+        del fileList[:]
     return fileList
 
 def setScrollerLibraryFile(configName, qtouchComponent, targetDevice):
@@ -67,4 +69,4 @@ def setScrollerHeaderFile(configName, qtouchComponent):
     scrollerHeaderFile.setType("HEADER")
     scrollerHeaderFile.setEnabled(False)
     scrollerHeaderFile.setMarkup(False)
-    return scrollerHeaderFile
+    return scrollerHeaderFile 

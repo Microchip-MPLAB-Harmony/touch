@@ -90,14 +90,14 @@ def initacquisitionInstance(qtouchComponent,groupNumber,parentMenu,selfChannels,
         touchAcquisitonFrequency = qtouchComponent.createKeyValueSetSymbol("DEF_SEL_FREQ_INIT_"+str(groupNumber),parentMenu)
     #parameter assignment    
     #touchSenseTechnology
-    if(shieldMode == "hardware"):
+    if(shieldMode != "none"):
         setTouchTechnologyDrivenShieldValues(touchSenseTechnology)
     else:
         setTouchTechnologyValues(touchSenseTechnology)
     #totalChannelCountSelf
     totalChannelCountSelf.setVisible(True)
     totalChannelCountSelf.setDefaultValue(int(selfChannels))
-    totalChannelCountSelf.setLabel("Self Capacitance Channels")
+    totalChannelCountSelf.setLabel("Self-Capacitance Channels")
     #totalChannelCountMutl
     totalChannelCountMutl.setVisible(True)
     totalChannelCountMutl.setDefaultValue(int(mutualChannels))

@@ -1,7 +1,7 @@
 """
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
-def setGestureFiles(configName, qtouchComponent, targetDevice):
+def setGestureFiles(configName, qtouchComponent, targetDevice,useTrustZone):
     """
     Generates as List of source files required for gesture support
     Arguments:
@@ -14,6 +14,8 @@ def setGestureFiles(configName, qtouchComponent, targetDevice):
     fileList = []
     fileList.append(setGestureLibraryFile(configName, qtouchComponent, targetDevice))
     fileList.append(setGestureHeaderFile(configName, qtouchComponent))
+    if(useTrustZone == False):
+        del fileList[:]
     return fileList
 
 def setGestureLibraryFile(configName, qtouchComponent, targetDevice):

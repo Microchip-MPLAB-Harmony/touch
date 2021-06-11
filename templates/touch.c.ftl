@@ -59,17 +59,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#if (TOUCH_CHAN_ENABLE_CNT > 1) >
 <#assign num_of_channel_more_than_one = 1 >
 </#if>
-<#--  
-<#import "/selfmutual.ftl" as selfMutual>
-<#if SELF_SCROLLER_NUM??><#assign self_scroller = SELF_SCROLLER_NUM></#if>
-<#if MUTL_SCROLLER_NUM??><#assign mutl_scroller = MUTL_SCROLLER_NUM></#if>
-<#if SELF_SURFACE_NUM??><#assign self_surface = SELF_SURFACE_NUM></#if>
-<#if MUTL_SURFACE_NUM??><#assign mutl_surface = MUTL_SURFACE_NUM></#if>
-<#if T2_SLIDER_MUTL_NUM??><#assign t2_slider_mutl = T2_SLIDER_MUTL_NUM></#if>
-<#if T2_SLIDER_SELF_NUM??><#assign t2_slider_self = T2_SLIDER_SELF_NUM></#if>
-<#if SELF_SENSOR_NUM??><#assign self_sensor = SELF_SENSOR_NUM ></#if>
-<#if MUTL_SENSOR_NUM??><#assign mutl_sensor = MUTL_SENSOR_NUM ></#if>
--->
+
 /*----------------------------------------------------------------------------
  *     include files
  *----------------------------------------------------------------------------*/

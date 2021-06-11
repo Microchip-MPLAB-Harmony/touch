@@ -3,10 +3,57 @@ MHC Python Interface documentation website <http://confluence.microchip.com/disp
 """
 import target_device
 import node_groups
-global Database
+import qtouch
+
+
+def applyDrivenShieldTimers(symbol, event):
+    """apply driven shield timers. Triggered by Driven shield plus application.
+    Arguments:
+        :symbol : the symbol that triggered the callback
+        :event : the new value. 
+    Returns:
+        :none
+    """    
+    print("---------Entering apply DSTimers----------")
+    component = symbol.getComponent()
+    toRemove = []
+    toAdd = []
+    toConnect = []
+    tIndex = 0
+    toremove = []
+    toadd = []
+        
+    applyTimers = symbol.getValue().split(">")
+    if len(applyTimers[0].strip("]["))!=0:
+        toremove = applyTimers[0].strip("][").split(", ")
+    if len(applyTimers[1].strip("]["))!=0:
+        toadd = applyTimers[1].strip("][").split(", ")
+    
+    for timer in toremove:
+        toRemove.append(timer.lower())
+        component.setDependencyEnabled("Drivenshield_"+timer, False)
+    for timer in toadd:
+        toAdd.append(timer.lower())
+        if "TCC" not in timer:
+            toConnect.append(["lib_qtouch", "Drivenshield_"+timer,timer.lower(), timer+"_TMR"])
+        component.setDependencyEnabled("Drivenshield_"+timer, True)
+    
+    if len(toRemove)!=0:
+        qtouch.deactivateComponents(toRemove)
+        # Database.deactivateComponents(toRemove)
+    if len(toAdd)!=0:
+        qtouch.activateComponents(toAdd)
+        # Database.activateComponents(toAdd)
+        if len(toConnect)!=0:
+            qtouch.connectDependencies(toConnect)
+            # Database.connectDependencies(toConnect)
+        sevent = component.getSymbolByID("TOUCH_SCRIPT_EVENT")
+        sevent.setValue("dstimer")
+        sevent.setValue("")
+    print("---------Leaving apply DSTimers----------")
 
 #group
-def initDrivenShieldGroup(ATDF,qtouchComponent,touchMenu,touchInfoMenu,minGroupCount,maxGroupCount,touchChannelMutual,ptcPininfo,shieldMode):    
+def initDrivenShieldGroup(ATDF,qtouchComponent,touchMenu,touchInfoMenu,minGroupCount,maxGroupCount,touchChannelMutual,ptcPininfo,shieldMode):
     """Initialise Driven Shield Groups and add to touch Module
     Arguments:
         :ATDF : MHC reference: <http://confluence.microchip.com/display/MH/MHC+Python+Interface#MHCPythonInterface-ATDFInterface>
@@ -27,42 +74,35 @@ def initDrivenShieldGroup(ATDF,qtouchComponent,touchMenu,touchInfoMenu,minGroupC
         if(ptcPininfo[index].getAttribute("group") == "Y"):
             ptcYPads.append(ptcPininfo[index].getAttribute("pad"))
     
-    tcSignals =[]
     tcInstances = getTCTimers(ATDF)
-    if(tcInstances is not None):
-        tcSignals = getTCTimersSignals(ATDF,tcInstances)
-    tccSignals =[]
     tccInstances = getTCCTimers(ATDF)
-    if(tccInstances is not None):    
-        tccSignals = getTCCTimersSignals(ATDF,tccInstances)
+    timersSharingPTC = getTimersSharingPTC(qtouchComponent,tcInstances,tccInstances,ATDF,ptcYPads)
+    timersSharingPTCMUX  = getTimersSharingPTCMux(qtouchComponent,tcInstances,tccInstances,ATDF,ptcYPads)
 
-    timersSharingPTC = []
-    timersSharingPTCMUX = []
-    timersSharingPTC = getTimersSharingPTC(qtouchComponent,tcInstances,tcSignals,timersSharingPTC,ptcYPads)
-    timersSharingPTCMUX = getTimersSharingPTCMUX(qtouchComponent,tcInstances,tcSignals,timersSharingPTCMUX,ptcYPads)
+
     # --------------
-
     timerInfo = qtouchComponent.createMenuSymbol("TIMER_INFO", touchInfoMenu)
     timerInfo.setLabel("Timer info")
+    drivenShieldPlusApply = qtouchComponent.createStringSymbol("DS_TIMER_APPLY", timerInfo)
+    drivenShieldPlusApply.setLabel("Apply Driven Shield Timers ")
+    drivenShieldPlusApply.setReadOnly(True)
+    drivenShieldPlusApply.setDependencies(applyDrivenShieldTimers,["DS_TIMER_APPLY"])
 
     enabledrivenShieldMenu = qtouchComponent.createBooleanSymbol("ENABLE_DRIVEN_SHIELD", touchMenu)
     enabledrivenShieldMenu.setLabel("Enable Driven Shield")
     enabledrivenShieldMenu.setDefaultValue(False)
     enabledrivenShieldMenu.setDescription("DS.")
     enabledrivenShieldMenu.setVisible(True)
-    enabledrivenShieldMenu.setEnabled(False)
     enabledrivenShieldMenu.setDependencies(drivenShieldUpdateEnabled,["ENABLE_DRIVEN_SHIELD"])
 
     for groupNum in range (minGroupCount,maxGroupCount+1):
         if groupNum == 1:
             drivenShieldMenu = qtouchComponent.createMenuSymbol("DRIVEN_SHIELD_MENU", enabledrivenShieldMenu)
             drivenShieldMenu.setLabel("Driven Shield Configuration")
-            drivenShieldMenu.setVisible(False)
-            drivenShieldMenu.setEnabled(False)
             initDrivenShieldInstance(
                 ATDF,qtouchComponent,groupNum,drivenShieldMenu,
                 timerInfo,touchMenu,touchChannelMutual,ptcPininfo,
-                tcInstances,tccInstances,timersSharingPTC,timersSharingPTCMUX,tcSignals,tccSignals,shieldMode)
+                tcInstances,tccInstances,timersSharingPTC,timersSharingPTCMUX,shieldMode)
         else:
             dynamicName = "drivenShieldMenu_"+str(groupNum) 
             dynamicId = "DRIVEN_SHIELD_MENU_" +str(groupNum) 
@@ -73,13 +113,13 @@ def initDrivenShieldGroup(ATDF,qtouchComponent,touchMenu,touchInfoMenu,minGroupC
             initDrivenShieldInstance(
                 ATDF,qtouchComponent,groupNum, vars()[dynamicName],timerInfo,
                 touchMenu,touchChannelMutual,ptcPininfo,tcInstances,tccInstances,
-                timersSharingPTC,timersSharingPTCMUX,tcSignals,tccSignals,shieldMode)
+                timersSharingPTC,timersSharingPTCMUX,shieldMode)
     
 def initDrivenShieldInstance(
     ATDF,qtouchComponent,groupNumber,parentLabel, 
     timerInfo, touchMenu, touchChannelMutual, ptcPininfo, 
     tcInstances, tccInstances,timersSharingPTC, timersSharingPTCMUX,
-    tcSignals,tccSignals,shieldMode):
+    shieldMode):
     """Initialise Driven Shield Instance
     Arguments:
         :ATDF : MHC reference: <http://confluence.microchip.com/display/MH/MHC+Python+Interface#MHCPythonInterface-ATDFInterface>
@@ -94,35 +134,46 @@ def initDrivenShieldInstance(
         :tccInstances : see getTCCTimers()
         :timersSharingPTC : see getTimersSharingPTC()
         :timersSharingPTCMUX: see getTimersSharingPTCMUX()
-        :tcSignals : see getTCTimersSignals()
-        :tccSignals : see= getTCCTimersSignals()
         :shieldMode : see target_device.getShieldMode()
     Returns:
         :none
     """
     if (groupNumber == 1):
-        if(shieldMode == "hardware"):
-            enableDrivenShieldAdjacent = qtouchComponent.createBooleanSymbol("DS_ADJACENT_SENSE_LINE_AS_SHIELD", parentLabel)
-            enableDrivenShieldDedicated = qtouchComponent.createBooleanSymbol("DS_DEDICATED_PIN_ENABLE", parentLabel)
-            drivenShieldDedicatedPin = qtouchComponent.createKeyValueSetSymbol("DS_DEDICATED_PIN", enableDrivenShieldDedicated)
-            enableDrivenShieldAdjacent.setLabel("Enable Adjacent Sense Pins as Shield")
-            enableDrivenShieldAdjacent.setDefaultValue(False)
-            enableDrivenShieldDedicated.setLabel("Enable Dedicated Driven Shield Pin")
-            enableDrivenShieldDedicated.setDefaultValue(False)
-            setDSDedicatedPins(drivenShieldDedicatedPin,ptcPininfo)
+        enableDrivenShieldPlus = qtouchComponent.createBooleanSymbol("DS_PLUS_ENABLE", parentLabel)
+        enableDrivenShieldPlus.setLabel("Enable Driven Shield Plus")
+        enableDrivenShieldPlus.setDefaultValue(False)
+
+        enableDrivenShieldDedicated = qtouchComponent.createBooleanSymbol("DS_DEDICATED_ENABLE", parentLabel)
+        enableDrivenShieldDedicated.setLabel("Enable Dedicated Driven Shield Pin")
+        enableDrivenShieldDedicated.setDefaultValue(False)
+
+        drivenShieldDedicatedTimer = qtouchComponent.createKeyValueSetSymbol("DS_DEDICATED_TIMER", enableDrivenShieldDedicated)
+        setDSTimers(drivenShieldDedicatedTimer)
+        
+        drivenShieldDedicatedTimerPin = qtouchComponent.createKeyValueSetSymbol("DS_DEDICATED_TIMER_PIN", enableDrivenShieldDedicated)
+        setDSDedicatedTimerPins(drivenShieldDedicatedTimerPin,ptcPininfo)
+
+        setTimerInfoGroup(qtouchComponent,timerInfo,tcInstances,tccInstances,drivenShieldDedicatedTimer,drivenShieldDedicatedTimerPin,ptcPininfo,ATDF)
+        if(shieldMode ==  "timer"):
+            setDSNodesMenu(groupNumber,qtouchComponent,touchMenu,touchChannelMutual,timersSharingPTC, timersSharingPTCMUX)
+
     else:
-        if(shieldMode == "hardware"):
-            enableDrivenShieldAdjacent = qtouchComponent.createBooleanSymbol("DS_ADJACENT_SENSE_LINE_AS_SHIELD_"+str(groupNumber), parentLabel)
-            enableDrivenShieldDedicated = qtouchComponent.createBooleanSymbol("DS_DEDICATED_PIN_ENABLE_"+str(groupNumber), parentLabel)
-            drivenShieldDedicatedPin = qtouchComponent.createKeyValueSetSymbol("DS_DEDICATED_PIN_"+str(groupNumber), enableDrivenShieldDedicated)
-            enableDrivenShieldAdjacent.setLabel("Enable Adjacent Sense Pins as Shield")
-            enableDrivenShieldAdjacent.setDefaultValue(False)
-            enableDrivenShieldDedicated.setLabel("Enable Dedicated Driven Shield Pin")
-            enableDrivenShieldDedicated.setDefaultValue(False)
-            setDSDedicatedPins(drivenShieldDedicatedPin,ptcPininfo)
+        enableDrivenShieldPlus = qtouchComponent.createBooleanSymbol("DS_PLUS_ENABLE_"+str(groupNumber), parentLabel)
+        enableDrivenShieldPlus.setLabel("Enable Driven Shield Plus")
+        enableDrivenShieldPlus.setDefaultValue(False)
+        enableDrivenShieldDedicated = qtouchComponent.createBooleanSymbol("DS_DEDICATED_PIN_ENABLE_"+str(groupNumber), parentLabel)
+        enableDrivenShieldDedicated.setLabel("Enable Dedicated Driven Shield Pin")
+        enableDrivenShieldDedicated.setDefaultValue(False)            
+        drivenShieldDedicatedTimerPin = qtouchComponent.createKeyValueSetSymbol("DS_DEDICATED_PIN_"+str(groupNumber), enableDrivenShieldDedicated)
+        setDSDedicatedTimerPins(drivenShieldDedicatedTimerPin,ptcPininfo)
 
+def setDSTimers(drivenShieldDedicatedTimer):
+    drivenShieldDedicatedTimer.setLabel("Select Dedicated Timer")
+    drivenShieldDedicatedTimer.setDefaultValue(0)
+    drivenShieldDedicatedTimer.setDisplayMode("Description")
+    drivenShieldDedicatedTimer.addKey("---","0","---")
 
-def setDSDedicatedPins(drivenShieldDedicatedPin,ptcPininfo):
+def setDSDedicatedTimerPins(drivenShieldDedicatedPin,ptcPininfo):
     """Populate the driven shield dedicated Table
     Arguments:
         :drivenShieldDedicatedPin : symbol to be populated
@@ -137,6 +188,68 @@ def setDSDedicatedPins(drivenShieldDedicatedPin,ptcPininfo):
             drivenShieldDedicatedPin.addKey(
                 ptcPininfo[index].getAttribute("index"),ptcPininfo[index].getAttribute("group")+"("+ptcPininfo[index].getAttribute("index")+")",
                 ptcPininfo[index].getAttribute("group")+ptcPininfo[index].getAttribute("index")+ "  ("+ ptcPininfo[index].getAttribute("pad")+")")
+
+def setTimerInfoGroup(qtouchComponent,timerInfo,tcInstances,tccInstances,drivenShieldDedicatedTimer,drivenShieldDedicatedTimerPin,ptcPininfo,ATDF):
+    tindex, pindex = 0, 0
+    
+    for index in range(0, len(tcInstances)):
+        tctimer = tcInstances[index].getAttribute("name")
+        drivenShieldDedicatedTimer.addKey(tctimer,str(tindex+1),tctimer)
+        tindex+=1
+        #create timer info group
+        timerMenu = qtouchComponent.createMenuSymbol(tctimer, timerInfo)
+        timerMenu.setLabel(tctimer)
+        #create signal info
+        tcTimerSignal = qtouchComponent.createKeyValueSetSymbol(tctimer+"_SIGNAL", timerMenu)
+        tcTimerSignal.setLabel("Signal")
+        tcTimerMux = qtouchComponent.createKeyValueSetSymbol(tctimer+"_Mux", timerMenu)
+        tcTimerMux.setLabel("Mux")
+        tcTimerMuxYpin = qtouchComponent.createKeyValueSetSymbol(tctimer+"_Ypin", timerMenu)
+        tcTimerMuxYpin.setLabel("Ypin")
+
+        tcptcSignals = ptcPininfo
+        tcSignals = getTCTimersSignals(ATDF,tctimer)
+        for sindex in range(0, len(tcSignals)):
+            tcTimermux = "MUX_"+tcSignals[sindex].getAttribute("pad")+tcSignals[sindex].getAttribute("function")+"_"+tctimer+"_"+tcSignals[sindex].getAttribute("group")+tcSignals[sindex].getAttribute("index")
+            tcTimerMux.addKey(tcTimermux, str(sindex), tcTimermux)
+            timerPin = tcSignals[sindex].getAttribute("pad")+tcSignals[sindex].getAttribute("function")+"_"+tctimer+"_"+tcSignals[sindex].getAttribute("group")+tcSignals[sindex].getAttribute("index")
+            tcTimerSignal.addKey(timerPin, str(sindex), timerPin)
+            drivenShieldDedicatedTimerPin.addKey(timerPin,str(pindex+1),timerPin)
+            for cnt in range (0, len(tcptcSignals)):
+                if tcptcSignals[cnt].getAttribute("pad") == tcSignals[sindex].getAttribute("pad"):
+                    tempstring = "Y("+tcptcSignals[cnt].getAttribute("index")+")"
+                    tcTimerMuxYpin.addKey(tempstring, str(sindex) ,tempstring)
+                    break;
+            pindex+= 1
+    
+    for index in range(0, len(tccInstances)):
+        tcctimer = tccInstances[index].getAttribute("name")
+        drivenShieldDedicatedTimer.addKey(tcctimer,str(tindex+1),tcctimer)
+        tindex+=1
+        #create timer info group
+        timerMenu = qtouchComponent.createMenuSymbol(tcctimer, timerInfo)
+        timerMenu.setLabel(tcctimer)
+        #create signal info
+        tccTimerSignal = qtouchComponent.createKeyValueSetSymbol(tcctimer+"_SIGNAL", timerMenu)
+        tccTimerSignal.setLabel("Signal")
+        tccTimerMux = qtouchComponent.createKeyValueSetSymbol(tcctimer+"_Mux", timerMenu)
+        tccTimerMux.setLabel("Mux")
+        tccTimerMuxYpin = qtouchComponent.createKeyValueSetSymbol(tcctimer+"_Ypin", timerMenu)
+        tccTimerMuxYpin.setLabel("Ypin")
+        tccptcSignals = ptcPininfo
+        tccSignals = getTCCTimersSignals(ATDF,tcctimer)
+        for sindex in range(0, len(tccSignals)):
+            tccTimermux = "MUX_"+tccSignals[sindex].getAttribute("pad")+tccSignals[sindex].getAttribute("function")+"_"+tcctimer+"_"+tccSignals[sindex].getAttribute("group")+tccSignals[sindex].getAttribute("index")
+            tccTimerMux.addKey(tccTimermux, str(sindex), tccTimermux)
+            timerPin = tccSignals[sindex].getAttribute("pad")+tccSignals[sindex].getAttribute("function")+"_"+tcctimer+"_"+tccSignals[sindex].getAttribute("group")+tccSignals[sindex].getAttribute("index")
+            tccTimerSignal.addKey(timerPin, str(sindex), timerPin)
+            drivenShieldDedicatedTimerPin.addKey(timerPin,str(pindex+1),timerPin)
+            for cnt in range (0, len(tccptcSignals)):
+                if tccptcSignals[cnt].getAttribute("pad") == tccSignals[sindex].getAttribute("pad"):
+                    tempstring = "Y("+tccptcSignals[cnt].getAttribute("index")+")"
+                    tccTimerMuxYpin.addKey(tempstring, str(sindex) ,tempstring)
+                    break;
+            pindex+= 1
 
 def getTCTimers(ATDF):
     """Retrieve TC timers from device ATDF
@@ -164,7 +277,7 @@ def getTCCTimers(ATDF):
     else:
         return []
 
-def getTCTimersSignals(ATDF,tcInstances):
+def getTCTimersSignals(ATDF,tcInstance):
     """Retrieve TC signals from each TC peripheral.
     Arguments:
         :ATDF : MHC reference: <http://confluence.microchip.com/display/MH/MHC+Python+Interface#MHCPythonInterface-ATDFInterface>
@@ -172,14 +285,13 @@ def getTCTimersSignals(ATDF,tcInstances):
     Returns:
         :list of TCTimer signals
     """
-    for indexI in range(0, len(tcInstances)):
-        tcSignalNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"TC\"]/instance@[name=\""+ tcInstances[indexI].getAttribute("name") +"\"]/signals")
-        if (tcSignalNode is not None):
-            return tcSignalNode.getChildren()
-        else:
-            return []
+    tcSignalNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"TC\"]/instance@[name=\""+ tcInstance +"\"]/signals")
+    if (tcSignalNode is not None):
+        return tcSignalNode.getChildren()
+    else:
+        return []
 
-def getTCCTimersSignals(ATDF,tccInstances):
+def getTCCTimersSignals(ATDF,tccInstance):
     """Retrieve TC signals from each TC peripheral.
     Arguments:
         :ATDF : MHC reference: <http://confluence.microchip.com/display/MH/MHC+Python+Interface#MHCPythonInterface-ATDFInterface>
@@ -187,52 +299,77 @@ def getTCCTimersSignals(ATDF,tccInstances):
     Returns:
         :list of TCCTimer signals
     """
-    for indexI in range(0, len(tccInstances)):
-        tccSignalNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"TCC\"]/instance@[name=\""+ tccInstances[indexI].getAttribute("name") +"\"]/signals")
-        if (tccSignalNode is not None):
-            return tccSignalNode.getChildren()
-        else:
-            return []
+    tccSignalNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"TCC\"]/instance@[name=\""+ tccInstance +"\"]/signals")
+    if (tccSignalNode is not None):
+        return tccSignalNode.getChildren()
+    else:
+        return []
 
-def getTimersSharingPTCMUX(qtouchComponent,tcInstances,tcSignals,timersSharingPTCMUX,ptcYPads):
+def getTimersSharingPTCMux(qtouchComponent,tcInstances,tccInstances,ATDF,ptcYPads):
     """Retrieve a list of strings containing both timer and PTC pin information .
     Arguments:
         :qtouchComponent : touchModule
         :tcInstances : see getTCTimers()
-        :tcSignals : see getTCTimersSignals()
-        :timersSharingPTCMUX : see getTimersSharingPTCMUX()
+        :tccInstances : see getTCCTimers()
+        :ATDF : MHC reference: <http://confluence.microchip.com/display/MH/MHC+Python+Interface#MHCPythonInterface-ATDFInterface>
         :ptcYPads : Y Pads extracted from ptcPinValues
     Returns:
         :list of timer and PTC multiplexed pins including pad,function,groupindex
     """
+    timersSharingPTCMUX = []
+
     for indexI in range(0, len(tcInstances)):
+        timer = tcInstances[indexI].getAttribute("name")
+        tcSignals = getTCTimersSignals(ATDF,timer)
         for indexS in range(0, len(tcSignals)):
-            timer = tcInstances[indexI].getAttribute("name")
             qtouchComponent.addDependency("Drivenshield_"+timer, "TMR", "TMR(Shield)", False, False)
             qtouchComponent.setDependencyEnabled("Drivenshield_"+timer, False)
             if tcSignals[indexS].getAttribute("pad") in ptcYPads:
                 string = tcSignals[indexS].getAttribute("pad")+tcSignals[indexS].getAttribute("function")+"_"+timer+"_"+tcSignals[indexS].getAttribute("group")+tcSignals[indexS].getAttribute("index")
                 timersSharingPTCMUX.append(string)
-        return timersSharingPTCMUX
+    
+    for indexI in range(0, len(tccInstances)):
+        timer = tccInstances[indexI].getAttribute("name")
+        tcSignals = getTCCTimersSignals(ATDF,timer)
+        for indexS in range(0, len(tcSignals)):
+            qtouchComponent.addDependency("Drivenshield_"+timer, "TMR", "TMR(Shield)", False, False)
+            qtouchComponent.setDependencyEnabled("Drivenshield_"+timer, False)
+            if tcSignals[indexS].getAttribute("pad") in ptcYPads:
+                string = tcSignals[indexS].getAttribute("pad")+tcSignals[indexS].getAttribute("function")+"_"+timer+"_"+tcSignals[indexS].getAttribute("group")+tcSignals[indexS].getAttribute("index")
+                timersSharingPTCMUX.append(string)
 
-def getTimersSharingPTC(qtouchComponent,tcInstances,tcSignals,timersSharingPTC,ptcYPads):
+    return timersSharingPTCMUX
+
+def getTimersSharingPTC(qtouchComponent,tcInstances,tccInstances,ATDF,ptcYPads):
     """Retrieve a list of pads multiplexed between timer and PTC.
     Arguments:
         :qtouchComponent : touchModule
         :tcInstances : see getTCTimers()
-        :tcSignals : see getTCTimersSignals()
-        :timersSharingPTCMUX : see getTimersSharingPTCMUX()
+        :tccInstances : see getTCCTimers()
+        :ATDF : MHC reference: <http://confluence.microchip.com/display/MH/MHC+Python+Interface#MHCPythonInterface-ATDFInterface>
         :ptcYPads : Y Pads extracted from ptcPinValues
     Returns:
         :list of timer and PTC multiplexed pins by pad
     """
+    timersSharingPTC = []
     for indexI in range(0, len(tcInstances)):
-        for indexS in range(0, len(tcSignals)):
-            timer = tcInstances[indexI].getAttribute("name")
+        timer = tcInstances[indexI].getAttribute("name")
+        tcSignals = getTCTimersSignals(ATDF,timer)
+        for indexS in range(0, len(tcSignals)):            
             qtouchComponent.addDependency("Drivenshield_"+timer, "TMR", "TMR(Shield)", False, False)
             qtouchComponent.setDependencyEnabled("Drivenshield_"+timer, False)
             if tcSignals[indexS].getAttribute("pad") in ptcYPads:
                 timersSharingPTC.append(timer)
+    
+    for indexI in range(0, len(tccInstances)):
+        timer = tccInstances[indexI].getAttribute("name")
+        tcSignals = getTCCTimersSignals(ATDF,timer)
+        for indexS in range(0, len(tcSignals)):            
+            qtouchComponent.addDependency("Drivenshield_"+timer, "TMR", "TMR(Shield)", False, False)
+            qtouchComponent.setDependencyEnabled("Drivenshield_"+timer, False)
+            if tcSignals[indexS].getAttribute("pad") in ptcYPads:
+                timersSharingPTC.append(timer)
+
     return timersSharingPTC
 
 def drivenShieldUpdateEnabled(symbol,event):
@@ -252,11 +389,8 @@ def drivenShieldUpdateEnabled(symbol,event):
             grpId = "DRIVEN_SHIELD_MENU"
         else:
             grpId = "DRIVEN_SHIELD_MENU_" +str(x)
-        component.getSymbolByID(grpId).setEnabled(currentVal)
         component.getSymbolByID(grpId).setVisible(currentVal)
 
-
-#updater
 def updateDrivenShieldGroups(symbol, event):
     """Handler for number of driven shield groups being used. 
     Triggered by qtouch.updateGroupsCounts(symbol,event)
@@ -316,7 +450,7 @@ def updateLumpModeDrivenShield(symbol,event,totalChannelCount,lump_symbol):
     component= symbol.getComponent()
     currentVal = int(event['symbol'].getValue())
     enableDrivenShieldAdjacent = component.getSymbolByID("DS_ADJACENT_SENSE_LINE_AS_SHIELD")
-    enableDrivenShieldDedicated = component.getSymbolByID("DS_DEDICATED_PIN_ENABLE")
+    enableDrivenShieldDedicated = component.getSymbolByID("DS_DEDICATED_ENABLE")
     drivenShieldDedicatedPin = component.getSymbolByID("DS_DEDICATED_PIN").getValue()
     
     tchSelfPinSelection = node_groups.getTchSelfPinSelection()
@@ -375,27 +509,23 @@ def updateLumpModeDrivenShield(symbol,event,totalChannelCount,lump_symbol):
 
     node_groups.setTchSelfPinSelection(tchSelfPinSelection)
     node_groups.setTchMutXPinSelection(tchMutXPinSelection)
-'''    
-
-def setDSNodesMenu(ATDF,groupNumber,qtouchComponent,touchMenu,touchChannelMutual,ptcPinValues,tcInstances,tccInstances,timersSharingPTC, timersSharingPTCMUX):
+   
+def setDSNodesMenu(groupNumber,qtouchComponent,touchMenu,touchChannelMutual,timersSharingPTC, timersSharingPTCMUX):
     """Populate the driven shield settings in the nodes group menus 
     Arguments:
-        :ATDF : MHC reference: <http://confluence.microchip.com/display/MH/MHC+Python+Interface#MHCPythonInterface-ATDFInterface>
         :groupNumber : index of the group instance
         :qtouchComponent : touchModule
         :touchMenu : touchMenu
         :touchChannelMutual : see target_device.getMutualCount() 
-        :ptcPinValues : see target_device.setDevicePinValues()
-        :tcInstances : see getTCTimers()
-        :tccInstances : see getTCCTimers()
         :timersSharingPTC : see getTimersSharingPTC()
         :timersSharingPTCMUX: see getTimersSharingPTCMUX()
     Returns:
         none
     """
+    
     nodesMenuArray =[]
     if groupNumber == 1:
-        for idx in range (0 ,touchChannelMutual):
+        for idx in range (0 ,touchChannelMutual-1):
             nodesMenuArray.append(touchMenu.getComponent().getSymbolByID("TOUCH_ENABLE_CH_"+str(idx)))
         
         for channelID in range(0, len(nodesMenuArray)):
@@ -435,56 +565,3 @@ def setDSNodesMenu(ATDF,groupNumber,qtouchComponent,touchMenu,touchChannelMutual
             for tIndex in range(0, len(timersSharingPTCMUX)):
                 dsAdjacentTimerPinMuxValue.addKey(timersSharingPTCMUX[tIndex], str(tIndex), timersSharingPTCMUX[tIndex])
 
-   
-
-
-def applyDrivenShieldTimers(symbol, event):
-    """apply driven shield timers. Triggered by Driven shield plus application.
-    Arguments:
-        :symbol : the symbol that triggered the callback
-        :event : the new value. 
-    Returns:
-        :none
-    """    
-    print("---------Entering apply DSTimers----------")
-    global Database
-    component = symbol.getComponent()
-    toRemove = []
-    toAdd = []
-    toConnect = []
-    tIndex = 0
-    toremove = []
-    toadd = []
-
-    applyTimers = symbol.getValue().split(">")
-    if len(applyTimers[0].strip("]["))!=0:
-        toremove = applyTimers[0].strip("][").split(", ")
-    if len(applyTimers[1].strip("]["))!=0:
-        toadd = applyTimers[1].strip("][").split(", ")
-    
-    for timer in toremove:
-        toRemove.append(timer.lower())
-        component.setDependencyEnabled("Drivenshield_"+timer, False)
-    for timer in toadd:
-        toAdd.append(timer.lower())
-        if "TCC" not in timer:
-            toConnect.append(["lib_qtouch", "Drivenshield_"+timer,timer.lower(), timer+"_TMR"])
-        component.setDependencyEnabled("Drivenshield_"+timer, True)
-    
-    if len(toRemove)!=0:
-        Database.deactivateComponents(toRemove)
-    if len(toAdd)!=0:
-        Database.activateComponents(toAdd)
-        if len(toConnect)!=0:
-            Database.connectDependencies(toConnect)
-        sevent = component.getSymbolByID("TOUCH_SCRIPT_EVENT")
-        sevent.setValue("dstimer")
-        sevent.setValue("")
-    print("---------Leaving apply DSTimers----------")
-
-
-
-
-
-
-'''

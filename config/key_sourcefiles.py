@@ -1,7 +1,7 @@
 """
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
-def setKeysFiles(configName, qtouchComponent, targetDevice):
+def setKeysFiles(configName, qtouchComponent, targetDevice,useTrustZone):
     """
     Generates as List of source files required for Keys support
     Arguments:
@@ -14,6 +14,8 @@ def setKeysFiles(configName, qtouchComponent, targetDevice):
     fileList = []
     fileList.append(setTouchLibraryFile(configName, qtouchComponent, targetDevice))
     fileList.append(setTouchHeaderFile(configName, qtouchComponent))
+    if(useTrustZone == False):
+        del fileList[:]
     return fileList
 
 def setTouchLibraryFile(configName, qtouchComponent, targetDevice):

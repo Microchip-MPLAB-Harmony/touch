@@ -1,7 +1,7 @@
 """
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
-
+import node_groups
 tchSelfPinSelection = []
 tchMutXPinSelection = []
 tchMutXPinSelection = []

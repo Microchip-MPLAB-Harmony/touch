@@ -1,7 +1,7 @@
 """
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
-def setAcquisitionFiles(configName, qtouchComponent, targetDevice):
+def setAcquisitionFiles(configName, qtouchComponent, targetDevice, useTrustZone):
     """
     Generates as List of source files required for Acquisition
     Arguments:
@@ -27,6 +27,10 @@ def setAcquisitionFiles(configName, qtouchComponent, targetDevice):
     fileList.append(setBindHeaderFile(configName, qtouchComponent, targetDevice))
     # touchCommonHeaderFile
     fileList.append(setCommonHeaderFile(configName, qtouchComponent, targetDevice))
+
+    if(useTrustZone == False):
+        del fileList[:]
+
     return fileList
 
 

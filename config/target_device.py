@@ -57,6 +57,7 @@ def setModuleID(qtouchComponent,touchMenu,targetDevice):
     elif(targetDevice == "SAML10"):
         getModuleID.setDefaultValue("0x0027")
     else:
+        print("Error_setModuleID - Device Not Supported")
         getModuleID.setDefaultValue("Error_setModuleID")
 
 # Minimum Interrupt priority
@@ -389,10 +390,16 @@ def setDevicePinValues(ATDF,withConsoleOutput, lumpsupport, targetDevice):
     # Determine largest Mutual config
     maxMutuals = 0
     thisMax = 0
-    for index in range(0,selLen):
-        thisMax = (ylen-index-selLen)*(xlen+index)
-        if(thisMax > maxMutuals):
-            maxMutuals = thisMax
+    if(selLen ==0):
+        for index in range(0,ylen):
+            thisMax = (ylen-index)*(xlen+index)
+            if(thisMax > maxMutuals):
+                maxMutuals = thisMax
+    else:
+        for index in range(0,selLen):
+            thisMax = (ylen-index-selLen)*(xlen+index)
+            if(thisMax > maxMutuals):
+                maxMutuals = thisMax
     # set the global counts for self and mutual
     touchChannelSelf = ylen 
     touchChannelMutual = maxMutuals

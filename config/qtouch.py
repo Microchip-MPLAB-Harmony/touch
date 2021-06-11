@@ -318,6 +318,10 @@ def instantiateComponent(qtouchComponent):
     shieldMode = target_device.getShieldMode(targetDevice)
     # Boost mode support
     boostMode = boost_mode_groups.getBoostSupported(targetDevice)
+    if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
+        useTrustZone = True
+    else:
+        useTrustZone = False
 
     #Self Mutual Related if not required then setMaxGroups(1)
     acquisition_groups.setMaxGroups(1) # Specifies the max number of acquisitions groups
@@ -339,6 +343,7 @@ def instantiateComponent(qtouchComponent):
     projectFilesList = []
 
     # ----Acquisition----
+    projectFilesList = projectFilesList + acquisition_sourcefiles.setAcquisitionFiles(configName, qtouchComponent, targetDevice,useTrustZone)
     acquisition_groups.initAcquisitionGroup(
         qtouchComponent, 
         touchMenu, 
@@ -349,7 +354,7 @@ def instantiateComponent(qtouchComponent):
         targetDevice,
         csdMode,
         shieldMode)
-    projectFilesList = projectFilesList + acquisition_sourcefiles.setAcquisitionFiles(configName, qtouchComponent, targetDevice)
+
 
     # ----Node----
     node_groups.initNodeGroup(
@@ -361,8 +366,7 @@ def instantiateComponent(qtouchComponent):
         touchChannelMutual,
         ptcPinValues,
         csdMode,
-        rSelMode
-        )
+        rSelMode)
 
     # ----Keys----
     key_groups.initKeyGroup(
@@ -372,7 +376,7 @@ def instantiateComponent(qtouchComponent):
         maxGroupCount,
         touchChannelSelf,
         touchChannelMutual)
-    projectFilesList = projectFilesList + key_sourcefiles.setKeysFiles(configName, qtouchComponent, targetDevice)
+    projectFilesList = projectFilesList + key_sourcefiles.setKeysFiles(configName, qtouchComponent, targetDevice,useTrustZone)
 
     # ----Sensor----
     sensor_groups.initSensorGroup(
@@ -382,6 +386,7 @@ def instantiateComponent(qtouchComponent):
         maxGroupCount)
 
     # ----Scroller----
+    projectFilesList = projectFilesList + scroller_sourcefiles.setScrollerFiles(configName, qtouchComponent, targetDevice,useTrustZone)
     scroller_groups.initScrollerGroup(
         qtouchComponent,
         touchMenu,
@@ -389,19 +394,21 @@ def instantiateComponent(qtouchComponent):
         maxGroupCount,
         touchChannelSelf,
         touchChannelMutual)
-    projectFilesList = projectFilesList + scroller_sourcefiles.setScrollerFiles(configName, qtouchComponent, targetDevice)
+    
 
     # ----Frequency Hop----
+    projectFilesList = projectFilesList + freq_hop_sourcefiles.setFreqHopFiles(configName, qtouchComponent, targetDevice,useTrustZone)
     freq_hop_groups.initFreqHopGroup(
         qtouchComponent,
         touchMenu,
         minGroupCount,
         maxGroupCount,
         targetDevice)
-    projectFilesList = projectFilesList + freq_hop_sourcefiles.setFreqHopFiles(configName, qtouchComponent, targetDevice)
+    
 
     # ----Driven Shield----
     if (shieldMode != "none"):
+        projectFilesList = projectFilesList + drivenshield_sourcefiles.setDrivenShieldFiles(configName, qtouchComponent,useTrustZone)
         drivenshield_groups.initDrivenShieldGroup(
             ATDF,
             qtouchComponent,
@@ -412,7 +419,7 @@ def instantiateComponent(qtouchComponent):
             touchChannelMutual,
             ptcPinValues,
             shieldMode)
-        projectFilesList = projectFilesList + drivenshield_sourcefiles.setDrivenShieldFiles(configName, qtouchComponent)
+        
 
     # ----Boost Mode----
     if(boostMode == True):
@@ -430,7 +437,7 @@ def instantiateComponent(qtouchComponent):
         touchMenu, 
         targetDevice, 
         touchChannelMutual)
-    projectFilesList = projectFilesList + surface_sourcefiles.setSurfaceFiles(configName,qtouchComponent, targetDevice)
+    projectFilesList = projectFilesList + surface_sourcefiles.setSurfaceFiles(configName,qtouchComponent, targetDevice,useTrustZone)
 
     # ----2D Surface Visualizer----
     projectFilesList = projectFilesList + surface_2D_Utility.initSurface2DUtilityInstance(
@@ -442,7 +449,7 @@ def instantiateComponent(qtouchComponent):
 
     # ----Gesture----
     gesture.initGestureInstance(qtouchComponent, touchMenu)
-    projectFilesList = projectFilesList + gesture_sourcefiles.setGestureFiles(configName, qtouchComponent, targetDevice)
+    projectFilesList = projectFilesList + gesture_sourcefiles.setGestureFiles(configName, qtouchComponent, targetDevice,useTrustZone)
 
 	#----Low power----
     if (lowpower.lowPowerSupported(targetDevice)):
@@ -477,10 +484,11 @@ def instantiateComponent(qtouchComponent):
         touchWarning.setVisible(False)
         touchWarning.setDependencies(onWarning,["PTC_CLOCK_FREQ"])
 
-    projectFilesList = projectFilesList + qtouch_sourcefiles.setTouchFiles(configName, qtouchComponent)
+    projectFilesList = projectFilesList + qtouch_sourcefiles.setTouchFiles(configName, qtouchComponent,useTrustZone)
 
-    if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
+    if useTrustZone == True:
         trustzone.initTrustzoneInstance(configName, qtouchComponent, touchMenu , targetDevice, projectFilesList)
+
         
     qtouchComponent.addPlugin("../touch/plugin/ptc_manager_c21.jar")
 
@@ -494,3 +502,12 @@ def finalizeComponent(qtouchComponent):
     """
     res = Database.activateComponents(autoComponentIDTable)
     res = Database.connectDependencies(autoConnectTable)
+
+def deactivateComponents(toRemove):
+    Database.deactivateComponents(toRemove)
+
+def activateComponents(toAdd):
+    Database.deactivateComponents(toAdd)
+
+def connectDependencies(toConnect):
+    Database.connectDependencies(toConnect)

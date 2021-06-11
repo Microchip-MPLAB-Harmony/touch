@@ -141,7 +141,13 @@ def scrollerUpdateEnabled(symbol,event):
         :none
     """
     component= symbol.getComponent()
-    currentVal = bool(event['symbol'].getValue())
+    scrollerEnabled = event["value"]
+
+    scrollerLibraryFile = component.getSymbolByID("TOUCH_SCR_LIB")
+    scrollerHeaderFile = component.getSymbolByID("TOUCH_SCR_HEADER")
+    scrollerLibraryFile.setEnabled(scrollerEnabled)
+    scrollerHeaderFile.setEnabled(scrollerEnabled)
+
     maxVal = component.getSymbolByID("NUM_ACQUISITION_GROUPS").getValue()
     minVal = component.getSymbolByID("NUM_ACQUISITION_GROUPS").getMin()
     for x in range(minVal,maxVal+1):
@@ -149,8 +155,8 @@ def scrollerUpdateEnabled(symbol,event):
             grpId = "SCROLLER_MENU"
         else:
             grpId = "SCROLLER_MENU_" +str(x)
-        component.getSymbolByID(grpId).setEnabled(currentVal)
-        component.getSymbolByID(grpId).setVisible(currentVal)
+        component.getSymbolByID(grpId).setEnabled(scrollerEnabled)
+        component.getSymbolByID(grpId).setVisible(scrollerEnabled)
 
 def setScrollerEnableCountValues(touchSCRNum,mutualChannels):
     """Populate the scroller type symbol 

@@ -1,7 +1,7 @@
 """
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
-def setSurfaceFiles(configName, qtouchComponent, targetDevice):
+def setSurfaceFiles(configName, qtouchComponent, targetDevice,useTrustZone):
     """
     Generates as List of source files required for Surface support
     Arguments:
@@ -16,6 +16,8 @@ def setSurfaceFiles(configName, qtouchComponent, targetDevice):
     fileList.append(setSurface2TLibraryFile(configName, qtouchComponent, targetDevice))
     fileList.append(setSurface1THeaderFile(configName, qtouchComponent))
     fileList.append(setSurface2THeaderFile(configName, qtouchComponent))
+    if(useTrustZone == False):
+        del fileList[:]
     return fileList
 
 def setSurface1TLibraryFile(configName, qtouchComponent, targetDevice):

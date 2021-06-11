@@ -40,17 +40,20 @@ def initFreqHopGroupInstance(qtouchComponent,groupNumber,parentLabel):
     if int(groupNumber) == 1:
         freqSteps = qtouchComponent.createIntegerSymbol("FREQ_HOP_STEPS", parentLabel)
         enableFreqHopAutoTuneMenu = qtouchComponent.createBooleanSymbol("FREQ_AUTOTUNE", parentLabel)
+        enableFreqHopAutoTuneMenu.setDependencies(freqHopUpdateEnabled,["FREQ_AUTOTUNE"])
         maxVariance = qtouchComponent.createIntegerSymbol("DEF_TOUCH_MAX_VARIANCE", enableFreqHopAutoTuneMenu)
         tuneInCount = qtouchComponent.createIntegerSymbol("DEF_TOUCH_TUNE_IN_COUNT", enableFreqHopAutoTuneMenu)
     else:
         freqSteps = qtouchComponent.createIntegerSymbol("GROUP_"+str(groupNumber)+"FREQ_HOP_STEPS", parentLabel)
         enableFreqHopAutoTuneMenu = qtouchComponent.createBooleanSymbol("GROUP_"+str(groupNumber)+"FREQ_AUTOTUNE", parentLabel)
+        enableFreqHopAutoTuneMenu.setDependencies(freqHopUpdateEnabled,["GROUP_"+str(groupNumber)+"FREQ_AUTOTUNE"])
         maxVariance = qtouchComponent.createIntegerSymbol("GROUP_"+str(groupNumber)+"DEF_TOUCH_MAX_VARIANCE", enableFreqHopAutoTuneMenu)
         tuneInCount = qtouchComponent.createIntegerSymbol("GROUP_"+str(groupNumber)+"DEF_TOUCH_TUNE_IN_COUNT", enableFreqHopAutoTuneMenu)
 
     #parameter assignment
     enableFreqHopAutoTuneMenu.setLabel("Enable Frequency Auto Tuning")
-    enableFreqHopAutoTuneMenu.setDefaultValue(True)
+    enableFreqHopAutoTuneMenu.setDefaultValue(False)
+    
     setFreqHopValues(qtouchComponent,freqHopStepsDefault,groupNumber,parentLabel)
     setFreqStepsValues(freqSteps,freqHopStepsDefault,freqHopStepsMax)
     setMaxVarianceValues(maxVariance)
@@ -76,7 +79,7 @@ def initFreqHopGroup(qtouchComponent, parentMenu, minVal, maxVal, targetDevice):
     enableFreqHopMenu.setDescription("Frequency Hop is a mechanism used in touch measurement to avoid noisy signal value. In Frequency Hop, more than one bursting frequency (user configurable) is used. Refer QTouch Modular Library Userguide for more details on Frequency Hop.")
     enableFreqHopMenu.setVisible(True)
     enableFreqHopMenu.setEnabled(True)
-    enableFreqHopMenu.setDependencies(freqHopUdateEnabled,["ENABLE_FREQ_HOP"])
+    enableFreqHopMenu.setDependencies(freqHopUpdateEnabled,["ENABLE_FREQ_HOP"])
 
     for groupNum in range (minVal,maxVal+1):
         if groupNum ==1:
@@ -96,7 +99,6 @@ def initFreqHopGroup(qtouchComponent, parentMenu, minVal, maxVal, targetDevice):
             vars()[dynamicName].setEnabled(False)
             initFreqHopGroupInstance(qtouchComponent,groupNum,vars()[dynamicName])
 
-#
 def updateFreqHopGroups(symbol,event):
     """Handler for number of frequency hop groups being used. 
     Triggered by qtouch.updateGroupsCounts(symbol,event)
@@ -118,8 +120,39 @@ def updateFreqHopGroups(symbol,event):
             component.getSymbolByID(grpId).setEnabled(True)
             component.getSymbolByID(grpId).setVisible(True)
 
-def freqHopUdateEnabled(symbol,event):
-    """Enables frequency hop functionality.
+
+def setSourceFilesEnabledStatus(fHopEnabled,autoTuneEnabled,symbol):
+    """Enables frequency hop Autotune functionality. Also Enables/Disables freqHop and AutoFreqHop files and Libraries.
+    Arguments:
+        :fHopEnabled : Boolean Flag
+        :autoTuneEnabled :Boolean Flag
+        :symbol : symbol received by freqHopUpdateEnabled()
+    Returns:
+        :none
+    """    
+    print("setSourceFilesEnabledStatus AUTOTUNE STATUS UPDATE : " + str(autoTuneEnabled))
+    print("setSourceFilesEnabledStatus AUTONTUNE ENABLE STATUS UPDATE : " + str(fHopEnabled))
+    
+    component= symbol.getComponent()
+    freqHopLibraryFile  = component.getSymbolByID("TOUCH_HOP_LIB")
+    freqHopAutoLibraryFile = component.getSymbolByID("TOUCH_HOP_AUTO_LIB")
+    freqHopHeaderFile = component.getSymbolByID("TOUCH_HOP_HEADER")
+    freqHopAutoHeaderFile = component.getSymbolByID("TOUCH_HOP_AUTO_HEADER")
+    
+    if(fHopEnabled == True):
+        freqHopLibraryFile.setEnabled(not autoTuneEnabled)
+        freqHopHeaderFile.setEnabled(not autoTuneEnabled)
+        freqHopAutoLibraryFile.setEnabled(autoTuneEnabled)
+        freqHopAutoHeaderFile.setEnabled(autoTuneEnabled)
+    else:
+        freqHopLibraryFile.setEnabled(False)
+        freqHopHeaderFile.setEnabled(False)
+        freqHopAutoLibraryFile.setEnabled(False)
+        freqHopAutoHeaderFile.setEnabled(False)
+
+
+def freqHopUpdateEnabled(symbol,event):
+    """Enables frequency hop functionality. Also Enables/Disables associated source files and Libraries.
     Arguments:
         :symbol : the symbol that triggered the callback
         :event : the new value. 
@@ -127,9 +160,13 @@ def freqHopUdateEnabled(symbol,event):
         :none
     """
     component= symbol.getComponent()
-    currentVal = bool(event['symbol'].getValue())
     maxVal = component.getSymbolByID("NUM_ACQUISITION_GROUPS").getValue()
     minVal = component.getSymbolByID("NUM_ACQUISITION_GROUPS").getMin()
+
+    fHopEnabled = component.getSymbolByID("ENABLE_FREQ_HOP").getValue()
+    autoTuneEnabled = component.getSymbolByID("FREQ_AUTOTUNE").getValue()
+
+    setSourceFilesEnabledStatus(fHopEnabled,autoTuneEnabled,symbol)
 
     for x in range(minVal,maxVal+1):
         if(x == minVal):
@@ -137,8 +174,16 @@ def freqHopUdateEnabled(symbol,event):
         else:
             fhMenu = "FREQ_HOP_MENU_" +str(x) 
         
-        component.getSymbolByID(fhMenu).setEnabled(currentVal)
-        component.getSymbolByID(fhMenu).setVisible(currentVal)
+        component.getSymbolByID(fhMenu).setEnabled(fHopEnabled)
+        component.getSymbolByID(fhMenu).setVisible(fHopEnabled)
+
+
+
+
+
+
+
+
 
 #parameter assignment
 def setFreqStepsValues(freqSteps, stepsDefault,stepsMax):

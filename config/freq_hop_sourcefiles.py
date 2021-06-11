@@ -1,7 +1,7 @@
 """
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
-def setFreqHopFiles(configName, qtouchComponent, targetDevice):
+def setFreqHopFiles(configName, qtouchComponent, targetDevice,useTrustZone):
     """
     Generates as List of source files required for frequency hop support
     Arguments:
@@ -20,6 +20,10 @@ def setFreqHopFiles(configName, qtouchComponent, targetDevice):
     fileList.append(setfreqHopHeaderFile(configName, qtouchComponent))
     # freqHopAutoHeaderFile
     fileList.append(setfreqHopAutoHeaderFile(configName, qtouchComponent))
+
+    if(useTrustZone == False):
+        del fileList[:]
+
     return fileList
 
 # freqHopLibraryFile
@@ -33,9 +37,8 @@ def setfreqHopLibraryFile(configName, qtouchComponent, targetDevice):
         file symbol
     """
     freqHopLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_HOP_LIB", None)
-    freqHopLibraryFile.setDependencies(freqAutoTuneFunc,["FREQ_AUTOTUNE"])
     freqHopLibraryFile.setDestPath("/touch/lib/")
-    freqHopLibraryFile.setEnabled(False)
+    freqHopLibraryFile.setEnabled(True)
     if (targetDevice in set(["SAME51","SAME53","SAME54","SAMD51"])):    
         freqHopLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_cm4_0x0006.X.a")
         freqHopLibraryFile.setOutputName("qtm_freq_hop_cm4_0x0006.X.a")
@@ -61,9 +64,8 @@ def setfreqHopAutoLibraryFile(configName, qtouchComponent, targetDevice):
         file symbol
     """
     freqHopAutoLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_HOP_AUTO_LIB", None)
-    freqHopAutoLibraryFile.setDependencies(freqAutoTuneFunc,["FREQ_AUTOTUNE"])
     freqHopAutoLibraryFile.setDestPath("/touch/lib/")
-    freqHopAutoLibraryFile.setEnabled(False)     
+    freqHopAutoLibraryFile.setEnabled(True)     
   
     if (targetDevice in set(["SAME51","SAME53","SAME54","SAMD51"])):    
         freqHopAutoLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_auto_cm4_0x0004.X.a")
@@ -95,8 +97,7 @@ def setfreqHopHeaderFile(configName, qtouchComponent):
     freqHopHeaderFile.setProjectPath("config/" + configName + "/touch/")
     freqHopHeaderFile.setType("HEADER")
     freqHopHeaderFile.setMarkup(False)
-    freqHopHeaderFile.setEnabled(False)
-    freqHopHeaderFile.setDependencies(freqAutoTuneFunc,["FREQ_AUTOTUNE"])
+    freqHopHeaderFile.setEnabled(True)
     return freqHopHeaderFile
 
 # freqHopAutoHeaderFile
@@ -115,36 +116,5 @@ def setfreqHopAutoHeaderFile(configName, qtouchComponent):
     freqHopAutoHeaderFile.setProjectPath("config/" + configName + "/touch/")
     freqHopAutoHeaderFile.setType("HEADER")
     freqHopAutoHeaderFile.setMarkup(False)
-    freqHopAutoHeaderFile.setEnabled(False)
+    freqHopAutoHeaderFile.setEnabled(True)
     return freqHopAutoHeaderFile
-
-def freqAutoTuneFunc(symbol,event):
-    """Handler for enabling library / header files.
-    Combines autotune and enable functionality
-    Arguments:
-        :symbol : the symbol that triggered the event
-        :event : new value of the symbol 
-    Returns:
-        :none
-    """
-    component= symbol.getComponent()
-    autotune = event["value"]
-    freqHopLibraryFile  = component.getSymbolByID("TOUCH_HOP_LIB")
-    freqHopAutoLibraryFile = component.getSymbolByID("TOUCH_HOP_AUTO_LIB")
-    freqHopHeaderFile = component.getSymbolByID("TOUCH_HOP_HEADER")
-    freqHopAutoHeaderFile = component.getSymbolByID("TOUCH_HOP_AUTO_HEADER")
-    hopEnabled = component.getSymbolByID("ENABLE_FREQ_HOP").getValue()
-
-    if(autotune == True):
-        freqHopLibraryFile.setEnabled(False)
-        freqHopHeaderFile.setEnabled(False)
-        freqHopAutoLibraryFile.setEnabled(True)
-        freqHopAutoHeaderFile.setEnabled(True)
-    elif(hopEnabled == True):
-        freqHopLibraryFile.setEnabled(True)
-        freqHopHeaderFile.setEnabled(True)
-        freqHopAutoLibraryFile.setEnabled(False)
-        freqHopAutoHeaderFile.setEnabled(False)
-    else:
-        freqHopAutoLibraryFile.setEnabled(False)
-        freqHopAutoHeaderFile.setEnabled(False)
