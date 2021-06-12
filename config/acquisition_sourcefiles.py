@@ -51,7 +51,7 @@ def setBindHeaderFile(configName, qtouchComponent, targetDevice):
     touchBindHeaderFile.setEnabled(False)
     touchBindHeaderFile.setSourcePath("/src/qtm_binding_layer_0x0005_api.h")
     touchBindHeaderFile.setOutputName("qtm_binding_layer_0x0005_api.h")
-    return touchBindHeaderFile
+    return "TOUCH_BIND_HEADER"
 
 def setCommonHeaderFile(configName, qtouchComponent, targetDevice):
     """
@@ -69,7 +69,7 @@ def setCommonHeaderFile(configName, qtouchComponent, targetDevice):
     touchCommonHeaderFile.setProjectPath("config/" + configName + "/touch/")
     touchCommonHeaderFile.setType("HEADER")
     touchCommonHeaderFile.setMarkup(False)
-    return touchCommonHeaderFile
+    return "TOUCH_COMMON_HEADER"
 
 def setAcquisitionLibraryFile(configName, qtouchComponent, targetDevice):
     """
@@ -127,7 +127,7 @@ def setAcquisitionLibraryFile(configName, qtouchComponent, targetDevice):
     else:
         touchAcqLibraryFile.setSourcePath("Error_setAcquisitionLibraryFile")
         touchAcqLibraryFile.setOutputName("Error_setAcquisitionLibraryFile")
-    return touchAcqLibraryFile
+    return "TOUCH_ACQ_LIB"
 
 def setAutoAcquisitionLibraryFile(configName, qtouchComponent, targetDevice):
     """
@@ -185,7 +185,7 @@ def setAutoAcquisitionLibraryFile(configName, qtouchComponent, targetDevice):
     else:
         touchAcqAutoLibraryFile.setOutputName("Error_setAutoAcquisitionLibraryFile")
         touchAcqAutoLibraryFile.setOutputName("Error_setAutoAcquisitionLibraryFile")
-    return touchAcqAutoLibraryFile
+    return "TOUCH_ACQ_AUTO_LIB"
 
 def setBindLibraryFile(configName, qtouchComponent, targetDevice):
     """
@@ -212,7 +212,7 @@ def setBindLibraryFile(configName, qtouchComponent, targetDevice):
     else:
         touchBindLibraryFile.setOutputName("Error_setBindLibraryFile")
         touchBindLibraryFile.setOutputName("Error_setBindLibraryFile")
-    return touchBindLibraryFile
+    return "TOUCH_BIND_LIB"
 
 def setAcqHeaderFile(configName, qtouchComponent, targetDevice):
     """
@@ -268,7 +268,7 @@ def setAcqHeaderFile(configName, qtouchComponent, targetDevice):
     else:
         touchAcqHeaderFile.setSourcePath("Error_setAcqHeaderFile")
         touchAcqHeaderFile.setOutputName("Error_setAcqHeaderFile")
-    return touchAcqHeaderFile
+    return "TOUCH_ACQ_HEADER"
 
 def setAcqHeaderFile2(configName, qtouchComponent, targetDevice):
     """
@@ -300,7 +300,7 @@ def setAcqHeaderFile2(configName, qtouchComponent, targetDevice):
     else:
         touchAcqHeaderFile2.setSourcePath("Error_setAcqHeaderFile2")
         touchAcqHeaderFile2.setOutputName("Error_setAcqHeaderFile2")
-    return touchAcqHeaderFile2
+    return "TOUCH_ACQ_HEADER_2"
 
 
 def enableAutoTuneFunctionality(symbol,event):

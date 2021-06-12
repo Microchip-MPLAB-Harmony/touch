@@ -51,7 +51,7 @@ def setfreqHopLibraryFile(configName, qtouchComponent, targetDevice):
     else:
         freqHopLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_cm0p_0x0006.X.a")
         freqHopLibraryFile.setOutputName("qtm_freq_hop_cm0p_0x0006.X.a")
-    return freqHopLibraryFile
+    return "TOUCH_HOP_LIB"
 
 # freqHopAutoLibraryFile
 def setfreqHopAutoLibraryFile(configName, qtouchComponent, targetDevice):
@@ -79,7 +79,7 @@ def setfreqHopAutoLibraryFile(configName, qtouchComponent, targetDevice):
     else:
         freqHopAutoLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_auto_cm0p_0x0004.X.a")
         freqHopAutoLibraryFile.setOutputName("qtm_freq_hop_auto_cm0p_0x0004.X.a")
-    return freqHopAutoLibraryFile
+    return "TOUCH_HOP_AUTO_LIB"
 
 # freqHopHeaderFile
 def setfreqHopHeaderFile(configName, qtouchComponent):
@@ -98,7 +98,7 @@ def setfreqHopHeaderFile(configName, qtouchComponent):
     freqHopHeaderFile.setType("HEADER")
     freqHopHeaderFile.setMarkup(False)
     freqHopHeaderFile.setEnabled(True)
-    return freqHopHeaderFile
+    return "TOUCH_HOP_HEADER"
 
 # freqHopAutoHeaderFile
 def setfreqHopAutoHeaderFile(configName, qtouchComponent):
@@ -117,4 +117,4 @@ def setfreqHopAutoHeaderFile(configName, qtouchComponent):
     freqHopAutoHeaderFile.setType("HEADER")
     freqHopAutoHeaderFile.setMarkup(False)
     freqHopAutoHeaderFile.setEnabled(True)
-    return freqHopAutoHeaderFile
+    return "TOUCH_HOP_AUTO_HEADER"

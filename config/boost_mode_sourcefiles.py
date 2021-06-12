@@ -38,7 +38,7 @@ def setBoostModeLibraryFile(configName, qtouchComponent, targetDevice):
     else:
         touchAcq4pLibraryFile.setSourcePath("Error_setBoostModeLibraryFile")
         touchAcq4pLibraryFile.setOutputName("Error_setBoostModeLibraryFile")
-    return touchAcq4pLibraryFile
+    return "TOUCH_ACQ_4P_LIB"
 
 def setBoostModeHeaderFile(configName, qtouchComponent, targetDevice):
     touchAcq4pHeaderFile = qtouchComponent.createFileSymbol("TOUCH_ACQ_4P_HEADER", None)
@@ -59,7 +59,7 @@ def setBoostModeHeaderFile(configName, qtouchComponent, targetDevice):
     else:
         touchAcq4pHeaderFile.setSourcePath("Error_setBoostModeHeaderFile")
         touchAcq4pHeaderFile.setOutputName("Error_setBoostModeHeaderFile")
-    return touchAcq4pHeaderFile
+    return "TOUCH_ACQ_4P_HEADER"
 
 
 def libChangeBoostMode(symbol,event):

@@ -318,6 +318,7 @@ def instantiateComponent(qtouchComponent):
     shieldMode = target_device.getShieldMode(targetDevice)
     # Boost mode support
     boostMode = boost_mode_groups.getBoostSupported(targetDevice)
+    
     if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
         useTrustZone = True
     else:
@@ -488,6 +489,8 @@ def instantiateComponent(qtouchComponent):
 
     if useTrustZone == True:
         trustzone.initTrustzoneInstance(configName, qtouchComponent, touchMenu , targetDevice, projectFilesList)
+    else:
+        print("NOT USING TRUSTZONE")
 
         
     qtouchComponent.addPlugin("../touch/plugin/ptc_manager_c21.jar")
