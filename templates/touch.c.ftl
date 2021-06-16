@@ -47,6 +47,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#assign sam_c2x_devices = ["SAMC21","SAMC20"]>
 <#assign sam_l2x_devices = ["SAML21","SAML22"]>
 <#assign sam_l1x_devices = ["SAML10"]>
+<#assign pic_devices = ["PIC32MZW","PIC32MZDA"]>
 <#assign supc_devices = ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]>
 <#assign no_standby_devices = ["SAMD10","SAMD11"]>
 <#assign no_standby_during_measurement = 0>
@@ -173,7 +174,7 @@ volatile uint8_t touch_postprocess_request = 0;
 
 /* Measurement Done Touch Flag  */
 volatile uint8_t measurement_done_touch = 0;
-<#if DEVICE_NAME=="PIC32MZW">
+<#if pic_devices?seq_contains(DEVICE_NAME)>
 static uint8_t all_measure_complete = 0;
 </#if>
 
@@ -189,7 +190,7 @@ uint16_t measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
 </#if>
 
 /* Acquisition module internal data - Size to largest acquisition set */
-<#if DEVICE_NAME == "PIC32MZW">
+<#if pic_devices?seq_contains(DEVICE_NAME)>
 uint32_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 <#else>
 uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
@@ -582,7 +583,7 @@ static touch_ret_t touch_sensors_config(void)
     touch_ret_t touch_ret = TOUCH_SUCCESS;
 
     /* Init acquisition module */
-<#if DEVICE_NAME == "PIC32MZW">
+<#if pic_devices?seq_contains(DEVICE_NAME)>
     qtm_cvd_init_acquisition_module(&qtlib_acq_set1);
     qtm_cvd_qtlib_assign_signal_memory(&touch_acq_signals_raw[0]);
 <#else>
@@ -653,7 +654,7 @@ Notes  :
 static void qtm_measure_complete_callback(void)
 {
     touch_postprocess_request = 1u;
-<#if DEVICE_NAME=="PIC32MZW">
+<#if pic_devices?seq_contains(DEVICE_NAME)>
 	all_measure_complete = 1;
 </#if>
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
@@ -764,7 +765,7 @@ void touch_process(void)
     if (time_to_measure_touch_var == 1u) {
 
         /* Do the acquisition */
-        <#if DEVICE_NAME == "PIC32MZW">
+        <#if pic_devices?seq_contains(DEVICE_NAME)>
         touch_ret = qtm_cvd_start_measurement_seq(&qtlib_acq_set1, qtm_measure_complete_callback);
         <#else>
          touch_ret = qtm_ptc_start_measurement_seq(&qtlib_acq_set1, qtm_measure_complete_callback);
@@ -781,7 +782,7 @@ void touch_process(void)
             #endif
             </#if>
             </#if>
-<#if DEVICE_NAME=="PIC32MZW">
+<#if pic_devices?seq_contains(DEVICE_NAME)>
 			all_measure_complete = 0;
 </#if>
         }
@@ -1299,7 +1300,7 @@ void touch_timer_handler(void)
 </#if>
 </#if>
 }
-<#if DEVICE_NAME == "PIC32MZW">
+<#if pic_devices?seq_contains(DEVICE_NAME)>
 <#if TOUCH_TIMER_INSTANCE != "">
 void timer_handler( uint32_t intCause, uintptr_t context )
 {
@@ -1497,7 +1498,8 @@ uint8_t get_surface_position(uint8_t ver_or_hor, uint8_t contact)
 }
 </#if>
 
-<#if DEVICE_NAME != "PIC32MZW">
+<#if pic_devices?seq_contains(DEVICE_NAME)>
+<#else>
 /*============================================================================
 void PTC_Handler_EOC(void)
 ------------------------------------------------------------------------------

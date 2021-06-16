@@ -42,6 +42,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 #include "device.h"
 
+//<#assign pic_devices = ["PIC32MZW","PIC32MZDA"]>
+
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 
@@ -49,12 +51,14 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 #endif
 // DOM-IGNORE-END
-
+//${DEVICE_NAME}
+<#if pic_devices?seq_contains(DEVICE_NAME)>
+<#else>
 <#if LOW_POWER_KEYS?exists && LOW_POWER_KEYS !=""> <!-- LOW Power -->
     <#import "/eventlowpower.ftl" as eventlp>
     <#import "/softwarelowpower.ftl" as softwarelp>
 </#if>
-
+</#if>
 <#import "/node.h.ftl" as node>
 
 /*----------------------------------------------------------------------------
@@ -101,10 +105,13 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 #define DEF_PTC_CAL_OPTION   ${TUNE_MODE_SELECTED}
 
+<#if pic_devices?seq_contains(DEVICE_NAME)>
+<#else>
 /* Defines the interrupt priority for the PTC. Set low priority to PTC interrupt for applications having interrupt time
  * constraints.
  */
 #define DEF_PTC_INTERRUPT_PRIORITY ${DEF_PTC_INTERRUPT_PRIORITY}
+</#if>
 
 /* Calibration option to ensure full charge transfer */
 /* Bits 7:0 = XX | TT SELECT_TAU | X | CAL_OPTION */

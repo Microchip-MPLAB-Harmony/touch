@@ -7,7 +7,10 @@ supportedDevices = ["PIC32MZ","SAMC21","SAMC20", "SAME51","SAME53","SAME54","SAM
 ADCDevices = ["SAME51","SAME53","SAME54","SAMD51"]
 #notSupportedVariants = ["ATSAMC21J18A"]
 notSupportedVariants = []
-PIC32Devices = ["PIC32MZ"]
+PIC32Devices = ["PIC32MZ", "PIC32MZW"]
+PIC32DeviceVariant = ["PIC32MZW", "PIC32MZDA"]
+
+
 
 def loadModule():
     #mod will have value if PTC peripheral is present in a device variant
@@ -20,27 +23,41 @@ def loadModule():
             if Variables.get("__PROCESSOR") not in notSupportedVariants:
                 if mod:
                     qtouchComponent = Module.CreateComponent("lib_qtouch", "Touch Library", "/Touch/", "config/qtouch.py")
+                    qtouchComponentAcquistion = Module.CreateComponent("touch_acquire","PTC","/Touch/","config/ptc_based_acq_engine.py")
+                    qtouchComponentAcquistion.addCapability("lib_qtouch", "ACQ_ENGINE")
                     qtouchComponent.setDisplayType("Peripheral Touch Controller(PTC)")
-                    qtouchComponent.addCapability("lib_qtouch", "PTC")
+                    qtouchComponent.setDependencyEnabled("PTC",True)
                     qtouchComponent.addDependency("Touch_timer", "TMR", None, False, True)
                     qtouchComponent.setDependencyEnabled("Touch_timer", True)
+                    qtouchComponent.addDependency("touch_acquire","ACQ_ENGINE",None,False,True)
+                    qtouchComponent.setDependencyEnabled("touch_acquire", True)
                     qtouchComponent.addDependency("Touch_sercom", "UART", None, False, False)
                     qtouchComponent.setDependencyEnabled("Touch_sercom", False)
                     qtouchComponent.addDependency("Touch_sercom_Krono", "UART", None, False, False)
                     qtouchComponent.setDependencyEnabled("Touch_sercom_Krono", False)
+                    qtouchComponent.addCapability("Touch_Data", "TouchData")
                 elif x in ADCDevices:
                     qtouchComponent = Module.CreateComponent("lib_qtouch", "Touch Library", "/Touch/", "config/qtouch.py")
+                    qtouchComponentAcquistion = Module.CreateComponent("touch_acquire","ADC_TOUCH","/Touch/","config/adc_based_acq_engine.py")
+                    qtouchComponentAcquistion.addCapability("lib_qtouch", "ACQ_ENGINE")
+                    qtouchComponentAcquistion.setDependencyEnabled("ADC", True)
                     qtouchComponent.setDisplayType("Peripheral Touch Controller(PTC)")
-                    qtouchComponent.addCapability("lib_qtouch", "PTC")
+                    qtouchComponent.addCapability("lib_qtouch", "TOUCH_DATA")
+                    qtouchComponent.setDisplayType("Peripheral Touch Controller(PTC)")
+                    qtouchComponent.addCapability("Touch_Data", "TouchData")
                     qtouchComponent.addDependency("Touch_timer", "TMR", None, False, True)
+                    qtouchComponent.addDependency("touch_acquire","ACQ_ENGINE",None,False,True)
+                    qtouchComponent.setDependencyEnabled("touch_acquire", True)
                     qtouchComponent.setDependencyEnabled("Touch_timer", True)
                     qtouchComponent.addDependency("Touch_sercom", "UART", None, False, False)
                     qtouchComponent.setDependencyEnabled("Touch_sercom", False)
                     qtouchComponent.addDependency("Touch_sercom_Krono", "UART", None, False, False)
                     qtouchComponent.setDependencyEnabled("Touch_sercom_Krono", False)
-                elif x in PIC32Devices and deviceName == "PIC32MZW":
+                elif (x in PIC32Devices) and (deviceName in PIC32DeviceVariant):
                     qtouchComponent = Module.CreateComponent("lib_qtouch", "Touch Library", "/Touch/", "config/qtouch.py")
                     qtouchComponent.setDisplayType("HCVD")
+                    qtouchComponent.addDependency("Acq_Engine", "ADC", None, False, True)
+                    qtouchComponent.setDependencyEnabled("Acq_Engine", True)
                     qtouchComponent.addDependency("Touch_timer", "TMR", None, False, True)
                     qtouchComponent.setDependencyEnabled("Touch_timer", True)
                     qtouchComponent.addDependency("Touch_sercom", "UART", None, False, False)

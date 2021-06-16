@@ -1,6 +1,3 @@
-"""
-MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
-"""
 import sys
 
 try:
@@ -9,45 +6,32 @@ try:
 except (NameError):
     pass
 
+import touch_target_device
+import touch_interface
+import touch_node_groups
+import touch_boost_mode_groups
+import touch_boost_mode_sourcefiles
+import touch_acquisition_groups
+import touch_acquisition_sourcefiles
+import touch_key_groups
+import touch_key_sourcefiles
+import touch_sensor_groups
+import touch_scroller_groups
+import touch_scroller_sourcefiles
+import touch_surface
+import touch_surface_sourcefiles
+import touch_freq_hop_groups
+import touch_freq_hop_sourcefiles
+import touch_ds_groups
+import touch_ds_sourcefiles
+import touch_gesture
+import touch_gesture_sourcefiles
+import touch_lowpower
+import touch_datastreamer
+import touch_qtouch_sourcefiles
+import touch_surface_2D_utility
 
-import interface
-import acquisition_groups
-import key_groups
-import node_groups
-import sensor_groups
-import scroller_groups
-import drivenshield_groups
-import boost_mode_groups
-import freq_hop_groups
-import surface
-import gesture
-import surface_2D_Utility
-import target_device
-import datastreamer
-import trustzone
-import lowpower
-import acquisition_sourcefiles
-import key_sourcefiles
-import scroller_sourcefiles
-import drivenshield_sourcefiles
-import freq_hop_sourcefiles
-import surface_sourcefiles
-import gesture_sourcefiles
-import qtouch_sourcefiles
-
-autoComponentIDTable = ["rtc"]
-autoConnectTable = [["lib_qtouch", "Touch_timer","rtc", "RTC_TMR"]]
-InterruptVector = "PTC" + "_INTERRUPT_ENABLE"
-InterruptHandler = "PTC" + "_INTERRUPT_HANDLER"
-
-#used for driven shield 
-touchChannels = []
-touchChannelSelf =0
-touchChannelMutual=0
-
-
-
-global touchMenu
+qtouchInst = {}
 
 def onAttachmentConnected(source,target):
     """Handler for peripheral assignment to touch module.
@@ -58,14 +42,12 @@ def onAttachmentConnected(source,target):
     Returns:
         :none
     """
-    global Database
-    global nonSecureStatus
     localComponent = source["component"]
     remoteComponent = target["component"]
     remoteID = remoteComponent.getID()
     connectID = source["id"]
     targetID = target["id"]
-    targetDevice = interface.getDeviceSeries()
+    targetDevice = localComponent.getSymbolByID("DEVICE_NAME").getValue()
 
     if (connectID == "Touch_timer"):
         plibUsed = localComponent.getSymbolByID("TOUCH_TIMER_INSTANCE")
@@ -123,6 +105,84 @@ def onAttachmentDisconnected(source, target):
         plibUsed = localComponent.getSymbolByID("TOUCH_SERCOM_KRONO_INSTANCE")
         plibUsed.clearValue()
 
+def destroyComponent(qtouchComponent):
+    print "Destroy touch module"
+
+def finalizeComponent(qtouchComponent):
+    """
+    MHC reference :<http://confluence.microchip.com/display/MH/MHC+Python+Interface#MHCPythonInterface-voidfinalizeComponent(component,[index])>
+    Arguments:
+        :qtouchComponent : newly created module see module.loadModule()
+    Returns:
+        :none
+    """
+    autoComponentIDTable = []
+    autoConnectTable = []
+    if qtouchInst['interfaceInst'].getDeviceSeries() in qtouchInst['target_deviceInst'].picDevices:
+        autoComponentIDTable[:] = ["adchs","tmr2"]
+        autoConnectTable[:] = [["lib_qtouch", "Touch_timer","tmr2","TMR2_TMR"],
+                                ["lib_qtouch", "Acq_Engine","adchs","ADCHS_ADC"]]
+    else:
+        autoComponentIDTable[:] = ["rtc"]
+        autoConnectTable[:] = [["lib_qtouch", "Touch_timer","rtc", "RTC_TMR"]]
+    InterruptVector = "PTC" + "_INTERRUPT_ENABLE"
+    InterruptHandler = "PTC" + "_INTERRUPT_HANDLER"
+    print(autoComponentIDTable)
+    print(autoConnectTable)
+    res = Database.activateComponents(autoComponentIDTable)
+    res = Database.connectDependencies(autoConnectTable)
+
+def applyDrivenShieldTimers(symbol, event):
+    """apply driven shield timers. Triggered by Driven shield plus application.
+    Arguments:
+        :symbol : the symbol that triggered the callback
+        :event : the new value. 
+    Returns:
+        :none
+    """    
+    print("---------Entering apply DSTimers----------")
+    component = symbol.getComponent()
+    toRemove = []
+    toAdd = []
+    toConnect = []
+    tIndex = 0
+    toremove = []
+    toadd = []
+    
+    applyTimers = symbol.getValue().split(">")
+    if len(applyTimers[0].strip("]["))!=0:
+        toremove = applyTimers[0].strip("][").split(", ")
+    if len(applyTimers[1].strip("]["))!=0:
+        toadd = applyTimers[1].strip("][").split(", ")
+    
+    for timer in toremove:
+        toRemove.append(timer.lower())
+        component.setDependencyEnabled("Drivenshield_"+timer, False)
+    for timer in toadd:
+        toAdd.append(timer.lower())
+        if "TCC" not in timer:
+            toConnect.append(["lib_qtouch", "Drivenshield_"+timer,timer.lower(), timer+"_TMR"])
+        component.setDependencyEnabled("Drivenshield_"+timer, True)
+    
+    if len(toRemove)!=0:
+        Database.deactivateComponents(toRemove)
+    if len(toAdd)!=0:
+        Database.activateComponents(toAdd)
+        if len(toConnect)!=0:
+            Database.connectDependencies(toConnect)
+        sevent = component.getSymbolByID("TOUCH_SCRIPT_EVENT")
+        sevent.setValue("dstimer")
+        sevent.setValue("")
+    print("---------Leaving apply DSTimers----------")
+
+def qtouchSetDependencies(symbol, func):
+    for i, sym in enumerate(symbol):
+        dependency = []
+        dependency.append(str(sym.getID()))
+        print (func, symbol)
+        if(func[i] == "applyDrivenShieldTimers"):
+            sym.setDependencies(applyDrivenShieldTimers,dependency)
+
 def processLump(symbol, event, targetDevice):
     """Handler for lump mode support menu click event. 
     Triggers updates for touch sub modules including : lumpmode, surface, drivenshield
@@ -132,29 +192,29 @@ def processLump(symbol, event, targetDevice):
     Returns:
         :none
     """
-
     localComponent = symbol.getComponent()
     touchSenseTechnology = localComponent.getSymbolByID("SENSE_TECHNOLOGY")
-    totalChannelCount = target_device.getMutualCount()
-    lumpSupported = target_device.getLumpSupported(targetDevice)
-    shieldMode = target_device.getShieldMode(targetDevice)
+    totalChannelCount = qtouchInst['target_deviceInst'].getMutualCount()
+    lumpSupported = qtouchInst['target_deviceInst'].getLumpSupported(targetDevice)
+    shieldMode = qtouchInst['target_deviceInst'].getShieldMode(targetDevice)
     surfaceEnabled = localComponent.getSymbolByID("ENABLE_SURFACE").getValue()
     touchtech = str(touchSenseTechnology.getSelectedKey())
     if (lumpSupported ==  True):
         lumpSymbol = localComponent.getSymbolByID("LUMP_CONFIG")
         lumpFeature = localComponent.getSymbolByID("LUMP_CONFIG").getValue()
         print("lump is supported")
+        print(lumpFeature)
         if(lumpFeature !=""):
             print("lump is not empty")
-            node_groups.updateLumpMode(lumpSymbol,touchtech)
+            qtouchInst['node_groupInst'].updateLumpMode(lumpSymbol,touchtech)
 
         if(shieldMode == "hardware"):
             print("shield is hardware")
-            drivenshield_groups.updateLumpModeDrivenShield(symbol,event,totalChannelCount,lumpFeature)
+            qtouchInst['ds_groupInst'].updateLumpModeDrivenShield(symbol,event,totalChannelCount,lumpFeature)
 
         if (surfaceEnabled == True):
-            if (surface.getSurfaceRearrangeRequired(targetDevice) == False):
-                surface.updateLumpModeSurface(symbol,touchSenseTechnology,totalChannelCount)
+            if (qtouchInst['surfaceInst'].getSurfaceRearrangeRequired(targetDevice) == False):
+                qtouchInst['surfaceInst'].updateLumpModeSurface(symbol,touchSenseTechnology,totalChannelCount)
 
 def onGenerate(symbol,event):
     """Handler for generate code menu click event. 
@@ -168,68 +228,27 @@ def onGenerate(symbol,event):
     localComponent = symbol.getComponent()
     targetDevice = localComponent.getSymbolByID("DEVICE_NAME").getValue()
     surfaceEnabled = localComponent.getSymbolByID("ENABLE_SURFACE").getValue()
-    nodeCount = target_device.getMutualCount()
+    nodeCount = qtouchInst['target_deviceInst'].getMutualCount()
 
-    if boost_mode_groups.getBoostSupported(targetDevice):
+    if qtouchInst['boostModeInst'].getBoostSupported(targetDevice):
         print("Entering ProcessBoostmode")
-        boost_mode_groups.processBoostMode(symbol,event,targetDevice,nodeCount)
+        qtouchInst['boostModeInst'].processBoostMode(symbol,event,targetDevice,nodeCount)
 
-    print("Entering ProcessLump")
-    processLump(symbol,event,targetDevice)
+    if targetDevice not in qtouchInst['target_deviceInst'].non_lump_support:
+        print("Entering ProcessLump")
+        processLump(symbol,event,targetDevice)
 
     if(surfaceEnabled ==True):
         print("Entering surface_rearrange")
-        surface.surface_rearrange(symbol,event)
+        qtouchInst['surfaceInst'].surface_rearrange(symbol,event)
 
-    lowpower.processSoftwareLP(symbol,event)
-
-
-def onWarning(symbol,event):
-    """Handler for clock parameter sync error event. 
-    Arguments:
-        :symbol : the symbol that triggered the event
-        :event : new value of the symbol 
-    Returns:
-        :none
-    """
-    if event['symbol'].getID() == "PTC_CLOCK_FREQ":
-        if "sync" in event['symbol'].getValue():
-            symbol.setLabel("!!!Warning PTC clock out of sync")
-            symbol.setDescription("Open touch configurator and save project")
-            symbol.setVisible(True)
-        elif "range" in event['symbol'].getValue():
-            symbol.setLabel("!!!Warning PTC clock out of range")
-            symbol.setDescription("Open clock configurator and adjust input clock")
-            symbol.setVisible(True)
-        else:
-            symbol.setLabel("")
-            symbol.setDescription("")
-            symbol.setVisible(False)
-
-
-    
-
-def updateGroupsCounts(symbol,event):
-    """Handler for updating module group counts
-    Triggers updates for touch sub modules with multiple groups:
-        node, sensor, key, scroller, frequency hop, boost mode, driven shield
-    Arguments:
-        :symbol : the symbol that triggered the event
-        :event : new value of the symbol 
-    Returns:
-        :none
-    """
-    acquisition_groups.updateAcquisitionGroups(symbol,event)
-    node_groups.updateNodeGroups(symbol,event)
-    key_groups.updateKeyGroups(symbol,event)
-    sensor_groups.updateSensorGroups(symbol,event)
-    scroller_groups.updateScrollerGroups(symbol,event)
-    drivenshield_groups.updateDrivenShieldGroups(symbol,event)
-    freq_hop_groups.updateFreqHopGroups(symbol,event)
-    boost_mode_groups.updateBoostModeGroups(symbol,event)
-
+    if (qtouchInst['lowpowerInst'].lowPowerSupported(targetDevice)):
+        qtouchInst['lowpowerInst'].processSoftwareLP(symbol,event)
 
 def instantiateComponent(qtouchComponent):
+    # import sys;sys.path.append(r'C:\Programs\eclipse\plugins\org.python.pydev.core_8.3.0.202104101217\pysrc')
+    # #import sys;sys.path.append(r'C:/Programs/Python/Python39/Scripts')
+    # import pydevd;pydevd.settrace()
     """Start Point for instantiation of the touch Module. 
     MHC reference : <http://confluence.microchip.com/display/MH/MHC+Python+Interface#MHCPythonInterface-voidinstantiateComponent(component,[index])>
     Builds and populates tree view menu in MHC. 
@@ -242,13 +261,6 @@ def instantiateComponent(qtouchComponent):
     Returns:
         :none
     """
-    global autoComponentIDTable
-    global autoConnectTable
-    global InterruptVector
-    global touchChannelSelf
-    global touchChannelMutual
-    global touchMenu
-
     print ("Entering initialise")
     showConfiguration = True
     configName = Variables.get("__CONFIGURATION_NAME")
@@ -277,62 +289,73 @@ def instantiateComponent(qtouchComponent):
     enableLoaded.setLabel("Project Loaded")
     enableLoaded.setDefaultValue(False)
 
-    #targetDevice
-    interface.getTargetDeviceInfo(ATDF,qtouchComponent,touchMenu)
-    targetDevice =interface.getDeviceSeries()
-    target_device.initTargetParameters(qtouchComponent,touchMenu,targetDevice,Database)
+    interfaceInst = touch_interface.classTouchInterface()
+    qtouchInst['interfaceInst'] = interfaceInst
+    interfaceInst.getTargetDeviceInfo(ATDF,qtouchComponent,touchMenu)
+    device = interfaceInst.getDeviceSeries()
 
+    print("Kamal")
+    print(interfaceInst.getDeviceSeries())
+
+    target_deviceInst = touch_target_device.classTouchTargetDevice()
+    target_deviceInst.initTargetParameters(qtouchComponent,touchMenu,device,Database)
+    qtouchInst['target_deviceInst'] = target_deviceInst
+
+    if device not in target_deviceInst.picDevices:
     # Interrupts
-    ptcInterruptConfig = qtouchComponent.createIntegerSymbol("DEF_PTC_INTERRUPT_PRIORITY", touchMenu)
-    ptcInterruptConfig.setLabel("PTC Interrupt Priority")
-    ptcInterruptMin = target_device.getMinInterrupt(targetDevice)
-    ptcInterruptConfig.setMin(ptcInterruptMin)
-    ptcInterruptMax = target_device.getMaxInterrupt(targetDevice)
-    ptcInterruptConfig.setMax(ptcInterruptMax)
-    ptcInterruptDefault= target_device.getDefaultInterrupt(targetDevice)
-    ptcInterruptConfig.setDefaultValue(ptcInterruptDefault)
-    ptcInterruptConfig.setDescription("Defines the interrupt priority for the PTC. Set low priority to PTC interrupt for applications having interrupt time constraints.")
+        ptcInterruptConfig = qtouchComponent.createIntegerSymbol("DEF_PTC_INTERRUPT_PRIORITY", touchMenu)
+        ptcInterruptConfig.setLabel("PTC Interrupt Priority")
+        ptcInterruptMin = target_deviceInst.getMinInterrupt(device)
+        ptcInterruptConfig.setMin(ptcInterruptMin)
+        ptcInterruptMax = target_deviceInst.getMaxInterrupt(device)
+        ptcInterruptConfig.setMax(ptcInterruptMax)
+        ptcInterruptDefault= target_deviceInst.getDefaultInterrupt(device)
+        ptcInterruptConfig.setDefaultValue(ptcInterruptDefault)
+        ptcInterruptConfig.setDescription("Defines the interrupt priority for the PTC. Set low priority to PTC interrupt for applications having interrupt time constraints.")
     
-
+    node_groupInst = touch_node_groups.classTouchNodeGroups()
+    qtouchInst['node_groupInst'] = node_groupInst
     # Lump support
-    lumpSupported = target_device.getLumpSupported(targetDevice)
+    lumpSupported = target_deviceInst.getLumpSupported(device)
     if (lumpSupported == True):
         lumpSymbol = qtouchComponent.createStringSymbol("LUMP_CONFIG", touchMenu)
         lumpSymbol.setLabel("Lump Configuration")
         lumpSymbol.setDefaultValue("")
-        lumpSymbol.setDependencies(node_groups.updateLumpMode,["LUMP_CONFIG"])
+        lumpSymbol.setDependencies(node_groupInst.updateLumpMode,["LUMP_CONFIG"])
         lumpSymbol.setVisible(True)
     
     # PinValues
-    ptcPinValues = target_device.setDevicePinValues(ATDF,False,lumpSupported,targetDevice)
+    ptcPinValues = target_deviceInst.setDevicePinValues(ATDF,True,lumpSupported,device)
+    print target_deviceInst.getSelfCount()
+    print target_deviceInst.getMutualCount()
+    print ptcPinValues
     # Channel Limits
-    touchChannelSelf = target_device.getSelfCount()
-    touchChannelMutual = target_device.getMutualCount()
+    touchChannelSelf = target_deviceInst.getSelfCount()
+    touchChannelMutual = target_deviceInst.getMutualCount()
     # clocksetup 
-    target_device.setGCLKconfig(qtouchComponent,ATDF,touchInfoMenu,targetDevice)
+    target_deviceInst.setGCLKconfig(qtouchComponent,ATDF,touchInfoMenu,device)
     # CSD support
-    csdMode = target_device.getCSDMode(targetDevice)
+    csdMode = target_deviceInst.getCSDMode(device)
     # Rsel support
-    rSelMode = target_device.getRSelMode(targetDevice)
+    rSelMode = target_deviceInst.getRSelMode(device)
     # Driven shield support
-    shieldMode = target_device.getShieldMode(targetDevice)
-    # Boost mode support
-    boostMode = boost_mode_groups.getBoostSupported(targetDevice)
+    shieldMode = target_deviceInst.getShieldMode(device)
     
     if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
         useTrustZone = True
     else:
         useTrustZone = False
 
+    acquisition_groupsInst = touch_acquisition_groups.classTouchAcquisitionGroups()
     #Self Mutual Related if not required then setMaxGroups(1)
-    acquisition_groups.setMaxGroups(1) # Specifies the max number of acquisitions groups
+    acquisition_groupsInst.setMaxGroups(1) # Specifies the max number of acquisitions groups
     acquisitionGroupCountMenu = qtouchComponent.createIntegerSymbol("NUM_ACQUISITION_GROUPS", touchMenu)
     acquisitionGroupCountMenu.setDefaultValue(1)
     acquisitionGroupCountMenu.setMin(1)
-    acquisitionGroupCountMenu.setMax(acquisition_groups.getMaxGroups()) # taken from acquisition_groups.py variable
-    acquisitionGroupCountMenu.setDependencies(updateGroupsCounts,["NUM_ACQUISITION_GROUPS"])
+    acquisitionGroupCountMenu.setMax(acquisition_groupsInst.getMaxGroups()) # taken from acquisition_groups.py variable
+    acquisitionGroupCountMenu.setDependencies(acquisition_groupsInst.updateAcquisitionGroups,["NUM_ACQUISITION_GROUPS"])
     acquisitionGroupCountMenu.setLabel("Number of Acquisition Groups")
-    if(acquisition_groups.getMaxGroups()>1):
+    if(acquisition_groupsInst.getMaxGroups()>1):
         acquisitionGroupCountMenu.setVisible(True)
     else:
         acquisitionGroupCountMenu.setVisible(False)
@@ -344,21 +367,22 @@ def instantiateComponent(qtouchComponent):
     projectFilesList = []
 
     # ----Acquisition----
-    projectFilesList = projectFilesList + acquisition_sourcefiles.setAcquisitionFiles(configName, qtouchComponent, targetDevice,useTrustZone)
-    acquisition_groups.initAcquisitionGroup(
+    acq_filesInst = touch_acquisition_sourcefiles.classTouchAcquisitionSourceFiles()
+    projectFilesList = projectFilesList + acq_filesInst.setAcquisitionFiles(configName, qtouchComponent, device,useTrustZone)
+    print(projectFilesList)
+    acquisition_groupsInst.initAcquisitionGroup(
         qtouchComponent, 
         touchMenu, 
         minGroupCount,
         maxGroupCount,
         touchChannelSelf,
         touchChannelMutual,
-        targetDevice,
+        device,
         csdMode,
         shieldMode)
 
-
     # ----Node----
-    node_groups.initNodeGroup(
+    node_groupInst.initNodeGroup(qtouchInst,
         qtouchComponent,
         touchMenu,
         minGroupCount,
@@ -370,47 +394,56 @@ def instantiateComponent(qtouchComponent):
         rSelMode)
 
     # ----Keys----
-    key_groups.initKeyGroup(
+    key_groupInst = touch_key_groups.classTouchKeyGroups()
+    key_fileInst = touch_key_sourcefiles.classTouchKeySourceFiles()
+    key_groupInst.initKeyGroup(
         qtouchComponent, 
         touchMenu, 
         minGroupCount,
         maxGroupCount,
         touchChannelSelf,
         touchChannelMutual)
-    projectFilesList = projectFilesList + key_sourcefiles.setKeysFiles(configName, qtouchComponent, targetDevice,useTrustZone)
-
+    projectFilesList = projectFilesList + key_fileInst.setKeysFiles(configName, qtouchComponent, device,useTrustZone)
+    qtouchInst['key_groupInst'] = key_groupInst
     # ----Sensor----
-    sensor_groups.initSensorGroup(
+    sensorInst = touch_sensor_groups.classTouchSensorGroups()
+    sensorInst.initSensorGroup(
         qtouchComponent, 
         touchMenu, 
         minGroupCount,
         maxGroupCount)
-
+    qtouchInst['sensorInst'] = sensorInst
     # ----Scroller----
-    projectFilesList = projectFilesList + scroller_sourcefiles.setScrollerFiles(configName, qtouchComponent, targetDevice,useTrustZone)
-    scroller_groups.initScrollerGroup(
+    scroller_groupInst = touch_scroller_groups.classTouchScrollerGroups()
+    scroller_fileInst = touch_scroller_sourcefiles.classTouchScrollerSourceFiles()
+    projectFilesList = projectFilesList + scroller_fileInst.setScrollerFiles(configName, qtouchComponent, device,useTrustZone)
+    scroller_groupInst.initScrollerGroup(
         qtouchComponent,
         touchMenu,
         minGroupCount,
         maxGroupCount,
         touchChannelSelf,
         touchChannelMutual)
-    
+    qtouchInst['scroller_groupInst'] = scroller_groupInst
 
     # ----Frequency Hop----
-    projectFilesList = projectFilesList + freq_hop_sourcefiles.setFreqHopFiles(configName, qtouchComponent, targetDevice,useTrustZone)
-    freq_hop_groups.initFreqHopGroup(
+    freqhop_groupInst = touch_freq_hop_groups.classTouchFreqGroups()
+    freqhop_fileInst = touch_freq_hop_sourcefiles.classTouchFreqSourceFiles()
+    projectFilesList = projectFilesList + freqhop_fileInst.setFreqHopFiles(configName, qtouchComponent, device,useTrustZone)
+    freqhop_groupInst.initFreqHopGroup(
         qtouchComponent,
         touchMenu,
         minGroupCount,
         maxGroupCount,
-        targetDevice)
-    
+        device)
+    qtouchInst['freqhop_groupInst'] = freqhop_groupInst
 
     # ----Driven Shield----
     if (shieldMode != "none"):
-        projectFilesList = projectFilesList + drivenshield_sourcefiles.setDrivenShieldFiles(configName, qtouchComponent,useTrustZone)
-        drivenshield_groups.initDrivenShieldGroup(
+        ds_groupInst = touch_ds_groups.classTouchDSGroup(node_groupInst, target_deviceInst)
+        ds_fileInst = touch_ds_sourcefiles.classTouchDSFiles()
+        projectFilesList = projectFilesList + ds_fileInst.setDrivenShieldFiles(configName, qtouchComponent,useTrustZone)
+        ds_groupInst.initDrivenShieldGroup(qtouchInst,
             ATDF,
             qtouchComponent,
             touchMenu,
@@ -420,45 +453,63 @@ def instantiateComponent(qtouchComponent):
             touchChannelMutual,
             ptcPinValues,
             shieldMode)
-        
+        qtouchInst['ds_groupInst'] = ds_groupInst
+        symbol,func = ds_groupInst.getDepDetails()
+        print (symbol, func)
+        qtouchSetDependencies(symbol, func)
 
     # ----Boost Mode----
+    # Boost mode support
+    boostModeInst = touch_boost_mode_groups.classTouchBoostModeGroups()
+    boostMode = boostModeInst.getBoostSupported(device)
     if(boostMode == True):
-        boost_mode_groups.initBoostModeGroup(
+        boostModeInst.initBoostModeGroup(
             configName, 
             qtouchComponent, 
             touchMenu,
             minGroupCount,
             maxGroupCount,
-            targetDevice)
+            device)
+    qtouchInst['boostModeInst'] = boostModeInst
 
     # ----Surface----
-    surface.initSurfaceInstance(
+    surfaceInst = touch_surface.classTouchSurface(node_groupInst)
+    surfaceInst.initSurfaceInstance(
         qtouchComponent, 
         touchMenu, 
-        targetDevice, 
+        device, 
         touchChannelMutual)
-    projectFilesList = projectFilesList + surface_sourcefiles.setSurfaceFiles(configName,qtouchComponent, targetDevice,useTrustZone)
+    surface_fileInst = touch_surface_sourcefiles.classTouchSurfaceFiles()
+    projectFilesList = projectFilesList + surface_fileInst.setSurfaceFiles(configName,qtouchComponent, device,useTrustZone)
+    qtouchInst['surfaceInst'] = surfaceInst
 
     # ----2D Surface Visualizer----
-    projectFilesList = projectFilesList + surface_2D_Utility.initSurface2DUtilityInstance(
+    surfaceUtiInst = touch_surface_2D_utility.classTouchSurface2DUtility()
+    projectFilesList = projectFilesList + surfaceUtiInst.initSurface2DUtilityInstance(
         configName, 
         qtouchComponent, 
         touchMenu, 
-        targetDevice, 
+        device, 
         touchChannelMutual)
+    qtouchInst['surfaceUtiInst'] = surfaceUtiInst
 
     # ----Gesture----
-    gesture.initGestureInstance(qtouchComponent, touchMenu)
-    projectFilesList = projectFilesList + gesture_sourcefiles.setGestureFiles(configName, qtouchComponent, targetDevice,useTrustZone)
+    gestureInst = touch_gesture.classTouchGesture()
+    gestureInst.initGestureInstance(qtouchComponent, touchMenu)
+    gesture_fileInst = touch_gesture_sourcefiles.classTouchGestureSourceFiles()
+    projectFilesList = projectFilesList + gesture_fileInst.setGestureFiles(configName, qtouchComponent, device,useTrustZone)
+    qtouchInst['gestureInst'] = gestureInst
 
 	#----Low power----
-    if (lowpower.lowPowerSupported(targetDevice)):
-        lowpower.initLowPowerInstance(qtouchComponent, touchMenu, targetDevice)
+    lowpowerInst = touch_lowpower.classTouchLP()
+    if (lowpowerInst.lowPowerSupported(device)):
+        lowpowerInst.initLowPowerInstance(qtouchComponent, touchMenu, device)
+    qtouchInst['lowpowerInst'] = lowpowerInst
 
     # ----Datastreamer----
-    projectFilesList = projectFilesList + datastreamer.initDataStreamer(configName, qtouchComponent, touchMenu)
-
+    datastreamerInst = touch_datastreamer.classTouchDataStreamer()
+    projectFilesList = projectFilesList + datastreamerInst.initDataStreamer(configName, qtouchComponent, touchMenu)
+    qtouchInst['datastreamerInst'] = datastreamerInst
 
     qtouchTimerComponent = qtouchComponent.createStringSymbol("TOUCH_TIMER_INSTANCE", None)
     qtouchTimerComponent.setLabel("Timer Component Chosen for Touch middleware")
@@ -478,39 +529,15 @@ def instantiateComponent(qtouchComponent):
     qtouchSercomComponent.setVisible(False)
     qtouchSercomComponent.setDefaultValue("")
     
-    if targetDevice not in ["PIC32MZW"]:
-        #keep it as last displayed tree config
-        touchWarning = qtouchComponent.createMenuSymbol("TOUCH_WARNING", None)
-        touchWarning.setLabel("")
-        touchWarning.setVisible(False)
-        touchWarning.setDependencies(onWarning,["PTC_CLOCK_FREQ"])
+    touchFiles = touch_qtouch_sourcefiles.classTouchQTouch()
+    projectFilesList = projectFilesList + touchFiles.setTouchFiles(configName, qtouchComponent,useTrustZone)
 
-    projectFilesList = projectFilesList + qtouch_sourcefiles.setTouchFiles(configName, qtouchComponent,useTrustZone)
-
-    if useTrustZone == True:
-        trustzone.initTrustzoneInstance(configName, qtouchComponent, touchMenu , targetDevice, projectFilesList)
-    else:
-        print("NOT USING TRUSTZONE")
-
-        
     qtouchComponent.addPlugin("../touch/plugin/ptc_manager_c21.jar")
 
-def finalizeComponent(qtouchComponent):
-    """
-    MHC reference :<http://confluence.microchip.com/display/MH/MHC+Python+Interface#MHCPythonInterface-voidfinalizeComponent(component,[index])>
-    Arguments:
-        :qtouchComponent : newly created module see module.loadModule()
-    Returns:
-        :none
-    """
-    res = Database.activateComponents(autoComponentIDTable)
-    res = Database.connectDependencies(autoConnectTable)
 
-def deactivateComponents(toRemove):
-    Database.deactivateComponents(toRemove)
+        
+    qtouchInst['touchFiles'] = touchFiles
 
-def activateComponents(toAdd):
-    Database.deactivateComponents(toAdd)
+    print qtouchInst
 
-def connectDependencies(toConnect):
-    Database.connectDependencies(toConnect)
+

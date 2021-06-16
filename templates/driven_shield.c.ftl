@@ -43,6 +43,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include "driven_shield.h"
 #include "touch.h"
 
+//<assign no_dma_devices = ["SAMD11", "SAMD10", "SAMD20"] >
+
 #if (DEF_ENABLE_DRIVEN_SHIELD == 1u)
 <#assign prescaler_value = "0, 0, 0, 0" >
 <#assign block_transfer_count = "1" >
@@ -95,6 +97,13 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#list ["SAMD21", "SAMDA1","SAMHA1"] as i>
 	<#if DEVICE_NAME == i>
 		<#assign prescaler_value = "4, 2, 3, 4" >
+		<#assign block_transfer_count = "1" >
+		<#assign data_type = "uint8_t" >
+	</#if>
+</#list>
+<#list ["SAMD11", "SAMD10", "SAMD20"] as i>
+	<#if DEVICE_NAME == i>
+		<#assign prescaler_value = "0, 2, 3, 3" >
 		<#assign block_transfer_count = "1" >
 		<#assign data_type = "uint8_t" >
 	</#if>
@@ -211,7 +220,6 @@ void drivenshield_configure()
 	/* Map DMA Transfer complete Event
 		output to PTC Start of convertion Event Inuput */
 	EVSYS_REGS->EVSYS_USER[37] = EVSYS_USER_CHANNEL(0x2);
-
 <#elseif (DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")>
 
 	EVSYS_REGS->EVSYS_CHANNEL = EVSYS_CHANNEL_EVGEN(0x48) | EVSYS_CHANNEL_PATH(2) | EVSYS_CHANNEL_EDGSEL(0) \
@@ -220,6 +228,21 @@ void drivenshield_configure()
 	/* Map DMA Transfer complete Event
 		output to PTC Start of convertion Event Inuput */
 	EVSYS_REGS->EVSYS_USER = EVSYS_USER_CHANNEL(0x2)|EVSYS_USER_USER(0x1C);
+<#elseif (DEVICE_NAME == "SAMD20")>
+
+	EVSYS_REGS->EVSYS_CHANNEL = EVSYS_CHANNEL_EVGEN(0x3A) | EVSYS_CHANNEL_PATH(2) | EVSYS_CHANNEL_EDGSEL(0) \
+									 ;
+
+	/* Map DMA Transfer complete Event
+		output to PTC Start of convertion Event Inuput */
+	EVSYS_REGS->EVSYS_USER = EVSYS_USER_CHANNEL(0x1)|EVSYS_USER_USER(0x0D);
+<#elseif (DEVICE_NAME == "SAMD10")||(DEVICE_NAME == "SAMD11")>
+	EVSYS_REGS->EVSYS_CHANNEL = EVSYS_CHANNEL_EVGEN(0x2B) | EVSYS_CHANNEL_PATH(2) | EVSYS_CHANNEL_EDGSEL(0) \
+									 ;
+
+	/* Map DMA Transfer complete Event
+		output to PTC Start of convertion Event Inuput */
+	EVSYS_REGS->EVSYS_USER = EVSYS_USER_CHANNEL(0x1)|EVSYS_USER_USER(0x11);
 </#if>
 
 <#if DS_DEDICATED_ENABLE ==true>
@@ -243,15 +266,25 @@ Notes  : This function uses the EVSYS to start the PTC to acquire touch
 ============================================================================*/
 void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type} volatile *dst_addr, ${data_type} value)
 {
+	<#if (DEVICE_NAME != "SAMD11") && (DEVICE_NAME != "SAMD10") && (DEVICE_NAME != "SAMD20")>
 	static ${data_type}  filter_level = 0;
 	static ${data_type} *addr;
+	</#if>
 	uint16_t        period = 0, count = 0, cc = 0;
 
+<#if (DEVICE_NAME != "SAMD11") && (DEVICE_NAME != "SAMD10") && (DEVICE_NAME != "SAMD20")>
 	addr         = (${data_type} *)dst_addr;
 	filter_level = value;
 
 	/* Configure DMA transfer */
 	DMAC_ChannelTransfer(0, &filter_level, addr, ${block_transfer_count});
+<#else>
+	<#if (DEVICE_NAME == "SAMD20")>
+	EVSYS_REGS->EVSYS_USER = EVSYS_USER_CHANNEL(0x1)|EVSYS_USER_USER(0x0D);
+	<#else>
+	EVSYS_REGS->EVSYS_USER = EVSYS_USER_CHANNEL(0x1)|EVSYS_USER_USER(0x11);
+	</#if>
+</#if>
 
 <#list ["SAME54", "SAME53", "SAME51", "SAMD51"] as i>
 <#if DEVICE_NAME == i>
@@ -279,6 +312,24 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	}
 	<#break>
 </#if>
+<#list ["SAMD11", "SAMD10","SAMD20"] as i>
+<#if DEVICE_NAME == i>
+ /* TC/TCC period value */
+    period = csd + 15 + sds;
+    period = period << 2;
+    period = period - 1; 
+
+    /* TC/TCC compare value */
+    cc = 9 + sds;
+    cc = cc << 2;
+ 
+
+    /* TC/TCC count value - initial offset */
+    count = 6;
+    count = count << 2;
+    count = count - offset_vs_prescaler[prescaler];
+</#if>
+</#list>
 </#list>
 <#list ["SAML22", "SAMC20", "SAMC21"] as i>
 <#if DEVICE_NAME == i>
