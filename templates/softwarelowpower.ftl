@@ -1,4 +1,8 @@
 <#macro lowpwer_disableevsys_saml_no_evs>
+    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    {
+        /* Wait for Synchronization after writing value to Count Register */
+    }
 	RTC_Timer32Stop();  
     RTC_Timer32CompareSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
     RTC_Timer32Start();
@@ -8,7 +12,11 @@
 </#macro>
 
 <#macro lowpwer_enableevsys_saml_no_evs>
-	RTC_Timer32Stop();  
+    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    {
+        /* Wait for Synchronization after writing value to Count Register */
+    }
+    RTC_Timer32Stop();  
     RTC_Timer32CompareSet(QTM_LOWPOWER_TRIGGER_PERIOD);
     RTC_Timer32Start();
 	/* Store the measurement period */
@@ -21,12 +29,12 @@
     {
         /* Wait for Synchronization after writing value to Count Register */
     }
-	RTC_Timer32Stop();
+    RTC_Timer32Stop();
     RTC_Timer32CompareSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
     RTC_Timer32Start();
-	/* Store the measurement period */
-	measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
-	touch_timer_config();
+    /* Store the measurement period */
+    measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
+    touch_timer_config();
 </#macro>
 
 <#macro lowpwer_enable_samc20_c21_no_evs>
@@ -45,15 +53,23 @@
 <#-- =======================================SAMD21============================================= -->
 
 <#macro lowpwer_disableevsys_samd20_d21_no_evs>
-	RTC_Timer32Stop();  
+    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    {
+        /* Wait for Synchronization after writing value to Count Register */
+    }
+    RTC_Timer32Stop(); 
     RTC_Timer32CompareSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
     RTC_Timer32Start();
-	/* Store the measurement period */
-	measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
-	touch_timer_config();
+    /* Store the measurement period */
+    measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
+    touch_timer_config();
 </#macro>
 
 <#macro lowpwer_enableevsys_samd20_d21_no_evs>
+    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    {
+        /* Wait for Synchronization after writing value to Count Register */
+    }
     RTC_Timer32Stop();  
     RTC_Timer32CompareSet(QTM_LOWPOWER_TRIGGER_PERIOD);
     RTC_Timer32Start();
@@ -65,14 +81,22 @@
 
 
 <#macro lowpwer_disable_samd1x_no_evs>
-	RTC_Timer32Stop();  
+    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    {
+        /* Wait for Synchronization after writing value to Count Register */
+    }
+    RTC_Timer32Stop();
     RTC_Timer32CompareSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
-	/* Store the measurement period */
-	measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
-	RTC_Timer32Start();
+    /* Store the measurement period */
+    measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
+    RTC_Timer32Start();
 </#macro>
 
 <#macro lowpwer_enable_samd1x_no_evs>
+    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    {
+        /* Wait for Synchronization after writing value to Count Register */
+    }
     RTC_Timer32Stop();
     RTC_Timer32CompareSet(QTM_LOWPOWER_TRIGGER_PERIOD);
     /* Store the measurement period */
