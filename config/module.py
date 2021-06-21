@@ -44,7 +44,6 @@ def loadModule():
                     qtouchComponent.setDisplayType("Peripheral Touch Controller(PTC)")
                     qtouchComponent.addCapability("lib_qtouch", "TOUCH_DATA")
                     qtouchComponent.setDisplayType("Peripheral Touch Controller(PTC)")
-                    qtouchComponent.addCapability("Touch_Data", "TouchData")
                     qtouchComponent.addDependency("Touch_timer", "TMR", None, False, True)
                     qtouchComponent.addDependency("touch_acquire","ACQ_ENGINE",None,False,True)
                     qtouchComponent.setDependencyEnabled("touch_acquire", True)
