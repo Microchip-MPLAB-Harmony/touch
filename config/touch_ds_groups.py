@@ -10,13 +10,15 @@ class classTouchDSGroup():
         self.targetDeviceInst = targetdevice_inst
         self.symbolList = []
         self.depFuncName = []
+        self.dependencies = []
 
-    def addDepSymbol(self, symbol, func):
+    def addDepSymbol(self, symbol, func, depen):
         self.symbolList.append(symbol)
         self.depFuncName.append(func)
+        self.dependencies.append(depen)
 
     def getDepDetails(self):
-        return self.symbolList, self.depFuncName
+        return self.symbolList, self.depFuncName, self.dependencies
 
     def initDrivenShieldGroup(self,instances,ATDF,qtouchComponent,touchMenu,touchInfoMenu,minGroupCount,maxGroupCount,touchChannelMutual,ptcPininfo,shieldMode):
         """Initialise Driven Shield Groups and add to touch Module
@@ -81,8 +83,7 @@ class classTouchDSGroup():
             drivenShieldPlusApply = qtouchComponent.createStringSymbol("DS_TIMER_APPLY", timerInfo)
             drivenShieldPlusApply.setLabel("Apply Driven Shield Timers ")
             drivenShieldPlusApply.setReadOnly(True)
-            self.addDepSymbol(drivenShieldPlusApply, "applyDrivenShieldTimers")
-            #drivenShieldPlusApply.setDependencies(self.applyDrivenShieldTimers,["DS_TIMER_APPLY"])
+            self.addDepSymbol(drivenShieldPlusApply, "applyDrivenShieldTimers", ["DS_TIMER_APPLY"])
 
             enabledrivenShieldMenu = qtouchComponent.createBooleanSymbol("ENABLE_DRIVEN_SHIELD", touchMenu)
             enabledrivenShieldMenu.setLabel("Enable Driven Shield")

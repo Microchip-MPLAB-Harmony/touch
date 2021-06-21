@@ -30,6 +30,7 @@ import touch_lowpower
 import touch_datastreamer
 import touch_qtouch_sourcefiles
 import touch_surface_2D_utility
+import touch_custom_pic32mzda
 
 qtouchInst = {}
 
@@ -119,8 +120,8 @@ def finalizeComponent(qtouchComponent):
     autoComponentIDTable = []
     autoConnectTable = []
     if qtouchInst['interfaceInst'].getDeviceSeries() in qtouchInst['target_deviceInst'].picDevices:
-        autoComponentIDTable[:] = ["adchs","tmr2"]
-        autoConnectTable[:] = [["lib_qtouch", "Touch_timer","tmr2","TMR2_TMR"],
+        autoComponentIDTable[:] = ["adchs","tmr4"]
+        autoConnectTable[:] = [["lib_qtouch", "Touch_timer","tmr4","TMR4_TMR"],
                                 ["lib_qtouch", "Acq_Engine","adchs","ADCHS_ADC"]]
     else:
         autoComponentIDTable[:] = ["rtc"]
@@ -131,6 +132,66 @@ def finalizeComponent(qtouchComponent):
     print(autoConnectTable)
     res = Database.activateComponents(autoComponentIDTable)
     res = Database.connectDependencies(autoConnectTable)
+
+def activateOcmpAndConfigure(ocmp):
+    Database.activateComponents([ocmp])
+    Database.setSymbolValue(ocmp, "OCMP_OCxCON_OCM", 6)
+
+def onPic32mzdaChange(symbol, event):
+    print("entering onPic32mzdaChange")
+    localComponent = symbol.getComponent()
+    currentActive =  Database.getActiveComponentIDs()
+    print currentActive
+    print symbol.getID()
+    print symbol.getValue()
+    print qtouchInst['customInst'].getCurrentOCMPChannel()
+    print qtouchInst['customInst'].getCurrentTMRChannel()
+
+    if symbol.getID() == "TOUCH_PIC32MZDA_DMA":
+        if qtouchInst['customInst'].getCurrentDmaChannel != "":
+            tempstr = qtouchInst['customInst'].getCurrentDmaChannel()
+            setSym = "DMAC_CHAN"+tempstr+"_ENBL"
+            Database.clearSymbolValue("core",setSym)
+            setSym = "DMAC_REQUEST_"+tempstr+"_SOURCE"
+            Database.clearSymbolValue("core",setSym)
+
+        setSym = "DMAC_CHAN"+str(symbol.getValue())+"_ENBL"
+        Database.setSymbolValue("core",setSym, True)
+        setSym = "DMAC_REQUEST_"+str(symbol.getValue())+"_SOURCE"
+        Database.setSymbolValue("core",setSym, "ADC_DC1")
+        qtouchInst['customInst'].setCurrentDmaChannel(str(symbol.getValue()))
+    
+    elif symbol.getID() == "TOUCH_DRIVEN_SHIELD_ENABLE":
+        setSym = localComponent.getSymbolByID("TOUCH_DS_COMP")
+        setSymTmr = localComponent.getSymbolByID("TOUCH_DS_TMR")
+        if symbol.getValue() == True:
+            if qtouchInst['customInst'].getCurrentOCMPChannel() == "":
+                # first itme driven shield is enabled
+                setSym.setVisible(True)
+                setSymTmr.setVisible(True)
+                for cnt in range(setSym.getKeyCount()):
+                    compValue = setSym.getKeyValue(cnt)
+                    if compValue.lower() not in currentActive:
+                        setSym.setValue(cnt)
+                        qtouchInst['customInst'].setCurrentOCMPChannel(compValue.lower())
+                        Database.activateComponents([compValue.lower()])
+                        Database.setSymbolValue(compValue.lower(), "OCMP_OCxCON_OCM", 6)
+                        break
+        else:
+            Database.deactivateComponents([qtouchInst['customInst'].getCurrentOCMPChannel()])
+            qtouchInst['customInst'].setCurrentOCMPChannel("")
+            setSym.setVisible(False)
+            setSymTmr.setVisible(False)
+    elif symbol.getID() == "TOUCH_DS_COMP":
+        ocmp = symbol.getValue()
+        ocmp = symbol.getKeyValue(ocmp).lower()
+        if ocmp not in currentActive:
+            Database.activateComponents([ocmp])
+        Database.setSymbolValue(ocmp, "OCMP_OCxCON_OCM", 6)
+        if qtouchInst['customInst'].getCurrentOCMPChannel() in currentActive:
+            if ocmp != qtouchInst['customInst'].getCurrentOCMPChannel():
+                Database.deactivateComponents([qtouchInst['customInst'].getCurrentOCMPChannel()])
+        qtouchInst['customInst'].setCurrentOCMPChannel(ocmp)
 
 def applyDrivenShieldTimers(symbol, event):
     """apply driven shield timers. Triggered by Driven shield plus application.
@@ -175,13 +236,15 @@ def applyDrivenShieldTimers(symbol, event):
         sevent.setValue("")
     print("---------Leaving apply DSTimers----------")
 
-def qtouchSetDependencies(symbol, func):
+def qtouchSetDependencies(symbol, func, dependency):
     for i, sym in enumerate(symbol):
-        dependency = []
-        dependency.append(str(sym.getID()))
-        print (func, symbol)
+        print sym,func,dependency
         if(func[i] == "applyDrivenShieldTimers"):
-            sym.setDependencies(applyDrivenShieldTimers,dependency)
+            sym.setDependencies(applyDrivenShieldTimers,dependency[i])
+        elif(func[i] == "onPTCClock"):
+            sym.setDependencies(onPTCClock, dependency[i])
+        elif(func[i] == "onPic32mzdaChange"):
+            sym.setDependencies(onPic32mzdaChange, dependency[i])
 
 def processLump(symbol, event, targetDevice):
     """Handler for lump mode support menu click event. 
@@ -241,9 +304,30 @@ def onGenerate(symbol,event):
     if(surfaceEnabled ==True):
         print("Entering surface_rearrange")
         qtouchInst['surfaceInst'].surface_rearrange(symbol,event)
-
+    
     if (qtouchInst['lowpowerInst'].lowPowerSupported(targetDevice)):
         qtouchInst['lowpowerInst'].processSoftwareLP(symbol,event)
+
+def onPTCClock(symbol,event):
+    """Handler for setGCLKconfig gclkID frequency
+    Arguments:
+        :symbol : the symbol that triggered the callback
+        :event : the new value. 
+    Returns:
+        :none
+    """
+
+    print "calling onPTCClock function"
+
+    component = symbol.getComponent()
+    if component.getSymbolValue("TOUCH_LOADED"):
+        frequency = event['symbol'].getValue()
+        channels = component.getSymbolValue("TOUCH_CHAN_ENABLE_CNT")
+        if frequency > 0 and channels > 0:   
+            symbol.setValue(symbol.getDefaultValue()+":sync")
+            sevent = component.getSymbolByID("TOUCH_SCRIPT_EVENT")
+            sevent.setValue("ptcclock")
+            sevent.setValue("")
 
 def instantiateComponent(qtouchComponent):
     # import sys;sys.path.append(r'C:\Programs\eclipse\plugins\org.python.pydev.core_8.3.0.202104101217\pysrc')
@@ -293,9 +377,15 @@ def instantiateComponent(qtouchComponent):
     qtouchInst['interfaceInst'] = interfaceInst
     interfaceInst.getTargetDeviceInfo(ATDF,qtouchComponent,touchMenu)
     device = interfaceInst.getDeviceSeries()
+    deviceFullName = interfaceInst.getDeviceName()
 
     print("Kamal")
     print(interfaceInst.getDeviceSeries())
+
+    if device == "PIC32MZDA":
+        customInst = touch_custom_pic32mzda.classTouchCustAddition()
+        customInst.initCustomMenu(ATDF,device, qtouchComponent, None, Database)
+        qtouchInst['customInst'] = customInst
 
     target_deviceInst = touch_target_device.classTouchTargetDevice()
     target_deviceInst.initTargetParameters(qtouchComponent,touchMenu,device,Database)
@@ -325,7 +415,7 @@ def instantiateComponent(qtouchComponent):
         lumpSymbol.setVisible(True)
     
     # PinValues
-    ptcPinValues = target_deviceInst.setDevicePinValues(ATDF,True,lumpSupported,device)
+    ptcPinValues = target_deviceInst.setDevicePinValues(ATDF,True,lumpSupported,device,deviceFullName)
     print target_deviceInst.getSelfCount()
     print target_deviceInst.getMutualCount()
     print ptcPinValues
@@ -454,9 +544,9 @@ def instantiateComponent(qtouchComponent):
             ptcPinValues,
             shieldMode)
         qtouchInst['ds_groupInst'] = ds_groupInst
-        symbol,func = ds_groupInst.getDepDetails()
-        print (symbol, func)
-        qtouchSetDependencies(symbol, func)
+        symbol,func,depen = ds_groupInst.getDepDetails()
+        qtouchSetDependencies(symbol, func, depen)
+
 
     # ----Boost Mode----
     # Boost mode support
@@ -534,8 +624,15 @@ def instantiateComponent(qtouchComponent):
 
     qtouchComponent.addPlugin("../touch/plugin/ptc_manager_c21.jar")
 
+    print("Depenedency details")
+    symbol,func,depen = target_deviceInst.getDepDetails()
+    print symbol,func,depen
+    qtouchSetDependencies(symbol, func, depen)
 
-        
+    symbol,func,depen = customInst.getDepDetails()
+    qtouchSetDependencies(symbol, func, depen)
+
+
     qtouchInst['touchFiles'] = touchFiles
 
     print qtouchInst

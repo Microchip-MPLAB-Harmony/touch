@@ -18,6 +18,9 @@ class classTouchTargetDevice():
         self.touchChannelSelf = 0
         self.touchChannelMutual = 0
         self.ptcPinValues =[]
+        self.symbolList = []
+        self.depFuncName = []
+        self.dependencies = []
 
     def getSelfCount(self):
         """Get self capacitance channels
@@ -64,7 +67,7 @@ class classTouchTargetDevice():
         elif(targetDevice == "PIC32MZW"):
             getModuleID.setDefaultValue("0x003e")
         elif(targetDevice == "PIC32MZDA"):
-            getModuleID.setDefaultValue("0x003e")
+            getModuleID.setDefaultValue("0x0046")
         else:
             print("Error_setModuleID - Device Not Supported")
             #getModuleID.setDefaultValue("Error_setModuleID")
@@ -142,6 +145,8 @@ class classTouchTargetDevice():
             clockXml.setDefaultValue("ha1_clock_config")
         elif(targetDevice == "SAML10"):
             clockXml.setDefaultValue("l1x_clock_config")
+        elif(targetDevice == "PIC32MZDA"):
+            clockXml.setDefaultValue("pic32mzda_clock_config")
         elif(targetDevice == "PIC32MZW"):
             clockXml.setDefaultValue("pic32mzw_clock_config")
         else:
@@ -335,35 +340,28 @@ class classTouchTargetDevice():
         Returns:
             :none
         """
+        ptcClockInfo = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PTC\"]/instance@[name=\"PTC\"]/parameters/param@[name=\"GCLK_ID\"]")
+        if ptcClockInfo is None:
+            ptcClockInfo = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"ADC\"]/instance@[name=\"ADC0\"]/parameters/param@[name=\"GCLK_ID\"]")
+        ptcFreqencyId= qtouchComponent.createStringSymbol("PTC_CLOCK_FREQ", parentSymbol)
+        ptcFreqencyId.setLabel("PTC Freqency Id ")
+        ptcFreqencyId.setReadOnly(True)
         if targetDevice not in self.picDevices:
-            ptcClockInfo = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PTC\"]/instance@[name=\"PTC\"]/parameters/param@[name=\"GCLK_ID\"]")
-            if ptcClockInfo is None:
-                ptcClockInfo = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"ADC\"]/instance@[name=\"ADC0\"]/parameters/param@[name=\"GCLK_ID\"]")
-            ptcFreqencyId= qtouchComponent.createStringSymbol("PTC_CLOCK_FREQ", parentSymbol)
-            ptcFreqencyId.setLabel("PTC Freqency Id ")
-            ptcFreqencyId.setReadOnly(True)
             ptcFreqencyId.setDefaultValue("GCLK_ID_"+ptcClockInfo.getAttribute("value")+"_FREQ")
-            ptcFreqencyId.setDependencies(self.onPTCClock,["core."+"GCLK_ID_"+ptcClockInfo.getAttribute("value")+"_FREQ"])
+            self.addDepSymbol(ptcFreqencyId, "onPTCClock", ["core."+"GCLK_ID_"+ptcClockInfo.getAttribute("value")+"_FREQ"])
+        else:
+            ptcFreqencyId.setDefaultValue("ADCHS_CLOCK_FREQUENCY")
+            self.addDepSymbol(ptcFreqencyId, "onPTCClock", ["core."+"ADCHS_CLOCK_FREQUENCY"])
 
-    def onPTCClock(self,symbol,event):
-        """Handler for setGCLKconfig gclkID frequency
-        Arguments:
-            :symbol : the symbol that triggered the callback
-            :event : the new value. 
-        Returns:
-            :none
-        """
-        component = symbol.getComponent()
-        if component.getSymbolValue("TOUCH_LOADED"):
-            frequency = event['symbol'].getValue()
-            channels = component.getSymbolValue("TOUCH_CHAN_ENABLE_CNT")
-            if frequency > 0 and channels > 0:   
-                symbol.setValue(symbol.getDefaultValue()+":sync")
-                sevent = component.getSymbolByID("TOUCH_SCRIPT_EVENT")
-                sevent.setValue("ptcclock")
-                sevent.setValue("")
+    def addDepSymbol(self, symbol, func, depen):
+        self.symbolList.append(symbol)
+        self.depFuncName.append(func)
+        self.dependencies.append(depen)
 
-    def setDevicePinValues(self,ATDF,withConsoleOutput, lumpsupport, targetDevice):
+    def getDepDetails(self):
+        return self.symbolList, self.depFuncName, self.dependencies
+
+    def setDevicePinValues(self,ATDF,withConsoleOutput, lumpsupport, targetDevice, deviceFullName):
         """
         Retrieves all touch pads, then sorts into x,y and multiplexed
         Arguments:
@@ -376,35 +374,62 @@ class classTouchTargetDevice():
         """
         if (targetDevice in self.picDevices):
             currentPath = os.path.dirname(os.path.abspath(inspect.stack()[0][1]))
-            pinoutXmlPath = os.path.join(currentPath, "../../csp/peripheral/gpio_02467/plugin/pin_xml/pins/MZ_W1_132.xml")
-            print(pinoutXmlPath)
-            tree = ET.parse(pinoutXmlPath)
-            root = tree.getroot()
-            cvdTPins = []
-            cvdRPins = []
-            cvdTPinsTemp = []
-            cvdRPinsTemp = []
-            cvdTPinsIndex = []
-            cvdRPinsIndex = []
-            self.ptcPinValues = []
-            for myPins in root.findall('pins'):
-                for myPin in myPins.findall('pin'):
-                    for myFunction in myPin.findall('function'):
-                        if myFunction.get("name").startswith("CVDT"):
-                            tempstring = myPin.get("name")
-                            index = myFunction.get("name")
-                            index.replace("CVDT",'')
-                            cvdTPinsIndex.append(int(index[4:]))
-                            cvdTPinsTemp.append(tempstring)
-                        elif myFunction.get("name").startswith("CVDR"):
-                            tempstring = myPin.get("name")
-                            index = myFunction.get("name")
-                            index.replace("CVDR",'')
-                            cvdRPinsIndex.append(int(index[4:]))
-                            cvdRPinsTemp.append(tempstring)
-
+            if targetDevice == "PIC32MZW":
+                pinoutXmlPath = os.path.join(currentPath, "../../csp/peripheral/gpio_02467/plugin/pin_xml/pins/MZ_W1_132.xml")
+                print(pinoutXmlPath)
+                tree = ET.parse(pinoutXmlPath)
+                root = tree.getroot()
+                cvdTPins = []
+                cvdRPins = []
+                cvdTPinsTemp = []
+                cvdRPinsTemp = []
+                cvdTPinsIndex = []
+                cvdRPinsIndex = []
+                self.ptcPinValues = []
+                for myPins in root.findall('pins'):
+                    for myPin in myPins.findall('pin'):
+                        for myFunction in myPin.findall('function'):
+                            if myFunction.get("name").startswith("CVDT"):
+                                tempstring = myPin.get("name")
+                                index = myFunction.get("name")
+                                index.replace("CVDT",'')
+                                cvdTPinsIndex.append(int(index[4:]))
+                                cvdTPinsTemp.append(tempstring)
+                            elif myFunction.get("name").startswith("CVDR"):
+                                tempstring = myPin.get("name")
+                                index = myFunction.get("name")
+                                index.replace("CVDR",'')
+                                cvdRPinsIndex.append(int(index[4:]))
+                                cvdRPinsTemp.append(tempstring)
+            elif targetDevice == "PIC32MZDA":
+                if "169" in deviceFullName:
+                    pinoutXmlPath = os.path.join(currentPath, "../../csp/peripheral/gpio_02467/plugin/pin_xml/pins/MZ_DA_169LFBGA.xml")
+                elif "176" in deviceFullName:
+                    pinoutXmlPath = os.path.join(currentPath, "../../csp/peripheral/gpio_02467/plugin/pin_xml/pins/MZ_DA_176LQFP.xml")
+                elif "288" in deviceFullName:
+                    pinoutXmlPath = os.path.join(currentPath, "../../csp/peripheral/gpio_02467/plugin/pin_xml/pins/MZ_DA_288LFBGA.xml")
+                print(pinoutXmlPath)
+                tree = ET.parse(pinoutXmlPath)
+                root = tree.getroot()
+                cvdTPins = []
+                cvdRPins = []
+                cvdTPinsTemp = []
+                cvdRPinsTemp = []
+                cvdTPinsIndex = []
+                cvdRPinsIndex = []
+                self.ptcPinValues = []
+                for myPins in root.findall('pins'):
+                    for myPin in myPins.findall('pin'):
+                        for myFunction in myPin.findall('function'):
+                            if myFunction.get("name").startswith("AN"):
+                                tempstring = myPin.get("name")
+                                tempstring = tempstring+"_"+myFunction.get("name")
+                                index = myFunction.get("name")
+                                print (index)
+                                cvdRPinsIndex.append(int(index[2:]))
+                                cvdRPinsTemp.append(tempstring)
             cvdRPins = [x for _,x in sorted(zip(cvdRPinsIndex,cvdRPinsTemp))]
-            cvdTPins = [x for _,x in sorted(zip(cvdTPinsIndex,cvdTPinsTemp))]
+            cvdTPins = [x for _,x in sorted(zip(cvdRPinsIndex,cvdRPinsTemp))]
             print(cvdRPins)
             print(cvdTPins)
             self.touchChannelSelf = len(cvdRPins)

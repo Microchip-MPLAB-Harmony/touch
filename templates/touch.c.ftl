@@ -192,12 +192,15 @@ uint16_t measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
 /* Acquisition module internal data - Size to largest acquisition set */
 <#if pic_devices?seq_contains(DEVICE_NAME)>
 uint32_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
+/* Acquisition set 1 - General settings */
+qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
+    = {DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, DEF_PTC_CAL_AUTO_TUNE, DEF_SEL_FREQ_INIT, 1};
 <#else>
 uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
-</#if>
 /* Acquisition set 1 - General settings */
 qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
     = {DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, DEF_PTC_CAL_AUTO_TUNE, DEF_SEL_FREQ_INIT, DEF_PTC_INTERRUPT_PRIORITY};
+</#if>
 
 /* Node status, signal, calibration values */
 qtm_acq_node_data_t ptc_qtlib_node_stat1[DEF_NUM_CHANNELS];
@@ -1315,9 +1318,9 @@ void touch_timer_config(void)
 	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].CALLBACK_API_NAME}(timer_handler,tmr_context);
 	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].TIMER_START_API_NAME}();
 	<#if ENABLE_GESTURE==true>
-	${TOUCH_TIMER_INSTANCE}_PeriodSet(1*(TMR2_FrequencyGet()/1000));
+	${TOUCH_TIMER_INSTANCE}_PeriodSet(1*(${TOUCH_TIMER_INSTANCE}_FrequencyGet()/1000));
 	<#else>
-	${TOUCH_TIMER_INSTANCE}_PeriodSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS*(TMR2_FrequencyGet()/1000));
+	${TOUCH_TIMER_INSTANCE}_PeriodSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS*(${TOUCH_TIMER_INSTANCE}_FrequencyGet()/1000));
 	</#if>
 	<#else>
 	<#if ENABLE_GESTURE==true>

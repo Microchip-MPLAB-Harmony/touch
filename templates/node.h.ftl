@@ -1,12 +1,12 @@
+<#assign pic_devices = ["PIC32MZW","PIC32MZDA"]>
 <#macro nodeComponent>
 <#assign CSD = 0>
-<#list ["PIC32CMLS00","PIC32CMLE00","SAML10","SAML11","SAML22","SAMC20","SAMC21","SAME54","SAME53","SAME51","SAMD51","PIC32MZW"] as csdSupported>
+<#list ["PIC32CMLS00","PIC32CMLE00","SAML10","SAML11","SAML22","SAMC20","SAMC21","SAME54","SAME53","SAME51","SAMD51","PIC32MZW","PIC32MZDA"] as csdSupported>
     <#if DEVICE_NAME == csdSupported>
         <#assign CSD = 1>
     </#if>
 </#list>
-
-<#if CSD == 1 && DEVICE_NAME == "PIC32MZW">
+<#if CSD == 1 && pic_devices?seq_contains(DEVICE_NAME)>
     <@Pic32mzwWithCSD/>
 <#elseif CSD == 1>
     <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>

@@ -130,7 +130,7 @@ class classTouchFreqGroups():
             :none
         """    
         print("setSourceFilesEnabledStatus AUTOTUNE STATUS UPDATE : " + str(autoTuneEnabled))
-        print("setSourceFilesEnabledStatus AUTONTUNE ENABLE STATUS UPDATE : " + str(fHopEnabled))
+        print("setSourceFilesEnabledStatus AUTOTUNE ENABLE STATUS UPDATE : " + str(fHopEnabled))
         
         component= symbol.getComponent()
         freqHopLibraryFile  = component.getSymbolByID("TOUCH_HOP_LIB")

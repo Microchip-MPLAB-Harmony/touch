@@ -184,20 +184,38 @@ class classTouchNodeGroups():
             # X and Y assignment
 
             if instances['interfaceInst'].getDeviceSeries() in instances['target_deviceInst'].picDevices:
-                cvdRPins = ptcPinValues[0]
-                cvdTPins = ptcPinValues[1]
-                for index in range(0, len(cvdRPins)):
-                    self.tchSelfPinSelection[len(self.tchSelfPinSelection)-1].addKey("Y("+str(index+1)+")",
-                    str(index+1),
-                    "Y"+str(index+1)+"  ("+cvdRPins[index]+")")
-                    self.tchMutYPinSelection[len(self.tchSelfPinSelection)-1].addKey("Y("+str(index+1)+")",
-                    str(index+1),
-                    "Y"+str(index+1)+"  ("+cvdRPins[index]+")")
-                for index in range(0, len(cvdTPins)):
-                    self.tchMutXPinSelection[len(self.tchMutXPinSelection)-1].addKey("X("+str(index)+")",
-                    str(index),
-                    "X"+str(index)+"  ("+cvdTPins[index]+")")
-
+                if instances['interfaceInst'].getDeviceSeries() == "PIC32MZW":
+                    cvdRPins = ptcPinValues[0]
+                    cvdTPins = ptcPinValues[1]
+                    for index in range(0, len(cvdRPins)):
+                        self.tchSelfPinSelection[len(self.tchSelfPinSelection)-1].addKey("Y("+str(index+1)+")",
+                        str(index+1),
+                        "Y"+str(index+1)+"  ("+cvdRPins[index]+")")
+                    for index in range(0, len(cvdTPins)):
+                        self.tchMutXPinSelection[len(self.tchMutXPinSelection)-1].addKey("X("+str(index)+")",
+                        str(index),
+                        "X"+str(index)+"  ("+cvdTPins[index]+")")
+                else:
+                    cvdRPins = ptcPinValues[0]
+                    cvdTPins = ptcPinValues[1]
+                    offset = 0
+                    for index in range(0, len(cvdRPins)):
+                        anNumber = cvdRPins[index].split("AN")[1]
+                        anNumber = int(anNumber)
+                        text = "  ("+cvdRPins[index].split("_")[0]+")"
+                        if (anNumber <= 4) or (anNumber >= 41 and anNumber <= 45):
+                            continue
+                        else:
+                            self.tchSelfPinSelection[len(self.tchSelfPinSelection)-1].addKey("Y("+str(anNumber)+")",
+                            "Y("+str(anNumber)+")",
+                            "Y"+str(anNumber)+text)
+                            self.tchMutYPinSelection[len(self.tchSelfPinSelection)-1].addKey("Y("+str(anNumber)+")",
+                            "Y("+str(anNumber)+")",
+                            "Y"+str(anNumber)+text)
+                    for index in range(0, len(cvdTPins)):
+                        self.tchMutXPinSelection[len(self.tchMutXPinSelection)-1].addKey("X("+str(anNumber)+")",
+                        "Y("+str(anNumber)+")",
+                        "X"+str(anNumber)+text)
             else:
                 for index in range(0, len(ptcPinValues)):
                     if(ptcPinValues[index].getAttribute("group") == "Y"):

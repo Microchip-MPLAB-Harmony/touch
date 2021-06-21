@@ -85,8 +85,13 @@ class classTouchAcquisitionSourceFiles():
         Returns:
             file symbol
         """
-        touchAcqLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_ACQ_LIB", None)   
-        touchAcqLibraryFile.setDestPath("/touch/lib/")
+        if (targetDevice == "PIC32MZW") or (targetDevice == "PIC32MZDA"):
+            touchAcqLibraryFile = qtouchComponent.createFileSymbol("TOUCH_ACQ_LIB", None)   
+            touchAcqLibraryFile.setDestPath("/touch/")
+            touchAcqLibraryFile.setProjectPath("config/" + configName + "/touch/")
+        else:
+            touchAcqLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_ACQ_LIB", None)   
+            touchAcqLibraryFile.setDestPath("/touch/lib/")
         touchAcqLibraryFile.setEnabled(True)
         touchAcqLibraryFile.setDependencies(self.enableAutoTuneFunctionality,["TUNE_MODE_SELECTED"])
 
@@ -130,11 +135,11 @@ class classTouchAcquisitionSourceFiles():
             touchAcqLibraryFile.setSourcePath("/src/libraries/qtm_acq_saml10_0x0027.X.a")
             touchAcqLibraryFile.setOutputName("qtm_acq_saml10_0x0027.X.a")
         elif(targetDevice == "PIC32MZW"):
-            touchAcqLibraryFile.setSourcePath("/src/libraries/hcvd_driver_PIC32MZ1025W104.C")
-            touchAcqLibraryFile.setOutputName("hcvd_driver_PIC32MZ1025W104.C")
+            touchAcqLibraryFile.setSourcePath("/src/libraries/hcvd_driver_PIC32MZ1025W104.c")
+            touchAcqLibraryFile.setOutputName("hcvd_driver_PIC32MZ1025W104.c")
         elif(targetDevice == "PIC32MZDA"):
-            touchAcqLibraryFile.setSourcePath("/src/libraries/hcvd_driver_PIC32MZ1025W104.C")
-            touchAcqLibraryFile.setOutputName("hcvd_driver_PIC32MZ1025W104.C")
+            touchAcqLibraryFile.setSourcePath("/src/libraries/cvd_driver_PIC32MZ.c")
+            touchAcqLibraryFile.setOutputName("cvd_driver_PIC32MZ.c")
         else:
             touchAcqLibraryFile.setSourcePath("Error_setAcquisitionLibraryFile")
             touchAcqLibraryFile.setOutputName("Error_setAcquisitionLibraryFile")
@@ -149,8 +154,13 @@ class classTouchAcquisitionSourceFiles():
         Returns:
             file symbol
         """
-        touchAcqAutoLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_ACQ_AUTO_LIB", None)
-        touchAcqAutoLibraryFile.setDestPath("/touch/lib/")
+        if (targetDevice == "PIC32MZW") or (targetDevice == "PIC32MZDA"):
+            touchAcqAutoLibraryFile = qtouchComponent.createFileSymbol("TOUCH_ACQ_AUTO_LIB", None)
+            touchAcqAutoLibraryFile.setDestPath("/touch/")
+            touchAcqAutoLibraryFile.setProjectPath("config/" + configName + "/touch/")
+        else:
+            touchAcqAutoLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_ACQ_AUTO_LIB", None)
+            touchAcqAutoLibraryFile.setDestPath("/touch/lib/")
         touchAcqAutoLibraryFile.setEnabled(False)
         touchAcqAutoLibraryFile.setDependencies(self.enableAutoTuneFunctionality,["TUNE_MODE_SELECTED"])
 
@@ -197,8 +207,8 @@ class classTouchAcquisitionSourceFiles():
             touchAcqAutoLibraryFile.setSourcePath("/src/libraries/hcvd_driver_PIC32MZ1025W104.C")
             touchAcqAutoLibraryFile.setOutputName("hcvd_driver_PIC32MZ1025W104.C")
         elif(targetDevice == "PIC32MZDA"):
-            touchAcqAutoLibraryFile.setSourcePath("/src/libraries/hcvd_driver_PIC32MZ1025W104.C")
-            touchAcqAutoLibraryFile.setOutputName("hcvd_driver_PIC32MZ1025W104.C")
+            touchAcqAutoLibraryFile.setSourcePath("/src/libraries/cvd_driver_PIC32MZ.c")
+            touchAcqAutoLibraryFile.setOutputName("cvd_driver_PIC32MZ.c")
         else:
             touchAcqAutoLibraryFile.setOutputName("Error_setAutoAcquisitionLibraryFile")
             touchAcqAutoLibraryFile.setOutputName("Error_setAutoAcquisitionLibraryFile")
@@ -286,8 +296,8 @@ class classTouchAcquisitionSourceFiles():
             touchAcqHeaderFile.setSourcePath("/src/qtm_acq_pic32mzw_0x003e_api.h")
             touchAcqHeaderFile.setOutputName("qtm_acq_pic32mzw_0x003e_api.h")
         elif(targetDevice == "PIC32MZDA"):
-            touchAcqHeaderFile.setSourcePath("/src/qtm_acq_pic32mzw_0x003e_api.h")
-            touchAcqHeaderFile.setOutputName("qtm_acq_pic32mzw_0x003e_api.h")
+            touchAcqHeaderFile.setSourcePath("/src/qtm_acq_pic32mzda_0x0046_api.h")
+            touchAcqHeaderFile.setOutputName("qtm_acq_pic32mzda_0x0046_api.h")
         else:
             touchAcqHeaderFile.setSourcePath("Error_setAcqHeaderFile")
             touchAcqHeaderFile.setOutputName("Error_setAcqHeaderFile")
@@ -324,8 +334,8 @@ class classTouchAcquisitionSourceFiles():
             touchAcqHeaderFile2.setSourcePath("/src/libraries/hcvd_driver_PIC32MZ1025W104.h")
             touchAcqHeaderFile2.setOutputName("hcvd_driver_PIC32MZ1025W104.h")
         elif(targetDevice == "PIC32MZDA"):
-            touchAcqHeaderFile2.setSourcePath("/src/libraries/hcvd_driver_PIC32MZ1025W104.h")
-            touchAcqHeaderFile2.setOutputName("hcvd_driver_PIC32MZ1025W104.h")
+            touchAcqHeaderFile2.setSourcePath("/src/libraries/cvd_driver_PIC32MZ.h")
+            touchAcqHeaderFile2.setOutputName("cvd_driver_PIC32MZ.h")
         else:
             touchAcqHeaderFile2.setSourcePath("Error_setAcqHeaderFile2")
             touchAcqHeaderFile2.setOutputName("Error_setAcqHeaderFile2")

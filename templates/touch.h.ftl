@@ -42,7 +42,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 #include "device.h"
 
-//<#assign pic_devices = ["PIC32MZW","PIC32MZDA"]>
+<#assign pic_devices = ["PIC32MZW","PIC32MZDA"]>
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -142,7 +142,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define DEF_NUM_CHANNELS (${TOUCH_CHAN_ENABLE_CNT})
 </#if>
 
-<#if DEVICE_NAME == "PIC32MZW">
+<#if pic_devices?seq_contains(DEVICE_NAME)>
 /* Defines node parameter setting
  * {X-line, Y-line, Charge Share Delay, 0, NODE_G(Analog Gain , Digital Gain),
  * filter level}
@@ -546,6 +546,10 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#else>
 #define KRONO_GESTURE_ENABLE 0u
 </#if>
+</#if>
+
+<#if DEVICE_NAME == "PIC32MZDA">
+#define TOUCH_DMA_CHANNEL ${TOUCH_PIC32MZDA_DMA}
 </#if>
 
 // DOM-IGNORE-BEGIN
