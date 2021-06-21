@@ -409,6 +409,29 @@ def instantiateComponent(qtouchComponent):
     enableLoaded.setLabel("Project Loaded")
     enableLoaded.setDefaultValue(False)
 
+    dmaInfo = qtouchComponent.createMenuSymbol("DMA_INFO", touchInfoMenu)
+    dmaInfo.setLabel("DMA Info")
+
+    dmaChannelsCount = qtouchComponent.createIntegerSymbol("DMA_CHANNEL_COUNT", dmaInfo)
+    dmaChannelsCount.setLabel("Channels count ")
+    dmaChannelsCount.setReadOnly(True)
+
+    channelCountNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"DMAC\"]/instance/parameters/param@[name=\"CH_NUM\"]")
+    if channelCountNode != None:
+        dmaChannelsCount.setDefaultValue(int(channelCountNode.getAttribute("value")))
+
+    #create evsys group
+    evsysInfo = qtouchComponent.createMenuSymbol("EVSYS_INFO", touchInfoMenu)
+    evsysInfo.setLabel("EVSYS Info")
+
+    evsysChannelsCount = qtouchComponent.createIntegerSymbol("EVSYS_CHANNEL_COUNT", evsysInfo)
+    evsysChannelsCount.setLabel("Channels count ")
+    evsysChannelsCount.setReadOnly(True)
+
+    channelCountNode = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"EVSYS\"]/instance/parameters/param@[name=\"CHANNELS\"]")
+    if channelCountNode != None:
+        evsysChannelsCount.setDefaultValue(int(channelCountNode.getAttribute("value")))
+
     interfaceInst = touch_interface.classTouchInterface()
     qtouchInst['interfaceInst'] = interfaceInst
     interfaceInst.getTargetDeviceInfo(ATDF,qtouchComponent,touchMenu)
