@@ -6,6 +6,9 @@ class classTouchNodeGroups():
         self.tchSelfPinSelection = []
         self.tchMutXPinSelection = []
         self.tchMutYPinSelection = []
+        self.symbolList = []
+        self.depFuncName = []
+        self.dependencies = []
         # defaultValue
         self.maxGroups = 4
 
@@ -83,6 +86,13 @@ class classTouchNodeGroups():
         """
         self.maxGroups = int(newMax)
 
+    def addDepSymbol(self, symbol, func, depen):
+        self.symbolList.append(symbol)
+        self.depFuncName.append(func)
+        self.dependencies.append(depen)
+
+    def getDepDetails(self):
+        return self.symbolList, self.depFuncName, self.dependencies
 
     def initNodeGroupInstance(self,instances,qtouchComponent,groupNumber,parentLabel,selfChannels,mutualChannels,ptcPinValues,csdMode,rSelMode):
         """Initialise Node Group Instance
@@ -119,6 +129,10 @@ class classTouchNodeGroups():
                 self.tchSelfPinSelection.append(qtouchComponent.createKeyValueSetSymbol("SELFCAP-INPUT_"+ str(channelID), touchChEnable))
                 self.tchMutXPinSelection.append(qtouchComponent.createKeyValueSetSymbol("MUTL-X-INPUT_"+ str(channelID), touchChEnable))
                 self.tchMutYPinSelection.append(qtouchComponent.createKeyValueSetSymbol("MUTL-Y-INPUT_"+ str(channelID), touchChEnable))
+                self.addDepSymbol(self.tchSelfPinSelection[len(self.tchSelfPinSelection)-1], "updatePinsSettings", ["SELFCAP-INPUT_"+ str(channelID)])
+                self.addDepSymbol(self.tchMutXPinSelection[len(self.tchMutYPinSelection)-1], "updatePinsSettings", ["MUTL-X-INPUT_"+ str(channelID)])
+                self.addDepSymbol(self.tchMutYPinSelection[len(self.tchMutYPinSelection)-1], "updatePinsSettings", ["MUTL-Y-INPUT_"+ str(channelID)])
+
                 if(csdMode!="NoCSD"):
                     #Charge Share Delay
                     touchChargeShareDelay = qtouchComponent.createIntegerSymbol("DEF_TOUCH_CHARGE_SHARE_DELAY" + str(channelID), touchChEnable)
@@ -139,6 +153,10 @@ class classTouchNodeGroups():
                 self.tchSelfPinSelection.append(qtouchComponent.createKeyValueSetSymbol("GROUP_"+str(groupNumber)+"_SELFCAP-INPUT_"+ str(channelID), vars()[dynamicTouchChEnable]))
                 self.tchMutXPinSelection.append(qtouchComponent.createKeyValueSetSymbol("GROUP_"+str(groupNumber)+"_MUTL-X-INPUT_"+ str(channelID), vars()[dynamicTouchChEnable]))
                 self.tchMutYPinSelection.append(qtouchComponent.createKeyValueSetSymbol("GROUP_"+str(groupNumber)+"_MUTL-Y-INPUT_"+ str(channelID), vars()[dynamicTouchChEnable]))
+                self.addDepSymbol(self.tchSelfPinSelection[len(self.tchSelfPinSelection)-1], "updatePinsSettings", ["GROUP_"+str(groupNumber)+"_SELFCAP-INPUT_"+ str(channelID)])
+                self.addDepSymbol(self.tchMutXPinSelection[len(self.tchMutYPinSelection)-1], "updatePinsSettings", ["GROUP_"+str(groupNumber)+"_MUTL-X-INPUT_"+ str(channelID)])
+                self.addDepSymbol(self.tchMutYPinSelection[len(self.tchMutYPinSelection)-1], "updatePinsSettings", ["GROUP_"+str(groupNumber)+"_MUTL-Y-INPUT_"+ str(channelID)])
+
                 #Charge Share Delay
                 if(csdMode!="NoCSD"):
                     touchChargeShareDelay = qtouchComponent.createIntegerSymbol("GROUP_"+str(groupNumber)+"_DEF_TOUCH_CHARGE_SHARE_DELAY" + str(channelID), vars()[dynamicTouchChEnable])

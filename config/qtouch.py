@@ -31,6 +31,7 @@ import touch_datastreamer
 import touch_qtouch_sourcefiles
 import touch_surface_2D_utility
 import touch_custom_pic32mzda
+import touch_pad
 
 qtouchInst = {}
 
@@ -238,13 +239,15 @@ def applyDrivenShieldTimers(symbol, event):
 
 def qtouchSetDependencies(symbol, func, dependency):
     for i, sym in enumerate(symbol):
-        print sym,func,dependency
+        #print sym,func,dependency
         if(func[i] == "applyDrivenShieldTimers"):
             sym.setDependencies(applyDrivenShieldTimers,dependency[i])
         elif(func[i] == "onPTCClock"):
             sym.setDependencies(onPTCClock, dependency[i])
         elif(func[i] == "onPic32mzdaChange"):
             sym.setDependencies(onPic32mzdaChange, dependency[i])
+        elif(func[i] == "updatePinsSettings"):
+            sym.setDependencies(updatePinsSettings, dependency[i])
 
 def processLump(symbol, event, targetDevice):
     """Handler for lump mode support menu click event. 
@@ -279,6 +282,39 @@ def processLump(symbol, event, targetDevice):
             if (qtouchInst['surfaceInst'].getSurfaceRearrangeRequired(targetDevice) == False):
                 qtouchInst['surfaceInst'].updateLumpModeSurface(symbol,touchSenseTechnology,totalChannelCount)
 
+def updatePinsSettings(symbol,event):
+    touchPads = qtouchInst['padsInfo'].getTouchPads()
+    touchModule = qtouchInst['padsInfo'].getTouchModule()
+    #print touchModule
+    #print touchPads
+    component = symbol.getComponent()
+    #clear setting
+    for pad in touchPads:
+        setting = touchPads[pad]
+        value = Database.getSymbolValue("core", "PIN_"+setting["index"]+"_FUNCTION_TYPE")
+        if touchModule in value:
+            Database.setSymbolValue("core", "PIN_"+setting["index"]+"_FUNCTION_TYPE", "")
+    activePds = set()
+    count = component.getSymbolByID("TOUCH_CHAN_ENABLE_CNT").getValue()
+    for i in range(count):
+        if "SELF" in symbol.getID():
+            signalSymbol = component.getSymbolByID("SELFCAP-INPUT_"+str(i))
+            padDesc = signalSymbol.getKeyDescription(signalSymbol.getValue())
+            padName = padDesc[padDesc.index("(")+1:padDesc.index(")")]
+            activePds.add(padName)
+        if "MUTL" in symbol.getID():
+            signalSymbol = component.getSymbolByID("MUTL-X-INPUT_"+str(i))
+            padDesc = signalSymbol.getKeyDescription(signalSymbol.getValue())
+            padName = padDesc[padDesc.index("(")+1:padDesc.index(")")]
+            activePds.add(padName)
+            signalSymbol = component.getSymbolByID("MUTL-Y-INPUT_"+str(i))
+            padDesc = signalSymbol.getKeyDescription(signalSymbol.getValue())
+            padName = padDesc[padDesc.index("(")+1:padDesc.index(")")]
+            activePds.add(padName)
+    for pad in activePds:
+        setting = touchPads[pad]
+        Database.setSymbolValue("core", "PIN_"+setting["index"]+"_FUNCTION_TYPE", setting["function"])
+
 def onGenerate(symbol,event):
     """Handler for generate code menu click event. 
     Triggers updates for touch sub modules, lump,surface,lowpower,boostmode
@@ -287,7 +323,7 @@ def onGenerate(symbol,event):
         :event : new value of the symbol 
     Returns:
         :none
-    """
+    """ 
     localComponent = symbol.getComponent()
     targetDevice = localComponent.getSymbolByID("DEVICE_NAME").getValue()
     surfaceEnabled = localComponent.getSymbolByID("ENABLE_SURFACE").getValue()
@@ -436,6 +472,11 @@ def instantiateComponent(qtouchComponent):
     else:
         useTrustZone = False
 
+    if device not in target_deviceInst.picDevices:
+        padsInfo = touch_pad.classTouchPads()
+        padsInfo.collectPadInfo(ATDF)
+        qtouchInst['padsInfo'] = padsInfo
+
     acquisition_groupsInst = touch_acquisition_groups.classTouchAcquisitionGroups()
     #Self Mutual Related if not required then setMaxGroups(1)
     acquisition_groupsInst.setMaxGroups(1) # Specifies the max number of acquisitions groups
@@ -482,6 +523,9 @@ def instantiateComponent(qtouchComponent):
         ptcPinValues,
         csdMode,
         rSelMode)
+    qtouchInst['node_groupInst'] = node_groupInst
+    symbol,func,depen = node_groupInst.getDepDetails()
+    qtouchSetDependencies(symbol, func, depen)
 
     # ----Keys----
     key_groupInst = touch_key_groups.classTouchKeyGroups()
@@ -629,8 +673,8 @@ def instantiateComponent(qtouchComponent):
     print symbol,func,depen
     qtouchSetDependencies(symbol, func, depen)
 
-    symbol,func,depen = customInst.getDepDetails()
-    qtouchSetDependencies(symbol, func, depen)
+    # symbol,func,depen = customInst.getDepDetails()
+    # qtouchSetDependencies(symbol, func, depen)
 
 
     qtouchInst['touchFiles'] = touchFiles
