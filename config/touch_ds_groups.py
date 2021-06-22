@@ -219,6 +219,17 @@ class classTouchDSGroup():
                         tcTimerMuxYpin.addKey(tempstring, str(sindex) ,tempstring)
                         break
                 pindex+= 1
+            timerClock = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"TC\"]/instance@[name=\""+ tctimer +"\"]/parameters/param@[name=\"GCLK_ID\"]")
+            clockIndex = qtouchComponent.createStringSymbol(tctimer+"_CLOCK_INDEX", timerMenu)
+            clockIndex.setLabel("Clock Index ")
+            clockIndex.setReadOnly(True)
+            clockIndex.setDefaultValue("GCLK_ID_"+timerClock.getAttribute("value")+"_GENSEL")
+            
+            timertUser = ATDF.getNode("/avr-tools-device-file/devices/device/events/users/user@[name=\""+ tctimer +"_EVU\"]")
+            eventUser = qtouchComponent.createStringSymbol(tctimer+"_EVENT_USER", timerMenu)
+            eventUser.setLabel("Event User ")
+            eventUser.setReadOnly(True)
+            eventUser.setDefaultValue("EVSYS_USER_"+timertUser.getAttribute("index"))
         
         for index in range(0, len(tccInstances)):
             tcctimer = tccInstances[index].getAttribute("name")
@@ -248,6 +259,20 @@ class classTouchDSGroup():
                         tccTimerMuxYpin.addKey(tempstring, str(sindex) ,tempstring)
                         break
                 pindex+= 1
+
+            timerClock = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"TCC\"]/instance@[name=\""+ tcctimer +"\"]/parameters/param@[name=\"GCLK_ID\"]")
+            clockIndex = qtouchComponent.createStringSymbol(tcctimer+"_CLOCK_INDEX", timerMenu)
+            clockIndex.setLabel("Clock Index ")
+            clockIndex.setReadOnly(True)
+            clockIndex.setDefaultValue("GCLK_ID_"+timerClock.getAttribute("value")+"_GENSEL")
+            
+            timertUser = ATDF.getNode("/avr-tools-device-file/devices/device/events/users/user@[name=\""+ tcctimer +"_EV_0\"]")
+            eventUser = qtouchComponent.createStringSymbol(tcctimer+"_EVENT_USER", timerMenu)
+            eventUser.setLabel("Event User ")
+            eventUser.setReadOnly(True)
+            eventUser.setDefaultValue("EVSYS_USER_"+timertUser.getAttribute("index"))
+
+        
 
     def getTCTimers(self,ATDF):
         """Retrieve TC timers from device ATDF
@@ -426,12 +451,12 @@ class classTouchDSGroup():
         minVal = component.getSymbolByID("NUM_ACQUISITION_GROUPS").getMin()
         for x in range(minVal+1,maxVal+1):
             # dsDedicatedTimer = "DS_DEDICATED_ENABLE_" +str(x)
-            dsTimer = "DS_TIMER_APPLY_" +str(x)
-            component.getSymbolByID(dsTimer).setEnabled(False)
-            component.getSymbolByID(dsTimer).setVisible(False)
+            dstimer = "DS_TIMER_APPLY_" +str(x)
+            component.getSymbolByID(dstimer).setEnabled(False)
+            component.getSymbolByID(dstimer).setVisible(False)
             if(currentVal >= x):
-                component.getSymbolByID(dsTimer).setEnabled(True)
-                component.getSymbolByID(dsTimer).setVisible(True)
+                component.getSymbolByID(dstimer).setEnabled(True)
+                component.getSymbolByID(dstimer).setVisible(True)
 
     def updateLumpModeDrivenShield(self,symbol,event,totalChannelCount,lump_symbol):
         """Handler for lump mode support menu click event.  
