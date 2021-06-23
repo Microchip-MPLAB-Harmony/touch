@@ -140,6 +140,9 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice == "PIC32MZDA"):
             touchAcqLibraryFile.setSourcePath("/src/libraries/cvd_driver_PIC32MZ.c")
             touchAcqLibraryFile.setOutputName("cvd_driver_PIC32MZ.c")
+        elif(targetDevice in ["PIC32CMLE00","PIC32CMLS00"]):
+            touchAcqLibraryFile.setSourcePath("/src/libraries/qtm_acq_pic32cm_le_0x0040.X.a")
+            touchAcqLibraryFile.setOutputName("qtm_acq_pic32cm_le_0x0040.X.a")
         else:
             touchAcqLibraryFile.setSourcePath("Error_setAcquisitionLibraryFile")
             touchAcqLibraryFile.setOutputName("Error_setAcquisitionLibraryFile")
@@ -209,6 +212,9 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice == "PIC32MZDA"):
             touchAcqAutoLibraryFile.setSourcePath("/src/libraries/cvd_driver_PIC32MZ.c")
             touchAcqAutoLibraryFile.setOutputName("cvd_driver_PIC32MZ.c")
+        elif(targetDevice in ["PIC32CMLE00","PIC32CMLS00"]):
+            touchAcqAutoLibraryFile.setSourcePath("/src/libraries/qtm_acq_pic32cm_le_0x0040.X.a")
+            touchAcqAutoLibraryFile.setOutputName("qtm_acq_pic32cm_le_0x0040.X.a")
         else:
             touchAcqAutoLibraryFile.setOutputName("Error_setAutoAcquisitionLibraryFile")
             touchAcqAutoLibraryFile.setOutputName("Error_setAutoAcquisitionLibraryFile")
@@ -298,6 +304,9 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice == "PIC32MZDA"):
             touchAcqHeaderFile.setSourcePath("/src/qtm_acq_pic32mzda_0x0046_api.h")
             touchAcqHeaderFile.setOutputName("qtm_acq_pic32mzda_0x0046_api.h")
+        elif(targetDevice in ["PIC32CMLE00","PIC32CMLS00"]):
+            touchAcqHeaderFile.setSourcePath("/src/qtm_acq_pic32cm_le_0x0040_api.h")
+            touchAcqHeaderFile.setOutputName("qtm_acq_pic32cm_le_0x0040_api.h")
         else:
             touchAcqHeaderFile.setSourcePath("Error_setAcqHeaderFile")
             touchAcqHeaderFile.setOutputName("Error_setAcqHeaderFile")

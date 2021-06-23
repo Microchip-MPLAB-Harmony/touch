@@ -80,7 +80,7 @@ class classTouchTargetDevice():
         Returns:
             :minimum Interrupt as (int)
         """
-        if (targetDevice in set(["SAMC20","SAMC21","SAMD20","SAMD21","SAMDA1","SAMHA1","SAMD10","SAMD11","SAMD51","SAME51","SAME53","SAME54","SAML10"])):
+        if (targetDevice in set(["SAMC20","SAMC21","SAMD20","SAMD21","SAMDA1","SAMHA1","SAMD10","SAMD11","SAMD51","SAME51","SAME53","SAME54","SAML10","PIC32CMLE00","PIC32CMLS00"])):
             return 0
         else:
             return -1
@@ -94,7 +94,7 @@ class classTouchTargetDevice():
             :maximum Interrupt as (int)
         """
         if targetDevice not in self.picDevices:
-            if (targetDevice in set(["SAMC20","SAMC21","SAMD20","SAMD21","SAMDA1","SAMHA1","SAMD10","SAMD11","SAML10"])):
+            if (targetDevice in set(["SAMC20","SAMC21","SAMD20","SAMD21","SAMDA1","SAMHA1","SAMD10","SAMD11","SAML10","PIC32CMLE00","PIC32CMLS00"])):
                 return 3
             elif(targetDevice in set(["SAMD51","SAME51","SAME53","SAME54"])):
                 return 7
@@ -112,7 +112,7 @@ class classTouchTargetDevice():
         
         if (targetDevice in set(["SAMC20","SAMC21","SAMD20","SAMD21","SAMDA1","SAMHA1"])):
             return 3
-        elif(targetDevice in set(["SAMD10","SAMD11","SAML10"])):
+        elif(targetDevice in set(["SAMD10","SAMD11","SAML10","PIC32CMLE00","PIC32CMLS00"])):
             return 2
         elif(targetDevice in set(["SAMD51","SAME51","SAME53","SAME54"])):
             return 7
@@ -149,6 +149,8 @@ class classTouchTargetDevice():
             clockXml.setDefaultValue("pic32mzda_clock_config")
         elif(targetDevice == "PIC32MZW"):
             clockXml.setDefaultValue("pic32mzw_clock_config")
+        elif(targetDevice == "PIC32CM"):
+            clockXml.setDefaultValue("pic32cm_clock_config")
         else:
             if targetDevice not in self.picDevices:
                 print ("error - setClockXML")
@@ -162,7 +164,7 @@ class classTouchTargetDevice():
         Returns:
             :none
         """
-        if (targetDevice in set(["SAMC21","SAMD10","SAMD11","SAMD21","SAMDA1","SAMHA1","SAML10"])):
+        if (targetDevice in set(["SAMC21","SAMD10","SAMD11","SAMD21","SAMDA1","SAMHA1","SAML10","PIC32CMLE00","PIC32CMLS00"])):
             Database.setSymbolValue("core", "PTC_INTERRUPT_ENABLE", True)
             Database.setSymbolValue("core", "PTC_INTERRUPT_HANDLER", "PTC_Handler")
         elif (targetDevice in set(["SAMC20","SAMD20"])):
@@ -215,6 +217,9 @@ class classTouchTargetDevice():
         elif(targetDevice == "SAML10"):
             Database.clearSymbolValue("core", "GCLK_ID_19_GENSEL")
             Database.setSymbolValue("core", "GCLK_ID_19_GENSEL", 1)
+        elif(targetDevice in ["PIC32CMLE00", "PIC32CMLS00"]):
+            Database.clearSymbolValue("core", "GCLK_ID_31_GENSEL")
+            Database.setSymbolValue("core", "GCLK_ID_31_GENSEL", 1)
         else:
             print ("error - setPTCClock")
 
