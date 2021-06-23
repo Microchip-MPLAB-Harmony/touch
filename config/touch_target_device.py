@@ -234,7 +234,7 @@ class classTouchTargetDevice():
             :none
         """
         if targetDevice not in self.picDevices:
-            if (targetDevice in set(["SAMC20","SAMC21","SAMD20","SAMD21","SAMHA1","SAMDA1","SAMD10","SAMD11"])):
+            if (targetDevice in set(["SAMC20","SAMC21","SAMD20","SAMD21","SAMHA1","SAMDA1","SAMD10","SAMD11","SAML10"])):
                 Database.clearSymbolValue("core", "PTC_CLOCK_ENABLE")
                 Database.setSymbolValue("core", "PTC_CLOCK_ENABLE", True)
             else:
@@ -464,20 +464,19 @@ class classTouchTargetDevice():
             selLen = len(selectablePins)
             # Determine largest Mutual config
             maxMutuals = 0
-            thisMax = 0
+
             if(selLen ==0):
-                for index in range(0,ylen):
-                    thisMax = (ylen-index)*(xlen+index)
-                    if(thisMax > maxMutuals):
-                        maxMutuals = thisMax
-            else:
-                for index in range(0,selLen):
-                    thisMax = (ylen-index-selLen)*(xlen+index)
-                    if(thisMax > maxMutuals):
-                        maxMutuals = thisMax
+                maxMutuals = ylen *xlen
+            elif(selLen == xlen and xlen == ylen): #Full Mux
+                maxMutuals = (ylen/2) * (xlen/2)
+            elif(ylen >= xlen):                     #Partial 1 more y than x
+                maxMutuals = xlen * (ylen-selLen)
+            else:                                   #Partial 2 more x than y
+                maxMutuals = ylen * (xlen-selLen)
+            
             # set the global counts for self and mutual
-            self.touchChannelSelf = 5#ylen 
-            self.touchChannelMutual = 5#maxMutuals
+            self.touchChannelSelf = ylen 
+            self.touchChannelMutual = maxMutuals
             # adust for lump support
             if(lumpsupport):
                 self.touchChannelSelf +=16
