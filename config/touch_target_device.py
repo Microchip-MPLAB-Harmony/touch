@@ -233,14 +233,12 @@ class classTouchTargetDevice():
         Returns:
             :none
         """
-        if (targetDevice in set(["SAMC21","SAMD20","SAMD21","SAMHA1","SAMDA1","SAMD10","SAMD11"])):
-            Database.clearSymbolValue("core", "PTC_CLOCK_ENABLE")
-            Database.setSymbolValue("core", "PTC_CLOCK_ENABLE", True)
-        elif(targetDevice in set(["SAMC20"])):
-            Database.clearSymbolValue("core", "PTC_CLOCK_ENABLE")
-            Database.setSymbolValue("core", "PTC_CLOCK_ENABLE", True, 2)
-        else:
-            print ("error - setPTCClockEnable")
+        if targetDevice not in self.picDevices:
+            if (targetDevice in set(["SAMC20","SAMC21","SAMD20","SAMD21","SAMHA1","SAMDA1","SAMD10","SAMD11"])):
+                Database.clearSymbolValue("core", "PTC_CLOCK_ENABLE")
+                Database.setSymbolValue("core", "PTC_CLOCK_ENABLE", True)
+            else:
+                print ("error - setPTCClockEnable")
 
     # ADC Clock
     def setADCClock(self,Database,targetDevice):
@@ -537,6 +535,7 @@ class classTouchTargetDevice():
         self.setModuleID(qtouchComponent,touchMenu,targetDevice)
         self.setClockXML(qtouchComponent,touchMenu,targetDevice)
         self.setInterruptVector(Database,targetDevice)
+        self.setPTCClockEnable(Database, targetDevice)
 
 if __name__ == "__main__":
     print "adding target device .py file"

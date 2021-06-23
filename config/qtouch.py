@@ -324,6 +324,9 @@ def onGenerate(symbol,event):
     Returns:
         :none
     """ 
+    if event['value'] is False:
+        return
+
     localComponent = symbol.getComponent()
     targetDevice = localComponent.getSymbolByID("DEVICE_NAME").getValue()
     surfaceEnabled = localComponent.getSymbolByID("ENABLE_SURFACE").getValue()
@@ -698,10 +701,5 @@ def instantiateComponent(qtouchComponent):
 
     # symbol,func,depen = customInst.getDepDetails()
     # qtouchSetDependencies(symbol, func, depen)
-
-
     qtouchInst['touchFiles'] = touchFiles
-
     print qtouchInst
-
-

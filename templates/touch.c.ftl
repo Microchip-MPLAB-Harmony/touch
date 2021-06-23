@@ -1545,6 +1545,10 @@ void PTC_Handler(void)
 	if (qtm_drivenshield_config.flags & (1u << DRIVEN_SHIELD_DUMMY_ACQ)) {
 		/* Clear the flag */
 		qtm_drivenshield_config.flags &= (uint8_t) ~(1u << DRIVEN_SHIELD_DUMMY_ACQ);
+    <#if DEVICE_NAME == "SAMD10" || DEVICE_NAME == "SAMD11" >
+	EVSYS_REGS->EVSYS_CHANNEL = EVSYS_CHANNEL_EVGEN(0) | EVSYS_CHANNEL_PATH(2) | EVSYS_CHANNEL_EDGSEL(0) \
+									 | EVSYS_CHANNEL_CHANNEL(0);
+    </#if>
 	} else {
 		drivenshield_stop();
 	qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();

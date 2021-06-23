@@ -36,8 +36,8 @@ This is for device feature and library version information
         </surface>
         <acquisition>
             <device name="SAMD20">
-                <manual>1.1</manual>
-                <auto>1.1</auto>
+                <manual>1.2</manual>
+                <auto>1.2</auto>
             </device>
             <device name="SAME5">
                 <manual>1.2</manual>
@@ -84,12 +84,12 @@ This is for device feature and library version information
                 <auto>1.1</auto>
             </device>
             <device name="SAMD10">
-                <manual>1.7</manual>
-                <auto>1.7</auto>
+                <manual>1.8</manual>
+                <auto>1.8</auto>
             </device>
             <device name="SAMD11">
-                <manual>1.7</manual>
-                <auto>1.7</auto>
+                <manual>1.8</manual>
+                <auto>1.8</auto>
             </device>
             <device name="PIC32MZ">
                 <manual>1.0</manual>

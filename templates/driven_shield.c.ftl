@@ -43,7 +43,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include "driven_shield.h"
 #include "touch.h"
 
-//<assign no_dma_devices = ["SAMD11", "SAMD10", "SAMD20"] >
+<#assign noDmaDevice = ["SAMD11", "SAMD10", "SAMD20"] >
 
 #if (DEF_ENABLE_DRIVEN_SHIELD == 1u)
 <#assign prescaler_value = "0, 0, 0, 0" >
@@ -101,13 +101,12 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 		<#assign data_type = "uint8_t" >
 	</#if>
 </#list>
-<#list ["SAMD11", "SAMD10", "SAMD20"] as i>
-	<#if DEVICE_NAME == i>
+
+<#if noDmaDevice?seq_contains(DEVICE_NAME) >
 		<#assign prescaler_value = "0, 2, 3, 3" >
 		<#assign block_transfer_count = "1" >
 		<#assign data_type = "uint8_t" >
-	</#if>
-</#list>
+</#if>
 </#if>
 
 /*============================================================================
@@ -231,14 +230,14 @@ void drivenshield_configure()
 <#elseif (DEVICE_NAME == "SAMD20")>
 
 	EVSYS_REGS->EVSYS_CHANNEL = EVSYS_CHANNEL_EVGEN(0x3A) | EVSYS_CHANNEL_PATH(2) | EVSYS_CHANNEL_EDGSEL(0) \
-									 ;
+									 | EVSYS_CHANNEL_CHANNEL(0);
 
 	/* Map DMA Transfer complete Event
 		output to PTC Start of convertion Event Inuput */
 	EVSYS_REGS->EVSYS_USER = EVSYS_USER_CHANNEL(0x1)|EVSYS_USER_USER(0x0D);
 <#elseif (DEVICE_NAME == "SAMD10")||(DEVICE_NAME == "SAMD11")>
 	EVSYS_REGS->EVSYS_CHANNEL = EVSYS_CHANNEL_EVGEN(0x2B) | EVSYS_CHANNEL_PATH(2) | EVSYS_CHANNEL_EDGSEL(0) \
-									 ;
+									 | EVSYS_CHANNEL_CHANNEL(0);
 
 	/* Map DMA Transfer complete Event
 		output to PTC Start of convertion Event Inuput */
@@ -272,7 +271,7 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	</#if>
 	uint16_t        period = 0, count = 0, cc = 0;
 
-<#if (DEVICE_NAME != "SAMD11") && (DEVICE_NAME != "SAMD10") && (DEVICE_NAME != "SAMD20")>
+<#if noDmaDevice?seq_contains(DEVICE_NAME) == false>
 	addr         = (${data_type} *)dst_addr;
 	filter_level = value;
 
@@ -312,9 +311,18 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	}
 	<#break>
 </#if>
+</#list>
 <#list ["SAMD11", "SAMD10","SAMD20"] as i>
 <#if DEVICE_NAME == i>
- /* TC/TCC period value */
+
+	<#if DEVICE_NAME == "SAMD20"]
+	EVSYS_REGS->EVSYS_CHANNEL = EVSYS_CHANNEL_EVGEN(0x3A) | EVSYS_CHANNEL_PATH(2) | EVSYS_CHANNEL_EDGSEL(0) \
+									 | EVSYS_CHANNEL_CHANNEL(0);
+	<#else>
+	EVSYS_REGS->EVSYS_CHANNEL = EVSYS_CHANNEL_EVGEN(0x2B) | EVSYS_CHANNEL_PATH(2) | EVSYS_CHANNEL_EDGSEL(0) \
+									 | EVSYS_CHANNEL_CHANNEL(0);
+	</#if>
+	/* TC/TCC period value */
     period = csd + 15 + sds;
     period = period << 2;
     period = period - 1; 
@@ -329,7 +337,6 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
     count = count << 2;
     count = count - offset_vs_prescaler[prescaler];
 </#if>
-</#list>
 </#list>
 <#list ["SAML22", "SAMC20", "SAMC21"] as i>
 <#if DEVICE_NAME == i>
@@ -490,6 +497,8 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	</#if>
 	<#if ((DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1"))>	
 	${x}_REGS->COUNT8.TC_CTRLA = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER(prescaler)| TC_CTRLA_WAVEGEN_NPWM | TC_CTRLA_RUNSTDBY_Msk ;
+	<#elseif ((DEVICE_NAME == "SAMD11")||(DEVICE_NAME == "SAMD10"))>
+	${x}_REGS->COUNT8.TC_CTRLA = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER(prescaler) | TC_CTRLA_WAVEGEN_NPWM | TC_CTRLA_RUNSTDBY_Msk ;
 	<#else>
 	${x}_REGS->COUNT8.TC_CTRLA = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER(prescaler);
 	</#if>
@@ -511,8 +520,10 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_PER = period;
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_COUNT = count;
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_CC[${DediTimerWo1}] = cc;
-<#if ((DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1"))>	
+<#if ((DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1"))>
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_CTRLA = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER(prescaler) | TC_CTRLA_WAVEGEN_NPWM | TC_CTRLA_RUNSTDBY_Msk ;
+<#elseif ((DEVICE_NAME == "SAMD11")||(DEVICE_NAME == "SAMD10"))>	
+	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_CTRLA = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER(prescaler) | TC_CTRLA_WAVEGEN_NPWM;
 <#else>
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_CTRLA = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER(prescaler);
 </#if>

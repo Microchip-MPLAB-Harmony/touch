@@ -231,4 +231,36 @@ This is for driven shield feature settings
 			<timer evsys_user_tmr="CHANNEL_0"/>
 		</evsys>
 	</device>
+	<device name="ATSAMD10">
+		<core>
+			<clock tc="GCLK1" tcc="GCLK1" />
+			<dma  />
+		</core>
+		<timer>
+			<tc  TC_CTRLA_MODE="Counter in 8-bit mode"  TC_OPERATION_MODE="Compare" TC_COMPARE_CTRLA_WAVEGEN="NPWM"
+					TC_CTRLA_RUNSTDBY="true" TC_COMPARE_EVCTRL_EV="true" TC_COMPARE_EVCTRL_TCINV="false"/>
+			<tcc TCC_0_WEXCTRL_DTIEN = "false"  TCC_1_WEXCTRL_DTIEN="false" TCC_2_WEXCTRL_DTIEN="false" TCC_3_WEXCTRL_DTIEN="false"/>
+		</timer>
+		<evsys>
+			<module  EVSYS_CHANNEL_0="true"/>
+			<user  />
+			<timer evsys_user_tmr="CHANNEL_0"/>
+		</evsys>
+	</device>
+	<device name="ATSAMD11">
+		<core>
+			<dma />
+			<clock tc="GCLK1" tcc="GCLK1" />
+		</core>
+		<timer>
+			<tc  TC_CTRLA_MODE="Counter in 8-bit mode"  TC_OPERATION_MODE="Compare" TC_COMPARE_CTRLA_WAVEGEN="NPWM"
+					TC_COMPARE_EVCTRL_EV="true" TC_COMPARE_EVCTRL_TCINV="false"/>
+			<tcc TCC_0_WEXCTRL_DTIEN = "false"  TCC_1_WEXCTRL_DTIEN="false" TCC_2_WEXCTRL_DTIEN="false" TCC_3_WEXCTRL_DTIEN="false"/>
+		</timer>
+		<evsys>
+			<module  EVSYS_CHANNEL_0="true"/>
+			<user />
+			<timer evsys_user_tmr="CHANNEL_0"/>
+		</evsys>
+	</device>
 </setting>

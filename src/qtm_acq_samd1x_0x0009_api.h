@@ -99,6 +99,16 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define NODE_SCAN_128MS       13u
 #define NODE_SCAN_256MS       14u
 
+#define DRIVEN_SHIELD_DUMMY_ACQ	3u
+
+typedef void (*qtm_drivenshield_callback_t) (uint8_t csd, uint8_t sds, uint8_t prescaler, uint8_t volatile * ptr, uint8_t value);
+
+/* Drivenshield status flag */
+typedef struct qtm_drivenshield_config_tag
+{
+	uint8_t  flags;
+}qtm_drivenshield_config_t;
+
 typedef enum tag_filter_level_t {
   FILTER_LEVEL_1,
   FILTER_LEVEL_2,
@@ -243,6 +253,40 @@ typedef struct
  *----------------------------------------------------------------------------*/
 
 /* Library prototypes */
+/*============================================================================
+touch_ret_t drivenshield_setup(drivenshield_config_t* config);
+------------------------------------------------------------------------------
+Purpose: Setup the drivenshield with settings from the user
+Input  : drivenshield_config_t  setup in touch.c and touch.h
+Output : touch_ret_t
+Notes  : Called by application to load the drivenshield operating parameters
+============================================================================*/
+touch_ret_t qtm_drivenshield_setup(qtm_drivenshield_config_t* config);
+
+/*============================================================================
+void drivenshield_register_start_callback(drivenshield_callback_t callback);
+------------------------------------------------------------------------------
+Purpose: register the Softshield Start callback with the touch library
+Input  : pointer to the applicaion function to start the event system
+Output : touch_ret_t
+Notes  : the library initialises this with a null, if this remains the the
+         library will function as normal, if this is not null then the
+         application will start the event system to kick off the PTC
+============================================================================*/
+touch_ret_t qtm_drivenshield_register_start_callback(qtm_drivenshield_callback_t callback);
+
+/*============================================================================
+void drivenshield_register_start_callback(drivenshield_callback_t callback);
+------------------------------------------------------------------------------
+Purpose: register the Softshield Start callback with the touch library
+Input  : pointer to the applicaion function to start the event system
+Output : touch_ret_t
+Notes  : the library initialises this with a null, if this remains the the
+         library will function as normal, if this is not null then the
+         application will start the event system to kick off the PTC
+============================================================================*/
+touch_ret_t qtm_drivenshield_deregister_start_callback(void);
+
 /*============================================================================
 touch_ret_t qtm_acquisition_process(void)
 ------------------------------------------------------------------------------
@@ -396,7 +440,10 @@ Notes    :  none
 ============================================================================*/
 void qtm_samd1x_ptc_handler_wcomp(void);
 
+#define qtm_samd11_ptc_handler_wcomp() qtm_samd1x_ptc_handler_wcomp()
+#define qtm_samd10_ptc_handler_wcomp() qtm_samd1x_ptc_handler_wcomp()
 
-
+#define qtm_samd11_ptc_handler_eoc() qtm_samd1x_ptc_handler_eoc()
+#define qtm_samd10_ptc_handler_eoc() qtm_samd1x_ptc_handler_eoc()
 
 #endif    /* TOUCH_API_D1X_ACQ_H */
