@@ -327,7 +327,7 @@ def onGenerate(symbol,event):
     localComponent = symbol.getComponent()
     targetDevice = localComponent.getSymbolByID("DEVICE_NAME").getValue()
     surfaceEnabled = localComponent.getSymbolByID("ENABLE_SURFACE").getValue()
-    nodeCount = qtouchInst['target_deviceInst'].getMutualCount()
+    nodeCount = localComponent.getSymbolByID("TOUCH_CHAN_ENABLE_CNT").getValue()
 
     if qtouchInst['boostModeInst'].getBoostSupported(targetDevice):
         print("Entering ProcessBoostmode")

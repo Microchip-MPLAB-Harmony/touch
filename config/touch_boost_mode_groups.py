@@ -176,7 +176,7 @@ class classTouchBoostModeGroups():
         localComponent = symbol.getComponent()
         touchSenseTechnology = localComponent.getSymbolByID("SENSE_TECHNOLOGY").getValue()
         surfaceEnabled = localComponent.getSymbolByID("ENABLE_SURFACE").getValue()
-        
+        lump_config = localComponent.getSymbolByID("LUMP_CONFIG").getValue()
 
         if (self.getBoostSupported(targetDevice)):
             # maximum number of boost mode group is limited to 32 in the script
@@ -264,6 +264,27 @@ class classTouchBoostModeGroups():
                 dgain.append(tempSymbol.getValue())
                 tempSymbol = localComponent.getSymbolByID("DEF_DIGI_FILT_OVERSAMPLING"+str(channel_num))
                 filterlevel.append(tempSymbol.getValue())
+
+            if lump_config != "":
+                LUMP_INDI = lump_config.split(";")
+                LUMP_NUM = len(LUMP_INDI)
+                for length in range(LUMP_NUM):
+                    currLump = LUMP_INDI[length]
+                    channelnum = int(currLump.split(":")[0])
+                    whichChannels = currLump.split(":")[1].split(",")
+                    tempx = []
+                    tempy = []
+                    for jj in [int(i) for i in whichChannels]:
+                        if x_lines[jj] not in tempx:
+                            tempx.append(x_lines[jj])
+                        if y_lines[jj] not in tempy:
+                            tempy.append(y_lines[jj])
+                    if len(tempy) == 1:
+                        y_lines[channelnum] = tempy[0]
+                    else:
+                        y_lines[channelnum] = tempy
+                    x_lines[channelnum] = tempx
+
 
             if surface_enabled == True:
                 for channel_num in range(0, touchNumChannel):
@@ -371,10 +392,16 @@ class classTouchBoostModeGroups():
                 if j < touch4pMaxGroup:
                     temp_string = "{ "
                     for i in x_lines_group_of_4[j]:
-                        if i != "X_NONE":
+                        if isinstance(i, list): #lump
                             key_to_node_map.insert(key_to_node_map_temp[node_count], node_count+x_none_cnt)
                             node_count = node_count + 1
-                            temp_string = temp_string + 'X(' + str(i) + '),'
+                            for eachI in i:
+                                temp_string = temp_string + 'X(' + str(eachI) + ')|'
+                            temp_string = temp_string[:-1] +","
+                        elif i != "X_NONE":
+                                key_to_node_map.insert(key_to_node_map_temp[node_count], node_count+x_none_cnt)
+                                node_count = node_count + 1
+                                temp_string = temp_string + 'X(' + str(i) + '),'
                         else:
                             x_none_cnt = x_none_cnt + 1
                             temp_string = temp_string + "X_NONE,"
@@ -390,7 +417,13 @@ class classTouchBoostModeGroups():
                     temp_string = tempSymbol.getValue()
                     if temp_string != "":
                         temp_string = temp_string + '+'
-                    temp_string = temp_string + 'Y('+str(y_lines_group_of_4[j])+')'
+                    current_y = y_lines_group_of_4[j]
+                    if isinstance(current_y, list):
+                        for eachI in current_y:
+                            temp_string = temp_string + 'Y(' + str(eachI) + ')|'
+                        temp_string = temp_string[:-1]
+                    else:
+                        temp_string = temp_string + 'Y('+str(y_lines_group_of_4[j])+')'
                     tempSymbol.setValue(temp_string)
 
                     tempSymbol = localComponent.getSymbolByID("MUTL_4P_CSD")
@@ -451,3 +484,4 @@ class classTouchBoostModeGroups():
                     temp_string = temp_string + ',' + str(i)
             tempSmbol = localComponent.getSymbolByID("MUTL_4P_NODE_KEY_MAP")
             tempSmbol.setValue(temp_string)
+            
