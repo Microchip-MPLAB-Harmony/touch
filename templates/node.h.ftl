@@ -1,4 +1,5 @@
 <#assign pic_devices = ["PIC32MZW","PIC32MZDA"]>
+<#assign device_allpins_xy = ["PIC32CMLS00","PIC32CMLE00","SAML10","SAML11","SAME54","SAME53","SAME51","SAMD51"]>
 <#macro nodeComponent>
 <#assign CSD = 0>
 <#list ["PIC32CMLS00","PIC32CMLE00","SAML10","SAML11","SAML22","SAMC20","SAMC21","SAME54","SAME53","SAME51","SAMD51","PIC32MZW","PIC32MZDA"] as csdSupported>
@@ -70,7 +71,7 @@
                     <#lt>   ${.vars["MUTL-X-INPUT_" + i]}, ${.vars["SELFCAP-INPUT_" + i]}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]},${.vars["DEF_NOD_PTC_PRESCALER" + i]}, NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), ${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
                     <#lt>}
         <#else>
-            <#if  DEVICE_NAME == "SAML10" || DEVICE_NAME == "SAML11" || DEVICE_NAME =="PIC32CMLS00"|| DEVICE_NAME =="PIC32CMLE00" >
+            <#if  device_allpins_xy?seq_contains(DEVICE_NAME) && (ENABLE_SURFACE == true)>
                     <#if (i < VERT_START_KEY) || (i >= (HORI_NUM_KEY + HORI_START_KEY)) >
                 <#lt>#define NODE_${i}_PARAMS                                                                                               \
                 <#lt>{                                                                                                                  \

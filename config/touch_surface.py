@@ -5,7 +5,7 @@ MHC Python Interface documentation website <http://confluence.microchip.com/disp
 class classTouchSurface():
     def __init__(self, node_inst):
         self.nodeInst = node_inst
-        self.surface_rearrangement_macro = set(["SAML10","SAML1xE","SAML11","PIC32CMLE00","PIC32CMLS00"])
+        self.surface_rearrangement_macro = set(["SAML10","SAML1xE","SAML11","PIC32CMLE00","PIC32CMLS00","SAME54","SAME53","SAME51","SAMD51"])
 
     def initSurfaceInstance(self,qtouchComponent, parentLabel , targetDevice, touchKeyCountMax):
         """Initialise Surface Instance
