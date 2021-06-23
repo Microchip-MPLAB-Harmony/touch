@@ -27,6 +27,12 @@ class classTouchSurface():
         surfaceMenu.setDescription("Configure Surface")
         surfaceMenu.setVisible(False)
 
+        if targetDevice in self.surface_rearrangement_macro:
+            touchChSurafceX = qtouchComponent.createStringSymbol("TOUCH_CH_SURFACE_X_LINES", surfaceMenu)
+            touchChSurafceX.setVisible(True)
+            touchChSurafceY = qtouchComponent.createStringSymbol("TOUCH_CH_SURFACE_Y_LINES", surfaceMenu)
+            touchChSurafceY.setVisible(True)
+
         enableSurface1T = qtouchComponent.createBooleanSymbol("ENABLE_SURFACE1T", surfaceMenu)
         self.setEnableSurface1TValues(enableSurface1T)
         enableSurface2T = qtouchComponent.createBooleanSymbol("ENABLE_SURFACE2T", surfaceMenu)
@@ -364,24 +370,14 @@ class classTouchSurface():
         targetDevice = localComponent.getSymbolByID("DEVICE_NAME").getValue()
 
         if self.getSurfaceRearrangeRequired(targetDevice) and (touchSenseTechnology == 1) and (surfaceEnabled == True):
-            x_append_x_x = []
-            x_append_x_y = []
-            y_append_y_x = []
-            y_append_y_y = []
-            list_x = []
-            list_y = []
+            output_x = []
+            output_y = []
             y_surface = []
             x_surface = []
-            y_append = []
-            x_append = []
             HORI_START_KEY1 = localComponent.getSymbolByID("HORI_START_KEY").getValue()
-            # HORI_START_KEY1 = horiStartKey.getValue() 
             HORI_NUM_KEY1 = localComponent.getSymbolByID("HORI_NUM_KEY").getValue()
-            # HORI_NUM_KEY1 = horiNumKey.getValue()
             VERT_START_KEY1 = localComponent.getSymbolByID("VERT_START_KEY").getValue()
-            # VERT_START_KEY1 = vertStartKey.getValue()
             VERT_NUM_KEY1 = localComponent.getSymbolByID("VERT_NUM_KEY").getValue()
-            # VERT_NUM_KEY1 = vertNumKey.getValue()
 
             for i in range(HORI_START_KEY1,(HORI_START_KEY1+HORI_NUM_KEY1)):
                 tempSymbol = localComponent.getSymbolByID("MUTL-X-INPUT_"+ str(i))
@@ -392,48 +388,23 @@ class classTouchSurface():
                 y_surface.append(tempSymbol.getValue())
             len_x = len(x_surface)
             len_y = len(y_surface)
-            x_append1 = []
-            y_append = []
-            for i in range(len_x):
-                temp_symbol_x_y = 'Y('+str(x_surface[i])+')'
-                temp_symbol_x_x = 'X('+str(x_surface[i])+')'
-                x_append_x_y.append(temp_symbol_x_y)
-                x_append_x_x.append(temp_symbol_x_x)
-            x_append1 = "|".join(x_append_x_x)
-            for j in range(len_y):
-                temp_symbol1_y_x = 'X(' +str(y_surface[j])+ ')'
-                temp_symbol1_y_y = 'Y(' +str(y_surface[j])+ ')'
-                y_append_y_x.append(temp_symbol1_y_x)
-                y_append_y_y.append(temp_symbol1_y_y)
-            y_append1 = "|".join(y_append_y_x)
-            for item in range(len_y):
-                if (temp_symbol1_y_x != ""):
-                    temp_symbol1_y_x = y_append1
-                    if item < len_y-1:
-                        temp_symbol1_y_x = temp_symbol1_y_x +'+'
-                    list_y.append(temp_symbol1_y_x)
-            list_y= ''.join(list_y)
-            for item1 in range(len_x):
-                if (temp_symbol_x_x != ""):
-                    temp_symbol_x_x= x_append1
-                    if item1 < len_x-1:
-                        temp_symbol_x_x = temp_symbol_x_x +'+'
-                    list_x.append(temp_symbol_x_x)
-            list_x= ''.join(list_x)
-            list_y = list_y + '+'
-            list_y = ''.join(list_y)
-            list_x = list_x + str('+')
-            list_x = list_x + list_y
-            list_x = list_x[:-1]
-            y_append_y_y = "+".join(y_append_y_y)
-            x_append_x_y = "+".join(x_append_x_y)
-            y_append_y_y = y_append_y_y + '+'
-            y_append_y_y = y_append_y_y + x_append_x_y
+
+            x_lump = []
+            y_lump = []
+            for x in x_surface:
+                x_lump.append('X('+str(x)+')')
+            for y in y_surface:
+                y_lump.append('X('+str(y)+')')
+            for y in range(len_y):
+                output_y.append('Y('+str(y_surface[y])+')')
+                output_x.append("|".join(x_lump))
+            for x in range(len_x):
+                output_y.append('Y('+str(x_surface[x])+')')
+                output_x.append("|".join(y_lump))
+
             tempSymbol = localComponent.getSymbolByID("TOUCH_CH_SURFACE_X_LINES")
-            temp_string = tempSymbol.getValue()
-            temp_string = list_x
+            temp_string = "+".join(output_x)
             tempSymbol.setValue(temp_string)
             tempSymbol = localComponent.getSymbolByID("TOUCH_CH_SURFACE_Y_LINES")
-            temp_string = tempSymbol.getValue()
-            temp_string = y_append_y_y
+            temp_string = "+".join(output_y)
             tempSymbol.setValue(temp_string)
