@@ -7,8 +7,9 @@ class classTouchPads():
     def collectPadInfo(self,ATDF):
         self.pads = {}
         self.touchPads = {}
-        pinNode = ATDF.getNode("/avr-tools-device-file/pinouts/pinout")
-
+        #pinNode = ATDF.getNode("/avr-tools-device-file/pinouts/pinout")
+        pinOuts = ATDF.getNode("/avr-tools-device-file/pinouts")
+        pinNode = pinOuts.getChildren()[len(pinOuts.getChildren())-1]
         if pinNode != None:
             pinValues = []
             pinValues = pinNode.getChildren()
