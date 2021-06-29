@@ -39,7 +39,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 *******************************************************************************/
 #ifndef TOUCH_H
 #define TOUCH_H
-
+<#if TOUCH_CHAN_ENABLE_CNT == 0>
+#error "Number of Touch sensor is defined as ZERO. Include atleast one touch sensor or remove Touch library in MHC."
+<#else>
 #include "device.h"
 
 <#assign pic_devices = ["PIC32MZW","PIC32MZDA"]>
@@ -560,3 +562,4 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #endif
 // DOM-IGNORE-END
 #endif // TOUCH_H
+</#if>

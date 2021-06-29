@@ -39,6 +39,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
 
+<#if TOUCH_CHAN_ENABLE_CNT == 0>
+#error "Number of Touch sensor is defined as ZERO. Include atleast one touch sensor or remove Touch library in MHC."
+<#else>
 <#import "/eventlowpower.ftl" as eventlp>
 <#import "/softwarelowpower.ftl" as softwarelp>
 <#assign sam_e5x_devices = ["SAME54","SAME53","SAME51","SAMD51"]>
@@ -1571,5 +1574,6 @@ void PTC_Handler(void)
 </#if>
 </#if>
 }
+</#if>
 </#if>
 </#if>

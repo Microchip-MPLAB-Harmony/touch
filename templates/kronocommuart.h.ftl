@@ -41,6 +41,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #ifndef UART_H_
 #define UART_H_
 
+<#if TOUCH_SERCOM_KRONO_INSTANCE == "">
+#warning "UART to send touch debug data is not defined. Connect UART to Touch library in MHC."
+<#else>
 #include "definitions.h"                // SYS function prototypes
 #include "touch/touch.h"
 #include "touch/datastreamer/kronocommadaptor.h"
@@ -86,3 +89,4 @@ typedef enum {
 #define COMMAND_INFO_PC_TO_MCU 0x80
 
 #endif /* UART_H_ */
+</#if>

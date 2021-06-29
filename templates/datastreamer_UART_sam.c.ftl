@@ -136,12 +136,16 @@ Notes  :
 ============================================================================*/
 void datastreamer_transmit(uint8_t data_byte)
 {
+	<#if TOUCH_SERCOM_INSTANCE != "">
 	<#if DEVICE_NAME == "PIC32MZDA">
 	uint32_t delay = 50000;
 	while(delay--);
 	</#if>
 	/* Write the data bye */
    ${.vars["${TOUCH_SERCOM_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Write(&data_byte, 1);
+   <#else>
+   #warning "UART to send touch debug data is not defined. Connect UART to Touch library in MHC."
+   </#if>
 }
 
 /*============================================================================

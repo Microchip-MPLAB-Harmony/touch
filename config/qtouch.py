@@ -99,7 +99,7 @@ def onAttachmentDisconnected(source, target):
 
     if (connectID == "Touch_timer"):
         plibUsed = localComponent.getSymbolByID("TOUCH_TIMER_INSTANCE")
-        plibUsed.clearValue()    
+        plibUsed.clearValue()
     if (connectID == "Touch_sercom"):
         plibUsed = localComponent.getSymbolByID("TOUCH_SERCOM_INSTANCE")
         plibUsed.clearValue()
@@ -331,6 +331,18 @@ def onGenerate(symbol,event):
     targetDevice = localComponent.getSymbolByID("DEVICE_NAME").getValue()
     surfaceEnabled = localComponent.getSymbolByID("ENABLE_SURFACE").getValue()
     nodeCount = localComponent.getSymbolByID("TOUCH_CHAN_ENABLE_CNT").getValue()
+    sercom = localComponent.getSymbolByID("TOUCH_SERCOM_INSTANCE").getValue()
+    timer = localComponent.getSymbolByID("TOUCH_TIMER_INSTANCE").getValue()
+
+    if int(nodeCount) == 0:
+        Log.writeErrorMessage("Touch Error: Number of sensor is ZERO")
+    if sercom == "":
+        dv = localComponent.getSymbolByID("ENABLE_DATA_STREAMER").getValue()
+        krono = localComponent.getSymbolByID("ENABLE_KRONOCOMM").getValue()
+        if krono or dv:
+            Log.writeErrorMessage("Touch Error: UART not connected")
+    if timer == "":
+        Log.writeErrorMessage("Touch Error: TIMER not connected")
 
     if qtouchInst['boostModeInst'].getBoostSupported(targetDevice):
         print("Entering ProcessBoostmode")

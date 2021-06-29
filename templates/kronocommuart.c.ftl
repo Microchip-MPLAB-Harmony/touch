@@ -42,6 +42,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include "touch/datastreamer/KronoCommuart_sam.h"
 #include "definitions.h"
 
+<#if TOUCH_SERCOM_KRONO_INSTANCE == "">
+#warning "UART to send touch debug data is not defined. Connect UART to Touch library in MHC."
+<#else>
 #if KRONOCOMM_UART == 1u
 
 extern struct io_descriptor *uart_io_ptr;
@@ -324,3 +327,5 @@ void krono_rx_complete_callback(uintptr_t usart_ptr)
 }
 
 #endif
+
+</#if>
