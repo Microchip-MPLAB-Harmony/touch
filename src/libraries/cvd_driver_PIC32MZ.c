@@ -1070,7 +1070,7 @@ void qtm_pic32_cvdDMA_handler_eoc(DMAC_TRANSFER_EVENT event, uintptr_t contextHa
 
     /* turn off the CVD sequence and ADC */
     #if ENABLE_DRIVEN_SHIELD == 1u
-    TMR_Stop(3);
+    TMR_Stop(TOUCH_OC_TIMER_INDEX);
     OCMP_Disable(TOUCH_OC_INDEX);
     #endif
     ADCCON3bits.DIGEN7 = 0U;
