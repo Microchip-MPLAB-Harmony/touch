@@ -143,6 +143,12 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice in ["PIC32CMLE00","PIC32CMLS00"]):
             touchAcqLibraryFile.setSourcePath("/src/libraries/qtm_acq_pic32cm_le_0x0040.X.a")
             touchAcqLibraryFile.setOutputName("qtm_acq_pic32cm_le_0x0040.X.a")
+        elif(targetDevice == "SAML21"):
+            touchAcqLibraryFile.setSourcePath("/src/libraries/qtm_acq_saml21_0x0026.X.a")
+            touchAcqLibraryFile.setOutputName("qtm_saml21_acq_0x0026.X.a")
+        elif(targetDevice == "SAML22"):
+            touchAcqLibraryFile.setSourcePath("/src/libraries/qtm_acq_saml22_0x0028.X.a")
+            touchAcqLibraryFile.setOutputName("qtm_acq_saml22_0x0028.X.a")
         else:
             touchAcqLibraryFile.setSourcePath("Error_setAcquisitionLibraryFile")
             touchAcqLibraryFile.setOutputName("Error_setAcquisitionLibraryFile")
@@ -215,6 +221,12 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice in ["PIC32CMLE00","PIC32CMLS00"]):
             touchAcqAutoLibraryFile.setSourcePath("/src/libraries/qtm_acq_pic32cm_le_0x0040.X.a")
             touchAcqAutoLibraryFile.setOutputName("qtm_acq_pic32cm_le_0x0040.X.a")
+        elif(targetDevice == "SAML21"):
+            touchAcqAutoLibraryFile.setSourcePath("/src/libraries/qtm_saml21_acq_0x0026.X.a")
+            touchAcqAutoLibraryFile.setOutputName("qtm_acq_saml21_0x0026.X.a")
+        elif(targetDevice == "SAML22"):
+            touchAcqAutoLibraryFile.setSourcePath("/src/libraries/qtm_acq_saml22_0x0028.X.a")
+            touchAcqAutoLibraryFile.setOutputName("qtm_acq_saml22_0x0028.X.a")
         else:
             touchAcqAutoLibraryFile.setOutputName("Error_setAutoAcquisitionLibraryFile")
             touchAcqAutoLibraryFile.setOutputName("Error_setAutoAcquisitionLibraryFile")
@@ -233,7 +245,7 @@ class classTouchAcquisitionSourceFiles():
         touchBindLibraryFile.setDestPath("/touch/lib/")
         touchBindLibraryFile.setEnabled(False)
 
-        if (targetDevice in set(["SAMC21","SAMC20","SAMD10","SAMD11","SAMD20","SAMD21","SAMDA1","SAMHA1"]) ):
+        if (targetDevice in set(["SAMC21","SAMC20","SAMD10","SAMD11","SAMD20","SAMD21","SAMDA1","SAMHA1","SAML21","SAML22"]) ):
             touchBindLibraryFile.setSourcePath("/src/libraries/qtm_binding_layer_cm0p_0x0005.X.a")
             touchBindLibraryFile.setOutputName("qtm_binding_layer_cm0p_0x0005.X.a")
         elif(targetDevice in set(["SAMD51","SAME51","SAME53","SAME54"])):
@@ -307,6 +319,12 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice in ["PIC32CMLE00","PIC32CMLS00"]):
             touchAcqHeaderFile.setSourcePath("/src/qtm_acq_pic32cm_le_0x0040_api.h")
             touchAcqHeaderFile.setOutputName("qtm_acq_pic32cm_le_0x0040_api.h")
+        elif(targetDevice == "SAML21"):
+            touchAcqHeaderFile.setSourcePath("/src/qtm_acq_saml21_0x0026_api.h")
+            touchAcqHeaderFile.setOutputName("qtm_acq_saml21_0x0026_api.h")
+        elif(targetDevice == "SAML22"):
+            touchAcqHeaderFile.setSourcePath("/src/qtm_acq_saml22_0x0028_api.h")
+            touchAcqHeaderFile.setOutputName("qtm_acq_saml22_0x0028_api.h")
         else:
             touchAcqHeaderFile.setSourcePath("Error_setAcqHeaderFile")
             touchAcqHeaderFile.setOutputName("Error_setAcqHeaderFile")
