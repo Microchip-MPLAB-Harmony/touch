@@ -294,27 +294,27 @@ def updatePinsSettings(symbol,event):
     for pad in touchPads:
         setting = touchPads[pad]
         value = Database.getSymbolValue("core", "PIN_"+setting["index"]+"_FUNCTION_TYPE")
-            Database.setSymbolValue("core", "PIN_"+setting["index"]+"_FUNCTION_TYPE", "")
+        Database.setSymbolValue("core", "PIN_"+setting["index"]+"_FUNCTION_TYPE", "")
     activePds = set()
     count = component.getSymbolByID("TOUCH_CHAN_ENABLE_CNT").getValue()
     for i in range(count):
         if "SELF" in symbol.getID():
             signalSymbol = component.getSymbolByID("SELFCAP-INPUT_"+str(i))
             if signalSymbol.getValue() != -1:
-            padDesc = signalSymbol.getKeyDescription(signalSymbol.getValue())
-            padName = padDesc[padDesc.index("(")+1:padDesc.index(")")]
+                padDesc = signalSymbol.getKeyDescription(signalSymbol.getValue())
+                padName = padDesc[padDesc.index("(")+1:padDesc.index(")")]
             activePds.add(padName)
         if "MUTL" in symbol.getID():
             signalSymbol = component.getSymbolByID("MUTL-X-INPUT_"+str(i))
             if signalSymbol.getValue() != -1:
-            padDesc = signalSymbol.getKeyDescription(signalSymbol.getValue())
-            padName = padDesc[padDesc.index("(")+1:padDesc.index(")")]
-            activePds.add(padName)
-            signalSymbol = component.getSymbolByID("MUTL-Y-INPUT_"+str(i))
+                padDesc = signalSymbol.getKeyDescription(signalSymbol.getValue())
+                padName = padDesc[padDesc.index("(")+1:padDesc.index(")")]
+                activePds.add(padName)
+                signalSymbol = component.getSymbolByID("MUTL-Y-INPUT_"+str(i))
             if signalSymbol.getValue() != -1:
-            padDesc = signalSymbol.getKeyDescription(signalSymbol.getValue())
-            padName = padDesc[padDesc.index("(")+1:padDesc.index(")")]
-            activePds.add(padName)
+                padDesc = signalSymbol.getKeyDescription(signalSymbol.getValue())
+                padName = padDesc[padDesc.index("(")+1:padDesc.index(")")]
+                activePds.add(padName)
     for pad in activePds:
         setting = touchPads[pad]
         Database.setSymbolValue("core", "PIN_"+setting["index"]+"_FUNCTION_TYPE", setting["function"])
