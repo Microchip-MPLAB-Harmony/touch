@@ -15,6 +15,8 @@ class classTouchQTouch():
         fileList.append(self.setTouchHeaderFile(configName, qtouchComponent))
         fileList.append(self.setTouchAPIHeaderFile(configName, qtouchComponent))
         fileList.append(self.setTouchSourceFile(configName, qtouchComponent))
+        fileList.append(self.setTouchExampleFile(configName, qtouchComponent))
+        fileList.append(self.setTouchExampleHeaderFile(configName, qtouchComponent))
         fileList.append(self.setPTCSystemInitFile(configName, qtouchComponent))
         fileList.append(self.setPTCSystemDefFile(configName, qtouchComponent))
         if(useTrustZone == False):
@@ -54,6 +56,40 @@ class classTouchQTouch():
         touchAPIHeaderFile.setType("HEADER")
         touchAPIHeaderFile.setMarkup(True)
         return touchAPIHeaderFile
+
+    def setTouchExampleFile(self,configName, qtouchComponent):
+        """
+        Generates touch source file
+            :configName : see Variables.get("__CONFIGURATION_NAME")  on MHC api documentation <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
+            :qtouchComponent : touchModule
+        Returns:
+            file symbol
+        """
+        touchExampleFile = qtouchComponent.createFileSymbol("TOUCH_EXAMPLE_SOURCE", None)
+        touchExampleFile.setSourcePath("/templates/touch_example.c.ftl")
+        touchExampleFile.setOutputName("touch_example.c")
+        touchExampleFile.setDestPath("/touch/")
+        touchExampleFile.setProjectPath("config/" + configName +"/touch/")
+        touchExampleFile.setType("SOURCE")
+        touchExampleFile.setMarkup(True)
+        return touchExampleFile
+
+    def setTouchExampleHeaderFile(self,configName, qtouchComponent):
+        """
+        Generates touch header file
+            :configName : see Variables.get("__CONFIGURATION_NAME")  on MHC api documentation <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
+            :qtouchComponent : touchModule
+        Returns:
+            file symbol
+        """
+        touchExampleHeaderFile = qtouchComponent.createFileSymbol("TOUCH_EXAMPLE_HEADER", None)
+        touchExampleHeaderFile.setSourcePath("/templates/touch_example.h.ftl")
+        touchExampleHeaderFile.setOutputName("touch_example.h")
+        touchExampleHeaderFile.setDestPath("/touch/")
+        touchExampleHeaderFile.setProjectPath("config/" + configName + "/touch/")
+        touchExampleHeaderFile.setType("HEADER")
+        touchExampleHeaderFile.setMarkup(True)
+        return touchExampleHeaderFile
 
     def setTouchSourceFile(self,configName, qtouchComponent):
         """

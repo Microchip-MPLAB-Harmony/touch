@@ -104,7 +104,7 @@ static void qtm_error_callback(uint8_t error);
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
 <#if no_standby_during_measurement == 1>
-static uint8_t measurement_in_progress = 0u;
+uint8_t measurement_in_progress = 0u;
 </#if>
 /* low power processing function */
 static void touch_process_lowpower(void);
@@ -874,25 +874,6 @@ void touch_process(void)
             </#if>
         }
     }
-<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>
-<#if no_standby_during_measurement == 1 >
-#if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
-    if ((time_to_measure_touch_var != 1u)) {
-        if(measurement_in_progress == 0u) {
-            PM_StandbyModeEnter();
-        } else {
-            PM_IdleModeEnter();
-        }
-    }
-#endif
-<#else>
-#if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
-        if ((time_to_measure_touch_var != 1u)) {
-            PM_StandbyModeEnter();
-        }
-#endif
-</#if>
-</#if>
 
 <#if ENABLE_KRONOCOMM = true>
 #if KRONOCOMM_ENABLE == 1u
