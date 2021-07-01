@@ -53,7 +53,7 @@
 <#-- =======================================SAMD21============================================= -->
 
 <#macro lowpwer_disableevsys_samd20_d21_no_evs>
-    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    while((RTC_REGS->MODE0.RTC_STATUS & RTC_STATUS_SYNCBUSY_Msk) == RTC_STATUS_SYNCBUSY_Msk)
     {
         /* Wait for Synchronization after writing value to Count Register */
     }
@@ -66,7 +66,7 @@
 </#macro>
 
 <#macro lowpwer_enableevsys_samd20_d21_no_evs>
-    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    while((RTC_REGS->MODE0.RTC_STATUS & RTC_STATUS_SYNCBUSY_Msk) == RTC_STATUS_SYNCBUSY_Msk)
     {
         /* Wait for Synchronization after writing value to Count Register */
     }
@@ -81,7 +81,7 @@
 
 
 <#macro lowpwer_disable_samd1x_no_evs>
-    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    while((RTC_REGS->MODE0.RTC_STATUS & RTC_MODE0_COUNT_COUNT_Msk) == RTC_MODE0_COUNT_COUNT_Msk)
     {
         /* Wait for Synchronization after writing value to Count Register */
     }
@@ -93,7 +93,7 @@
 </#macro>
 
 <#macro lowpwer_enable_samd1x_no_evs>
-    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    while((RTC_REGS->MODE0.RTC_STATUS & RTC_MODE0_COUNT_COUNT_Msk) == RTC_MODE0_COUNT_COUNT_Msk)
     {
         /* Wait for Synchronization after writing value to Count Register */
     }

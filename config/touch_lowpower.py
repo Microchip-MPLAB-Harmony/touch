@@ -16,6 +16,9 @@ class classTouchLP():
             "SAME54","SAME53","SAME51","SAMD51",
             "SAML21","SAML22",
             "SAMD10","SAMD11"]
+        self.symbolList = []
+        self.depFuncName = []
+        self.dependencies = []
 
     def lowPowerEventsSupported(self,targetDevice):
         """
@@ -39,6 +42,14 @@ class classTouchLP():
         else:
             return False
 
+    def addDepSymbol(self, symbol, func, depen):
+        self.symbolList.append(symbol)
+        self.depFuncName.append(func)
+        self.dependencies.append(depen)
+
+    def getDepDetails(self):
+        return self.symbolList, self.depFuncName, self.dependencies
+
     def initLowPowerInstance(self,qtouchComponent, parentLabel , targetDevice):
         """
         Creates Low power menu and variables
@@ -58,7 +69,7 @@ class classTouchLP():
         
         self.setLowPowerKeyValues(qtouchComponent,LowPowerEvntMenu)
         self.setLowPowerDetThreshold(qtouchComponent,LowPowerEvntMenu)
-        #self.setLowPowerPeriod(qtouchComponent,LowPowerEvntMenu,targetDevice)
+        self.setLowPowerPeriod(qtouchComponent,LowPowerEvntMenu,targetDevice)
         self.setLowPowerTriggerPeriod(qtouchComponent,LowPowerEvntMenu)
         self.setTouchInactivityTime(qtouchComponent,LowPowerEvntMenu)
         self.setDriftPeriod(qtouchComponent,LowPowerEvntMenu)
@@ -77,7 +88,7 @@ class classTouchLP():
         lowPowerKey.setLabel("Low-power Keys Selection")
         lowPowerKey.setDefaultValue("")
         lowPowerKey.setDescription("Series of low-power key numbers separated by ,")
-        lowPowerKey.setDependencies(self.enablePM,["LOW_POWER_KEYS"])
+        self.addDepSymbol(lowPowerKey, "enablePM", ["LOW_POWER_KEYS"])
 
     def setLowPowerDetThreshold(self,qtouchComponent,LowPowerEvntMenu):
         """ Populates the low Power Detect threshold
@@ -220,26 +231,3 @@ class classTouchLP():
             lp_mask_of_8.append(hex(sum))
         tempSymbol = localComponent.getSymbolByID("LOW_POWER_KEYS_MASK")
         tempSymbol.setValue(",".join(lp_mask_of_8))
-        
-    def enablePM(self,symbol,event):
-        """Event Handler enabling low power mode, updates pm and supc as required by targetDevice
-        Arguments:
-            :symbol : the symbol that triggered the callback
-            :event : the new value. 
-        Returns:
-            :none
-        """
-        localComponent = symbol.getComponent()
-        targetDevice = localComponent.getSymbolByID("DEVICE_NAME").getValue()
-        lowPowerKey = localComponent.getSymbolByID("LOW_POWER_KEYS").getValue()
-        pmComponentID = ["pm"]
-        supcComponentID = ["supc"]
-        if(lowPowerKey != ""):
-            Database.activateComponents(pmComponentID)
-            if (targetDevice in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]):
-                Database.activateComponents(supcComponentID)
-        else:
-            if(targetDevice in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]):
-                Database.deactivateComponents(supcComponentID)
-            if(targetDevice not in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]):
-                Database.deactivateComponents(pmComponentID)

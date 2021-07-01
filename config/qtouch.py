@@ -248,6 +248,8 @@ def qtouchSetDependencies(symbol, func, dependency):
             sym.setDependencies(onPic32mzdaChange, dependency[i])
         elif(func[i] == "updatePinsSettings"):
             sym.setDependencies(updatePinsSettings, dependency[i])
+        elif(func[i] == "enablePM"):
+            sym.setDependencies(enablePM, dependency[i])
 
 def processLump(symbol, event, targetDevice):
     """Handler for lump mode support menu click event. 
@@ -292,22 +294,24 @@ def updatePinsSettings(symbol,event):
     for pad in touchPads:
         setting = touchPads[pad]
         value = Database.getSymbolValue("core", "PIN_"+setting["index"]+"_FUNCTION_TYPE")
-        if touchModule in value:
             Database.setSymbolValue("core", "PIN_"+setting["index"]+"_FUNCTION_TYPE", "")
     activePds = set()
     count = component.getSymbolByID("TOUCH_CHAN_ENABLE_CNT").getValue()
     for i in range(count):
         if "SELF" in symbol.getID():
             signalSymbol = component.getSymbolByID("SELFCAP-INPUT_"+str(i))
+            if signalSymbol.getValue() != -1:
             padDesc = signalSymbol.getKeyDescription(signalSymbol.getValue())
             padName = padDesc[padDesc.index("(")+1:padDesc.index(")")]
             activePds.add(padName)
         if "MUTL" in symbol.getID():
             signalSymbol = component.getSymbolByID("MUTL-X-INPUT_"+str(i))
+            if signalSymbol.getValue() != -1:
             padDesc = signalSymbol.getKeyDescription(signalSymbol.getValue())
             padName = padDesc[padDesc.index("(")+1:padDesc.index(")")]
             activePds.add(padName)
             signalSymbol = component.getSymbolByID("MUTL-Y-INPUT_"+str(i))
+            if signalSymbol.getValue() != -1:
             padDesc = signalSymbol.getKeyDescription(signalSymbol.getValue())
             padName = padDesc[padDesc.index("(")+1:padDesc.index(")")]
             activePds.add(padName)
@@ -358,6 +362,29 @@ def onGenerate(symbol,event):
     
     if (qtouchInst['lowpowerInst'].lowPowerSupported(targetDevice)):
         qtouchInst['lowpowerInst'].processSoftwareLP(symbol,event)
+
+def enablePM(symbol,event):
+        """Event Handler enabling low power mode, updates pm and supc as required by targetDevice
+        Arguments:
+            :symbol : the symbol that triggered the callback
+            :event : the new value. 
+        Returns:
+            :none
+        """
+        localComponent = symbol.getComponent()
+        targetDevice = localComponent.getSymbolByID("DEVICE_NAME").getValue()
+        lowPowerKey = localComponent.getSymbolByID("LOW_POWER_KEYS").getValue()
+        pmComponentID = ["pm"]
+        supcComponentID = ["supc"]
+        if(lowPowerKey != ""):
+            Database.activateComponents(pmComponentID)
+            if (targetDevice in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]):
+                Database.activateComponents(supcComponentID)
+        else:
+            if(targetDevice in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]):
+                Database.deactivateComponents(supcComponentID)
+            if(targetDevice not in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]):
+                Database.deactivateComponents(pmComponentID)
 
 def onPTCClock(symbol,event):
     """Handler for setGCLKconfig gclkID frequency
@@ -677,6 +704,8 @@ def instantiateComponent(qtouchComponent):
     if (lowpowerInst.lowPowerSupported(device)):
         lowpowerInst.initLowPowerInstance(qtouchComponent, touchMenu, device)
     qtouchInst['lowpowerInst'] = lowpowerInst
+    symbol,func,depen = lowpowerInst.getDepDetails()
+    qtouchSetDependencies(symbol, func, depen)
 
     # ----Datastreamer----
     datastreamerInst = touch_datastreamer.classTouchDataStreamer()

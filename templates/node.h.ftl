@@ -7,6 +7,26 @@
         <#assign CSD = 1>
     </#if>
 </#list>
+
+<#if pic_devices?seq_contains(DEVICE_NAME)>
+/* Defines node parameter setting
+ * {X-line, Y-line, Charge Share Delay, 0, NODE_G(Analog Gain , Digital Gain),
+ * filter level}
+ */
+<#else>
+<#if CSD == 1>
+/* Defines node parameter setting
+ * {X-line, Y-line, Charge Share Delay, NODE_RSEL_PRSC(series resistor, prescaler), NODE_G(Analog Gain , Digital Gain),
+ * filter level}
+ */
+<#else>
+/* Defines node parameter setting
+ * {X-line, Y-line, NODE_RSEL_PRSC, NODE_GAIN(Analog Gain , Digital Gain), filter level}
+ */
+</#if>
+</#if>
+
+
 <#if CSD == 1 && pic_devices?seq_contains(DEVICE_NAME)>
     <@Pic32mzwWithCSD/>
 <#elseif CSD == 1>

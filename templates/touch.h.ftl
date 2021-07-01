@@ -56,7 +56,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 //${DEVICE_NAME}
 <#if pic_devices?seq_contains(DEVICE_NAME)>
 <#else>
-<#if LOW_POWER_KEYS?exists && LOW_POWER_KEYS !=""> <!-- LOW Power -->
+<#if LOW_POWER_KEYS?exists && LOW_POWER_KEYS !="">
     <#import "/eventlowpower.ftl" as eventlp>
     <#import "/softwarelowpower.ftl" as softwarelp>
 </#if>
@@ -144,17 +144,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define DEF_NUM_CHANNELS (${TOUCH_CHAN_ENABLE_CNT})
 </#if>
 
-<#if pic_devices?seq_contains(DEVICE_NAME)>
-/* Defines node parameter setting
- * {X-line, Y-line, Charge Share Delay, 0, NODE_G(Analog Gain , Digital Gain),
- * filter level}
- */
-    <#else>
-/* Defines node parameter setting
- * {X-line, Y-line, Charge Share Delay, NODE_RSEL_PRSC(series resistor, prescaler), NODE_G(Analog Gain , Digital Gain),
- * filter level}
- */
-    </#if>
 <@node.nodeComponent/>
 
 /**********************************************************/
