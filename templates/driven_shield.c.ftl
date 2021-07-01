@@ -96,7 +96,11 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 <#list ["SAMD21", "SAMDA1","SAMHA1"] as i>
 	<#if DEVICE_NAME == i>
+		<#if DEVICE_NAME_SPECIFIC?ends_with("D") >
+		<#assign prescaler_value = "1, 2, 3, 4" >
+		<#else>
 		<#assign prescaler_value = "4, 2, 3, 4" >
+		</#if>
 		<#assign block_transfer_count = "1" >
 		<#assign data_type = "uint8_t" >
 	</#if>
