@@ -277,7 +277,7 @@ def processLump(symbol, event, targetDevice):
 
         if(shieldMode == "hardware"):
             print("shield is hardware")
-            qtouchInst['ds_groupInst'].updateLumpModeDrivenShield(symbol,event,totalChannelCount,lumpFeature)
+            qtouchInst['ds_groupInst'].updateLumpModeDrivenShield(symbol,event,totalChannelCount,lumpSymbol)
 
         if (surfaceEnabled == True):
             if (qtouchInst['surfaceInst'].getSurfaceRearrangeRequired(targetDevice) == False):

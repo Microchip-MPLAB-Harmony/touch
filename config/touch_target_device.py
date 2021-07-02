@@ -64,6 +64,8 @@ class classTouchTargetDevice():
             getModuleID.setDefaultValue("0x000f")
         elif(targetDevice == "SAML10"):
             getModuleID.setDefaultValue("0x0027")
+        elif(targetDevice in ["PIC32CMLE00","PIC32CMLS00"]):
+            getModuleID.setDefaultValue("0x0040")
         elif(targetDevice == "PIC32MZW"):
             getModuleID.setDefaultValue("0x003e")
         elif(targetDevice == "PIC32MZDA"):
@@ -153,7 +155,7 @@ class classTouchTargetDevice():
             clockXml.setDefaultValue("pic32mzda_clock_config")
         elif(targetDevice == "PIC32MZW"):
             clockXml.setDefaultValue("pic32mzw_clock_config")
-        elif(targetDevice == "PIC32CM"):
+        elif(targetDevice in ["PIC32CMLE00","PIC32CMLS00"]):
             clockXml.setDefaultValue("pic32cm_clock_config")
         elif(targetDevice == "SAML22"):
             clockXml.setDefaultValue("l22_clock_config")
@@ -248,7 +250,7 @@ class classTouchTargetDevice():
             :none
         """
         if targetDevice not in self.picDevices:
-            if (targetDevice in set(["SAMC20","SAMC21","SAMD20","SAMD21","SAMHA1","SAMDA1","SAMD10","SAMD11","SAML10","SAML21","SAML22"])):
+            if (targetDevice in set(["SAMC20","SAMC21","SAMD20","SAMD21","SAMHA1","SAMDA1","SAMD10","SAMD11","SAML10","SAML21","SAML22","PIC32CMLE00","PIC32CMLS00"])):
                 Database.clearSymbolValue("core", "PTC_CLOCK_ENABLE")
                 Database.setSymbolValue("core", "PTC_CLOCK_ENABLE", True)
             else:

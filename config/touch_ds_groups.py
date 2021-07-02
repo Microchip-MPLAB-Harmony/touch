@@ -472,12 +472,12 @@ class classTouchDSGroup():
         print("Updating shield lumps")
         component= symbol.getComponent()
         currentVal = int(event['symbol'].getValue())
-        enableDrivenShieldAdjacent = component.getSymbolByID("DS_ADJACENT_SENSE_LINE_AS_SHIELD")
-        enableDrivenShieldDedicated = component.getSymbolByID("DS_DEDICATED_ENABLE")
-        drivenShieldDedicatedPin = component.getSymbolByID("DS_DEDICATED_PIN").getValue()
+        enableDrivenShieldAdjacent = component.getSymbolByID("DS_ADJACENT_SENSE_LINE_AS_SHIELD").getValue()
+        enableDrivenShieldDedicated = component.getSymbolByID("DS_DEDICATED_PIN_ENABLE").getValue()
+        drivenShieldDedicatedPin = component.getSymbolByID("DS_DEDICATED_PIN")
         
-        tchSelfPinSelection = self.nodeInst.getTchSelfPinSelection()
-        tchMutXPinSelection = self.nodeInst.getTchMutXPinSelection()
+#        tchSelfPinSelection = self.nodeInst.getTchSelfPinSelection()
+#        tchMutXPinSelection = self.nodeInst.getTchMutXPinSelection()
 
         for i in range(0,totalChannelCount):
             if((enableDrivenShieldAdjacent == True) or (enableDrivenShieldDedicated == True)):
@@ -496,16 +496,16 @@ class classTouchDSGroup():
                         LUMP_NUM = len(LUMP_INDI)
                         input0 =[]
                         for a in range(0,(totalChannelCount-LUMP_NUM)):
-                            value = tchSelfPinSelection[int(a)].getValue()
-                            input0.append(tchSelfPinSelection[int(a)].getKeyValue(value))
+                            value = self.nodeInst.tchSelfPinSelection[int(a)].getValue()
+                            input0.append(self.nodeInst.tchSelfPinSelection[int(a)].getKeyValue(value))
                         if (i < totalChannelCount-LUMP_NUM):
                             for j in range(0,(totalChannelCount-LUMP_NUM)):
-                                value1 = tchSelfPinSelection[int(i)].getValue()
-                                if ((tchSelfPinSelection[int(i)].getKeyValue(value1)) != input0[j]):
+                                value1 = self.nodeInst.tchSelfPinSelection[int(i)].getValue()
+                                if ((self.nodeInst.tchSelfPinSelection[int(i)].getKeyValue(value1)) != input0[j]):
                                     shieldPins.append(input0[j])
                         else:
-                            LUMP_NODE_VAL = tchSelfPinSelection[int(i)].getValue()
-                            LUMP_NODE_INDI = tchSelfPinSelection[int(i)].getKeyValue(LUMP_NODE_VAL).split("|")
+                            LUMP_NODE_VAL = self.nodeInst.tchSelfPinSelection[int(i)].getValue()
+                            LUMP_NODE_INDI = self.nodeInst.tchSelfPinSelection[int(i)].getKeyValue(LUMP_NODE_VAL).split("|")
                             LUMP_NODE_SIZE = len(LUMP_NODE_INDI)
                             for j in range(0,(totalChannelCount-LUMP_NUM)):
                                 par = 0
@@ -517,8 +517,8 @@ class classTouchDSGroup():
                     else:
                         for j in range(0,totalChannelCount):
                             if (i != j):
-                                shildY = tchSelfPinSelection[int(j)].getValue()
-                                shieldY = tchSelfPinSelection[int(j)].getKeyValue(shildY)
+                                shildY = self.nodeInst.tchSelfPinSelection[int(j)].getValue()
+                                shieldY = self.nodeInst.tchSelfPinSelection[int(j)].getKeyValue(shildY)
                                 shieldPins.append(shieldY)
                                 print ("Adjacent Shield pins = "+ str(shieldPins))
                 if(shieldPins != []):
@@ -527,11 +527,11 @@ class classTouchDSGroup():
                 else:
                     drivenPin = "X_NONE"
                     print ("Drive pins = NONE")
-                tchMutXPinSelection[int(i)].setKeyValue(str(i),drivenPin)
-                tchMutXPinSelection[int(i)].setValue(int(i))
+                self.nodeInst.tchMutXPinSelection[int(i)].setKeyValue(str(i),drivenPin)
+                self.nodeInst.tchMutXPinSelection[int(i)].setValue(int(i))
 
-        self.nodeInst.setTchSelfPinSelection(tchSelfPinSelection)
-        self.nodeInst.setTchMutXPinSelection(tchMutXPinSelection)
+#        self.nodeInst.setTchSelfPinSelection(tchSelfPinSelection)
+#        self.nodeInst.setTchMutXPinSelection(tchMutXPinSelection)
     
     def setDSNodesMenu(self,groupNumber,qtouchComponent,touchMenu,touchChannelMutual,timersSharingPTC, timersSharingPTCMUX):
         """Populate the driven shield settings in the nodes group menus 
