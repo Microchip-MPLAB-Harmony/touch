@@ -69,6 +69,7 @@ class classTouchLP():
         
         self.setLowPowerKeyValues(qtouchComponent,LowPowerEvntMenu)
         self.setLowPowerDetThreshold(qtouchComponent,LowPowerEvntMenu)
+        if (self.lowPowerEventsSupported(targetDevice)):
         self.setLowPowerPeriod(qtouchComponent,LowPowerEvntMenu,targetDevice)
         self.setLowPowerTriggerPeriod(qtouchComponent,LowPowerEvntMenu)
         self.setTouchInactivityTime(qtouchComponent,LowPowerEvntMenu)
@@ -116,7 +117,6 @@ class classTouchLP():
         """
         lowPowerPeriod = qtouchComponent.createKeyValueSetSymbol("LOW_POWER_PERIOD", LowPowerEvntMenu)
         lowPowerPeriod.setLabel("Low-power Measurement Period")
-        if (targetDevice in ["SAMD20","SAMD21","SAMDA1","SAMHA1"]):
             lowPowerPeriod.addKey("NODE_SCAN_4MS", "NODE_SCAN_4MS", "4msec")
             lowPowerPeriod.addKey("NODE_SCAN_8MS", "NODE_SCAN_8MS", "8msec")
             lowPowerPeriod.addKey("NODE_SCAN_16MS", "NODE_SCAN_16MS", "16msec")
