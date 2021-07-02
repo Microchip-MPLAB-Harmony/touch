@@ -60,8 +60,8 @@ class classTouchDSGroup():
             else:
                 dsPins = ptcPininfo[1]
                 for index in range(0, len(dsPins)):
-                    drivenShieldDedicatedPin.addKey("X("+str(index)+")",
-                    str(index),
+                    drivenShieldDedicatedPin.addKey(str(index),
+                    "X("+str(index)+")",
                     "X"+str(index)+"  ("+dsPins[index]+")")
 
         else:

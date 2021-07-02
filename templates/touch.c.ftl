@@ -1499,8 +1499,8 @@ Notes  : none
 void ADC0_1_Handler(void)
 {
     ADC0_REGS->ADC_INTFLAG |=1u;
-    <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
-        <#if DS_DEDICATED_ENABLE == true || DS_PLUS_ENABLE == true>
+<#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
+<#if DS_DEDICATED_ENABLE == true || DS_PLUS_ENABLE == true>
 #if (DEF_ENABLE_DRIVEN_SHIELD == 1u)
 	if (qtm_drivenshield_config.flags & (1u << DRIVEN_SHIELD_DUMMY_ACQ)) {
 		/* Clear the flag */
@@ -1512,12 +1512,10 @@ void ADC0_1_Handler(void)
 #else
 	qtm_same54_ptc_handler();
 #endif
-        <#else>
-    qtm_same54_ptc_handler();
-        </#if>
+<#else>
 	qtm_same54_ptc_handler();
-    </#if>
-    qtm_same54_ptc_handler();
+</#if>
+</#if>
 }
 <#else>
 void PTC_Handler(void)

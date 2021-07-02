@@ -71,7 +71,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 	<#assign block_transfer_count = "8" >
 	<#assign data_type = "uint32_t" >
 <#elseif DEVICE_NAME == "SAML21">
-	<#assign prescaler_value = "1, 3, 2, 3" >
+	<#assign prescaler_value = "0, 3, 2, 3" >
 <#else>
 <#list ["SAME54","SAME53","SAME51","SAMD51"] as i>
 	<#if DEVICE_NAME == i>
@@ -367,6 +367,8 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	<#if DEVICE_VARIANT == "SAMC21N">
 	period = period - 4;
 	count = count - 2;
+	<#elseif (DEVICE_NAME == "SAMC21") || (DEVICE_NAME == "SAMC20")>
+	cc = cc + 3;
 	</#if>
 	</#if>
 	<#break>
