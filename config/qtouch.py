@@ -261,12 +261,11 @@ def processLump(symbol, event, targetDevice):
         :none
     """
     localComponent = symbol.getComponent()
-    touchSenseTechnology = localComponent.getSymbolByID("SENSE_TECHNOLOGY")
-    totalChannelCount = qtouchInst['target_deviceInst'].getMutualCount()
+    touchSenseTechnology = localComponent.getSymbolByID("SENSE_TECHNOLOGY").getSelectedKey()
+    totalChannelCount = localComponent.getSymbolByID("TOUCH_CHAN_ENABLE_CNT").getValue()
     lumpSupported = qtouchInst['target_deviceInst'].getLumpSupported(targetDevice)
     shieldMode = qtouchInst['target_deviceInst'].getShieldMode(targetDevice)
     surfaceEnabled = localComponent.getSymbolByID("ENABLE_SURFACE").getValue()
-    touchtech = str(touchSenseTechnology.getSelectedKey())
     if (lumpSupported ==  True):
         lumpSymbol = localComponent.getSymbolByID("LUMP_CONFIG")
         lumpFeature = localComponent.getSymbolByID("LUMP_CONFIG").getValue()
@@ -274,7 +273,7 @@ def processLump(symbol, event, targetDevice):
         print(lumpFeature)
         if(lumpFeature !=""):
             print("lump is not empty")
-            qtouchInst['node_groupInst'].updateLumpMode(lumpSymbol,touchtech)
+            qtouchInst['node_groupInst'].updateLumpMode(lumpSymbol,touchSenseTechnology)
 
         if(shieldMode == "hardware"):
             print("shield is hardware")

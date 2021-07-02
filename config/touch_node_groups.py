@@ -130,7 +130,7 @@ class classTouchNodeGroups():
                 self.tchMutXPinSelection.append(qtouchComponent.createKeyValueSetSymbol("MUTL-X-INPUT_"+ str(channelID), touchChEnable))
                 self.tchMutYPinSelection.append(qtouchComponent.createKeyValueSetSymbol("MUTL-Y-INPUT_"+ str(channelID), touchChEnable))
                 self.addDepSymbol(self.tchSelfPinSelection[len(self.tchSelfPinSelection)-1], "updatePinsSettings", ["SELFCAP-INPUT_"+ str(channelID)])
-                self.addDepSymbol(self.tchMutXPinSelection[len(self.tchMutYPinSelection)-1], "updatePinsSettings", ["MUTL-X-INPUT_"+ str(channelID)])
+                self.addDepSymbol(self.tchMutXPinSelection[len(self.tchMutXPinSelection)-1], "updatePinsSettings", ["MUTL-X-INPUT_"+ str(channelID)])
                 self.addDepSymbol(self.tchMutYPinSelection[len(self.tchMutYPinSelection)-1], "updatePinsSettings", ["MUTL-Y-INPUT_"+ str(channelID)])
 
                 if(csdMode!="NoCSD"):
@@ -154,7 +154,7 @@ class classTouchNodeGroups():
                 self.tchMutXPinSelection.append(qtouchComponent.createKeyValueSetSymbol("GROUP_"+str(groupNumber)+"_MUTL-X-INPUT_"+ str(channelID), vars()[dynamicTouchChEnable]))
                 self.tchMutYPinSelection.append(qtouchComponent.createKeyValueSetSymbol("GROUP_"+str(groupNumber)+"_MUTL-Y-INPUT_"+ str(channelID), vars()[dynamicTouchChEnable]))
                 self.addDepSymbol(self.tchSelfPinSelection[len(self.tchSelfPinSelection)-1], "updatePinsSettings", ["GROUP_"+str(groupNumber)+"_SELFCAP-INPUT_"+ str(channelID)])
-                self.addDepSymbol(self.tchMutXPinSelection[len(self.tchMutYPinSelection)-1], "updatePinsSettings", ["GROUP_"+str(groupNumber)+"_MUTL-X-INPUT_"+ str(channelID)])
+                self.addDepSymbol(self.tchMutXPinSelection[len(self.tchMutXPinSelection)-1], "updatePinsSettings", ["GROUP_"+str(groupNumber)+"_MUTL-X-INPUT_"+ str(channelID)])
                 self.addDepSymbol(self.tchMutYPinSelection[len(self.tchMutYPinSelection)-1], "updatePinsSettings", ["GROUP_"+str(groupNumber)+"_MUTL-Y-INPUT_"+ str(channelID)])
 
                 #Charge Share Delay
@@ -174,10 +174,10 @@ class classTouchNodeGroups():
             self.tchSelfPinSelection[len(self.tchSelfPinSelection)-1].setLabel("Select Y Pin for Channel "+ str(channelID))
             self.tchSelfPinSelection[len(self.tchSelfPinSelection)-1].setOutputMode("Value")
             self.tchSelfPinSelection[len(self.tchSelfPinSelection)-1].setDisplayMode("Description")
-            self.tchMutXPinSelection[len(self.tchSelfPinSelection)-1].setLabel("Select X Pin for Channel "+ str(channelID))
+            self.tchMutXPinSelection[len(self.tchMutXPinSelection)-1].setLabel("Select X Pin for Channel "+ str(channelID))
             self.tchMutXPinSelection[len(self.tchMutXPinSelection)-1].setOutputMode("Value")
             self.tchMutXPinSelection[len(self.tchMutXPinSelection)-1].setDisplayMode("Description")
-            self.tchMutYPinSelection[len(self.tchSelfPinSelection)-1].setLabel("Select Y Pin for Channel "+ str(channelID))
+            self.tchMutYPinSelection[len(self.tchMutYPinSelection)-1].setLabel("Select Y Pin for Channel "+ str(channelID))
             self.tchMutYPinSelection[len(self.tchMutYPinSelection)-1].setOutputMode("Value")
             self.tchMutYPinSelection[len(self.tchMutYPinSelection)-1].setDisplayMode("Description")
             
@@ -227,7 +227,7 @@ class classTouchNodeGroups():
                             self.tchSelfPinSelection[len(self.tchSelfPinSelection)-1].addKey("Y("+str(anNumber)+")",
                             "Y("+str(anNumber)+")",
                             "Y"+str(anNumber)+text)
-                            self.tchMutYPinSelection[len(self.tchSelfPinSelection)-1].addKey("Y("+str(anNumber)+")",
+                            self.tchMutYPinSelection[len(self.tchMutYPinSelection)-1].addKey("Y("+str(anNumber)+")",
                             "Y("+str(anNumber)+")",
                             "Y"+str(anNumber)+text)
                     for index in range(0, len(cvdTPins)):
@@ -241,12 +241,12 @@ class classTouchNodeGroups():
                             ptcPinValues[index].getAttribute("index"),ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
                             ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
 
-                        self.tchMutYPinSelection[len(self.tchSelfPinSelection)-1].addKey(
+                        self.tchMutYPinSelection[len(self.tchMutYPinSelection)-1].addKey(
                             ptcPinValues[index].getAttribute("index"),ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
                             ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
 
                     if(ptcPinValues[index].getAttribute("group") == "X"):        
-                        self.tchMutXPinSelection[len(self.tchSelfPinSelection)-1].addKey(
+                        self.tchMutXPinSelection[len(self.tchMutXPinSelection)-1].addKey(
                             ptcPinValues[index].getAttribute("index"),ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
                             ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
 
@@ -484,7 +484,8 @@ class classTouchNodeGroups():
                         if yCh not in lump_y:
                             lump_y.append(yCh)
                     lumpy = "|".join(lump_y)
-                    self.tchSelfPinSelection[int(lump_node)].setKeyValue(str(0),lumpy)
+                    key1 = self.tchMutXPinSelection[int(lump_node)].getKey(0)
+                    self.tchSelfPinSelection[int(lump_node)].setKeyValue(str(key1),lumpy)
                     self.tchSelfPinSelection[int(lump_node)].setValue(0)
                 elif (touchtech == "MutualCap"):
                     for item in lump_node_array:
@@ -497,10 +498,12 @@ class classTouchNodeGroups():
                         if yCh not in lump_y:
                             lump_y.append(yCh)
                     lumpx = "|".join(lump_x)
-                    self.tchMutXPinSelection[int(lump_node)].setKeyValue(str(0),lumpx)
+                    key1 = self.tchMutXPinSelection[int(lump_node)].getKey(0)
+                    self.tchMutXPinSelection[int(lump_node)].setKeyValue(str(key1),lumpx)
                     self.tchMutXPinSelection[int(lump_node)].setValue(0)
                     lumpy = "|".join(lump_y)
-                    self.tchMutYPinSelection[int(lump_node)].setKeyValue(str(0),lumpy)
+                    key2 = self.tchMutYPinSelection[int(lump_node)].getKey(0)
+                    self.tchMutYPinSelection[int(lump_node)].setKeyValue(str(key2),lumpy)
                     self.tchMutYPinSelection[int(lump_node)].setValue(0)
         else:
             print("NOT LUMPING NODES")
