@@ -125,8 +125,12 @@ def finalizeComponent(qtouchComponent):
         autoConnectTable[:] = [["lib_qtouch", "Touch_timer","tmr4","TMR4_TMR"],
                                 ["lib_qtouch", "Acq_Engine","adchs","ADCHS_ADC"]]
     else:
-        autoComponentIDTable[:] = ["rtc"]
-        autoConnectTable[:] = [["lib_qtouch", "Touch_timer","rtc", "RTC_TMR"]]
+        if qtouchInst['interfaceInst'].getDeviceSeries() in qtouchInst['target_deviceInst'].adc_based_acquisition:
+            autoComponentIDTable[:] = ["rtc","ptc","adc0"]
+            autoConnectTable[:] = [["lib_qtouch", "Touch_timer","rtc", "RTC_TMR"], ["lib_qtouch", "lib_acquire", "ptc", "ptc_Acq_Engine"], ["ptc", "lib_acquire", "adc0", "ADC0_ADC"]]
+        else:
+            autoComponentIDTable[:] = ["rtc","ptc"]
+            autoConnectTable[:] = [["lib_qtouch", "Touch_timer","rtc", "RTC_TMR"], ["lib_qtouch", "lib_acquire", "ptc", "ptc_Acq_Engine"]]
     InterruptVector = "PTC" + "_INTERRUPT_ENABLE"
     InterruptHandler = "PTC" + "_INTERRUPT_HANDLER"
     print(autoComponentIDTable)
