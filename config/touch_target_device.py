@@ -470,7 +470,8 @@ class classTouchTargetDevice():
             # sort the pins list by index
             for found in range(0, len(self.ptcPinValues)):
                 for idx in range(0, len(self.ptcPinValues)):
-                    if (int(self.ptcPinValues[idx].getAttribute("index")) == found):
+                    if (self.ptcPinValues[idx].getAttribute("group") in ["X", "Y"]):
+                        if (int(self.ptcPinValues[idx].getAttribute("index")) == found):
                             sortedptcPinValues.append(self.ptcPinValues[idx])
             self.ptcPinValues = sortedptcPinValues
 
@@ -557,8 +558,12 @@ class classTouchTargetDevice():
         self.setModuleID(qtouchComponent,touchMenu,targetDevice)
         self.setClockXML(qtouchComponent,touchMenu,targetDevice)
         self.setInterruptVector(Database,targetDevice)
-        self.setPTCClockEnable(Database, targetDevice)
-        self.setPTCClock(Database, targetDevice)
+        if(targetDevice in self.adc_based_acquisition):
+            self.setADCClock(Database,targetDevice)
+
+        else:
+            self.setPTCClockEnable(Database, targetDevice)
+            self.setPTCClock(Database, targetDevice)
 
 if __name__ == "__main__":
     print "adding target device .py file"
