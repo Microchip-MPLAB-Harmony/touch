@@ -33,12 +33,13 @@ This is for SAMD20, SAMD21 Family
 		<clock index = "25_0" symbol="EVSYS_CHANNEL_0" value="True" component_id= "evsys" name="EVSYS 0" />
 		<clock index = "26_0" symbol="RTC_MODE0_EVCTRL_PEREO0_ENABLE" value="True" component_id= "rtc" name="EVSYS 0" />
 		<clock index = "27_0" symbol="EVSYS_CHANNEL_ONDEMAND" value="True" component_id= "evsys" name="EVSYS 0" />
+        <clock index = "28_0" symbol="CONFIG_CLOCK_OSC8M_ONDEMAND" value="0" component_id= "core" name="Enable OSC8M ONDEMAND always" />
 	</all_clock_symbols_list>
 	<all_conditions_list>
 		<condition />
 	</all_conditions_list>
 	<common>
-		<default clock_update_index_list="0_0,1_0,2_0,3_0,4_0,5_0,7_0,8_0,13_0,14_0,15_0,16_0,17_0,18_0,19_0,20_0,21_0,22_0,23_0,24_0,25_0,26_0,27_0"/>
+		<default clock_update_index_list="0_0,1_0,2_0,3_0,4_0,5_0,7_0,8_0,13_0,14_0,15_0,16_0,17_0,18_0,19_0,20_0,21_0,22_0,23_0,24_0,25_0,26_0,27_0,28_0"/>
 	</common>
 </clock_settings>
 <description>
