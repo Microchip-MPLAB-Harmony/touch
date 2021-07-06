@@ -345,7 +345,7 @@ class classTouchDSGroup():
             timer = tcInstances[indexI].getAttribute("name")
             tcSignals = self.getTCTimersSignals(ATDF,timer)
             for indexS in range(0, len(tcSignals)):
-                qtouchComponent.addDependency("Drivenshield_"+timer, "TMR", "TMR(Shield)", False, False)
+                qtouchComponent.addDependency("Drivenshield_"+timer, "TMR", None, False, False)
                 qtouchComponent.setDependencyEnabled("Drivenshield_"+timer, False)
                 if tcSignals[indexS].getAttribute("pad") in ptcYPads:
                     string = tcSignals[indexS].getAttribute("pad")+tcSignals[indexS].getAttribute("function")+"_"+timer+"_"+tcSignals[indexS].getAttribute("group")+tcSignals[indexS].getAttribute("index")
@@ -355,7 +355,7 @@ class classTouchDSGroup():
             timer = tccInstances[indexI].getAttribute("name")
             tcSignals = self.getTCCTimersSignals(ATDF,timer)
             for indexS in range(0, len(tcSignals)):
-                qtouchComponent.addDependency("Drivenshield_"+timer, "TMR", "TMR(Shield)", False, False)
+                qtouchComponent.addDependency("Drivenshield_"+timer, "TMR", None, False, False)
                 qtouchComponent.setDependencyEnabled("Drivenshield_"+timer, False)
                 if tcSignals[indexS].getAttribute("pad") in ptcYPads:
                     string = tcSignals[indexS].getAttribute("pad")+tcSignals[indexS].getAttribute("function")+"_"+timer+"_"+tcSignals[indexS].getAttribute("group")+tcSignals[indexS].getAttribute("index")
@@ -379,7 +379,7 @@ class classTouchDSGroup():
             timer = tcInstances[indexI].getAttribute("name")
             tcSignals = self.getTCTimersSignals(ATDF,timer)
             for indexS in range(0, len(tcSignals)):            
-                qtouchComponent.addDependency("Drivenshield_"+timer, "TMR", "TMR(Shield)", False, False)
+                qtouchComponent.addDependency("Drivenshield_"+timer, "TMR", None, False, False)
                 qtouchComponent.setDependencyEnabled("Drivenshield_"+timer, False)
                 if tcSignals[indexS].getAttribute("pad") in ptcYPads:
                     timersSharingPTC.append(timer)
@@ -388,7 +388,7 @@ class classTouchDSGroup():
             timer = tccInstances[indexI].getAttribute("name")
             tcSignals = self.getTCCTimersSignals(ATDF,timer)
             for indexS in range(0, len(tcSignals)):            
-                qtouchComponent.addDependency("Drivenshield_"+timer, "TMR", "TMR(Shield)", False, False)
+                qtouchComponent.addDependency("Drivenshield_"+timer, "TMR", None, False, False)
                 qtouchComponent.setDependencyEnabled("Drivenshield_"+timer, False)
                 if tcSignals[indexS].getAttribute("pad") in ptcYPads:
                     timersSharingPTC.append(timer)
