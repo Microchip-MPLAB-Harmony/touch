@@ -1,10 +1,40 @@
 ![Microchip logo](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_logo.png)
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
-#  Microchip MPLAB� Harmony 3 Touch Library Release Notes
+#  Microchip MPLAB Harmony 3 Touch Library Release Notes
+## Touch Library v3.10.0 Release 
+### NEW FEATURES SUPPORTED 
+* Driven shield support extended for - SAM D1x, SAM D20 
+* Acquisition engine and library are separate in MHC project graph 
+* PIC32MZDA device support 
 
-## Touch Library v3.. Release -- WIP
+### BUG FIXES 
+* SAMHA1 ondemand Osc8m ondemand not set 
+* ATSAMD10D14AS Touch Project Clock Error 
+* Enable only non-event system low-power with driven shield 
+* Touch GUI dock update issue 
+* RTC count sync issue 
+* Mutual cap surface XY configuration for XYmuxed devices 
+* Lump with boost mode
+* Touch_example.c file is generated along with touch.c file
+* Sleep instruction is moved from touch_process() to touch_example.c file
 
+### DEVELOPMENT TOOLS 
+* [MPLAB X IDE v5.50](https://www.microchip.com/mplabx-ide-windows-installer)
+* [MPLAB XC32 C/C++ Compiler v2.50](https://www.microchip.com/mplab/compilers)
+* MPLAB XIDE plug-ins: 
+    * MPLAB Harmony Configurator (MHC) v3.8.0 
+    
+### Required MPLAB Harmony v3.x.x Modules 
+* csp v3.9.1 
+* bsp v3.9.0 
+* dev_packs v3.9.0 
+* mhc v3.8.0 
+
+### KNOWN ISSUES 
+* None. 
+
+## Touch Library v3.9.2 Release
 ### BUG FIXES
 * Touch configuration panel cannot open when MHC upgrades to 3.7.0
 * Gesture disables timer start
