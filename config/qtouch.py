@@ -288,39 +288,42 @@ def processLump(symbol, event, targetDevice):
                 qtouchInst['surfaceInst'].updateLumpModeSurface(symbol,touchSenseTechnology,totalChannelCount)
 
 def updatePinsSettings(symbol,event):
-    touchPads = qtouchInst['padsInfo'].getTouchPads()
-    touchModule = qtouchInst['padsInfo'].getTouchModule()
-    #print touchModule
-    #print touchPads
-    component = symbol.getComponent()
-    #clear setting
-    for pad in touchPads:
-        setting = touchPads[pad]
-        value = Database.getSymbolValue("core", "PIN_"+setting["index"]+"_FUNCTION_TYPE")
-        Database.setSymbolValue("core", "PIN_"+setting["index"]+"_FUNCTION_TYPE", "")
-    activePds = set()
-    count = component.getSymbolByID("TOUCH_CHAN_ENABLE_CNT").getValue()
-    for i in range(count):
-        if "SELF" in symbol.getID():
-            signalSymbol = component.getSymbolByID("SELFCAP-INPUT_"+str(i))
-            if signalSymbol.getValue() != -1:
-                padDesc = signalSymbol.getKeyDescription(signalSymbol.getValue())
-                padName = padDesc[padDesc.index("(")+1:padDesc.index(")")]
-            activePds.add(padName)
-        if "MUTL" in symbol.getID():
-            signalSymbol = component.getSymbolByID("MUTL-X-INPUT_"+str(i))
-            if signalSymbol.getValue() != -1:
-                padDesc = signalSymbol.getKeyDescription(signalSymbol.getValue())
-                padName = padDesc[padDesc.index("(")+1:padDesc.index(")")]
+    localComponent = symbol.getComponent()
+    targetDevice = localComponent.getSymbolByID("DEVICE_NAME").getValue()
+    if targetDevice not in ["PIC32MZW", "PIC32MZDA"]:
+        touchPads = qtouchInst['padsInfo'].getTouchPads()
+        touchModule = qtouchInst['padsInfo'].getTouchModule()
+        #print touchModule
+        #print touchPads
+        component = symbol.getComponent()
+        #clear setting
+        for pad in touchPads:
+            setting = touchPads[pad]
+            value = Database.getSymbolValue("core", "PIN_"+setting["index"]+"_FUNCTION_TYPE")
+            Database.setSymbolValue("core", "PIN_"+setting["index"]+"_FUNCTION_TYPE", "")
+        activePds = set()
+        count = component.getSymbolByID("TOUCH_CHAN_ENABLE_CNT").getValue()
+        for i in range(count):
+            if "SELF" in symbol.getID():
+                signalSymbol = component.getSymbolByID("SELFCAP-INPUT_"+str(i))
+                if signalSymbol.getValue() != -1:
+                    padDesc = signalSymbol.getKeyDescription(signalSymbol.getValue())
+                    padName = padDesc[padDesc.index("(")+1:padDesc.index(")")]
                 activePds.add(padName)
-                signalSymbol = component.getSymbolByID("MUTL-Y-INPUT_"+str(i))
-            if signalSymbol.getValue() != -1:
-                padDesc = signalSymbol.getKeyDescription(signalSymbol.getValue())
-                padName = padDesc[padDesc.index("(")+1:padDesc.index(")")]
-                activePds.add(padName)
-    for pad in activePds:
-        setting = touchPads[pad]
-        Database.setSymbolValue("core", "PIN_"+setting["index"]+"_FUNCTION_TYPE", setting["function"])
+            if "MUTL" in symbol.getID():
+                signalSymbol = component.getSymbolByID("MUTL-X-INPUT_"+str(i))
+                if signalSymbol.getValue() != -1:
+                    padDesc = signalSymbol.getKeyDescription(signalSymbol.getValue())
+                    padName = padDesc[padDesc.index("(")+1:padDesc.index(")")]
+                    activePds.add(padName)
+                    signalSymbol = component.getSymbolByID("MUTL-Y-INPUT_"+str(i))
+                if signalSymbol.getValue() != -1:
+                    padDesc = signalSymbol.getKeyDescription(signalSymbol.getValue())
+                    padName = padDesc[padDesc.index("(")+1:padDesc.index(")")]
+                    activePds.add(padName)
+        for pad in activePds:
+            setting = touchPads[pad]
+            Database.setSymbolValue("core", "PIN_"+setting["index"]+"_FUNCTION_TYPE", setting["function"])
 
 def onGenerate(symbol,event):
     """Handler for generate code menu click event. 
@@ -486,7 +489,7 @@ def instantiateComponent(qtouchComponent):
     print("Kamal")
     print(interfaceInst.getDeviceSeries())
 
-    if device == "PIC32MZDA":
+    if device in ["PIC32MZDA","PIC32MZW"]:
         customInst = touch_custom_pic32mzda.classTouchCustAddition()
         customInst.initCustomMenu(ATDF,device, qtouchComponent, None, Database)
         qtouchInst['customInst'] = customInst
