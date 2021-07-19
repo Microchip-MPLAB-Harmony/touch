@@ -192,7 +192,10 @@ class classTouchNodeGroups():
                 self.setSeriesRValues(touchSeriesResistor)
 
             #PTC Clock Prescaler
-            self.setPTCPresscalerValues(touchPTCPrescaler)
+            if(rSelMode == "e5x"):
+                self.setPTCPresscalerValuesE5x(touchPTCPrescaler)
+            else:
+                self.setPTCPresscalerValues(touchPTCPrescaler)
             #Analog Gain
             self.setAnalogGainValues(touchAnalogGain)
             #Digital Filter Gain - Accumulated sum is scaled to Digital Gain
@@ -399,6 +402,28 @@ class classTouchNodeGroups():
         touchPTCPrescaler.setOutputMode("Value")
         touchPTCPrescaler.setDisplayMode("Description")
         touchPTCPrescaler.setDescription("The PTC clock is prescaled by PTC and then used for touch measurement.The PTC prescaling factor is defined by this parameter. It is recommended to configure this parameter such that the clock after the prescaler is less than or equal to 1MHz.")
+
+    def setPTCPresscalerValuesE5x(self,touchPTCPrescaler):
+        """Populate the ptc prescaler symbol
+        Arguments:
+            :touchPTCPrescaler : symbol to be populated
+        Returns:
+            none
+        """
+        touchPTCPrescaler.setLabel("PTC Clock Prescaler")
+        touchPTCPrescaler.addKey("PRESC4", "PRSC_DIV_SEL_2", "2")
+        touchPTCPrescaler.addKey("PRESC4", "PRSC_DIV_SEL_4", "4")
+        touchPTCPrescaler.addKey("PRESC8", "PRSC_DIV_SEL_8", "8")
+        touchPTCPrescaler.addKey("PRESC16", "PRSC_DIV_SEL_16", "16")
+        touchPTCPrescaler.addKey("PRESC32", "PRSC_DIV_SEL_32", "32")
+        touchPTCPrescaler.addKey("PRESC64", "PRSC_DIV_SEL_64", "64")
+        touchPTCPrescaler.addKey("PRESC128", "PRSC_DIV_SEL_128", "128")
+        touchPTCPrescaler.addKey("PRESC256", "PRSC_DIV_SEL_256", "256")
+        touchPTCPrescaler.setDefaultValue(0)
+        touchPTCPrescaler.setOutputMode("Value")
+        touchPTCPrescaler.setDisplayMode("Description")
+        touchPTCPrescaler.setDescription("The PTC clock is prescaled by PTC and then used for touch measurement.The PTC prescaling factor is defined by this parameter. It is recommended to configure this parameter such that the clock after the prescaler is less than or equal to 1MHz.")
+
 
     def setAnalogGainValues(self,touchAnalogGain):
         """Populate the analog gain symbol
