@@ -211,7 +211,7 @@ class classTouchLP():
         lp_mask_of_8 = []
         
         for i in low_power_mask.split(","):
-            low_power_keys.append(i)
+            low_power_keys.append(int(i))
         for i in range(total_num_channel):
             if i in low_power_keys:
                 lp_mask.append(1)

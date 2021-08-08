@@ -666,6 +666,9 @@ static void qtm_measure_complete_callback(void)
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
 <#if no_standby_during_measurement == 1>
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
+<#if DEVICE_NAME == "SAMD10" || DEVICE_NAME == "SAMD11" >
+    qtm_autoscan_node_cancel(); /* disable PTC */
+</#if>
 measurement_in_progress = 0;
 #endif
 </#if>
