@@ -994,6 +994,7 @@ static void touch_enable_lowpower_measurement(void)
     <#if num_of_channel_more_than_one == 1>
 	time_drift_wakeup_counter = 0;
     </#if>
+    lp_measurement = 1u;
 	<@softwarelp.lowpwer_enableevsys_saml_no_evs/>
 	<#else>
 	<@eventlp.lowpwer_enable_saml_evsys/>
