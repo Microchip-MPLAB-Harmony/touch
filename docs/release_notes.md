@@ -1,6 +1,18 @@
 ![Microchip logo](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_logo.png)
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
+## Touch Library v3.10.1 Release
+### BUG FIXES
+* Low-power related bug fixes for SAMD1x and software low-power
+* Touch Library's capability name is reverted back to "TouchData"
+* Bug fix related to resistor value not populated on node parameter for Mutual cap sensor
+### DEVELOPMENT TOOLS 
+
+* [MPLAB X IDE v5.50](https://www.microchip.com/mplabx-ide-windows-installer)
+* [MPLAB XC32 C/C++ Compiler v3.01](https://www.microchip.com/mplab/compilers)
+* MPLAB X IDE plug-ins:
+  * MPLAB Harmony Configurator (MHC) v3.7.0
+
 #  Microchip MPLAB Harmony 3 Touch Library Release Notes
 ## Touch Library v3.10.0 Release 
 ### NEW FEATURES SUPPORTED 
