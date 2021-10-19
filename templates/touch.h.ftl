@@ -518,6 +518,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /**********************************************************/
 #define DEF_TOUCH_DATA_STREAMER_ENABLE ${(ENABLE_DATA_STREAMER)?then('1u', '0u')}
 
+#define DEF_TOUCH_TUNE_ENABLE ${(ENABLE_TOUCH_TUNE_WITH_PLUGIN)?then('1u', '0u')}
+
 
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
 <#if ((DS_DEDICATED_ENABLE == true) || (DS_PLUS_ENABLE == true)) >

@@ -14,3 +14,4 @@
 **/*.IAR/*.dep
 **/*.IAR/*.custom_argvars
 *.class
+.vscode/

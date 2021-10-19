@@ -67,12 +67,15 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /*----------------------------------------------------------------------------
  *     include files
  *----------------------------------------------------------------------------*/
+#include "definitions.h"
 #include "touch/touch.h"
-#include "definitions.h" 
-<#if ENABLE_DATA_STREAMER = true>
+<#if ENABLE_TOUCH_TUNE_WITH_PLUGIN == true>
+#include "touch/touchTune.h"
+</#if>
+<#if ENABLE_DATA_STREAMER == true>
 #include "touch/datastreamer/datastreamer.h"
 </#if>
-<#if ENABLE_KRONOCOMM = true>
+<#if ENABLE_KRONOCOMM == true>
 #include "touch/datastreamer/kronocommadaptor.h"
 #include "touch/datastreamer/kronocommuart_sam.h"
 </#if>
@@ -694,7 +697,7 @@ static void qtm_error_callback(uint8_t error)
 {
 	module_error_code = error + 1u;
 
-<#if ENABLE_DATA_STREAMER = true>
+<#if ENABLE_DATA_STREAMER == true>
 	#if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
 	    datastreamer_output();
 	#endif
@@ -736,10 +739,16 @@ void touch_init(void)
 </#if>
 </#if>
 	
-<#if ENABLE_DATA_STREAMER = true>	
+<#if ENABLE_DATA_STREAMER == true>	
 #if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
 	datastreamer_init();
 #endif
+</#if>
+
+<#if ENABLE_TOUCH_TUNE_WITH_PLUGIN == true>
+    #if DEF_TOUCH_TUNE_ENABLE == 1u
+    touchTuneInit();
+    #endif
 </#if>
 }
 
@@ -865,6 +874,12 @@ void touch_process(void)
         #endif
         </#if>
 
+        <#if ENABLE_TOUCH_TUNE_WITH_PLUGIN = true>
+        #if DEF_TOUCH_TUNE_ENABLE == 1u
+        touchTuneNewDataAvailable();
+        #endif
+        </#if>
+
         if (0u != (qtlib_key_set1.qtm_touch_key_group_data->qtm_keys_status & QTM_KEY_REBURST)) {
             time_to_measure_touch_var = 1u;
         } else {
@@ -878,21 +893,23 @@ void touch_process(void)
         }
     }
 
-<#if ENABLE_KRONOCOMM = true>
+<#if ENABLE_KRONOCOMM == true>
 #if KRONOCOMM_ENABLE == 1u
-		Krono_UpdateBuffer();
+    Krono_UpdateBuffer();
+    uart_process();
 #endif
 </#if>
 
-<#if ENABLE_DATA_STREAMER = true>
+<#if ENABLE_DATA_STREAMER == true>
     #if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
         datastreamer_output();
     #endif
 </#if>
-<#if ENABLE_KRONOCOMM = true>
-#if KRONOCOMM_ENABLE == 1u
-    uart_process();
-#endif
+
+<#if ENABLE_TOUCH_TUNE_WITH_PLUGIN == true>
+    #if DEF_TOUCH_TUNE_ENABLE == 1u
+    touchTuneProcess();
+    #endif
 </#if>
 }
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 

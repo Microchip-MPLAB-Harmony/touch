@@ -38,8 +38,8 @@ CONSEQUENTIAL DAMAGES, LOST  PROFITS  OR  LOST  DATA,  COST  OF  PROCUREMENT  OF
 SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
-#ifndef UART_H_
-#define UART_H_
+#ifndef KRONOCOMM_UART_H_
+#define KRONOCOMM_UART_H_
 
 <#if TOUCH_SERCOM_KRONO_INSTANCE == "">
 #warning "UART to send touch debug data is not defined. Connect UART to Touch library in MHC."

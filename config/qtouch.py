@@ -32,6 +32,7 @@ import touch_qtouch_sourcefiles
 import touch_surface_2D_utility
 import touch_custom_pic32mzda
 import touch_pad
+import touch_tune_with_plugin
 
 qtouchInst = {}
 
@@ -72,15 +73,14 @@ def onAttachmentConnected(source,target):
         plibUsed = localComponent.getSymbolByID("TOUCH_SERCOM_INSTANCE")
         plibUsed.clearValue()
         plibUsed.setValue(remoteID.upper(), 1)
-        if (Database.getSymbolValue(remoteID, "USART_INTERRUPT_MODE") == True):
-            Database.setSymbolValue(remoteID, "USART_INTERRUPT_MODE", False)
-
+        if (Database.getSymbolValue(remoteID, "USART_OPERATING_MODE") == 1):
+            Database.setSymbolValue(remoteID, "USART_OPERATING_MODE", 0)
     if (connectID == "Touch_sercom_Krono"):
         plibUsed = localComponent.getSymbolByID("TOUCH_SERCOM_KRONO_INSTANCE")
         plibUsed.clearValue()
         plibUsed.setValue(remoteID.upper(), 1)
-        if (Database.getSymbolValue(remoteID, "USART_INTERRUPT_MODE") == False):
-            Database.setSymbolValue(remoteID, "USART_INTERRUPT_MODE", True)
+        if (Database.getSymbolValue(remoteID, "USART_OPERATING_MODE") == 0):
+            Database.setSymbolValue(remoteID, "USART_OPERATING_MODE", 1)
 
 def onAttachmentDisconnected(source, target):
     """Handler for disconnect from touch module.
@@ -688,15 +688,7 @@ def instantiateComponent(qtouchComponent):
     projectFilesList = projectFilesList + surface_fileInst.setSurfaceFiles(configName,qtouchComponent, device,useTrustZone)
     qtouchInst['surfaceInst'] = surfaceInst
 
-    # ----2D Surface Visualizer----
-    surfaceUtiInst = touch_surface_2D_utility.classTouchSurface2DUtility()
-    projectFilesList = projectFilesList + surfaceUtiInst.initSurface2DUtilityInstance(
-        configName, 
-        qtouchComponent, 
-        touchMenu, 
-        device, 
-        touchChannelMutual)
-    qtouchInst['surfaceUtiInst'] = surfaceUtiInst
+
 
     # ----Gesture----
     gestureInst = touch_gesture.classTouchGesture()
@@ -713,10 +705,29 @@ def instantiateComponent(qtouchComponent):
     symbol,func,depen = lowpowerInst.getDepDetails()
     qtouchSetDependencies(symbol, func, depen)
 
+    tuneMenu = qtouchComponent.createMenuSymbol("TUNE_MENU", touchMenu)
+    tuneMenu.setLabel("Touch Debug Configuration")
+    tuneMenu.setVisible(showConfiguration)
+
     # ----Datastreamer----
     datastreamerInst = touch_datastreamer.classTouchDataStreamer()
-    projectFilesList = projectFilesList + datastreamerInst.initDataStreamer(configName, qtouchComponent, touchMenu)
+    projectFilesList = projectFilesList + datastreamerInst.initDataStreamer(configName, qtouchComponent, tuneMenu)
     qtouchInst['datastreamerInst'] = datastreamerInst
+
+    # ----TouchTune----
+    touchTuneInst = touch_tune_with_plugin.classTouchTuneWithPlugin()
+    projectFilesList = projectFilesList + touchTuneInst.initTouchTune(configName, qtouchComponent, tuneMenu)
+    qtouchInst['touchTuneInst'] = touchTuneInst
+
+    # ----2D Surface Visualizer----
+    surfaceUtiInst = touch_surface_2D_utility.classTouchSurface2DUtility()
+    projectFilesList = projectFilesList + surfaceUtiInst.initSurface2DUtilityInstance(
+        configName, 
+        qtouchComponent, 
+        tuneMenu, 
+        device, 
+        touchChannelMutual)
+    qtouchInst['surfaceUtiInst'] = surfaceUtiInst
 
     qtouchTimerComponent = qtouchComponent.createStringSymbol("TOUCH_TIMER_INSTANCE", None)
     qtouchTimerComponent.setLabel("Timer Component Chosen for Touch middleware")

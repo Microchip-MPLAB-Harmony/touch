@@ -42,7 +42,7 @@ class classTouchSurface2DUtility():
         tch2DUartHeaderFile.setProjectPath("config/" + configName + "/touch/datastreamer/")
         tch2DUartHeaderFile.setType("HEADER")
         tch2DUartHeaderFile.setEnabled(False)
-        tch2DUartHeaderFile.setMarkup(False)
+        tch2DUartHeaderFile.setMarkup(True)
         return tch2DUartHeaderFile
 
     def set2DAdapterHeaderFile(self,configName, qtouchComponent):
