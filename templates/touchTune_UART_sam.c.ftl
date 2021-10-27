@@ -40,7 +40,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  
 #include "touchTune.h"
 
-
+<#if TOUCH_SERCOM_KRONO_INSTANCE == "">
+#warning "UART to send touch debug data is not defined. Connect UART to Touch library in MHC."
+<#else>
 #if DEF_TOUCH_TUNE_ENABLE == 1U
 
 <#assign csdDevices = 0 />
@@ -780,3 +782,4 @@ void touchUartRxComplete(uintptr_t lTouchUart)
 	${.vars["${TOUCH_SERCOM_KRONO_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Read((void *) &rxData,1);
 	#endif
 }
+</#if>
