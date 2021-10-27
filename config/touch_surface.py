@@ -314,7 +314,7 @@ class classTouchSurface():
 
         component = symbol.getComponent()
         surfaceEnabled = component.getSymbolByID("ENABLE_SURFACE").getValue()
-        if (touchSenseTechnology.getValue() == 1) and (surfaceEnabled == True):
+        if (touchSenseTechnology == "MutualCap") and (surfaceEnabled == True):
                 MUTL_SURFACE_X = []
                 MUTL_SURFACE_Y = []
                 HORI_START_KEY = component.getSymbolByID("HORI_START_KEY").getValue()
