@@ -1,19 +1,45 @@
 ![Microchip logo](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_logo.png)
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
+#  Microchip MPLAB Harmony 3 Touch Library Release Notes
+
+## Touch Library v3.11.0 Release 
+### NEW FEATURES SUPPORTED 
+* Two-way debug protocol is supported.
+  * Now user can select between MPLAB Data Visualizer Touch plugin and old Data Visualizer in the **Paramters->Tune** tab of Touch Configurator.
+  * Refer to [Introduction to Touch Plugin](https://microchipdeveloper.com/touch:introduction-to-touch-plugin) for more details on MPLAB Data Visualizer Touch Plugin.
+
+### BUG FIXES 
+* Bug related to mutual cap surface sensor node generation is fixed
+* Error related to surface two-way debug files are fixed
+* Lable related issue in Mutual cap table view pin selection is fixed
+
+### DEVELOPMENT TOOLS 
+* [MPLAB X IDE v5.50](https://www.microchip.com/mplabx-ide-windows-installer)
+* [MPLAB XC32 C/C++ Compiler v2.41](https://www.microchip.com/mplab/compilers)
+* MPLAB XIDE plug-ins: 
+    * MPLAB Harmony Configurator (MHC) v3.8.2
+
+### Required MPLAB Harmony v3.x.x Modules 
+* csp v3.10.0
+* mhc v3.8.2
+
+### KNOWN ISSUES 
+* Touch Configurator does not work proplery when configuring Slider/Wheel using MCC Cofnigurator. Workaround is to use Harmony Configurator.
+
 ## Touch Library v3.10.1 Release
 ### BUG FIXES
 * Low-power related bug fixes for SAMD1x and software low-power
 * Touch Library's capability name is reverted back to "TouchData"
 * Bug fix related to resistor value not populated on node parameter for Mutual cap sensor
-### DEVELOPMENT TOOLS 
+
+### DEVELOPMENT TOOLS
 
 * [MPLAB X IDE v5.50](https://www.microchip.com/mplabx-ide-windows-installer)
 * [MPLAB XC32 C/C++ Compiler v3.01](https://www.microchip.com/mplab/compilers)
 * MPLAB X IDE plug-ins:
-  * MPLAB Harmony Configurator (MHC) v3.7.0
+  * MPLAB Harmony Configurator (MHC) v3.8.0
 
-#  Microchip MPLAB Harmony 3 Touch Library Release Notes
 ## Touch Library v3.10.0 Release 
 ### NEW FEATURES SUPPORTED 
 * Driven shield support extended for - SAM D1x, SAM D20 

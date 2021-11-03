@@ -7,7 +7,7 @@ var data_for_search
 var repo_name = "touch";
 var doc_folder_name = "docs";
 var localhost_path = "http://localhost:4000/";
-var home_index_string = "Touch Library";
+var home_index_string = "Touch";
 
 (function (jtd, undefined) {
 
