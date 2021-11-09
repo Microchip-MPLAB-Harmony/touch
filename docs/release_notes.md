@@ -6,13 +6,13 @@
 ## Touch Library v3.11.0 Release 
 ### NEW FEATURES SUPPORTED 
 * Two-way debug protocol is supported.
-  * Now user can select between MPLAB Data Visualizer Touch plugin and old Data Visualizer in the **Paramters->Tune** tab of Touch Configurator.
+  * Now user can select between MPLAB Data Visualizer Touch plugin and old Data Visualizer in the **Parameters->Tune** tab of Touch Configurator.
   * Refer to [Introduction to Touch Plugin](https://microchipdeveloper.com/touch:introduction-to-touch-plugin) for more details on MPLAB Data Visualizer Touch Plugin.
 
 ### BUG FIXES 
 * Bug related to mutual cap surface sensor node generation is fixed
 * Error related to surface two-way debug files are fixed
-* Lable related issue in Mutual cap table view pin selection is fixed
+* Label related issue in Mutual cap table view pin selection is fixed
 
 ### DEVELOPMENT TOOLS 
 * [MPLAB X IDE v5.50](https://www.microchip.com/mplabx-ide-windows-installer)
@@ -25,7 +25,7 @@
 * mhc v3.8.2
 
 ### KNOWN ISSUES 
-* Touch Configurator does not work proplery when configuring Slider/Wheel using MCC Cofnigurator. Workaround is to use Harmony Configurator.
+* Touch Configurator does not work properly when configuring Slider/Wheel using MCC Harmony Library. Workaround is to use Harmony Configurator.
 
 ## Touch Library v3.10.1 Release
 ### BUG FIXES
