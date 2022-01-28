@@ -160,7 +160,11 @@ typedef struct  __attribute__((packed)) {
 #define DEBUG_DATA_FREQ_HOP_LEN (sizeof(tuneFreqData_t))
 #endif
 
-<#if  DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00">
+<#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
+extern qtm_acq_samd1x_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] ;
+<#elseif DEVICE_NAME=="SAML11" || DEVICE_NAME=="SAML1xE">
+extern qtm_acq_saml10_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] ;
+<#elseif  DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00">
 extern qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] ;
 <#else>
 extern qtm_acq_${DEVICE_NAME?lower_case}_node_config_t  ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
@@ -387,7 +391,11 @@ void update_scroller_config(uint8_t scroller_num) {
 channel_acq_param acq_data;
 void copy_acq_config(uint8_t channel)
 {
-<#if DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00">
+<#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
+qtm_acq_samd1x_node_config_t *ptr = &ptc_seq_node_cfg1[channel];
+<#elseif DEVICE_NAME=="SAML11" || DEVICE_NAME=="SAML1xE">
+qtm_acq_saml10_node_config_t *ptr = &ptc_seq_node_cfg1[channel];
+<#elseif DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00">
 qtm_acq_pic32cm_node_config_t *ptr = &ptc_seq_node_cfg1[channel];
 <#else>
 qtm_acq_${DEVICE_NAME?lower_case}_node_config_t *ptr = &ptc_seq_node_cfg1[channel];
