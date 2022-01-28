@@ -60,7 +60,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#assign samc2x = ["SAMC20", "SAMC21"] />
 <#assign saml22 = ["SAML22"] />
 <#assign same5x = ["SAME51","SAME53","SAME54","SAMD51"] />
-<#assign saml1x_pic32cmle = ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"] />
+<#assign saml1x_pic32cmle = ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00"] />
 <#assign pic32cvd = ["PIC32MZW","PIC32MZDA"] />
 <#if samd2x_d1x_l21?seq_contains(DEVICE_NAME)>
 <#assign familyname = "samd2x_d1x_l21" />
@@ -160,7 +160,11 @@ typedef struct  __attribute__((packed)) {
 #define DEBUG_DATA_FREQ_HOP_LEN (sizeof(tuneFreqData_t))
 #endif
 
+<#if  DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00">
+extern qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] ;
+<#else>
 extern qtm_acq_${DEVICE_NAME?lower_case}_node_config_t  ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
+</#if>
 extern qtm_touch_key_data_t         qtlib_key_data_set1[DEF_NUM_CHANNELS];
 extern qtm_touch_key_config_t       qtlib_key_configs_set1[DEF_NUM_CHANNELS];
 extern qtm_touch_key_group_config_t qtlib_key_grp_config_set1;
@@ -383,7 +387,11 @@ void update_scroller_config(uint8_t scroller_num) {
 channel_acq_param acq_data;
 void copy_acq_config(uint8_t channel)
 {
-	qtm_acq_${DEVICE_NAME?lower_case}_node_config_t *ptr = &ptc_seq_node_cfg1[channel];
+<#if DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00">
+qtm_acq_pic32cm_node_config_t *ptr = &ptc_seq_node_cfg1[channel];
+<#else>
+qtm_acq_${DEVICE_NAME?lower_case}_node_config_t *ptr = &ptc_seq_node_cfg1[channel];
+</#if>
     max_channels_or_scrollers = DEF_NUM_CHANNELS;
 	//acq_data.node_xmask	= ptr->node_xmask;
 	//acq_data.node_ymask	= ptr->node_ymask;
