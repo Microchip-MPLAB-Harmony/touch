@@ -468,7 +468,7 @@ class classTouchTargetDevice():
             self.ptcPinValues = ptcSignalsATDF.getChildren()
             sortedptcPinValues = []
             # sort the pins list by index
-            for found in range(0, len(self.ptcPinValues)):
+            for found in range(0, 256):#len(self.ptcPinValues)):
                 for idx in range(0, len(self.ptcPinValues)):
                     if (self.ptcPinValues[idx].getAttribute("group") in ["X", "Y"]):
                         if (int(self.ptcPinValues[idx].getAttribute("index")) == found):
