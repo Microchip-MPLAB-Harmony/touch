@@ -467,7 +467,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
     <#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == true>
-        <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")> 
+        <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "SAML1xE")> 
             <@eventlp.lowpower_SAML/>
             <@eventlp.lowpower_params_common/>
         <#elseif (DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")>

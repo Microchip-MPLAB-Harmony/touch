@@ -134,6 +134,9 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice == "SAML10"):
             touchAcqLibraryFile.setSourcePath("/src/libraries/qtm_acq_saml10_0x0027.X.a")
             touchAcqLibraryFile.setOutputName("qtm_acq_saml10_0x0027.X.a")
+        elif(targetDevice in set(["SAML11","SAML1xE"])):
+            touchAcqLibraryFile.setSourcePath("/src/libraries/0x0027_qtm_saml11_acq.X.a")
+            touchAcqLibraryFile.setOutputName("0x0027_qtm_saml11_acq.X.a")
         elif(targetDevice == "PIC32MZW"):
             touchAcqLibraryFile.setSourcePath("/src/libraries/hcvd_driver_PIC32MZ1025W104.c")
             touchAcqLibraryFile.setOutputName("hcvd_driver_PIC32MZ1025W104.c")
@@ -212,6 +215,9 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice == "SAML10"):
             touchAcqAutoLibraryFile.setSourcePath("/src/libraries/qtm_acq_saml10_0x0027.X.a")
             touchAcqAutoLibraryFile.setOutputName("qtm_acq_saml10_0x0027.X.a")
+        elif(targetDevice in set(["SAML11","SAML1xE"])):
+            touchAcqAutoLibraryFile.setSourcePath("/src/libraries/0x0027_qtm_saml11_acq.X.a")
+            touchAcqAutoLibraryFile.setOutputName("0x0027_qtm_saml11_acq.X.a")   
         elif(targetDevice == "PIC32MZW"):
             touchAcqAutoLibraryFile.setSourcePath("/src/libraries/hcvd_driver_PIC32MZ1025W104.C")
             touchAcqAutoLibraryFile.setOutputName("hcvd_driver_PIC32MZ1025W104.C")
@@ -251,7 +257,7 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice in set(["SAMD51","SAME51","SAME53","SAME54"])):
             touchBindLibraryFile.setSourcePath("/src/libraries/qtm_binding_layer_cm4_0x0005.X.a")
             touchBindLibraryFile.setOutputName("qtm_binding_layer_cm4_0x0005.X.a")
-        elif(targetDevice in set(["SAML10"])):
+        elif(targetDevice in set(["SAML10","SAML11","SAML1xE"])):
             touchBindLibraryFile.setSourcePath("/src/libraries/qtm_binding_layer_cm23_0x0005.X.a")
             touchBindLibraryFile.setOutputName("qtm_binding_layer_cm23_0x0005.X.a")
         else:
@@ -310,6 +316,9 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice == "SAML10"):
             touchAcqHeaderFile.setSourcePath("/src/qtm_acq_saml10_0x0027_api.h")
             touchAcqHeaderFile.setOutputName("qtm_acq_saml10_0x0027_api.h")
+        elif(targetDevice in set(["SAML11","SAML1xE"])):
+            touchAcqHeaderFile.setSourcePath("/src/qtm_acq_saml11_0x0027_api.h")
+            touchAcqHeaderFile.setOutputName("qtm_acq_saml11_0x0027_api.h")    
         elif(targetDevice == "PIC32MZW"):
             touchAcqHeaderFile.setSourcePath("/src/qtm_acq_pic32mzw_0x003e_api.h")
             touchAcqHeaderFile.setOutputName("qtm_acq_pic32mzw_0x003e_api.h")

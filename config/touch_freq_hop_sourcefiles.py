@@ -44,7 +44,7 @@ class classTouchFreqSourceFiles():
         if (targetDevice in set(["SAME51","SAME53","SAME54","SAMD51"])):    
             freqHopLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_cm4_0x0006.X.a")
             freqHopLibraryFile.setOutputName("qtm_freq_hop_cm4_0x0006.X.a")
-        elif(targetDevice in set(["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"])):
+        elif(targetDevice in set(["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00"])):
             freqHopLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_cm23_0x0006.X.a")
             freqHopLibraryFile.setOutputName("qtm_freq_hop_cm23_0x0006.X.a")
         elif (targetDevice in set(["PIC32MZW", "PIC32MZDA"])):
@@ -72,7 +72,7 @@ class classTouchFreqSourceFiles():
         if (targetDevice in set(["SAME51","SAME53","SAME54","SAMD51"])):    
             freqHopAutoLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_auto_cm4_0x0004.X.a")
             freqHopAutoLibraryFile.setOutputName("qtm_freq_hop_auto_cm4_0x0004.X.a")
-        elif(targetDevice in set(["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"])):
+        elif(targetDevice in set(["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00"])):
             freqHopAutoLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_auto_cm23_0x0004.X.a")
             freqHopAutoLibraryFile.setOutputName("qtm_freq_hop_auto_cm23_0x0004.X.a")
         elif (targetDevice in set(["PIC32MZW", "PIC32MZDA"])):

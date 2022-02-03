@@ -178,6 +178,13 @@ class classTouchBoostModeGroups():
         surfaceEnabled = localComponent.getSymbolByID("ENABLE_SURFACE").getValue()
         lump_config = localComponent.getSymbolByID("LUMP_CONFIG").getValue()
 
+        if(targetDevice in ["SAML10","SAML11","SAML1xE"]):
+            if localComponent.getSymbolByID("ENABLE_BOOST").getValue():
+                localComponent.getSymbolByID("MODULE_ID").setValue("0x0033")
+            else:
+                localComponent.getSymbolByID("MODULE_ID").setValue("0x0027")
+
+
         if (self.getBoostSupported(targetDevice)):
             # maximum number of boost mode group is limited to 32 in the script
             touch4pMaxGroup = 32

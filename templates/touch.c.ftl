@@ -49,9 +49,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#assign sam_d1x_devices = ["SAMD10","SAMD11"]>
 <#assign sam_c2x_devices = ["SAMC21","SAMC20"]>
 <#assign sam_l2x_devices = ["SAML21","SAML22"]>
-<#assign sam_l1x_devices = ["SAML10"]>
+<#assign sam_l1x_devices = ["SAML10","SAML11","SAML1xE"]>
 <#assign pic_devices = ["PIC32MZW","PIC32MZDA"]>
-<#assign supc_devices = ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]>
+<#assign supc_devices = ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00"]>
 <#assign no_standby_devices = ["SAMD10","SAMD11"]>
 <#assign no_standby_during_measurement = 0>
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
@@ -913,7 +913,7 @@ void touch_process(void)
 </#if>
 }
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
-    <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")>
+    <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "SAML1xE")>
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
 static void touch_configure_pm_supc(void)
 {
@@ -1006,7 +1006,7 @@ Notes  :
 ============================================================================*/
 static void touch_enable_lowpower_measurement(void)
 {
-<#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")>
+<#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "SAML1xE")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")>
 	<#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false>
     <#if num_of_channel_more_than_one == 1>
 	time_drift_wakeup_counter = 0;
@@ -1349,6 +1349,16 @@ void touch_timer_config(void)
 {  
 <#if TOUCH_TIMER_INSTANCE != "">
     ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].CALLBACK_API_NAME}(rtc_cb, rtc_context);
+
+<#if DEVICE_NAME == "SAMD20" || DEVICE_NAME == "SAMD21" || (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "SAML1xE")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00") >
+    while((RTC_REGS->MODE0.RTC_STATUS & RTC_STATUS_SYNCBUSY_Msk) == RTC_STATUS_SYNCBUSY_Msk)
+<#elseif DEVICE_NAME == "SAMC20" || DEVICE_NAME == "SAMC21" || DEVICE_NAME == "SAML21" || DEVICE_NAME == "SAML20" >
+    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+</#if>
+    { /* Wait for Synchronization after writing value to Count Register */ }
+    RTC_Timer32Stop();
+    RTC_Timer32CounterSet(0u);
+
 <#if ENABLE_GESTURE==true>
 #if ((KRONO_GESTURE_ENABLE == 1u) || (DEF_TOUCH_DATA_STREAMER_ENABLE == 1u))
     ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}(1);

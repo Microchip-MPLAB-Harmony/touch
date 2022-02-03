@@ -1,7 +1,7 @@
 <#assign pic_devices = ["PIC32MZW","PIC32MZDA"]>
 
 <#assign doubleCompensation= 0>
-<#list ["SAME51","SAME53","SAME54","SAMD51","SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"] as i>
+<#list ["SAME51","SAME53","SAME54","SAMD51","SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00"] as i>
 <#if DEVICE_NAME == i>
 <#assign doubleCompensation = 1>
 </#if>

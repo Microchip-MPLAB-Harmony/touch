@@ -75,6 +75,10 @@ This is for device feature and library version information
                 <manual>1.4</manual>
                 <auto>1.4</auto>
             </device>
+            <device name="SAML1xE">
+                <manual>1.4</manual>
+                <auto>1.4</auto>
+            </device>            
             <device name="SAML21">
                 <manual>1.1</manual>
                 <auto>1.1</auto>
