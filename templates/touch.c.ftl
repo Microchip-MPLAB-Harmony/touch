@@ -891,21 +891,23 @@ void touch_process(void)
             #endif
             </#if>
         }
+        <#if ENABLE_KRONOCOMM == true>
+        #if KRONOCOMM_ENABLE == 1u
+            Krono_UpdateBuffer();
+        #endif
+        </#if>
+        <#if ENABLE_DATA_STREAMER == true>
+            #if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
+                datastreamer_output();
+            #endif
+        </#if>
     }
 
 <#if ENABLE_KRONOCOMM == true>
 #if KRONOCOMM_ENABLE == 1u
-    Krono_UpdateBuffer();
     uart_process();
 #endif
 </#if>
-
-<#if ENABLE_DATA_STREAMER == true>
-    #if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
-        datastreamer_output();
-    #endif
-</#if>
-
 <#if ENABLE_TOUCH_TUNE_WITH_PLUGIN == true>
     #if DEF_TOUCH_TUNE_ENABLE == 1u
     touchTuneProcess();
