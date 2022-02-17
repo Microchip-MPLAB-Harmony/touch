@@ -10,7 +10,6 @@ import touch_target_device
 import touch_interface
 import touch_node_groups
 import touch_boost_mode_groups
-import touch_boost_mode_sourcefiles
 import touch_acquisition_groups
 import touch_acquisition_sourcefiles
 import touch_key_groups
@@ -241,6 +240,24 @@ def applyDrivenShieldTimers(symbol, event):
         sevent.setValue("")
     print("---------Leaving apply DSTimers----------")
 
+def libChangeBoostMode(symbol,event):
+    localcomponent = symbol.getComponent()
+    touchAcqLibraryFile = localcomponent.getSymbolByID("TOUCH_ACQ_LIB")
+    touchAcqHeaderFile = localcomponent.getSymbolByID("TOUCH_ACQ_HEADER")
+    touchAcq4pLibraryFile = localcomponent.getSymbolByID("TOUCH_ACQ_4P_LIB")
+    touchAcq4pHeaderFile = localcomponent.getSymbolByID("TOUCH_ACQ_4P_HEADER")
+
+    if(event["value"] == False):
+        touchAcqLibraryFile.setEnabled(True)
+        touchAcqHeaderFile.setEnabled(True)
+        touchAcq4pLibraryFile.setEnabled(False)
+        touchAcq4pHeaderFile.setEnabled(False)
+    else:
+        touchAcqLibraryFile.setEnabled(False)
+        touchAcqHeaderFile.setEnabled(False)
+        touchAcq4pLibraryFile.setEnabled(True)
+        touchAcq4pHeaderFile.setEnabled(True)
+
 def qtouchSetDependencies(symbol, func, dependency):
     for i, sym in enumerate(symbol):
         #print sym,func,dependency
@@ -254,6 +271,8 @@ def qtouchSetDependencies(symbol, func, dependency):
             sym.setDependencies(updatePinsSettings, dependency[i])
         elif(func[i] == "enablePM"):
             sym.setDependencies(enablePM, dependency[i])
+        elif(func[i] == "libChangeBoostMode"):
+            sym.setDependencies(libChangeBoostMode, dependency[i])
 
 def processLump(symbol, event, targetDevice):
     """Handler for lump mode support menu click event. 
@@ -662,7 +681,6 @@ def instantiateComponent(qtouchComponent):
         symbol,func,depen = ds_groupInst.getDepDetails()
         qtouchSetDependencies(symbol, func, depen)
 
-
     # ----Boost Mode----
     # Boost mode support
     boostModeInst = touch_boost_mode_groups.classTouchBoostModeGroups()
@@ -674,8 +692,11 @@ def instantiateComponent(qtouchComponent):
             touchMenu,
             minGroupCount,
             maxGroupCount,
-            device)
+            device,
+            useTrustZone)
     qtouchInst['boostModeInst'] = boostModeInst
+    symbol,func,depen = boostModeInst.getDepDetails()
+    qtouchSetDependencies(symbol, func, depen)
 
     # ----Surface----
     surfaceInst = touch_surface.classTouchSurface(node_groupInst)

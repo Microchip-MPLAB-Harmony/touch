@@ -3,6 +3,19 @@ MHC Python Interface documentation website <http://confluence.microchip.com/disp
 """
 class classTouchBoostModeFiles():
 
+    def __init__(self):
+        self.symbolList = []
+        self.depFuncName = []
+        self.dependencies = []
+
+    def addDepSymbol(self, symbol, func, depen):
+        self.symbolList.append(symbol)
+        self.depFuncName.append(func)
+        self.dependencies.append(depen)
+
+    def getDepDetails(self):
+        return self.symbolList, self.depFuncName, self.dependencies
+
     def setBoostModeFiles(self,configName, qtouchComponent, targetDevice,useTrustZone):
         """
         Generates as List of source files required for Acquisition
@@ -26,7 +39,7 @@ class classTouchBoostModeFiles():
         touchAcq4pLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_ACQ_4P_LIB", None)
         touchAcq4pLibraryFile.setDestPath("/touch/lib/")
         touchAcq4pLibraryFile.setEnabled(False)
-        touchAcq4pLibraryFile.setDependencies(self.libChangeBoostMode,["ENABLE_BOOST"])
+        self.addDepSymbol(touchAcq4pLibraryFile, "libChangeBoostMode", ["ENABLE_BOOST"])
 
         if(targetDevice == "SAML10"):
             touchAcq4pLibraryFile.setSourcePath("/src/libraries/qtm_acq_4p_saml10_0x0033.X.a")
@@ -48,7 +61,7 @@ class classTouchBoostModeFiles():
         touchAcq4pHeaderFile.setProjectPath("config/" + configName + "/touch/")
         touchAcq4pHeaderFile.setType("HEADER")
         touchAcq4pHeaderFile.setMarkup(False)
-        touchAcq4pHeaderFile.setDependencies(libChangeBoostMode,["ENABLE_BOOST"])
+        self.addDepSymbol(touchAcq4pHeaderFile, "libChangeBoostMode", ["ENABLE_BOOST"])
         if(targetDevice == "SAML10"):
             touchAcq4pHeaderFile.setSourcePath("/src/qtm_acq_4p_saml10_0x0033_api.h")
             touchAcq4pHeaderFile.setOutputName("qtm_acq_4p_saml10_0x0033_api.h")
@@ -64,20 +77,3 @@ class classTouchBoostModeFiles():
         return "TOUCH_ACQ_4P_HEADER"
 
 
-    def libChangeBoostMode(self,symbol,event):
-        localcomponent = symbol.getComponent()
-        touchAcqLibraryFile = localcomponent.getSymbolByID("TOUCH_ACQ_LIB")
-        touchAcqHeaderFile = localcomponent.getSymbolByID("TOUCH_ACQ_HEADER")
-        touchAcq4pLibraryFile = localcomponent.getSymbolByID("TOUCH_ACQ_4P_LIB")
-        touchAcq4pHeaderFile = localcomponent.getSymbolByID("TOUCH_ACQ_4P_HEADER")
-
-        if(event["value"] == False):
-            touchAcqLibraryFile.setEnabled(True)
-            touchAcqHeaderFile.setEnabled(True)
-            touchAcq4pLibraryFile.setEnabled(False)
-            touchAcq4pHeaderFile.setEnabled(False)
-        else:
-            touchAcqLibraryFile.setEnabled(False)
-            touchAcqHeaderFile.setEnabled(False)
-            touchAcq4pLibraryFile.setEnabled(True)
-            touchAcq4pHeaderFile.setEnabled(True)

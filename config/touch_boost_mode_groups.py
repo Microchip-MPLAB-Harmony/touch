@@ -1,11 +1,17 @@
 """
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
+import touch_boost_mode_sourcefiles
 class classTouchBoostModeGroups():
     def __init__(self):
         self.maxGroups = 4 # defaultValue
         self.boost_mode_support = set(["SAML10","SAML1xE","SAML11","PIC32CMLE00","PIC32CMLS00"])
-    def initBoostModeGroup(self,configName, qtouchComponent, parentMenu, minVal, maxVal, targetDevice):
+        self.bostModeSourceInstance = touch_boost_mode_sourcefiles.classTouchBoostModeFiles()
+
+    def getDepDetails(self):
+        return self.bostModeSourceInstance.getDepDetails()
+
+    def initBoostModeGroup(self,configName, qtouchComponent, parentMenu, minVal, maxVal, targetDevice,useTrustZone):
         """
         Creates boost mode menu and variables
         Arguments :
@@ -31,6 +37,8 @@ class classTouchBoostModeGroups():
                 vars()[dynamicName].setLabel("Boost Mode Configuration Group"+str(groupNum))
                 vars()[dynamicName].setVisible(True)
                 self.initBoostModeInstance(qtouchComponent,groupNum,vars()[dynamicName])
+        
+        self.bostModeSourceInstance.setBoostModeFiles(configName, qtouchComponent, targetDevice, useTrustZone)
 
     def initBoostModeInstance(self,qtouchComponent,groupNumber,parentLabel):
         """Initialise boost mode groups Instance
