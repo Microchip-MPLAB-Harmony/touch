@@ -518,7 +518,14 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /**********************************************************/
 #define DEF_TOUCH_DATA_STREAMER_ENABLE ${(ENABLE_DATA_STREAMER)?then('1u', '0u')}
 
+<#if ENABLE_TOUCH_TUNE_WITH_PLUGIN == true>
+<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
+#warning "MPLAB Touch does not work with Boost Mode. Instead use Data Visualizer from Touch Configurator->Parameters->Tune option."
+#define DEF_TOUCH_TUNE_ENABLE 0u
+<#else>
 #define DEF_TOUCH_TUNE_ENABLE ${(ENABLE_TOUCH_TUNE_WITH_PLUGIN)?then('1u', '0u')}
+</#if>
+</#if>
 
 
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>

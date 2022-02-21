@@ -505,7 +505,6 @@ def instantiateComponent(qtouchComponent):
     device = interfaceInst.getDeviceSeries()
     deviceFullName = interfaceInst.getDeviceName()
 
-    print("Kamal")
     print(interfaceInst.getDeviceSeries())
 
     if device in ["PIC32MZDA","PIC32MZW"]:
