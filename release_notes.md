@@ -3,6 +3,20 @@
 
 #  Microchip MPLAB Harmony 3 Touch Library Release Notes
 
+## Touch Library v3.11.1 Release 
+### BUG FIXES
+* Bug related to SAME5x Prescaler is resolved.
+* Bug related to Touch timer periodicity is resolved.
+* Data Streamer tune data is sent only once after each touch measurement.
+* Compilation error on SAMD10 device is resolved.
+* Boost mode libraries and API files are NOT added when Boost mode is enabled. This is resolved.
+### KNOWN ISSUES
+* Touch tune data with MPLAB Touch Plugin does not work with Boost mode.
+### DEVELOPMENT TOOLS 
+* [MPLAB X IDE v6.00](https://www.microchip.com/mplabx-ide-windows-installer)
+* [MPLAB XC32 C/C++ Compiler v4.00](https://www.microchip.com/mplab/compilers)
+* MPLAB XIDE plug-ins: 
+    * MPLAB Harmony Configurator (MHC) v3.8.2
 ## Touch Library v3.11.0 Release 
 ### NEW FEATURES SUPPORTED 
 * Two-way debug protocol is supported.
