@@ -53,7 +53,7 @@ class classTouchFreqSourceFiles():
         else:
             freqHopLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_cm0p_0x0006.X.a")
             freqHopLibraryFile.setOutputName("qtm_freq_hop_cm0p_0x0006.X.a")
-        return "TOUCH_HOP_LIB"
+        return freqHopLibraryFile
 
     # freqHopAutoLibraryFile
     def setfreqHopAutoLibraryFile(self,configName, qtouchComponent, targetDevice):
@@ -81,7 +81,7 @@ class classTouchFreqSourceFiles():
         else:
             freqHopAutoLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_auto_cm0p_0x0004.X.a")
             freqHopAutoLibraryFile.setOutputName("qtm_freq_hop_auto_cm0p_0x0004.X.a")
-        return "TOUCH_HOP_AUTO_LIB"
+        return freqHopAutoLibraryFile
 
     # freqHopHeaderFile
     def setfreqHopHeaderFile(self,configName, qtouchComponent):
@@ -100,7 +100,7 @@ class classTouchFreqSourceFiles():
         freqHopHeaderFile.setType("HEADER")
         freqHopHeaderFile.setMarkup(False)
         freqHopHeaderFile.setEnabled(True)
-        return "TOUCH_HOP_HEADER"
+        return freqHopHeaderFile
 
     # freqHopAutoHeaderFile
     def setfreqHopAutoHeaderFile(self,configName, qtouchComponent):
@@ -119,4 +119,4 @@ class classTouchFreqSourceFiles():
         freqHopAutoHeaderFile.setType("HEADER")
         freqHopAutoHeaderFile.setMarkup(False)
         freqHopAutoHeaderFile.setEnabled(True)
-        return "TOUCH_HOP_AUTO_HEADER"
+        return freqHopAutoHeaderFile

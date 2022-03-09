@@ -45,7 +45,7 @@ class classTouchSurfaceFiles():
         else:
             surface1TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_cm0p_0x0021.X.a")
             surface1TLibraryFile.setOutputName("qtm_surface_cs_cm0p_0x0021.X.a")
-        return "TOUCH_SURFACE1T_LIB"
+        return surface1TLibraryFile
 
 
     def setSurface2TLibraryFile(self,configName, qtouchComponent, targetDevice):
@@ -72,7 +72,7 @@ class classTouchSurfaceFiles():
         else:
             surface2TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_2t_cm0p_0x0025.X.a")
             surface2TLibraryFile.setOutputName("qtm_surface_cs_2t_cm0p_0x0025.X.a")
-        return "TOUCH_SURFACE2T_LIB"
+        return surface2TLibraryFile
 
     def setSurface1THeaderFile(self,configName, qtouchComponent):
         """
@@ -90,7 +90,7 @@ class classTouchSurfaceFiles():
         surface1THeaderFile.setType("HEADER")
         surface1THeaderFile.setMarkup(False)
         surface1THeaderFile.setEnabled(False)
-        return "TOUCH_SURFACE1T_HEADER"
+        return surface1THeaderFile
 
     def setSurface2THeaderFile(self,configName, qtouchComponent):
         """
@@ -108,5 +108,5 @@ class classTouchSurfaceFiles():
         surface2THeaderFile.setType("HEADER")
         surface2THeaderFile.setMarkup(False)
         surface2THeaderFile.setEnabled(False)
-        return "TOUCH_SURFACE2T_HEADER"
+        return surface2THeaderFile
 

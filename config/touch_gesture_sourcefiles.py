@@ -57,7 +57,7 @@ class classTouchGestureSourceFiles():
             gestureLibraryFile.setOutputName("qtm_surface_gestures_cm0p_0x0023.X.a")
             gestureLibraryFile.setDestPath("/touch/lib/")
             gestureLibraryFile.setEnabled(False)
-        return "TOUCH_GESTURE_LIB"
+        return gestureLibraryFile
 
     def setGestureHeaderFile(self,configName, qtouchComponent):
         """
@@ -75,4 +75,4 @@ class classTouchGestureSourceFiles():
         gestureHeaderFile.setType("HEADER")
         gestureHeaderFile.setMarkup(False)
         gestureHeaderFile.setEnabled(False)
-        return "TOUCH_GESTURE_HEADER"
+        return gestureHeaderFile

@@ -2,6 +2,10 @@
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
 class classTouchQTouch():
+
+    def __init__(self):
+        self.systemDefFileSymbol = []
+
     def setTouchFiles(self,configName, qtouchComponent,useTrustZone):
         """
         Generates as List of touch source files
@@ -22,6 +26,9 @@ class classTouchQTouch():
         if(useTrustZone == False):
             del fileList[:]
         return fileList
+
+    def getSystemDefFileSymbol(self):
+        return self.systemDefFileSymbol[0]
 
     def setTouchHeaderFile(self,configName, qtouchComponent):
         """
@@ -137,4 +144,5 @@ class classTouchQTouch():
         ptcSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
         ptcSystemDefFile.setSourcePath("../touch/templates/system/definitions.h.ftl")
         ptcSystemDefFile.setMarkup(True)
+        self.systemDefFileSymbol.append(ptcSystemDefFile)
         return ptcSystemDefFile

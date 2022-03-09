@@ -45,7 +45,7 @@ class classTouchKeySourceFiles():
         else:
             touchLibraryFile.setSourcePath("/src/libraries/qtm_touch_key_cm0p_0x0002.X.a")
             touchLibraryFile.setOutputName("qtm_touch_key_cm0p_0x0002.X.a")
-        return "TOUCH_KEY_LIB"
+        return touchLibraryFile
 
     def setTouchHeaderFile(self,configName, qtouchComponent):
         """
@@ -62,4 +62,4 @@ class classTouchKeySourceFiles():
         touchHeaderFile.setProjectPath("config/" + configName + "/touch/")
         touchHeaderFile.setType("HEADER")
         touchHeaderFile.setMarkup(False)
-        return "TOUCH_KEY_HEADER"
+        return touchHeaderFile

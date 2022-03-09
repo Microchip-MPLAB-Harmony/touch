@@ -53,7 +53,7 @@ class classTouchScrollerSourceFiles():
             scrollerLibraryFile.setOutputName("qtm_scroller_cm0p_0x000b.X.a")
             scrollerLibraryFile.setDestPath("/touch/lib/")
             scrollerLibraryFile.setEnabled(False)
-        return "TOUCH_SCR_LIB"
+        return scrollerLibraryFile
 
     def setScrollerHeaderFile(self,configName, qtouchComponent):
         """
@@ -71,4 +71,4 @@ class classTouchScrollerSourceFiles():
         scrollerHeaderFile.setType("HEADER")
         scrollerHeaderFile.setEnabled(False)
         scrollerHeaderFile.setMarkup(False)
-        return "TOUCH_SCR_HEADER" 
+        return scrollerHeaderFile

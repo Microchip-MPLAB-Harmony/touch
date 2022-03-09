@@ -32,6 +32,7 @@ import touch_surface_2D_utility
 import touch_custom_pic32mzda
 import touch_pad
 import touch_tune_with_plugin
+import touchTrustZone
 
 qtouchInst = {}
 
@@ -273,6 +274,19 @@ def qtouchSetDependencies(symbol, func, dependency):
             sym.setDependencies(enablePM, dependency[i])
         elif(func[i] == "libChangeBoostMode"):
             sym.setDependencies(libChangeBoostMode, dependency[i])
+        elif(func[i] == "securefileUpdate"):
+            sym.setDependencies(securefileUpdate, dependency[i])
+
+def securefileUpdate(symbol,event):
+    component = symbol.getComponent()
+    if (Database.getSymbolValue("core", "PTC_IS_NON_SECURE") == False):
+        secureStatus = "SECURE"
+        Database.setSymbolValue("core","NVIC_42_0_SECURITY_TYPE", 0)
+    else:
+        secureStatus = "NON_SECURE"
+        Database.setSymbolValue("core","NVIC_42_0_SECURITY_TYPE", 1)
+
+    qtouchInst['trustZoneInst'].checknonsecureStatus(component,secureStatus)
 
 def processLump(symbol, event, targetDevice):
     """Handler for lump mode support menu click event. 
@@ -770,6 +784,19 @@ def instantiateComponent(qtouchComponent):
     touchFiles = touch_qtouch_sourcefiles.classTouchQTouch()
     projectFilesList = projectFilesList + touchFiles.setTouchFiles(configName, qtouchComponent,useTrustZone)
 
+    ptcSystemDefFile = touchFiles.getSystemDefFileSymbol()
+    if (Database.getSymbolValue("core", "PTC_IS_NON_SECURE") == False):
+        secureStatus = "SECURE"
+        Database.setSymbolValue("core","NVIC_42_0_SECURITY_TYPE", 0)
+    else:
+        secureStatus = "NON_SECURE"
+        Database.setSymbolValue("core","NVIC_42_0_SECURITY_TYPE", 1)
+    trustZoneInst = touchTrustZone.touchTrustZone()
+    trustZoneInst.initTrustzoneInstance(configName, qtouchComponent, touchMenu, device,projectFilesList,ptcSystemDefFile,secureStatus)
+    qtouchInst['trustZoneInst'] = trustZoneInst
+    symbol,func,depen = trustZoneInst.getDepDetails()
+    qtouchSetDependencies(symbol, func, depen)
+
     qtouchComponent.addPlugin("../touch/plugin/ptc_manager_c21.jar")
 
     print("Depenedency details")
@@ -780,4 +807,4 @@ def instantiateComponent(qtouchComponent):
     # symbol,func,depen = customInst.getDepDetails()
     # qtouchSetDependencies(symbol, func, depen)
     qtouchInst['touchFiles'] = touchFiles
-    print qtouchInst
+

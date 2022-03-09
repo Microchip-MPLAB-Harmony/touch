@@ -39,7 +39,7 @@ class classTouchDSFiles():
         drivenShieldHeadFile.setEnabled(False)
         drivenShieldHeadFile.setDependencies(self.enableDrivenShieldFiles,["DS_DEDICATED_ENABLE"])
         drivenShieldHeadFile.setDependencies(self.enableDrivenShieldFiles,["DS_PLUS_ENABLE"])
-        return "HEADER_DRIVENSHIELD"
+        return drivenShieldHeadFile
 
     def setDrivenShieldSourceile(self,configName, qtouchComponent):
         """
@@ -59,7 +59,7 @@ class classTouchDSFiles():
         drivenShieldSourceFile.setEnabled(False)
         drivenShieldSourceFile.setDependencies(self.enableDrivenShieldFiles,["DS_DEDICATED_ENABLE"])
         drivenShieldSourceFile.setDependencies(self.enableDrivenShieldFiles,["DS_PLUS_ENABLE"])
-        return "SOURCE_DRIVENSHIELD"
+        return drivenShieldSourceFile
 
     def enableDrivenShieldFiles(self,symbol,event):
         """Handler for enabling source / header files.
