@@ -45,6 +45,12 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#else>
 #if DEF_TOUCH_TUNE_ENABLE == 1U
 
+#if ((DEF_SENSOR_TYPE == NODE_SELFCAP) || (DEF_SENSOR_TYPE == NODE_SELFCAP_SHIELD) )
+#define TECH SELF_CAP
+#elif (DEF_SENSOR_TYPE == NODE_MUTUAL)
+#define TECH MUTUAL_CAP
+#endif
+
 <#assign csdDevices = 0 />
 <#list ["PIC32CMLS00","PIC32CMLE00","SAML10","SAML11","SAML1xE","SAML22","SAMC20","SAMC21","SAME54","SAME53","SAME51","SAMD51","PIC32MZW","PIC32MZDA"] as csdSupported>
     <#if DEVICE_NAME == csdSupported>
@@ -54,7 +60,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#assign outputModuleCnt = 3 >
 <#assign configModuleCnt = 7 >
 <#assign runtimeDataFunctions = ["copy_run_time_data"] />
-<#assign availableModules = ["KEYS_MODULE"] />
+<#assign availableData = ["KEYS_MODULE"] />
+<#assign availableConfig = ["SENSOR_NODE_CONFIG_ID","SENSOR_KEY_CONFIG_ID","COMMON_SENSOR_CONFIG_ID"] />
 <#assign familyname = "" />
 <#assign samd2x_d1x_l21 = ["SAMD11", "SAMD10", "SAMD20", "SAMD21", "SAMDA1","SAMHA1", "SAML21" ] />
 <#assign samc2x = ["SAMC20", "SAMC21"] />
@@ -80,7 +87,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
 <#-- assign outputModuleCnt = outputModuleCnt + 1 -->
 <#assign runtimeDataFunctions = runtimeDataFunctions + ["copy_scroller_run_time_data"] />
-<#assign availableModules = availableModules + ["SCROLLER_MODULE"] />
+<#assign availableData = availableData + ["SCROLLER_MODULE"] />
+<#assign availableConfig = availableConfig + ["SCROLLER_CONFIG_ID"] />
 #define SCROLLER_MODULE_OUTPUT 1u
 <#else>
 <#assign runtimeDataFunctions = runtimeDataFunctions + ["NULL"] />
@@ -96,7 +104,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define FREQ_HOP_AUTO_MODULE_OUTPUT 1u
 <#-- <#assign outputModuleCnt = outputModuleCnt + 1 > -->
 <#assign runtimeDataFunctions =  runtimeDataFunctions + ["copy_freq_hop_auto_runtime_data"] />
-<#assign availableModules = availableModules + ["FREQ_HOP_AUTO_TUNE_MODULE"] />
+<#assign availableData = availableData + ["FREQ_HOP_AUTO_TUNE_MODULE"] />
+<#assign availableConfig = availableConfig + ["FREQ_HOPPING_AUTO_TUNE_ID"] />
 <#else>
 #define FREQ_HOP_AUTO_MODULE_OUTPUT 0u
 <#assign runtimeDataFunctions = runtimeDataFunctions + ["NULL"] />
@@ -143,7 +152,7 @@ typedef struct __attribute__((packed)) {
 #define NO_OF_CONFIG_FRAME_ID	 7u//(8U)
 #define STREAMING_DEBUG_DATA     (1u)
 #define STREAMING_CONFIG_DATA    (2u)
-#define PROJECT_CONFIG_DATA_LEN	 (6u)
+#define PROJECT_CONFIG_DATA_LEN	 (10u)
 #define COMMON_KEY_CONFIG_I_LEN  sizeof(qtm_touch_key_group_config_t)
 #define COMMON_KEY_CONFIG_II_LEN (2u)
 #define SENSOR_ACQ_CONFIG_LEN	 sizeof(channel_acq_param)
@@ -154,7 +163,7 @@ typedef struct __attribute__((packed)) {
 #if FREQ_HOP_AUTO_MODULE_OUTPUT == 1u
 typedef struct  __attribute__((packed)) {
 	uint8_t currentFreq;
-	uint8_t freqList[15];
+	uint8_t freqList[16];
 }tuneFreqData_t;
 #define FREQ_HOP_AUTOTUNE_PARAM_LEN		(3U)
 #define DEBUG_DATA_FREQ_HOP_LEN (sizeof(tuneFreqData_t))
@@ -194,7 +203,7 @@ void copy_run_time_data(uint8_t channel_num);
 typedef struct tag_uart_command_info_t {
 	uint8_t transaction_type;
 	uint8_t frame_id;
-	uint8_t num_of_bytes;
+	uint16_t num_of_bytes;
 	uint8_t header_status;
 } uart_command_info_t;
 uart_command_info_t volatile uart_command_info;
@@ -255,24 +264,24 @@ sensorData_t runtime_data_arr;
 #define CONFIG_3_PTR ((uint8_t*) (&qtlib_key_grp_config_set1.sensor_touch_di))
 #define CONFIG_3_LEN ((uint8_t)  (sizeof(qtm_touch_key_group_config_t))-(2U))
 
-#define CONFIG_4_PTR ((uint8_t*) (&common_parameters_arr[0]))
-#define CONFIG_4_LEN ((uint8_t)  (COMMON_KEY_CONFIG_II_LEN))
-
 #if SCROLLER_MODULE_OUTPUT == 1u
-#define CONFIG_5_PTR ((uint8_t*) (&qtm_scroller_config1[0]))
-#define CONFIG_5_LEN ((uint8_t) (sizeof(scroll_config_param) * DEF_NUM_SCROLLERS))
+#define CONFIG_4_PTR ((uint8_t*) (&qtm_scroller_config1[0]))
+#define CONFIG_4_LEN ((uint8_t) (sizeof(scroll_config_param) * DEF_NUM_SCROLLERS))
+#else
+#define CONFIG_4_PTR ((uint8_t*) 0u)//(&qtm_scroller_config1[0]))
+#define CONFIG_4_LEN ((uint8_t) 0u)//(sizeof(scroll_config_param) * DEF_NUM_SCROLLERS))
+#endif
+
+#if FREQ_HOP_AUTO_MODULE_OUTPUT == 1u
+#define CONFIG_5_PTR ((uint8_t*) (&qtm_freq_hop_autotune_config1.enable_freq_autotune))
+#define CONFIG_5_LEN ((uint8_t)  FREQ_HOP_AUTOTUNE_PARAM_LEN)
 #else
 #define CONFIG_5_PTR ((uint8_t*) 0u)//(&qtm_scroller_config1[0]))
 #define CONFIG_5_LEN ((uint8_t) 0u)//(sizeof(scroll_config_param) * DEF_NUM_SCROLLERS))
 #endif
 
-#if FREQ_HOP_AUTO_MODULE_OUTPUT == 1u
-#define CONFIG_6_PTR ((uint8_t*) (&qtm_freq_hop_autotune_config1.enable_freq_autotune))
-#define CONFIG_6_LEN ((uint8_t)  FREQ_HOP_AUTOTUNE_PARAM_LEN)
-#else
-#define CONFIG_6_PTR ((uint8_t*) 0u)//(&qtm_scroller_config1[0]))
-#define CONFIG_6_LEN ((uint8_t) 0u)//(sizeof(scroll_config_param) * DEF_NUM_SCROLLERS))
-#endif
+#define CONFIG_6_PTR ((uint8_t*) (&common_parameters_arr[0]))
+#define CONFIG_6_LEN ((uint8_t)  (COMMON_KEY_CONFIG_II_LEN))
 
 #define DATA_0_PTR 			((uint8_t*)&runtime_data_arr.signal)
 #define DATA_0_ID 			KEY_DEBUG_DATA_ID
@@ -306,11 +315,12 @@ sensorData_t runtime_data_arr;
 #define DATA_2_LEN			0u
 #define DATA_2_REPEAT 		0u
 #define DATA_2_FRAME_LEN 	0u
-#endif
+#endif	
 
 /* configuration details */
-uint8_t proj_config[PROJECT_CONFIG_DATA_LEN] = {  ${familyname},  (DEF_NUM_CHANNELS), (${availableModules?join("|")}),
-												(0U),(0U), PROTOCOL_VERSION }; // store the config values from DV 
+uint8_t proj_config[PROJECT_CONFIG_DATA_LEN] = {PROTOCOL_VERSION, ${familyname}, TECH, (DEF_NUM_CHANNELS),
+									(${availableConfig?join("|")}), (0u), (0u),
+									(${availableData?join("|")}), (0u),(0u)};
 
 uint8_t frame_len_lookup[NO_OF_CONFIG_FRAME_ID]  = {<#list 0..configModuleCnt-1 as i><#if i==configModuleCnt-1>CONFIG_${i}_LEN<#else>CONFIG_${i}_LEN,</#if></#list>};
 uint8_t *ptr_arr[NO_OF_CONFIG_FRAME_ID]	= {<#list 0..configModuleCnt-1 as i><#if i==configModuleCnt-1>CONFIG_${i}_PTR<#else>CONFIG_${i}_PTR,</#if></#list>};
@@ -435,7 +445,7 @@ void copy_channel_config_data(uint8_t id, uint8_t channel) {
 		copy_acq_config(channel);
 		break;
 		#if SCROLLER_MODULE_OUTPUT == 1u
-		case 5:
+		case 4:
 		copy_scroller_config(channel);
 		break;
 		#endif
@@ -542,13 +552,8 @@ void uart_send_frame_header(uint8_t trans_type, uint8_t frame,uint16_t frame_len
 	uart_send_data_wait(DV_HEADER);
  	uart_send_data_wait(trans_type);
  	uart_send_data_wait(frame);
-	if(frame_len > 255)
-	{
-		uart_send_data_wait(frame_len>>8);
-		uart_send_data_wait(frame_len);
-	}
-	else
-	uart_send_data_wait(frame_len);
+	uart_send_data_wait((uint8_t)(frame_len & 0xFF));
+	uart_send_data_wait((uint8_t)(frame_len>>8));
 	uart_frame_header_flag = 1;
 }
 
@@ -600,7 +605,7 @@ void uart_recv_frame_data(uint8_t frame_id, uint16_t len)
             }
         break;
 #if SCROLLER_MODULE_OUTPUT == 1u
-        case 5:
+        case 4:
             while(num_data > sizeof(scroll_config_param)) {
 
                 uint8_t *ptr = (uint8_t *) &scroll_config_data.type;
@@ -645,11 +650,11 @@ void touchTuneProcess(void)
 
 	switch (uart_command_info.header_status) {
 		case HEADER_AWAITING:
-			if (uart_min_num_bytes_received() > 4)
+			if (uart_min_num_bytes_received() > 5)
 			{
 				if (uart_get_char() == DV_HEADER)
 				{
-					uart_get_string( (uint8_t *) &uart_command_info.transaction_type, 3); // uart_command_info.transaction_type ,uart_command_info.frame_id,uart_command_info.num_of_bytes
+					uart_get_string( (uint8_t *) &uart_command_info.transaction_type, 4); // uart_command_info.transaction_type ,uart_command_info.frame_id,uart_command_info.num_of_bytes
 					uart_command_info.header_status		= DATA_AWAITING;
 				}
 			}
