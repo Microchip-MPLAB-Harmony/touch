@@ -1,0 +1,55 @@
+{
+    "settings": [ 
+        {
+            "symbol":"GCLK_0_SRC", 
+            "value":"1", 
+            "componentId":"core", 
+             "name":"Set source as OSC16M"
+        },{
+            "symbol":"GCLK_INST_NUM1", 
+            "value":"True", 
+            "componentId":"core", 
+             "name":"Select GCLK1"
+        },{
+            "symbol":"GCLK_1_DIV", 
+            "value":"4", 
+            "componentId":"core", 
+             "name":"Prescale 16MHz by 4 for PTC"
+        },{
+            "symbol":"NVM_RWS", 
+            "value":"2", 
+            "componentId":"nvmctrl", 
+             "name":"Wait state - 2"
+        },{
+            "symbol":"CONFIG_CLOCK_OSC16M_FREQSEL", 
+            "value":"3", 
+            "componentId":"core", 
+             "name":"Enable 16MHz output"
+        },{
+            "symbol":"GCLK_0_DIV", 
+            "value":"1", 
+            "componentId":"core", 
+             "name":"Div GCLK0 by 1"
+        },{
+            "symbol":"CONFIG_CLOCK_DPLL_ENABLE", 
+            "value":"False", 
+            "componentId":"core", 
+             "name":"Set DPLL as false"
+        },{
+            "symbol":"GCLK_ID_1_CHEN", 
+            "value":"False", 
+            "componentId":"core", 
+             "name":"Set DPLL as false"
+        },{
+            "symbol":"CONFIG_CLOCK_DPLL_REF_CLOCK", 
+            "value":"1", 
+            "componentId":"core", 
+             "name":"Set DPLL as false"
+        }
+    ],
+    "descriptions":[
+            "{Oscillator| Prescaler Divisor | Frequency},{OSC16M| 1 | 16MHz}",
+            "{Generic clock(Peripherals)| Source | Frequency},{GCLK0(CPU)|OSC16M| 16MHz}, {GCLK1(PTC, UART)|OSC16M(DIV 4)|4MHz},{Timer(RTC)|OSCULP32K|1KHz}",
+            "{Wait states},{NVM states| 2}"
+    ]
+}
