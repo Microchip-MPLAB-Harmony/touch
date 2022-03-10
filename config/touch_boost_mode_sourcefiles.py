@@ -44,7 +44,7 @@ class classTouchBoostModeFiles():
         if(targetDevice == "SAML10"):
             touchAcq4pLibraryFile.setSourcePath("/src/libraries/qtm_acq_4p_saml10_0x0033.X.a")
             touchAcq4pLibraryFile.setOutputName("qtm_acq_4p_saml10_0x0033.X.a")
-        elif(targetDevice == "SAML11"):
+        elif(targetDevice in ["SAML11","SAML1xE"]):
             touchAcq4pLibraryFile.setSourcePath("/src/libraries/qtm_acq_4p_saml11_0x0033.X.a")
             touchAcq4pLibraryFile.setOutputName("qtm_acq_4p_saml11_0x0033.X.a")
         elif(targetDevice in ["PIC32CMLE00","PIC32CMLS00"]):
@@ -61,11 +61,12 @@ class classTouchBoostModeFiles():
         touchAcq4pHeaderFile.setProjectPath("config/" + configName + "/touch/")
         touchAcq4pHeaderFile.setType("HEADER")
         touchAcq4pHeaderFile.setMarkup(False)
+        touchAcq4pHeaderFile.setEnabled(False)
         self.addDepSymbol(touchAcq4pHeaderFile, "libChangeBoostMode", ["ENABLE_BOOST"])
         if(targetDevice == "SAML10"):
             touchAcq4pHeaderFile.setSourcePath("/src/qtm_acq_4p_saml10_0x0033_api.h")
             touchAcq4pHeaderFile.setOutputName("qtm_acq_4p_saml10_0x0033_api.h")
-        elif(targetDevice == "SAML11"):
+        elif(targetDevice in ["SAML11","SAML1xE"]):
             touchAcq4pHeaderFile.setSourcePath("/src/qtm_acq_4p_saml11_0x0033_api.h")
             touchAcq4pHeaderFile.setOutputName("qtm_acq_4p_saml11_0x0033_api.h")
         elif(targetDevice in ["PIC32CMLE00","PIC32CMLS00"]):
