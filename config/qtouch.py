@@ -278,15 +278,19 @@ def qtouchSetDependencies(symbol, func, dependency):
             sym.setDependencies(securefileUpdate, dependency[i])
 
 def securefileUpdate(symbol,event):
+    print "securefileUpdate"
     component = symbol.getComponent()
-    if (Database.getSymbolValue("core", "PTC_IS_NON_SECURE") == False):
-        secureStatus = "SECURE"
-        Database.setSymbolValue("core","NVIC_42_0_SECURITY_TYPE", 0)
-    else:
-        secureStatus = "NON_SECURE"
-        Database.setSymbolValue("core","NVIC_42_0_SECURITY_TYPE", 1)
-
-    qtouchInst['trustZoneInst'].checknonsecureStatus(component,secureStatus)
+    device = component.getSymbolByID("DEVICE_NAME").getValue()
+    if qtouchInst['target_deviceInst'].isSecureDevice(device):
+        nvicid = qtouchInst['target_deviceInst'].getSecureNVICID(device)
+        secureStatus = ""
+        if (Database.getSymbolValue("core", "PTC_IS_NON_SECURE") == False):
+            secureStatus = "SECURE"
+            Database.setSymbolValue("core",nvicid, 0)
+        else:
+            secureStatus = "NON_SECURE"
+            Database.setSymbolValue("core",nvicid, 1)
+        qtouchInst['trustZoneInst'].checknonsecureStatus(component,secureStatus)
 
 def processLump(symbol, event, targetDevice):
     """Handler for lump mode support menu click event. 
@@ -572,6 +576,9 @@ def instantiateComponent(qtouchComponent):
     
     if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
         useTrustZone = True
+        touchTruzoneWarning = qtouchComponent.createMenuSymbol("TOUCH_TRUSTZONE", None)
+        touchTruzoneWarning.setLabel("Set \"Secure\" project as \"Main Project\" in MPBABx before configuring Touch")
+        Log.writeWarningMessage("Set \"Secure\" project as \"Main Project\" in MPBABx before configuring Touch!!!")
     else:
         useTrustZone = False
 
@@ -785,17 +792,23 @@ def instantiateComponent(qtouchComponent):
     projectFilesList = projectFilesList + touchFiles.setTouchFiles(configName, qtouchComponent,useTrustZone)
 
     ptcSystemDefFile = touchFiles.getSystemDefFileSymbol()
-    if (Database.getSymbolValue("core", "PTC_IS_NON_SECURE") == False):
-        secureStatus = "SECURE"
-        Database.setSymbolValue("core","NVIC_42_0_SECURITY_TYPE", 0)
-    else:
-        secureStatus = "NON_SECURE"
-        Database.setSymbolValue("core","NVIC_42_0_SECURITY_TYPE", 1)
-    trustZoneInst = touchTrustZone.touchTrustZone()
-    trustZoneInst.initTrustzoneInstance(configName, qtouchComponent, touchMenu, device,projectFilesList,ptcSystemDefFile,secureStatus)
-    qtouchInst['trustZoneInst'] = trustZoneInst
-    symbol,func,depen = trustZoneInst.getDepDetails()
-    qtouchSetDependencies(symbol, func, depen)
+
+    # Trustzone - secure device updates
+    if target_deviceInst.isSecureDevice(device):
+        nvicid = target_deviceInst.getSecureNVICID(device)
+        secureStatus = ""
+        if (Database.getSymbolValue("core", "PTC_IS_NON_SECURE") == False):
+            secureStatus = "SECURE"
+            Database.setSymbolValue("core",nvicid, 0)
+        else:
+            secureStatus = "NON_SECURE"
+            Database.setSymbolValue("core",nvicid, 1)
+
+        trustZoneInst = touchTrustZone.touchTrustZone()
+        trustZoneInst.initTrustzoneInstance(configName, qtouchComponent, touchMenu, device,projectFilesList,ptcSystemDefFile,secureStatus)
+        qtouchInst['trustZoneInst'] = trustZoneInst
+        symbol,func,depen = trustZoneInst.getDepDetails()
+        qtouchSetDependencies(symbol, func, depen)
 
     qtouchComponent.addPlugin("../touch/plugin/ptc_manager_c21.jar")
 

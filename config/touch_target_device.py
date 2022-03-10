@@ -40,6 +40,18 @@ class classTouchTargetDevice():
         """
         return self.touchChannelMutual
 
+    def getSecureNVICID(self,targetDevice):
+        if(targetDevice in set(["SAML10","SAML11","SAML1xE"])):
+            return "NVIC_42_0_SECURITY_TYPE"
+        elif(targetDevice in set(["PIC32CMLS60","PIC32CMLS00"])):
+            return "NVIC_67_0_SECURITY_TYPE"
+
+    def isSecureDevice(self,targetDevice):
+        if(targetDevice in set(["SAML10","SAML11","SAML1xE","PIC32CMLS60","PIC32CMLS00"])):
+            return True
+        else:
+            return False
+
     def setModuleID(self,qtouchComponent,touchMenu,targetDevice):
         """
         assigns the Module ID based on targetDevice

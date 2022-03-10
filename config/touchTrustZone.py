@@ -5,6 +5,7 @@ class touchTrustZone():
         self.symbolList = []
         self.depFuncName = []
         self.dependencies = []
+        self.configName = ""
 
     def addDepSymbol(self, symbol, func, depen):
         self.symbolList.append(symbol)
@@ -22,6 +23,7 @@ class touchTrustZone():
         enableTrustzoneUtility.setVisible(False)
         enableTrustzoneUtility.setDefaultValue(True)
         #ptcNonSecureState = Database.getSymbolValue("core", "PTC_IS_NON_SECURE")
+        self.configName = configName
         
         self.addDepSymbol(ptcSystemDefFile, "securefileUpdate", ["core.PTC_IS_NON_SECURE"])
         self.addDepSymbol(ptcSystemDefFile, "securefileUpdate", ["core.NVIC_42_0_SECURITY_TYPE"])
@@ -56,11 +58,9 @@ class touchTrustZone():
         self.checknonsecureStatus(qtouchComponent, self.nonSecureStatus)
 
     def checknonsecureStatus(self, qtouchComponent, secureStatus):
-        print "self.localProjectFilesList", self.localProjectFilesList
         for kx in range(len(self.localProjectFilesList)):
             entryname = self.localProjectFilesList[kx].getID()
-            splitname = entryname.split('_')     
-            
+            splitname = entryname.split('_')
             if "PTC_SYS_DEF" == entryname :
                 if (secureStatus == "SECURE"):
                     self.localProjectFilesList[kx].setOutputName("core.LIST_SYSTEM_DEFINITIONS_SECURE_H_INCLUDES")
@@ -73,4 +73,10 @@ class touchTrustZone():
                 else:
                     self.localProjectFilesList[kx].setOutputName("core.LIST_SYSTEM_INIT_C_SYS_INITIALIZE_PERIPHERALS")
             
+            if ("LIB" in entryname):
+                if(secureStatus == "SECURE"):
+                    self.localProjectFilesList[kx].setDestPath("../../../../../Secure/firmware/src/config/"+self.configName+"/touch/lib/")
+                else:
+                    self.localProjectFilesList[kx].setDestPath("../../../../../NonSecure/firmware/src/config/"+self.configName+"/touch/lib/")
+
             self.localProjectFilesList[kx].setSecurity(secureStatus)

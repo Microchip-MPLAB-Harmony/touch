@@ -58,7 +58,8 @@ class classTouchInterface():
         self.deviceChild = devicesNode.getChildren()
         self.deviceName = self.deviceChild[0].getAttribute("name")
         self.deviceSeries = self.deviceChild[0].getAttribute("series")
-
+        if self.deviceSeries == "PIC32CMLS60":
+            self.deviceSeries = "PIC32CMLS00"
         if self.deviceSeries == "PIC32MZ":
             self.deviceSeries = self.deviceChild[0].getAttribute("family")
 
