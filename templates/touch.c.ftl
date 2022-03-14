@@ -50,8 +50,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#assign sam_c2x_devices = ["SAMC21","SAMC20"]>
 <#assign sam_l2x_devices = ["SAML21","SAML22"]>
 <#assign sam_l1x_devices = ["SAML10","SAML11","SAML1xE"]>
+<#assign pic32cm_le_devices = ["PIC32CMLE00","PIC32CMLS00","PIC32CMLS60"]>
 <#assign pic_devices = ["PIC32MZW","PIC32MZDA"]>
-<#assign supc_devices = ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00"]>
+<#assign supc_devices = ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMLS60"]>
 <#assign no_standby_devices = ["SAMD10","SAMD11"]>
 <#assign no_standby_during_measurement = 0>
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
@@ -213,7 +214,7 @@ qtm_acq_node_data_t ptc_qtlib_node_stat1[DEF_NUM_CHANNELS];
 
 /* Node configurations */
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
-<#if DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00">
+<#if DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00" || DEVICE_NAME=="PIC32CMLS60">
 qtm_acq_4p_pic32cm_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
 <#else>
 qtm_acq_4p_${DEVICE_NAME?lower_case}_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
@@ -224,7 +225,7 @@ qtm_acq_4p_${DEVICE_NAME?lower_case}_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS
 qtm_acq_samd1x_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 <#elseif DEVICE_NAME== "SAML11" || DEVICE_NAME== "SAML1xE">
 qtm_acq_saml10_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
-<#elseif  DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00">
+<#elseif  DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00" || DEVICE_NAME=="PIC32CMLS60">
 qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 <#else>
 qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
@@ -929,7 +930,7 @@ static void touch_configure_pm_supc(void)
 
 }
 #endif
-    <#elseif ((DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00"))>
+    <#elseif ((DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")|| (DEVICE_NAME=="PIC32CMLS60"))>
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
 static void touch_configure_pm_supc(void)
 {
@@ -957,7 +958,7 @@ Notes  :
 ============================================================================*/
 static void touch_disable_lowpower_measurement(void)
 {
-<#if sam_l1x_devices?seq_contains(DEVICE_NAME)>
+<#if sam_l1x_devices?seq_contains(DEVICE_NAME) || pic32cm_le_devices?seq_contains(DEVICE_NAME)>
     <#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false>
     lp_measurement = 0;
     <@softwarelp.lowpwer_disableevsys_saml_no_evs/>
@@ -1008,7 +1009,7 @@ Notes  :
 ============================================================================*/
 static void touch_enable_lowpower_measurement(void)
 {
-<#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "SAML1xE")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")>
+<#if sam_l1x_devices?seq_contains(DEVICE_NAME) || pic32cm_le_devices?seq_contains(DEVICE_NAME)>
 	<#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false>
     <#if num_of_channel_more_than_one == 1>
 	time_drift_wakeup_counter = 0;
@@ -1272,7 +1273,7 @@ void touch_timer_handler(void)
     <@eventlp.lowpower_touch_timer_handler_samd21_evsys/>
     <#elseif sam_c2x_devices?seq_contains(DEVICE_NAME)>
     <@eventlp.lowpower_touch_timer_handler_samc20_c21_evsys/>
-    <#elseif sam_l1x_devices?seq_contains(DEVICE_NAME)>
+    <#elseif sam_l1x_devices?seq_contains(DEVICE_NAME) || pic32cm_le_devices?seq_contains(DEVICE_NAME)>
     <@eventlp.lowpower_touch_timer_handler_saml1x_evsys/>
     <#elseif sam_l2x_devices?seq_contains(DEVICE_NAME)>
     <@eventlp.lowpower_touch_timer_handler_saml2x_evsys/>
@@ -1354,7 +1355,7 @@ void touch_timer_config(void)
 
 <#if (DEVICE_NAME == "SAMD20") || (DEVICE_NAME == "SAMD21") >
     while((RTC_REGS->MODE0.RTC_STATUS & RTC_STATUS_SYNCBUSY_Msk) == RTC_STATUS_SYNCBUSY_Msk)
-<#elseif (DEVICE_NAME == "SAMC20") || (DEVICE_NAME == "SAMC21") || (DEVICE_NAME == "SAML21") || (DEVICE_NAME == "SAML22") || (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "SAML1xE")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")>
+<#elseif (DEVICE_NAME == "SAMC20") || (DEVICE_NAME == "SAMC21") || (DEVICE_NAME == "SAML21") || (DEVICE_NAME == "SAML22") || (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "SAML1xE")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")||(DEVICE_NAME == "PIC32CMLS60")>
     while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
 </#if>
     { /* Wait for Synchronization after writing value to Count Register */ }
@@ -1579,7 +1580,7 @@ void PTC_Handler(void)
 	qtm_samd1x_ptc_handler_eoc();
 <#elseif DEVICE_NAME=="SAML11">
     qtm_saml10_ptc_handler_eoc();
-<#elseif DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00">
+<#elseif DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00" || DEVICE_NAME=="PIC32CMLS60">
     qtm_pic32cm_ptc_handler_eoc();
 <#else>
 	qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();

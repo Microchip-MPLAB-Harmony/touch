@@ -470,7 +470,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
         <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "SAML1xE")> 
             <@eventlp.lowpower_SAML/>
             <@eventlp.lowpower_params_common/>
-        <#elseif (DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")>
+        <#elseif (DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")||(DEVICE_NAME == "PIC32CMLS60")>
             <@eventlp.lowpower_PIC32CM/>
             <@eventlp.lowpower_params_common/>
         <#elseif (DEVICE_NAME == "SAMD20")||(DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")>
@@ -494,7 +494,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
     <#if ENABLE_EVENT_LP == false>
         <#--  <#if (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")>
             <@softwarelp.lowpower_SAML/>
-        <#elseif (DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")>
+        <#elseif (DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")||(DEVICE_NAME == "PIC32CMLS60")>
             <@softwarelp.lowpower_PIC32CM/>
             <@eventlp.lowpower_params_saml/>
         <#elseif (DEVICE_NAME == "SAMD20")||(DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")>
