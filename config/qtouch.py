@@ -439,7 +439,6 @@ def onPTCClock(symbol,event):
     """
 
     print "calling onPTCClock function"
-
     component = symbol.getComponent()
     if component.getSymbolValue("TOUCH_LOADED"):
         frequency = event['symbol'].getValue()
@@ -448,7 +447,25 @@ def onPTCClock(symbol,event):
             symbol.setValue(symbol.getDefaultValue()+":sync")
             sevent = component.getSymbolByID("TOUCH_SCRIPT_EVENT")
             sevent.setValue("ptcclock")
-            sevent.setValue("")
+            #sevent.setValue("")
+            
+            
+            
+def onWarning(symbol,event):
+    if event['symbol'].getID() == "PTC_CLOCK_FREQ":
+        if "sync" in event['symbol'].getValue():
+            symbol.setLabel("!!!Warning PTC clock out of sync")
+            symbol.setDescription("Open touch configurator and save project")
+            symbol.setVisible(True)
+        elif "range" in event['symbol'].getValue():
+            symbol.setLabel("!!!Warning PTC clock out of range")
+            symbol.setDescription("Open clock configurator and adjust input clock")
+            symbol.setVisible(True)
+        else:
+            symbol.setLabel("")
+            symbol.setDescription("")
+            symbol.setVisible(False)
+            
 
 def instantiateComponent(qtouchComponent):
     # import sys;sys.path.append(r'C:\Programs\eclipse\plugins\org.python.pydev.core_8.3.0.202104101217\pysrc')
@@ -787,6 +804,11 @@ def instantiateComponent(qtouchComponent):
     qtouchSercomComponent.setReadOnly(True)
     qtouchSercomComponent.setVisible(False)
     qtouchSercomComponent.setDefaultValue("")
+    
+    touchWarning = qtouchComponent.createMenuSymbol("TOUCH_WARNING", None)
+    touchWarning.setLabel("")
+    touchWarning.setVisible(False)
+    touchWarning.setDependencies(onWarning,["PTC_CLOCK_FREQ"])
     
     touchFiles = touch_qtouch_sourcefiles.classTouchQTouch()
     projectFilesList = projectFilesList + touchFiles.setTouchFiles(configName, qtouchComponent,useTrustZone)
