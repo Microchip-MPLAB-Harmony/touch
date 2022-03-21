@@ -1098,7 +1098,11 @@ static void touch_process_lowpower(void) {
         }
         <#if num_of_channel_more_than_one == 1>
         if(lp_measurement) {
-			touch_seq_lp_sensor();
+            if(get_sensor_state(current_lp_sensor) == QTM_KEY_STATE_NO_DET) {
+                /* change low-power sensor only when
+                    the current lp sensor is not in detect*/
+                touch_seq_lp_sensor();
+            }
 		}
         </#if>
     } 
