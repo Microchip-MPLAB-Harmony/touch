@@ -1,7 +1,23 @@
 ![Microchip logo](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_logo.png)
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
-#  Microchip MPLAB Harmony 3 Touch Library Release Notes
+#  Microchip MPLAB® Harmony 3 Touch Library Release Notes
+
+## Touch Library v3.11.2 Release
+### BUG FIXES
+* Bug related to Touch Configurator not opening in MPLAB® Code Configurator (MCC) is resolved. Prerequisite MCC Plugin v5.1.2 and MCC Harmony Core v1.1.0.
+* Touch files not properly added to project for Trustzone applications. This is resolved.
+* The protocol version used in TouchTune.c file is updated to match with MPLAB® Touch Plugin v2.0.0.
+### KNOWN ISSUES
+* Touch tune data with MPLAB® Touch Plugin does not work with Boost mode.
+### DEVELOPMENT TOOLS 
+* [MPLAB® X IDE v6.00](https://www.microchip.com/mplabx-ide-windows-installer)
+* [MPLAB® XC32 C/C++ Compiler v4.00](https://www.microchip.com/mplab/compilers)
+* MPLAB® XIDE plug-ins: 
+    * MPLAB® Harmony Configurator (MHC) v3.8.3
+    * MPLAB® Code Configurator (MCC)
+      * MCC Plugin v5.1.2
+      * MCC Harmony Core v1.1.0
 
 ## Touch Library v3.11.1 Release 
 ### BUG FIXES
