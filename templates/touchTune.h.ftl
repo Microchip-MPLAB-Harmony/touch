@@ -143,7 +143,7 @@ typedef enum
 
 typedef enum
 {
-	PROTOCOL_VERSION = 0x40		// 0x01000000b - lsb 5 bits - Minor version, msb first 3 bits - Major version
+	PROTOCOL_VERSION = 0x02		// 0x00000010b - msb 5 bits - Minor version (00000b), lsb first 3 bits - Major version (010b)
 }ROW_5;
 
 void touchTuneInit(void);
