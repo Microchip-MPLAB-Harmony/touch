@@ -197,7 +197,7 @@ extern qtm_acquisition_control_t qtlib_acq_set1;
 void uart_send_frame_header(uint8_t trans_type, uint8_t frame,uint16_t frame_len);
 void uart_recv_frame_data(uint8_t frame_id,uint16_t len);
 void copy_Channel_Data(uint8_t channel_num);
-void uart_send_data(uint8_t con_or_debug, uint8_t *data_ptr,  uint8_t data_len);
+void uart_send_data(uint8_t con_or_debug, uint8_t *data_ptr,  uint16_t data_len);
 void copy_run_time_data(uint8_t channel_num);
 
 typedef struct tag_uart_command_info_t {
@@ -208,7 +208,7 @@ typedef struct tag_uart_command_info_t {
 } uart_command_info_t;
 uart_command_info_t volatile uart_command_info;
 
-uint8_t tx_data_len = 0;
+uint16_t tx_data_len = 0;
 uint8_t *tx_data_ptr ;
 
 volatile uint8_t  current_debug_data;
@@ -322,14 +322,14 @@ uint8_t proj_config[PROJECT_CONFIG_DATA_LEN] = {PROTOCOL_VERSION, ${familyname},
 									(${availableConfig?join("|")}), (0u), (0u),
 									(${availableData?join("|")}), (0u),(0u)};
 
-uint8_t frame_len_lookup[NO_OF_CONFIG_FRAME_ID]  = {<#list 0..configModuleCnt-1 as i><#if i==configModuleCnt-1>CONFIG_${i}_LEN<#else>CONFIG_${i}_LEN,</#if></#list>};
+uint16_t frame_len_lookup[NO_OF_CONFIG_FRAME_ID]  = {<#list 0..configModuleCnt-1 as i><#if i==configModuleCnt-1>CONFIG_${i}_LEN<#else>CONFIG_${i}_LEN,</#if></#list>};
 uint8_t *ptr_arr[NO_OF_CONFIG_FRAME_ID]	= {<#list 0..configModuleCnt-1 as i><#if i==configModuleCnt-1>CONFIG_${i}_PTR<#else>CONFIG_${i}_PTR,</#if></#list>};
 
 /* output data details */
 uint8_t *debug_frame_ptr_arr[OUTPUT_MODULE_CNT]  = {<#list 0..outputModuleCnt-1 as i><#if i==outputModuleCnt-1>DATA_${i}_PTR<#else>DATA_${i}_PTR,</#if></#list>};
 uint8_t debug_frame_id[OUTPUT_MODULE_CNT]		  = {<#list 0..outputModuleCnt-1 as i><#if i==outputModuleCnt-1>DATA_${i}_ID<#else>DATA_${i}_ID,</#if></#list>};
-uint8_t debug_frame_data_len[OUTPUT_MODULE_CNT]  = {<#list 0..outputModuleCnt-1 as i><#if i==outputModuleCnt-1>DATA_${i}_LEN<#else>DATA_${i}_LEN,</#if></#list>};
-uint8_t debug_frame_total_len[OUTPUT_MODULE_CNT] = {<#list 0..outputModuleCnt-1 as i><#if i==outputModuleCnt-1>DATA_${i}_FRAME_LEN<#else>DATA_${i}_FRAME_LEN,</#if></#list>};
+uint16_t debug_frame_data_len[OUTPUT_MODULE_CNT]  = {<#list 0..outputModuleCnt-1 as i><#if i==outputModuleCnt-1>DATA_${i}_LEN<#else>DATA_${i}_LEN,</#if></#list>};
+uint16_t debug_frame_total_len[OUTPUT_MODULE_CNT] = {<#list 0..outputModuleCnt-1 as i><#if i==outputModuleCnt-1>DATA_${i}_FRAME_LEN<#else>DATA_${i}_FRAME_LEN,</#if></#list>};
 uint8_t debug_num_ch_scroller[OUTPUT_MODULE_CNT] = {<#list 0..outputModuleCnt-1 as i><#if i==outputModuleCnt-1>DATA_${i}_REPEAT<#else>DATA_${i}_REPEAT,</#if></#list>};
 void (*debug_func_ptr[OUTPUT_MODULE_CNT])(uint8_t ch) = {<#list 0..(runtimeDataFunctions?size-1) as i><#if i==(runtimeDataFunctions?size-1)>${runtimeDataFunctions[i]}<#else>${runtimeDataFunctions[i]},</#if></#list>};
 
@@ -524,7 +524,7 @@ void uart_send_data_wait(uint8_t data)
 	;
 }
 
-void uart_send_data(uint8_t con_or_debug, uint8_t *data_ptr,  uint8_t data_len) {
+void uart_send_data(uint8_t con_or_debug, uint8_t *data_ptr,  uint16_t data_len) {
 	if (uart_tx_in_progress == 0) {
 		config_or_debug           = con_or_debug;
 		uart_tx_in_progress       = 1;
