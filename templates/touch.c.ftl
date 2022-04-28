@@ -47,7 +47,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#assign sam_e5x_devices = ["SAME54","SAME53","SAME51","SAMD51"]>
 <#assign sam_d2x_devices = ["SAMD21","SAMDA1","SAMD20","SAMHA1"]>
 <#assign sam_d1x_devices = ["SAMD10","SAMD11"]>
-<#assign sam_c2x_devices = ["SAMC21","SAMC20"]>
+<#assign sam_c2x_devices = ["SAMC21","SAMC20","PIC32CMJH01","PIC32CMJH00"]>
 <#assign sam_l2x_devices = ["SAML21","SAML22"]>
 <#assign sam_l1x_devices = ["SAML10","SAML11","SAML1xE"]>
 <#assign pic32cm_le_devices = ["PIC32CMLE00","PIC32CMLS00","PIC32CMLS60"]>
@@ -227,6 +227,8 @@ qtm_acq_samd1x_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TO
 qtm_acq_saml10_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 <#elseif  DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00" || DEVICE_NAME=="PIC32CMLS60">
 qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
+<#elseif  DEVICE_NAME =="PIC32CMJH00" || DEVICE_NAME=="PIC32CMJH01">
+qtm_acq_pic32cmjh_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 <#else>
 qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 </#if>
@@ -1359,7 +1361,7 @@ void touch_timer_config(void)
 
 <#if (DEVICE_NAME == "SAMD20") || (DEVICE_NAME == "SAMD21") >
     while((RTC_REGS->MODE0.RTC_STATUS & RTC_STATUS_SYNCBUSY_Msk) == RTC_STATUS_SYNCBUSY_Msk)
-<#elseif (DEVICE_NAME == "SAMC20") || (DEVICE_NAME == "SAMC21") || (DEVICE_NAME == "SAML21") || (DEVICE_NAME == "SAML22") || (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "SAML1xE")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")||(DEVICE_NAME == "PIC32CMLS60")>
+<#elseif (DEVICE_NAME == "SAMC20") || (DEVICE_NAME == "SAMC21") || (DEVICE_NAME == "SAML21") || (DEVICE_NAME == "SAML22") || (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "SAML1xE")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")||(DEVICE_NAME == "PIC32CMLS60")|| (DEVICE_NAME == "PIC32CMJH01")|| (DEVICE_NAME == "PIC32CMJH00")>
     while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
 </#if>
     /* Wait for Synchronization after writing value to Count Register */
@@ -1586,6 +1588,8 @@ void PTC_Handler(void)
     qtm_saml10_ptc_handler_eoc();
 <#elseif DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00" || DEVICE_NAME=="PIC32CMLS60">
     qtm_pic32cm_ptc_handler_eoc();
+<#elseif DEVICE_NAME =="PIC32CMJH00" || DEVICE_NAME=="PIC32CMJH01">
+    qtm_pic32cmjh_ptc_handler_eoc();
 <#else>
 	qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();
 </#if>

@@ -53,6 +53,8 @@ extern "C" {
 #include "qtm_common_components_api.h"
 <#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
 #include "qtm_acq_samd1x_0x0009_api.h"
+<#elseif  DEVICE_NAME == "PIC32CMJH01"|| DEVICE_NAME=="PIC32CMJH00">
+#include "qtm_acq_pic32cmjh_0x002f_api.h"
 <#else>
     <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
         <#if DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00"|| DEVICE_NAME=="PIC32CMLS60">

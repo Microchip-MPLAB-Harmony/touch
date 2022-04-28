@@ -6,12 +6,12 @@ class classTouchLP():
     def __init__(self):
         self.LOW_POWER_EVENTS_SUPPORTED_DEVICES =  ["SAMD20","SAMD21","SAMDA1","SAMHA1",
                 "SAML11","SAML1xE","SAML10",
-                "SAMC21","SAMC20",
+                "SAMC21","SAMC20","PIC32CMJH01","PIC32CMJH00",
                 "PIC32CMLE00","PIC32CMLS00",
                 "SAML21","SAML22"]
         self.LOW_POWER_SUPPORTED_DEVICES =  ["SAMD20","SAMD21","SAMDA1","SAMHA1",
             "SAML11","SAML1xE","SAML10",
-            "SAMC21","SAMC20",
+            "SAMC21","SAMC20","PIC32CMJH01","PIC32CMJH00",
             "PIC32CMLE00","PIC32CMLS00",
             "SAME54","SAME53","SAME51","SAMD51",
             "SAML21","SAML22",
