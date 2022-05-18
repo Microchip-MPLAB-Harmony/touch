@@ -48,7 +48,7 @@ class classTouchInterface():
         Returns:
             self.deviceSeries (string)
         """
-        releaseVersion = "v3.11.2"
+        releaseVersion = "v3.12.0"
         releaseYear    = "2022"
 
         devicesNode = ATDF.getNode("/avr-tools-device-file/devices")
