@@ -490,7 +490,7 @@ def instantiateComponent(qtouchComponent):
     configName = Variables.get("__CONFIGURATION_NAME")
  
     touchConfigurator = qtouchComponent.createMenuSymbol("TOUCH_CONFIGURATOR", None)
-    touchConfigurator.setLabel("Goto Menu, MHC > Tools > Touch Configuration")    
+    touchConfigurator.setLabel("Goto Menu, Window > MPLAB Code Configurator > Harmony > Touch Configuration")    
     
     touchMenu = qtouchComponent.createMenuSymbol("TOUCH_MENU", None)
     touchMenu.setLabel("Touch Configuration")
