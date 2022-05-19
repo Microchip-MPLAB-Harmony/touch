@@ -59,6 +59,8 @@ def onAttachmentConnected(source,target):
         if targetID == "RTC_TMR":
             if (Database.getSymbolValue(remoteID, "RTC_MODE0_MATCHCLR") == False):
                 Database.setSymbolValue(remoteID, "RTC_MODE0_MATCHCLR", True)
+            if (Database.getSymbolValue(remoteID, "RTC_COUNTSYNC_ENABLE") == True):
+                Database.setSymbolValue(remoteID, "RTC_COUNTSYNC_ENABLE", False)
             if (Database.getSymbolValue(remoteID, "RTC_MODE0_INTENSET_CMP0_ENABLE") == False):
                 Database.setSymbolValue(remoteID, "RTC_MODE0_INTENSET_CMP0_ENABLE", True)
                 Database.setSymbolValue(remoteID, "RTC_MODULE_SELECTION", 0)
