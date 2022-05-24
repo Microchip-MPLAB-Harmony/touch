@@ -28,9 +28,11 @@
             { "device":"SAMD10", "manual":"1.8", "auto":"1.8" },
             { "device":"SAMD11", "manual":"1.8", "auto":"1.8" },
             { "device":"PIC32MZ", "manual":"1.0", "auto":"1.0" },
-            { "device":"PIC32CMLE00", "manual":"1.4", "auto":"1.4" },
-			{ "device":"PIC32CMJH00", "manual":"1.0", "auto":"1.0" },
-			{ "device":"PIC32CMJH01", "manual":"1.0", "auto":"1.0" }
+            { "device":"PIC32CMLE00", "manual":"1.0", "auto":"1.0" },
+            { "device":"PIC32CMLS00", "manual":"1.0", "auto":"1.0" },
+            { "device":"PIC32CMLS60", "manual":"1.0", "auto":"1.0" },
+            { "device":"PIC32CMJH00", "manual":"1.0", "auto":"1.0" },
+            { "device":"PIC32CMJH01", "manual":"1.0", "auto":"1.0" }
         ]
     }
 }
