@@ -1,0 +1,11 @@
+package:
+  format-version: "1.0.0"
+  name: "touch"
+  version: "3.12.0"
+  type: "api"
+  status: "production"
+  
+  dependencies:
+    - name: "csp"
+      type: "package"
+      version: "3.12.0"

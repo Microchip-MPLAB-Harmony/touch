@@ -3,6 +3,22 @@
 
 #  Microchip MPLAB® Harmony 3 Touch Library Release Notes
 
+## Touch Library v3.12.0 Release
+### NEW FEATURES SUPPORTED
+* PIC32CM JH family device support is done.
+* RTC CountSync is disabled by default for all touch projects.
+### BUG FIXES
+* Goto menu for Touch Configurator is set to proper path.
+### KNOWN ISSUES
+* Event system based low power has issues when it enters low power mode.
+### DEVELOPMENT TOOLS 
+* [MPLAB® X IDE v6.00](https://www.microchip.com/mplabx-ide-windows-installer)
+* [MPLAB® XC32 C/C++ Compiler v4.10](https://www.microchip.com/mplab/compilers)
+* MPLAB® XIDE plug-ins: 
+    * MPLAB® Code Configurator (MCC)
+      * MCC Plugin v5.1.4
+      * MCC Core v5.4.3
+
 ## Touch Library v3.11.2 Release
 ### BUG FIXES
 * Bug related to Touch Configurator not opening in MPLAB® Code Configurator (MCC) is resolved. Prerequisite MCC Plugin v5.1.2 and MCC Harmony Core v1.1.0.
