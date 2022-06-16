@@ -240,7 +240,7 @@ def applyDrivenShieldTimers(symbol, event):
             Database.connectDependencies(toConnect)
         sevent = component.getSymbolByID("TOUCH_SCRIPT_EVENT")
         sevent.setValue("dstimer")
-        sevent.setValue("")
+        #sevent.setValue("")
     print("---------Leaving apply DSTimers----------")
 
 def libChangeBoostMode(symbol,event):
