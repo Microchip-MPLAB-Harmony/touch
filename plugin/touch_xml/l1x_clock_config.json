@@ -80,6 +80,6 @@
     "descriptions":[
             "{Oscillator| Prescaler Divisor | Frequency},{OSC8M|1|8MHz}",
             "{Generic clock(Peripherals)| Source | Frequency},{GCLK0(CPU)|OSC8M|8MHz},{GCLK1(Timer)|OSCULP32K|2.048KHz},{GCLK2(PTC)|OSC8M|4MHz}",
-			"{Wait states}, {NVM states| 2}"
+            "{Wait states}, {NVM states| 2}"
     ]
 }
