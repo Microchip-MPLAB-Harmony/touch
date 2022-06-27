@@ -3,6 +3,18 @@
 
 #  Microchip MPLAB® Harmony 3 Touch Library Release Notes
 
+## Touch Library v3.12.1 Release
+### BUG FIXES
+* Bug related to enableing Drivenshield is resolved.
+* Bug related to applying Drivenshield setting is resolved.
+### DEVELOPMENT TOOLS 
+* [MPLAB® X IDE v6.00](https://www.microchip.com/mplabx-ide-windows-installer)
+* [MPLAB® XC32 C/C++ Compiler v4.10](https://www.microchip.com/mplab/compilers)
+* MPLAB® XIDE plug-ins: 
+    * MPLAB® Code Configurator (MCC)
+      * MCC Plugin v5.1.9
+      * MCC Core v5.4.4
+	  
 ## Touch Library v3.12.0 Release
 ### NEW FEATURES SUPPORTED
 * PIC32CM JH family device support is done.
