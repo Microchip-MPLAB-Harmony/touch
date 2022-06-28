@@ -5,8 +5,7 @@
 
 ## Touch Library v3.12.1 Release
 ### BUG FIXES
-* Bug related to enableing Drivenshield is resolved.
-* Bug related to applying Drivenshield setting is resolved.
+* Bug related to enabling Drivenshield is resolved
 ### DEVELOPMENT TOOLS 
 * [MPLAB® X IDE v6.00](https://www.microchip.com/mplabx-ide-windows-installer)
 * [MPLAB® XC32 C/C++ Compiler v4.10](https://www.microchip.com/mplab/compilers)
