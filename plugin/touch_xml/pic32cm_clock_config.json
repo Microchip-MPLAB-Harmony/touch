@@ -51,11 +51,6 @@
             "componentId":"core", 
              "name":"Prescale 12MHz by 3 for PTC"
         },{
-            "symbol":"GCLK_1_ENABLE", 
-            "value":"True", 
-            "componentId":"core", 
-             "name":"Enable GCLK1"
-        },{
             "symbol":"NVM_RWS", 
             "value":"1", 
             "componentId":"nvmctrl", 
