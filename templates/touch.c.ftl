@@ -1247,12 +1247,12 @@ Notes  :
 void touch_timer_handler(void)
 {
 <#if ENABLE_GESTURE==true>
-	touch_gesture_time_cnt++;
+	touch_gesture_time_cnt = touch_gesture_time_cnt + 2u;
 	if (touch_gesture_time_cnt >= DEF_GESTURE_TIME_BASE_MS) {
 		qtm_update_gesture_2d_timer(touch_gesture_time_cnt / DEF_GESTURE_TIME_BASE_MS);
 		touch_gesture_time_cnt = touch_gesture_time_cnt % DEF_GESTURE_TIME_BASE_MS;
 	}
-	interrupt_cnt++;
+	interrupt_cnt = interrupt_cnt + 2u;
 	if (interrupt_cnt >= DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
 		interrupt_cnt = 0;
 		/* Count complete - Measure touch sensors */
@@ -1376,7 +1376,7 @@ void touch_timer_config(void)
     ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}((uint32_t) measurement_period_store);
     <#else>
     ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}((uint32_t) DEF_TOUCH_MEASUREMENT_PERIOD_MS);
-    </#if>    
+    </#if>
 #endif
     ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].TIMER_START_API_NAME}(); 
 <#else>
@@ -1389,7 +1389,7 @@ void touch_timer_config(void)
 </#if>
 <#else>
 	<#if ENABLE_GESTURE==true>
-	#warning "Timer for periodic touch measurement not defined; Call touch_timer_handler() every 1 millisecond."
+	#warning "Timer for periodic touch measurement not defined; Call touch_timer_handler() every 2 millisecond."
 	<#else>
 	#warning "Timer for periodic touch measurement not defined; Call touch_timer_handler() every DEF_TOUCH_MEASUREMENT_PERIOD_MS."
 	</#if>
