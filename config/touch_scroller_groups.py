@@ -247,7 +247,7 @@ class classTouchScrollerGroups():
             none
         """
         touchScrollerDeadband.setLabel("Scroller Deadband")
-        touchScrollerDeadband.addKey("SCR_DB_NONE", "DB_NONE", "no deadband")
+        touchScrollerDeadband.addKey("SCR_DB_NONE", "SCR_DB_NONE", "no deadband")
         touchScrollerDeadband.addKey("SCR_DB_1_PERCENT", "SCR_DB_1_PERCENT", "1 Percent")
         touchScrollerDeadband.addKey("SCR_DB_2_PERCENT", "SCR_DB_2_PERCENT", "2 Percent")
         touchScrollerDeadband.addKey("SCR_DB_3_PERCENT", "SCR_DB_3_PERCENT", "3 Percent")
