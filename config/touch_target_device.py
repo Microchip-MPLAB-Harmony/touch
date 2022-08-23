@@ -10,7 +10,7 @@ class classTouchTargetDevice():
         self.xPads = set()
         self.yPads = set()
         self.adc_based_acquisition = set(["SAME54","SAME53","SAME51","SAMD51"])
-        self.no_csd_support = set(["SAMD20","SAMD21","SAMDA1","SAMHA1","SAMD10","SAMD11"])
+        self.no_csd_support = set(["SAMD20","SAMD21","SAMDA1","SAMHA1","SAMD10","SAMD11", "SAML21"])
         self.non_lump_support = set(["PIC32MZW", "PIC32MZDA"])
         self.picDevices = ["PIC32MZW", "PIC32MZDA"]
         self.timer_driven_shield_support = set(["SAMD21","SAMDA1","SAMHA1","SAME54","SAME53","SAME51","SAMD51","SAMC21","SAMC20","SAML21","SAML22","SAMD10","SAMD11","SAMD20"])
