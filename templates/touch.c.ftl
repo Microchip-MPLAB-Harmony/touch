@@ -51,7 +51,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#assign sam_l2x_devices = ["SAML21","SAML22"]>
 <#assign sam_l1x_devices = ["SAML10","SAML11","SAML1xE"]>
 <#assign pic32cm_le_devices = ["PIC32CMLE00","PIC32CMLS00","PIC32CMLS60"]>
-<#assign pic_devices = ["PIC32MZW","PIC32MZDA"]>
+<#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35"]>
+<#assign buckland = ["PIC32CXBZ31","WBZ35"]>
 <#assign supc_devices = ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMLS60"]>
 <#assign no_standby_devices = ["SAMD10","SAMD11"]>
 <#assign no_standby_during_measurement = 0>
@@ -229,6 +230,8 @@ qtm_acq_saml10_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TO
 qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 <#elseif  DEVICE_NAME =="PIC32CMJH00" || DEVICE_NAME=="PIC32CMJH01">
 qtm_acq_pic32cmjh_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
+<#elseif  DEVICE_NAME =="PIC32CXBZ31" || DEVICE_NAME=="WBZ35">
+qtm_acq_pic32cx_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 <#else>
 qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 </#if>
@@ -1247,12 +1250,12 @@ Notes  :
 void touch_timer_handler(void)
 {
 <#if ENABLE_GESTURE==true>
-	touch_gesture_time_cnt = touch_gesture_time_cnt + 2u;
+	touch_gesture_time_cnt++;
 	if (touch_gesture_time_cnt >= DEF_GESTURE_TIME_BASE_MS) {
 		qtm_update_gesture_2d_timer(touch_gesture_time_cnt / DEF_GESTURE_TIME_BASE_MS);
 		touch_gesture_time_cnt = touch_gesture_time_cnt % DEF_GESTURE_TIME_BASE_MS;
 	}
-	interrupt_cnt = interrupt_cnt + 2u;
+	interrupt_cnt++;
 	if (interrupt_cnt >= DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
 		interrupt_cnt = 0;
 		/* Count complete - Measure touch sensors */
@@ -1331,11 +1334,19 @@ void touch_timer_config(void)
 	<#if TOUCH_TIMER_INSTANCE != "">
 	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].CALLBACK_API_NAME}(timer_handler,tmr_context);
 	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].TIMER_START_API_NAME}();
+    <#if buckland?seq_contains(DEVICE_NAME) >
+	<#if ENABLE_GESTURE==true>
+	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}(1*(${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].FREQUENCY_GET_API_NAME}()/1000));
+	<#else>
+	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}(DEF_TOUCH_MEASUREMENT_PERIOD_MS*(${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].FREQUENCY_GET_API_NAME}()/1000));
+	</#if>
+    <#else>
 	<#if ENABLE_GESTURE==true>
 	${TOUCH_TIMER_INSTANCE}_PeriodSet(1*(${TOUCH_TIMER_INSTANCE}_FrequencyGet()/1000));
 	<#else>
 	${TOUCH_TIMER_INSTANCE}_PeriodSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS*(${TOUCH_TIMER_INSTANCE}_FrequencyGet()/1000));
 	</#if>
+    </#if>
 	<#else>
 	<#if ENABLE_GESTURE==true>
 	#warning "Timer for periodic touch measurement not defined; Call touch_timer_handler() every 1 millisecond."
@@ -1376,7 +1387,7 @@ void touch_timer_config(void)
     ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}((uint32_t) measurement_period_store);
     <#else>
     ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}((uint32_t) DEF_TOUCH_MEASUREMENT_PERIOD_MS);
-    </#if>
+    </#if>    
 #endif
     ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].TIMER_START_API_NAME}(); 
 <#else>
@@ -1389,7 +1400,7 @@ void touch_timer_config(void)
 </#if>
 <#else>
 	<#if ENABLE_GESTURE==true>
-	#warning "Timer for periodic touch measurement not defined; Call touch_timer_handler() every 2 millisecond."
+	#warning "Timer for periodic touch measurement not defined; Call touch_timer_handler() every 1 millisecond."
 	<#else>
 	#warning "Timer for periodic touch measurement not defined; Call touch_timer_handler() every DEF_TOUCH_MEASUREMENT_PERIOD_MS."
 	</#if>
@@ -1526,6 +1537,13 @@ uint8_t get_surface_position(uint8_t ver_or_hor, uint8_t contact)
 </#if>
 
 <#if pic_devices?seq_contains(DEVICE_NAME)>
+<#if buckland?seq_contains(DEVICE_NAME)>
+void CVD_Handler(void)
+{
+    qtm_cvd_clear_interrupt();
+    qtm_pic32_cvd_handler_eoc();
+}
+</#if>
 <#else>
 /*============================================================================
 void PTC_Handler_EOC(void)

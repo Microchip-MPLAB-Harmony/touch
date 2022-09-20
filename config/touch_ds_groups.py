@@ -57,6 +57,10 @@ class classTouchDSGroup():
                 for index in range(0, len(ptcPininfo)):
                     if(ptcPininfo[index].getAttribute("group") == "Y"):
                         drivenShieldDedicatedPin.addKey(ptcPininfo[index].getAttribute("index"),ptcPininfo[index].getAttribute("group")+"("+ptcPininfo[index].getAttribute("index")+")",ptcPininfo[index].getAttribute("group")+ptcPininfo[index].getAttribute("index")+ "  ("+ ptcPininfo[index].getAttribute("pad")+")")
+            elif instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35"]:
+                for index in range(0, len(ptcPininfo)):
+                    if(ptcPininfo[index].getAttribute("group") == "CVDR"):
+                        drivenShieldDedicatedPin.addKey(ptcPininfo[index].getAttribute("index"),"Y("+ptcPininfo[index].getAttribute("index")+")","Y"+ptcPininfo[index].getAttribute("index")+ "  ("+ ptcPininfo[index].getAttribute("pad")+")")
             else:
                 dsPins = ptcPininfo[1]
                 for index in range(0, len(dsPins)):
@@ -468,7 +472,11 @@ class classTouchDSGroup():
         print("Updating shield lumps")
         component= symbol.getComponent()
         currentVal = int(event['symbol'].getValue())
-        enableDrivenShieldAdjacent = component.getSymbolByID("DS_ADJACENT_SENSE_LINE_AS_SHIELD").getValue()
+        enableDrivenShieldAdjacent = False
+        if self.instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35"]:
+            enableDrivenShieldAdjacent = False
+        else:
+            enableDrivenShieldAdjacent = component.getSymbolByID("DS_ADJACENT_SENSE_LINE_AS_SHIELD").getValue()
         enableDrivenShieldDedicated = component.getSymbolByID("DS_DEDICATED_PIN_ENABLE").getValue()
         drivenShieldDedicatedPin = component.getSymbolByID("DS_DEDICATED_PIN")
         

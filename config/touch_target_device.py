@@ -10,11 +10,11 @@ class classTouchTargetDevice():
         self.xPads = set()
         self.yPads = set()
         self.adc_based_acquisition = set(["SAME54","SAME53","SAME51","SAMD51"])
-        self.no_csd_support = set(["SAMD20","SAMD21","SAMDA1","SAMHA1","SAMD10","SAMD11", "SAML21"])
-        self.non_lump_support = set(["PIC32MZW", "PIC32MZDA"])
-        self.picDevices = ["PIC32MZW", "PIC32MZDA"]
+        self.no_csd_support = set(["SAMD20","SAMD21","SAMDA1","SAMHA1","SAMD10","SAMD11"])
+        self.non_lump_support = set(["PIC32MZW", "PIC32MZDA", "PIC32CXBZ31", "WBZ35"])
+        self.picDevices = ["PIC32MZW", "PIC32MZDA", "PIC32CXBZ31", "WBZ35"]
         self.timer_driven_shield_support = set(["SAMD21","SAMDA1","SAMHA1","SAME54","SAME53","SAME51","SAMD51","SAMC21","SAMC20","SAML21","SAML22","SAMD10","SAMD11","SAMD20"])
-        self.hardware_driven_shield_support = set(["SAML10","SAML11","SAML1xE","PIC32MZW","PIC32CMLE00","PIC32CMLS00","PIC32CMJH01","PIC32CMJH00"])
+        self.hardware_driven_shield_support = set(["SAML10","SAML11","SAML1xE","PIC32MZW","PIC32CMLE00","PIC32CMLS00","PIC32CMJH01","PIC32CMJH00","PIC32CXBZ31", "WBZ35"])
         self.touchChannelSelf = 0
         self.touchChannelMutual = 0
         self.ptcPinValues =[]
@@ -78,7 +78,7 @@ class classTouchTargetDevice():
             getModuleID.setDefaultValue("0x0027")
         elif(targetDevice in ["PIC32CMLE00","PIC32CMLS00"]):
             getModuleID.setDefaultValue("0x0040")
-        elif(targetDevice == "PIC32MZW"):
+        elif(targetDevice in set(["PIC32MZW","PIC32CXBZ31", "WBZ35"])):
             getModuleID.setDefaultValue("0x003e")
         elif(targetDevice == "PIC32MZDA"):
             getModuleID.setDefaultValue("0x0046")
@@ -169,6 +169,8 @@ class classTouchTargetDevice():
             clockXml.setDefaultValue("pic32mzda_clock_config")
         elif(targetDevice == "PIC32MZW"):
             clockXml.setDefaultValue("pic32mzw_clock_config")
+        elif(targetDevice in ["PIC32CXBZ31", "WBZ35"]):
+            clockXml.setDefaultValue("pic32cx_clock_config")
         elif(targetDevice in ["PIC32CMLE00","PIC32CMLS00"]):
             clockXml.setDefaultValue("pic32cm_clock_config")
         elif(targetDevice == "SAML22"):
@@ -266,8 +268,11 @@ class classTouchTargetDevice():
         Returns:
             :none
         """
-        if targetDevice not in self.picDevices:
-            if (targetDevice in set(["SAMC20","SAMC21","SAMD20","SAMD21","SAMHA1","SAMDA1","SAMD10","SAMD11","SAML10","SAML11","SAML1xE","SAML21","SAML22","PIC32CMLE00","PIC32CMLS00","PIC32CMJH01","PIC32CMJH00"])):
+        if(targetDevice in ["PIC32CXBZ31", "WBZ35"]):
+            Database.clearSymbolValue("core", "CVD_CLOCK_ENABLE")
+            Database.setSymbolValue("core", "CVD_CLOCK_ENABLE", True)
+        elif targetDevice not in self.picDevices:
+            if (targetDevice in set(["SAMC20","SAMC21","SAMD20","SAMD21","SAMHA1","SAMDA1","SAMD10","SAMD11","SAML10","SAML11","SAML21","SAML22","PIC32CMLE00","PIC32CMLS00"])):
                 Database.clearSymbolValue("core", "PTC_CLOCK_ENABLE")
                 Database.setSymbolValue("core", "PTC_CLOCK_ENABLE", True)
             else:
@@ -291,6 +296,12 @@ class classTouchTargetDevice():
             Database.setSymbolValue("core", "GCLK_ID_40_GENSEL", 1)
         else:
             print ("error - setADCClock")
+
+    def getDefaultCSDValue(self,targetDevice):
+        if targetDevice in self.picDevices:
+            return 30
+        else:
+            return 0
 
     def getCSDMode(self,targetDevice):
         """Get charge share delay bit resolution based on targetDevice. 
@@ -464,16 +475,67 @@ class classTouchTargetDevice():
                                 print (index)
                                 cvdRPinsIndex.append(int(index[2:]))
                                 cvdRPinsTemp.append(tempstring)
-            cvdRPins = [x for _,x in sorted(zip(cvdRPinsIndex,cvdRPinsTemp))]
-            cvdTPins = [x for _,x in sorted(zip(cvdRPinsIndex,cvdRPinsTemp))]
-            print(cvdRPins)
-            print(cvdTPins)
-            self.touchChannelSelf = len(cvdRPins)
-            self.touchChannelMutual = len(cvdTPins)
-            print(self.touchChannelSelf)
-            print(self.touchChannelMutual)
-            self.ptcPinValues.append(cvdRPins)
-            self.ptcPinValues.append(cvdTPins)
+            elif targetDevice in ["PIC32CXBZ31", "WBZ35"]:
+                ptcSignalsATDF = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"CVD\"]/instance/signals")
+                self.ptcPinValues = []
+                selectablePins =set()
+                self.ptcPinValues = ptcSignalsATDF.getChildren()
+                print(self.ptcPinValues, len(self.ptcPinValues))
+                sortedptcPinValues = []
+
+                # sort the pins list by index
+                for found in range(256):
+                    for idx in range(0, len(self.ptcPinValues)):
+                        if (self.ptcPinValues[idx].getAttribute("group") in ["CVDR", "CVDT"]):
+                            if (int(self.ptcPinValues[idx].getAttribute("index")) == found):
+                                sortedptcPinValues.append(self.ptcPinValues[idx])
+                self.ptcPinValues = sortedptcPinValues
+
+                for index in range(0, len(self.ptcPinValues)):
+                    if(self.ptcPinValues[index].getAttribute("group") == "CVDT"):
+                        self.xPads.add(self.ptcPinValues[index].getAttribute("pad"))
+                    elif(self.ptcPinValues[index].getAttribute("group") == "CVDR"):
+                        self.yPads.add(self.ptcPinValues[index].getAttribute("pad"))
+
+                selectablePins = self.xPads.intersection(self.yPads)
+                ylen = len(self.yPads)
+                xlen = len(self.xPads)
+                selLen = len(selectablePins)
+                # Determine largest Mutual config
+                maxMutuals = 0
+
+                if(selLen ==0):
+                    maxMutuals = ylen *xlen
+                elif(selLen == xlen and xlen == ylen): #Full Mux
+                    maxMutuals = (ylen/2) * (xlen/2)
+                elif(ylen >= xlen):                     #Partial 1 more y than x
+                    maxMutuals = xlen * (ylen-selLen)
+                else:                                   #Partial 2 more x than y
+                    maxMutuals = ylen * (xlen-selLen)
+                
+                # set the global counts for self and mutual
+                self.touchChannelSelf = ylen 
+                self.touchChannelMutual = maxMutuals
+
+                print("====================================================")
+                print("Largest non Lump Mutual Config : " + str(maxMutuals))
+                print("Lump Supported : "+ str(lumpsupport))
+                print("self.touchChannelSelf : " + str(self.touchChannelSelf))
+                print("self.touchChannelMutual : " + str(self.touchChannelMutual))
+                print("====================================================")
+                print("X pins length: " + str(xlen))
+                print("X Pins:")
+                print(self.xPads)
+                print("====================================================")
+                print("Y pins length: " + str(ylen))
+                print("Y Pins :")
+                print(self.yPads)
+                print("====================================================")
+                print("Selectable pins length: " + str(selLen))
+                print("Selectable Pins:")
+                print(selectablePins)
+                print("====================================================")
+
         else:
             if (targetDevice in self.adc_based_acquisition):
                 ptcSignalsATDF = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"ADC\"]/instance@[name=\"ADC0\"]/signals")

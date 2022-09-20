@@ -52,7 +52,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #endif
 
 <#assign csdDevices = 0 />
-<#list ["PIC32CMLS60","PIC32CMLS00","PIC32CMLE00","SAML10","SAML11","SAML1xE","SAML22","SAMC20","SAMC21","SAME54","SAME53","SAME51","SAMD51","PIC32MZW","PIC32MZDA", "PIC32CMJH01","PIC32CMJH00"] as csdSupported>
+<#list ["PIC32CMLS60","PIC32CMLS00","PIC32CMLE00","SAML10","SAML11","SAML1xE","SAML22","SAMC20","SAMC21","SAME54","SAME53","SAME51","SAMD51","PIC32MZW","PIC32MZDA", "PIC32CMJH01","PIC32CMJH00","PIC32CXBZ31","WBZ35"] as csdSupported>
     <#if DEVICE_NAME == csdSupported>
         <#assign csdDevices = 1>
     </#if>
@@ -68,7 +68,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#assign saml22 = ["SAML22"] />
 <#assign same5x = ["SAME51","SAME53","SAME54","SAMD51"] />
 <#assign saml1x_pic32cmle = ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMLS60"] />
-<#assign pic32cvd = ["PIC32MZW","PIC32MZDA"] />
+<#assign pic32cvd = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35"] />
 <#if samd2x_d1x_l21?seq_contains(DEVICE_NAME)>
 <#assign familyname = "samd2x_d1x_l21" />
 <#elseif samc2x?seq_contains(DEVICE_NAME)>

@@ -1,4 +1,4 @@
-<#assign pic_devices = ["PIC32MZW","PIC32MZDA"]>
+<#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35"]>
 
 <#assign doubleCompensation= 0>
 <#list ["SAME51","SAME53","SAME54","SAMD51","SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMLS60"] as i>

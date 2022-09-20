@@ -123,9 +123,14 @@ def finalizeComponent(qtouchComponent):
     autoComponentIDTable = []
     autoConnectTable = []
     if qtouchInst['interfaceInst'].getDeviceSeries() in qtouchInst['target_deviceInst'].picDevices:
-        autoComponentIDTable[:] = ["adchs","tmr4"]
-        autoConnectTable[:] = [["lib_qtouch", "Touch_timer","tmr4","TMR4_TMR"],
-                                ["lib_qtouch", "Acq_Engine","adchs","ADCHS_ADC"]]
+        if qtouchInst['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35"]:
+            autoComponentIDTable[:] = ["adchs","rtc"]
+            autoConnectTable[:] = [["lib_qtouch", "Touch_timer","rtc","RTC_TMR"],
+                                    ["lib_qtouch", "Acq_Engine","adchs","ADCHS_ADC"]]
+        else:
+            autoComponentIDTable[:] = ["adchs","tmr4"]
+            autoConnectTable[:] = [["lib_qtouch", "Touch_timer","tmr4","TMR4_TMR"],
+                                    ["lib_qtouch", "Acq_Engine","adchs","ADCHS_ADC"]]
     else:
         if qtouchInst['interfaceInst'].getDeviceSeries() in qtouchInst['target_deviceInst'].adc_based_acquisition:
             autoComponentIDTable[:] = ["rtc","ptc","adc0"]
@@ -329,7 +334,7 @@ def processLump(symbol, event, targetDevice):
 def updatePinsSettings(symbol,event):
     localComponent = symbol.getComponent()
     targetDevice = localComponent.getSymbolByID("DEVICE_NAME").getValue()
-    if targetDevice not in ["PIC32MZW", "PIC32MZDA"]:
+    if targetDevice not in ["PIC32MZW", "PIC32MZDA", "PIC32CXBZ31", "WBZ35"]:
         touchPads = qtouchInst['padsInfo'].getTouchPads()
         touchModule = qtouchInst['padsInfo'].getTouchModule()
         #print touchModule
@@ -588,6 +593,7 @@ def instantiateComponent(qtouchComponent):
     target_deviceInst.setGCLKconfig(qtouchComponent,ATDF,touchInfoMenu,device)
     # CSD support
     csdMode = target_deviceInst.getCSDMode(device)
+    csdDefaultValue = target_deviceInst.getDefaultCSDValue(device)
     # Rsel support
     rSelMode = target_deviceInst.getRSelMode(device)
     # Driven shield support
@@ -651,6 +657,7 @@ def instantiateComponent(qtouchComponent):
         touchChannelMutual,
         ptcPinValues,
         csdMode,
+        csdDefaultValue,
         rSelMode)
     qtouchInst['node_groupInst'] = node_groupInst
     symbol,func,depen = node_groupInst.getDepDetails()

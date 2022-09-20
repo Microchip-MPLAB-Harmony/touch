@@ -94,7 +94,7 @@ class classTouchNodeGroups():
     def getDepDetails(self):
         return self.symbolList, self.depFuncName, self.dependencies
 
-    def initNodeGroupInstance(self,instances,qtouchComponent,groupNumber,parentLabel,selfChannels,mutualChannels,ptcPinValues,csdMode,rSelMode):
+    def initNodeGroupInstance(self,instances,qtouchComponent,groupNumber,parentLabel,selfChannels,mutualChannels,ptcPinValues,csdMode,csdDefaultValue,rSelMode):
         """Initialise Node Group Instance
         Arguments:
             :qtouchComponent : touchModule
@@ -182,7 +182,7 @@ class classTouchNodeGroups():
             self.tchMutYPinSelection[len(self.tchMutYPinSelection)-1].setDisplayMode("Description")
             
             if(csdMode!="NoCSD"):
-                self.setCSDValues(touchChargeShareDelay,csdMode)
+                self.setCSDValues(touchChargeShareDelay,csdMode,csdDefaultValue)
 
             if(rSelMode == "e5x"):
                 self.setSeriesRValuesE5x(touchSeriesResistor)
@@ -205,7 +205,23 @@ class classTouchNodeGroups():
             # X and Y assignment
 
             if instances['interfaceInst'].getDeviceSeries() in instances['target_deviceInst'].picDevices:
-                if instances['interfaceInst'].getDeviceSeries() == "PIC32MZW":
+                if instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35"]:
+                    for index in range(0, len(ptcPinValues)):
+                        if(ptcPinValues[index].getAttribute("group") == "CVDR"):
+                            self.tchSelfPinSelection[len(self.tchSelfPinSelection)-1].addKey(
+                                ptcPinValues[index].getAttribute("index"),"Y("+ptcPinValues[index].getAttribute("index")+")",
+                                "Y"+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
+
+                            self.tchMutYPinSelection[len(self.tchMutYPinSelection)-1].addKey(
+                                ptcPinValues[index].getAttribute("index"),"Y("+ptcPinValues[index].getAttribute("index")+")",
+                                "Y"+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
+
+                        if(ptcPinValues[index].getAttribute("group") == "CVDT"):
+                            self.tchMutXPinSelection[len(self.tchMutXPinSelection)-1].addKey(
+                                ptcPinValues[index].getAttribute("index"),"X("+ptcPinValues[index].getAttribute("index")+")",
+                                "X"+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
+
+                elif instances['interfaceInst'].getDeviceSeries() == "PIC32MZW":
                     cvdRPins = ptcPinValues[0]
                     cvdTPins = ptcPinValues[1]
                     for index in range(0, len(cvdRPins)):
@@ -254,7 +270,7 @@ class classTouchNodeGroups():
                             ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
 
 
-    def initNodeGroup(self,instances,qtouchComponent, touchMenu, minVal,maxVal,selfChannels,mutualChannels, ptcPinValues,csdMode,rSelMode):
+    def initNodeGroup(self,instances,qtouchComponent, touchMenu, minVal,maxVal,selfChannels,mutualChannels, ptcPinValues,csdMode,csdDefaultValue,rSelMode):
         """Initialise Node Groups and add to touch Module
         Arguments:
             :qtouchComponent : touchModule
@@ -278,7 +294,7 @@ class classTouchNodeGroups():
                 nodeMenu.setDescription("Configure Nodes")
                 nodeMenu.setVisible(True)
                 nodeMenu.setEnabled(True)
-                self.initNodeGroupInstance(instances,qtouchComponent,groupNum,nodeMenu,selfChannels,mutualChannels,ptcPinValues,csdMode,rSelMode)
+                self.initNodeGroupInstance(instances,qtouchComponent,groupNum,nodeMenu,selfChannels,mutualChannels,ptcPinValues,csdMode,csdDefaultValue,rSelMode)
             else:
                 dynamicNodeMenu = "nodeMenu_" +str(groupNum) 
                 dynamicId = "NODE_MENU_" +str(groupNum) 
@@ -286,7 +302,7 @@ class classTouchNodeGroups():
                 vars()[dynamicNodeMenu].setLabel("Node Configuration Group"+str(groupNum))
                 vars()[dynamicNodeMenu].setVisible(False)
                 vars()[dynamicNodeMenu].setEnabled(False)
-                self.initNodeGroupInstance(instances,qtouchComponent,groupNum,vars()[dynamicNodeMenu],selfChannels,mutualChannels,ptcPinValues,csdMode,rSelMode)
+                self.initNodeGroupInstance(instances,qtouchComponent,groupNum,vars()[dynamicNodeMenu],selfChannels,mutualChannels,ptcPinValues,csdMode,csdDefaultValue,rSelMode)
 
     def updateNodeGroups(self,symbol,event):
         """Handler for number of Node groups being used. Triggered by qtouch.updateGroupsCounts(symbol,event)
@@ -308,7 +324,7 @@ class classTouchNodeGroups():
                 component.getSymbolByID(grpId).setEnabled(True)
                 component.getSymbolByID(grpId).setVisible(True)
 
-    def setCSDValues(self,touchChargeShareDelay,csdMode):
+    def setCSDValues(self,touchChargeShareDelay,csdMode,csdDefaultValue):
         """Populate the charge share delay symbol 
         Arguments:
             :touchChargeShareDelay : symbol to be populated
@@ -317,7 +333,7 @@ class classTouchNodeGroups():
             none
         """
         touchChargeShareDelay.setLabel("Additional Charge Share Delay")
-        touchChargeShareDelay.setDefaultValue(0)
+        touchChargeShareDelay.setDefaultValue(csdDefaultValue)
         touchChargeShareDelay.setMin(0)
         touchChargeShareDelay.setDescription("Increase in Charge Share Delay increases sensor charging time and so the touch measurement time. It indicates the number of additional cycles that are inserted within a touch measurement cycle.")
         

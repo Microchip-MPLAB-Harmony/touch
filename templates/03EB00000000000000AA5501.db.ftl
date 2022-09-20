@@ -25,7 +25,7 @@
 <#assign debug_data_node = ['Signal', 'Reference' , 'Delta', 'Compensation', 'CSD'] >
 </#if>
 
-<#assign pic_devices = ["PIC32MZW","PIC32MZDA"]>
+<#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35"]>
 <#if pic_devices?seq_contains(DEVICE_NAME)>
 <#if TUNE_MODE_SELECTED != "CAL_AUTO_TUNE_NONE">
 <#assign debug_data_node_title = ['Signal', 'Reference' , 'Delta', 'added S/H cap pF', 'Acq Time'] >
