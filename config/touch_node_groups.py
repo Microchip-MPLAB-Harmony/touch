@@ -184,7 +184,7 @@ class classTouchNodeGroups():
             if(csdMode!="NoCSD"):
                 self.setCSDValues(touchChargeShareDelay,csdMode,csdDefaultValue)
 
-            if(rSelMode == "e5x"):
+            if(rSelMode in ["e5x","pic32cz"]):
                 self.setSeriesRValuesE5x(touchSeriesResistor)
             elif(rSelMode == "l22"):
                 self.setSeriesRValuesL22(touchSeriesResistor)
@@ -194,12 +194,20 @@ class classTouchNodeGroups():
             #PTC Clock Prescaler
             if(rSelMode == "e5x"):
                 self.setPTCPresscalerValuesE5x(touchPTCPrescaler)
+            elif(rSelMode == "pic32cz"):
+                self.setPTCPresscalerValuesCZ(touchPTCPrescaler)
             else:
                 self.setPTCPresscalerValues(touchPTCPrescaler)
             #Analog Gain
-            self.setAnalogGainValues(touchAnalogGain)
+            if(rSelMode == "pic32cz"):
+                self.setAnalogGainValuesCZ(touchAnalogGain)
+            else:
+                self.setAnalogGainValues(touchAnalogGain)
             #Digital Filter Gain - Accumulated sum is scaled to Digital Gain
-            self.setDigitalFilterGainValues(touchDigitalFilterGain)
+            if(rSelMode == "pic32cz"):
+                self.setDigitalFilterGainValuesCZ(touchDigitalFilterGain)
+            else:
+                self.setDigitalFilterGainValues(touchDigitalFilterGain)
             #Digital Filter Oversampling - Number of samples for each measurement
             self.setDigitalFilterOversamplingValues(touchDigitalFilterOversampling)
             # X and Y assignment
@@ -268,6 +276,19 @@ class classTouchNodeGroups():
                         self.tchMutXPinSelection[len(self.tchMutXPinSelection)-1].addKey(
                             ptcPinValues[index].getAttribute("index"),ptcPinValues[index].getAttribute("group")+"("+ptcPinValues[index].getAttribute("index")+")",
                             ptcPinValues[index].getAttribute("group")+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
+
+                    if(ptcPinValues[index].getAttribute("group") == "DRV"):
+                        self.tchSelfPinSelection[len(self.tchSelfPinSelection)-1].addKey(
+                            ptcPinValues[index].getAttribute("index"),"Y"+"("+ptcPinValues[index].getAttribute("index")+")",
+                            "Y"+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
+
+                        self.tchMutYPinSelection[len(self.tchMutYPinSelection)-1].addKey(
+                            ptcPinValues[index].getAttribute("index"),"Y"+"("+ptcPinValues[index].getAttribute("index")+")",
+                            "Y"+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
+
+                        self.tchMutXPinSelection[len(self.tchMutXPinSelection)-1].addKey(
+                            ptcPinValues[index].getAttribute("index"),"X"+"("+ptcPinValues[index].getAttribute("index")+")",
+                            "X"+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
 
 
     def initNodeGroup(self,instances,qtouchComponent, touchMenu, minVal,maxVal,selfChannels,mutualChannels, ptcPinValues,csdMode,csdDefaultValue,rSelMode):
@@ -419,6 +440,24 @@ class classTouchNodeGroups():
         touchPTCPrescaler.setDisplayMode("Description")
         touchPTCPrescaler.setDescription("The PTC clock is prescaled by PTC and then used for touch measurement.The PTC prescaling factor is defined by this parameter. It is recommended to configure this parameter such that the clock after the prescaler is less than or equal to 1MHz.")
 
+    def setPTCPresscalerValuesCZ(self,touchPTCPrescaler):
+        """Populate the ptc prescaler symbol
+        Arguments:
+            :touchPTCPrescaler : symbol to be populated
+        Returns:
+            none
+        """
+        touchPTCPrescaler.setLabel("PTC Clock Prescaler")
+        touchPTCPrescaler.addKey("PRESC2", "PRSC_DIV_SEL_2", "2")
+        touchPTCPrescaler.addKey("PRESC4", "PRSC_DIV_SEL_4", "4")
+        touchPTCPrescaler.addKey("PRESC8", "PRSC_DIV_SEL_8", "8")
+        touchPTCPrescaler.addKey("PRESC16", "PRSC_DIV_SEL_16", "16")
+        touchPTCPrescaler.addKey("PRESC32", "PRSC_DIV_SEL_32", "32")
+        touchPTCPrescaler.setDefaultValue(0)
+        touchPTCPrescaler.setOutputMode("Value")
+        touchPTCPrescaler.setDisplayMode("Description")
+        touchPTCPrescaler.setDescription("The PTC clock is prescaled by PTC and then used for touch measurement.The PTC prescaling factor is defined by this parameter. It is recommended to configure this parameter such that the clock after the prescaler is less than or equal to 1MHz.")
+
     def setPTCPresscalerValuesE5x(self,touchPTCPrescaler):
         """Populate the ptc prescaler symbol
         Arguments:
@@ -472,6 +511,40 @@ class classTouchNodeGroups():
         touchDigitalFilterGain.addKey("GAIN4", "GAIN_4", "4")
         touchDigitalFilterGain.addKey("GAIN8", "GAIN_8", "8")
         touchDigitalFilterGain.addKey("GAIN16", "GAIN_16", "16")
+        touchDigitalFilterGain.setDefaultValue(0)
+        touchDigitalFilterGain.setOutputMode("Value")
+        touchDigitalFilterGain.setDisplayMode("Description")
+        touchDigitalFilterGain.setDescription("Gain setting for touch delta value. Higher gain setting increases touch delta as well as noise. So, optimum gain setting should be used.Gain should be tuned such that the touch delta is between 40~60 counts. ")
+    
+    def setAnalogGainValuesCZ(self,touchAnalogGain):
+        """Populate the analog gain symbol
+        Arguments:
+            :touchPTCPrescaler : symbol to be populated
+        Returns:
+            none
+        """
+        touchAnalogGain.setLabel("Analog Gain")
+        touchAnalogGain.addKey("ANA_GAIN1", "GAIN_1", "1")
+        touchAnalogGain.addKey("ANA_GAIN2", "GAIN_2", "2")
+        touchAnalogGain.addKey("ANA_GAIN4", "GAIN_4", "4")
+        touchAnalogGain.addKey("ANA_GAIN8", "GAIN_8", "8")
+        touchAnalogGain.setDefaultValue(0)
+        touchAnalogGain.setOutputMode("Value")
+        touchAnalogGain.setDisplayMode("Description")
+        touchAnalogGain.setDescription("Gain setting for touch delta value.Higher gain setting increases touch delta as well as noise.So, optimum gain setting should be used.Gain should be tuned such that the touch delta is between 40~60 counts.")
+            
+    def setDigitalFilterGainValuesCZ(self,touchDigitalFilterGain):
+        """Populate the digital gain symbol
+        Arguments:
+            :touchPTCPrescaler : symbol to be populated
+        Returns:
+            none
+        """
+        touchDigitalFilterGain.setLabel("Digital Filter Gain")
+        touchDigitalFilterGain.addKey("GAIN1", "GAIN_1", "1")
+        touchDigitalFilterGain.addKey("GAIN2", "GAIN_2", "2")
+        touchDigitalFilterGain.addKey("GAIN4", "GAIN_4", "4")
+        touchDigitalFilterGain.addKey("GAIN8", "GAIN_8", "8")
         touchDigitalFilterGain.setDefaultValue(0)
         touchDigitalFilterGain.setOutputMode("Value")
         touchDigitalFilterGain.setDisplayMode("Description")

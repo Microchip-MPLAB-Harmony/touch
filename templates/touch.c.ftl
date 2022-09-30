@@ -53,7 +53,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#assign pic32cm_le_devices = ["PIC32CMLE00","PIC32CMLS00","PIC32CMLS60"]>
 <#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35"]>
 <#assign buckland = ["PIC32CXBZ31","WBZ35"]>
-<#assign supc_devices = ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMLS60"]>
+<#assign pic32cz = ["PIC32CZCA80"]>
+<#assign supc_devices = ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMLS60","PIC32CZCA80"]>
 <#assign no_standby_devices = ["SAMD10","SAMD11"]>
 <#assign no_standby_during_measurement = 0>
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
@@ -195,6 +196,8 @@ uint8_t module_error_code = 0;
 uint16_t time_since_touch = 0;
 /* store the drift period for comparison */
 uint16_t measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
+/* measurement mode; 0 - sequential, 1 - windowcomp*/
+static uint8_t measurement_mode = 0u; 
 </#if>
 
 /* Acquisition module internal data - Size to largest acquisition set */
@@ -203,6 +206,11 @@ uint32_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 /* Acquisition set 1 - General settings */
 qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
     = {DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, DEF_PTC_CAL_AUTO_TUNE, DEF_SEL_FREQ_INIT, 1};
+<#elseif pic32cz?seq_contains(DEVICE_NAME)>
+uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
+/* Acquisition set 1 - General settings */
+qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
+    ={DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, DEF_SEL_FREQ_INIT, DEF_PTC_INTERRUPT_PRIORITY, DEF_PTC_WAKEUP_EXP};
 <#else>
 uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 /* Acquisition set 1 - General settings */
@@ -232,6 +240,8 @@ qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..T
 qtm_acq_pic32cmjh_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 <#elseif  DEVICE_NAME =="PIC32CXBZ31" || DEVICE_NAME=="WBZ35">
 qtm_acq_pic32cx_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
+<#elseif  DEVICE_NAME =="PIC32CZCA80">
+qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 <#else>
 qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 </#if>
@@ -908,7 +918,12 @@ void touch_process(void)
             #endif
         </#if>
     }
-
+#if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
+	if ((time_to_measure_touch_var != 1u) && 
+        (measurement_mode == 1u) ){
+		PM_StandbyModeEnter();   
+	}
+#endif
 <#if ENABLE_KRONOCOMM == true>
 #if KRONOCOMM_ENABLE == 1u
     uart_process();
@@ -946,6 +961,16 @@ static void touch_configure_pm_supc(void)
 
     /* Configure VREG. Mask the values loaded from NVM during reset.*/
     SUPC_REGS->SUPC_VREG = SUPC_VREG_ENABLE_Msk | SUPC_VREG_SEL_BUCK | SUPC_VREG_RUNSTDBY_Msk | SUPC_VREG_VSVSTEP(0) | SUPC_VREG_VSPER(0) | SUPC_VREG_STDBYPL0_Msk;
+}
+#endif
+    <#elseif ((DEVICE_NAME == "PIC32CZCA80"))>
+#if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
+static void touch_configure_pm_supc(void)
+{
+    /* 
+     * Enable Analog Input Charge Pump of PTC , for weak VDD 
+     */
+    SUPC_REGS->SUPC_VREGCTRL |= SUPC_VREGCTRL_CPEN(1u << 2u);
 }
 #endif
 </#if>
@@ -1002,6 +1027,14 @@ static void touch_disable_lowpower_measurement(void)
 <#if sam_e5x_devices?seq_contains(DEVICE_NAME)>
     <@softwarelp.lowpwer_disable_same5x_no_evs/>
 </#if>
+<#if pic32cz?seq_contains(DEVICE_NAME)>
+    <#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false>
+    lp_measurement = 0;
+    <@softwarelp.lowpwer_disableevsys_saml_no_evs/>
+    <#else>
+    <@eventlp.lowpwer_disable_pic32cz_evsys/>
+    </#if>
+</#if>
 }
 
 /*============================================================================
@@ -1056,6 +1089,14 @@ static void touch_enable_lowpower_measurement(void)
 <#if sam_e5x_devices?seq_contains(DEVICE_NAME)>
     <@softwarelp.lowpwer_enable_same5x_no_evs/>
 </#if>
+<#if pic32cz?seq_contains(DEVICE_NAME)>
+	<#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false>
+    lp_measurement = 1u;
+	<@softwarelp.lowpwer_enableevsys_saml_no_evs/>
+	<#else>
+	<@eventlp.lowpwer_enable_pic32cz_evsys/>
+	</#if>
+</#if>
 }
 
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
@@ -1070,11 +1111,10 @@ Output : none
 Notes  :
 ============================================================================*/
 static void touch_process_lowpower(void) {
+       touch_ret_t touch_ret;
 <#if ENABLE_EVENT_LP?exists>
 	<#if ENABLE_EVENT_LP == true>
     if (time_since_touch >= DEF_TOUCH_TIMEOUT) {
-        
-    touch_ret_t touch_ret;
     
 		/* Start Autoscan */
 		touch_ret = qtm_autoscan_sensor_node(&auto_scan_setup, touch_measure_wcomp_match);
@@ -1286,6 +1326,8 @@ void touch_timer_handler(void)
     <@eventlp.lowpower_touch_timer_handler_saml1x_evsys/>
     <#elseif sam_l2x_devices?seq_contains(DEVICE_NAME)>
     <@eventlp.lowpower_touch_timer_handler_saml2x_evsys/>
+    <#elseif pic32cz?seq_contains(DEVICE_NAME)>
+    <@eventlp.lowpower_touch_timer_handler_pic32cz_evsys/>  
     </#if>
 
 <#elseif (ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false) || (sam_e5x_devices?seq_contains(DEVICE_NAME)) || (sam_d1x_devices?seq_contains(DEVICE_NAME)) >  <#-- No event system -->
@@ -1608,6 +1650,8 @@ void PTC_Handler(void)
     qtm_pic32cm_ptc_handler_eoc();
 <#elseif DEVICE_NAME =="PIC32CMJH00" || DEVICE_NAME=="PIC32CMJH01">
     qtm_pic32cmjh_ptc_handler_eoc();
+<#elseif DEVICE_NAME =="PIC32CZCA80">
+    qtm_pic32cz_ptc_handler_eoc();
 <#else>
 	qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();
 </#if>

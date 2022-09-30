@@ -45,6 +45,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include "device.h"
 
 <#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35"]>
+<#assign pic32cz = ["PIC32CZCA80"]>
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -99,13 +100,20 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
         </#if>
     </#if>
 
-
+<#if pic32cz?seq_contains(DEVICE_NAME)>
+<#else>
 /* Set sensor calibration mode for charge share delay ,Prescaler or series resistor.
  * Range: CAL_AUTO_TUNE_NONE / CAL_AUTO_TUNE_RSEL / CAL_AUTO_TUNE_PRSC / CAL_AUTO_TUNE_CSD
  * Default value: CAL_AUTO_TUNE_NONE.
  */
 
 #define DEF_PTC_CAL_OPTION   ${TUNE_MODE_SELECTED}
+
+/* Calibration option to ensure full charge transfer */
+/* Bits 7:0 = XX | TT SELECT_TAU | X | CAL_OPTION */
+#define DEF_PTC_TAU_TARGET CAL_CHRG_5TAU
+#define DEF_PTC_CAL_AUTO_TUNE (uint8_t)((DEF_PTC_TAU_TARGET << CAL_CHRG_TIME_POS) | DEF_PTC_CAL_OPTION)
+</#if>
 
 <#if pic_devices?seq_contains(DEVICE_NAME)>
 <#else>
@@ -115,16 +123,19 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define DEF_PTC_INTERRUPT_PRIORITY ${DEF_PTC_INTERRUPT_PRIORITY}
 </#if>
 
-/* Calibration option to ensure full charge transfer */
-/* Bits 7:0 = XX | TT SELECT_TAU | X | CAL_OPTION */
-#define DEF_PTC_TAU_TARGET CAL_CHRG_5TAU
-#define DEF_PTC_CAL_AUTO_TUNE (uint8_t)((DEF_PTC_TAU_TARGET << CAL_CHRG_TIME_POS) | DEF_PTC_CAL_OPTION)
-
 /* Set default bootup acquisition frequency.
  * Range: FREQ_SEL_0 - FREQ_SEL_15 , FREQ_SEL_SPREAD
  * Default value: FREQ_SEL_0.
  */
 #define DEF_SEL_FREQ_INIT ${DEF_SEL_FREQ_INIT}
+
+<#if pic32cz?seq_contains(DEVICE_NAME)>
+/* Set default wakeup exponent.
+ * Range: 4u to 15u
+ * Default value: 4u.
+ */    
+#define DEF_PTC_WAKEUP_EXP ${DEF_PTC_WAKEUP_EXP}
+</#if>
 
 /*----------------------------------------------------------------------------
  *     defines
@@ -487,6 +498,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
             <@eventlp.lowpower_params_common/>
         <#elseif (DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21")||(DEVICE_NAME == "PIC32CMJH01")||(DEVICE_NAME == "PIC32CMJH00")>
             <@eventlp.lowpower_samc20_c21/>
+            <@eventlp.lowpower_params_common/>
+        <#elseif (DEVICE_NAME == "PIC32CZCA80")>
+            <@eventlp.lowpower_PIC32CZ/>
             <@eventlp.lowpower_params_common/>
         </#if>
     </#if>

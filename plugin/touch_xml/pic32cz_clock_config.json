@@ -1,0 +1,28 @@
+{
+    "settings": [ 
+		{
+            "symbol":"CONFIG_CLOCK_DFLL_ENABLE", 
+            "value":"True", 
+            "componentId":"core", 
+             "name":"Enable DFLL"
+        },
+		{
+            "symbol":"GCLK_1_SRC", 
+            "value":"5", 
+            "componentId":"core", 
+             "name":"Select DFLL for GCLK1"
+        },
+		{
+            "symbol":"GCLK_1_DIV", 
+            "value":"12", 
+            "componentId":"core", 
+             "name":"Prescale DFLL by 12 for PTC"
+        }
+       
+    ],
+    "descriptions":[
+            "{Oscillator| Prescaler Divisor | Frequency},{DFLL48M| 1 | 48MHz(Open loop)}",
+            "{Generic clock(Peripherals)| Source | Frequency}, {GCLK1(PTC, UART)|DFLL48M(DIV 12)|4MHz},{(RTC)|ULP32K|1KHz}",
+            "{Wait states},{NVM states| 2}"
+    ]
+}

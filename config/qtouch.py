@@ -428,10 +428,10 @@ def enablePM(symbol,event):
         supcComponentID = ["supc"]
         if(lowPowerKey != ""):
             Database.activateComponents(pmComponentID)
-            if (targetDevice in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]):
+            if (targetDevice in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00","PIC32CZCA80"]):
                 Database.activateComponents(supcComponentID)
         else:
-            if(targetDevice in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]):
+            if(targetDevice in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00","PIC32CZCA80"]):
                 Database.deactivateComponents(supcComponentID)
             if(targetDevice not in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]):
                 Database.deactivateComponents(pmComponentID)
@@ -843,7 +843,7 @@ def instantiateComponent(qtouchComponent):
 
     qtouchComponent.addPlugin("../touch/plugin/ptc_manager_c21.jar")
 
-    print("Depenedency details")
+    print("Dependency details")
     symbol,func,depen = target_deviceInst.getDepDetails()
     print symbol,func,depen
     qtouchSetDependencies(symbol, func, depen)

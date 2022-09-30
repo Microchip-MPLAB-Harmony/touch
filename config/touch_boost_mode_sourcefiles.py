@@ -50,6 +50,9 @@ class classTouchBoostModeFiles():
         elif(targetDevice in ["PIC32CMLE00","PIC32CMLS00"]):
             touchAcq4pLibraryFile.setSourcePath("/src/libraries/qtm_acq_4p_pic32cm_le_0x0041.X.a")
             touchAcq4pLibraryFile.setOutputName("qtm_acq_4p_pic32cm_le_0x0041.X.a")
+        elif(targetDevice in ["PIC32CZCA80"]):
+            touchAcq4pLibraryFile.setSourcePath("/src/libraries/qtm_acq_global_pic32cz_ca80_0x0049.X.a")
+            touchAcq4pLibraryFile.setOutputName("qtm_acq_global_pic32cz_ca80_0x0049.X.a")
         else:
             touchAcq4pLibraryFile.setSourcePath("Error_setBoostModeLibraryFile")
             touchAcq4pLibraryFile.setOutputName("Error_setBoostModeLibraryFile")
@@ -72,6 +75,9 @@ class classTouchBoostModeFiles():
         elif(targetDevice in ["PIC32CMLE00","PIC32CMLS00"]):
             touchAcq4pHeaderFile.setSourcePath("/src/qtm_acq_4p_pic32cm_le_0x0041_api.h")
             touchAcq4pHeaderFile.setOutputName("qtm_acq_4p_pic32cm_le_0x0041_api.h")
+        elif(targetDevice in ["PIC32CZCA80"]):
+            touchAcq4pHeaderFile.setSourcePath("/src/qtm_global_pic32czca_0x0049_api.h")
+            touchAcq4pHeaderFile.setOutputName("qtm_global_pic32czca_0x0049_api.h")
         else:
             touchAcq4pHeaderFile.setSourcePath("Error_setBoostModeHeaderFile")
             touchAcq4pHeaderFile.setOutputName("Error_setBoostModeHeaderFile")

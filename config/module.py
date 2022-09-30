@@ -2,7 +2,7 @@
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
 
-supportedDevices = ["PIC32CX","WBZ3","PIC32MZ","SAMC21","SAMC20", "SAME51","SAME53","SAME54","SAMD51","SAMD20","SAMD21","SAML21","SAML22","SAML10","SAML11","SAML1xE","SAMD10","SAMD11","SAMDA1","SAMHA1","PIC32CM"]
+supportedDevices = ["PIC32CZ","PIC32CX","WBZ3","PIC32MZ","SAMC21","SAMC20", "SAME51","SAME53","SAME54","SAMD51","SAMD20","SAMD21","SAML21","SAML22","SAML10","SAML11","SAML1xE","SAMD10","SAMD11","SAMDA1","SAMHA1","PIC32CM"]
 #The following devices which have X,Y signals listed under ADC0 instead of PTC are listed as special devices.
 ADCDevices = ["SAME51","SAME53","SAME54","SAMD51"]
 #notSupportedVariants = ["ATSAMC21J18A"]

@@ -57,6 +57,8 @@ class classTouchDSGroup():
                 for index in range(0, len(ptcPininfo)):
                     if(ptcPininfo[index].getAttribute("group") == "Y"):
                         drivenShieldDedicatedPin.addKey(ptcPininfo[index].getAttribute("index"),ptcPininfo[index].getAttribute("group")+"("+ptcPininfo[index].getAttribute("index")+")",ptcPininfo[index].getAttribute("group")+ptcPininfo[index].getAttribute("index")+ "  ("+ ptcPininfo[index].getAttribute("pad")+")")
+                    if(ptcPininfo[index].getAttribute("group") == "DRV"):
+                        drivenShieldDedicatedPin.addKey(ptcPininfo[index].getAttribute("index"),"Y"+"("+ptcPininfo[index].getAttribute("index")+")","Y"+ptcPininfo[index].getAttribute("index")+ "  ("+ ptcPininfo[index].getAttribute("pad")+")")
             elif instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35"]:
                 for index in range(0, len(ptcPininfo)):
                     if(ptcPininfo[index].getAttribute("group") == "CVDR"):

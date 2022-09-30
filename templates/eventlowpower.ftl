@@ -64,7 +64,8 @@
 
 /* Defines the Auto scan trigger period.
  * The Low-power measurement period determine the interval between low-power touch measurement.
- * Range: NODE_SCAN_4MS to NODE_SCAN_512MS
+ * Range: NODE_SCAN_4MS to NODE_SCAN_512MS 
+ * Check API file to get the actual range. For certain devices, range is NODE_SCAN_8MS to NODE_SCAN_1024MS 
  * Default value: NODE_SCAN_64MS
 */
 #define QTM_AUTOSCAN_TRIGGER_PERIOD	 ${LOW_POWER_PERIOD}
@@ -455,6 +456,7 @@
 #define QTM_RTC_TO_PTC_EVSYS_CHANNEL			0u
 #define QTM_AUTOSCAN_TRIGGER_PERIOD_EVENT		(1u << QTM_AUTOSCAN_TRIGGER_PERIOD)
 </#macro>
+<#-- ========================================================================================== -->
 
 <#macro lowpower_samd21_da1_ha1>
 /* Auto scan trigger Periods */
@@ -492,6 +494,81 @@
 #define QTM_AUTOSCAN_TRIGGER_PERIOD_EVENT       (1u << QTM_AUTOSCAN_TRIGGER_PERIOD)
 </#macro>
 
+<#-- ========================================================================================== -->
+<#macro lowpwer_enable_pic32cz_evsys>
+	/* Enable event trigger */
+    EVSYS_REGS->CHANNEL[QTM_RTC_TO_PTC_EVSYS_CHANNEL].EVSYS_CHANNEL = EVSYS_CHANNEL_EVGEN(QTM_AUTOSCAN_TRIGGER_GENERATOR) | EVSYS_CHANNEL_PATH(0u) | EVSYS_CHANNEL_EDGSEL(0u) \
+                                        | EVSYS_CHANNEL_ONDEMAND(1) | EVSYS_CHANNEL_RUNSTDBY(1);
+    EVSYS_REGS->EVSYS_USER[QTM_AUTOSCAN_STCONV_USER] = QTM_RTC_TO_PTC_EVSYS_CHANNEL+1u;
+
+    /* Set up timer with periodic event output and drift period */
+    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    {
+        /* Wait for Synchronization after writing value to Count Register */
+    }
+    RTC_Timer32Stop();
+    RTC_Timer32CounterSet(0);
+    RTC_REGS->MODE0.RTC_EVCTRL = QTM_AUTOSCAN_TRIGGER_PERIOD_EVENT;
+    RTC_Timer32Compare0Set(DEF_TOUCH_DRIFT_PERIOD_MS);
+    RTC_Timer32Start();
+	/* Store the measurement period */
+	measurement_period_store = DEF_TOUCH_DRIFT_PERIOD_MS;
+    
+    measurement_mode = 1u;
+</#macro>
+
+<#macro lowpwer_disable_pic32cz_evsys>
+	 /* Disable RTC to PTC event */
+    EVSYS_REGS->EVSYS_USER[QTM_AUTOSCAN_STCONV_USER] = 0;
+    EVSYS_REGS->CHANNEL[QTM_RTC_TO_PTC_EVSYS_CHANNEL].EVSYS_CHANNEL = EVSYS_CHANNEL_EVGEN(0) | EVSYS_CHANNEL_PATH(0) | EVSYS_CHANNEL_EDGSEL(0) \
+                                        | EVSYS_CHANNEL_ONDEMAND(0) | EVSYS_CHANNEL_RUNSTDBY(0);
+    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    {
+        /* Wait for Synchronization after writing value to Count Register */
+    }
+    RTC_Timer32Stop();
+    RTC_Timer32CounterSet(0);
+    RTC_REGS->MODE0.RTC_EVCTRL = 0;
+    RTC_Timer32Compare0Set(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
+    RTC_Timer32Start();
+	/* Store the measurement period */
+	measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
+    
+    measurement_mode = 0u;
+</#macro>
+
+<#macro lowpower_touch_timer_handler_pic32cz_evsys>
+	time_to_measure_touch_var = 1u;
+#if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
+	qtm_update_qtlib_timer(measurement_period_store);
+	if (time_since_touch < (65535u - measurement_period_store)) {
+		time_since_touch += measurement_period_store;
+	} else {
+		time_since_touch = 65535;
+	}
+#else
+	qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
+#endif
+</#macro>
+
+<#macro lowpower_PIC32CZ>
+/* Auto scan trigger Periods */
+#define NODE_SCAN_8MS		0u
+#define NODE_SCAN_16MS		1u
+#define NODE_SCAN_32MS		2u
+#define NODE_SCAN_64MS		3u
+#define NODE_SCAN_128MS		4u
+#define NODE_SCAN_256MS		5u
+#define NODE_SCAN_512MS		6u
+#define NODE_SCAN_1024MS	7u
+
+/* Event system parameters */
+#define QTM_AUTOSCAN_TRIGGER_GENERATOR			(QTM_AUTOSCAN_TRIGGER_PERIOD + 6u)
+#define QTM_AUTOSCAN_STCONV_USER				 EVENT_ID_USER_PTC_STCONV
+#define QTM_RTC_TO_PTC_EVSYS_CHANNEL			 0u
+#define QTM_AUTOSCAN_TRIGGER_PERIOD_EVENT		(1u << QTM_AUTOSCAN_TRIGGER_PERIOD)
+</#macro>
+<#-- ========================================================================================== -->
 
 <#macro lowpower_touch_timer_handler_saml1x_evsys>
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)

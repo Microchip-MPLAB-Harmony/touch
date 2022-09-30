@@ -84,6 +84,8 @@ class classTouchAcquisitionGroups():
             touchAutoTuneMode = qtouchComponent.createKeyValueSetSymbol("TUNE_MODE_SELECTED", parentMenu)
             touchScanRate = qtouchComponent.createIntegerSymbol("DEF_TOUCH_MEASUREMENT_PERIOD_MS", parentMenu)
             touchAcquisitonFrequency = qtouchComponent.createKeyValueSetSymbol("DEF_SEL_FREQ_INIT", parentMenu)
+            if (targetDevice in ["PIC32CZCA80"]):
+                ptcWakeupTime = qtouchComponent.createIntegerSymbol("DEF_PTC_WAKEUP_EXP", parentMenu)
         else:
             touchSenseTechnology = qtouchComponent.createKeyValueSetSymbol("SENSE_TECHNOLOGY_"+str(groupNumber), parentMenu)
             totalChannelCountSelf = qtouchComponent.createIntegerSymbol("MAX_CHANNEL_COUNT_SELF_"+str(groupNumber),parentMenu)
@@ -91,6 +93,8 @@ class classTouchAcquisitionGroups():
             touchAutoTuneMode = qtouchComponent.createKeyValueSetSymbol("TUNE_MODE_SELECTED_"+str(groupNumber),parentMenu)
             touchScanRate = qtouchComponent.createIntegerSymbol("DEF_TOUCH_MEASUREMENT_PERIOD_MS_"+str(groupNumber),parentMenu)
             touchAcquisitonFrequency = qtouchComponent.createKeyValueSetSymbol("DEF_SEL_FREQ_INIT_"+str(groupNumber),parentMenu)
+            if (targetDevice in ["PIC32CZCA80"]):
+                ptcWakeupTime = qtouchComponent.createIntegerSymbol("DEF_PTC_WAKEUP_EXP", parentMenu)
         #parameter assignment    
         #touchSenseTechnology
         if(shieldMode != "none"):
@@ -111,6 +115,9 @@ class classTouchAcquisitionGroups():
         self.setScanRateValues(touchScanRate)    
         #Acquisition Frequency
         self.setAcquisitionFrequencyValues(touchAcquisitonFrequency)
+        if (targetDevice in ["PIC32CZCA80"]):
+            #PTC Wake up component   
+            self.setPtcWakeupTime(ptcWakeupTime) 
 
     #updater
     def updateAcquisitionGroups(self,symbol,event):
@@ -187,7 +194,7 @@ class classTouchAcquisitionGroups():
     def setScanRateValues(self,touchScanRate):
         """ Populate the touchScanRate symbol
         Arguments:
-            :touchScanRate : symbol to tbe changed
+            :touchScanRate : symbol to be changed
         Returns:
             :none
         """
@@ -196,6 +203,19 @@ class classTouchAcquisitionGroups():
         touchScanRate.setMin(1)
         touchScanRate.setMax(255)
         touchScanRate.setDescription("Defines the timer scan rate in milliseconds to initiate periodic touch measurement on all enabled touch sensors.")
+
+    def setPtcWakeupTime(self,ptcWakeupTime):
+        """ Populate the ptcWakeupTime symbol
+        Arguments:
+            :ptcWakeupTime : symbol to te changed
+        Returns:
+            :none
+        """
+        ptcWakeupTime.setLabel("PTC Wake up Time Exponent")
+        ptcWakeupTime.setDefaultValue(4)
+        ptcWakeupTime.setMin(4)
+        ptcWakeupTime.setMax(15)
+        ptcWakeupTime.setDescription("The wake-up exponent is passed from the application to the library. The initial value of wakeup exponent that is passed from application is determined on the minimum prescaler and this is further updated automatically inside the library based on changes in Node prescaler values.")
 
     def setAcquisitionFrequencyValues(self,touchAcquisitonFrequency):
         """Populate the touchAcquisitonFrequency symbol

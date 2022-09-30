@@ -158,6 +158,9 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice in ["PIC32CMJH00","PIC32CMJH01"]):
             touchAcqLibraryFile.setSourcePath("/src/libraries/qtm_acq_pic32cmjh_0x002f.X.a")
             touchAcqLibraryFile.setOutputName("qtm_acq_pic32cmjh_0x002f.X.a")
+        elif(targetDevice in ["PIC32CZCA80"]):
+            touchAcqLibraryFile.setSourcePath("/src/libraries/qtm_acq_pic32cz_ca80_0x004a.X.a")
+            touchAcqLibraryFile.setOutputName("qtm_acq_pic32cz_ca80_0x004a.X.a")
         else:
             touchAcqLibraryFile.setSourcePath("Error_setAcquisitionLibraryFile")
             touchAcqLibraryFile.setOutputName("Error_setAcquisitionLibraryFile")
@@ -245,6 +248,9 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice in ["PIC32CMJH00","PIC32CMJH01"]):
             touchAcqAutoLibraryFile.setSourcePath("/src/libraries/qtm_acq_pic32cmjh_0x002f.X.a")
             touchAcqAutoLibraryFile.setOutputName("qtm_acq_pic32cmjh_0x002f.X.a")
+        elif(targetDevice in ["PIC32CZCA80"]):
+            touchAcqAutoLibraryFile.setSourcePath("/src/libraries/qtm_acq_pic32cz_ca80_0x004a.X.a")
+            touchAcqAutoLibraryFile.setOutputName("qtm_acq_pic32cz_ca80_0x004a.X.a")
         else:
             touchAcqAutoLibraryFile.setOutputName("Error_setAutoAcquisitionLibraryFile")
             touchAcqAutoLibraryFile.setOutputName("Error_setAutoAcquisitionLibraryFile")
@@ -352,6 +358,9 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice in ["PIC32CMJH00","PIC32CMJH01"]):
             touchAcqHeaderFile.setSourcePath("/src/qtm_acq_pic32cmjh_0x002f_api.h")
             touchAcqHeaderFile.setOutputName("qtm_acq_pic32cmjh_0x002f_api.h")
+        elif(targetDevice in ["PIC32CZCA80"]):
+            touchAcqHeaderFile.setSourcePath("/src/qtm_acq_pic32czca_0x004a_api.h")
+            touchAcqHeaderFile.setOutputName("qtm_acq_pic32czca_0x004a_api.h")
         else:
             touchAcqHeaderFile.setSourcePath("Error_setAcqHeaderFile")
             touchAcqHeaderFile.setOutputName("Error_setAcqHeaderFile")
