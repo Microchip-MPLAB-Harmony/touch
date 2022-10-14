@@ -426,12 +426,14 @@ def enablePM(symbol,event):
         lowPowerKey = localComponent.getSymbolByID("LOW_POWER_KEYS").getValue()
         pmComponentID = ["pm"]
         supcComponentID = ["supc"]
+        if(targetDevice in ["PIC32CZCA80","PIC32CZCA90"]):
+            Database.activateComponents(supcComponentID)
         if(lowPowerKey != ""):
             Database.activateComponents(pmComponentID)
-            if (targetDevice in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00","PIC32CZCA80"]):
+            if (targetDevice in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]):
                 Database.activateComponents(supcComponentID)
         else:
-            if(targetDevice in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00","PIC32CZCA80"]):
+            if(targetDevice in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]):
                 Database.deactivateComponents(supcComponentID)
             if(targetDevice not in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]):
                 Database.deactivateComponents(pmComponentID)

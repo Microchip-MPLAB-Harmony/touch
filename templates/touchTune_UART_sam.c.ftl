@@ -52,7 +52,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #endif
 
 <#assign csdDevices = 0 />
-<#list ["PIC32CMLS60","PIC32CMLS00","PIC32CMLE00","SAML10","SAML11","SAML1xE","SAML22","SAMC20","SAMC21","SAME54","SAME53","SAME51","SAMD51","PIC32MZW","PIC32MZDA", "PIC32CMJH01","PIC32CMJH00","PIC32CXBZ31","WBZ35"] as csdSupported>
+<#list ["PIC32CMLS60","PIC32CMLS00","PIC32CMLE00","SAML10","SAML11","SAML1xE","SAML22","SAMC20","SAMC21","SAME54","SAME53","SAME51","SAMD51","PIC32MZW","PIC32MZDA", "PIC32CMJH01","PIC32CMJH00","PIC32CXBZ31","WBZ35","PIC32CZCA80","PIC32CZCA90"] as csdSupported>
     <#if DEVICE_NAME == csdSupported>
         <#assign csdDevices = 1>
     </#if>
@@ -69,6 +69,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#assign same5x = ["SAME51","SAME53","SAME54","SAMD51"] />
 <#assign saml1x_pic32cmle = ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMLS60"] />
 <#assign pic32cvd = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35"] />
+<#assign pic32czca = ["PIC32CZCA80","PIC32CZCA90"] />
 <#if samd2x_d1x_l21?seq_contains(DEVICE_NAME)>
 <#assign familyname = "samd2x_d1x_l21" />
 <#elseif samc2x?seq_contains(DEVICE_NAME)>
@@ -81,6 +82,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#assign familyname = "pic32cvd" />
 <#elseif saml22?seq_contains(DEVICE_NAME)>
 <#assign familyname = "saml22" />
+<#elseif pic32czca?seq_contains(DEVICE_NAME)>
+<#assign familyname = "pic32czca" />
 </#if>
 
 <#if ENABLE_SCROLLER == true>
@@ -170,13 +173,15 @@ typedef struct  __attribute__((packed)) {
 #endif
 
 <#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
-extern qtm_acq_samd1x_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] ;
+extern qtm_acq_samd1x_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
 <#elseif DEVICE_NAME=="SAML11" || DEVICE_NAME=="SAML1xE">
-extern qtm_acq_saml10_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] ;
+extern qtm_acq_saml10_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
 <#elseif  DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00" || DEVICE_NAME=="PIC32CMLS60">
-extern qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] ;
+extern qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
 <#elseif  DEVICE_NAME =="PIC32CMJH00" || DEVICE_NAME=="PIC32CMJH01">
-extern qtm_acq_pic32cmjh_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] ;
+extern qtm_acq_pic32cmjh_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
+<#elseif  DEVICE_NAME =="PIC32CZCA80"||DEVICE_NAME =="PIC32CZCA90">
+extern qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
 <#else>
 extern qtm_acq_${DEVICE_NAME?lower_case}_node_config_t  ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
 </#if>
@@ -411,6 +416,8 @@ qtm_acq_saml10_node_config_t *ptr = &ptc_seq_node_cfg1[channel];
 qtm_acq_pic32cm_node_config_t *ptr = &ptc_seq_node_cfg1[channel];
 <#elseif DEVICE_NAME =="PIC32CMJH00" || DEVICE_NAME=="PIC32CMJH01">
 qtm_acq_pic32cmjh_node_config_t *ptr = &ptc_seq_node_cfg1[channel];
+<#elseif  DEVICE_NAME =="PIC32CZCA80"||DEVICE_NAME =="PIC32CZCA90">
+qtm_acq_pic32czca_node_config_t *ptr = &ptc_seq_node_cfg1[channel];
 <#else>
 qtm_acq_${DEVICE_NAME?lower_case}_node_config_t *ptr = &ptc_seq_node_cfg1[channel];
 </#if>

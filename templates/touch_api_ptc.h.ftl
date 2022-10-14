@@ -61,7 +61,7 @@ extern "C" {
     <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
         <#if DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00"|| DEVICE_NAME=="PIC32CMLS60">
 #include "qtm_acq_4p_pic32cm_le_0x0041_api.h"
-        <#elseif  DEVICE_NAME == "PIC32CZCA80">
+        <#elseif  DEVICE_NAME == "PIC32CZCA80" || DEVICE_NAME == "PIC32CZCA90">
 #include "qtm_global_pic32czca_0x0049_api.h"
         <#else>
 #include "qtm_acq_4p_${DEVICE_NAME?lower_case}_${MODULE_ID}_api.h"
@@ -69,7 +69,7 @@ extern "C" {
     <#else>
         <#if DEVICE_NAME == "PIC32CMLE00" || DEVICE_NAME == "PIC32CMLS00"|| DEVICE_NAME=="PIC32CMLS60">
 #include "qtm_acq_pic32cm_le_0x0040_api.h"
-        <#elseif  DEVICE_NAME == "PIC32CZCA80">
+        <#elseif  DEVICE_NAME == "PIC32CZCA80"|| DEVICE_NAME == "PIC32CZCA90">
 #include "qtm_acq_pic32czca_0x004a_api.h"
         <#else>
 #include "qtm_acq_${DEVICE_NAME?lower_case}_${MODULE_ID}_api.h"

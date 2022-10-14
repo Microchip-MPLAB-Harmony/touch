@@ -84,7 +84,7 @@ class classTouchAcquisitionGroups():
             touchAutoTuneMode = qtouchComponent.createKeyValueSetSymbol("TUNE_MODE_SELECTED", parentMenu)
             touchScanRate = qtouchComponent.createIntegerSymbol("DEF_TOUCH_MEASUREMENT_PERIOD_MS", parentMenu)
             touchAcquisitonFrequency = qtouchComponent.createKeyValueSetSymbol("DEF_SEL_FREQ_INIT", parentMenu)
-            if (targetDevice in ["PIC32CZCA80"]):
+            if (targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
                 ptcWakeupTime = qtouchComponent.createIntegerSymbol("DEF_PTC_WAKEUP_EXP", parentMenu)
         else:
             touchSenseTechnology = qtouchComponent.createKeyValueSetSymbol("SENSE_TECHNOLOGY_"+str(groupNumber), parentMenu)
@@ -93,8 +93,7 @@ class classTouchAcquisitionGroups():
             touchAutoTuneMode = qtouchComponent.createKeyValueSetSymbol("TUNE_MODE_SELECTED_"+str(groupNumber),parentMenu)
             touchScanRate = qtouchComponent.createIntegerSymbol("DEF_TOUCH_MEASUREMENT_PERIOD_MS_"+str(groupNumber),parentMenu)
             touchAcquisitonFrequency = qtouchComponent.createKeyValueSetSymbol("DEF_SEL_FREQ_INIT_"+str(groupNumber),parentMenu)
-            if (targetDevice in ["PIC32CZCA80"]):
-                ptcWakeupTime = qtouchComponent.createIntegerSymbol("DEF_PTC_WAKEUP_EXP", parentMenu)
+
         #parameter assignment    
         #touchSenseTechnology
         if(shieldMode != "none"):
@@ -110,12 +109,12 @@ class classTouchAcquisitionGroups():
         totalChannelCountMutl.setDefaultValue(int(mutualChannels))
         totalChannelCountMutl.setLabel("Mutual Capacitance Channels")
         # Select Tuning mode
-        self.setAutoTuneModeValues(touchAutoTuneMode,csdMode)
+        self.setAutoTuneModeValues(touchAutoTuneMode,csdMode, targetDevice)
         #Scan Rate (ms)    
         self.setScanRateValues(touchScanRate)    
         #Acquisition Frequency
         self.setAcquisitionFrequencyValues(touchAcquisitonFrequency)
-        if (targetDevice in ["PIC32CZCA80"]):
+        if (targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
             #PTC Wake up component   
             self.setPtcWakeupTime(ptcWakeupTime) 
 
@@ -173,7 +172,7 @@ class classTouchAcquisitionGroups():
         touchSenseTechnology.setDisplayMode("Description")
         touchSenseTechnology.setDescription("Selects the sensor technology - Selfcap: Requires one pin per channel; Simple sensor design; Recommended for small number of sensors (less than 12). SelfCapShield: Requires one pin per channel with Driven shield options; Simple sensor design; Recommended for small number of sensors (less than 12). Mutualcap: Requires one X pin and one Y pin per channel; Can realize X x Y number of sensors in a matrix form; Recommended for large number of sensors (more than 12)")
 
-    def setAutoTuneModeValues(self,touchAutoTuneMode,csdMode):
+    def setAutoTuneModeValues(self,touchAutoTuneMode,csdMode, targetDevice):
         """Populate touchAutoTuneMode symbol
         Arguments:
             :touchAutoTuneMode :symbol to be changed
@@ -183,9 +182,10 @@ class classTouchAcquisitionGroups():
         """
         touchAutoTuneMode.setLabel("Select the Required Tuning Mode")
         touchAutoTuneMode.addKey("Manual Tuning","CAL_AUTO_TUNE_NONE","Manual tuning is done based on the values defined by user")
-        touchAutoTuneMode.addKey("Tune Resistor value","CAL_AUTO_TUNE_RSEL","Series Resistor is tuned")
-        if(csdMode != "NoCSD"):
-            touchAutoTuneMode.addKey("Tune CSD","CAL_AUTO_TUNE_CSD","Charge Share Delay - CSD is tuned")
+        if (targetDevice not in ["PIC32CZCA80", "PIC32CZCA90"]):
+            touchAutoTuneMode.addKey("Tune Resistor value","CAL_AUTO_TUNE_RSEL","Series Resistor is tuned")
+            if(csdMode != "NoCSD"):
+                touchAutoTuneMode.addKey("Tune CSD","CAL_AUTO_TUNE_CSD","Charge Share Delay - CSD is tuned")
         touchAutoTuneMode.setDefaultValue(0)
         touchAutoTuneMode.setOutputMode("Value")
         touchAutoTuneMode.setDisplayMode("Key")

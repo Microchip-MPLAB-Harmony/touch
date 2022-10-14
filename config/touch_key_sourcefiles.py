@@ -42,7 +42,7 @@ class classTouchKeySourceFiles():
         elif (targetDevice in ["PIC32MZW", "PIC32MZDA"]):
             touchLibraryFile.setSourcePath("/src/libraries/qtm_touch_key_pic32mz_0x0002.X.a")
             touchLibraryFile.setOutputName("qtm_touch_key_pic32mz_0x0002.X.a")
-        elif (targetDevice in ["PIC32CZCA80"]):
+        elif (targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
             touchLibraryFile.setSourcePath("/src/libraries/qtm_touch_key_pic32cz_0x0002.X.a")
             touchLibraryFile.setOutputName("qtm_touch_key_pic32cz_0x0002.X.a")
         else:

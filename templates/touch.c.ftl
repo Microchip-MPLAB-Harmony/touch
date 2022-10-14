@@ -53,8 +53,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#assign pic32cm_le_devices = ["PIC32CMLE00","PIC32CMLS00","PIC32CMLS60"]>
 <#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35"]>
 <#assign buckland = ["PIC32CXBZ31","WBZ35"]>
-<#assign pic32cz = ["PIC32CZCA80"]>
-<#assign supc_devices = ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMLS60","PIC32CZCA80"]>
+<#assign pic32cz = ["PIC32CZCA80", "PIC32CZCA90"]>
+<#assign supc_devices = ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMLS60","PIC32CZCA80","PIC32CZCA90"]>
 <#assign no_standby_devices = ["SAMD10","SAMD11"]>
 <#assign no_standby_during_measurement = 0>
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
@@ -240,7 +240,7 @@ qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..T
 qtm_acq_pic32cmjh_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 <#elseif  DEVICE_NAME =="PIC32CXBZ31" || DEVICE_NAME=="WBZ35">
 qtm_acq_pic32cx_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
-<#elseif  DEVICE_NAME =="PIC32CZCA80">
+<#elseif  DEVICE_NAME =="PIC32CZCA80"||DEVICE_NAME =="PIC32CZCA90">
 qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 <#else>
 qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
@@ -963,7 +963,7 @@ static void touch_configure_pm_supc(void)
     SUPC_REGS->SUPC_VREG = SUPC_VREG_ENABLE_Msk | SUPC_VREG_SEL_BUCK | SUPC_VREG_RUNSTDBY_Msk | SUPC_VREG_VSVSTEP(0) | SUPC_VREG_VSPER(0) | SUPC_VREG_STDBYPL0_Msk;
 }
 #endif
-    <#elseif ((DEVICE_NAME == "PIC32CZCA80"))>
+    <#elseif ((DEVICE_NAME == "PIC32CZCA80")||(DEVICE_NAME == "PIC32CZCA90"))>
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
 static void touch_configure_pm_supc(void)
 {
@@ -1290,12 +1290,12 @@ Notes  :
 void touch_timer_handler(void)
 {
 <#if ENABLE_GESTURE==true>
-	touch_gesture_time_cnt++;
+	touch_gesture_time_cnt= touch_gesture_time_cnt + 2u;
 	if (touch_gesture_time_cnt >= DEF_GESTURE_TIME_BASE_MS) {
 		qtm_update_gesture_2d_timer(touch_gesture_time_cnt / DEF_GESTURE_TIME_BASE_MS);
 		touch_gesture_time_cnt = touch_gesture_time_cnt % DEF_GESTURE_TIME_BASE_MS;
 	}
-	interrupt_cnt++;
+	interrupt_cnt= interrupt_cnt + 2u;
 	if (interrupt_cnt >= DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
 		interrupt_cnt = 0;
 		/* Count complete - Measure touch sensors */
@@ -1391,7 +1391,7 @@ void touch_timer_config(void)
     </#if>
 	<#else>
 	<#if ENABLE_GESTURE==true>
-	#warning "Timer for periodic touch measurement not defined; Call touch_timer_handler() every 1 millisecond."
+	#warning "Timer for periodic touch measurement not defined; Call touch_timer_handler() every 2 millisecond."
 	<#else>
 	#warning "Timer for periodic touch measurement not defined; Call touch_timer_handler() every DEF_TOUCH_MEASUREMENT_PERIOD_MS."
 	</#if>
@@ -1650,7 +1650,7 @@ void PTC_Handler(void)
     qtm_pic32cm_ptc_handler_eoc();
 <#elseif DEVICE_NAME =="PIC32CMJH00" || DEVICE_NAME=="PIC32CMJH01">
     qtm_pic32cmjh_ptc_handler_eoc();
-<#elseif DEVICE_NAME =="PIC32CZCA80">
+<#elseif (DEVICE_NAME =="PIC32CZCA80" ||(DEVICE_NAME == "PIC32CZCA90"))>
     qtm_pic32cz_ptc_handler_eoc();
 <#else>
 	qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();
