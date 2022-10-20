@@ -6,7 +6,7 @@
             "componentId":"core", 
              "name":"Select GCLK2"
         },
-		{
+        {
             "symbol":"GCLK_2_SRC", 
             "value":"5", 
             "componentId":"core", 
@@ -18,7 +18,7 @@
             "componentId":"core", 
              "name":"Select Run in Standby for GCLK2"
         },
-		{
+        {
             "symbol":"GCLK_2_DIV", 
             "value":"12", 
             "componentId":"core", 
