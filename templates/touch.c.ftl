@@ -1414,8 +1414,14 @@ void touch_timer_config(void)
 
 <#if (DEVICE_NAME == "SAMD20") || (DEVICE_NAME == "SAMD21") >
     while((RTC_REGS->MODE0.RTC_STATUS & RTC_STATUS_SYNCBUSY_Msk) == RTC_STATUS_SYNCBUSY_Msk)
+    {
+
+    }
 <#elseif (DEVICE_NAME == "SAMC20") || (DEVICE_NAME == "SAMC21") || (DEVICE_NAME == "SAML21") || (DEVICE_NAME == "SAML22") || (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "SAML1xE")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")||(DEVICE_NAME == "PIC32CMLS60")|| (DEVICE_NAME == "PIC32CMJH01")|| (DEVICE_NAME == "PIC32CMJH00")>
     while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    {
+        
+    }
 </#if>
     /* Wait for Synchronization after writing value to Count Register */
     RTC_Timer32Stop();
