@@ -918,12 +918,14 @@ void touch_process(void)
             #endif
         </#if>
     }
+<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
 	if ((time_to_measure_touch_var != 1u) && 
         (measurement_mode == 1u) ){
 		PM_StandbyModeEnter();   
 	}
 #endif
+</#if>
 <#if ENABLE_KRONOCOMM == true>
 #if KRONOCOMM_ENABLE == 1u
     uart_process();
@@ -1035,6 +1037,7 @@ static void touch_disable_lowpower_measurement(void)
     <@eventlp.lowpwer_disable_pic32cz_evsys/>
     </#if>
 </#if>
+measurement_mode = 0u;
 }
 
 /*============================================================================
@@ -1097,6 +1100,7 @@ static void touch_enable_lowpower_measurement(void)
 	<@eventlp.lowpwer_enable_pic32cz_evsys/>
 	</#if>
 </#if>
+measurement_mode = 1u;
 }
 
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
