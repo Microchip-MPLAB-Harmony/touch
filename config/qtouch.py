@@ -387,6 +387,8 @@ def onGenerate(symbol,event):
     nodeCount = localComponent.getSymbolByID("TOUCH_CHAN_ENABLE_CNT").getValue()
     sercom = localComponent.getSymbolByID("TOUCH_SERCOM_INSTANCE").getValue()
     timer = localComponent.getSymbolByID("TOUCH_TIMER_INSTANCE").getValue()
+    ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")
+    localComponent.getSymbolByID("GET_PTC_CLOCK_FREQUENCY").setValue(ptcClockFrequencyDefault)
 
     if int(nodeCount) == 0:
         Log.writeErrorMessage("Touch Error: Number of sensor is ZERO")
@@ -600,6 +602,10 @@ def instantiateComponent(qtouchComponent):
     rSelMode = target_deviceInst.getRSelMode(device)
     # Driven shield support
     shieldMode = target_deviceInst.getShieldMode(device)
+    ptcClockFrequency = qtouchComponent.createIntegerSymbol("GET_PTC_CLOCK_FREQUENCY", touchMenu)
+    ptcClockFrequency.setLabel("Get PTC Clock Frequency")
+    ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")
+    ptcClockFrequency.setDefaultValue(ptcClockFrequencyDefault)
     
     if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
         useTrustZone = True

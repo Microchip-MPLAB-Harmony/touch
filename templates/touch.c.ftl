@@ -719,7 +719,47 @@ static void qtm_error_callback(uint8_t error)
 	#endif
 </#if>
 }
-
+<#if pic32cz?seq_contains(DEVICE_NAME)>
+/*============================================================================
+void PTC_Initialize(void)
+------------------------------------------------------------------------------
+Purpose: Initialization of wake-up component of PTC and analog input charge pump
+Input  : none
+Output : none
+Notes  :
+============================================================================*/
+void PTC_Initialize(void)
+{
+    uint32_t gclk_freq = ${GET_PTC_CLOCK_FREQUENCY}u;
+    uint32_t ptc_clock = 0u;
+    uint8_t wakeup_clock_cycles =0u;
+    uint8_t wakeup_exp = 0u;
+    /* Wakeup exponent for Minimum PTC pre-scaler (PRSC_DIV_SEL_2) 
+     * The Wake-up Exponent is the exponent for the power of 2 which represents the wake-up count in PTC core clocks.
+     * The PTC core must warm up before being allowed to perform conversions. 
+     */  
+    if(gclk_freq > 0u)
+    {
+        /* PTC clock for minimum pre-scaler (PRSC_DIV_SEL_2) */
+        ptc_clock = gclk_freq / 2UL; 
+        /* wakeup-time for Analog Core is 20us. Calculate clock cycles required for 20us */
+        wakeup_clock_cycles = (uint8_t) ((20UL * ptc_clock) / (1000000UL)); 
+        /* find the exponent near to wakeup_clock_cycles */
+        do{
+           wakeup_exp =  wakeup_exp + 1u;
+           wakeup_clock_cycles = (wakeup_clock_cycles >> 1u);
+        }while(wakeup_clock_cycles > 0u);
+        
+        /* set the wakeup exponent */
+        qtlib_acq_set1.qtm_acq_node_group_config->wakeup_exp = wakeup_exp;
+    }  
+    /* 
+     * Enable Analog Input Charge Pump of PTC , for weak VDD 
+     */
+    SUPC_REGS->SUPC_VREGCTRL |= SUPC_VREGCTRL_CPEN(1u << 2u);
+    
+}
+</#if>
 /*============================================================================
 void touch_init(void)
 ------------------------------------------------------------------------------
@@ -731,6 +771,9 @@ Notes  :
 ============================================================================*/
 void touch_init(void)
 {
+<#if pic32cz?seq_contains(DEVICE_NAME)>
+    PTC_Initialize();
+</#if>
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
 	touch_timer_config();
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
