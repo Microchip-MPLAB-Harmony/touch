@@ -602,6 +602,14 @@ def instantiateComponent(qtouchComponent):
     rSelMode = target_deviceInst.getRSelMode(device)
     # Driven shield support
     shieldMode = target_deviceInst.getShieldMode(device)
+    autoTuneCSDDisableGetValue = target_deviceInst.getAutotuneCSDDisabled(device)
+    autoTuneCSDDisable = qtouchComponent.createBooleanSymbol("DISABLE_AUTOTUNE_CSD", touchMenu)
+    autoTuneCSDDisable.setLabel("Disable AutotuneCSD feature")
+    if (autoTuneCSDDisableGetValue == 1):
+        autoTuneCSDDisable.setValue(True)
+    else:
+        autoTuneCSDDisable.setValue(False)
+
     ptcClockFrequency = qtouchComponent.createIntegerSymbol("GET_PTC_CLOCK_FREQUENCY", touchMenu)
     ptcClockFrequency.setLabel("Get PTC Clock Frequency")
     ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")

@@ -11,6 +11,7 @@ class classTouchTargetDevice():
         self.yPads = set()
         self.adc_based_acquisition = set(["SAME54","SAME53","SAME51","SAMD51"])
         self.no_csd_support = set(["SAMD20","SAMD21","SAMDA1","SAMHA1","SAMD10","SAMD11", "SAML21"])
+        self.csd_device_with_noAutoTuneCSD_support = set(["PIC32CZCA80","PIC32CZCA90"])
         self.non_lump_support = set(["PIC32MZW", "PIC32MZDA", "PIC32CXBZ31", "WBZ35"])
         self.picDevices = ["PIC32MZW", "PIC32MZDA", "PIC32CXBZ31", "WBZ35"]
         self.timer_driven_shield_support = set(["SAMD21","SAMDA1","SAMHA1","SAME54","SAME53","SAME51","SAMD51","SAMC21","SAMC20","SAML21","SAML22","SAMD10","SAMD11","SAMD20"])
@@ -310,6 +311,19 @@ class classTouchTargetDevice():
             return 30
         else:
             return 0
+
+    def getAutotuneCSDDisabled(self,targetDevice):
+        """Used to determine whether autotune CSD has to be supported or not 
+        for devices with CSD feature based on targetDevice.       
+        Arguments:
+            :targetDevice : see interface.getDeviceSeries()
+        Returns:
+            :True or False (boolean)
+        """
+        if(targetDevice in self.csd_device_with_noAutoTuneCSD_support):
+            return 1
+        else:
+            return 0 
 
     def getCSDMode(self,targetDevice):
         """Get charge share delay bit resolution based on targetDevice. 
