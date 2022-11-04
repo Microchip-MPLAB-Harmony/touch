@@ -1,11 +1,9 @@
-/*============================================================================
+/*****************************************************************************
 Filename : qtm_global_pic32czca_0x0049_api.h
-Project : QTouch Modular Library
-Purpose : API for Acquisition module - PIC32CZ/PTC
------------------------------------------------------------------------------
-Copyright (c) 2020- Microchip Inc. All rights reserved.
-------------------------------------------------------------------------------
-*******************************************************************************
+Project : Touch Modular Library
+Purpose : API for Global Acquisition module(parallel and standard acquisition) - PIC32CZ_CA80/CA90
+*******************************************************************************/
+/*******************************************************************************
 Copyright (c) Microchip Technology Inc. All rights reserved.
 
 Microchip licenses to you the right to use, modify, copy and distribute
@@ -270,15 +268,17 @@ Notes  :  none
 ============================================================================*/
 touch_ret_t qtm_ptc_start_measurement_seq(qtm_acquisition_control_t* qtm_acq_control_pointer, void (*measure_complete_callback) (void));
 
-/*============================================================================
-touch_ret_t qtm_autoscan_sensor_node(qtm_auto_scan_config_t* qtm_auto_scan_config_ptr, void (*auto_scan_callback)(void));
+/*=============================================================================================================================================================
+touch_ret_t qtm_autoscan_sensor_node(qtm_auto_scan_config_t* qtm_auto_scan_config_ptr, void (*auto_scan_callback)(void))
 
-------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
 Purpose: Configures the PTC for sleep mode measurement of a single node, with window comparator wake
 Input  : Acquisition set, channel number, threshold, scan trigger
 Output : touch_ret_t
-Notes  : none
-============================================================================*/
+Notes  : For parallel acquisition the autoscan window is set based on the raw signal. 
+	     Application must ensure the raw signals pointer holds the raw signals of the autoscan acquisition group, if there is more than one acquisition groups.   
+		 Application can implement filter mechanisms on raw signals in noisy environment. 
+================================================================================================================================================================*/
 touch_ret_t qtm_autoscan_sensor_node(qtm_auto_scan_config_t* qtm_auto_scan_config_ptr, void (*auto_scan_callback)(void));
 
 /*============================================================================
