@@ -17,6 +17,10 @@ D,${3},${i+1},Reference${i}
 -D,${4},${i+1},Delta${i}
 <#if pic_devices?seq_contains(DEVICE_NAME) >
 D,${5},${i+1},Compensation${i},F,(variable * 2.5)
+<#elseif pic32czca?seq_contains(DEVICE_NAME) && ((SENSE_TECHNOLOGY == "NODE_SELFCAP") || (SENSE_TECHNOLOGY == "NODE_SELFCAP_SHIELD"))>
+D,${5},${i+1},Compensation${i},F,((((variable>>8) &0x1F) * 1.5 + ((variable&0x1F)  +1) * 0.075))*2
+<#elseif pic32czca?seq_contains(DEVICE_NAME) && ((SENSE_TECHNOLOGY == "NODE_MUTUAL") || (SENSE_TECHNOLOGY == "NODE_MUTUAL_4P"))>
+D,${5},${i+1},Compensation${i},F,(((variable>>8) &0x1F) * 1.5 + ((variable&0x1F)  +1) * 0.075)
 <#else>
 <#if ((SENSE_TECHNOLOGY == "NODE_SELFCAP") && (doubleCompensation ==1))>
 D,${5},${i+1},Compensation${i},F,((variable & 0x0F)*0.00675+((variable >> 4) & 0x0F)*0.0675+((variable >> 8) & 0x0F)*0.675+((variable >> 12) & 0x3) * 6.75)*2

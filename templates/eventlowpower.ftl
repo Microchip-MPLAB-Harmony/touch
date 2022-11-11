@@ -514,7 +514,6 @@
 	/* Store the measurement period */
 	measurement_period_store = DEF_TOUCH_DRIFT_PERIOD_MS;
     
-    measurement_mode = 1u;
 </#macro>
 
 <#macro lowpwer_disable_pic32cz_evsys>
@@ -534,7 +533,6 @@
 	/* Store the measurement period */
 	measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
     
-    measurement_mode = 0u;
 </#macro>
 
 <#macro lowpower_touch_timer_handler_pic32cz_evsys>

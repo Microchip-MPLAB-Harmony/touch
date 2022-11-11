@@ -1154,7 +1154,7 @@ static void touch_disable_lowpower_measurement(void)
     <@eventlp.lowpwer_disable_pic32cz_evsys/>
     </#if>
 </#if>
-measurement_mode = 0u;
+    measurement_mode = 0u;
 }
 
 /*============================================================================
@@ -1217,7 +1217,7 @@ static void touch_enable_lowpower_measurement(void)
 	<@eventlp.lowpwer_enable_pic32cz_evsys/>
 	</#if>
 </#if>
-measurement_mode = 1u;
+    measurement_mode = 1u;
 }
 
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
