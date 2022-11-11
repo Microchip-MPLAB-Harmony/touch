@@ -94,7 +94,13 @@ extern qtm_drivenshield_config_t qtm_drivenshield_config;
 /*----------------------------------------------------------------------------
  *   prototypes
  *----------------------------------------------------------------------------*/
-
+<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
+  <#if ["PIC32CZCA80","PIC32CZCA90"]?seq_contains(DEVICE_NAME) >
+ /*! \brief Initialization of Node Pin definitions
+  */
+void touch_Stuff_PinDefs(void);
+  </#if>
+</#if>
 /*! \brief configure keys, wheels and sliders.
  */
 static touch_ret_t touch_sensors_config(void);
@@ -207,10 +213,23 @@ uint32_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
     = {DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, DEF_PTC_CAL_AUTO_TUNE, DEF_SEL_FREQ_INIT, 1};
 <#elseif pic32cz?seq_contains(DEVICE_NAME)>
+<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
+/* Acquisition module internal data - Size to largest acquisition set */
+uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
+/* Sensor pins mask*/
+const uint32_t acq_node_ymasks[DEF_NUM_NODE_SETS] = {Y_MASK_ALL};
+const uint32_t acq_node_xmasks[DEF_NUM_NODES] = { X_MASK_ALL };
+/* Sensor pins Array */
+uint8_t acq_node_pin_array[DEF_NUM_PINDEFS] = { 0u };
+/* Acquisition set 1 - General settings */
+qtm_acq_node_gen_config_t ptc_qtlib_acq_gen1
+    ={DEF_NUM_CHANNELS >> 2, DEF_SENSOR_TYPE, DEF_SEL_FREQ_INIT, &acq_node_pin_array[0],DEF_PTC_INTERRUPT_PRIORITY, DEF_PTC_WAKEUP_EXP};
+<#else>
 uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 /* Acquisition set 1 - General settings */
 qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
     ={DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, DEF_SEL_FREQ_INIT, DEF_PTC_INTERRUPT_PRIORITY, DEF_PTC_WAKEUP_EXP};
+</#if>
 <#else>
 uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 /* Acquisition set 1 - General settings */
@@ -225,6 +244,8 @@ qtm_acq_node_data_t ptc_qtlib_node_stat1[DEF_NUM_CHANNELS];
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 <#if DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00" || DEVICE_NAME=="PIC32CMLS60">
 qtm_acq_4p_pic32cm_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
+<#elseif pic32cz?seq_contains(DEVICE_NAME)>
+qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
 <#else>
 qtm_acq_4p_${DEVICE_NAME?lower_case}_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
 </#if>
@@ -623,8 +644,12 @@ static touch_ret_t touch_sensors_config(void)
         qtm_calibrate_sensor_node(&qtlib_acq_set1, sensor_nodes);
     }
 
-
-<#if ENABLE_BOOST?exists && ENABLE_BOOST == true && ENABLE_SURFACE == true>
+<#if pic32cz?seq_contains(DEVICE_NAME)>
+    /* Enable sensor keys and assign nodes */
+    for (sensor_nodes = 0u; sensor_nodes < DEF_NUM_SENSORS; sensor_nodes++) {
+			qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[sensor_nodes]);
+    }
+<#elseif ENABLE_BOOST?exists && ENABLE_BOOST == true && ENABLE_SURFACE == true>
 		/* Enable sensor keys and assign nodes */
 		for(sensor_nodes = 0u; sensor_nodes < SURFACE_CS_START_KEY_V; sensor_nodes++)
 		{
@@ -640,7 +665,7 @@ static touch_ret_t touch_sensors_config(void)
     for (sensor_nodes = 0u; sensor_nodes < DEF_NUM_SENSORS; sensor_nodes++) {
 		<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 			qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[touch_key_node_mapping_4p[sensor_nodes]]);
-    <#else>
+        <#else>
 			qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[sensor_nodes]);
 		</#if>
     }
@@ -759,6 +784,52 @@ void PTC_Initialize(void)
     SUPC_REGS->SUPC_VREGCTRL |= SUPC_VREGCTRL_CPEN(1u << 2u);
     
 }
+<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
+/*============================================================================
+void touch_Stuff_PinDefs(void)
+------------------------------------------------------------------------------
+Purpose: Initialization of Node Pin definitions
+Input  : none
+Output : none
+Notes  : none
+============================================================================*/
+void touch_Stuff_PinDefs(void)
+{
+uint32_t node_mask = 0u;
+uint8_t config_counter =0u;
+uint8_t byte_counter = 0u;
+uint16_t pindefs_index = 0u;
+uint8_t Counter = 0u;
+uint8_t x_pin_count = 0u; 
+    
+	for(config_counter = 0u; config_counter < DEF_NUM_NODE_SETS; config_counter++)
+	{		
+        /* Y bit mask */
+        node_mask = acq_node_ymasks[config_counter];
+        for(byte_counter = 0u; byte_counter < NUM_BYTES_PTC_PINREG; byte_counter++)
+        {
+            acq_node_pin_array[pindefs_index++] = (uint8_t)(node_mask & 0xFFu);
+            node_mask = (node_mask >> 8u);
+        }
+   
+        if (DEF_SENSOR_TYPE == NODE_MUTUAL_4P)
+        {
+             x_pin_count = 4u;
+            for(Counter = 0u; Counter < x_pin_count; Counter++)
+            {
+                node_mask = acq_node_xmasks[(config_counter * x_pin_count) + Counter];
+            
+                for(byte_counter = 0u; byte_counter < NUM_BYTES_PTC_PINREG; byte_counter++)
+                {
+                acq_node_pin_array[pindefs_index++] = (uint8_t)(node_mask & 0xFFu);
+                node_mask = (node_mask >> 8u);
+                }
+            }
+        }
+        
+	}
+}
+</#if>
 </#if>
 /*============================================================================
 void touch_init(void)
@@ -773,6 +844,9 @@ void touch_init(void)
 {
 <#if pic32cz?seq_contains(DEVICE_NAME)>
     PTC_Initialize();
+    <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
+    touch_Stuff_PinDefs();
+    </#if>
 </#if>
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
 	touch_timer_config();
