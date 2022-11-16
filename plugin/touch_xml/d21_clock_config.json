@@ -56,6 +56,11 @@
             "componentId":"core", 
              "name":"GCLK1 Runinstandby"
         },{
+            "symbol":"GCLK_2_RUNSTDBY", 
+            "value":"True", 
+            "componentId":"core", 
+             "name":"GCLK2 Runinstandby"
+        },{
             "symbol":"CONFIG_CLOCK_OSC8M_ONDEMAND", 
             "value":"1", 
             "componentId":"core", 
@@ -115,11 +120,6 @@
             "value":"True", 
             "componentId":"evsys", 
              "name":"EVSYS 0"
-        },{
-            "symbol":"CONFIG_CLOCK_OSC8M_ONDEMAND", 
-            "value":"0", 
-            "componentId":"core", 
-             "name":"Enable OSC8M ONDEMAND always"
         }
     ],
     "descriptions":[

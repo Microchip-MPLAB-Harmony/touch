@@ -484,7 +484,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
         <#elseif (DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")||(DEVICE_NAME == "PIC32CMLS60")>
             <@eventlp.lowpower_PIC32CM/>
             <@eventlp.lowpower_params_common/>
-        <#elseif (DEVICE_NAME == "SAMD20")||(DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")>
+        <#elseif (DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1")>
             <@eventlp.lowpower_samd21_da1_ha1/>
             <@eventlp.lowpower_params_common/>
         <#elseif (DEVICE_NAME == "SAMD20")>
