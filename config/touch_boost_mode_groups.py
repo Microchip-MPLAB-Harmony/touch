@@ -6,6 +6,7 @@ class classTouchBoostModeGroups():
     def __init__(self):
         self.maxGroups = 4 # defaultValue
         self.boost_mode_support = set(["SAML10","SAML1xE","SAML11","PIC32CMLE00","PIC32CMLS00","PIC32CZCA80","PIC32CZCA90"])
+        self.boost_mode_remove_support_temporarily = set(["PIC32CZCA80","PIC32CZCA90"])
         self.bostModeSourceInstance = touch_boost_mode_sourcefiles.classTouchBoostModeFiles()
 
     def getDepDetails(self):
@@ -164,7 +165,10 @@ class classTouchBoostModeGroups():
         """
         
         if(targetDevice in self.boost_mode_support):
-            return True
+            if(targetDevice in self.boost_mode_remove_support_temporarily):
+                return False
+            else:
+                return True
         else:
             return False
 
