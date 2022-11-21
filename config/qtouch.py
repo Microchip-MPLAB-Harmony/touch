@@ -387,8 +387,9 @@ def onGenerate(symbol,event):
     nodeCount = localComponent.getSymbolByID("TOUCH_CHAN_ENABLE_CNT").getValue()
     sercom = localComponent.getSymbolByID("TOUCH_SERCOM_INSTANCE").getValue()
     timer = localComponent.getSymbolByID("TOUCH_TIMER_INSTANCE").getValue()
-    ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")
-    localComponent.getSymbolByID("GET_PTC_CLOCK_FREQUENCY").setValue(ptcClockFrequencyDefault)
+    if targetDevice in ["PIC32CZCA80","PIC32CZCA90"]:
+        ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")
+        localComponent.getSymbolByID("GET_PTC_CLOCK_FREQUENCY").setValue(ptcClockFrequencyDefault)
 
     if int(nodeCount) == 0:
         Log.writeErrorMessage("Touch Error: Number of sensor is ZERO")
@@ -610,10 +611,11 @@ def instantiateComponent(qtouchComponent):
     else:
         autoTuneCSDDisable.setValue(False)
 
-    ptcClockFrequency = qtouchComponent.createIntegerSymbol("GET_PTC_CLOCK_FREQUENCY", touchMenu)
-    ptcClockFrequency.setLabel("Get PTC Clock Frequency")
-    ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")
-    ptcClockFrequency.setDefaultValue(ptcClockFrequencyDefault)
+    if device in ["PIC32CZCA80","PIC32CZCA90"]:
+        ptcClockFrequency = qtouchComponent.createIntegerSymbol("GET_PTC_CLOCK_FREQUENCY", touchMenu)
+        ptcClockFrequency.setLabel("Get PTC Clock Frequency")
+        ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")
+        ptcClockFrequency.setDefaultValue(ptcClockFrequencyDefault)
     
     if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
         useTrustZone = True
