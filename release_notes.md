@@ -3,6 +3,27 @@
 
 #  Microchip MPLAB® Harmony 3 Touch Library Release Notes
 
+## Touch Library v3.13.0 Release
+### NEW FEATURES SUPPORTED
+Touch Tune tab provides information to user on bidirectional or unidirectional interface.
+### BUG FIXES
+* Fixed bug related to CSD option shown for devices which doesn't have CSD feature.
+* Driven shield on SAMD2x wasn't working correctly. This is fixed.
+* Bug related to gesture timing periodicity is fixed.
+* Scroller configuration related bug is fixed in GUI.
+* Unintended braces in touch timer function is removed.
+* SAMD2x Low power related issues are fixed.
+### KNOWN ISSUES
+* For PIC32CM JH and SAMC2x families, event system based low power has issues when it enters low power mode.
+* For SAML1x and PIC32CM LE00/LS00/LS60 device families, PORT_MUX registers for pins adjacent to touch pins may be overwritten by touch library.
+### DEVELOPMENT TOOLS 
+* [MPLAB® X IDE v6.05](https://www.microchip.com/en-us/tools-resources/develop/mplab-x-ide)
+* [MPLAB® XC32 C/C++ Compiler v4.20](https://www.microchip.com/mplab/compilers)
+* MPLAB® XIDE plug-ins: 
+    * MPLAB® Code Configurator (MCC)
+      * MCC Plugin v5.2.2
+      * MCC Core v5.4.14
+
 ## Touch Library v3.12.1 Release
 ### BUG FIXES
 * Bug related to enabling Drivenshield is resolved
@@ -13,7 +34,7 @@
     * MPLAB® Code Configurator (MCC)
       * MCC Plugin v5.1.9
       * MCC Core v5.4.4
-	  
+  
 ## Touch Library v3.12.0 Release
 ### NEW FEATURES SUPPORTED
 * PIC32CM JH family device support is done.
