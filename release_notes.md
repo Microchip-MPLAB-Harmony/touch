@@ -14,7 +14,7 @@ Touch Tune tab provides information to user on bidirectional or unidirectional i
 * Unintended braces in touch timer function is removed.
 * SAMD2x Low power related issues are fixed.
 ### KNOWN ISSUES
-* For PIC32CM JH and SAMC2x families, event system based low power has issues when it enters low power mode.
+* For PIC32CM JH and SAMC2x families, event system based low power has issues when it enters low power mode. Workaround - Use software based low power feature.
 * For SAML1x and PIC32CM LE00/LS00/LS60 device families, PORT_MUX registers for pins adjacent to touch pins may be overwritten by touch library.
 ### DEVELOPMENT TOOLS 
 * [MPLAB® X IDE v6.05](https://www.microchip.com/en-us/tools-resources/develop/mplab-x-ide)
