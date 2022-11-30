@@ -67,6 +67,13 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#assign num_of_channel_more_than_one = 1 >
 </#if>
 
+<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>
+<#if USE_SYS_TIME?exists && USE_SYS_TIME == true>
+#warning "Using low-power feature with SYS_TIME may not work properly"
+</#if>
+</#if>
+
+
 /*----------------------------------------------------------------------------
  *     include files
  *----------------------------------------------------------------------------*/
@@ -1410,78 +1417,83 @@ Notes  :
 ============================================================================*/
 void touch_timer_handler(void)
 {
-<#if ENABLE_GESTURE==true>
-	touch_gesture_time_cnt= touch_gesture_time_cnt + 2u;
-	if (touch_gesture_time_cnt >= DEF_GESTURE_TIME_BASE_MS) {
-		qtm_update_gesture_2d_timer(touch_gesture_time_cnt / DEF_GESTURE_TIME_BASE_MS);
-		touch_gesture_time_cnt = touch_gesture_time_cnt % DEF_GESTURE_TIME_BASE_MS;
-	}
-	interrupt_cnt= interrupt_cnt + 2u;
-	if (interrupt_cnt >= DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
-		interrupt_cnt = 0;
-		/* Count complete - Measure touch sensors */
-		time_to_measure_touch_var = 1;
-<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
-#if DEF_TOUCH_LOWPOWER_ENABLE == 1u
-	if (time_since_touch < (65535u - measurement_period_store)) {
-		time_since_touch += measurement_period_store;
-	} else {
-		time_since_touch = 65535;
-	}
-    qtm_update_qtlib_timer(measurement_period_store);
-#else
+    <#if USE_SYS_TIME?exists && USE_SYS_TIME == true>
+    time_to_measure_touch_var = 1;
     qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
-#endif
-<#else>
-    qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
-</#if>
-	}
-<#else> <#-- no gesture -->
-<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>
-<#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == true > <#-- event system -->
-    <#if sam_d2x_devices?seq_contains(DEVICE_NAME)>
-    <@eventlp.lowpower_touch_timer_handler_samd21_evsys/>
-    <#elseif sam_c2x_devices?seq_contains(DEVICE_NAME)>
-    <@eventlp.lowpower_touch_timer_handler_samc20_c21_evsys/>
-    <#elseif sam_l1x_devices?seq_contains(DEVICE_NAME) || pic32cm_le_devices?seq_contains(DEVICE_NAME)>
-    <@eventlp.lowpower_touch_timer_handler_saml1x_evsys/>
-    <#elseif sam_l2x_devices?seq_contains(DEVICE_NAME)>
-    <@eventlp.lowpower_touch_timer_handler_saml2x_evsys/>
-    <#elseif pic32cz?seq_contains(DEVICE_NAME)>
-    <@eventlp.lowpower_touch_timer_handler_pic32cz_evsys/>  
-    </#if>
-
-<#elseif (ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false) || (sam_e5x_devices?seq_contains(DEVICE_NAME)) || (sam_d1x_devices?seq_contains(DEVICE_NAME)) >  <#-- No event system -->
-	/* Count complete - Measure touch sensors */
-	time_to_measure_touch_var = 1u;
-
-	qtm_update_qtlib_timer(measurement_period_store);
+    <#else>
+    <#if ENABLE_GESTURE==true>
+        touch_gesture_time_cnt= touch_gesture_time_cnt + 2u;
+        if (touch_gesture_time_cnt >= DEF_GESTURE_TIME_BASE_MS) {
+            qtm_update_gesture_2d_timer(touch_gesture_time_cnt / DEF_GESTURE_TIME_BASE_MS);
+            touch_gesture_time_cnt = touch_gesture_time_cnt % DEF_GESTURE_TIME_BASE_MS;
+        }
+        interrupt_cnt= interrupt_cnt + 2u;
+        if (interrupt_cnt >= DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
+            interrupt_cnt = 0;
+            /* Count complete - Measure touch sensors */
+            time_to_measure_touch_var = 1;
+    <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
     #if DEF_TOUCH_LOWPOWER_ENABLE == 1u
-	if (time_since_touch < (65535u - measurement_period_store)) {
-		time_since_touch += measurement_period_store;
-	}
-	else
-	{
-		time_since_touch = 65535;
-	}
-    <#if num_of_channel_more_than_one == 1>
-	if (time_drift_wakeup_counter < (65535u - measurement_period_store)) {
-		time_drift_wakeup_counter += measurement_period_store;
-		} else {
-		time_drift_wakeup_counter = 65535;
-	}
-    </#if>
+        if (time_since_touch < (65535u - measurement_period_store)) {
+            time_since_touch += measurement_period_store;
+        } else {
+            time_since_touch = 65535;
+        }
+        qtm_update_qtlib_timer(measurement_period_store);
+    #else
+        qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
     #endif
-<#else>
-    <#if sam_e5x_devices?seq_contains(DEVICE_NAME)>
-        <@softwarelp.lowpower_touch_timer_handler_same5x_noevs/>
+    <#else>
+        qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
     </#if>
-</#if>  
-<#else>  <#-- no low power -->
-    time_to_measure_touch_var = 1u;
-    qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
-</#if>
-</#if>
+        }
+    <#else> <#-- no gesture -->
+    <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>
+    <#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == true > <#-- event system -->
+        <#if sam_d2x_devices?seq_contains(DEVICE_NAME)>
+        <@eventlp.lowpower_touch_timer_handler_samd21_evsys/>
+        <#elseif sam_c2x_devices?seq_contains(DEVICE_NAME)>
+        <@eventlp.lowpower_touch_timer_handler_samc20_c21_evsys/>
+        <#elseif sam_l1x_devices?seq_contains(DEVICE_NAME) || pic32cm_le_devices?seq_contains(DEVICE_NAME)>
+        <@eventlp.lowpower_touch_timer_handler_saml1x_evsys/>
+        <#elseif sam_l2x_devices?seq_contains(DEVICE_NAME)>
+        <@eventlp.lowpower_touch_timer_handler_saml2x_evsys/>
+        <#elseif pic32cz?seq_contains(DEVICE_NAME)>
+        <@eventlp.lowpower_touch_timer_handler_pic32cz_evsys/>  
+        </#if>
+
+    <#elseif (ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false) || (sam_e5x_devices?seq_contains(DEVICE_NAME)) || (sam_d1x_devices?seq_contains(DEVICE_NAME)) >  <#-- No event system -->
+        /* Count complete - Measure touch sensors */
+        time_to_measure_touch_var = 1u;
+
+        qtm_update_qtlib_timer(measurement_period_store);
+        #if DEF_TOUCH_LOWPOWER_ENABLE == 1u
+        if (time_since_touch < (65535u - measurement_period_store)) {
+            time_since_touch += measurement_period_store;
+        }
+        else
+        {
+            time_since_touch = 65535;
+        }
+        <#if num_of_channel_more_than_one == 1>
+        if (time_drift_wakeup_counter < (65535u - measurement_period_store)) {
+            time_drift_wakeup_counter += measurement_period_store;
+            } else {
+            time_drift_wakeup_counter = 65535;
+        }
+        </#if>
+        #endif
+    <#else>
+        <#if sam_e5x_devices?seq_contains(DEVICE_NAME)>
+            <@softwarelp.lowpower_touch_timer_handler_same5x_noevs/>
+        </#if>
+    </#if>  
+    <#else>  <#-- no low power -->
+        time_to_measure_touch_var = 1u;
+        qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
+    </#if>
+    </#if>
+    </#if>
 }
 <#if pic_devices?seq_contains(DEVICE_NAME)>
 <#if TOUCH_TIMER_INSTANCE != "">
@@ -1491,9 +1503,19 @@ void timer_handler( uint32_t intCause, uintptr_t context )
 }
 uintptr_t tmr_context;
 </#if>
+<#if USE_SYS_TIME?exists && USE_SYS_TIME == true>
+void touch_systime_hanlder(uintptr_t context )
+{
+     touch_timer_handler();
+}
+uintptr_t tmr_context;
+</#if>
 
 void touch_timer_config(void)
 {
+    <#if USE_SYS_TIME?exists && USE_SYS_TIME == true>
+    SYS_TIME_CallbackRegisterMS(touch_systime_hanlder, (uintptr_t)tmr_context, DEF_TOUCH_MEASUREMENT_PERIOD_MS, SYS_TIME_PERIODIC);
+    <#else>
 	<#if TOUCH_TIMER_INSTANCE != "">
 	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].CALLBACK_API_NAME}(timer_handler,tmr_context);
 	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].TIMER_START_API_NAME}();
@@ -1517,20 +1539,29 @@ void touch_timer_config(void)
 	#warning "Timer for periodic touch measurement not defined; Call touch_timer_handler() every DEF_TOUCH_MEASUREMENT_PERIOD_MS."
 	</#if>
 	</#if>
+    </#if>
 }
-<#else>
+<#else> <#-- non pic devices -->
 <#if TOUCH_TIMER_INSTANCE != "">
-
 void rtc_cb( RTC_TIMER32_INT_MASK intCause, uintptr_t context )
 {
     touch_timer_handler();
 }
 uintptr_t rtc_context;
 </#if>
-
+<#if USE_SYS_TIME?exists && USE_SYS_TIME == true>
+void touch_systime_hanlder(uintptr_t context )
+{
+     touch_timer_handler();
+}
+uintptr_t tmr_context;
+</#if>
 void touch_timer_config(void)
 {  
-<#if TOUCH_TIMER_INSTANCE != "">
+    <#if USE_SYS_TIME?exists && USE_SYS_TIME == true>
+    SYS_TIME_CallbackRegisterMS(touch_systime_hanlder, (uintptr_t)tmr_context, DEF_TOUCH_MEASUREMENT_PERIOD_MS, SYS_TIME_PERIODIC);
+    <#else>
+    <#if TOUCH_TIMER_INSTANCE != "">
     ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].CALLBACK_API_NAME}(rtc_cb, rtc_context);
 
 <#if (DEVICE_NAME == "SAMD20") || (DEVICE_NAME == "SAMD21") >
@@ -1573,6 +1604,7 @@ void touch_timer_config(void)
 	<#else>
 	#warning "Timer for periodic touch measurement not defined; Call touch_timer_handler() every DEF_TOUCH_MEASUREMENT_PERIOD_MS."
 	</#if>
+</#if>
 </#if>
 }
 </#if>

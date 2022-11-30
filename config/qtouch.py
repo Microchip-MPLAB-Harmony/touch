@@ -369,6 +369,20 @@ def updatePinsSettings(symbol,event):
             setting = touchPads[pad]
             Database.setSymbolValue("core", "PIN_"+setting["index"]+"_FUNCTION_TYPE", setting["function"])
 
+def useSysTimeEvent(symbol,event):
+    localComponent = symbol.getComponent()
+    localComponent.setDependencyEnabled("SW_Timer", event['value'])
+    warning = localComponent.getSymbolByID("SYS_TIME_WARNING")
+    # tmrInstance = localComponent.getSymbolByID("TOUCH_TIMER_INSTANCE")
+    if event['value'] is True:
+        # tmrInstance.clearValue()
+        localComponent.setDependencyEnabled("Touch_timer", False)
+        warning.setVisible(True)
+    else:
+        localComponent.setDependencyEnabled("Touch_timer", True)
+        warning.setVisible(False)
+
+
 def onGenerate(symbol,event):
     """Handler for generate code menu click event. 
     Triggers updates for touch sub modules, lump,surface,lowpower,boostmode
@@ -509,6 +523,19 @@ def instantiateComponent(qtouchComponent):
     touchInfoMenu = qtouchComponent.createMenuSymbol("TOUCH_INFO", None)
     touchInfoMenu.setLabel("Touch Configuration Helper")
     touchInfoMenu.setVisible(showConfiguration)
+
+    touchConfigMenu = qtouchComponent.createMenuSymbol("TOUCH_EXPERIMENTAL_FEATURES", None)
+    touchConfigMenu.setLabel("Touch Experimental Features")
+    touchConfigMenu.setVisible(True)
+
+    useSysTime = qtouchComponent.createBooleanSymbol("USE_SYS_TIME", touchConfigMenu)
+    useSysTime.setLabel("Use SYS_TIME")
+    useSysTime.setDefaultValue(False)
+    useSysTime.setDependencies(useSysTimeEvent,["USE_SYS_TIME"])
+
+    sysTimeWarning= qtouchComponent.createMenuSymbol("SYS_TIME_WARNING", touchConfigMenu)
+    sysTimeWarning.setLabel("Using SYS TIME may not work with low-power Feature")
+    sysTimeWarning.setVisible(False)
     
     touchScriptEvent = qtouchComponent.createStringSymbol("TOUCH_SCRIPT_EVENT", touchInfoMenu)
     touchScriptEvent.setLabel("Script Event ")
