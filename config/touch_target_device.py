@@ -281,7 +281,7 @@ class classTouchTargetDevice():
             Database.clearSymbolValue("core", "CVD_CLOCK_ENABLE")
             Database.setSymbolValue("core", "CVD_CLOCK_ENABLE", True)
         elif targetDevice not in self.picDevices:
-            if (targetDevice in set(["SAMC20","SAMC21","SAMD20","SAMD21","SAMHA1","SAMDA1","SAMD10","SAMD11","SAML10","SAML11","SAML21","SAML22","PIC32CMLE00","PIC32CMLS00","PIC32CZCA80","PIC32CZCA90"])):
+            if (targetDevice in set(["SAMC20","SAMC21","SAMD20","SAMD21","SAMHA1","SAMDA1","SAMD10","SAMD11","SAML10","SAML11","SAML21","SAML22","PIC32CMLE00","PIC32CMLS00","PIC32CZCA80","PIC32CZCA90","SAML1xE","PIC32CMJH01","PIC32CMJH00"])):
                 Database.clearSymbolValue("core", "PTC_CLOCK_ENABLE")
                 Database.setSymbolValue("core", "PTC_CLOCK_ENABLE", True)
             else:
