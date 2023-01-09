@@ -1239,11 +1239,11 @@ Output : none
 Notes  :
 ============================================================================*/
 static void touch_process_lowpower(void) {
-       touch_ret_t touch_ret;
+       
 <#if ENABLE_EVENT_LP?exists>
 	<#if ENABLE_EVENT_LP == true>
     if (time_since_touch >= DEF_TOUCH_TIMEOUT) {
-    
+    touch_ret_t touch_ret;
 		/* Start Autoscan */
 		touch_ret = qtm_autoscan_sensor_node(&auto_scan_setup, touch_measure_wcomp_match);
 
