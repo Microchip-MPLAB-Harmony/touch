@@ -73,15 +73,15 @@ class classTouchTuneWithPlugin():
             :none
         """
         component = symbol.getComponent()
+        surfaceUtility = symbol.getComponent().getSymbolByID("ENABLE_KRONOCOMM").getValue()
         if(event["value"] == True):
-            #tchTouchTuneHeaderFile.setEnabled(True)
             component.setDependencyEnabled("Touch_sercom_Krono", True)
             component.getSymbolByID("TOUCH_SERCOM_KRONO_INSTANCE").setVisible(True)
             component.getSymbolByID("TOUCH_TUNE_WITH_PLUGIN_SOURCE").setEnabled(True)
             component.getSymbolByID("TOUCH_TUNE_WITH_PLUGIN_HEADER").setEnabled(True)
         else:
-            #tchTouchTuneHeaderFile.setEnabled(False)
-            component.setDependencyEnabled("Touch_sercom_Krono", False)
-            component.getSymbolByID("TOUCH_SERCOM_KRONO_INSTANCE").setVisible(False)
+            if (surfaceUtility == False):
+                component.setDependencyEnabled("Touch_sercom_Krono", False)
+                component.getSymbolByID("TOUCH_SERCOM_KRONO_INSTANCE").setVisible(False)
             component.getSymbolByID("TOUCH_TUNE_WITH_PLUGIN_SOURCE").setEnabled(False)
             component.getSymbolByID("TOUCH_TUNE_WITH_PLUGIN_HEADER").setEnabled(False)

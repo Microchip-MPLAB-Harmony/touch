@@ -107,9 +107,9 @@ class classTouchSurface2DUtility():
         Returns:
             :none
         """
-        component = symbol.getComponent()
+        component = symbol.getComponent()  
+        touchTune = symbol.getComponent().getSymbolByID("ENABLE_TOUCH_TUNE_WITH_PLUGIN").getValue()
         if(event["value"] == True):
-            #tchKronocommUartHeaderFile.setEnabled(True)
             component.setDependencyEnabled("Touch_sercom_Krono", True)
             component.getSymbolByID("TOUCH_SERCOM_KRONO_INSTANCE").setVisible(True)
             component.getSymbolByID("TOUCH_KRONOCOMM_UART_HEADER").setEnabled(True)
@@ -117,9 +117,9 @@ class classTouchSurface2DUtility():
             component.getSymbolByID("TOUCH_KRONOCOMM_UART_SOURCE").setEnabled(True)
             component.getSymbolByID("TOUCH_KRONOCOMM_ADAPTOR_SOURCE").setEnabled(True)
         else:
-            #tchKronocommUartHeaderFile.setEnabled(False)
-            component.setDependencyEnabled("Touch_sercom_Krono", False)
-            component.getSymbolByID("TOUCH_SERCOM_KRONO_INSTANCE").setVisible(False)
+            if (touchTune == False):
+                component.setDependencyEnabled("Touch_sercom_Krono", False)
+                component.getSymbolByID("TOUCH_SERCOM_KRONO_INSTANCE").setVisible(False)
             component.getSymbolByID("TOUCH_KRONOCOMM_UART_HEADER").setEnabled(False)
             component.getSymbolByID("TOUCH_KRONOCOMM_ADAPTOR_HEADER").setEnabled(False)
             component.getSymbolByID("TOUCH_KRONOCOMM_UART_SOURCE").setEnabled(False)
