@@ -61,6 +61,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
 extern volatile uint8_t time_to_measure_touch_var;
+extern volatile uint8_t measurement_mode;
 <#if no_standby_during_measurement == 1>
 extern uint8_t measurement_in_progress;
 </#if>
