@@ -183,9 +183,10 @@ class classTouchAcquisitionGroups():
         touchAutoTuneMode.setLabel("Select the Required Tuning Mode")
         touchAutoTuneMode.addKey("Manual Tuning","CAL_AUTO_TUNE_NONE","Manual tuning is done based on the values defined by user")
         if (targetDevice not in ["PIC32CZCA80", "PIC32CZCA90"]):
-            touchAutoTuneMode.addKey("Tune Resistor value","CAL_AUTO_TUNE_RSEL","Series Resistor is tuned")
             if(csdMode != "NoCSD"):
                 touchAutoTuneMode.addKey("Tune CSD","CAL_AUTO_TUNE_CSD","Charge Share Delay - CSD is tuned")
+            else:
+                touchAutoTuneMode.addKey("Tune Prescaler value","CAL_AUTO_TUNE_PRSC","Clock Prescaler is tuned")
         touchAutoTuneMode.setDefaultValue(0)
         touchAutoTuneMode.setOutputMode("Value")
         touchAutoTuneMode.setDisplayMode("Key")
