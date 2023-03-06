@@ -4,7 +4,8 @@ MHC Python Interface documentation website <http://confluence.microchip.com/disp
 class classTouchFreqGroups():
     def __init__(self):
         self.maxGroups = 4
-
+        self.freqHopStepsMax = 7
+        self.freqHopStepsDefault = 3
     def getMaxGroups(self):
         """Get maximum acquisition groups
         Arguments:
@@ -33,17 +34,18 @@ class classTouchFreqGroups():
         Returns:
             :none
         """
-        freqHopStepsMax = 7
-        freqHopStepsDefault = 3
+
 
         if int(groupNumber) == 1:
             freqSteps = qtouchComponent.createIntegerSymbol("FREQ_HOP_STEPS", parentLabel)
+            freqSteps.setDependencies(self.freqHopStepCountUpdate,["FREQ_HOP_STEPS"])
             enableFreqHopAutoTuneMenu = qtouchComponent.createBooleanSymbol("FREQ_AUTOTUNE", parentLabel)
             enableFreqHopAutoTuneMenu.setDependencies(self.freqHopUpdateEnabled,["FREQ_AUTOTUNE"])
             maxVariance = qtouchComponent.createIntegerSymbol("DEF_TOUCH_MAX_VARIANCE", enableFreqHopAutoTuneMenu)
             tuneInCount = qtouchComponent.createIntegerSymbol("DEF_TOUCH_TUNE_IN_COUNT", enableFreqHopAutoTuneMenu)
         else:
             freqSteps = qtouchComponent.createIntegerSymbol("GROUP_"+str(groupNumber)+"FREQ_HOP_STEPS", parentLabel)
+            freqSteps.setDependencies(self.freqHopStepCountUpdate,["GROUP_"+str(groupNumber)+"FREQ_HOP_STEPS"])
             enableFreqHopAutoTuneMenu = qtouchComponent.createBooleanSymbol("GROUP_"+str(groupNumber)+"FREQ_AUTOTUNE", parentLabel)
             enableFreqHopAutoTuneMenu.setDependencies(self.freqHopUpdateEnabled,["GROUP_"+str(groupNumber)+"FREQ_AUTOTUNE"])
             maxVariance = qtouchComponent.createIntegerSymbol("GROUP_"+str(groupNumber)+"DEF_TOUCH_MAX_VARIANCE", enableFreqHopAutoTuneMenu)
@@ -53,8 +55,8 @@ class classTouchFreqGroups():
         enableFreqHopAutoTuneMenu.setLabel("Enable Frequency Auto Tuning")
         enableFreqHopAutoTuneMenu.setDefaultValue(False)
         
-        self.setFreqHopValues(qtouchComponent,freqHopStepsDefault,groupNumber,parentLabel)
-        self.setFreqStepsValues(freqSteps,freqHopStepsDefault,freqHopStepsMax)
+        self.setFreqHopValues(qtouchComponent,self.freqHopStepsDefault,self.freqHopStepsMax,groupNumber,parentLabel)
+        self.setFreqStepsValues(freqSteps,self.freqHopStepsDefault,self.freqHopStepsMax)
         self.setMaxVarianceValues(maxVariance)
         self.setTuneInCountValues(tuneInCount)
 
@@ -149,6 +151,16 @@ class classTouchFreqGroups():
             freqHopAutoLibraryFile.setEnabled(False)
             freqHopAutoHeaderFile.setEnabled(False)
 
+    def freqHopStepCountUpdate(self, symbol, event):
+        component= symbol.getComponent()
+        steps = int(symbol.getValue())
+
+        for freqID in range(0, self.freqHopStepsMax):
+            symbol = component.getSymbolByID("HOP_FREQ"+ str(freqID))
+            symbol.setVisible(True)
+            
+            if freqID >= steps:
+                symbol.setVisible(False)
 
     def freqHopUpdateEnabled(self,symbol,event):
         """Enables frequency hop functionality. Also Enables/Disables associated source files and Libraries.
@@ -192,7 +204,7 @@ class classTouchFreqGroups():
         freqSteps.setMax(stepsMax)
         freqSteps.setDescription("Defines the number of frequencies used for touch measurement. Noise performance will be good if more number of frequencies are used - but increases response time and RAM usage. If higher number of frequencies needs to be used (to tackle noise), consider enabling frequency auto-tune option.")
 
-    def setFreqHopValues(self,qtouchComponent,steps,groupNumber,parentLabel):
+    def setFreqHopValues(self,qtouchComponent,steps,maxSteps,groupNumber,parentLabel):
         """Populate the frequency hop Values symbol 
         Arguments:
             :qtouchComponent : touchModule
@@ -202,7 +214,7 @@ class classTouchFreqGroups():
         Returns:
             none
         """
-        for freqID in range(0, steps):
+        for freqID in range(0, maxSteps):
             if(groupNumber ==1):
                 freqHopValues = qtouchComponent.createKeyValueSetSymbol("HOP_FREQ"+ str(freqID), parentLabel)
             else:
@@ -229,6 +241,9 @@ class classTouchFreqGroups():
             freqHopValues.setDisplayMode("Description")
             freqHopValues.setDefaultValue(freqID)
             freqHopValues.setDescription("Sets the Hop Frequencies")
+            
+            if freqID >= steps:
+                freqHopValues.setVisible(False)
 
     def setMaxVarianceValues(self,maxVariance):
         """Populate the maximum variance symbol 
