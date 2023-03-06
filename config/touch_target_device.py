@@ -473,6 +473,16 @@ class classTouchTargetDevice():
                                 index.replace("CVDR",'')
                                 cvdRPinsIndex.append(int(index[4:]))
                                 cvdRPinsTemp.append(tempstring)
+                cvdRPins = [x for _,x in sorted(zip(cvdRPinsIndex,cvdRPinsTemp))]
+                cvdTPins = [x for _,x in sorted(zip(cvdRPinsIndex,cvdRPinsTemp))]
+                print(cvdRPins)
+                print(cvdTPins)
+                self.touchChannelSelf = len(cvdRPins)
+                self.touchChannelMutual = len(cvdTPins)
+                print(self.touchChannelSelf)
+                print(self.touchChannelMutual)
+                self.ptcPinValues.append(cvdRPins)
+                self.ptcPinValues.append(cvdTPins)
             elif targetDevice == "PIC32MZDA":
                 if "169" in deviceFullName:
                     pinoutXmlPath = os.path.join(currentPath, "../../csp/peripheral/gpio_02467/plugin/pin_xml/pins/MZ_DA_169LFBGA.xml")
@@ -500,6 +510,16 @@ class classTouchTargetDevice():
                                 print (index)
                                 cvdRPinsIndex.append(int(index[2:]))
                                 cvdRPinsTemp.append(tempstring)
+                cvdRPins = [x for _,x in sorted(zip(cvdRPinsIndex,cvdRPinsTemp))]
+                cvdTPins = [x for _,x in sorted(zip(cvdRPinsIndex,cvdRPinsTemp))]
+                print(cvdRPins)
+                print(cvdTPins)
+                self.touchChannelSelf = len(cvdRPins)
+                self.touchChannelMutual = len(cvdTPins)
+                print(self.touchChannelSelf)
+                print(self.touchChannelMutual)
+                self.ptcPinValues.append(cvdRPins)
+                self.ptcPinValues.append(cvdTPins)
             elif targetDevice in ["PIC32CXBZ31", "WBZ35"]:
                 ptcSignalsATDF = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"CVD\"]/instance/signals")
                 self.ptcPinValues = []
