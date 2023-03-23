@@ -887,6 +887,7 @@ def instantiateComponent(qtouchComponent):
         qtouchSetDependencies(symbol, func, depen)
 
     qtouchComponent.addPlugin("../touch/plugin/ptc_manager_c21.jar")
+    qtouchComponent.addPlugin("../harmony-services/plugins/generic_plugin.jar", "TOUCH_CONFIGURATION_BETA", {"plugin_name": "Touch Configuration (beta)", "main_html_path": "touch/plugin/index.html"})
 
     print("Dependency details")
     symbol,func,depen = target_deviceInst.getDepDetails()

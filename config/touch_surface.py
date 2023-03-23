@@ -33,6 +33,8 @@ class classTouchSurface():
             touchChSurafceY = qtouchComponent.createStringSymbol("TOUCH_CH_SURFACE_Y_LINES", surfaceMenu)
             touchChSurafceY.setVisible(True)
 
+        orientationKey = qtouchComponent.createIntegerSymbol("SURFACE_ORIENTATION", surfaceMenu)
+        self.setOrientationKeyValues(orientationKey)
         enableSurface1T = qtouchComponent.createBooleanSymbol("ENABLE_SURFACE1T", surfaceMenu)
         self.setEnableSurface1TValues(enableSurface1T)
         enableSurface2T = qtouchComponent.createBooleanSymbol("ENABLE_SURFACE2T", surfaceMenu)
@@ -73,6 +75,12 @@ class classTouchSurface():
         else:
             component.getSymbolByID("SURFACE_MENU").setEnabled(False)
             component.getSymbolByID("SURFACE_MENU").setVisible(False)
+
+
+    def setOrientationKeyValues(self,orientationKey):
+        orientationKey.setLabel("Set Orientation of Surface")
+        orientationKey.setDefaultValue(0)
+
 
     def setEnableSurface1TValues(self,enableSurface1T): 
         """Populate the 1 touch surface enable symbol 
