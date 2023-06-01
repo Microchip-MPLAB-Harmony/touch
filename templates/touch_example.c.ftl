@@ -58,15 +58,15 @@ void touch_mainloop_example(void){
     /* call touch process function */
     touch_process();
 
-    if(measurement_done_touch == 1)
+    if(measurement_done_touch == 1u)
     {
-        measurement_done_touch = 0;
+        measurement_done_touch = 0u;
         // process touch data
     }
 
     <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>
     /* perform sleep operation based on touch state */
-    <#if no_standby_during_measurement == 1 >
+    <#if no_standby_during_measurement == 1u >
     #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
         if ((time_to_measure_touch_var != 1u)&& 
         (measurement_mode == 1u)) {
@@ -119,7 +119,7 @@ uint16_t scroller_position = 0u;
     scroller_status = get_scroller_state(${i});
     scroller_position = get_scroller_position(${i});
     //Example: 8 bit scroller resolution. Modify as per requirement.
-    scroller_position = scroller_position  >> 5;
+    scroller_position = scroller_position  >> 5u;
     //LED_OFF
     if ( 0u != scroller_status) {
         switch (scroller_position) {

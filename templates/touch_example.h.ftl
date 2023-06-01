@@ -38,9 +38,19 @@ CONSEQUENTIAL DAMAGES, LOST  PROFITS  OR  LOST  DATA,  COST  OF  PROCUREMENT  OF
 SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
+#ifndef TOUCH_EXMAPLE_H
+#define TOUCH_EXMAPLE_H
 
-<#if TOUCH_CHAN_ENABLE_CNT == 0>
-#error "Number of Touch sensor is defined as ZERO. Include atleast one touch sensor or remove Touch library in MHC."
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
+
+    extern "C" {
+
+#endif
+// DOM-IGNORE-END
+
+<#if TOUCH_CHAN_ENABLE_CNT == 0u>
+#error "Number of Touch sensor is defined as ZERO. Include atleast one touch sensor or remove Touch library in MCC."
 <#else>
 
 #include <stddef.h>                     // Defines NULL
@@ -51,10 +61,10 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 <#assign no_standby_devices = ["SAMD10","SAMD11"]>
 
-<#assign no_standby_during_measurement = 0>
+<#assign no_standby_during_measurement = 0u>
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
 <#if (DS_DEDICATED_ENABLE == true) || (DS_PLUS_ENABLE == true) || no_standby_devices?seq_contains(DEVICE_NAME)>
-<#assign no_standby_during_measurement = 1>
+<#assign no_standby_during_measurement = 1u>
 </#if>
 </#if>
 
@@ -62,7 +72,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
 extern volatile uint8_t time_to_measure_touch_var;
 extern volatile uint8_t measurement_mode;
-<#if no_standby_during_measurement == 1>
+<#if no_standby_during_measurement == 1u>
 extern uint8_t measurement_in_progress;
 </#if>
 #endif
@@ -73,3 +83,11 @@ extern volatile uint8_t measurement_done_touch;
 void touch_mainloop_example(void);
 void touch_status_display(void);
 </#if>
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
+
+    }
+
+#endif
+// DOM-IGNORE-END
+#endif // TOUCH_H
