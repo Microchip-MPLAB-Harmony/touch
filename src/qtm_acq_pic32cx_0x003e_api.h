@@ -70,6 +70,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 /* X line bit position - CVDT line */
 #define X_NONE 0u
+#undef X
 #define X(n) ((uint32_t)(1u << (n)))
 
 /* Y line bit position - CVDR line */

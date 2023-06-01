@@ -79,6 +79,7 @@ Copyright (c)  Microchip Inc. All rights reserved.
 
 /* X line bit position */
 #define X_NONE 0u
+#undef X
 #define X(n) ((uint32_t)(1u << (n)))
 
 /* Y line bit position */

@@ -39,8 +39,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
 
-#ifndef __QTM_API_COMMON_INC__
-#define __QTM_API_COMMON_INC__
+#ifndef QTM_API_COMMON_INC__
+#define QTM_API_COMMON_INC__
 
 #include <stdint.h>
 #include <stddef.h>
@@ -199,4 +199,4 @@ typedef struct {
 #define SCROLLER_TYPE_WHEEL 1u
 #define SCROLLER_TYPE_WRAPAROUND 2u
 
-#endif /* __QTM_QPI_COMMON_*/
+#endif /* QTM_QPI_COMMON_*/

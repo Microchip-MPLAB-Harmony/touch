@@ -44,6 +44,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define TOUCH_BITMASK(np)  (uint32_t)((uint32_t) 1u << (np) )            
     
 /* Touch constant definitions */
+#undef X
 #define X(n)        TOUCH_BITMASK((n))
 #define Y(n)        TOUCH_BITMASK((n))
 #define X_NONE      (0u)
