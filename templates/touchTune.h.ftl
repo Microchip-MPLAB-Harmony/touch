@@ -38,8 +38,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
 
-#ifndef TOUCHTUNE_H_
-#define TOUCHTUNE_H_
+#ifndef TOUCH_TUNE_H
+#define TOUCH_TUNE_H
 
 
 #include <stddef.h>                     // Defines NULL
@@ -50,137 +50,112 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 #if DEF_TOUCH_TUNE_ENABLE == 1U
 
-#define DV_HEADER    0x55 //0x48
-#define DV_FOOTER    0xAA //0x46
+/* 0x00000010b - msb 5 bits - Minor version (00000b), lsb first 3 bits - Major version (010b) */
+#define PROTOCOL_VERSION 0x02u
 
-#define UART_RX_BUF_LENGTH 60
+#define DV_HEADER    0x55u //0x48
+#define DV_FOOTER    0xAAu //0x46
 
-#define HEADER_AWAITING 0
-#define HEADER_RECEIVED 1
-#define DATA_AWAITING 2
-#define DATA_RECEIVED 3
+#define UART_RX_BUF_LENGTH 60u
+
+#define HEADER_AWAITING 0u
+#define HEADER_RECEIVED 1u
+#define DATA_AWAITING 2u
+#define DATA_RECEIVED 3u
  
+#define SEND_DEBUG_DATA		 0x8000u
 
-#define SEND_DEBUG_DATA		 0x8000
+#define STREAMING_DEBUG_DATA     (1u)
+#define STREAMING_CONFIG_DATA    (2u)
 
-#define ZERO 0x00 // 0x30 
+#define ZERO 0x00u
 
 typedef enum
 {
-	PC_REQUEST_CONFIG_DATA_FROM_MCU		= 0x01,//0x31, // sw read PC_REQUEST_CONFIG_DATA_FROM_MCU
-	PC_SEND_CONFIG_DATA_TO_MCU		= 0x02,//0x32, // sw write	PC_SEND_CONFIG_DATA_TO_MCU
-	MCU_SEND_TUNE_DATA_TO_PC		= 0x03,//0x33, // send debug data MCU_SEND_TUNE_DATA_TO_PC
-	MCU_RESPOND_CONFIG_DATA_TO_PC = 0x04 //0x34	// sw read MCU_RESPOND_CONFIG_DATA_TO_PC
+	PC_REQUEST_CONFIG_DATA_FROM_MCU		= 0x01u,//0x31, // sw read PC_REQUEST_CONFIG_DATA_FROM_MCU
+	PC_SEND_CONFIG_DATA_TO_MCU		= 0x02u,//0x32, // sw write	PC_SEND_CONFIG_DATA_TO_MCU
+	MCU_SEND_TUNE_DATA_TO_PC		= 0x03u,//0x33, // send debug data MCU_SEND_TUNE_DATA_TO_PC
+	MCU_RESPOND_CONFIG_DATA_TO_PC = 0x04u //0x34	// sw read MCU_RESPOND_CONFIG_DATA_TO_PC
 }TYPE_ID_VALUES;
 
 typedef enum {
-	tiny = 0x31,
-    avrda = 0x32,
-	samd2x_d1x_l21 = 0x33,
-	samc2x = 0x34,
-	same5x = 0x35,
-	saml1x_pic32cmle = 0x36,
-	saml22 = 0x37,
-	pic32cvd = 0x38,
-	pic32czca = 0x39
+	tiny = 0x31u,
+    avrda = 0x32u,
+	samd2x_d1x_l21 = 0x33u,
+	samc2x = 0x34u,
+	same5x = 0x35u,
+	saml1x_pic32cmle = 0x36u,
+	saml22 = 0x37u,
+	pic32cvd = 0x38u,
+	pic32czca = 0x39u
 }DEVICE_TYPE;
 
-//typedef enum
-//{
-//	FREQ_HOP_MODULE           = 0x01,
-//	FREQ_HOP_AUTO_TUNE_MODULE = 0x02,
-//	KEYS_MODULE               = 0x04,
-//	SCROLLER_MODULE           = 0x08,
-//	SURFACE_1T_MODULE         = 0x10,
-//	SURFACE_2T_MODULE         = 0x20
-//}LIBRARY_MODULES;
+/***********
+ * Config data mask and ids
+*/
+
+#define PROJECT_CONFIG_ID  0u
+#define SENSOR_NODE_CONFIG_ID 1u
+#define SENSOR_KEY_CONFIG_ID 2u
+#define COMMON_SENSOR_CONFIG_ID 3u
+#define SCROLLER_CONFIG_ID 4u
+#define FREQ_HOPPING_AUTO_TUNE_ID 5u
+#define SURFACE_CONFIG_ID 6u
+#define GESTURE_CONFIG_ID 7u
+
+
+#define PROJECT_CONFIG_MASK  ((uint8_t) 1<<PROJECT_CONFIG_ID)
+#define SENSOR_NODE_CONFIG_MASK ((uint8_t) 1<<(SENSOR_NODE_CONFIG_ID-1))
+#define SENSOR_KEY_CONFIG_MASK ((uint8_t) 1<<(SENSOR_KEY_CONFIG_ID-1))
+#define COMMON_SENSOR_CONFIG_MASK ((uint8_t) 1<<(COMMON_SENSOR_CONFIG_ID-1))
+#define SCROLLER_CONFIG_MASK ((uint8_t) 1<<(SCROLLER_CONFIG_ID-1))
+#define FREQ_HOPPING_AUTO_TUNE_MASK ((uint8_t) 1<<(FREQ_HOPPING_AUTO_TUNE_ID-1))
+#define SURFACE_CONFIG_MASK ((uint8_t) 1<<(SURFACE_CONFIG_ID-1))
+#define GESTURE_CONFIG_MASK ((uint8_t) 1<<(GESTURE_CONFIG_ID-1))
+
+/***********
+ * debug data mask and ids
+*/
+
+#define DEBUG_MASK 0x80u
+
+#define KEY_DEBUG_DATA_ID 		0u
+#define SCROLLER_DEBUG_DATA_ID	1u
+#define FREQ_HOP_AUTO_TUNE_DATA_ID 		2u
+#define SURFACE_DEBUG_DATA_ID 		3u
+#define GESTURE_DEBUG_DATA_ID 		4u
+
+#define KEY_DEBUG_MASK ((uint8_t)1<<KEY_DEBUG_DATA_ID)
+#define SCROLLER_DEBUG_MASK ((uint8_t)1<<SCROLLER_DEBUG_DATA_ID)
+#define FREQ_HOP_AUTO_TUNE_DEBUG_MASK ((uint8_t)1<<FREQ_HOP_AUTO_TUNE_DATA_ID)
+#define SURFACE_DEBUG_MASK ((uint8_t)1<<SURFACE_DEBUG_DATA_ID)
+#define GESTURE_DEBUG_MASK ((uint8_t)1<<GESTURE_DEBUG_DATA_ID)
 
 typedef enum
 {
-	CONFIG_INFO =  0x00,
-	SENSOR_NODE_CONFIG_ID = 0x01 ,
-	SENSOR_KEY_CONFIG_ID = 0x02,
-	COMMON_SENSOR_CONFIG_ID = 0x04,	
-	SCROLLER_CONFIG_ID = 0x08,
-	FREQ_HOPPING_AUTO_TUNE_ID = 0x10,
-	SURFACE_CONFIG_ID = 0x20,
-	COMMON_ACQUISITION_CONFIG_ID = 0x40,	
-	LUMP_CONFIG_ID = 0x80,
-}CONFIG_DATA_SELECTION_ID;
-
-typedef enum
-{
-	KEYS_MODULE               = 0x01,	
-	SCROLLER_MODULE           = 0x02,
-	FREQ_HOP_AUTO_TUNE_MODULE = 0x04,
-	SURFACE_1T_MODULE		  = 0x08,
-	SURFACE_2T_MODULE         = 0x10,
-}DEBUG_DATA_SELECTION_ID;            
-typedef enum     
-{
-    KEY_DEBUG_DATA_ID		   = 0x80,
-	SCROLLER_DEBUG_DATA_ID     = 0x81,
-	FREQ_HOP_AUTO_TUNE_DATA_ID = 0x82
-}DEBUG_DATA_FRAME_ID;
-
-typedef enum
-{
-	SELF_CAP = 0x00,
-	MUTUAL_CAP = 0x01
+	SELF_CAP = 0x00u,
+	MUTUAL_CAP = 0x01u
 }ACQ_METHOD;
 
 typedef enum
 {
-	VAL_8P = 0x30,
-	VAL_4P = 0x40
+	VAL_8P = 0x30u,
+	VAL_4P = 0x40u
 }SUB_TYPE;
 
 typedef enum
 {
-	EV_LP = 0x01,
-	SW_LP = 0x02,
-	LUMP = 0x08	
+	EV_LP = 0x01u,
+	SW_LP = 0x02u,
+	LUMP = 0x08u
 }ROW_4;
-
-typedef enum
-{
-	PROTOCOL_VERSION = 0x02		// 0x00000010b - msb 5 bits - Minor version (00000b), lsb first 3 bits - Major version (010b)
-}ROW_5;
 
 void touchTuneInit(void);
 void touchTuneProcess(void);
 void touchTuneNewDataAvailable(void);
 
-extern volatile uint16_t command_flags;
-<#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
-extern qtm_acq_samd1x_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#elseif DEVICE_NAME=="SAML11" || DEVICE_NAME=="SAML1xE">
-extern qtm_acq_saml10_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#elseif  DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00" || DEVICE_NAME=="PIC32CMLS60">
-extern qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#elseif  DEVICE_NAME =="PIC32CMJH00" || DEVICE_NAME=="PIC32CMJH01">
-extern qtm_acq_pic32cmjh_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#elseif  DEVICE_NAME =="PIC32CZCA80"||DEVICE_NAME =="PIC32CZCA90">
-extern qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#else>
-extern qtm_acq_${DEVICE_NAME?lower_case}_node_config_t  ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-</#if>
-extern qtm_touch_key_data_t         qtlib_key_data_set1[DEF_NUM_CHANNELS];
-extern qtm_touch_key_config_t       qtlib_key_configs_set1[DEF_NUM_CHANNELS];
-extern qtm_touch_key_group_config_t qtlib_key_grp_config_set1;
-extern qtm_acq_node_data_t			ptc_qtlib_node_stat1[DEF_NUM_CHANNELS];
 
-#if SCROLLER_MODULE_OUTPUT == 1u
-extern qtm_scroller_data_t			qtm_scroller_data1[DEF_NUM_SCROLLERS];
-extern qtm_scroller_control_t		qtm_scroller_control1;
-extern qtm_scroller_config_t		qtm_scroller_config1[DEF_NUM_SCROLLERS];
-#endif
-
-#if FREQ_HOP_AUTO_MODULE_OUTPUT == 1u
-extern qtm_freq_hop_autotune_config_t qtm_freq_hop_autotune_config1;
-extern qtm_acquisition_control_t qtlib_acq_set1;
-#endif
 
 #endif
 
-#endif /* TOUCHTUNE_H_ */
+#endif /* TOUCH_TUNE_H */
