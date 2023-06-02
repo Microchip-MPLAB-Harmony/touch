@@ -40,7 +40,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 *******************************************************************************/
 
 <#if TOUCH_CHAN_ENABLE_CNT == 0>
-#error "Number of Touch sensor is defined as ZERO. Include atleast one touch sensor or remove Touch library in MHC."
+#error "Number of Touch sensor is defined as ZERO. Include atleast one touch sensor or remove Touch library in MCC."
 <#else>
 <#import "/eventlowpower.ftl" as eventlp>
 <#import "/softwarelowpower.ftl" as softwarelp>
@@ -56,15 +56,15 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#assign pic32cz = ["PIC32CZCA80", "PIC32CZCA90"]>
 <#assign supc_devices = ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMLS60","PIC32CZCA80","PIC32CZCA90"]>
 <#assign no_standby_devices = ["SAMD10","SAMD11"]>
-<#assign no_standby_during_measurement = 0>
+<#assign no_standby_during_measurement = 0u>
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
 <#if (DS_DEDICATED_ENABLE == true) || (DS_PLUS_ENABLE == true) || no_standby_devices?seq_contains(DEVICE_NAME)>
-<#assign no_standby_during_measurement = 1>
+<#assign no_standby_during_measurement = 1u>
 </#if>
 </#if>
-<#assign num_of_channel_more_than_one = 0 >
+<#assign num_of_channel_more_than_one = 0u >
 <#if (TOUCH_CHAN_ENABLE_CNT > 1) >
-<#assign num_of_channel_more_than_one = 1 >
+<#assign num_of_channel_more_than_one = 1u >
 </#if>
 
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>
@@ -79,6 +79,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  *----------------------------------------------------------------------------*/
 #include "definitions.h"
 #include "touch/touch.h"
+#include "qtm_touch_key_0x0002_api.h"
+#include "touch_example.h"
+#include "../peripheral/rtc/plib_rtc.h"
 <#if ENABLE_TOUCH_TUNE_WITH_PLUGIN == true>
 #include "touch/touchTune.h"
 </#if>
@@ -142,7 +145,7 @@ static void touch_measure_wcomp_match(void);
 static void touch_seq_lp_sensor(void);
 static void touch_enable_nonlp_sensors(void);
 static void touch_disable_nonlp_sensors(void);
-uint16_t time_drift_wakeup_counter;
+static uint16_t time_drift_wakeup_counter;
 </#if>
 </#if>
 <#else>
@@ -169,9 +172,9 @@ static void touch_measure_wcomp_match(void);
 #if DEF_TOUCH_LOWPOWER_ENABLE == 1u
 static uint8_t lp_measurement = 0u;
  <#if num_of_channel_more_than_one == 1>
-#define get_lowpower_mask(x) lowpower_key_mask[x>>3]
-uint8_t lowpower_key_mask[(DEF_NUM_CHANNELS+7)>>3] = {DEF_LOWPOWER_KEYS};
-uint8_t current_lp_sensor = 0;
+#define get_lowpower_mask(x) lowpower_key_mask[x>>3u]
+static uint8_t lowpower_key_mask[(DEF_NUM_CHANNELS+7)>>3u] = {DEF_LOWPOWER_KEYS};
+static uint16_t current_lp_sensor = 0u;
 </#if>
 #endif
         </#if>
@@ -180,9 +183,9 @@ uint8_t current_lp_sensor = 0;
 #if DEF_TOUCH_LOWPOWER_ENABLE == 1u
 static uint8_t lp_measurement = 0u;
 <#if num_of_channel_more_than_one == 1>
-uint8_t current_lp_sensor = 0;
-#define get_lowpower_mask(x) lowpower_key_mask[x>>3]
-uint8_t lowpower_key_mask[(DEF_NUM_CHANNELS+7)>>3] = {DEF_LOWPOWER_KEYS};
+uint8_t current_lp_sensor = 0u;
+#define get_lowpower_mask(x) lowpower_key_mask[x>>3u]
+uint8_t lowpower_key_mask[(DEF_NUM_CHANNELS+7u)>>3u] = {DEF_LOWPOWER_KEYS};
 </#if>
 #endif
         </#if>
@@ -190,35 +193,35 @@ uint8_t lowpower_key_mask[(DEF_NUM_CHANNELS+7)>>3] = {DEF_LOWPOWER_KEYS};
 </#if>
 
 /* Flag to indicate time for touch measurement */
-volatile uint8_t time_to_measure_touch_var = 0;
+volatile uint8_t time_to_measure_touch_var = 0u;
 /* post-process request flag */
-volatile uint8_t touch_postprocess_request = 0;
+static volatile uint8_t touch_postprocess_request = 0u;
 
 /* Measurement Done Touch Flag  */
-volatile uint8_t measurement_done_touch = 0;
+volatile uint8_t measurement_done_touch = 0u;
 <#if pic_devices?seq_contains(DEVICE_NAME)>
-static uint8_t all_measure_complete = 0;
+static uint8_t all_measure_complete = 0u;
 </#if>
 
 /* Error Handling */
-uint8_t module_error_code = 0;
+static uint8_t module_error_code = 0u;
 
 
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
 /* Low-power measurement variables */
-uint16_t time_since_touch = 0;
+static uint16_t time_since_touch = 0u;
 /* store the drift period for comparison */
-uint16_t measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
+static uint16_t measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
 /* measurement mode; 0 - sequential, 1 - windowcomp*/
-volatile uint8_t measurement_mode = 0u; 
+static volatile uint8_t measurement_mode = 0u; 
 </#if>
 
 /* Acquisition module internal data - Size to largest acquisition set */
 <#if pic_devices?seq_contains(DEVICE_NAME)>
-uint32_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
+static uint32_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 /* Acquisition set 1 - General settings */
-qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
-    = {DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, DEF_PTC_CAL_AUTO_TUNE, DEF_SEL_FREQ_INIT, 1};
+static qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
+    = {DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, DEF_PTC_CAL_AUTO_TUNE, (uint8_t)DEF_SEL_FREQ_INIT, 1u};
 <#elseif pic32cz?seq_contains(DEVICE_NAME)>
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 /* Acquisition module internal data - Size to largest acquisition set */
@@ -229,19 +232,19 @@ const uint32_t acq_node_xmasks[DEF_NUM_NODES] = { X_MASK_ALL };
 /* Sensor pins Array */
 uint8_t acq_node_pin_array[DEF_NUM_PINDEFS] = { 0u };
 /* Acquisition set 1 - General settings */
-qtm_acq_node_gen_config_t ptc_qtlib_acq_gen1
-    ={DEF_NUM_CHANNELS >> 2, DEF_SENSOR_TYPE, DEF_SEL_FREQ_INIT, &acq_node_pin_array[0],DEF_PTC_INTERRUPT_PRIORITY, DEF_PTC_WAKEUP_EXP};
+static qtm_acq_node_gen_config_t ptc_qtlib_acq_gen1
+    ={DEF_NUM_CHANNELS >> 2, DEF_SENSOR_TYPE, (uint8_t)DEF_SEL_FREQ_INIT, &acq_node_pin_array[0],DEF_PTC_INTERRUPT_PRIORITY, DEF_PTC_WAKEUP_EXP};
 <#else>
 uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 /* Acquisition set 1 - General settings */
-qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
-    ={DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, DEF_SEL_FREQ_INIT, DEF_PTC_INTERRUPT_PRIORITY, DEF_PTC_WAKEUP_EXP};
+static qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
+    ={DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, (uint8_t)DEF_SEL_FREQ_INIT, DEF_PTC_INTERRUPT_PRIORITY, DEF_PTC_WAKEUP_EXP};
 </#if>
 <#else>
 uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 /* Acquisition set 1 - General settings */
-qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
-    = {DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, DEF_PTC_CAL_AUTO_TUNE, DEF_SEL_FREQ_INIT, DEF_PTC_INTERRUPT_PRIORITY};
+static qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
+    = {DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, DEF_PTC_CAL_AUTO_TUNE, (uint8_t)DEF_SEL_FREQ_INIT, DEF_PTC_INTERRUPT_PRIORITY};
 </#if>
 
 /* Node status, signal, calibration values */
@@ -280,7 +283,7 @@ qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNE
 </#if>
 
 /* Container */
-qtm_acquisition_control_t qtlib_acq_set1 = {&ptc_qtlib_acq_gen1, &ptc_seq_node_cfg1[0], &ptc_qtlib_node_stat1[0]};
+static qtm_acquisition_control_t qtlib_acq_set1 = {&ptc_qtlib_acq_gen1, &ptc_seq_node_cfg1[0], &ptc_qtlib_node_stat1[0]};
 
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 <#if ENABLE_SURFACE == true>
@@ -307,11 +310,11 @@ uint8_t touch_key_node_mapping_4p[DEF_NUM_SENSORS] = {${.vars["MUTL_4P_NODE_KEY_
 /**********************************************************/
 
 /* Buffer used with various noise filtering functions */
-uint16_t noise_filter_buffer[DEF_NUM_CHANNELS * NUM_FREQ_STEPS];
-uint8_t  freq_hop_delay_selection[NUM_FREQ_STEPS] = {DEF_MEDIAN_FILTER_FREQUENCIES};
+static uint16_t noise_filter_buffer[DEF_NUM_CHANNELS * NUM_FREQ_STEPS];
+static uint8_t  freq_hop_delay_selection[NUM_FREQ_STEPS] = {DEF_MEDIAN_FILTER_FREQUENCIES};
 
 /* Configuration */
-qtm_freq_hop_config_t qtm_freq_hop_config1 = {
+static qtm_freq_hop_config_t qtm_freq_hop_config1 = {
     DEF_NUM_CHANNELS,
     NUM_FREQ_STEPS,
     &ptc_qtlib_acq_gen1.freq_option_select,
@@ -319,10 +322,10 @@ qtm_freq_hop_config_t qtm_freq_hop_config1 = {
 };
 
 /* Data */
-qtm_freq_hop_data_t qtm_freq_hop_data1 = {0, 0, &noise_filter_buffer[0], &ptc_qtlib_node_stat1[0]};
+static qtm_freq_hop_data_t qtm_freq_hop_data1 = {0, 0, &noise_filter_buffer[0], &ptc_qtlib_node_stat1[0]};
 
 /* Container */
-qtm_freq_hop_control_t qtm_freq_hop_control1 = {&qtm_freq_hop_data1, &qtm_freq_hop_config1};
+static qtm_freq_hop_control_t qtm_freq_hop_control1 = {&qtm_freq_hop_data1, &qtm_freq_hop_config1};
 
 <#elseif ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>
 /**********************************************************/
@@ -330,12 +333,12 @@ qtm_freq_hop_control_t qtm_freq_hop_control1 = {&qtm_freq_hop_data1, &qtm_freq_h
 /**********************************************************/
 
 /* Buffer used with various noise filtering functions */
-uint16_t noise_filter_buffer[DEF_NUM_CHANNELS * NUM_FREQ_STEPS];
-uint8_t  freq_hop_delay_selection[NUM_FREQ_STEPS] = {DEF_MEDIAN_FILTER_FREQUENCIES};
-uint8_t  freq_hop_autotune_counters[NUM_FREQ_STEPS];
+static uint16_t noise_filter_buffer[DEF_NUM_CHANNELS * NUM_FREQ_STEPS];
+static uint8_t  freq_hop_delay_selection[NUM_FREQ_STEPS] = {DEF_MEDIAN_FILTER_FREQUENCIES};
+static uint8_t  freq_hop_autotune_counters[NUM_FREQ_STEPS];
 
 /* Configuration */
-qtm_freq_hop_autotune_config_t qtm_freq_hop_autotune_config1 = {DEF_NUM_CHANNELS,
+static qtm_freq_hop_autotune_config_t qtm_freq_hop_autotune_config1 = {DEF_NUM_CHANNELS,
                                                                 NUM_FREQ_STEPS,
                                                                 &ptc_qtlib_acq_gen1.freq_option_select,
                                                                 &freq_hop_delay_selection[0],
@@ -344,11 +347,11 @@ qtm_freq_hop_autotune_config_t qtm_freq_hop_autotune_config1 = {DEF_NUM_CHANNELS
                                                                 FREQ_AUTOTUNE_COUNT_IN};
 
 /* Data */
-qtm_freq_hop_autotune_data_t qtm_freq_hop_autotune_data1
+static qtm_freq_hop_autotune_data_t qtm_freq_hop_autotune_data1
     = {0, 0, &noise_filter_buffer[0], &ptc_qtlib_node_stat1[0], &freq_hop_autotune_counters[0]};
 
 /* Container */
-qtm_freq_hop_autotune_control_t qtm_freq_hop_autotune_control1
+static qtm_freq_hop_autotune_control_t qtm_freq_hop_autotune_control1
     = {&qtm_freq_hop_autotune_data1, &qtm_freq_hop_autotune_config1};
 
 </#if>
@@ -367,20 +370,20 @@ qtm_touch_key_group_config_t qtlib_key_grp_config_set1 = {DEF_NUM_SENSORS,
                                                           DEF_DRIFT_HOLD_TIME,
                                                           DEF_REBURST_MODE};
 
-qtm_touch_key_group_data_t qtlib_key_grp_data_set1;
+static qtm_touch_key_group_data_t qtlib_key_grp_data_set1;
 
 /* Key data */
 qtm_touch_key_data_t qtlib_key_data_set1[DEF_NUM_SENSORS];
 
 <#if TOUCH_KEY_ENABLE_CNT&gt;=1>
 /* Key Configurations */
-qtm_touch_key_config_t qtlib_key_configs_set1[DEF_NUM_SENSORS] = {<#list 0..TOUCH_KEY_ENABLE_CNT-1 as i><#if i==TOUCH_KEY_ENABLE_CNT-1>KEY_${i}_PARAMS<#else> KEY_${i}_PARAMS,</#if></#list>}; 
+static qtm_touch_key_config_t qtlib_key_configs_set1[DEF_NUM_SENSORS] = {<#list 0..TOUCH_KEY_ENABLE_CNT-1 as i><#if i==TOUCH_KEY_ENABLE_CNT-1>KEY_${i}_PARAMS<#else> KEY_${i}_PARAMS,</#if></#list>}; 
 <#else>
 /* Key Configurations */
-qtm_touch_key_config_t qtlib_key_configs_set1[DEF_NUM_SENSORS];
+static qtm_touch_key_config_t qtlib_key_configs_set1[DEF_NUM_SENSORS];
 </#if>
 /* Container */
-qtm_touch_key_control_t qtlib_key_set1
+static qtm_touch_key_control_t qtlib_key_set1
     = {&qtlib_key_grp_data_set1, &qtlib_key_grp_config_set1, &qtlib_key_data_set1[0], &qtlib_key_configs_set1[0]};
 
 <#if ENABLE_SCROLLER == true>
@@ -390,19 +393,19 @@ qtm_touch_key_control_t qtlib_key_set1
 /**********************************************************/
 
 /* Individual and Group Data */
-qtm_scroller_data_t       qtm_scroller_data1[DEF_NUM_SCROLLERS];
-qtm_scroller_group_data_t qtm_scroller_group_data1 = {0};
+static qtm_scroller_data_t       qtm_scroller_data1[DEF_NUM_SCROLLERS];
+static qtm_scroller_group_data_t qtm_scroller_group_data1 = {0};
 
 /* Group Configuration */
-qtm_scroller_group_config_t qtm_scroller_group_config1 = {&qtlib_key_data_set1[0], DEF_NUM_SCROLLERS};
+static qtm_scroller_group_config_t qtm_scroller_group_config1 = {&qtlib_key_data_set1[0], DEF_NUM_SCROLLERS};
 
 <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
 /* Scroller Configurations */
-qtm_scroller_config_t qtm_scroller_config1[DEF_NUM_SCROLLERS] = {<#list 0..TOUCH_SCROLLER_ENABLE_CNT-1 as i><#if i==TOUCH_SCROLLER_ENABLE_CNT-1>SCROLLER_${i}_PARAMS<#else> SCROLLER_${i}_PARAMS,</#if></#list>}; 
+static qtm_scroller_config_t qtm_scroller_config1[DEF_NUM_SCROLLERS] = {<#list 0..TOUCH_SCROLLER_ENABLE_CNT-1 as i><#if i==TOUCH_SCROLLER_ENABLE_CNT-1>SCROLLER_${i}_PARAMS<#else> SCROLLER_${i}_PARAMS,</#if></#list>}; 
 </#if>
 
 /* Container */
-qtm_scroller_control_t qtm_scroller_control1
+static qtm_scroller_control_t qtm_scroller_control1
     = {&qtm_scroller_group_data1, &qtm_scroller_group_config1, &qtm_scroller_data1[0], &qtm_scroller_config1[0]};
 </#if>
 </#if>
@@ -411,7 +414,7 @@ qtm_scroller_control_t qtm_scroller_control1
 /***************** Surface 1t Module ********************/
 /**********************************************************/
 
-qtm_surface_cs_config_t qtm_surface_cs_config1 = {
+static qtm_surface_cs_config_t qtm_surface_cs_config1 = {
     /* Config: */
     SURFACE_CS_START_KEY_H,
     SURFACE_CS_NUM_KEYS_H,
@@ -424,10 +427,10 @@ qtm_surface_cs_config_t qtm_surface_cs_config1 = {
     &qtlib_key_data_set1[0]};
 
 /* Surface Data */
-qtm_surface_contact_data_t qtm_surface_cs_data1;
+static qtm_surface_contact_data_t qtm_surface_cs_data1;
 
 /* Container */
-qtm_surface_cs_control_t qtm_surface_cs_control1 = {&qtm_surface_cs_data1, &qtm_surface_cs_config1};
+static qtm_surface_cs_control_t qtm_surface_cs_control1 = {&qtm_surface_cs_data1, &qtm_surface_cs_config1};
 </#if>
 
 <#if ENABLE_SURFACE2T?exists && ENABLE_SURFACE2T== true>
@@ -435,7 +438,7 @@ qtm_surface_cs_control_t qtm_surface_cs_control1 = {&qtm_surface_cs_data1, &qtm_
 /***************** Surface 2t Module ********************/
 /**********************************************************/
 
-qtm_surface_cs_config_t qtm_surface_cs_config1 = {
+static qtm_surface_cs_config_t qtm_surface_cs_config1 = {
     /* Config: */
     SURFACE_CS_START_KEY_H,
     SURFACE_CS_NUM_KEYS_H,
@@ -449,13 +452,13 @@ qtm_surface_cs_config_t qtm_surface_cs_config1 = {
 
 /* surface Configurations */
 /* Surface Data */
-qtm_surface_cs2t_data_t qtm_surface_cs_data1;
+static qtm_surface_cs2t_data_t qtm_surface_cs_data1;
 
 /* Contact Data */
-qtm_surface_contact_data_t qtm_surface_contacts[2];
+static qtm_surface_contact_data_t qtm_surface_contacts[2];
 
 /* Container */
-qtm_surface_cs2t_control_t qtm_surface_cs_control1
+static qtm_surface_cs2t_control_t qtm_surface_cs_control1
     = {&qtm_surface_cs_data1, &qtm_surface_contacts[0], &qtm_surface_cs_config1};
 </#if>
 
@@ -466,7 +469,7 @@ qtm_surface_cs2t_control_t qtm_surface_cs_control1
 
 /* Gesture Configurations */
 <#if ENABLE_SURFACE2T==true>
-qtm_gestures_2d_config_t qtm_gestures_2d_config = {&qtm_surface_contacts[0].h_position,
+static qtm_gestures_2d_config_t qtm_gestures_2d_config = {&qtm_surface_contacts[0].h_position,
                                                    &qtm_surface_contacts[0].v_position,
                                                    &qtm_surface_contacts[0].qt_contact_status,
                                                    &qtm_surface_contacts[1].h_position,
@@ -490,7 +493,7 @@ qtm_gestures_2d_config_t qtm_gestures_2d_config = {&qtm_surface_contacts[0].h_po
 
 };
 <#elseif ENABLE_SURFACE1T==true>
-qtm_gestures_2d_config_t qtm_gestures_2d_config = {&qtm_surface_cs_data1.h_position,
+static qtm_gestures_2d_config_t qtm_gestures_2d_config = {&qtm_surface_cs_data1.h_position,
                                                    &qtm_surface_cs_data1.v_position,
                                                    &qtm_surface_cs_data1.qt_surface_status,
                                                    0,
@@ -512,9 +515,9 @@ qtm_gestures_2d_config_t qtm_gestures_2d_config = {&qtm_surface_cs_data1.h_posit
                                                    0
 };
 </#if>
-qtm_gestures_2d_data_t qtm_gestures_2d_data;
+static qtm_gestures_2d_data_t qtm_gestures_2d_data;
 
-qtm_gestures_2d_control_t qtm_gestures_2d_control1 = {&qtm_gestures_2d_data, &qtm_gestures_2d_config};
+static qtm_gestures_2d_control_t qtm_gestures_2d_control1 = {&qtm_gestures_2d_data, &qtm_gestures_2d_config};
 </#if>
 
 /*----------------------------------------------------------------------------
@@ -539,9 +542,9 @@ touch_ret_t touch_surface_4p_acq_to_key(void * ptr)
 
 	/*compute vertical node signal, compcap and status */
 	for (uint16_t cnt = 0; cnt < SURFACE_CS_NUM_KEYS_V; cnt++) {
-		sum_signal = 0;
-		comp_cap   = 0;
-		status     = 0;
+		sum_signal = 0u;
+		comp_cap   = 0u;
+		status     = 0u;
 		for (uint16_t cnt1 = 0; cnt1 < SURFACE_CS_NUM_KEYS_H; cnt1++) {
 			sum_signal
 			    += ptc_qtlib_node_stat1[touch_key_node_mapping_4p[cnt * SURFACE_CS_NUM_KEYS_H + cnt1 + SURFACE_CS_START_KEY_V]].node_acq_signals;
@@ -557,9 +560,9 @@ touch_ret_t touch_surface_4p_acq_to_key(void * ptr)
 
 	/*compute horizontal node signal, compcap and status */
 	for (uint16_t cnt1 = 0; cnt1 < SURFACE_CS_NUM_KEYS_H; cnt1++) {
-		sum_signal = 0;
-		comp_cap   = 0;
-		status     = 0;
+		sum_signal = 0u;
+		comp_cap   = 0u;
+		status     = 0u;
 		for (uint16_t cnt = 0; cnt < SURFACE_CS_NUM_KEYS_V; cnt++) {
 			sum_signal
 			    += ptc_qtlib_node_stat1[touch_key_node_mapping_4p[cnt * SURFACE_CS_NUM_KEYS_V + cnt1 + SURFACE_CS_START_KEY_V]].node_acq_signals;
@@ -592,7 +595,7 @@ touch_ret_t touch_surface_4p_key_to_acq_update(void * ptr)
 
 	for(uint16_t cnt = 0; cnt < (SURFACE_CS_NUM_KEYS_V+SURFACE_CS_NUM_KEYS_H); cnt++)	{
 		if(ptc_qtlib_node_stat1_4p_sur[cnt].node_acq_status & NODE_CAL_REQ) {
-			calib_flag = 1;
+			calib_flag = 1u;
 			break;
 		}
 	}
@@ -640,40 +643,40 @@ static touch_ret_t touch_sensors_config(void)
     qtm_cvd_init_acquisition_module(&qtlib_acq_set1);
     qtm_cvd_qtlib_assign_signal_memory(&touch_acq_signals_raw[0]);
 <#else>
-    qtm_ptc_init_acquisition_module(&qtlib_acq_set1);
-    qtm_ptc_qtlib_assign_signal_memory(&touch_acq_signals_raw[0]);
+    touch_ret = qtm_ptc_init_acquisition_module(&qtlib_acq_set1);
+    touch_ret |= qtm_ptc_qtlib_assign_signal_memory(&touch_acq_signals_raw[0]);
 </#if>
 
     /* Initialize sensor nodes */
-    for (sensor_nodes = 0u; sensor_nodes < DEF_NUM_CHANNELS; sensor_nodes++) {
+    for (sensor_nodes = 0u; sensor_nodes < (uint16_t) DEF_NUM_CHANNELS; sensor_nodes++) {
         /* Enable each node for measurement and mark for calibration */
-        qtm_enable_sensor_node(&qtlib_acq_set1, sensor_nodes);
-        qtm_calibrate_sensor_node(&qtlib_acq_set1, sensor_nodes);
+        touch_ret |= qtm_enable_sensor_node(&qtlib_acq_set1, sensor_nodes);
+        touch_ret |= qtm_calibrate_sensor_node(&qtlib_acq_set1, sensor_nodes);
     }
 
 <#if pic32cz?seq_contains(DEVICE_NAME)>
     /* Enable sensor keys and assign nodes */
-    for (sensor_nodes = 0u; sensor_nodes < DEF_NUM_SENSORS; sensor_nodes++) {
-			qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[sensor_nodes]);
+    for (sensor_nodes = 0u; sensor_nodes < (uint16_t) DEF_NUM_SENSORS; sensor_nodes++) {
+			touch_ret|=qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[sensor_nodes]);
     }
 <#elseif ENABLE_BOOST?exists && ENABLE_BOOST == true && ENABLE_SURFACE == true>
 		/* Enable sensor keys and assign nodes */
 		for(sensor_nodes = 0u; sensor_nodes < SURFACE_CS_START_KEY_V; sensor_nodes++)
 		{
-			qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[touch_key_node_mapping_4p[sensor_nodes]]);
+			touch_ret|=qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[touch_key_node_mapping_4p[sensor_nodes]]);
 		}
 		/* For surface sensor configure separately */
 		for (sensor_nodes = 0u; sensor_nodes < SURFACE_CS_NUM_KEYS_V+SURFACE_CS_NUM_KEYS_H; sensor_nodes++) {
-			qtm_init_sensor_key(
+			touch_ret|=qtm_init_sensor_key(
 			&qtlib_key_set1, sensor_nodes + SURFACE_CS_START_KEY_V, &ptc_qtlib_node_stat1_4p_sur[sensor_nodes]);
 		}
 <#else>
     /* Enable sensor keys and assign nodes */
-    for (sensor_nodes = 0u; sensor_nodes < DEF_NUM_SENSORS; sensor_nodes++) {
+    for (sensor_nodes = 0u; sensor_nodes < (uint16_t)DEF_NUM_SENSORS; sensor_nodes++) {
 		<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
-			qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[touch_key_node_mapping_4p[sensor_nodes]]);
+			touch_ret|=qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[touch_key_node_mapping_4p[sensor_nodes]]);
         <#else>
-			qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[sensor_nodes]);
+			touch_ret|=qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[sensor_nodes]);
 		</#if>
     }
 </#if>
@@ -869,7 +872,7 @@ void touch_init(void)
 </#if>
 
 	/* Configure touch sensors with Application specific settings */
-	touch_sensors_config();
+    (void)touch_sensors_config();
 
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
 <#if DS_DEDICATED_ENABLE == true || DS_PLUS_ENABLE == true>
@@ -910,7 +913,7 @@ void touch_process(void)
 <#else>
 <#if num_of_channel_more_than_one == 1>
 #if DEF_TOUCH_DRIFT_PERIOD_MS != 0u && DEF_TOUCH_LOWPOWER_ENABLE == 1u
-	if ((time_drift_wakeup_counter >= DEF_TOUCH_DRIFT_PERIOD_MS) && (measurement_period_store != DEF_TOUCH_MEASUREMENT_PERIOD_MS)) {
+	if ((time_drift_wakeup_counter >= DEF_TOUCH_DRIFT_PERIOD_MS) && (measurement_period_store != (uint16_t)DEF_TOUCH_MEASUREMENT_PERIOD_MS)) {
 		time_drift_wakeup_counter = 0u;
 		touch_enable_nonlp_sensors();
 	}
@@ -1263,7 +1266,7 @@ static void touch_process_lowpower(void) {
             touch_enable_lowpower_measurement();
         }
         <#if num_of_channel_more_than_one == 1>
-        if(lp_measurement) {
+        if((bool)lp_measurement) {
             if(get_sensor_state(current_lp_sensor) == QTM_KEY_STATE_NO_DET) {
                 /* change low-power sensor only when
                     the current lp sensor is not in detect*/
@@ -1272,7 +1275,7 @@ static void touch_process_lowpower(void) {
 		}
         </#if>
     } 
-    else if(measurement_period_store != DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
+    else if(measurement_period_store != (uint16_t)DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
         <#if num_of_channel_more_than_one == 1>
         touch_enable_nonlp_sensors();
         </#if>
@@ -1324,44 +1327,44 @@ static void touch_seq_lp_sensor(void)
 	uint8_t lp_sensor_found = 0;
 	uint8_t mbit = 0;
 
-	qtm_key_suspend(current_lp_sensor, &qtlib_key_set1);
+	(void)qtm_key_suspend(current_lp_sensor, &qtlib_key_set1);
 
-    for (uint16_t cnt = current_lp_sensor+1; cnt < DEF_NUM_CHANNELS; cnt++) {
-        mbit = cnt % 8;
-        if (get_lowpower_mask(cnt) & (1 << mbit)) {
+    for (uint16_t cnt = current_lp_sensor+(uint16_t)1; cnt < (uint16_t)DEF_NUM_CHANNELS; cnt++) {
+        mbit = (uint8_t)cnt % (uint8_t)8;
+        if (((uint8_t)(get_lowpower_mask(cnt)) & ((uint8_t)1 << mbit))!= 0u) {
             lp_sensor_found = 1;
             current_lp_sensor = cnt;
             break;
         }
     }
     
-    if (lp_sensor_found == 0) {
+    if (lp_sensor_found == 0u) {
         for (uint16_t cnt = 0; cnt <= current_lp_sensor; cnt++) {
-            mbit = cnt % 8;
-            if (get_lowpower_mask(cnt) & (1 << mbit)) {
-                lp_sensor_found = 1;
+            mbit = (uint8_t)cnt % (uint8_t)8;
+            if (((uint8_t)(get_lowpower_mask(cnt)) &((uint8_t)1 << mbit))!= 0u) {
+                lp_sensor_found = 1u;
                 current_lp_sensor = cnt;
                 break;
             }
         }
     }
-	qtm_key_resume(current_lp_sensor, &qtlib_key_set1);
-}
-
+	(void)qtm_key_resume(current_lp_sensor, &qtlib_key_set1);
+    }
+         
 static void touch_disable_nonlp_sensors(void)
 {
-	for (uint16_t cnt = 0; cnt < DEF_NUM_CHANNELS; cnt++) {
+	for (uint16_t cnt = 0; cnt < (uint16_t)DEF_NUM_CHANNELS; cnt++) {
 		if(cnt != current_lp_sensor) {
-			qtm_key_suspend(cnt, &qtlib_key_set1);
+			(void)qtm_key_suspend(cnt, &qtlib_key_set1);
 		}
 	}
 }
 
 static void touch_enable_nonlp_sensors(void)
 {
-	for (uint16_t cnt = 0; cnt < DEF_NUM_CHANNELS; cnt++) {
+	for (uint16_t cnt = 0; cnt < (uint16_t)DEF_NUM_CHANNELS; cnt++) {
 		if(cnt != current_lp_sensor) {
-			qtm_key_resume(cnt, &qtlib_key_set1);
+			(void)qtm_key_resume(cnt, &qtlib_key_set1);
 		}
 	}
 }
@@ -1383,7 +1386,7 @@ static void touch_measure_wcomp_match(void)
         <#if sam_c2x_devices?seq_contains(DEVICE_NAME) || sam_l2x_devices?seq_contains(DEVICE_NAME) || sam_d2x_devices?seq_contains(DEVICE_NAME)>
         qtm_autoscan_node_cancel();
         time_since_touch = 0u;
-        time_to_measure_touch_var =1; 
+        time_to_measure_touch_var =1u; 
         <#else>
         touch_disable_lowpower_measurement();
         time_to_measure_touch_var = 1u;	
@@ -1411,7 +1414,7 @@ Notes  :
 void touch_timer_handler(void)
 {
     <#if USE_SYS_TIME?exists && USE_SYS_TIME == true>
-    time_to_measure_touch_var = 1;
+    time_to_measure_touch_var = 1u;
     qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
     <#else>
     <#if ENABLE_GESTURE==true>
@@ -1422,15 +1425,15 @@ void touch_timer_handler(void)
         }
         interrupt_cnt= interrupt_cnt + 2u;
         if (interrupt_cnt >= DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
-            interrupt_cnt = 0;
+            interrupt_cnt = 0u;
             /* Count complete - Measure touch sensors */
-            time_to_measure_touch_var = 1;
+            time_to_measure_touch_var = 1u;
     <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
     #if DEF_TOUCH_LOWPOWER_ENABLE == 1u
         if (time_since_touch < (65535u - measurement_period_store)) {
             time_since_touch += measurement_period_store;
         } else {
-            time_since_touch = 65535;
+            time_since_touch = 65535u;
         }
         qtm_update_qtlib_timer(measurement_period_store);
     #else
@@ -1540,7 +1543,7 @@ void rtc_cb( RTC_TIMER32_INT_MASK intCause, uintptr_t context )
 {
     touch_timer_handler();
 }
-uintptr_t rtc_context;
+static uintptr_t rtc_context;
 </#if>
 <#if USE_SYS_TIME?exists && USE_SYS_TIME == true>
 void touch_systime_hanlder(uintptr_t context )
@@ -1661,9 +1664,9 @@ void update_sensor_state(uint16_t sensor_node, uint8_t new_state)
 void calibrate_node(uint16_t sensor_node)
 {
     /* Calibrate Node */
-    qtm_calibrate_sensor_node(&qtlib_acq_set1, sensor_node);
+    (void)qtm_calibrate_sensor_node(&qtlib_acq_set1, sensor_node);
     /* Initialize key */
-    qtm_init_sensor_key(&qtlib_key_set1, sensor_node, &ptc_qtlib_node_stat1[sensor_node]);
+    (void)qtm_init_sensor_key(&qtlib_key_set1, sensor_node, &ptc_qtlib_node_stat1[sensor_node]);
 }
 <#if ENABLE_SCROLLER?exists && ENABLE_SCROLLER == true>
 <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
