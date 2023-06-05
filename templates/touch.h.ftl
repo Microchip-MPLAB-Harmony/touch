@@ -39,7 +39,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 *******************************************************************************/
 #ifndef TOUCH_H
 #define TOUCH_H
-<#if TOUCH_CHAN_ENABLE_CNT == 0u>
+<#if TOUCH_CHAN_ENABLE_CNT == 0>
 #error "Number of Touch sensor is defined as ZERO. Include atleast one touch sensor or remove Touch library in MCC."
 <#else>
 #include "device.h"
@@ -530,14 +530,14 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /**********************************************************/
 /***************** Communication - Data Streamer ******************/
 /**********************************************************/
-#define DEF_TOUCH_DATA_STREAMER_ENABLE ${(ENABLE_DATA_STREAMER)?then('1u', '0u')}u
+#define DEF_TOUCH_DATA_STREAMER_ENABLE ${(ENABLE_DATA_STREAMER)?then('1u', '0u')}
 
 <#if ENABLE_TOUCH_TUNE_WITH_PLUGIN == true>
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 #warning "MPLAB Touch does not work with Boost Mode. Instead use Data Visualizer from Touch Configurator->Parameters->Tune option."
 #define DEF_TOUCH_TUNE_ENABLE 0u
 <#else>
-#define DEF_TOUCH_TUNE_ENABLE ${(ENABLE_TOUCH_TUNE_WITH_PLUGIN)?then('1u', '0u')}u
+#define DEF_TOUCH_TUNE_ENABLE ${(ENABLE_TOUCH_TUNE_WITH_PLUGIN)?then('1u', '0u')}
 </#if>
 </#if>
 
@@ -566,8 +566,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define TOUCH_DMA_CHANNEL ${TOUCH_PIC32MZDA_DMA}u
 </#if>
 
-void rtc_cb( RTC_TIMER32_INT_MASK intCause, uintptr_t context );
-void PTC_Handler(void);
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

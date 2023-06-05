@@ -56,15 +56,15 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#assign pic32cz = ["PIC32CZCA80", "PIC32CZCA90"]>
 <#assign supc_devices = ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMLS60","PIC32CZCA80","PIC32CZCA90"]>
 <#assign no_standby_devices = ["SAMD10","SAMD11"]>
-<#assign no_standby_during_measurement = 0u>
+<#assign no_standby_during_measurement = 0>
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
 <#if (DS_DEDICATED_ENABLE == true) || (DS_PLUS_ENABLE == true) || no_standby_devices?seq_contains(DEVICE_NAME)>
-<#assign no_standby_during_measurement = 1u>
+<#assign no_standby_during_measurement = 1>
 </#if>
 </#if>
-<#assign num_of_channel_more_than_one = 0u >
+<#assign num_of_channel_more_than_one = 0>
 <#if (TOUCH_CHAN_ENABLE_CNT > 1) >
-<#assign num_of_channel_more_than_one = 1u >
+<#assign num_of_channel_more_than_one = 1>
 </#if>
 
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>
@@ -78,6 +78,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  *     include files
  *----------------------------------------------------------------------------*/
 #include "definitions.h"
+#include "../interrupts.h"
 #include "touch/touch.h"
 #include "qtm_touch_key_0x0002_api.h"
 #include "touch_example.h"
@@ -193,7 +194,7 @@ uint8_t lowpower_key_mask[(DEF_NUM_CHANNELS+7u)>>3u] = {DEF_LOWPOWER_KEYS};
 </#if>
 
 /* Flag to indicate time for touch measurement */
-volatile uint8_t time_to_measure_touch_var = 0u;
+static volatile uint8_t time_to_measure_touch_var = 0u;
 /* post-process request flag */
 static volatile uint8_t touch_postprocess_request = 0u;
 
@@ -225,7 +226,7 @@ static qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
 <#elseif pic32cz?seq_contains(DEVICE_NAME)>
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 /* Acquisition module internal data - Size to largest acquisition set */
-uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
+static uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 /* Sensor pins mask*/
 const uint32_t acq_node_ymasks[DEF_NUM_NODE_SETS] = {Y_MASK_ALL};
 const uint32_t acq_node_xmasks[DEF_NUM_NODES] = { X_MASK_ALL };
@@ -235,13 +236,13 @@ uint8_t acq_node_pin_array[DEF_NUM_PINDEFS] = { 0u };
 static qtm_acq_node_gen_config_t ptc_qtlib_acq_gen1
     ={DEF_NUM_CHANNELS >> 2, DEF_SENSOR_TYPE, (uint8_t)DEF_SEL_FREQ_INIT, &acq_node_pin_array[0],DEF_PTC_INTERRUPT_PRIORITY, DEF_PTC_WAKEUP_EXP};
 <#else>
-uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
+static uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 /* Acquisition set 1 - General settings */
 static qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
     ={DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, (uint8_t)DEF_SEL_FREQ_INIT, DEF_PTC_INTERRUPT_PRIORITY, DEF_PTC_WAKEUP_EXP};
 </#if>
 <#else>
-uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
+static uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 /* Acquisition set 1 - General settings */
 static qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
     = {DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, DEF_PTC_CAL_AUTO_TUNE, (uint8_t)DEF_SEL_FREQ_INIT, DEF_PTC_INTERRUPT_PRIORITY};
@@ -377,10 +378,10 @@ qtm_touch_key_data_t qtlib_key_data_set1[DEF_NUM_SENSORS];
 
 <#if TOUCH_KEY_ENABLE_CNT&gt;=1>
 /* Key Configurations */
-static qtm_touch_key_config_t qtlib_key_configs_set1[DEF_NUM_SENSORS] = {<#list 0..TOUCH_KEY_ENABLE_CNT-1 as i><#if i==TOUCH_KEY_ENABLE_CNT-1>KEY_${i}_PARAMS<#else> KEY_${i}_PARAMS,</#if></#list>}; 
+qtm_touch_key_config_t qtlib_key_configs_set1[DEF_NUM_SENSORS] = {<#list 0..TOUCH_KEY_ENABLE_CNT-1 as i><#if i==TOUCH_KEY_ENABLE_CNT-1>KEY_${i}_PARAMS<#else> KEY_${i}_PARAMS,</#if></#list>}; 
 <#else>
 /* Key Configurations */
-static qtm_touch_key_config_t qtlib_key_configs_set1[DEF_NUM_SENSORS];
+qtm_touch_key_config_t qtlib_key_configs_set1[DEF_NUM_SENSORS];
 </#if>
 /* Container */
 static qtm_touch_key_control_t qtlib_key_set1
@@ -644,14 +645,14 @@ static touch_ret_t touch_sensors_config(void)
     qtm_cvd_qtlib_assign_signal_memory(&touch_acq_signals_raw[0]);
 <#else>
     touch_ret = qtm_ptc_init_acquisition_module(&qtlib_acq_set1);
-    touch_ret |= qtm_ptc_qtlib_assign_signal_memory(&touch_acq_signals_raw[0]);
+    touch_ret = qtm_ptc_qtlib_assign_signal_memory(&touch_acq_signals_raw[0]);
 </#if>
 
     /* Initialize sensor nodes */
     for (sensor_nodes = 0u; sensor_nodes < (uint16_t) DEF_NUM_CHANNELS; sensor_nodes++) {
         /* Enable each node for measurement and mark for calibration */
-        touch_ret |= qtm_enable_sensor_node(&qtlib_acq_set1, sensor_nodes);
-        touch_ret |= qtm_calibrate_sensor_node(&qtlib_acq_set1, sensor_nodes);
+        touch_ret = qtm_enable_sensor_node(&qtlib_acq_set1, sensor_nodes);
+        touch_ret = qtm_calibrate_sensor_node(&qtlib_acq_set1, sensor_nodes);
     }
 
 <#if pic32cz?seq_contains(DEVICE_NAME)>
@@ -663,20 +664,20 @@ static touch_ret_t touch_sensors_config(void)
 		/* Enable sensor keys and assign nodes */
 		for(sensor_nodes = 0u; sensor_nodes < SURFACE_CS_START_KEY_V; sensor_nodes++)
 		{
-			touch_ret|=qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[touch_key_node_mapping_4p[sensor_nodes]]);
+			touch_ret=qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[touch_key_node_mapping_4p[sensor_nodes]]);
 		}
 		/* For surface sensor configure separately */
 		for (sensor_nodes = 0u; sensor_nodes < SURFACE_CS_NUM_KEYS_V+SURFACE_CS_NUM_KEYS_H; sensor_nodes++) {
-			touch_ret|=qtm_init_sensor_key(
+			touch_ret=qtm_init_sensor_key(
 			&qtlib_key_set1, sensor_nodes + SURFACE_CS_START_KEY_V, &ptc_qtlib_node_stat1_4p_sur[sensor_nodes]);
 		}
 <#else>
     /* Enable sensor keys and assign nodes */
     for (sensor_nodes = 0u; sensor_nodes < (uint16_t)DEF_NUM_SENSORS; sensor_nodes++) {
 		<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
-			touch_ret|=qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[touch_key_node_mapping_4p[sensor_nodes]]);
+			touch_ret=qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[touch_key_node_mapping_4p[sensor_nodes]]);
         <#else>
-			touch_ret|=qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[sensor_nodes]);
+			touch_ret=qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[sensor_nodes]);
 		</#if>
     }
 </#if>
@@ -684,18 +685,18 @@ static touch_ret_t touch_sensors_config(void)
 <#if ENABLE_SCROLLER?exists && ENABLE_SCROLLER == true>
 <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>	
 	/* scroller init */
-	touch_ret |= qtm_init_scroller_module(&qtm_scroller_control1);
+	touch_ret = qtm_init_scroller_module(&qtm_scroller_control1);
 </#if>
 </#if>
 
 <#if ENABLE_SURFACE1T?exists && ENABLE_SURFACE1T== true>	
-	touch_ret |= qtm_init_surface_cs(&qtm_surface_cs_control1);
+	touch_ret = qtm_init_surface_cs(&qtm_surface_cs_control1);
 </#if>
 <#if ENABLE_SURFACE2T?exists && ENABLE_SURFACE2T== true>	
-	touch_ret |= qtm_init_surface_cs2t(&qtm_surface_cs_control1);
+	touch_ret = qtm_init_surface_cs2t(&qtm_surface_cs_control1);
 </#if>
 <#if ENABLE_GESTURE?exists && ENABLE_GESTURE==true>	
-	touch_ret |= qtm_init_gestures_2d();
+	touch_ret = qtm_init_gestures_2d();
 </#if>
 
     return (touch_ret);
@@ -1539,6 +1540,7 @@ void touch_timer_config(void)
 }
 <#else> <#-- non pic devices -->
 <#if TOUCH_TIMER_INSTANCE != "">
+void rtc_cb( RTC_TIMER32_INT_MASK intCause, uintptr_t context ); 
 void rtc_cb( RTC_TIMER32_INT_MASK intCause, uintptr_t context )
 {
     touch_timer_handler();
