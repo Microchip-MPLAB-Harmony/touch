@@ -49,7 +49,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #endif
 // DOM-IGNORE-END
 
-<#if TOUCH_CHAN_ENABLE_CNT == 0u>
+<#if TOUCH_CHAN_ENABLE_CNT == 0>
 #error "Number of Touch sensor is defined as ZERO. Include atleast one touch sensor or remove Touch library in MCC."
 <#else>
 
@@ -61,10 +61,10 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 <#assign no_standby_devices = ["SAMD10","SAMD11"]>
 
-<#assign no_standby_during_measurement = 0u>
+<#assign no_standby_during_measurement = 0>
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
 <#if (DS_DEDICATED_ENABLE == true) || (DS_PLUS_ENABLE == true) || no_standby_devices?seq_contains(DEVICE_NAME)>
-<#assign no_standby_during_measurement = 1u>
+<#assign no_standby_during_measurement = 1>
 </#if>
 </#if>
 
@@ -72,7 +72,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
 extern volatile uint8_t time_to_measure_touch_var;
 extern volatile uint8_t measurement_mode;
-<#if no_standby_during_measurement == 1u>
+<#if no_standby_during_measurement == 1>
 extern uint8_t measurement_in_progress;
 </#if>
 #endif

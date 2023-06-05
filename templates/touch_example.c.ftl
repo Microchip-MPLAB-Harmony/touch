@@ -66,7 +66,7 @@ void touch_mainloop_example(void){
 
     <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>
     /* perform sleep operation based on touch state */
-    <#if no_standby_during_measurement == 1u >
+    <#if no_standby_during_measurement == 1>
     #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
         if ((time_to_measure_touch_var != 1u)&& 
         (measurement_mode == 1u)) {
