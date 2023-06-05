@@ -111,8 +111,10 @@ void     update_sensor_cc_val(uint16_t sensor_node, uint16_t new_cc_value);
 uint8_t  get_sensor_state(uint16_t sensor_node);
 void     update_sensor_state(uint16_t sensor_node, uint8_t new_state);
 void     calibrate_node(uint16_t sensor_node);
+<#if ENABLE_SCROLLER == true>
 uint8_t  get_scroller_state(uint16_t sensor_node);
 uint16_t get_scroller_position(uint16_t sensor_node);
+</#if>
 <#if ENABLE_SURFACE==true>
 <#if ENABLE_SURFACE1T== true>
 #define HOR_POS 0u

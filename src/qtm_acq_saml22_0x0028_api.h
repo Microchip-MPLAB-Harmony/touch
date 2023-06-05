@@ -424,15 +424,6 @@ Notes    :  none
 ============================================================================*/
 void qtm_saml22_ptc_handler_wcomp(void);
 
-/*============================================================================
-void qtm_ptc_clear_interrupt(void)
-------------------------------------------------------------------------------
-Purpose:  Clears the eoc/wcomp interrupt bits
-Input    :  none
-Output  :  none
-Notes    :  none
-============================================================================*/
-void qtm_ptc_clear_interrupt(void);
 
 
 #endif    /* TOUCH_API_L22_ACQ_H */
