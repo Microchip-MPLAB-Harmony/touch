@@ -38,8 +38,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
 
-#ifndef _TOUCHTUNE_H_
-#define _TOUCHTUNE_H_
+#ifndef TOUCHTUNE_H_
+#define TOUCHTUNE_H_
 
 
 #include <stddef.h>                     // Defines NULL
@@ -152,9 +152,35 @@ void touchTuneProcess(void);
 void touchTuneNewDataAvailable(void);
 
 extern volatile uint16_t command_flags;
+<#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
+extern qtm_acq_samd1x_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
+<#elseif DEVICE_NAME=="SAML11" || DEVICE_NAME=="SAML1xE">
+extern qtm_acq_saml10_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
+<#elseif  DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00" || DEVICE_NAME=="PIC32CMLS60">
+extern qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
+<#elseif  DEVICE_NAME =="PIC32CMJH00" || DEVICE_NAME=="PIC32CMJH01">
+extern qtm_acq_pic32cmjh_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
+<#elseif  DEVICE_NAME =="PIC32CZCA80"||DEVICE_NAME =="PIC32CZCA90">
+extern qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
+<#else>
+extern qtm_acq_${DEVICE_NAME?lower_case}_node_config_t  ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
+</#if>
+extern qtm_touch_key_data_t         qtlib_key_data_set1[DEF_NUM_CHANNELS];
+extern qtm_touch_key_config_t       qtlib_key_configs_set1[DEF_NUM_CHANNELS];
+extern qtm_touch_key_group_config_t qtlib_key_grp_config_set1;
+extern qtm_acq_node_data_t			ptc_qtlib_node_stat1[DEF_NUM_CHANNELS];
 
+#if SCROLLER_MODULE_OUTPUT == 1u
+extern qtm_scroller_data_t			qtm_scroller_data1[DEF_NUM_SCROLLERS];
+extern qtm_scroller_control_t		qtm_scroller_control1;
+extern qtm_scroller_config_t		qtm_scroller_config1[DEF_NUM_SCROLLERS];
+#endif
 
+#if FREQ_HOP_AUTO_MODULE_OUTPUT == 1u
+extern qtm_freq_hop_autotune_config_t qtm_freq_hop_autotune_config1;
+extern qtm_acquisition_control_t qtlib_acq_set1;
+#endif
 
 #endif
 
-#endif /* _TOUCHTUNE_H_ */
+#endif /* TOUCHTUNE_H_ */

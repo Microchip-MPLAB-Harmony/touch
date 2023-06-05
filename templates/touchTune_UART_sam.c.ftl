@@ -51,14 +51,14 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define TECH MUTUAL_CAP
 #endif
 
-<#assign csdDevices = 0 />
+<#assign csdDevices = 0>
 <#list ["PIC32CMLS60","PIC32CMLS00","PIC32CMLE00","SAML10","SAML11","SAML1xE","SAML22","SAMC20","SAMC21","SAME54","SAME53","SAME51","SAMD51","PIC32MZW","PIC32MZDA", "PIC32CMJH01","PIC32CMJH00","PIC32CXBZ31","WBZ35","PIC32CZCA80","PIC32CZCA90"] as csdSupported>
     <#if DEVICE_NAME == csdSupported>
         <#assign csdDevices = 1>
     </#if>
 </#list>
-<#assign outputModuleCnt = 3 >
-<#assign configModuleCnt = 7 >
+<#assign outputModuleCnt = 3>
+<#assign configModuleCnt = 7>
 <#assign runtimeDataFunctions = ["copy_run_time_data"] />
 <#assign availableData = ["KEYS_MODULE"] />
 <#assign availableConfig = ["SENSOR_NODE_CONFIG_ID","SENSOR_KEY_CONFIG_ID","COMMON_SENSOR_CONFIG_ID"] />
@@ -120,7 +120,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define OUTPUT_MODULE_CNT ${outputModuleCnt}u
 
 typedef struct __attribute__((packed)) {
-	uint16_t signal;
+	uint16_t touchSignal;
 	uint16_t reference;
 	int16_t delta;
 	uint8_t state;
@@ -172,40 +172,18 @@ typedef struct  __attribute__((packed)) {
 #define DEBUG_DATA_FREQ_HOP_LEN (sizeof(tuneFreqData_t))
 #endif
 
-<#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
-extern qtm_acq_samd1x_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#elseif DEVICE_NAME=="SAML11" || DEVICE_NAME=="SAML1xE">
-extern qtm_acq_saml10_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#elseif  DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00" || DEVICE_NAME=="PIC32CMLS60">
-extern qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#elseif  DEVICE_NAME =="PIC32CMJH00" || DEVICE_NAME=="PIC32CMJH01">
-extern qtm_acq_pic32cmjh_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#elseif  DEVICE_NAME =="PIC32CZCA80"||DEVICE_NAME =="PIC32CZCA90">
-extern qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#else>
-extern qtm_acq_${DEVICE_NAME?lower_case}_node_config_t  ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-</#if>
-extern qtm_touch_key_data_t         qtlib_key_data_set1[DEF_NUM_CHANNELS];
-extern qtm_touch_key_config_t       qtlib_key_configs_set1[DEF_NUM_CHANNELS];
-extern qtm_touch_key_group_config_t qtlib_key_grp_config_set1;
-extern qtm_acq_node_data_t			ptc_qtlib_node_stat1[DEF_NUM_CHANNELS];
-
-#if SCROLLER_MODULE_OUTPUT == 1u
-extern qtm_scroller_data_t			qtm_scroller_data1[DEF_NUM_SCROLLERS];
-extern qtm_scroller_control_t		qtm_scroller_control1;
-extern qtm_scroller_config_t		qtm_scroller_config1[DEF_NUM_SCROLLERS];
-#endif
-
-#if FREQ_HOP_AUTO_MODULE_OUTPUT == 1u
-extern qtm_freq_hop_autotune_config_t qtm_freq_hop_autotune_config1;
-extern qtm_acquisition_control_t qtlib_acq_set1;
-#endif
-
 void uart_send_frame_header(uint8_t trans_type, uint8_t frame,uint16_t frame_len);
 void uart_recv_frame_data(uint8_t frame_id,uint16_t len);
-void copy_Channel_Data(uint8_t channel_num);
+
 void uart_send_data(uint8_t con_or_debug, uint8_t *data_ptr,  uint16_t data_len);
+void uart_send_data_wait(uint8_t data);
+void UART_Write(uint8_t data);
+void uart_get_string(uint8_t *data_recv, uint16_t len);
+uint8_t uart_get_char(void);
 void copy_run_time_data(uint8_t channel_num);
+void copy_acq_config(uint8_t channel);
+void update_acq_config(uint8_t channel);
+void copy_channel_config_data(uint8_t id, uint8_t channel);
 
 typedef struct tag_uart_command_info_t {
 	uint8_t transaction_type;
@@ -213,19 +191,19 @@ typedef struct tag_uart_command_info_t {
 	uint16_t num_of_bytes;
 	uint8_t header_status;
 } uart_command_info_t;
-uart_command_info_t volatile uart_command_info;
+static uart_command_info_t  uart_command_info;
 
-uint16_t tx_data_len = 0;
-uint8_t *tx_data_ptr ;
+static uint16_t tx_data_len = 0;
+static uint8_t *tx_data_ptr ;
 
-volatile uint8_t  current_debug_data;
-volatile uint8_t  uart_tx_in_progress = 0;
-volatile uint8_t  uart_frame_header_flag = 1;
-volatile uint8_t  config_or_debug = 0;
-volatile uint8_t  write_buf_channel_num;
-volatile uint8_t  write_buf_read_ptr;
+static volatile uint8_t  current_debug_data;
+static  uint8_t  uart_tx_in_progress = 0;
+static volatile uint8_t  uart_frame_header_flag = 1;
+static volatile uint8_t  config_or_debug = 0;
+static  uint8_t  write_buf_channel_num;
+static volatile uint8_t  write_buf_read_ptr;
 volatile uint16_t command_flags = 0x0000;
-volatile uint16_t max_channels_or_scrollers;
+static volatile uint16_t max_channels_or_scrollers;
 
 
 #if UART_RX_BUF_LENGTH <= 255 
@@ -233,14 +211,14 @@ typedef uint8_t rx_buff_ptr_t;
 #else 
 typedef uint16_t rx_buff_ptr_t;
 #endif
-volatile rx_buff_ptr_t read_buf_read_ptr;
-volatile rx_buff_ptr_t read_buf_write_ptr;
+static rx_buff_ptr_t read_buf_read_ptr;
+static rx_buff_ptr_t read_buf_write_ptr;
 
-static volatile uint8_t rxData;
-uintptr_t touchUart;
+static uint8_t rxData;
+static uintptr_t touchUart;
 void touchUartTxComplete(uintptr_t lTouchUart);
 void touchUartRxComplete(uintptr_t lTouchUart);
-
+rx_buff_ptr_t uart_min_num_bytes_received(void);
 #if SCROLLER_MODULE_OUTPUT == 1u
 tuneScrollerData_t runtime_scroller_data_arr;
 #define DEBUG_DATA_PER_SCROLLER_LEN sizeof(tuneScrollerData_t)
@@ -254,10 +232,10 @@ tuneFreqData_t runtime_freq_hop_auto_data_arr;
 void copy_freq_hop_auto_runtime_data(uint8_t channel_num);
 #endif
 
-uint8_t read_buffer[UART_RX_BUF_LENGTH];  
-uint8_t common_parameters_arr[COMMON_KEY_CONFIG_II_LEN] = {(uint8_t)DEF_TOUCH_MEASUREMENT_PERIOD_MS,DEF_SEL_FREQ_INIT};
+static uint8_t read_buffer[UART_RX_BUF_LENGTH];  
+static uint8_t common_parameters_arr[COMMON_KEY_CONFIG_II_LEN] = {(uint8_t)DEF_TOUCH_MEASUREMENT_PERIOD_MS,(uint8_t)DEF_SEL_FREQ_INIT};
 
-sensorData_t runtime_data_arr;
+static sensorData_t runtime_data_arr;
 
 #define CONFIG_0_PTR ((uint8_t*) &proj_config[0])
 #define CONFIG_0_LEN ((uint8_t)  PROJECT_CONFIG_DATA_LEN)
@@ -290,7 +268,7 @@ sensorData_t runtime_data_arr;
 #define CONFIG_6_PTR ((uint8_t*) (&common_parameters_arr[0]))
 #define CONFIG_6_LEN ((uint8_t)  (COMMON_KEY_CONFIG_II_LEN))
 
-#define DATA_0_PTR 			((uint8_t*)&runtime_data_arr.signal)
+#define DATA_0_PTR 			((uint8_t*)&runtime_data_arr.touchSignal)
 #define DATA_0_ID 			KEY_DEBUG_DATA_ID
 #define DATA_0_LEN			sizeof(sensorData_t)
 #define DATA_0_REPEAT 		DEF_NUM_CHANNELS
@@ -325,20 +303,20 @@ sensorData_t runtime_data_arr;
 #endif	
 
 /* configuration details */
-uint8_t proj_config[PROJECT_CONFIG_DATA_LEN] = {PROTOCOL_VERSION, ${familyname}, TECH, (DEF_NUM_CHANNELS),
-									(${availableConfig?join("|")}), (0u), (0u),
-									(${availableData?join("|")}), (0u),(0u)};
+static uint8_t proj_config[PROJECT_CONFIG_DATA_LEN] = {(uint8_t) PROTOCOL_VERSION, (uint8_t)${familyname}, (uint8_t)TECH, (uint8_t)(DEF_NUM_CHANNELS),
+									((uint8_t)${availableConfig?join("|")}), (0u), (0u),
+									((uint8_t)${availableData?join("|")}), (0u),(0u)};
 
-uint16_t frame_len_lookup[NO_OF_CONFIG_FRAME_ID]  = {<#list 0..configModuleCnt-1 as i><#if i==configModuleCnt-1>CONFIG_${i}_LEN<#else>CONFIG_${i}_LEN,</#if></#list>};
-uint8_t *ptr_arr[NO_OF_CONFIG_FRAME_ID]	= {<#list 0..configModuleCnt-1 as i><#if i==configModuleCnt-1>CONFIG_${i}_PTR<#else>CONFIG_${i}_PTR,</#if></#list>};
+static uint16_t frame_len_lookup[NO_OF_CONFIG_FRAME_ID]  = {<#list 0..configModuleCnt-1 as i><#if i==configModuleCnt-1>CONFIG_${i}_LEN<#else>CONFIG_${i}_LEN,</#if></#list>};
+static uint8_t *ptr_arr[NO_OF_CONFIG_FRAME_ID]	= {<#list 0..configModuleCnt-1 as i><#if i==configModuleCnt-1>CONFIG_${i}_PTR<#else>CONFIG_${i}_PTR,</#if></#list>};
 
 /* output data details */
-uint8_t *debug_frame_ptr_arr[OUTPUT_MODULE_CNT]  = {<#list 0..outputModuleCnt-1 as i><#if i==outputModuleCnt-1>DATA_${i}_PTR<#else>DATA_${i}_PTR,</#if></#list>};
-uint8_t debug_frame_id[OUTPUT_MODULE_CNT]		  = {<#list 0..outputModuleCnt-1 as i><#if i==outputModuleCnt-1>DATA_${i}_ID<#else>DATA_${i}_ID,</#if></#list>};
-uint16_t debug_frame_data_len[OUTPUT_MODULE_CNT]  = {<#list 0..outputModuleCnt-1 as i><#if i==outputModuleCnt-1>DATA_${i}_LEN<#else>DATA_${i}_LEN,</#if></#list>};
-uint16_t debug_frame_total_len[OUTPUT_MODULE_CNT] = {<#list 0..outputModuleCnt-1 as i><#if i==outputModuleCnt-1>DATA_${i}_FRAME_LEN<#else>DATA_${i}_FRAME_LEN,</#if></#list>};
-uint8_t debug_num_ch_scroller[OUTPUT_MODULE_CNT] = {<#list 0..outputModuleCnt-1 as i><#if i==outputModuleCnt-1>DATA_${i}_REPEAT<#else>DATA_${i}_REPEAT,</#if></#list>};
-void (*debug_func_ptr[OUTPUT_MODULE_CNT])(uint8_t ch) = {<#list 0..(runtimeDataFunctions?size-1) as i><#if i==(runtimeDataFunctions?size-1)>${runtimeDataFunctions[i]}<#else>${runtimeDataFunctions[i]},</#if></#list>};
+static uint8_t *debug_frame_ptr_arr[OUTPUT_MODULE_CNT]  = {<#list 0..outputModuleCnt-1 as i><#if i==outputModuleCnt-1>DATA_${i}_PTR<#else>DATA_${i}_PTR,</#if></#list>};
+static uint8_t debug_frame_id[OUTPUT_MODULE_CNT]		  = {<#list 0..outputModuleCnt-1 as i><#if i==outputModuleCnt-1>(uint8_t)DATA_${i}_ID<#else>(uint8_t)DATA_${i}_ID,</#if></#list>};
+static uint16_t debug_frame_data_len[OUTPUT_MODULE_CNT]  = {<#list 0..outputModuleCnt-1 as i><#if i==outputModuleCnt-1>(uint16_t)DATA_${i}_LEN<#else>(uint16_t)DATA_${i}_LEN,</#if></#list>};
+static uint16_t debug_frame_total_len[OUTPUT_MODULE_CNT] = {<#list 0..outputModuleCnt-1 as i><#if i==outputModuleCnt-1>DATA_${i}_FRAME_LEN<#else>DATA_${i}_FRAME_LEN,</#if></#list>};
+static uint8_t debug_num_ch_scroller[OUTPUT_MODULE_CNT] = {<#list 0..outputModuleCnt-1 as i><#if i==outputModuleCnt-1>DATA_${i}_REPEAT<#else>DATA_${i}_REPEAT,</#if></#list>};
+static void (*debug_func_ptr[OUTPUT_MODULE_CNT])(uint8_t ch) = {<#list 0..(runtimeDataFunctions?size-1) as i><#if i==(runtimeDataFunctions?size-1)>${runtimeDataFunctions[i]}<#else>${runtimeDataFunctions[i]},</#if></#list>};
 
 #if FREQ_HOP_AUTO_MODULE_OUTPUT == 1u
 void copy_freq_hop_auto_runtime_data(uint8_t channel_num)
@@ -368,12 +346,12 @@ void copy_scroller_run_time_data(uint8_t channel_num)
 	/* Slider Delta */
 	delta_temp = qtm_scroller_control1.qtm_scroller_data[channel_num].contact_size;
 	*temp_ptr++ = delta_temp;
-	*temp_ptr++ = (delta_temp >> 8);
+	*temp_ptr++ = (delta_temp >> (uint16_t)8);
 	 
 	/* filtered position */
 	position_temp = (qtm_scroller_control1.qtm_scroller_data[channel_num].position);//get_scroller_position(channel_num);
 	*temp_ptr++ =  position_temp;
-	*temp_ptr++ = (position_temp >> 8);
+	*temp_ptr++ = (position_temp >> (uint16_t)8);
 	
 }
 
@@ -405,7 +383,7 @@ void update_scroller_config(uint8_t scroller_num) {
 
 #endif
 
-channel_acq_param acq_data;
+static channel_acq_param acq_data;
 void copy_acq_config(uint8_t channel)
 {
 <#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
@@ -430,12 +408,12 @@ qtm_acq_${DEVICE_NAME?lower_case}_node_config_t *ptr = &ptc_seq_node_cfg1[channe
 	acq_data.prsc_res	= ptr->node_rsel_prsc;
 	acq_data.gain	= ptr->node_gain;
 	acq_data.node_oversampling	= ptr->node_oversampling;
-	if(channel == 0) {
-		uart_send_frame_header(MCU_RESPOND_CONFIG_DATA_TO_PC, uart_command_info.frame_id,(sizeof(channel_acq_param) * DEF_NUM_CHANNELS));
-		uart_send_data(STREAMING_CONFIG_DATA,(uint8_t *) &acq_data.node_xmask, sizeof(channel_acq_param));
+	if(channel == (uint8_t)0) {
+		uart_send_frame_header((uint8_t)MCU_RESPOND_CONFIG_DATA_TO_PC, (uint8_t)uart_command_info.frame_id,(uint16_t)(sizeof(channel_acq_param) * DEF_NUM_CHANNELS));
+		uart_send_data(STREAMING_CONFIG_DATA,(uint8_t *) &acq_data.node_xmask, (uint16_t)sizeof(channel_acq_param));
 	} else {
 		tx_data_ptr	= (uint8_t *) &acq_data.node_xmask;
-		tx_data_len = sizeof(channel_acq_param);
+		tx_data_len = (uint16_t)sizeof(channel_acq_param);
 	}
 }
 
@@ -462,7 +440,7 @@ void copy_channel_config_data(uint8_t id, uint8_t channel) {
 		#endif
 		default:
 		max_channels_or_scrollers = 1;
-		uart_send_frame_header(MCU_RESPOND_CONFIG_DATA_TO_PC, uart_command_info.frame_id,frame_len_lookup[uart_command_info.frame_id]);
+		uart_send_frame_header((uint8_t)MCU_RESPOND_CONFIG_DATA_TO_PC, uart_command_info.frame_id,frame_len_lookup[uart_command_info.frame_id]);
 		uart_send_data(STREAMING_CONFIG_DATA,ptr_arr[uart_command_info.frame_id],frame_len_lookup[uart_command_info.frame_id]);
 		break;
 	}
@@ -472,36 +450,36 @@ void copy_channel_config_data(uint8_t id, uint8_t channel) {
 void copy_run_time_data(uint8_t channel_num)
 {
 	uint16_t signal_temp, ref_temp ; int16_t delta_temp ;
-	uint8_t *temp_ptr = (uint8_t *) &runtime_data_arr.signal;
+	uint8_t *temp_ptr = (uint8_t *) &runtime_data_arr.touchSignal;
 	
 	signal_temp = ptc_qtlib_node_stat1[channel_num].node_acq_signals;
-	*temp_ptr++ =  signal_temp;
-	*temp_ptr++ = (signal_temp >> 8);
+	*temp_ptr++ = (uint8_t) signal_temp;
+	*temp_ptr++ = (uint8_t) (signal_temp >>(uint16_t)8);
 	
 	ref_temp = qtlib_key_data_set1[channel_num].channel_reference;
-	*temp_ptr++ = ref_temp;
-	*temp_ptr++ = (ref_temp >> 8);
+	*temp_ptr++ = (uint8_t) ref_temp;
+	*temp_ptr++ = (uint8_t) (ref_temp >>(uint16_t)8);
 	
-	delta_temp = signal_temp - ref_temp;
-	*temp_ptr++ = delta_temp;
-	*temp_ptr++ = (delta_temp >> 8);
+	delta_temp = (int16_t)signal_temp - (int16_t)ref_temp;
+	*temp_ptr++ = (uint8_t) delta_temp;
+	*temp_ptr++ = (uint8_t)((uint8_t)delta_temp >>(uint8_t)8);
 
-	if(qtlib_key_data_set1[channel_num].sensor_state & 0x80) {
+	if((bool)(qtlib_key_data_set1[channel_num].sensor_state & (uint8_t)0x80)) {
 		*temp_ptr++ = 1;
 	}
 	else {
 		*temp_ptr++ = 0;
 	}
 
-	*temp_ptr++ = ptc_qtlib_node_stat1[channel_num].node_comp_caps;
-	*temp_ptr++ = ptc_qtlib_node_stat1[channel_num].node_comp_caps>>8;
+	*temp_ptr++ = (uint8_t) ptc_qtlib_node_stat1[channel_num].node_comp_caps;
+	*temp_ptr++ = (uint8_t) ptc_qtlib_node_stat1[channel_num].node_comp_caps>>8;
 }
 
 uint8_t uart_get_char(void)
 {
 	uint8_t data = read_buffer[read_buf_read_ptr];
 	read_buf_read_ptr++;
-	if (read_buf_read_ptr == UART_RX_BUF_LENGTH) {
+	if (read_buf_read_ptr == (rx_buff_ptr_t) UART_RX_BUF_LENGTH) {
 		read_buf_read_ptr = 0;
 	}
 	return data;
@@ -518,29 +496,36 @@ void uart_get_string(uint8_t *data_recv, uint16_t len)
 
 
 void touchTuneNewDataAvailable(void) {
-	command_flags |= SEND_DEBUG_DATA;
+	command_flags |= (uint16_t)SEND_DEBUG_DATA;
 }
 
 void UART_Write(uint8_t data) {
+    bool check;
 	static uint8_t txData;
 	txData = data;
-	${.vars["${TOUCH_SERCOM_KRONO_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Write(&txData, 1); // sam devices
+	check = ${.vars["${TOUCH_SERCOM_KRONO_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Write(&txData, 1u); // sam devices
+    if (check != true)
+    {
+        
+    }
 }
 
 void uart_send_data_wait(uint8_t data)
 {
-	uart_tx_in_progress = 1;
+	uart_tx_in_progress = 1u;
 	UART_Write(data);
-	while (uart_tx_in_progress == 1)
-	;
+	while (uart_tx_in_progress == 1u)
+    {
+        
+    }
 }
 
 void uart_send_data(uint8_t con_or_debug, uint8_t *data_ptr,  uint16_t data_len) {
-	if (uart_tx_in_progress == 0) {
+	if (uart_tx_in_progress == 0u) {
 		config_or_debug           = con_or_debug;
-		uart_tx_in_progress       = 1;
-		write_buf_channel_num	  = 1;
-		write_buf_read_ptr        = 1;
+		uart_tx_in_progress       = 1u;
+		write_buf_channel_num	  = 1u;
+		write_buf_read_ptr        = 1u;
 		tx_data_ptr			      = data_ptr;
 		tx_data_len			      = data_len;
 		UART_Write(tx_data_ptr[0]);
@@ -549,8 +534,8 @@ void uart_send_data(uint8_t con_or_debug, uint8_t *data_ptr,  uint16_t data_len)
 
 rx_buff_ptr_t uart_min_num_bytes_received(void)
 {
-	int16_t retvar =  (read_buf_write_ptr - read_buf_read_ptr);
-	if (retvar < 0) 
+	int16_t retvar =  ((int16_t)read_buf_write_ptr - (int16_t)read_buf_read_ptr);
+	if (retvar < (int16_t)0) 
 	{
 		retvar = retvar + UART_RX_BUF_LENGTH;
 	}
@@ -559,12 +544,12 @@ rx_buff_ptr_t uart_min_num_bytes_received(void)
 
 void uart_send_frame_header(uint8_t trans_type, uint8_t frame,uint16_t frame_len)
 {
-	uart_frame_header_flag = 0;
+	uart_frame_header_flag = 0u;
 	uart_send_data_wait(DV_HEADER);
  	uart_send_data_wait(trans_type);
  	uart_send_data_wait(frame);
-	uart_send_data_wait((uint8_t)(frame_len & 0xFF));
-	uart_send_data_wait((uint8_t)(frame_len>>8));
+	uart_send_data_wait((uint8_t)(frame_len & (uint8_t)0xFF));
+	uart_send_data_wait((uint8_t)(frame_len>>(uint8_t)8u));
 	uart_frame_header_flag = 1;
 }
 
@@ -572,6 +557,7 @@ void uart_recv_frame_data(uint8_t frame_id, uint16_t len)
 {
     static uint8_t ch_num;
     uint8_t num_data;
+    int8_t data;
     num_data = uart_min_num_bytes_received();
     switch(frame_id)
     {
@@ -579,18 +565,22 @@ void uart_recv_frame_data(uint8_t frame_id, uint16_t len)
             while(num_data > sizeof(channel_acq_param)) {
 
                 uint8_t *ptr = (uint8_t *) &acq_data.node_xmask;
-                for(uint8_t cnt = 0; cnt < sizeof(channel_acq_param); cnt++) {
+                for(uint8_t cnt = 0u; cnt < sizeof(channel_acq_param); cnt++) {
                     ptr[cnt] = uart_get_char();
                 }
                 update_acq_config(ch_num);
                 ch_num++;
-                num_data -= sizeof(channel_acq_param);
+                num_data -= (uint8_t)sizeof(channel_acq_param);
 
-                if(ch_num == DEF_NUM_CHANNELS) {
-                    ch_num = 0;
+                if(ch_num == (uint8_t)DEF_NUM_CHANNELS) {
+                    ch_num = 0u;
                     uart_command_info.header_status = HEADER_AWAITING;
-                    command_flags &= ~(1<<uart_command_info.frame_id);
-                    uart_get_char(); // reading footer
+                    command_flags &= (uint16_t)~((uint16_t)1<<(uint16_t)uart_command_info.frame_id);
+                    data = (int8_t)uart_get_char(); // reading footer
+                    if (data == DV_FOOTER)
+                    {
+                        
+                    }
                     break;
                 }
             }
@@ -604,13 +594,17 @@ void uart_recv_frame_data(uint8_t frame_id, uint16_t len)
                     ptr[cnt] = uart_get_char();
                 }
                 ch_num++;
-                num_data -= sizeof(qtm_touch_key_config_t);
+                num_data -= (uint8_t)sizeof(qtm_touch_key_config_t);
 
-                if(ch_num == DEF_NUM_CHANNELS) {
+                if(ch_num == (uint8_t)DEF_NUM_CHANNELS) {
                     ch_num = 0;
                     uart_command_info.header_status = HEADER_AWAITING;
-                    command_flags &= ~(1<<uart_command_info.frame_id);
-                    uart_get_char();
+                    command_flags &= (uint16_t)~((uint16_t)1<<(uint16_t)uart_command_info.frame_id);
+                    data = (int8_t)uart_get_char(); // reading footer
+                    if (data == DV_FOOTER)
+                    {
+                        
+                    }
                     break;
                 }
             }
@@ -630,7 +624,7 @@ void uart_recv_frame_data(uint8_t frame_id, uint16_t len)
                 if(ch_num == DEF_NUM_SCROLLERS) {
                     ch_num = 0;
                     uart_command_info.header_status = HEADER_AWAITING;
-                    command_flags &= ~(1<<uart_command_info.frame_id);
+                    command_flags &= ~(uint16_t)((uint8_t)1<<(uint8_t)uart_command_info.frame_id);;
                     uart_get_char(); // reading footer
                     break;
                 }
@@ -639,7 +633,11 @@ void uart_recv_frame_data(uint8_t frame_id, uint16_t len)
 #endif
         default:
             uart_get_string(ptr_arr[uart_command_info.frame_id],uart_command_info.num_of_bytes);//frame_len_lookup[uart_command_info.frame_id]);
-            uart_get_char();// receiving footer
+            data = (int8_t)uart_get_char(); // reading footer
+            if (data == DV_FOOTER)
+            {
+                break;
+            }
         break;
 
     }
@@ -647,11 +645,15 @@ void uart_recv_frame_data(uint8_t frame_id, uint16_t len)
 
 
 void touchTuneInit(void) {
-
+bool check;
     ${.vars["${TOUCH_SERCOM_KRONO_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_WriteCallbackRegister(touchUartTxComplete, touchUart);
     ${.vars["${TOUCH_SERCOM_KRONO_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_ReadCallbackRegister(touchUartRxComplete, touchUart);
 
-    ${.vars["${TOUCH_SERCOM_KRONO_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Read((void *) &rxData, 1);
+    check =${.vars["${TOUCH_SERCOM_KRONO_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Read((void *) &rxData, 1u);
+   if (check != true)
+   {
+       
+   }
 }
 
 
@@ -661,53 +663,65 @@ void touchTuneProcess(void)
 
 	switch (uart_command_info.header_status) {
 		case HEADER_AWAITING:
-			if (uart_min_num_bytes_received() > 5)
+			if (uart_min_num_bytes_received() > 5u)
 			{
-				if (uart_get_char() == DV_HEADER)
+				if (uart_get_char() == (uint8_t)DV_HEADER)
 				{
-					uart_get_string( (uint8_t *) &uart_command_info.transaction_type, 4); // uart_command_info.transaction_type ,uart_command_info.frame_id,uart_command_info.num_of_bytes
+					uart_get_string( (uint8_t *) &uart_command_info.transaction_type, 4u); // uart_command_info.transaction_type ,uart_command_info.frame_id,uart_command_info.num_of_bytes
 					uart_command_info.header_status		= DATA_AWAITING;
 				}
 			}
 			break;
 		case DATA_AWAITING:
-			if(uart_command_info.transaction_type == PC_SEND_CONFIG_DATA_TO_MCU) // user has pressed write to kit
+			if(uart_command_info.transaction_type == (uint8_t)PC_SEND_CONFIG_DATA_TO_MCU) // user has pressed write to kit
 			{
-                if(uart_command_info.num_of_bytes >= UART_RX_BUF_LENGTH) {
+                if(uart_command_info.num_of_bytes >= (rx_buff_ptr_t)UART_RX_BUF_LENGTH) {
                     uart_recv_frame_data(uart_command_info.frame_id,uart_command_info.num_of_bytes);
                 }else if (uart_min_num_bytes_received() > uart_command_info.num_of_bytes) //total length of bytes + footer
 				{
-					command_flags |= (1 << (uart_command_info.frame_id )); // (uart_command_info.frame_id - CONFIG_INFO)
+					command_flags |= (uint16_t)((uint16_t)1<<(uint16_t)uart_command_info.frame_id); // (uart_command_info.frame_id - CONFIG_INFO)
 					uart_command_info.header_status	= DATA_RECEIVED;
 				}
+                else
+                {
+                    //code doesn't reach
+                }
 			}
-			else if (uart_command_info.transaction_type == PC_REQUEST_CONFIG_DATA_FROM_MCU) // read from kit
+			else if (uart_command_info.transaction_type == (uint8_t)PC_REQUEST_CONFIG_DATA_FROM_MCU) // read from kit
 			{
-				if(uart_min_num_bytes_received() > 1) // Data length = 1 + footer
+				if(uart_min_num_bytes_received() > 1u) // Data length = 1 + footer
 				{
-					if ((uart_get_char() == ZERO) && (uart_get_char() == DV_FOOTER) ) // requesting configuration
+					if ((uart_get_char() == (uint8_t)ZERO) && (uart_get_char() == (uint8_t)DV_FOOTER) ) // requesting configuration
 					{
-						command_flags |= (1 << (uart_command_info.frame_id )); // (uart_command_info.frame_id - CONFIG_INFO)
+						command_flags |= (uint16_t)((uint16_t)1<<(uint16_t)uart_command_info.frame_id); // (uart_command_info.frame_id - CONFIG_INFO)
 						uart_command_info.header_status	= DATA_RECEIVED;
 					}
 				}
 			}
+            else
+            {
+                //code doesn't reach
+            }
 		break;
 		case DATA_RECEIVED:
-			if((command_flags & 0x0FFF) && (uart_tx_in_progress == 0)) {
-				if (uart_command_info.transaction_type == PC_REQUEST_CONFIG_DATA_FROM_MCU) // requesting configuration
+			if((bool)(command_flags & 0x0FFFu) && (uart_tx_in_progress == 0u)) {
+				if (uart_command_info.transaction_type == (uint8_t)PC_REQUEST_CONFIG_DATA_FROM_MCU) // requesting configuration
 				{
-					copy_channel_config_data(uart_command_info.frame_id, 0);
+					copy_channel_config_data(uart_command_info.frame_id, 0u);
 					uart_command_info.header_status = HEADER_AWAITING;
 				}
-				else if(uart_command_info.transaction_type == PC_SEND_CONFIG_DATA_TO_MCU)// PC Updating parameters.
+				else if(uart_command_info.transaction_type == (uint8_t)PC_SEND_CONFIG_DATA_TO_MCU)// PC Updating parameters.
 				{
 					uart_recv_frame_data(uart_command_info.frame_id,uart_command_info.num_of_bytes);//frame_len_lookup[uart_command_info.frame_id]);
 					// uart_get_string(ptr_arr[uart_command_info.frame_id],uart_command_info.num_of_bytes);//frame_len_lookup[uart_command_info.frame_id]);
 					// uart_get_char();// receiving footer
-					uart_command_info.header_status = HEADER_AWAITING;
-					command_flags &= ~(1<<uart_command_info.frame_id);
+					uart_command_info.header_status = (uint8_t)HEADER_AWAITING;
+					command_flags &= (uint16_t)~((uint16_t)1<<(uint16_t)uart_command_info.frame_id);
 				}
+                else
+                {
+                    //code doesn't come here
+                }
 			}
 		break;
 		default:
@@ -716,7 +730,7 @@ void touchTuneProcess(void)
 	}
 
 	/* to send periodic data */
-	if((command_flags & SEND_DEBUG_DATA) && (uart_tx_in_progress == 0)) {
+	if((bool)(command_flags & (uint16_t)SEND_DEBUG_DATA) && (uart_tx_in_progress == 0u)) {
 		
         while(debug_func_ptr[debug_index] == NULL) {
             debug_index++;
@@ -726,9 +740,9 @@ void touchTuneProcess(void)
         }
 		current_debug_data = debug_frame_id[debug_index];
 		
-		uart_send_frame_header(MCU_SEND_TUNE_DATA_TO_PC, current_debug_data, debug_frame_total_len[debug_index]);
+		uart_send_frame_header((uint8_t)MCU_SEND_TUNE_DATA_TO_PC, (uint8_t)current_debug_data, (uint16_t)debug_frame_total_len[debug_index]);
 								
-		(debug_func_ptr[debug_index])(0);
+		(debug_func_ptr[debug_index])(0u);
 		
 		max_channels_or_scrollers = debug_num_ch_scroller[debug_index];
 		
@@ -737,7 +751,7 @@ void touchTuneProcess(void)
 		debug_index++;
 		
 		if(debug_index == OUTPUT_MODULE_CNT) {
-			debug_index = 0;
+			debug_index = 0u;
 		}
 	}
 }
@@ -748,9 +762,9 @@ void touchUartTxComplete(uintptr_t lTouchUart)
 {
 	#if (DEF_TOUCH_TUNE_ENABLE == 1u)
 
-	if (uart_frame_header_flag != 1)
+	if (uart_frame_header_flag != 1u)
 	{
-		uart_tx_in_progress = 0;
+		uart_tx_in_progress = 0u;
 	} 
 	else 
 	{
@@ -764,40 +778,44 @@ void touchUartTxComplete(uintptr_t lTouchUart)
 				if (write_buf_channel_num < max_channels_or_scrollers)
 				{
                     copy_channel_config_data(uart_command_info.frame_id, write_buf_channel_num);
-					write_buf_read_ptr = 1;
+					write_buf_read_ptr = 1u;
 					write_buf_channel_num++;
 					UART_Write(tx_data_ptr[0]);
 				}
 				else if(write_buf_channel_num == max_channels_or_scrollers)
 				{
 					write_buf_channel_num++;
-					command_flags &= ~(1<<uart_command_info.frame_id);
+					command_flags &= (uint16_t)~((uint16_t)1<<(uint16_t)uart_command_info.frame_id);
 					UART_Write(DV_FOOTER);
 				}
 				else
 				{
-					uart_tx_in_progress = 0;
+					uart_tx_in_progress = 0u;
 				}
 			} else if(config_or_debug == STREAMING_DEBUG_DATA) {
 				/* per channel data are sent channel by channel to reduce RAM requirements */
 				if (write_buf_channel_num < max_channels_or_scrollers)
 				{
-					(*debug_func_ptr[current_debug_data & 0x0F])(write_buf_channel_num);  
-					write_buf_read_ptr = 1;
+					(*debug_func_ptr[current_debug_data & (uint8_t)0x0F])(write_buf_channel_num);  
+					write_buf_read_ptr = 1u;
 					write_buf_channel_num++;
 					UART_Write(tx_data_ptr[0]);
 				}
 				else if(write_buf_channel_num == max_channels_or_scrollers)
 				{
 					write_buf_channel_num++;
-					command_flags &= ~(SEND_DEBUG_DATA); // clearing off debug data
+					command_flags &= ~(uint16_t)(SEND_DEBUG_DATA); // clearing off debug data
 					UART_Write(DV_FOOTER);
 				}
 				else
 				{
-					uart_tx_in_progress = 0;
+					uart_tx_in_progress = 0u;
 				}
 			}
+            else
+            {
+                //code doesn't reach
+            }
 		}
 	}
 	#endif
@@ -805,13 +823,18 @@ void touchUartTxComplete(uintptr_t lTouchUart)
 
 void touchUartRxComplete(uintptr_t lTouchUart)
 {
+    bool check;
 	#if (DEF_TOUCH_TUNE_ENABLE == 1u)
 	read_buffer[read_buf_write_ptr] = rxData;
 	read_buf_write_ptr++;
-	if (read_buf_write_ptr == UART_RX_BUF_LENGTH) {
-		read_buf_write_ptr = 0;
+	if (read_buf_write_ptr == (rx_buff_ptr_t) UART_RX_BUF_LENGTH) {
+		read_buf_write_ptr = 0u;
 	}
-	${.vars["${TOUCH_SERCOM_KRONO_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Read((void *) &rxData,1);
+	check = ${.vars["${TOUCH_SERCOM_KRONO_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Read((void *) &rxData,1u);
+   if (check != true)
+   {
+       
+   }
 	#endif
 }
 </#if>
