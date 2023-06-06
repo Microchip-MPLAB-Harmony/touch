@@ -172,7 +172,7 @@ static void touch_measure_wcomp_match(void);
 #if DEF_TOUCH_LOWPOWER_ENABLE == 1u
 static uint8_t lp_measurement = 0u;
  <#if num_of_channel_more_than_one == 1>
-#define get_lowpower_mask(x) lowpower_key_mask[x>>3u]
+#define get_lowpower_mask(x) lowpower_key_mask[(x)>>3u]
 static uint8_t lowpower_key_mask[(DEF_NUM_CHANNELS+7)>>3u] = {DEF_LOWPOWER_KEYS};
 static uint16_t current_lp_sensor = 0u;
 </#if>
@@ -184,16 +184,20 @@ static uint16_t current_lp_sensor = 0u;
 static uint8_t lp_measurement = 0u;
 <#if num_of_channel_more_than_one == 1>
 uint8_t current_lp_sensor = 0u;
-#define get_lowpower_mask(x) lowpower_key_mask[x>>3u]
+#define get_lowpower_mask(x) lowpower_key_mask[(x)>>3u]
 uint8_t lowpower_key_mask[(DEF_NUM_CHANNELS+7u)>>3u] = {DEF_LOWPOWER_KEYS};
 </#if>
 #endif
         </#if>
     </#if> 
 </#if>
-
+<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
+/* Flag to indicate time for touch measurement */
+volatile uint8_t time_to_measure_touch_var = 0u;
+<#else>
 /* Flag to indicate time for touch measurement */
 static volatile uint8_t time_to_measure_touch_var = 0u;
+</#if>
 /* post-process request flag */
 static volatile uint8_t touch_postprocess_request = 0u;
 
@@ -213,7 +217,7 @@ static uint16_t time_since_touch = 0u;
 /* store the drift period for comparison */
 static uint16_t measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
 /* measurement mode; 0 - sequential, 1 - windowcomp*/
-static volatile uint8_t measurement_mode = 0u; 
+volatile uint8_t measurement_mode = 0u; 
 </#if>
 
 /* Acquisition module internal data - Size to largest acquisition set */
@@ -1238,8 +1242,9 @@ static void touch_process_lowpower(void) {
        
 <#if ENABLE_EVENT_LP?exists>
 	<#if ENABLE_EVENT_LP == true>
+	touch_ret_t touch_ret;
     if (time_since_touch >= DEF_TOUCH_TIMEOUT) {
-    touch_ret_t touch_ret;
+    
 		/* Start Autoscan */
 		touch_ret = qtm_autoscan_sensor_node(&auto_scan_setup, touch_measure_wcomp_match);
 
@@ -1251,11 +1256,15 @@ static void touch_process_lowpower(void) {
     } else if (measurement_period_store != DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
 
         /* Cancel node auto scan */
-        qtm_autoscan_node_cancel();
+        touch_ret = qtm_autoscan_node_cancel();
 
         /* disable event system low-power measurement */
         touch_disable_lowpower_measurement();
     }
+		else
+	{
+		//doesn't reach
+	}
 }
     <#elseif ENABLE_EVENT_LP == false>
     if (time_since_touch >= DEF_TOUCH_TIMEOUT) {
@@ -1282,6 +1291,10 @@ static void touch_process_lowpower(void) {
         /* disable low-power measurement */
         touch_disable_lowpower_measurement();
     }
+	else
+	{
+		//doesn't reach
+	}
 }
         </#if>
 <#else>
@@ -1306,6 +1319,10 @@ static void touch_process_lowpower(void) {
         /* disable low-power measurement */
         touch_disable_lowpower_measurement();
     }
+	else
+	{
+		//doesn't reach
+	}
 }    
     </#if>
 	</#if>
@@ -1342,7 +1359,7 @@ static void touch_seq_lp_sensor(void)
         for (uint16_t cnt = 0; cnt <= current_lp_sensor; cnt++) {
             mbit = (uint8_t)cnt % (uint8_t)8;
             if (((uint8_t)(get_lowpower_mask(cnt)) &((uint8_t)1 << mbit))!= 0u) {
-                lp_sensor_found = 1u;
+                //lp_sensor_found = 1u;
                 current_lp_sensor = cnt;
                 break;
             }
@@ -1382,11 +1399,15 @@ Notes  :
 ============================================================================*/
 static void touch_measure_wcomp_match(void)
 {
+    touch_ret_t touch_ret;
     if(measurement_period_store != DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
         <#if sam_c2x_devices?seq_contains(DEVICE_NAME) || sam_l2x_devices?seq_contains(DEVICE_NAME) || sam_d2x_devices?seq_contains(DEVICE_NAME)>
-        qtm_autoscan_node_cancel();
+        touch_ret = qtm_autoscan_node_cancel();
+        if (touch_ret == TOUCH_SUCCESS)
+        {
         time_since_touch = 0u;
         time_to_measure_touch_var =1u; 
+		}
         <#else>
         touch_disable_lowpower_measurement();
         time_to_measure_touch_var = 1u;	

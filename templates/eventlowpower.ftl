@@ -3,7 +3,7 @@
 
 <#macro lowpower_acq_param>
 	/* Low-power autoscan related parameters */
-	qtm_auto_scan_config_t auto_scan_setup 
+static qtm_auto_scan_config_t auto_scan_setup 
         = {&qtlib_acq_set1, QTM_AUTOSCAN_NODE, QTM_AUTOSCAN_THRESHOLD, QTM_AUTOSCAN_TRIGGER_PERIOD};
 </#macro>
 
