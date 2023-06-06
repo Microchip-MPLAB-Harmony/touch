@@ -97,7 +97,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#if DS_DEDICATED_ENABLE == true || DS_PLUS_ENABLE == true>
 #if (DEF_ENABLE_DRIVEN_SHIELD == 1u)
 #include "driven_shield.h"
-extern qtm_drivenshield_config_t qtm_drivenshield_config;
 #endif
 </#if>
 </#if>
@@ -1781,7 +1780,7 @@ void PTC_Handler(void)
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
 <#if DS_DEDICATED_ENABLE == true || DS_PLUS_ENABLE == true>
 #if (DEF_ENABLE_DRIVEN_SHIELD == 1u)
-	if (qtm_drivenshield_config.flags & (1u << DRIVEN_SHIELD_DUMMY_ACQ)) {
+	if ((qtm_drivenshield_config.flags & (1u << DRIVEN_SHIELD_DUMMY_ACQ))!=0u) {
 		/* Clear the flag */
 		qtm_drivenshield_config.flags &= (uint8_t) ~(1u << DRIVEN_SHIELD_DUMMY_ACQ);
     <#if DEVICE_NAME == "SAMD10" || DEVICE_NAME == "SAMD11" >

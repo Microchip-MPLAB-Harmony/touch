@@ -61,7 +61,7 @@ Notes  : This setup is very product dependent,
          Users also use this function to configure GPIO pins and Enable
          GCLKs and APBClocks for the peripherals associated with the shield
 ============================================================================*/
-void drivenshield_configure();
+void drivenshield_configure(void);
 
 /*============================================================================
 void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type} volatile *dst_addr, ${data_type} value)

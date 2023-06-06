@@ -131,10 +131,10 @@ Output : None
 ============================================================================*/
 static void drivenshield_port_mux_config(uint8_t pin, uint8_t mux)
 {
-	uint8_t temp_pin = pin%32;
-	uint8_t port = pin>>5; /* div by 32 */
+	uint8_t temp_pin =(uint8_t) pin%32u;
+	uint8_t port = (uint8_t)pin>>5u; /* div by 32 */
 
-	if(mux == 0)
+	if(mux == 0u)
 	{
 		PORT_REGS->GROUP[port].PORT_PINCFG[temp_pin] = 0;
 	}
@@ -142,27 +142,27 @@ static void drivenshield_port_mux_config(uint8_t pin, uint8_t mux)
 	{
 		PORT_REGS->GROUP[port].PORT_PINCFG[temp_pin] = 0x01;
 
-		if(temp_pin%2)
+		if(temp_pin%2u !=0u)
 		{
 			/* odd */
-			PORT_REGS->GROUP[port].PORT_PMUX[temp_pin>>1] &= ~0xf0;
-			PORT_REGS->GROUP[port].PORT_PMUX[temp_pin>>1] |= (mux << 4);
+			PORT_REGS->GROUP[port].PORT_PMUX[temp_pin>>1u] &= ~(uint8_t)0xf0;
+			PORT_REGS->GROUP[port].PORT_PMUX[temp_pin>>1u] |= (mux << 4u);
 		}
 		else
 		{
 			/* even */
-			PORT_REGS->GROUP[port].PORT_PMUX[temp_pin>>1] &= ~0x0f;
-			PORT_REGS->GROUP[port].PORT_PMUX[temp_pin>>1] |= (mux);
+			PORT_REGS->GROUP[port].PORT_PMUX[temp_pin>>1u] &= ~(uint8_t)0x0f;
+			PORT_REGS->GROUP[port].PORT_PMUX[temp_pin>>1u] |= (uint8_t)(mux);
 		}
 	}
 }
 
 /* extern current measure channel data from lib */
-extern uint16_t current_measure_channel;
+extern volatile uint16_t current_measure_channel;
 
 <#if DS_PLUS_ENABLE == true && uniqueTimersDSP?size != 0>
 /* PTC pin's TC/TCC pinmux settings */
-uint32_t driven_shield_pin[DEF_NUM_CHANNELS][2] = {
+static uint32_t driven_shield_pin[DEF_NUM_CHANNELS][2] = {
 <#list 0..TOUCH_KEY_ENABLE_CNT-1 as i>
 	<#assign DSPLUS_TIMER_PINMUX = "DSPLUS_TIMER_PINMUX" + i>
 <#if .vars[DSPLUS_TIMER_PINMUX] != "---">
@@ -191,18 +191,18 @@ Notes  : This setup is very product dependent,
          Users also use this function to configure GPIO pins and Enable
          GCLKs and APBClocks for the peripherals associated with the shield
 ============================================================================*/
-void drivenshield_configure()
+void drivenshield_configure(void)
 {
 	touch_ret_t touch_ret = TOUCH_SUCCESS;
 	/* Shield configuration */
 	touch_ret = qtm_drivenshield_setup(&qtm_drivenshield_config);
 	if (touch_ret != TOUCH_SUCCESS) {
-		while (1)
+		while (1){}
 			;
 	}
 	touch_ret = qtm_drivenshield_register_start_callback(&drivenshield_start);
 	if (touch_ret != TOUCH_SUCCESS) {
-		while (1)
+		while (1){}
 			;
 	}
 	
@@ -250,7 +250,7 @@ void drivenshield_configure()
 
 <#if DS_DEDICATED_ENABLE ==true>
 	/* Dedicated Shield Timer pin mux setting */
-	drivenshield_port_mux_config(PIN_${.vars["DS_DEDICATED_TIMER_PIN"]}, MUX_${.vars["DS_DEDICATED_TIMER_PIN"]});
+	drivenshield_port_mux_config((uint8_t)PIN_${.vars["DS_DEDICATED_TIMER_PIN"]}, (uint8_t)MUX_${.vars["DS_DEDICATED_TIMER_PIN"]});
 </#if>
 
 	/* stop all the timers */
@@ -274,13 +274,18 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	static ${data_type} *addr;
 	</#if>
 	uint16_t        period = 0, count = 0, cc = 0;
+    bool check;
 
 <#if noDmaDevice?seq_contains(DEVICE_NAME) == false>
 	addr         = (${data_type} *)dst_addr;
 	filter_level = value;
 
 	/* Configure DMA transfer */
-	DMAC_ChannelTransfer(0, &filter_level, addr, ${block_transfer_count});
+	check = DMAC_ChannelTransfer((DMAC_CHANNEL)0, &filter_level, addr, ${block_transfer_count}u);
+	  if (check != true)
+		{
+        
+		}
 <#else>
 	<#if (DEVICE_NAME == "SAMD20")>
 	EVSYS_REGS->EVSYS_USER = EVSYS_USER_CHANNEL(0x1)|EVSYS_USER_USER(0x0D);
@@ -327,48 +332,48 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 									 | EVSYS_CHANNEL_CHANNEL(0);
 	</#if>
 	/* TC/TCC period value */
-    period = csd + 15 + sds;
-    period = period << 2;
-    period = period - 1; 
+    period = (uint16_t)csd + 15u + (uint16_t)sds;
+    period = (uint16_t)period << 2u;
+    period = (uint16_t)period - 1u; 
 
     /* TC/TCC compare value */
-    cc = 9 + sds;
-    cc = cc << 2;
+    cc = (uint16_t)(9u + (uint16_t)sds);
+    cc = (uint16_t)cc << 2u;
  
 
     /* TC/TCC count value - initial offset */
-    count = 6;
-    count = count << 2;
-    count = count - offset_vs_prescaler[prescaler];
+    count = 6u;
+    count = (uint16_t)count << 2u;
+    count = (uint16_t)count - offset_vs_prescaler[prescaler];
 </#if>
 </#list>
 <#list ["SAML22", "SAMC20", "SAMC21"] as i>
 <#if DEVICE_NAME == i>
 	/* TC/TCC period value */
-	period = csd+1;
-	period = period * 6;
-	period = period + sds + 1;
-	period = period << 2;
-	period = period - 1;
+	period = (uint16_t)csd+1u;
+	period = (uint16_t)period * 6u;
+	period = (uint16_t)period + sds + 1u;
+	period = period << 2u;
+	period = (uint16_t)period - 1u;
 
 	/* TC/TCC compare value */
-	cc = csd+1;
-	cc = cc * 3;
-	cc = cc << 2;
-	cc = cc + (sds<<2);
+	cc = (uint16_t)csd+1u;
+	cc = (uint16_t)cc * 3u;
+	cc = (uint16_t)cc << 2u;
+	cc = (uint16_t)cc + (uint16_t)((uint16_t)sds<<2u);
 	
 	/* TC/TCC count value - initial offset */
-	count = csd+1;
-	count = count * 2;
-	count = count << 2;
+	count = (uint16_t)csd+1u;
+	count = (uint16_t)count * 2u;
+	count = (uint16_t)count << 2u;
 	<#if DEVICE_NAME == "SAML22">
-	count = count - 2;
+	count = (uint16_t)count - 2u;
 	<#else>
 	<#if DEVICE_VARIANT == "SAMC21N">
-	period = period - 4;
-	count = count - 2;
+	period = (uint16_t)period - 4u;
+	count = (uint16_t)count - 2u;
 	<#elseif (DEVICE_NAME == "SAMC21") || (DEVICE_NAME == "SAMC20")>
-	cc = cc + 3;
+	cc = (uint16_t)cc + 3u;
 	</#if>
 	</#if>
 	<#break>
@@ -377,54 +382,54 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 <#list ["SAML21"] as i>
 <#if DEVICE_NAME == i>
 	/* TC/TCC period value */
-	period = csd + 15 + sds;
-	period = period << 2;
-	period = period - 1;
+	period = (uint16_t)csd + 15u + (uint16_t)sds;
+	period = (uint16_t)period << 2u;
+	period = (uint16_t)period - 1u;
 
 	/* TC/TCC compare value */
-	cc = 9 + sds;
-	cc = cc << 2;
+	cc = (uint16_t)(9u + (uint16_t)sds);
+	cc = (uint16_t)cc << 2u;
 
 	/* TC/TCC count value - initial offset */
-	count = 6;
-	count = count << 2;
-	count = count - offset_vs_prescaler[prescaler];
+	count = 6u;
+	count = (uint16_t)count << 2u;
+	count = (uint16_t)count - offset_vs_prescaler[prescaler];
 	<#break>
 </#if>
 </#list>
 <#list ["SAMD21", "SAMDA1","SAMHA1"] as i>
 <#if DEVICE_NAME == i>
  /* TC/TCC period value */
-    period = csd + 15 + sds;
-    period = period << 2;
-    period = period - 1; 
+    period = (uint16_t)csd + 15u + (uint16_t)sds;
+    period = (uint16_t)period << 2u;
+    period = (uint16_t)period - 1u; 
 
     /* TC/TCC compare value */
-    cc = 9 + sds;
-    cc = cc << 2;
+    cc = (uint16_t)(9u + (uint16_t)sds);
+    cc = (uint16_t)cc << 2u;
  
 
     /* TC/TCC count value - initial offset */
-    count = 6;
-    count = count << 2;
-    count = count - offset_vs_prescaler[prescaler];
+    count = 6u;
+    count = (uint16_t)count << 2u;
+    count = (uint16_t)count - offset_vs_prescaler[prescaler];
 </#if>
 </#list>
-	while (period > 255) {
-		prescaler = prescaler + 1;
-		period    = period >> 1;
-		cc        = cc >> 1;
-		count     = count >> 1;
+	while (period > 255u) {
+		prescaler = prescaler + 1u;
+		period    = period >> 1u;
+		cc        = cc >> 1u;
+		count     = count >> 1u;
 	}
 
 <#if DS_PLUS_ENABLE == true && uniqueTimersDSP?size != 0>
 	/* configure the pins as timer or analog based on current channel being measured */
 	for (uint16_t cnt = 0; cnt < DEF_NUM_CHANNELS; cnt++) {
-		if ((driven_shield_pin[cnt][0] != 0) && (driven_shield_pin[cnt][1] != 0)) {
+		if ((driven_shield_pin[cnt][0] != 0u) && (driven_shield_pin[cnt][1] != 0u)) {
 			if (current_measure_channel != cnt) {
-				drivenshield_port_mux_config(driven_shield_pin[cnt][0], driven_shield_pin[cnt][1]);
+				drivenshield_port_mux_config((uint8_t)driven_shield_pin[cnt][0], (uint8_t)driven_shield_pin[cnt][1]);
 			} else {
-				drivenshield_port_mux_config(driven_shield_pin[cnt][0], 1);
+				drivenshield_port_mux_config((uint8_t)driven_shield_pin[cnt][0], 1u);
 			}
 		}
 	}
@@ -470,7 +475,7 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	<#if .vars["DSPLUS_TIMER_PINMUX"+i]?contains(x) && .vars["DSPLUS_TIMER_PINMUX"+i] != "---">
 <#assign DediTimerWo = .vars["DSPLUS_TIMER_PINMUX"+i]>
 <#assign DediTimerWo1 = DediTimerWo?split("WO")[1]>
-	${x}_REGS->TCC_CC[${DediTimerWo1}%${x}_NUM_CHANNELS] = cc;
+	${x}_REGS->TCC_CC[${DediTimerWo1}u%${x}_NUM_CHANNELS] = cc;
 	</#if>
 </#list>
 	<#if DS_DEDICATED_ENABLE ==true>
@@ -478,19 +483,19 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 		<#assign DediTimerWo = .vars["DS_DEDICATED_TIMER_PIN"]>
 		<#assign DediTimerWo1 = DediTimerWo?split("WO")[1]>
 	/* Dedicated Shield */
-	${x}_REGS->TCC_CC[${DediTimerWo1}%${x}_NUM_CHANNELS] = cc;
+	${x}_REGS->TCC_CC[${DediTimerWo1}u%${x}_NUM_CHANNELS] = cc;
 		</#if>
 	</#if>
 	${x}_REGS->TCC_CTRLA = TCC_CTRLA_PRESCALER(prescaler);
 	${x}_PWMStart();
 	<#else>
-	${x}_REGS->COUNT8.TC_PER = period;
-	${x}_REGS->COUNT8.TC_COUNT = count;
+	${x}_REGS->COUNT8.TC_PER = (uint8_t)period;
+	${x}_REGS->COUNT8.TC_COUNT = (uint8_t)count;
 <#list 0..TOUCH_KEY_ENABLE_CNT-1 as i>
 	<#if .vars["DSPLUS_TIMER_PINMUX"+i]?contains(x) && .vars["DSPLUS_TIMER_PINMUX"+i] != "---">
 <#assign DediTimerWo = .vars["DSPLUS_TIMER_PINMUX"+i]>
 <#assign DediTimerWo1 = DediTimerWo?split("WO")[1]>
-	${x}_REGS->COUNT8.TC_CC[${DediTimerWo1}] = cc;
+	${x}_REGS->COUNT8.TC_CC[${DediTimerWo1}] =(uint8_t) cc;
 	</#if>
 </#list>
 	<#if DS_DEDICATED_ENABLE ==true>
@@ -498,7 +503,7 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 		<#assign DediTimerWo = .vars["DS_DEDICATED_TIMER_PIN"]>
 		<#assign DediTimerWo1 = DediTimerWo?split("WO")[1]>
 	/* Dedicated Shield */
-	${x}_REGS->COUNT8.TC_CC[${DediTimerWo1}] = cc;
+	${x}_REGS->COUNT8.TC_CC[${DediTimerWo1}] = (uint8_t)cc;
 		</#if>
 	</#if>
 	<#if ((DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1"))>	
@@ -517,15 +522,15 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	/* Dedicated Shield */
 	<#if .vars["DS_DEDICATED_TIMER"]?contains("TCC") >
 	${DS_DEDICATED_TIMER}_REGS->TCC_EVCTRL = TCC_EVCTRL_EVACT0_START | TCC_EVCTRL_TCEI0(1);
-	${DS_DEDICATED_TIMER}_REGS->TCC_PER = period;
-	${DS_DEDICATED_TIMER}_REGS->TCC_COUNT = count;
-	${DS_DEDICATED_TIMER}_REGS->TCC_CC[${DediTimerWo1}%${DS_DEDICATED_TIMER}_NUM_CHANNELS] = cc;
+	${DS_DEDICATED_TIMER}_REGS->TCC_PER = (uint8_t)period;
+	${DS_DEDICATED_TIMER}_REGS->TCC_COUNT = (uint8_t)count;
+	${DS_DEDICATED_TIMER}_REGS->TCC_CC[${DediTimerWo1}%${DS_DEDICATED_TIMER}_NUM_CHANNELS] = (uint8_t)cc;
 	${DS_DEDICATED_TIMER}_REGS->TCC_CTRLA = TCC_CTRLA_PRESCALER(prescaler);
 	${DS_DEDICATED_TIMER}_PWMStart();
 	<#else>
-	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_PER = period;
-	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_COUNT = count;
-	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_CC[${DediTimerWo1}] = cc;
+	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_PER = (uint8_t)period;
+	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_COUNT = (uint8_t)count;
+	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_CC[${DediTimerWo1}] = (uint8_t)cc;
 <#if ((DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1"))>
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_CTRLA = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER(prescaler) | TC_CTRLA_WAVEGEN_NPWM | TC_CTRLA_RUNSTDBY_Msk ;
 <#elseif ((DEVICE_NAME == "SAMD11")||(DEVICE_NAME == "SAMD10")||(DEVICE_NAME == "SAMD20"))>	

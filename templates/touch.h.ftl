@@ -548,6 +548,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /***************** Enable/Disbale Driven shield ***********/
 /**********************************************************/
 #define DEF_ENABLE_DRIVEN_SHIELD 1u
+extern qtm_drivenshield_config_t qtm_drivenshield_config;
 </#if>
 </#if>
 /**********************************************************/
