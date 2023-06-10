@@ -49,6 +49,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 </#list>
 #include <definitions.h>
 
+extern volatile uint16_t current_measure_channel;
+
 /*============================================================================
 void drivenshield_configure()
 ------------------------------------------------------------------------------

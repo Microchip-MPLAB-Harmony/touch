@@ -157,9 +157,6 @@ static void drivenshield_port_mux_config(uint8_t pin, uint8_t mux)
 	}
 }
 
-/* extern current measure channel data from lib */
-extern volatile uint16_t current_measure_channel;
-
 <#if DS_PLUS_ENABLE == true && uniqueTimersDSP?size != 0>
 /* PTC pin's TC/TCC pinmux settings */
 static uint32_t driven_shield_pin[DEF_NUM_CHANNELS][2] = {
@@ -197,12 +194,12 @@ void drivenshield_configure(void)
 	/* Shield configuration */
 	touch_ret = qtm_drivenshield_setup(&qtm_drivenshield_config);
 	if (touch_ret != TOUCH_SUCCESS) {
-		while (1){}
+		while (true){}
 			;
 	}
 	touch_ret = qtm_drivenshield_register_start_callback(&drivenshield_start);
 	if (touch_ret != TOUCH_SUCCESS) {
-		while (1){}
+		while (true){}
 			;
 	}
 	
@@ -271,13 +268,13 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 {
 	<#if (DEVICE_NAME != "SAMD11") && (DEVICE_NAME != "SAMD10") && (DEVICE_NAME != "SAMD20")>
 	static ${data_type}  filter_level = 0;
-	static ${data_type} *addr;
+	static ${data_type} volatile *addr;
 	</#if>
 	uint16_t        period = 0, count = 0, cc = 0;
     bool check;
 
 <#if noDmaDevice?seq_contains(DEVICE_NAME) == false>
-	addr         = (${data_type} *)dst_addr;
+	addr         = (${data_type} volatile *)dst_addr;
 	filter_level = value;
 
 	/* Configure DMA transfer */

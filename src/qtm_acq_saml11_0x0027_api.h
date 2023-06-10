@@ -41,8 +41,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 /* QTouch Modular Library Configuration */
 
-#ifndef __TOUCH_API_L11_ACQ_H__
-#define __TOUCH_API_L11_ACQ_H__
+#ifndef QTM_SAM_L11_ACQ_API_H
+#define QTM_SAM_L11_ACQ_API_H
 
 /* Include files */
 #include <stdint.h>
@@ -368,4 +368,4 @@ Notes    :  none
 ============================================================================*/
 void qtm_saml10_ptc_handler_eoc(void);
 
-#endif    /* __TOUCH_API_L10_ACQ_H__ */
+#endif    /* QTM_SAM_L11_ACQ_API_H */

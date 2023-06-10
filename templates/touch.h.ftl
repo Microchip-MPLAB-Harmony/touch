@@ -567,6 +567,8 @@ extern qtm_drivenshield_config_t qtm_drivenshield_config;
 #define TOUCH_DMA_CHANNEL ${TOUCH_PIC32MZDA_DMA}u
 </#if>
 
+<#import "/misra.h.ftl" as misra>
+<@misra.acqexternvariables/>
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

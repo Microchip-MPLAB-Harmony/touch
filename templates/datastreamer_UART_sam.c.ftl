@@ -78,31 +78,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /*----------------------------------------------------------------------------
   global variables
 ----------------------------------------------------------------------------*/
-extern qtm_acquisition_control_t qtlib_acq_set1;
-<#if TOUCH_KEY_ENABLE_CNT != 0>
-extern qtm_touch_key_control_t   qtlib_key_set1;
-extern qtm_touch_key_config_t    qtlib_key_configs_set1[DEF_NUM_SENSORS];
-</#if>
-<#if ENABLE_FREQ_HOP==true>
-<#if FREQ_AUTOTUNE != false>
-extern qtm_freq_hop_autotune_control_t qtm_freq_hop_autotune_control1;
-</#if>
-</#if>
-<#if ENABLE_SCROLLER == true>
-<#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
-extern qtm_scroller_control_t qtm_scroller_control1;
-</#if>
-</#if>
-<#if ENABLE_SURFACE == true>
-<#if ENABLE_SURFACE1T == true>
-extern qtm_surface_cs_control_t qtm_surface_cs_control1;
-<#else>
-extern qtm_surface_cs2t_control_t qtm_surface_cs_control1;
-</#if>
-</#if>
-extern uint8_t module_error_code;
-
-uint8_t data[] = {
+static uint8_t data[] = {
     0x5F, 0xB4, 0x00, 0x86, 0x4A, 0x03, 0xEB, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xAA, 0x55, 0x01, 0x6E, 0xA0};
 
 /*----------------------------------------------------------------------------
@@ -205,11 +181,11 @@ void datastreamer_output(void)
 
 #if (DEF_PTC_CAL_OPTION == CAL_AUTO_TUNE_CSD)
 		/* CSD */
-		u8temp_output = qtlib_acq_set1.qtm_acq_node_config[count_bytes_out].node_csd;
+		u8temp_output = ptc_seq_node_cfg1[count_bytes_out].node_csd;
 		datastreamer_transmit(u8temp_output);
 #else
 		/* Prescalar */
-		u8temp_output = NODE_PRSC(qtlib_acq_set1.qtm_acq_node_config[count_bytes_out].node_rsel_prsc);
+		u8temp_output = NODE_PRSC(ptc_seq_node_cfg1[count_bytes_out].node_rsel_prsc);
 		datastreamer_transmit(u8temp_output);
 #endif
 
@@ -228,11 +204,10 @@ void datastreamer_output(void)
 
 #if (SCROLLER_MODULE_OUTPUT == 1)
 
-	for (count_bytes_out = 0u; count_bytes_out < qtm_scroller_control1.qtm_scroller_group_config->num_scrollers;
-	     count_bytes_out++) {
+	for (count_bytes_out = 0u; count_bytes_out < DEF_NUM_SCROLLERS; count_bytes_out++) {
 
 		/* State */
-		u8temp_output = qtm_scroller_control1.qtm_scroller_data[count_bytes_out].scroller_status;
+		u8temp_output = qtm_scroller_data1[count_bytes_out].scroller_status;
 		if (0u != (u8temp_output & 0x01)) {
 			datastreamer_transmit(0x01);
 		} else {
@@ -240,17 +215,17 @@ void datastreamer_output(void)
 		}
 
 		/* Delta */
-		u16temp_output = qtm_scroller_control1.qtm_scroller_data[count_bytes_out].contact_size;
+		u16temp_output = qtm_scroller_data1[count_bytes_out].contact_size;
 		datastreamer_transmit((uint8_t)u16temp_output);
 		datastreamer_transmit((uint8_t)(u16temp_output >> 8u));
 
 		/* Threshold */
-		u16temp_output = qtm_scroller_control1.qtm_scroller_config[count_bytes_out].contact_min_threshold;
+		u16temp_output = qtm_scroller_config1[count_bytes_out].contact_min_threshold;
 		datastreamer_transmit((uint8_t)u16temp_output);
 		datastreamer_transmit((uint8_t)(u16temp_output >> 8u));
 
 		/* filtered position */
-		u16temp_output = qtm_scroller_control1.qtm_scroller_data[count_bytes_out].position;
+		u16temp_output = qtm_scroller_data1[count_bytes_out].position;
 		datastreamer_transmit((uint8_t)(u16temp_output & 0x00FFu));
 		datastreamer_transmit((uint8_t)((u16temp_output & 0xFF00u) >> 8u));
 	}
@@ -262,44 +237,44 @@ void datastreamer_output(void)
 	for (count_bytes_out = 0u; count_bytes_out < 2u; count_bytes_out++) {
 
 		/* surface contact state */
-		u8temp_output = qtm_surface_cs_control1.qtm_surface_contact_data[count_bytes_out].qt_contact_status;
+		u8temp_output = qtm_surface_contacts[count_bytes_out].qt_contact_status;
 		datastreamer_transmit(u8temp_output);
 
 		/* horizontal position */
-		u16temp_output = qtm_surface_cs_control1.qtm_surface_contact_data[count_bytes_out].h_position;
+		u16temp_output = qtm_surface_contacts[count_bytes_out].h_position;
 		datastreamer_transmit((uint8_t)u16temp_output);
 		datastreamer_transmit((uint8_t)(u16temp_output >> 8u));
 
 		/* vertical position */
-		u16temp_output = qtm_surface_cs_control1.qtm_surface_contact_data[count_bytes_out].v_position;
+		u16temp_output = qtm_surface_contacts[count_bytes_out].v_position;
 		datastreamer_transmit((uint8_t)u16temp_output);
 		datastreamer_transmit((uint8_t)(u16temp_output >> 8u));
 
 		/* filtered position */
-		u16temp_output = qtm_surface_cs_control1.qtm_surface_contact_data[count_bytes_out].contact_size;
+		u16temp_output = qtm_surface_contacts[count_bytes_out].contact_size;
 		datastreamer_transmit((uint8_t)(u16temp_output & 0x00FFu));
 		datastreamer_transmit((uint8_t)((u16temp_output & 0xFF00u) >> 8u));
 	}
 
-	u8temp_output = qtm_surface_cs_control1.qtm_surface_cs2t_data->qt_surface_cs2t_status;
+	u8temp_output = qtm_surface_cs_data1.qt_surface_cs2t_status;
 	datastreamer_transmit(u8temp_output);
 <#else>
 	/* surface contact state */
-	u8temp_output = qtm_surface_cs_control1.qtm_surface_contact_data->qt_surface_status;
+	u8temp_output = qtm_surface_cs_data1.qt_surface_status;
 	datastreamer_transmit(u8temp_output);
 
 	/* horizontal position */
-	u16temp_output = qtm_surface_cs_control1.qtm_surface_contact_data->h_position;
+	u16temp_output = qtm_surface_cs_data1.h_position;
 	datastreamer_transmit((uint8_t)u16temp_output);
 	datastreamer_transmit((uint8_t)(u16temp_output >> 8u));
 
 	/* vertical position */
-	u16temp_output = qtm_surface_cs_control1.qtm_surface_contact_data->v_position;
+	u16temp_output = qtm_surface_cs_data1.v_position;
 	datastreamer_transmit((uint8_t)u16temp_output);
 	datastreamer_transmit((uint8_t)(u16temp_output >> 8u));
 
 	/* filtered position */
-	u16temp_output = qtm_surface_cs_control1.qtm_surface_contact_data->contact_size;
+	u16temp_output = qtm_surface_cs_data1.contact_size;
 	datastreamer_transmit((uint8_t)(u16temp_output & 0x00FFu));
 	datastreamer_transmit((uint8_t)((u16temp_output & 0xFF00u) >> 8u));
 </#if>
@@ -309,9 +284,9 @@ void datastreamer_output(void)
 #if (FREQ_HOP_AUTO_MODULE_OUTPUT == 1)
 
 	/* Frequency selection - from acq module */
-	datastreamer_transmit(qtlib_acq_set1.qtm_acq_node_group_config->freq_option_select);
+	datastreamer_transmit(qtm_freq_hop_autotune_config1->freq_option_select);
 
-	for (count_bytes_out = 0u; count_bytes_out < qtm_freq_hop_autotune_control1.qtm_freq_hop_autotune_config->num_freqs; count_bytes_out++) {
+	for (count_bytes_out = 0u; count_bytes_out < NUM_FREQ_STEPS; count_bytes_out++) {
 		/* Frequencies */
 		datastreamer_transmit(qtm_freq_hop_autotune_control1.qtm_freq_hop_autotune_config->median_filter_freq[count_bytes_out]);
 	}

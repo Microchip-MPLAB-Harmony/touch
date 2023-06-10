@@ -154,7 +154,7 @@ static uint16_t time_drift_wakeup_counter;
 static void touch_seq_lp_sensor(void);
 static void touch_enable_nonlp_sensors(void);
 static void touch_disable_nonlp_sensors(void);
-uint16_t time_drift_wakeup_counter;
+static uint16_t time_drift_wakeup_counter;
 </#if>
 <#elseif sam_e5x_devices?seq_contains(DEVICE_NAME)>
 static void touch_measure_wcomp_match(void);
@@ -185,7 +185,7 @@ static uint8_t lp_measurement = 0u;
 <#if num_of_channel_more_than_one == 1>
 uint8_t current_lp_sensor = 0u;
 #define get_lowpower_mask(x) lowpower_key_mask[(x)>>3u]
-uint8_t lowpower_key_mask[(DEF_NUM_CHANNELS+7u)>>3u] = {DEF_LOWPOWER_KEYS};
+static uint8_t lowpower_key_mask[(DEF_NUM_CHANNELS+7u)>>3u] = {DEF_LOWPOWER_KEYS};
 </#if>
 #endif
         </#if>
@@ -208,8 +208,7 @@ static uint8_t all_measure_complete = 0u;
 </#if>
 
 /* Error Handling */
-static uint8_t module_error_code = 0u;
-
+uint8_t module_error_code = 0u;
 
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
 /* Low-power measurement variables */
@@ -318,7 +317,7 @@ static uint16_t noise_filter_buffer[DEF_NUM_CHANNELS * NUM_FREQ_STEPS];
 static uint8_t  freq_hop_delay_selection[NUM_FREQ_STEPS] = {DEF_MEDIAN_FILTER_FREQUENCIES};
 
 /* Configuration */
-static qtm_freq_hop_config_t qtm_freq_hop_config1 = {
+qtm_freq_hop_config_t qtm_freq_hop_config1 = {
     DEF_NUM_CHANNELS,
     NUM_FREQ_STEPS,
     &ptc_qtlib_acq_gen1.freq_option_select,
@@ -342,7 +341,7 @@ static uint8_t  freq_hop_delay_selection[NUM_FREQ_STEPS] = {DEF_MEDIAN_FILTER_FR
 static uint8_t  freq_hop_autotune_counters[NUM_FREQ_STEPS];
 
 /* Configuration */
-static qtm_freq_hop_autotune_config_t qtm_freq_hop_autotune_config1 = {DEF_NUM_CHANNELS,
+qtm_freq_hop_autotune_config_t qtm_freq_hop_autotune_config1 = {DEF_NUM_CHANNELS,
                                                                 NUM_FREQ_STEPS,
                                                                 &ptc_qtlib_acq_gen1.freq_option_select,
                                                                 &freq_hop_delay_selection[0],
@@ -397,7 +396,7 @@ static qtm_touch_key_control_t qtlib_key_set1
 /**********************************************************/
 
 /* Individual and Group Data */
-static qtm_scroller_data_t       qtm_scroller_data1[DEF_NUM_SCROLLERS];
+qtm_scroller_data_t       qtm_scroller_data1[DEF_NUM_SCROLLERS];
 static qtm_scroller_group_data_t qtm_scroller_group_data1 = {0};
 
 /* Group Configuration */
@@ -405,7 +404,7 @@ static qtm_scroller_group_config_t qtm_scroller_group_config1 = {&qtlib_key_data
 
 <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
 /* Scroller Configurations */
-static qtm_scroller_config_t qtm_scroller_config1[DEF_NUM_SCROLLERS] = {<#list 0..TOUCH_SCROLLER_ENABLE_CNT-1 as i><#if i==TOUCH_SCROLLER_ENABLE_CNT-1>SCROLLER_${i}_PARAMS<#else> SCROLLER_${i}_PARAMS,</#if></#list>}; 
+qtm_scroller_config_t qtm_scroller_config1[DEF_NUM_SCROLLERS] = {<#list 0..TOUCH_SCROLLER_ENABLE_CNT-1 as i><#if i==TOUCH_SCROLLER_ENABLE_CNT-1>SCROLLER_${i}_PARAMS<#else> SCROLLER_${i}_PARAMS,</#if></#list>}; 
 </#if>
 
 /* Container */
@@ -456,7 +455,7 @@ static qtm_surface_cs_config_t qtm_surface_cs_config1 = {
 
 /* surface Configurations */
 /* Surface Data */
-static qtm_surface_cs2t_data_t qtm_surface_cs_data1;
+qtm_surface_cs2t_data_t qtm_surface_cs_data1;
 
 /* Contact Data */
 static qtm_surface_contact_data_t qtm_surface_contacts[2];
@@ -1069,7 +1068,9 @@ static void touch_configure_pm_supc(void)
     /* Configure PM */
     PM_REGS->PM_STDBYCFG = PM_STDBYCFG_BBIASHS_Msk| PM_STDBYCFG_VREGSMOD(0)| PM_STDBYCFG_DPGPDSW_Msk| PM_STDBYCFG_BBIASTR_Msk;
 
-    PM_ConfigurePerformanceLevel(PM_PLCFG_PLSEL_PL0);
+    while(PM_ConfigurePerformanceLevel(PM_PLCFG_PLSEL_PL0) != true) {
+
+	}
 
     /* Configure VREG. Mask the values loaded from NVM during reset.*/
     SUPC_REGS->SUPC_VREG = SUPC_VREG_ENABLE_Msk | SUPC_VREG_SEL_BUCK | SUPC_VREG_RUNSTDBY_Msk | SUPC_VREG_VSVSTEP(0) | SUPC_VREG_VSPER(0) | SUPC_VREG_STDBYPL0_Msk;
@@ -1083,7 +1084,9 @@ static void touch_configure_pm_supc(void)
     /* Configure PM */
     PM_REGS->PM_STDBYCFG = PM_STDBYCFG_BBIASHS_Msk| PM_STDBYCFG_VREGSMOD(2)| PM_STDBYCFG_DPGPDSW_Msk| PM_STDBYCFG_BBIASTR_Msk;
 
-    while(PM_ConfigurePerformanceLevel(PM_PLCFG_PLSEL_PL0) != true);
+    while(PM_ConfigurePerformanceLevel(PM_PLCFG_PLSEL_PL0) != true) {
+
+	}
 
     /* Configure VREG. Mask the values loaded from NVM during reset.*/
     SUPC_REGS->SUPC_VREG = SUPC_VREG_ENABLE_Msk | SUPC_VREG_SEL_BUCK | SUPC_VREG_RUNSTDBY_Msk | SUPC_VREG_VSVSTEP(0) | SUPC_VREG_VSPER(0) | SUPC_VREG_STDBYPL0_Msk;
@@ -1275,7 +1278,7 @@ static void touch_process_lowpower(void) {
             touch_enable_lowpower_measurement();
         }
         <#if num_of_channel_more_than_one == 1>
-        if((bool)lp_measurement) {
+        if(lp_measurement == 1u) {
             if(get_sensor_state(current_lp_sensor) == QTM_KEY_STATE_NO_DET) {
                 /* change low-power sensor only when
                     the current lp sensor is not in detect*/
@@ -1307,7 +1310,7 @@ static void touch_process_lowpower(void) {
 			touch_enable_lowpower_measurement();
         }
         <#if num_of_channel_more_than_one == 1>
-        if (lp_measurement) {
+        if (lp_measurement == 1u) {
             touch_seq_lp_sensor();
         }
         </#if>
@@ -1343,6 +1346,7 @@ static void touch_seq_lp_sensor(void)
 {
 	uint8_t lp_sensor_found = 0;
 	uint8_t mbit = 0;
+	uint16_t nextLpSensor = 0u;
 
 	(void)qtm_key_suspend(current_lp_sensor, &qtlib_key_set1);
 
@@ -1350,7 +1354,7 @@ static void touch_seq_lp_sensor(void)
         mbit = (uint8_t)cnt % (uint8_t)8;
         if (((uint8_t)(get_lowpower_mask(cnt)) & ((uint8_t)1 << mbit))!= 0u) {
             lp_sensor_found = 1;
-            current_lp_sensor = cnt;
+            nextLpSensor = cnt;
             break;
         }
     }
@@ -1360,12 +1364,13 @@ static void touch_seq_lp_sensor(void)
             mbit = (uint8_t)cnt % (uint8_t)8;
             if (((uint8_t)(get_lowpower_mask(cnt)) &((uint8_t)1 << mbit))!= 0u) {
                 //lp_sensor_found = 1u;
-                current_lp_sensor = cnt;
+                nextLpSensor = cnt;
                 break;
             }
         }
     }
-	(void)qtm_key_resume(current_lp_sensor, &qtlib_key_set1);
+	(void)qtm_key_resume(nextLpSensor, &qtlib_key_set1);
+	current_lp_sensor = (uint8_t) nextLpSensor;
     }
          
 static void touch_disable_nonlp_sensors(void)

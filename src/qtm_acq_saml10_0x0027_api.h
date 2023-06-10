@@ -38,8 +38,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
 
-#ifndef __TOUCH_API_L10_ACQ_H__
-#define __TOUCH_API_L10_ACQ_H__
+#ifndef QTM_SAM_L10_ACQ_API_H
+#define QTM_SAM_L10_ACQ_API_H
 
 /* Include files */
 #include <stdint.h>
@@ -367,4 +367,4 @@ Notes    :  none
 ============================================================================*/
 void qtm_saml10_ptc_handler_eoc(void);
 
-#endif    /* __TOUCH_API_L10_ACQ_H__ */
+#endif    /* QTM_SAM_L10_ACQ_API_H */

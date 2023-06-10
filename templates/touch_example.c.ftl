@@ -68,21 +68,23 @@ void touch_mainloop_example(void){
     /* perform sleep operation based on touch state */
     <#if no_standby_during_measurement == 1>
     #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
-        if ((time_to_measure_touch_var != 1u)&& 
-        (measurement_mode == 1u)) {
-            if(measurement_in_progress == 0u) {
-                PM_StandbyModeEnter();
-            } else {
-                PM_IdleModeEnter();
-            }
+        if (time_to_measure_touch_var != 1u) {
+			if(measurement_mode == 1u) {
+	            if(measurement_in_progress == 0u) {
+	                PM_StandbyModeEnter();
+	            } else {
+	                PM_IdleModeEnter();
+	            }
+			}
         }
     #endif
     <#else>
     #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
-            if ((time_to_measure_touch_var != 1u)&& 
-        (measurement_mode == 1u)) {
-                PM_StandbyModeEnter();
-            }
+            if (time_to_measure_touch_var != 1u) {
+		        if(measurement_mode == 1u) {
+		                PM_StandbyModeEnter();
+	            }
+			}
     #endif
     </#if>
     </#if>

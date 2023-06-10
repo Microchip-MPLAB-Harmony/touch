@@ -40,6 +40,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  
 #include "touchTune.h"
 
+void touchUartTxComplete(uintptr_t lTouchUart);
+void touchUartRxComplete(uintptr_t lTouchUart);
+
 <#if TOUCH_SERCOM_KRONO_INSTANCE == "">
 #warning "UART to send touch debug data is not defined. Connect UART to Touch library in MHC."
 <#else>
@@ -145,20 +148,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /*******************************************************************************
  * Acqusition Parameters
 *******************************************************************************/
-<#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
-extern qtm_acq_samd1x_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#elseif DEVICE_NAME=="SAML11" || DEVICE_NAME=="SAML1xE">
-extern qtm_acq_saml10_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#elseif  DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00" || DEVICE_NAME=="PIC32CMLS60">
-extern qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#elseif  DEVICE_NAME =="PIC32CMJH00" || DEVICE_NAME=="PIC32CMJH01">
-extern qtm_acq_pic32cmjh_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#elseif  DEVICE_NAME =="PIC32CZCA80"||DEVICE_NAME =="PIC32CZCA90">
-extern qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#else>
-extern qtm_acq_${DEVICE_NAME?lower_case}_node_config_t  ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-</#if>
-extern qtm_acq_node_data_t			ptc_qtlib_node_stat1[DEF_NUM_CHANNELS];
 typedef struct __attribute__((packed)) {
 	uint16_t node_xmask;
 	uint16_t node_ymask;
@@ -173,7 +162,7 @@ typedef struct __attribute__((packed)) {
 	uint16_t acq_signal;
 	uint16_t reference;
 	int16_t delta;
-	uint8_t state;
+	uint8_t sensor_state;
 	uint16_t ccvalue;
 }sensorData_t;
 void copy_channel_config_data(uint8_t id, uint8_t channel);
@@ -183,9 +172,6 @@ void copy_acq_config(uint8_t channel);
 /*******************************************************************************
  * Keys' Module Parameters
 *******************************************************************************/
-extern qtm_touch_key_data_t         qtlib_key_data_set1[DEF_NUM_CHANNELS];
-extern qtm_touch_key_config_t       qtlib_key_configs_set1[DEF_NUM_CHANNELS];
-extern qtm_touch_key_group_config_t qtlib_key_grp_config_set1;
 
 <#if ENABLE_SCROLLER == true>
 <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
@@ -206,9 +192,6 @@ typedef struct __attribute__((packed))  {
 	uint8_t  position_hysteresis;
 	uint16_t threhsold;
 }scroll_config_param;
-extern qtm_scroller_data_t			qtm_scroller_data1[DEF_NUM_SCROLLERS];
-extern qtm_scroller_control_t		qtm_scroller_control1;
-extern qtm_scroller_config_t		qtm_scroller_config1[DEF_NUM_SCROLLERS];
 
 static tuneScrollerData_t runtime_scroller_data_arr;
 #define DEBUG_DATA_PER_SCROLLER_LEN sizeof(tuneScrollerData_t)
@@ -231,8 +214,6 @@ typedef struct  __attribute__((packed)) {
 }tuneFreqData_t;
 #define FREQ_HOP_AUTOTUNE_PARAM_LEN		(3U)
 #define DEBUG_DATA_FREQ_HOP_LEN (sizeof(tuneFreqData_t))
-extern qtm_freq_hop_autotune_config_t qtm_freq_hop_autotune_config1;
-extern qtm_acquisition_control_t qtlib_acq_set1;
 static tuneFreqData_t runtime_freq_hop_auto_data_arr;
 void copy_freq_hop_auto_runtime_data(uint8_t channel_num);
 #endif
@@ -260,13 +241,6 @@ typedef struct __attribute__((packed)){
 	uint16_t h_position;
 	uint16_t v_position;
 }tuneSurfaceData_t;
-<#if ENABLE_SURFACE1T == true>
-extern qtm_surface_cs_config_t  qtm_surface_cs_config1;
-extern qtm_surface_contact_data_t qtm_surface_cs_data1;
-<#else>
-extern qtm_surface_cs_config_t  qtm_surface_cs_config1;
-extern qtm_surface_contact_data_t qtm_surface_contacts[2];;
-</#if>
 static tuneSurfaceData_t runtime_surface_data_arr;
 void copy_surface_run_time_data(uint8_t channel_num);
 #endif
@@ -284,8 +258,6 @@ typedef struct  __attribute__((packed)) {
 }tuneGestureData_t;
 tuneGestureData_t runtime_gesture_data_arr;
 void copy_gesture_run_time_data(uint8_t channel_num);
-extern qtm_gestures_2d_config_t qtm_gestures_2d_config;
-extern qtm_gestures_2d_data_t qtm_gestures_2d_data;
 static tuneGestureData_t runtime_gesture_data_arr;
 void copy_gesture_run_time_data(uint8_t channel_num);
 #endif
@@ -332,8 +304,6 @@ static volatile rx_buff_ptr_t read_buf_write_ptr;
 
 static uint8_t rxData;
 static uintptr_t touchUart;
-void touchUartTxComplete(uintptr_t lTouchUart);
-void touchUartRxComplete(uintptr_t lTouchUart);
 rx_buff_ptr_t uart_min_num_bytes_received(void);
 uint8_t getDebugIndex(uint8_t debugFramId);
 uint8_t getConfigIndex(uint8_t frameid);
@@ -736,7 +706,7 @@ void copy_run_time_data(uint8_t channel_num)
 	delta_temp -= (int16_t) qtlib_key_data_set1[channel_num].channel_reference;
 	runtime_data_arr.delta = delta_temp;
 
-	runtime_data_arr.state = (uint8_t) ((qtlib_key_data_set1[channel_num].sensor_state & 0x80u) >> 7);
+	runtime_data_arr.sensor_state = (uint8_t) ((qtlib_key_data_set1[channel_num].sensor_state & 0x80u) >> 7);
 	runtime_data_arr.ccvalue = ptc_qtlib_node_stat1[channel_num].node_comp_caps;
 
 }
@@ -1042,10 +1012,9 @@ void touchTuneProcess(void)
 
 void touchUartTxComplete(uintptr_t lTouchUart)
 {
+	#if (DEF_TOUCH_TUNE_ENABLE == 1u)
 
 	uint8_t arrayIndex = 0u;
-
-	#if (DEF_TOUCH_TUNE_ENABLE == 1u)
 
 	if (uart_frame_header_flag != 1u)
 	{

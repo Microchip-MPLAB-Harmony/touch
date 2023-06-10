@@ -396,5 +396,4 @@ Notes    :  none
 ============================================================================*/
 void qtm_samc21_ptc_handler_wcomp(void);
 
-
 #endif /* TOUCH_API_D20_ACQ_H */
