@@ -38,8 +38,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
 
-#ifndef KRONOCOMMADAPTOR_H_
-#define KRONOCOMMADAPTOR_H_
+#ifndef KRONOCOMMADAPTOR_H
+#define KRONOCOMMADAPTOR_H
 
 #include <stdint.h>
 #include "touch/touch.h"
@@ -113,39 +113,28 @@ typedef struct _TOUCHRAM {
 } TOUCHRAM;
 
 // maks for operating modes (used by coreRam.mode)
-#define MODE_STANDBY 0b0000
+#define MODE_STANDBY 0b0000u
 #define MODE_FULL 0b0011
 #define MODE_TOUCH 0x02u
 #define MODE_GESTURE 0x01u
-#define MODE_RAWADC 0b0100
+#define MODE_RAWADC 0b0100u
 
-#define VERSION_HI 2
-#define VERSION_LO 0
-#define ID_HI 0
-#define ID_LO 0x30
+#define VERSION_HI 2u
+#define VERSION_LO 0u
+#define ID_HI 0u
+#define ID_LO 0x30u
 
 // bit masks for touch flags (used by touchRam.touchState)
 
-#define TOUCHSTATE_TCH 0x01
-#define TOUCHSTAT_TCH_DUAL 0x04
-#define TOUCHSTATE_nTCH 0xfe
-#define TOUCHSTATE_GES 0x02
-#define TOUCHSTATE_nGES 0xfd
-
-#endif /* KRONOCOMMADAPTOR_H_ */
-
-uint8_t *Adaptor_QueryCoreValues(uint8_t addressOffset);
-uint8_t *Adaptor_QueryCFGValues(uint8_t addressOffset);
-uint8_t *Adaptor_QueryTouchValues(uint8_t addressOffset);
-uint8_t *Adaptor_QuerySensorDelta(uint8_t addressOffset);
-uint8_t *Adaptor_QuerySensorRaw(uint8_t addressOffset);
-uint8_t *Adaptor_QuerySensorRef(uint8_t addressOffset);
-uint8_t *Adaptor_QueryGestureCFGValues(uint8_t addressOffset);
+#define TOUCHSTATE_TCH 0x01u
+#define TOUCHSTAT_TCH_DUAL 0x04u
+#define TOUCHSTATE_nTCH 0xfeu
+#define TOUCHSTATE_GES 0x02u
+#define TOUCHSTATE_nGES 0xfdu
 
 uint8_t Krono_memory_map_read(uint8_t mem_map_address);
 uint8_t Krono_memory_map_write(uint8_t mem_map_address, uint8_t write_what);
 
 void Krono_UpdateBuffer(void);
-void InitIRQPin(void);
-void SetIRQPin(void);
-void ClearIRQPin(void);
+
+#endif /* KRONOCOMMADAPTOR_H */

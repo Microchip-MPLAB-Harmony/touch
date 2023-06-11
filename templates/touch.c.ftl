@@ -472,7 +472,7 @@ static qtm_surface_cs2t_control_t qtm_surface_cs_control1
 
 /* Gesture Configurations */
 <#if ENABLE_SURFACE2T==true>
-static qtm_gestures_2d_config_t qtm_gestures_2d_config = {&qtm_surface_contacts[0].h_position,
+qtm_gestures_2d_config_t qtm_gestures_2d_config = {&qtm_surface_contacts[0].h_position,
                                                    &qtm_surface_contacts[0].v_position,
                                                    &qtm_surface_contacts[0].qt_contact_status,
                                                    &qtm_surface_contacts[1].h_position,
@@ -484,7 +484,7 @@ static qtm_gestures_2d_config_t qtm_gestures_2d_config = {&qtm_surface_contacts[
                                                    SWIPE_TIMEOUT,
                                                    HORIZONTAL_SWIPE_DISTANCE_THRESHOLD,
                                                    VERTICAL_SWIPE_DISTANCE_THRESHOLD,
-                                                   0,
+                                                   0u,
                                                    TAP_AREA,
                                                    SEQ_TAP_DIST_THRESHOLD,
                                                    EDGE_BOUNDARY,
@@ -496,29 +496,29 @@ static qtm_gestures_2d_config_t qtm_gestures_2d_config = {&qtm_surface_contacts[
 
 };
 <#elseif ENABLE_SURFACE1T==true>
-static qtm_gestures_2d_config_t qtm_gestures_2d_config = {&qtm_surface_cs_data1.h_position,
+qtm_gestures_2d_config_t qtm_gestures_2d_config = {&qtm_surface_cs_data1.h_position,
                                                    &qtm_surface_cs_data1.v_position,
                                                    &qtm_surface_cs_data1.qt_surface_status,
-                                                   0,
-                                                   0,
-                                                   0,
+                                                   0u,
+                                                   0u,
+                                                   0u,
                                                    SCR_RESOLUTION(SURFACE_CS_RESOL_DB),
                                                    TAP_RELEASE_TIMEOUT,
                                                    TAP_HOLD_TIMEOUT,
                                                    SWIPE_TIMEOUT,
                                                    HORIZONTAL_SWIPE_DISTANCE_THRESHOLD,
                                                    VERTICAL_SWIPE_DISTANCE_THRESHOLD,
-                                                   0,
+                                                   0u,
                                                    TAP_AREA,
                                                    SEQ_TAP_DIST_THRESHOLD,
                                                    EDGE_BOUNDARY,
                                                    WHEEL_POSTSCALER,
                                                    WHEEL_START_QUADRANT_COUNT,
                                                    WHEEL_REVERSE_QUADRANT_COUNT,
-                                                   0
+                                                   0u
 };
 </#if>
-static qtm_gestures_2d_data_t qtm_gestures_2d_data;
+qtm_gestures_2d_data_t qtm_gestures_2d_data;
 
 static qtm_gestures_2d_control_t qtm_gestures_2d_control1 = {&qtm_gestures_2d_data, &qtm_gestures_2d_config};
 </#if>
@@ -1418,8 +1418,8 @@ static void touch_measure_wcomp_match(void)
 #endif
 </#if>
 <#if ENABLE_GESTURE==true>
-uint8_t interrupt_cnt;
-uint8_t touch_gesture_time_cnt;
+static uint8_t interrupt_cnt;
+static uint16_t touch_gesture_time_cnt;
 </#if>
 
 /*============================================================================
@@ -1438,9 +1438,9 @@ void touch_timer_handler(void)
     qtm_update_qtlib_timer(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
     <#else>
     <#if ENABLE_GESTURE==true>
-        touch_gesture_time_cnt= touch_gesture_time_cnt + 2u;
+        touch_gesture_time_cnt = touch_gesture_time_cnt + 2u;
         if (touch_gesture_time_cnt >= DEF_GESTURE_TIME_BASE_MS) {
-            qtm_update_gesture_2d_timer(touch_gesture_time_cnt / DEF_GESTURE_TIME_BASE_MS);
+            qtm_update_gesture_2d_timer((uint16_t)(touch_gesture_time_cnt / DEF_GESTURE_TIME_BASE_MS));
             touch_gesture_time_cnt = touch_gesture_time_cnt % DEF_GESTURE_TIME_BASE_MS;
         }
         interrupt_cnt= interrupt_cnt + 2u;

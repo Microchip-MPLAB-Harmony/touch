@@ -155,8 +155,8 @@ typedef struct
 /* Container */
 typedef struct
 {
-	qtm_gestures_2d_data_t *qtm_gestures_2d_data;
-	qtm_gestures_2d_config_t *qtm_gestures_2d_config;
+	qtm_gestures_2d_data_t *qtm_gestures_data;
+	qtm_gestures_2d_config_t *qtm_gestures_config;
 } qtm_gestures_2d_control_t;
 
 /*----------------------------------------------------------------------------

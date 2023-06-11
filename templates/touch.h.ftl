@@ -409,7 +409,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  *wheel counter will be incremented by 1. Example: if wheel post scaler is 2, then for each two swipe detection, the
  *wheel counter will be incremented by 1.
  */
-#define WHEEL_POSTSCALER ${WHEEL_POSTSCALER}u
+#define WHEEL_POSTSCALER ${WHEEL_POSTSCALER}
 /* 	Wheel Start Quadrant count <2-255>
  *	The wheel gesture movement can be broken down into 90 degree arcs.
  *	The firmware watches for a certain number of arcs to occur in a circular pattern before starting to report wheel
@@ -418,14 +418,14 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  *prone to prematurely reporting wheel gesture information. Example: if WHEEL_START_QUADRANT_COUNT is configured as 2,
  *then after 180 degree, the gesture is updated as Wheel.
  */
-#define WHEEL_START_QUADRANT_COUNT ${WHEEL_START_QUADRANT_COUNT}u
+#define WHEEL_START_QUADRANT_COUNT ${WHEEL_START_QUADRANT_COUNT}
 /* 	Wheel Reverse Quadrant count <2-255>
  *	The WHEEL_REVERSE_QUADRANT_COUNT performs a similar function as WHEEL_START_QUADRANT_COUNT except it is used when
  *changing the direction of the wheel instead of starting it new. This is used to prevent quick toggling between
  *directions. Example: If WHEEL_REVERSE_QUADRANT_COUNT is set as 4 and after some wheel gestures, if the user changes
  *the direction of rotation, then only after 360 degree, it will be detected as one wheel gesture.
  */
-#define WHEEL_REVERSE_QUADRANT_COUNT ${WHEEL_REVERSE_QUADRANT_COUNT}u
+#define WHEEL_REVERSE_QUADRANT_COUNT ${WHEEL_REVERSE_QUADRANT_COUNT}
 <#if ENABLE_SURFACE2T==true>
 
 /* Pinch Zoom Threshold <0-255>
