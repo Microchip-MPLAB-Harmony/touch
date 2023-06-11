@@ -120,13 +120,13 @@ uint16_t get_scroller_position(uint16_t sensor_node);
 #define HOR_POS 0u
 #define VER_POS 1u
 uint8_t get_surface_status(void);
-uint8_t get_surface_position(uint8_t ver_or_hor);
+uint16_t get_surface_position(uint8_t ver_or_hor);
 </#if>
 <#if ENABLE_SURFACE2T== true>
 #define HOR_POS 0u
 #define VER_POS 1u
 uint8_t get_surface_status(void);
-uint8_t get_surface_position(uint8_t ver_or_hor, uint8_t contact);
+uint16_t get_surface_position(uint8_t ver_or_hor, uint8_t contact);
 </#if>
 </#if>
 

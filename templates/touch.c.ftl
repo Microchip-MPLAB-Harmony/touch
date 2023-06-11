@@ -417,7 +417,7 @@ static qtm_scroller_control_t qtm_scroller_control1
 /***************** Surface 1t Module ********************/
 /**********************************************************/
 
-static qtm_surface_cs_config_t qtm_surface_cs_config1 = {
+qtm_surface_cs_config_t qtm_surface_cs_config1 = {
     /* Config: */
     SURFACE_CS_START_KEY_H,
     SURFACE_CS_NUM_KEYS_H,
@@ -430,7 +430,7 @@ static qtm_surface_cs_config_t qtm_surface_cs_config1 = {
     &qtlib_key_data_set1[0]};
 
 /* Surface Data */
-static qtm_surface_contact_data_t qtm_surface_cs_data1;
+qtm_surface_contact_data_t qtm_surface_cs_data1;
 
 /* Container */
 static qtm_surface_cs_control_t qtm_surface_cs_control1 = {&qtm_surface_cs_data1, &qtm_surface_cs_config1};
@@ -441,7 +441,7 @@ static qtm_surface_cs_control_t qtm_surface_cs_control1 = {&qtm_surface_cs_data1
 /***************** Surface 2t Module ********************/
 /**********************************************************/
 
-static qtm_surface_cs_config_t qtm_surface_cs_config1 = {
+qtm_surface_cs_config_t qtm_surface_cs_config1 = {
     /* Config: */
     SURFACE_CS_START_KEY_H,
     SURFACE_CS_NUM_KEYS_H,
@@ -458,7 +458,7 @@ static qtm_surface_cs_config_t qtm_surface_cs_config1 = {
 qtm_surface_cs2t_data_t qtm_surface_cs_data1;
 
 /* Contact Data */
-static qtm_surface_contact_data_t qtm_surface_contacts[2];
+qtm_surface_contact_data_t qtm_surface_contacts[2];
 
 /* Container */
 static qtm_surface_cs2t_control_t qtm_surface_cs_control1
@@ -885,12 +885,6 @@ void touch_init(void)
 </#if>
 </#if>
 	
-<#if ENABLE_DATA_STREAMER == true>	
-#if DEF_TOUCH_DATA_STREAMER_ENABLE == 1
-	datastreamer_init();
-#endif
-</#if>
-
 <#if ENABLE_TOUCH_TUNE_WITH_PLUGIN == true>
     #if DEF_TOUCH_TUNE_ENABLE == 1u
     touchTuneInit();
@@ -1404,9 +1398,9 @@ Notes  :
 ============================================================================*/
 static void touch_measure_wcomp_match(void)
 {
-    touch_ret_t touch_ret;
     if(measurement_period_store != DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
         <#if sam_c2x_devices?seq_contains(DEVICE_NAME) || sam_l2x_devices?seq_contains(DEVICE_NAME) || sam_d2x_devices?seq_contains(DEVICE_NAME)>
+	    touch_ret_t touch_ret;
         touch_ret = qtm_autoscan_node_cancel();
         if (touch_ret == TOUCH_SUCCESS)
         {
@@ -1716,9 +1710,9 @@ uint8_t get_surface_status(void)
   return (qtm_surface_cs_control1.qtm_surface_contact_data->qt_surface_status);
 }
 
-uint8_t get_surface_position(uint8_t ver_or_hor)
+uint16_t get_surface_position(uint8_t ver_or_hor)
 {
-	uint8_t temp_pos = 0;
+	uint16_t temp_pos = 0;
 /*
 *	ver_or_hor, 0 = hor, 1 = ver
 */
@@ -1740,9 +1734,9 @@ uint8_t get_surface_status(void)
   return (qtm_surface_cs_control1.qtm_surface_cs2t_data->qt_surface_cs2t_status);
 }
 
-uint8_t get_surface_position(uint8_t ver_or_hor, uint8_t contact)
+uint16_t get_surface_position(uint8_t ver_or_hor, uint8_t contact)
 {
-	uint8_t temp_pos = 0;
+	uint16_t temp_pos = 0;
 	/*
 	*	ver_or_hor, 0 = hor, 1 = ver
 	* contact, determines which contact point,
@@ -1784,7 +1778,7 @@ void ADC0_1_Handler(void)
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
 <#if DS_DEDICATED_ENABLE == true || DS_PLUS_ENABLE == true>
 #if (DEF_ENABLE_DRIVEN_SHIELD == 1u)
-	if (qtm_drivenshield_config.flags & (1u << DRIVEN_SHIELD_DUMMY_ACQ)) {
+	if ((qtm_drivenshield_config.flags & (1u << DRIVEN_SHIELD_DUMMY_ACQ)) == (1u << DRIVEN_SHIELD_DUMMY_ACQ)) {
 		/* Clear the flag */
 		qtm_drivenshield_config.flags &= (uint8_t) ~(1u << DRIVEN_SHIELD_DUMMY_ACQ);
 	} else {
@@ -1806,7 +1800,7 @@ void PTC_Handler(void)
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
 <#if DS_DEDICATED_ENABLE == true || DS_PLUS_ENABLE == true>
 #if (DEF_ENABLE_DRIVEN_SHIELD == 1u)
-	if ((qtm_drivenshield_config.flags & (1u << DRIVEN_SHIELD_DUMMY_ACQ))!=0u) {
+	if ((qtm_drivenshield_config.flags & (1u << DRIVEN_SHIELD_DUMMY_ACQ)) != 0u) {
 		/* Clear the flag */
 		qtm_drivenshield_config.flags &= (uint8_t) ~(1u << DRIVEN_SHIELD_DUMMY_ACQ);
     <#if DEVICE_NAME == "SAMD10" || DEVICE_NAME == "SAMD11" >

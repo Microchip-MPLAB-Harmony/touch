@@ -150,7 +150,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  * Default value: 1
  */
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
-#define DEF_NUM_CHANNELS (${MUTL_4P_NUM_GROUP}u<<2u)
+#define DEF_NUM_CHANNELS (uint16_t) ((uint16_t)${MUTL_4P_NUM_GROUP}u<<2u)
 <#else>
 #define DEF_NUM_CHANNELS (${TOUCH_CHAN_ENABLE_CNT}u)
 </#if>

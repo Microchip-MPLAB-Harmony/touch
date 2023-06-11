@@ -38,8 +38,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
 
-#ifndef __TOUCH_API_PIC32CM_4P_H__
-#define __TOUCH_API_PIC32CM_4P_H__
+#ifndef TOUCH_API_PIC32CM_4P_H
+#define TOUCH_API_PIC32CM_4P_H
 
 /* Include files */
 #include <stdint.h>
@@ -357,4 +357,4 @@ Notes    :  none
 ============================================================================*/
 void qtm_pic32cm_ptc_handler_eoc(void);
 
-#endif    /* __TOUCH_API_PIC32CM_4P_H__ */
+#endif    /* TOUCH_API_PIC32CM_4P_H */

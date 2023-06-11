@@ -10,7 +10,7 @@ extern qtm_acq_4p_pic32cm_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
 <#elseif pic32cz?seq_contains(DEVICE_NAME)>
 extern qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
 <#else>
-extern qtm_acq_4p_${DEVICE_NAME?lower_case}_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2]
+extern qtm_acq_4p_${DEVICE_NAME?lower_case}_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
 </#if>
 <#else>
 <#if TOUCH_CHAN_ENABLE_CNT&gt;=1>
@@ -33,6 +33,17 @@ extern qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM
 extern qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
 </#if>
 </#if>
+
+<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
+<#if ENABLE_SURFACE == true>
+/* map node to key */
+extern uint8_t touch_key_node_mapping_4p[SURFACE_CS_START_KEY_V+SURFACE_CS_NUM_KEYS_V*SURFACE_CS_NUM_KEYS_H];
+<#else>
+/* map node to key */
+extern uint8_t touch_key_node_mapping_4p[DEF_NUM_SENSORS];
+</#if>
+</#if>
+
 /* Keys variables */
 extern qtm_touch_key_group_config_t qtlib_key_grp_config_set1;
 extern qtm_touch_key_data_t qtlib_key_data_set1[DEF_NUM_SENSORS];

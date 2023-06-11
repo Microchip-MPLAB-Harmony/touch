@@ -137,7 +137,7 @@ Notes  :
 ============================================================================*/
 void datastreamer_output(void)
 {
-	int16_t           i, temp_int_calc;
+	int16_t           temp_int_calc;
 	static uint8_t    sequence = 0u;
 	uint16_t          u16temp_output;
 	uint8_t           u8temp_output, send_header;
@@ -146,7 +146,7 @@ void datastreamer_output(void)
 	send_header = sequence & (0x0fu);
 	if (send_header == 0u) {
 		for (count_bytes_out = 0u; count_bytes_out < (uint16_t) sizeof(data); count_bytes_out++) {
-			datastreamer_transmit(data[i]);
+			datastreamer_transmit(data[count_bytes_out]);
 		}
 	}
 

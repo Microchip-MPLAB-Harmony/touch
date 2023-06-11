@@ -271,14 +271,14 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	static ${data_type} volatile *addr;
 	</#if>
 	uint16_t        period = 0, count = 0, cc = 0;
-    bool check;
 
 <#if noDmaDevice?seq_contains(DEVICE_NAME) == false>
+    bool check;
 	addr         = (${data_type} volatile *)dst_addr;
 	filter_level = value;
 
 	/* Configure DMA transfer */
-	check = DMAC_ChannelTransfer((DMAC_CHANNEL)0, &filter_level, addr, ${block_transfer_count}u);
+	check = DMAC_ChannelTransfer((DMAC_CHANNEL)0, (const void *) &filter_level, (const void *) addr, ${block_transfer_count}u);
 	  if (check != true)
 		{
         
@@ -294,22 +294,22 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 <#list ["SAME54", "SAME53", "SAME51", "SAMD51"] as i>
 <#if DEVICE_NAME == i>
 	/* TC/TCC period value */
-	period = csd + 1;
-	period = period << 2;
+	period = (uint16_t) ((uint16_t)csd + 1u);
+	period = (uint16_t) (period << 2);
 	period = period + sds;
-	period = period << 1;
-	period = period - 1;
+	period = (uint16_t) (period << 1);
+	period = (uint16_t) (period - 1u);
 
 	/* TC/TCC compare value */
-	cc = csd + 1;
-	cc = cc << 1;
-	cc = cc + sds;
-	cc = cc << 1;
+	cc = (uint16_t) ((uint16_t)csd + 1u);
+	cc = (uint16_t) (cc << 1);
+	cc = (uint16_t) (cc + sds);
+	cc = (uint16_t) (cc << 1);
 
 	/* TC/TCC count value - initial offset */
-	count = csd + 1;
-	count = count << 1;
-	if (prescaler <= 3) {
+	count = (uint16_t) ((uint16_t)csd + 1u);
+	count = (uint16_t) (count << 1);
+	if (prescaler <= 3u) {
 		count = count - offset_vs_prescaler[prescaler];
 	} else {
 		/* Using Prescaler value greater than PRSC_DIV_SEL_8
@@ -330,34 +330,34 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	</#if>
 	/* TC/TCC period value */
     period = (uint16_t)csd + 15u + (uint16_t)sds;
-    period = (uint16_t)period << 2u;
-    period = (uint16_t)period - 1u; 
+    period = (uint16_t) (period << 2u);
+    period = (uint16_t) (period - 1u);
 
     /* TC/TCC compare value */
     cc = (uint16_t)(9u + (uint16_t)sds);
-    cc = (uint16_t)cc << 2u;
+    cc = (uint16_t) (cc << 2u);
  
 
     /* TC/TCC count value - initial offset */
     count = 6u;
-    count = (uint16_t)count << 2u;
-    count = (uint16_t)count - offset_vs_prescaler[prescaler];
+    count = (uint16_t) (count << 2u);
+    count = (uint16_t) (count - offset_vs_prescaler[prescaler]);
 </#if>
 </#list>
 <#list ["SAML22", "SAMC20", "SAMC21"] as i>
 <#if DEVICE_NAME == i>
 	/* TC/TCC period value */
 	period = (uint16_t)csd+1u;
-	period = (uint16_t)period * 6u;
+	period = (uint16_t) (period * 6u);
 	period = (uint16_t)period + sds + 1u;
-	period = period << 2u;
-	period = (uint16_t)period - 1u;
+	period = (uint16_t) (period << 2u);
+	period = (uint16_t) (period - 1u);
 
 	/* TC/TCC compare value */
-	cc = (uint16_t)csd+1u;
-	cc = (uint16_t)cc * 3u;
-	cc = (uint16_t)cc << 2u;
-	cc = (uint16_t)cc + (uint16_t)((uint16_t)sds<<2u);
+	cc = (uint16_t)((uint16_t)csd+1u);
+	cc = (uint16_t)(cc * 3u);
+	cc = (uint16_t)(cc << 2u);
+	cc = (uint16_t)(cc + (uint16_t)((uint16_t)sds<<2u));
 	
 	/* TC/TCC count value - initial offset */
 	count = (uint16_t)csd+1u;
