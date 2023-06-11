@@ -39,8 +39,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
 
-#ifndef __DATASTREAMER_H_
-#define __DATASTREAMER_H_
+#ifndef DATASTREAMER_H
+#define DATASTREAMER_H
 
 /*----------------------------------------------------------------------------
  *     include files

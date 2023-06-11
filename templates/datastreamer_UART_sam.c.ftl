@@ -84,7 +84,7 @@ static uint8_t data[] = {
 /*----------------------------------------------------------------------------
   prototypes
 ----------------------------------------------------------------------------*/
-void datastreamer_transmit(uint8_t data);
+void datastreamer_transmit(uint8_t data_byte);
 
 /*----------------------------------------------------------------------------
  *   function definitions
@@ -118,7 +118,9 @@ void datastreamer_transmit(uint8_t data_byte)
 	while(delay--);
 	</#if>
 	/* Write the data bye */
-   ${.vars["${TOUCH_SERCOM_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Write(&data_byte, 1);
+   if(${.vars["${TOUCH_SERCOM_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Write(&data_byte, 1)) {
+
+   }
    <#else>
    #warning "UART to send touch debug data is not defined. Connect UART to Touch library in MHC."
    </#if>
@@ -139,22 +141,22 @@ void datastreamer_output(void)
 	static uint8_t    sequence = 0u;
 	uint16_t          u16temp_output;
 	uint8_t           u8temp_output, send_header;
-	volatile uint16_t count_bytes_out;
+	uint16_t count_bytes_out;
 
-	send_header = sequence & (0x0f);
-	if (send_header == 0) {
-		for (i = 0; i < sizeof(data); i++) {
+	send_header = sequence & (0x0fu);
+	if (send_header == 0u) {
+		for (count_bytes_out = 0u; count_bytes_out < (uint16_t) sizeof(data); count_bytes_out++) {
 			datastreamer_transmit(data[i]);
 		}
 	}
 
 	// Start token
-	datastreamer_transmit(0x55);
+	datastreamer_transmit(0x55u);
 
 	// Frame Start
 	datastreamer_transmit(sequence);
 
-	for (count_bytes_out = 0u; count_bytes_out < DEF_NUM_SENSORS; count_bytes_out++) {
+	for (count_bytes_out = 0u; count_bytes_out < (uint16_t) DEF_NUM_SENSORS; count_bytes_out++) {
 		/* Signals */
 		u16temp_output = get_sensor_node_signal(count_bytes_out);
 		datastreamer_transmit((uint8_t)u16temp_output);
@@ -166,8 +168,8 @@ void datastreamer_output(void)
 		datastreamer_transmit((uint8_t)(u16temp_output >> 8u));
 
 		/* Touch delta */
-		temp_int_calc = get_sensor_node_signal(count_bytes_out);
-		temp_int_calc -= get_sensor_node_reference(count_bytes_out);
+		temp_int_calc = (int16_t) get_sensor_node_signal(count_bytes_out);
+		temp_int_calc -= (int16_t) get_sensor_node_reference(count_bytes_out);
 		u16temp_output = (uint16_t)(temp_int_calc);
 		datastreamer_transmit((uint8_t)u16temp_output);
 		datastreamer_transmit((uint8_t)(u16temp_output >> 8u));
@@ -192,10 +194,10 @@ void datastreamer_output(void)
 #endif
 		/* State */
 		u8temp_output = get_sensor_state(count_bytes_out);
-		if (0u != (u8temp_output & 0x80)) {
-			datastreamer_transmit(0x01);
+		if (0u != (u8temp_output & 0x80u)) {
+			datastreamer_transmit(0x01u);
 		} else {
-			datastreamer_transmit(0x00);
+			datastreamer_transmit(0x00u);
 		}
 
 		/* Threshold */
@@ -208,10 +210,10 @@ void datastreamer_output(void)
 
 		/* State */
 		u8temp_output = qtm_scroller_data1[count_bytes_out].scroller_status;
-		if (0u != (u8temp_output & 0x01)) {
-			datastreamer_transmit(0x01);
+		if (0u != (u8temp_output & 0x01u)) {
+			datastreamer_transmit(0x01u);
 		} else {
-			datastreamer_transmit(0x00);
+			datastreamer_transmit(0x00u);
 		}
 
 		/* Delta */
@@ -299,7 +301,7 @@ void datastreamer_output(void)
 	datastreamer_transmit(sequence++);
 
 	/* End token */
-	datastreamer_transmit(~0x55);
+	datastreamer_transmit((uint8_t)(~(0x55u)));
 }
 
 #endif
