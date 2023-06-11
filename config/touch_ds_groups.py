@@ -460,7 +460,7 @@ class classTouchDSGroup():
                 component.getSymbolByID(dstimer).setEnabled(True)
                 component.getSymbolByID(dstimer).setVisible(True)
 
-    def updateLumpModeDrivenShield(self,symbol,event,totalChannelCount,lump_symbol):
+    def updateLumpModeDrivenShield(self,instances,symbol,event,totalChannelCount,lump_symbol):
         """Handler for lump mode support menu click event.  
         Triggered by qtouch.processLump()
         Arguments:
@@ -475,7 +475,7 @@ class classTouchDSGroup():
         component= symbol.getComponent()
         currentVal = int(event['symbol'].getValue())
         enableDrivenShieldAdjacent = False
-        if self.instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35"]:
+        if instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35"]:
             enableDrivenShieldAdjacent = False
         else:
             enableDrivenShieldAdjacent = component.getSymbolByID("DS_ADJACENT_SENSE_LINE_AS_SHIELD").getValue()
