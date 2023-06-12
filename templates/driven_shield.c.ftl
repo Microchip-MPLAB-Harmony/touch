@@ -177,7 +177,7 @@ qtm_drivenshield_config_t qtm_drivenshield_config;
 static const uint8_t offset_vs_prescaler[4] = { ${prescaler_value} };
 </#if>
 /*============================================================================
-void drivenshield_configure()
+void drivenshield_configure(void)
 ------------------------------------------------------------------------------
 Purpose: Sets up the qtm_drivenshield_config_t qtm_drivenshield_config object
 Input  : Users application / configuration parameters
@@ -268,21 +268,20 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 {
 	<#if (DEVICE_NAME != "SAMD11") && (DEVICE_NAME != "SAMD10") && (DEVICE_NAME != "SAMD20")>
 	static ${data_type}  filter_level = 0;
-	static ${data_type} volatile *addr;
+	static uint32_t addr;
 	</#if>
 	uint16_t        period = 0, count = 0, cc = 0;
 
 <#if noDmaDevice?seq_contains(DEVICE_NAME) == false>
     bool check;
-	addr         = (${data_type} volatile *)dst_addr;
+	addr = (uint32_t)dst_addr;
 	filter_level = value;
 
 	/* Configure DMA transfer */
-	check = DMAC_ChannelTransfer((DMAC_CHANNEL)0, (const void *) &filter_level, (const void *) addr, ${block_transfer_count}u);
-	  if (check != true)
-		{
-        
-		}
+	check = DMAC_ChannelTransfer((DMAC_CHANNEL)0, &filter_level, (uint32_t *) addr, ${block_transfer_count}u);
+	if (check != true) {
+		/* error condition. During normal operation control shouldn't come here */
+	}
 <#else>
 	<#if (DEVICE_NAME == "SAMD20")>
 	EVSYS_REGS->EVSYS_USER = EVSYS_USER_CHANNEL(0x1)|EVSYS_USER_USER(0x0D);

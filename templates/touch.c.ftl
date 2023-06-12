@@ -78,11 +78,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  *     include files
  *----------------------------------------------------------------------------*/
 #include "definitions.h"
+#include "../peripheral/rtc/plib_rtc.h"
 #include "../interrupts.h"
 #include "touch/touch.h"
-#include "qtm_touch_key_0x0002_api.h"
-#include "touch_example.h"
-#include "../peripheral/rtc/plib_rtc.h"
 <#if ENABLE_TOUCH_TUNE_WITH_PLUGIN == true>
 #include "touch/touchTune.h"
 </#if>
@@ -183,7 +181,7 @@ static uint16_t current_lp_sensor = 0u;
 #if DEF_TOUCH_LOWPOWER_ENABLE == 1u
 static uint8_t lp_measurement = 0u;
 <#if num_of_channel_more_than_one == 1>
-uint8_t current_lp_sensor = 0u;
+static uint16_t current_lp_sensor = 0u;
 #define get_lowpower_mask(x) lowpower_key_mask[(x)>>3u]
 static uint8_t lowpower_key_mask[(DEF_NUM_CHANNELS+7u)>>3u] = {DEF_LOWPOWER_KEYS};
 </#if>
@@ -606,7 +604,7 @@ touch_ret_t touch_surface_4p_key_to_acq_update(void * ptr)
 	if(calib_flag == 1)	{
 		for(uint16_t cnt = 0; cnt < (SURFACE_CS_NUM_KEYS_V+SURFACE_CS_NUM_KEYS_H); cnt++) {
 			qtm_init_sensor_key(
-			&qtlib_key_set1, cnt + SURFACE_CS_START_KEY_V, &ptc_qtlib_node_stat1_4p_sur[cnt]);
+			&qtlib_key_set1, (uint8_t) (cnt + SURFACE_CS_START_KEY_V), &ptc_qtlib_node_stat1_4p_sur[cnt]);
 
 			if(cnt < SURFACE_CS_NUM_KEYS_V) {
 				for(uint16_t hor_cnt = 0; hor_cnt < SURFACE_CS_NUM_KEYS_H; hor_cnt++){
@@ -660,26 +658,26 @@ static touch_ret_t touch_sensors_config(void)
 <#if pic32cz?seq_contains(DEVICE_NAME)>
     /* Enable sensor keys and assign nodes */
     for (sensor_nodes = 0u; sensor_nodes < (uint16_t) DEF_NUM_SENSORS; sensor_nodes++) {
-			touch_ret|=qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[sensor_nodes]);
+			touch_ret=qtm_init_sensor_key(&qtlib_key_set1, (uint8_t) sensor_nodes, &ptc_qtlib_node_stat1[sensor_nodes]);
     }
 <#elseif ENABLE_BOOST?exists && ENABLE_BOOST == true && ENABLE_SURFACE == true>
 		/* Enable sensor keys and assign nodes */
 		for(sensor_nodes = 0u; sensor_nodes < SURFACE_CS_START_KEY_V; sensor_nodes++)
 		{
-			touch_ret=qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[touch_key_node_mapping_4p[sensor_nodes]]);
+			touch_ret=qtm_init_sensor_key(&qtlib_key_set1, (uint8_t) sensor_nodes, &ptc_qtlib_node_stat1[touch_key_node_mapping_4p[sensor_nodes]]);
 		}
 		/* For surface sensor configure separately */
-		for (sensor_nodes = 0u; sensor_nodes < SURFACE_CS_NUM_KEYS_V+SURFACE_CS_NUM_KEYS_H; sensor_nodes++) {
+		for (sensor_nodes = 0u; sensor_nodes < (SURFACE_CS_NUM_KEYS_V+SURFACE_CS_NUM_KEYS_H); sensor_nodes++) {
 			touch_ret=qtm_init_sensor_key(
-			&qtlib_key_set1, sensor_nodes + SURFACE_CS_START_KEY_V, &ptc_qtlib_node_stat1_4p_sur[sensor_nodes]);
+			&qtlib_key_set1, (uint8_t) (sensor_nodes + SURFACE_CS_START_KEY_V), &ptc_qtlib_node_stat1_4p_sur[sensor_nodes]);
 		}
 <#else>
     /* Enable sensor keys and assign nodes */
     for (sensor_nodes = 0u; sensor_nodes < (uint16_t)DEF_NUM_SENSORS; sensor_nodes++) {
 		<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
-			touch_ret=qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[touch_key_node_mapping_4p[sensor_nodes]]);
+			touch_ret=qtm_init_sensor_key(&qtlib_key_set1, (uint8_t) sensor_nodes, &ptc_qtlib_node_stat1[touch_key_node_mapping_4p[sensor_nodes]]);
         <#else>
-			touch_ret=qtm_init_sensor_key(&qtlib_key_set1, sensor_nodes, &ptc_qtlib_node_stat1[sensor_nodes]);
+			touch_ret=qtm_init_sensor_key(&qtlib_key_set1, (uint8_t) sensor_nodes, &ptc_qtlib_node_stat1[sensor_nodes]);
 		</#if>
     }
 </#if>
@@ -1062,7 +1060,7 @@ static void touch_configure_pm_supc(void)
     /* Configure PM */
     PM_REGS->PM_STDBYCFG = PM_STDBYCFG_BBIASHS_Msk| PM_STDBYCFG_VREGSMOD(0)| PM_STDBYCFG_DPGPDSW_Msk| PM_STDBYCFG_BBIASTR_Msk;
 
-    while(PM_ConfigurePerformanceLevel(PM_PLCFG_PLSEL_PL0) != true) {
+    while(PM_ConfigurePerformanceLevel(PLCFG_PLSEL0) != true) {
 
 	}
 
@@ -1078,7 +1076,7 @@ static void touch_configure_pm_supc(void)
     /* Configure PM */
     PM_REGS->PM_STDBYCFG = PM_STDBYCFG_BBIASHS_Msk| PM_STDBYCFG_VREGSMOD(2)| PM_STDBYCFG_DPGPDSW_Msk| PM_STDBYCFG_BBIASTR_Msk;
 
-    while(PM_ConfigurePerformanceLevel(PM_PLCFG_PLSEL_PL0) != true) {
+    while(PM_ConfigurePerformanceLevel(PLCFG_PLSEL0) != true) {
 
 	}
 
@@ -1364,8 +1362,8 @@ static void touch_seq_lp_sensor(void)
         }
     }
 	(void)qtm_key_resume(nextLpSensor, &qtlib_key_set1);
-	current_lp_sensor = (uint8_t) nextLpSensor;
-    }
+	current_lp_sensor = nextLpSensor;
+}
          
 static void touch_disable_nonlp_sensors(void)
 {
@@ -1684,10 +1682,17 @@ void update_sensor_state(uint16_t sensor_node, uint8_t new_state)
 
 void calibrate_node(uint16_t sensor_node)
 {
+	touch_ret_t touch_ret = TOUCH_SUCCESS;
     /* Calibrate Node */
-    (void)qtm_calibrate_sensor_node(&qtlib_acq_set1, sensor_node);
+	touch_ret = qtm_calibrate_sensor_node(&qtlib_acq_set1, sensor_node);
+    if(touch_ret != TOUCH_SUCCESS) {
+		/* Error condition */
+	}
     /* Initialize key */
-    (void)qtm_init_sensor_key(&qtlib_key_set1, sensor_node, &ptc_qtlib_node_stat1[sensor_node]);
+    qtm_init_sensor_key(&qtlib_key_set1, (uint8_t) sensor_node, &ptc_qtlib_node_stat1[sensor_node]);
+    if(touch_ret != TOUCH_SUCCESS) {
+		/* Error condition */
+	}
 }
 <#if ENABLE_SCROLLER?exists && ENABLE_SCROLLER == true>
 <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
@@ -1778,13 +1783,13 @@ void ADC0_1_Handler(void)
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
 <#if DS_DEDICATED_ENABLE == true || DS_PLUS_ENABLE == true>
 #if (DEF_ENABLE_DRIVEN_SHIELD == 1u)
-	if ((qtm_drivenshield_config.flags & (1u << DRIVEN_SHIELD_DUMMY_ACQ)) == (1u << DRIVEN_SHIELD_DUMMY_ACQ)) {
+	if ((qtm_drivenshield_config.flags & (1u << DRIVEN_SHIELD_DUMMY_ACQ))  != 0u) {
 		/* Clear the flag */
 		qtm_drivenshield_config.flags &= (uint8_t) ~(1u << DRIVEN_SHIELD_DUMMY_ACQ);
 	} else {
 		drivenshield_stop();
     qtm_same54_ptc_handler();
-}
+	}
 #else
 	qtm_same54_ptc_handler();
 #endif

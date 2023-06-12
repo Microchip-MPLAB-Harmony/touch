@@ -110,7 +110,8 @@ uint8_t uart_get_char(void)
 
 void uart_send_data_wait(uint8_t data)
 {
-	static uint8_t uartTxData = data;
+	static uint8_t uartTxData = 0u;
+	uartTxData = data;
 	uart_tx_in_progress = 1u;
     if(${.vars["${TOUCH_SERCOM_KRONO_INSTANCE?lower_case}"].USART_PLIB_API_PREFIX}_Write(&uartTxData, 1)) {
 

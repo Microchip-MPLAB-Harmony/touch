@@ -180,7 +180,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
     <#lt>#define KEY_${i}_PARAMS                                                                                            \
 		<#lt>{                                                                                                              \
-		<#lt>    ${.vars[DEF_SENSOR_DET_THRESHOLD]}, (uint8_t)${.vars[DEF_SENSOR_HYST]}, (uint8_t)${.vars[DEF_NOD_AKS]}                       \
+		<#lt>    ${.vars[DEF_SENSOR_DET_THRESHOLD]}u, (uint8_t)${.vars[DEF_SENSOR_HYST]}, (uint8_t)${.vars[DEF_NOD_AKS]}                       \
 		<#lt>}
 
  </#list>
@@ -271,7 +271,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 	<#if (.vars[TOUCH_ENABLE_SCROLLER_] != false)>
     <#lt>#define SCROLLER_${i}_PARAMS                                                                                       \
 		<#lt>{                                                                                                              \
-		<#lt>    (uint8_t)${.vars[DEF_SCR_TYPE]}, ${.vars[TOUCH_SCR_START_KEY]}, ${.vars[TOUCH_SCR_SIZE]},                            \
+		<#lt>    (uint8_t)${.vars[DEF_SCR_TYPE]}, ${.vars[TOUCH_SCR_START_KEY]}u, ${.vars[TOUCH_SCR_SIZE]}u,                            \
 		SCROLLER_RESOL_DEADBAND((uint8_t)${.vars[DEF_SCR_RESOLUTION]}, (uint8_t)${.vars[DEF_SCR_DEADBAND]}),(uint8_t)${.vars[DEF_SCR_POS_HYS]},${.vars[DEF_SCR_CONTACT_THRESHOLD]}\
 		<#lt>}
 	</#if>

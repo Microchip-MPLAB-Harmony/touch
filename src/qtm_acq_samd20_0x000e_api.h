@@ -231,6 +231,7 @@ typedef struct qtm_drivenshield_config_tag
 {
 	uint8_t  flags;
 }qtm_drivenshield_config_t;
+extern volatile uint16_t current_measure_channel;
 
 /*----------------------------------------------------------------------------
 * prototypes

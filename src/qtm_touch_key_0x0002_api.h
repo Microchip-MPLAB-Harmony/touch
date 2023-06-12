@@ -171,7 +171,7 @@ Input  : Pointer to key group control data, key number, pointers to sensor node 
 Output : TOUCH_SUCCESS
 Notes  : none
 ============================================================================*/
-touch_ret_t qtm_init_sensor_key(qtm_touch_key_control_t *qtm_lib_key_group_ptr, uint16_t which_sensor_key,
+touch_ret_t qtm_init_sensor_key(qtm_touch_key_control_t *qtm_lib_key_group_ptr, uint8_t which_sensor_key,
                                 qtm_acq_node_data_t *acq_lib_node_ptr);
 
 /*============================================================================

@@ -49,10 +49,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 </#list>
 #include <definitions.h>
 
-extern volatile uint16_t current_measure_channel;
-
 /*============================================================================
-void drivenshield_configure()
+void drivenshield_configure(void)
 ------------------------------------------------------------------------------
 Purpose: Sets up the qtm_softshield_config_t qtm_softshield_config object
 Input  : Users application / configuration parameters

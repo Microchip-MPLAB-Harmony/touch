@@ -256,7 +256,6 @@ typedef struct  __attribute__((packed)) {
 	uint8_t gestures_which_gesture;
 	uint8_t gestures_info;
 }tuneGestureData_t;
-tuneGestureData_t runtime_gesture_data_arr;
 void copy_gesture_run_time_data(uint8_t channel_num);
 static tuneGestureData_t runtime_gesture_data_arr;
 void copy_gesture_run_time_data(uint8_t channel_num);

@@ -244,7 +244,7 @@ void Krono_UpdateBuffer(void)
 #endif
 <#if (ENABLE_SURFACE1T == true)>	
         {
-			if((qtm_surface_cs_data1.qt_contact_status & TOUCH_ACTIVE) == TOUCH_ACTIVE)
+			if((qtm_surface_cs_data1.qt_surface_status & TOUCH_ACTIVE) == TOUCH_ACTIVE)
 			{
 				touchRam[0] |= TOUCHSTATE_TCH;
 			}
