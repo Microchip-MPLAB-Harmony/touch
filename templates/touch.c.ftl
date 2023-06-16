@@ -214,7 +214,6 @@ static uint16_t time_since_touch = 0u;
 /* store the drift period for comparison */
 static uint16_t measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
 /* measurement mode; 0 - sequential, 1 - windowcomp*/
-volatile uint8_t measurement_mode = 0u; 
 </#if>
 
 /* Acquisition module internal data - Size to largest acquisition set */
@@ -1156,7 +1155,6 @@ static void touch_disable_lowpower_measurement(void)
     <@eventlp.lowpwer_disable_pic32cz_evsys/>
     </#if>
 </#if>
-	measurement_mode = 0u;
 }
 
 /*============================================================================
@@ -1219,7 +1217,6 @@ static void touch_enable_lowpower_measurement(void)
 	<@eventlp.lowpwer_enable_pic32cz_evsys/>
 	</#if>
 </#if>
-	measurement_mode = 1u;
 }
 
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
