@@ -59,26 +59,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include "definitions.h"                // SYS function prototypes
 #include "touch.h"
 
-<#assign no_standby_devices = ["SAMD10","SAMD11"]>
-
-<#assign no_standby_during_measurement = 0>
-<#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
-<#if (DS_DEDICATED_ENABLE == true) || (DS_PLUS_ENABLE == true) || no_standby_devices?seq_contains(DEVICE_NAME)>
-<#assign no_standby_during_measurement = 1>
-</#if>
-</#if>
-
-<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
-#if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
-extern volatile uint8_t time_to_measure_touch_var;
-<#if no_standby_during_measurement == 1>
-extern uint8_t measurement_in_progress;
-</#if>
-#endif
-</#if>
-
-extern volatile uint8_t measurement_done_touch;
-
 void touch_mainloop_example(void);
 void touch_status_display(void);
 </#if>

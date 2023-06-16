@@ -43,13 +43,10 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
   include files
 ----------------------------------------------------------------------------*/
 #include "touch/touch.h"
-
 #if KRONOCOMM_ENABLE == 1u
 #include "touch/datastreamer/kronocommadaptor.h"
 #if KRONOCOMM_UART == 1u
- 
 #include "touch/datastreamer/KronoCommuart_sam.h"
-
 #endif
 
 static uint8_t writeback_req = 0u;
@@ -244,13 +241,12 @@ void Krono_UpdateBuffer(void)
 #endif
 <#if (ENABLE_SURFACE1T == true)>	
         {
-			if((qtm_surface_cs_data1.qt_surface_status & TOUCH_ACTIVE) == TOUCH_ACTIVE)
-			{
+			if((qtm_surface_cs_data1.qt_surface_status & TOUCH_ACTIVE) == TOUCH_ACTIVE) {
 				touchRam[0] |= TOUCHSTATE_TCH;
 			}
-			
-	    	else
+	    	else {
 		    	touchRam[0] &= TOUCHSTATE_nTCH;
+			}
 
 		}
 <#else>

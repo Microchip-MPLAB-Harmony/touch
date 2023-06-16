@@ -1591,8 +1591,12 @@ void touch_timer_config(void)
     RTC_Timer32Stop();
     RTC_Timer32CounterSet(0u);
 
-<#if ENABLE_GESTURE==true>
+<#if ENABLE_GESTURE == true>
+<#if ENABLE_KRONOCOMM == true>
 #if ((KRONO_GESTURE_ENABLE == 1u) || (DEF_TOUCH_DATA_STREAMER_ENABLE == 1u))
+<#else>
+#if (DEF_TOUCH_DATA_STREAMER_ENABLE == 1u)
+</#if>
     ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}(1);
 #else
     <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
@@ -1686,7 +1690,7 @@ void calibrate_node(uint16_t sensor_node)
 		/* Error condition */
 	}
     /* Initialize key */
-    qtm_init_sensor_key(&qtlib_key_set1, (uint8_t) sensor_node, &ptc_qtlib_node_stat1[sensor_node]);
+    touch_ret = qtm_init_sensor_key(&qtlib_key_set1, (uint8_t) sensor_node, &ptc_qtlib_node_stat1[sensor_node]);
     if(touch_ret != TOUCH_SUCCESS) {
 		/* Error condition */
 	}

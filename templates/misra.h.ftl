@@ -1,7 +1,8 @@
 <#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35"]>
 <#assign pic32cz = ["PIC32CZCA80","PIC32CZCA90"]>
+<#assign no_standby_devices = ["SAMD10","SAMD11"]>
 
-<#macro acqexternvariables>
+<#macro externvariables>
 /* Acquisition variables */
 extern qtm_acq_node_data_t ptc_qtlib_node_stat1[DEF_NUM_CHANNELS];
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
@@ -80,5 +81,22 @@ extern qtm_gestures_2d_config_t qtm_gestures_2d_config;
 extern qtm_gestures_2d_data_t qtm_gestures_2d_data;
 </#if>
 extern uint8_t module_error_code;
+
+
+<#assign no_standby_during_measurement = 0>
+<#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
+<#if (DS_DEDICATED_ENABLE == true) || (DS_PLUS_ENABLE == true) || no_standby_devices?seq_contains(DEVICE_NAME)>
+<#assign no_standby_during_measurement = 1>
+</#if>
+</#if>
+<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
+#if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
+extern volatile uint8_t time_to_measure_touch_var;
+<#if no_standby_during_measurement == 1>
+extern uint8_t measurement_in_progress;
+</#if>
+#endif
+</#if>
+extern volatile uint8_t measurement_done_touch;
 </#macro>
 

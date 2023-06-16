@@ -568,7 +568,7 @@ extern qtm_drivenshield_config_t qtm_drivenshield_config;
 </#if>
 
 <#import "/misra.h.ftl" as misra>
-<@misra.acqexternvariables/>
+<@misra.externvariables/>
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

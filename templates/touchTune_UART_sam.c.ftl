@@ -242,7 +242,9 @@ typedef struct __attribute__((packed)){
 	uint16_t v_position;
 }tuneSurfaceData_t;
 static tuneSurfaceData_t runtime_surface_data_arr;
-void copy_surface_run_time_data(uint8_t channel_num);
+void copy_surface_run_time_data(uint8_t contact_num);
+void copy_surface_config(uint8_t channel_num);
+void update_surface_config(uint8_t channel_num);
 #endif
 </#if>
 
@@ -256,7 +258,6 @@ typedef struct  __attribute__((packed)) {
 	uint8_t gestures_which_gesture;
 	uint8_t gestures_info;
 }tuneGestureData_t;
-void copy_gesture_run_time_data(uint8_t channel_num);
 static tuneGestureData_t runtime_gesture_data_arr;
 void copy_gesture_run_time_data(uint8_t channel_num);
 #endif
@@ -526,58 +527,22 @@ void update_scroller_config(uint8_t scroller_num) {
 <#if ENABLE_SURFACE1T == true>
 void copy_surface_run_time_data(uint8_t contact_num)
 {
-	uint16_t position_temp;
-	uint16_t delta_temp ;	
-	uint8_t *temp_ptr = &runtime_surface_data_arr.status;
- 	/* Surface State */
-	if(qtm_surface_cs_data1.qt_surface_status & 0x01)
-		*temp_ptr++ = 1;
-	else
-		*temp_ptr++ = 0;
-				
-	/* surface Delta */
-	delta_temp = qtm_surface_cs_data1.contact_size;
-	*temp_ptr++ = (delta_temp & 0xFF);
-	*temp_ptr++ = (delta_temp >> 8);
-	 
-	/* surface filtered X Y position */
-	position_temp = qtm_surface_cs_data1.h_position;
-	*temp_ptr++ = (position_temp & 0xFF);
-	*temp_ptr++ = (position_temp >> 8);
-
-	position_temp = qtm_surface_cs_data1.v_position;
-	*temp_ptr++ = (position_temp & 0xFF);
-	*temp_ptr++ = (position_temp >> 8);
+	runtime_surface_data_arr.status = qtm_surface_cs_data1.qt_surface_status & 0x01u;
+	runtime_surface_data_arr.contact_size = qtm_surface_cs_data1.contact_size;
+	runtime_surface_data_arr.h_position = qtm_surface_cs_data1.h_position;
+	runtime_surface_data_arr.v_position = qtm_surface_cs_data1.v_position;
 }
 <#else>
 void copy_surface_run_time_data(uint8_t contact_num)
 {
-	uint16_t position_temp;
-	uint16_t delta_temp ;	
-	uint8_t *temp_ptr = &runtime_surface_data_arr.status;
- 	/* Surface State */
-	if(qtm_surface_contacts[contact_num].qt_contact_status & 0x01)
-		*temp_ptr++ = 1;
-	else
-		*temp_ptr++ = 0;
-
-	/* surface Delta */
-	delta_temp = qtm_surface_contacts[contact_num].contact_size;
-	*temp_ptr++ = (delta_temp & 0xFF);
-	*temp_ptr++ = (delta_temp >> 8);
-	 
-	/* surface filtered X Y position */
-	position_temp = qtm_surface_contacts[contact_num].h_position;
-	*temp_ptr++ = (position_temp & 0xFF);
-	*temp_ptr++ = (position_temp >> 8);
-
-	position_temp = qtm_surface_contacts[contact_num].v_position;
-	*temp_ptr++ = (position_temp & 0xFF);
-	*temp_ptr++ = (position_temp >> 8);
+	runtime_surface_data_arr.status = qtm_surface_contacts[contact_num].qt_contact_status & 0x01u;
+	runtime_surface_data_arr.contact_size = qtm_surface_contacts[contact_num].contact_size;
+	runtime_surface_data_arr.h_position = qtm_surface_contacts[contact_num].h_position;
+	runtime_surface_data_arr.v_position = qtm_surface_contacts[contact_num].v_position;
 }
 </#if>
 
-surface_config_param surface_config_data;
+static surface_config_param surface_config_data;
 void copy_surface_config(uint8_t channel_num) {
 	surface_config_data.start_key_h = qtm_surface_cs_config1.start_key_h;
 	surface_config_data.number_of_keys_h = qtm_surface_cs_config1.number_of_keys_h;
@@ -588,12 +553,12 @@ void copy_surface_config(uint8_t channel_num) {
 	surface_config_data.position_filter = qtm_surface_cs_config1.position_filter;
 	surface_config_data.contact_min_threshold = qtm_surface_cs_config1.contact_min_threshold;
 	max_channels_or_scrollers = 1u;
-	if(channel_num == 0) {
-		uart_send_frame_header(MCU_RESPOND_CONFIG_DATA_TO_PC, uart_command_info.frame_id,(sizeof(surface_config_param) * 1));
-		uart_send_data(STREAMING_CONFIG_DATA,(uint8_t *) &surface_config_data.start_key_h, sizeof(surface_config_param));
+	if(channel_num == 0u) {
+		uart_send_frame_header((uint8_t)MCU_RESPOND_CONFIG_DATA_TO_PC, uart_command_info.frame_id,(uint16_t) (sizeof(surface_config_param) * 1u));
+		uart_send_data((uint8_t) STREAMING_CONFIG_DATA,(uint8_t *) &surface_config_data.start_key_h, (uint16_t) sizeof(surface_config_param));
 	} else {
 		tx_data_ptr	= (uint8_t *) &surface_config_data.start_key_h;
-		tx_data_len = sizeof(surface_config_param);
+		tx_data_len = (uint16_t) sizeof(surface_config_param);
 	}
 }
 
@@ -611,14 +576,11 @@ void update_surface_config(uint8_t channel_num) {
 #if (GESTURE_MODULE_OUTPUT == 1U)
 void copy_gesture_run_time_data(uint8_t channel_num)
 {
-	uint8_t *temp_ptr = &runtime_gesture_data_arr.gestures_status;
-
-	*temp_ptr++ = qtm_gestures_2d_data.gestures_status;
-	*temp_ptr++ = qtm_gestures_2d_data.gestures_which_gesture;
-	*temp_ptr++ = qtm_gestures_2d_data.gestures_info;
+	runtime_gesture_data_arr.gestures_status = qtm_gestures_2d_data.gestures_status;
+	runtime_gesture_data_arr.gestures_which_gesture = qtm_gestures_2d_data.gestures_which_gesture;
+	runtime_gesture_data_arr.gestures_info = qtm_gestures_2d_data.gestures_info;
 
 	qtm_gestures_2d_clearGesture();
-
 }
 #endif
 </#if>
@@ -880,6 +842,7 @@ void uart_recv_frame_data(uint8_t frame_id, uint16_t len)
                     ptr[cnt] = uart_get_char();
                 }
                 update_surface_config(ch_num);
+				num_data -= (uint16_t) sizeof(surface_config_param);
                 ch_num = 0u;
                 uart_command_info.header_status = HEADER_AWAITING;
                 command_flags = command_flags & (uint16_t) (~((uint16_t)1<<uart_command_info.frame_id));
