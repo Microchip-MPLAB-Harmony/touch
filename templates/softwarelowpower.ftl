@@ -145,7 +145,7 @@
     RTC_Timer32Compare0Set(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
 	/* Store the measurement period */
 	measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
-    lp_measurement = 0;
+    lowpower_measurement_flag = 0u;
 	RTC_Timer32Start();
 </#macro>
 
@@ -159,12 +159,12 @@
     RTC_Timer32Compare0Set(QTM_LOWPOWER_TRIGGER_PERIOD);
 	/* Store the measurement period */
 	measurement_period_store = QTM_LOWPOWER_TRIGGER_PERIOD;
-    lp_measurement = 1;
+    lowpower_measurement_flag = 1u;
     RTC_Timer32Start();
 </#macro>
 
 <#macro lowpower_touch_timer_handler_same5x_noevs>
-    if (lp_measurement == 1) {
+    if (lowpower_measurement_flag == 1u) {
             cnt_tmr += RTC_Timer32CounterGet();
             if (cnt_tmr >= DEF_TOUCH_DRIFT_PERIOD_MS) {
                 qtm_update_qtlib_timer(cnt_tmr);
