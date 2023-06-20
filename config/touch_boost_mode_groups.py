@@ -184,6 +184,7 @@ class classTouchBoostModeGroups():
         """
 
         touchNumChannel = nodeCount
+        boostModeEnabled = False
 
         localComponent = symbol.getComponent()
         touchSenseTechnology = localComponent.getSymbolByID("SENSE_TECHNOLOGY").getValue()
@@ -193,14 +194,18 @@ class classTouchBoostModeGroups():
         if(targetDevice in ["SAML10","SAML11","SAML1xE"]):
             if localComponent.getSymbolByID("ENABLE_BOOST").getValue():
                 localComponent.getSymbolByID("MODULE_ID").setValue("0x0033")
+                boostModeEnabled = True
             else:
                 localComponent.getSymbolByID("MODULE_ID").setValue("0x0027")
         if(targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
             if localComponent.getSymbolByID("ENABLE_BOOST").getValue():
                 localComponent.getSymbolByID("MODULE_ID").setValue("0x0049")
+                boostModeEnabled = True
             else:
                 localComponent.getSymbolByID("MODULE_ID").setValue("0x004a")
 
+        if not boostModeEnabled:
+            return
 
         if (self.getBoostSupported(targetDevice)):
             # maximum number of boost mode group is limited to 32 in the script
@@ -274,7 +279,7 @@ class classTouchBoostModeGroups():
                 tempSymbol = localComponent.getSymbolByID("MUTL-X-INPUT_"+ str(channel_num))
                 x_lines.append(tempSymbol.getValue())
                 tempSymbol = localComponent.getSymbolByID("MUTL-Y-INPUT_"+ str(channel_num))
-                print(str(tempSymbol))
+                # print(str(tempSymbol))
                 y_lines.append(tempSymbol.getValue())
                 tempSymbol = localComponent.getSymbolByID("DEF_TOUCH_CHARGE_SHARE_DELAY"+str(channel_num))
                 csd.append(tempSymbol.getValue())

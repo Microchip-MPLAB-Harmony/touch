@@ -53,7 +53,7 @@ class classTouchFreqGroups():
 
         #parameter assignment
         enableFreqHopAutoTuneMenu.setLabel("Enable Frequency Auto Tuning")
-        enableFreqHopAutoTuneMenu.setDefaultValue(False)
+        enableFreqHopAutoTuneMenu.setDefaultValue(True)
         
         self.setFreqHopValues(qtouchComponent,self.freqHopStepsDefault,self.freqHopStepsMax,groupNumber,parentLabel)
         self.setFreqStepsValues(freqSteps,self.freqHopStepsDefault,self.freqHopStepsMax)

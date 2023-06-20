@@ -76,6 +76,9 @@ class classTouchSurface():
             component.getSymbolByID("SURFACE_MENU").setEnabled(False)
             component.getSymbolByID("SURFACE_MENU").setVisible(False)
 
+        if component.getSymbolValue("TOUCH_PRE_GENERATE"):
+            component.setSymbolValue("TOUCH_PRE_GENERATE", False)
+        component.setSymbolValue("TOUCH_PRE_GENERATE", True)
 
     def setOrientationKeyValues(self,orientationKey):
         orientationKey.setLabel("Set Orientation of Surface")
@@ -319,49 +322,34 @@ class classTouchSurface():
         Returns:
             :none
         """
-
         component = symbol.getComponent()
         surfaceEnabled = component.getSymbolByID("ENABLE_SURFACE").getValue()
-        if (touchSenseTechnology == "MutualCap") and (surfaceEnabled == True):
-                MUTL_SURFACE_X = []
-                MUTL_SURFACE_Y = []
-                HORI_START_KEY = component.getSymbolByID("HORI_START_KEY").getValue()
-                HORI_NUM_KEY = component.getSymbolByID("HORI_NUM_KEY").getValue()
-                VERT_START_KEY = component.getSymbolByID("VERT_START_KEY").getValue()
-                VERT_NUM_KEY = component.getSymbolByID("VERT_NUM_KEY").getValue()
 
-                for i in range(HORI_START_KEY,(HORI_START_KEY+HORI_NUM_KEY)):
-                    vals = self.nodeInst.tchMutXPinSelection[int(i)].getValue()
-                    MUTL_SURFACE_X.append(self.nodeInst.tchMutXPinSelection[int(i)].getKeyValue(vals))
-                MUTL_SURFACE_X = "|".join(MUTL_SURFACE_X)
-                for j in range(VERT_START_KEY,(VERT_START_KEY+VERT_NUM_KEY)):
-                    vals = self.nodeInst.tchMutYPinSelection[int(j)].getValue()
-                    MUTL_SURFACE_Y.append(self.nodeInst.tchMutYPinSelection[int(j)].getKeyValue(vals))
-                MUTL_SURFACE_Y = "|".join(MUTL_SURFACE_Y)
-                if (VERT_START_KEY >0):
-                    for i in range(0,VERT_START_KEY):
-                        vals1 = self.nodeInst.tchMutXPinSelection[int(i)].getValue()
-                        vals2 = self.nodeInst.tchMutYPinSelection[int(i)].getValue()
-                        self.nodeInst.tchMutXPinSelection[int(i)].setValue(vals1)
-                        self.nodeInst.tchMutYPinSelection[int(i)].setValue(vals2)
-                for i in range(VERT_START_KEY,(VERT_START_KEY+VERT_NUM_KEY)):
-                    vals1 = self.nodeInst.tchMutXPinSelection[int(i)].getValue()
-                    vals2 = self.nodeInst.tchMutYPinSelection[int(i)].getValue()
-                    self.nodeInst.tchMutXPinSelection[int(i)].setKeyValue(str(vals1),MUTL_SURFACE_X)
-                    self.nodeInst.tchMutXPinSelection[int(i)].setValue(vals1)
-                    self.nodeInst.tchMutYPinSelection[int(i)].setValue(vals2)
-                for i in range(HORI_START_KEY,(HORI_START_KEY+HORI_NUM_KEY)):
-                    vals1 = self.nodeInst.tchMutXPinSelection[int(i)].getValue()
-                    vals2 = self.nodeInst.tchMutYPinSelection[int(i)].getValue()
-                    self.nodeInst.tchMutYPinSelection[int(i)].setKeyValue(str(vals2),MUTL_SURFACE_Y)
-                    self.nodeInst.tchMutXPinSelection[int(i)].setValue(vals1)
-                    self.nodeInst.tchMutYPinSelection[int(i)].setValue(vals2)
-                if (totalChannelCount - (VERT_START_KEY + VERT_NUM_KEY + HORI_NUM_KEY ) >0):
-                    for i in range((VERT_START_KEY + VERT_NUM_KEY + HORI_NUM_KEY),totalChannelCount):
-                        vals1 = self.nodeInst.tchMutXPinSelection[int(i)].getValue()
-                        vals2 = self.nodeInst.tchMutYPinSelection[int(i)].getValue()
-                        self.nodeInst.tchMutXPinSelection[int(i)].setValue(vals1)
-                        self.nodeInst.tchMutYPinSelection[int(i)].setValue(vals2)
+        lumpConfigXSym = component.getSymbolByID("FTL_X_INFO")
+        lumpConfigYSym = component.getSymbolByID("FTL_Y_INFO")
+        xconfig = lumpConfigXSym.getValue().split(",")
+        yconfig = lumpConfigYSym.getValue().split(",")
+
+        if (touchSenseTechnology == "MutualCap") and (surfaceEnabled == True):
+            MUTL_SURFACE_X = []
+            MUTL_SURFACE_Y = []
+            HORI_START_KEY = component.getSymbolByID("HORI_START_KEY").getValue()
+            HORI_NUM_KEY = component.getSymbolByID("HORI_NUM_KEY").getValue()
+            VERT_START_KEY = component.getSymbolByID("VERT_START_KEY").getValue()
+            VERT_NUM_KEY = component.getSymbolByID("VERT_NUM_KEY").getValue()
+
+            for i in range(HORI_START_KEY,(HORI_START_KEY+HORI_NUM_KEY)):
+                MUTL_SURFACE_X.append(xconfig[int(i)])
+            MUTL_SURFACE_X = "|".join(MUTL_SURFACE_X)
+            for j in range(VERT_START_KEY,(VERT_START_KEY+VERT_NUM_KEY)):
+                MUTL_SURFACE_Y.append(yconfig[int(j)])
+            MUTL_SURFACE_Y = "|".join(MUTL_SURFACE_Y)
+            for i in range(VERT_START_KEY,(VERT_START_KEY+VERT_NUM_KEY)):
+                xconfig[int(i)] = MUTL_SURFACE_X
+            for i in range(HORI_START_KEY,(HORI_START_KEY+HORI_NUM_KEY)):
+                yconfig[int(i)] = MUTL_SURFACE_Y
+            lumpConfigXSym.setValue(",".join(xconfig))
+            lumpConfigYSym.setValue(",".join(yconfig))
 
     def surface_rearrange(self,symbol,event):
         """Handler for rarranging the surface sensor structure
@@ -377,42 +365,43 @@ class classTouchSurface():
         surfaceEnabled = localComponent.getSymbolByID("ENABLE_SURFACE").getValue()
         targetDevice = localComponent.getSymbolByID("DEVICE_NAME").getValue()
 
+        lumpConfigXSym = localComponent.getSymbolByID("FTL_X_INFO")
+        lumpConfigYSym = localComponent.getSymbolByID("FTL_Y_INFO")
+        xconfig = lumpConfigXSym.getValue().split(",")
+        yconfig = lumpConfigYSym.getValue().split(",")
+
         if self.getSurfaceRearrangeRequired(targetDevice) and (touchSenseTechnology == 1) and (surfaceEnabled == True):
-            output_x = []
-            output_y = []
-            y_surface = []
-            x_surface = []
+            hor_y_surface = []
+            hor_x_surface = []
+            ver_y_surface = []
+            ver_x_surface = []
             HORI_START_KEY1 = localComponent.getSymbolByID("HORI_START_KEY").getValue()
             HORI_NUM_KEY1 = localComponent.getSymbolByID("HORI_NUM_KEY").getValue()
             VERT_START_KEY1 = localComponent.getSymbolByID("VERT_START_KEY").getValue()
             VERT_NUM_KEY1 = localComponent.getSymbolByID("VERT_NUM_KEY").getValue()
 
+            # swap X and Y for horizontal channels
             for i in range(HORI_START_KEY1,(HORI_START_KEY1+HORI_NUM_KEY1)):
-                tempSymbol = localComponent.getSymbolByID("MUTL-X-INPUT_"+ str(i))
-                x_surface.append(tempSymbol.getValue())
+                temp = yconfig[i]
+                temp = temp.replace('Y','X')
+                hor_x_surface.append(temp)
+
+                temp = xconfig[i]
+                temp = temp.replace('X','Y')
+                hor_y_surface.append(temp)
+
+            # no swap for vertical channels
             for j in range(VERT_START_KEY1,(VERT_START_KEY1+VERT_NUM_KEY1)):
-                tempSymbol = localComponent.getSymbolByID("MUTL-Y-INPUT_"+ str(j))
-                print(str(tempSymbol))
-                y_surface.append(tempSymbol.getValue())
-            len_x = len(x_surface)
-            len_y = len(y_surface)
+                ver_x_surface.append(xconfig[j])
+                ver_y_surface.append(yconfig[j])
 
-            x_lump = []
-            y_lump = []
-            for x in x_surface:
-                x_lump.append('X('+str(x)+')')
-            for y in y_surface:
-                y_lump.append('X('+str(y)+')')
-            for y in range(len_y):
-                output_y.append('Y('+str(y_surface[y])+')')
-                output_x.append("|".join(x_lump))
-            for x in range(len_x):
-                output_y.append('Y('+str(x_surface[x])+')')
-                output_x.append("|".join(y_lump))
+            for i in range(HORI_NUM_KEY1):
+                xconfig[i+HORI_START_KEY1] = hor_x_surface[i]
+                yconfig[i+HORI_START_KEY1] = hor_y_surface[i]
 
-            tempSymbol = localComponent.getSymbolByID("TOUCH_CH_SURFACE_X_LINES")
-            temp_string = "+".join(output_x)
-            tempSymbol.setValue(temp_string)
-            tempSymbol = localComponent.getSymbolByID("TOUCH_CH_SURFACE_Y_LINES")
-            temp_string = "+".join(output_y)
-            tempSymbol.setValue(temp_string)
+            for i in range(VERT_NUM_KEY1):
+                xconfig[i+VERT_START_KEY1] = ver_x_surface[i]
+                yconfig[i+VERT_START_KEY1] = ver_y_surface[i]
+
+            lumpConfigXSym.setValue(",".join(xconfig))
+            lumpConfigYSym.setValue(",".join(yconfig))

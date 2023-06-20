@@ -221,24 +221,26 @@ class classTouchLP():
         low_power_keys = []
         lp_mask_of_8 = []
         
-        for i in low_power_mask.split(","):
-            low_power_keys.append(int(i))
-        for i in range(total_num_channel):
-            if i in low_power_keys:
-                lp_mask.append(1)
-            else:
-                lp_mask.append(0)
-        for i in range(1000):
-            if len(lp_mask)%8 != 0:
-                lp_mask.append(0)
-            else:
-                break
-        for i in range(int(len(lp_mask)/8)):
-            sum = 0
-            for loop_cnt in range(8):
-                index = i*8 + loop_cnt
-                if lp_mask[index] == 1:
-                    sum = sum + pow(2,loop_cnt)
-            lp_mask_of_8.append(hex(sum))
-        tempSymbol = localComponent.getSymbolByID("LOW_POWER_KEYS_MASK")
-        tempSymbol.setValue(",".join(lp_mask_of_8))
+        if low_power_mask != "":
+        
+            for i in low_power_mask.split(","):
+                low_power_keys.append(int(i))
+            for i in range(total_num_channel):
+                if i in low_power_keys:
+                    lp_mask.append(1)
+                else:
+                    lp_mask.append(0)
+            for i in range(1000):
+                if len(lp_mask)%8 != 0:
+                    lp_mask.append(0)
+                else:
+                    break
+            for i in range(int(len(lp_mask)/8)):
+                sum = 0
+                for loop_cnt in range(8):
+                    index = i*8 + loop_cnt
+                    if lp_mask[index] == 1:
+                        sum = sum + pow(2,loop_cnt)
+                lp_mask_of_8.append(hex(sum))
+            tempSymbol = localComponent.getSymbolByID("LOW_POWER_KEYS_MASK")
+            tempSymbol.setValue(",".join(lp_mask_of_8))

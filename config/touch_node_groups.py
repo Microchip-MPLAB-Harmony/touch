@@ -121,6 +121,7 @@ class classTouchNodeGroups():
             touchNodeNumChannel.setDefaultValue(0)
             touchNodeNumChannel.setMin(0)
             touchNodeNumChannel.setMax(mutualChannels)
+            self.addDepSymbol(touchNodeNumChannel, "onGenerate", ["TOUCH_CHAN_ENABLE_CNT"])
         
         for channelID in range(0, mutualChannels):
             if int(groupNumber) == 1:
@@ -136,16 +137,22 @@ class classTouchNodeGroups():
                 if(csdMode!="NoCSD"):
                     #Charge Share Delay
                     touchChargeShareDelay = qtouchComponent.createIntegerSymbol("DEF_TOUCH_CHARGE_SHARE_DELAY" + str(channelID), touchChEnable)
+                    self.addDepSymbol(touchChargeShareDelay, "updateParameter", ["DEF_TOUCH_CHARGE_SHARE_DELAY" + str(channelID)])
                 #Series Resistor
                 touchSeriesResistor = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_SERIES_RESISTOR" + str(channelID), touchChEnable)
+                self.addDepSymbol(touchSeriesResistor, "updateParameter", ["DEF_NOD_SERIES_RESISTOR" + str(channelID)])
                 #PTC Clock Prescaler
                 touchPTCPrescaler = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_PTC_PRESCALER" + str(channelID), touchChEnable)
+                self.addDepSymbol(touchPTCPrescaler, "updateParameter", ["DEF_NOD_PTC_PRESCALER" + str(channelID)])
                 #Analog Gain
                 touchAnalogGain = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_GAIN_ANA" + str(channelID), touchChEnable)
+                self.addDepSymbol(touchAnalogGain, "updateParameter", ["DEF_NOD_GAIN_ANA" + str(channelID)])
                 #Digital Filter Gain - Accumulated sum is scaled to Digital Gain
                 touchDigitalFilterGain = qtouchComponent.createKeyValueSetSymbol("DEF_DIGI_FILT_GAIN"  + str(channelID), touchChEnable)
+                self.addDepSymbol(touchDigitalFilterGain, "updateParameter", ["DEF_DIGI_FILT_GAIN" + str(channelID)])
                 #Digital Filter Oversampling - Number of samples for each measurement
                 touchDigitalFilterOversampling = qtouchComponent.createKeyValueSetSymbol("DEF_DIGI_FILT_OVERSAMPLING" + str(channelID), touchChEnable)
+                self.addDepSymbol(touchDigitalFilterOversampling, "updateParameter", ["DEF_DIGI_FILT_OVERSAMPLING" + str(channelID)])
             else:
                 dynamicTouchChEnable = "touchChEnable_" +str(groupNumber) 
                 vars()[dynamicTouchChEnable] = qtouchComponent.createBooleanSymbol("GROUP_"+str(groupNumber)+"_TOUCH_ENABLE_CH_" + str(channelID), parentLabel)
@@ -578,14 +585,27 @@ class classTouchNodeGroups():
         Returns:
             :none
         """
-        print(touchtech)
+        localComponent = lump_symbol.getComponent()
         lump_feature = lump_symbol.getValue()
+
         if (lump_feature != ""):
+            lumpConfigXSym = localComponent.getSymbolByID("FTL_X_INFO")
+            lumpConfigYSym = localComponent.getSymbolByID("FTL_Y_INFO")
+            xLumpList = lumpConfigXSym.getValue().split(",")
+            yLumpList = lumpConfigYSym.getValue().split(",")
+
             lump_items = str(lump_feature).split(";")
             num_of_lumps = len(lump_items)
+            
+            if num_of_lumps == 0:
+                return
             for lmp in range(0,num_of_lumps):
                 lump_x = []
                 lump_y = []
+                
+                # check for empty configuration
+                if lump_items[lmp] == "":
+                    continue
 
                 lump_split = str(lump_items[lmp]).split(":")
                 
@@ -593,31 +613,23 @@ class classTouchNodeGroups():
                 lump_node_array = str(lump_split[1]).split(",")
                 if ((touchtech == "SelfCap") or (touchtech == "SelfCapShield")):
                     for item in lump_node_array:
-                        val = self.tchSelfPinSelection[int(item)].getValue()
-                        yCh = self.tchSelfPinSelection[int(item)].getKeyValue(val)
+                        yCh = yLumpList[int(item)]
                         if yCh not in lump_y:
                             lump_y.append(yCh)
-                    lumpy = "|".join(lump_y)
-                    key1 = self.tchMutXPinSelection[int(lump_node)].getKey(0)
-                    self.tchSelfPinSelection[int(lump_node)].setKeyValue(str(key1),lumpy)
-                    self.tchSelfPinSelection[int(lump_node)].setValue(0)
+                    yLumpList[int(lump_node)] = "|".join(lump_y)
                 elif (touchtech == "MutualCap"):
                     for item in lump_node_array:
-                        val1 = self.tchMutXPinSelection[int(item)].getValue()
-                        val2 = self.tchMutYPinSelection[int(item)].getValue()
-                        xCh = self.tchMutXPinSelection[int(item)].getKeyValue(val1)
-                        yCh = self.tchMutYPinSelection[int(item)].getKeyValue(val2)
+                        xCh = xLumpList[int(item)]
+                        yCh = yLumpList[int(item)]
                         if xCh not in lump_x:
                             lump_x.append(xCh)
                         if yCh not in lump_y:
                             lump_y.append(yCh)
-                    lumpx = "|".join(lump_x)
-                    key1 = self.tchMutXPinSelection[int(lump_node)].getKey(0)
-                    self.tchMutXPinSelection[int(lump_node)].setKeyValue(str(key1),lumpx)
-                    self.tchMutXPinSelection[int(lump_node)].setValue(0)
-                    lumpy = "|".join(lump_y)
-                    key2 = self.tchMutYPinSelection[int(lump_node)].getKey(0)
-                    self.tchMutYPinSelection[int(lump_node)].setKeyValue(str(key2),lumpy)
-                    self.tchMutYPinSelection[int(lump_node)].setValue(0)
+                    xLumpList[int(lump_node)] = "|".join(lump_x)
+                    yLumpList[int(lump_node)] = "|".join(lump_y)
+
+            localComponent.getSymbolByID("FTL_X_INFO").setValue(",".join(xLumpList))
+            localComponent.getSymbolByID("FTL_Y_INFO").setValue(",".join(yLumpList))
+
         else:
             print("NOT LUMPING NODES")

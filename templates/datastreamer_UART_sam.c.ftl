@@ -286,11 +286,11 @@ void datastreamer_output(void)
 #if (FREQ_HOP_AUTO_MODULE_OUTPUT == 1)
 
 	/* Frequency selection - from acq module */
-	datastreamer_transmit(qtm_freq_hop_autotune_config1->freq_option_select);
+	datastreamer_transmit(*qtm_freq_hop_autotune_config1.freq_option_select);
 
 	for (count_bytes_out = 0u; count_bytes_out < NUM_FREQ_STEPS; count_bytes_out++) {
 		/* Frequencies */
-		datastreamer_transmit(qtm_freq_hop_autotune_control1.qtm_freq_hop_autotune_config->median_filter_freq[count_bytes_out]);
+		datastreamer_transmit(qtm_freq_hop_autotune_config1.median_filter_freq[count_bytes_out]);
 	}
 #endif
 
