@@ -157,7 +157,7 @@ class classTouchDSGroup():
             self.setDSTimers(drivenShieldDedicatedTimer)
             
             drivenShieldDedicatedTimerPin = qtouchComponent.createKeyValueSetSymbol("DS_DEDICATED_TIMER_PIN", enableDrivenShieldDedicated)
-            drivenShieldDedicatedTimerPin.setLable("Select Timer Pin")
+            drivenShieldDedicatedTimerPin.setLabel("Select Timer Pin")
             self.setDSDedicatedTimerPins(instances,drivenShieldDedicatedTimerPin,ptcPininfo)
 
             self.setTimerInfoGroup(qtouchComponent,timerInfo,tcInstances,tccInstances,drivenShieldDedicatedTimer,drivenShieldDedicatedTimerPin,ptcPininfo,ATDF)
