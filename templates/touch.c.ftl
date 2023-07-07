@@ -73,12 +73,13 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 </#if>
 </#if>
 
-
 /*----------------------------------------------------------------------------
  *     include files
  *----------------------------------------------------------------------------*/
 #include "definitions.h"
+<#if TOUCH_TIMER_INSTANCE == "RTC">
 #include "../peripheral/rtc/plib_rtc.h"
+</#if>
 #include "../interrupts.h"
 #include "touch/touch.h"
 <#if ENABLE_TOUCH_TUNE_WITH_PLUGIN == true>
