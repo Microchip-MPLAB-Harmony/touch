@@ -40,8 +40,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 *******************************************************************************/
 
 
-#ifndef __TOUCH_API_PIC32MZW_ACQ_H__
-#define __TOUCH_API_PIC32MZW_ACQ_H__
+#ifndef TOUCH_API_PIC32MZW_ACQ_H
+#define TOUCH_API_PIC32MZW_ACQ_H
 
 /* Include files */
 #include <stdint.h>
@@ -338,4 +338,4 @@ Notes    :  none
 ============================================================================*/
 void qtm_pic32_cvd_handler_eoc(void);
 
-#endif    /* __TOUCH_API_PIC32MZW_ACQ_H__ */
+#endif    /* TOUCH_API_PIC32MZW_ACQ_H */

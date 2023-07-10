@@ -32,8 +32,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 *******************************************************************************/
 
 /* QTouch Modular Library Configuration */
-#ifndef __TOUCH_API_PIC32CZCA_ACQ_H__
-#define __TOUCH_API_PIC32CZCA_ACQ_H__
+#ifndef TOUCH_API_PIC32CZCA_ACQ_H
+#define TOUCH_API_PIC32CZCA_ACQ_H
 
 /* Include files */
 #include <stdint.h>
@@ -349,4 +349,4 @@ Notes  : none
 ============================================================================*/
 uint8_t qtm_acq_module_get_version(void);
 
-#endif    /* __TOUCH_API_PIC32CZCA_ACQ_H__ */
+#endif    /* TOUCH_API_PIC32CZCA_ACQ_H */

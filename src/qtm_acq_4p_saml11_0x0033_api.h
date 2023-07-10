@@ -38,8 +38,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
 
-#ifndef __TOUCH_API_L11_ACQ_H__
-#define __TOUCH_API_L11_ACQ_H__
+#ifndef TOUCH_API_L11_ACQ_H
+#define TOUCH_API_L11_ACQ_H
 
 /* Include files */
 #include "qtm_acq_4p_saml10_0x0033_api.h"
@@ -49,4 +49,4 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define qtm_saml11_ptc_handler_eoc qtm_saml10_ptc_handler_eoc
 #define qtm_acq_4p_saml11_config_t qtm_acq_4p_saml10_config_t
 
-#endif    /* __TOUCH_API_L11_ACQ_H__ */
+#endif    /* TOUCH_API_L11_ACQ_H */

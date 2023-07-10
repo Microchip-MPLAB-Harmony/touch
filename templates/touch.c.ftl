@@ -122,6 +122,10 @@ static void qtm_measure_complete_callback(void);
  */
 static void qtm_error_callback(uint8_t error);
 
+<#if pic32cz?seq_contains(DEVICE_NAME)>
+void PTC_Initialize(void);
+</#if>
+
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
 <#if no_standby_during_measurement == 1>
@@ -755,6 +759,7 @@ static void qtm_error_callback(uint8_t error)
 	#endif
 </#if>
 }
+
 <#if pic32cz?seq_contains(DEVICE_NAME)>
 /*============================================================================
 void PTC_Initialize(void)
@@ -766,7 +771,7 @@ Notes  :
 ============================================================================*/
 void PTC_Initialize(void)
 {
-    uint32_t gclk_freq = ${GET_PTC_CLOCK_FREQUENCY}u;
+    uint32_t gclk_freq = ${GET_PTC_CLOCK_FREQUENCY}UL;
     uint32_t ptc_clock = 0u;
     uint8_t wakeup_clock_cycles =0u;
     uint8_t wakeup_exp = 0u;
@@ -774,7 +779,7 @@ void PTC_Initialize(void)
      * The Wake-up Exponent is the exponent for the power of 2 which represents the wake-up count in PTC core clocks.
      * The PTC core must warm up before being allowed to perform conversions. 
      */  
-    if(gclk_freq > 0u)
+    if(gclk_freq > 0UL)
     {
         /* PTC clock for minimum pre-scaler (PRSC_DIV_SEL_2) */
         ptc_clock = gclk_freq / 2UL; 
@@ -792,7 +797,7 @@ void PTC_Initialize(void)
     /* 
      * Enable Analog Input Charge Pump of PTC , for weak VDD 
      */
-    SUPC_REGS->SUPC_VREGCTRL |= SUPC_VREGCTRL_CPEN(1u << 2u);
+    SUPC_REGS->SUPC_VREGCTRL |= SUPC_VREGCTRL_CPEN(4u);
     
 }
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
@@ -1091,7 +1096,7 @@ static void touch_configure_pm_supc(void)
     /* 
      * Enable Analog Input Charge Pump of PTC , for weak VDD 
      */
-    SUPC_REGS->SUPC_VREGCTRL |= SUPC_VREGCTRL_CPEN(1u << 2u);
+    SUPC_REGS->SUPC_VREGCTRL |= SUPC_VREGCTRL_CPEN(4u);
 }
 #endif
 </#if>
