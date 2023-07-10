@@ -779,21 +779,22 @@ void PTC_Initialize(void)
      * The Wake-up Exponent is the exponent for the power of 2 which represents the wake-up count in PTC core clocks.
      * The PTC core must warm up before being allowed to perform conversions. 
      */  
-    if(gclk_freq > 0UL)
-    {
-        /* PTC clock for minimum pre-scaler (PRSC_DIV_SEL_2) */
-        ptc_clock = gclk_freq / 2UL; 
-        /* wakeup-time for Analog Core is 20us. Calculate clock cycles required for 20us */
-        wakeup_clock_cycles = (uint8_t) ((20UL * ptc_clock) / (1000000UL)); 
-        /* find the exponent near to wakeup_clock_cycles */
-        do{
-           wakeup_exp =  wakeup_exp + 1u;
-           wakeup_clock_cycles = (wakeup_clock_cycles >> 1u);
-        }while(wakeup_clock_cycles > 0u);
-        
-        /* set the wakeup exponent */
-        qtlib_acq_set1.qtm_acq_node_group_config->wakeup_exp = wakeup_exp;
-    }  
+    <#if GET_PTC_CLOCK_FREQUENCY != 0>
+    /* PTC clock for minimum pre-scaler (PRSC_DIV_SEL_2) */
+    ptc_clock = gclk_freq / 2UL; 
+    /* wakeup-time for Analog Core is 20us. Calculate clock cycles required for 20us */
+    wakeup_clock_cycles = (uint8_t) ((20UL * ptc_clock) / (1000000UL)); 
+    /* find the exponent near to wakeup_clock_cycles */
+    do{
+       wakeup_exp =  wakeup_exp + 1u;
+       wakeup_clock_cycles = (wakeup_clock_cycles >> 1u);
+    }while(wakeup_clock_cycles > 0u);
+    
+    /* set the wakeup exponent */
+    qtlib_acq_set1.qtm_acq_node_group_config->wakeup_exp = wakeup_exp;
+	<#else>
+	#warning "PTC clock is configured to 0 Hz."
+	</#if>
     /* 
      * Enable Analog Input Charge Pump of PTC , for weak VDD 
      */
