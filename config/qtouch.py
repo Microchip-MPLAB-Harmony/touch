@@ -575,11 +575,11 @@ def instantiateComponent(qtouchComponent):
 		:none
 	"""
 	print ("Entering initialise")
-	showConfiguration = True
+	showConfiguration = False
 	configName = Variables.get("__CONFIGURATION_NAME")
- 
+
 	touchConfigurator = qtouchComponent.createMenuSymbol("TOUCH_CONFIGURATOR", None)
-	touchConfigurator.setLabel("Goto Menu, Window > MPLAB Code Configurator > Harmony > Touch Configuration")	
+	touchConfigurator.setLabel("Select Project Graph -> Plugins > Touch Configuration")
 	
 	touchMenu = qtouchComponent.createMenuSymbol("TOUCH_MENU", None)
 	touchMenu.setLabel("Touch Configuration")
