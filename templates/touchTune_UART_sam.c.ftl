@@ -240,6 +240,7 @@ typedef struct __attribute__((packed)){
 	uint16_t contact_size;
 	uint16_t h_position;
 	uint16_t v_position;
+	uint8_t resolution;
 }tuneSurfaceData_t;
 static tuneSurfaceData_t runtime_surface_data_arr;
 void copy_surface_run_time_data(uint8_t contact_num);
@@ -531,6 +532,7 @@ void copy_surface_run_time_data(uint8_t contact_num)
 	runtime_surface_data_arr.contact_size = qtm_surface_cs_data1.contact_size;
 	runtime_surface_data_arr.h_position = qtm_surface_cs_data1.h_position;
 	runtime_surface_data_arr.v_position = qtm_surface_cs_data1.v_position;
+	runtime_surface_data_arr.resolution = (uint8_t) qtm_surface_cs_config1.resol_deadband >> 4;
 }
 <#else>
 void copy_surface_run_time_data(uint8_t contact_num)
