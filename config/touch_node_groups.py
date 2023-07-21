@@ -437,7 +437,7 @@ class classTouchNodeGroups():
         Returns:
             none
         """
-        touchPTCPrescaler.setLabel("PTC Clock Prescaler")
+        touchPTCPrescaler.setLabel("PTC Clock (MHz)")
         touchPTCPrescaler.addKey("PRESC4", "PRSC_DIV_SEL_4", "4")
         touchPTCPrescaler.addKey("PRESC8", "PRSC_DIV_SEL_8", "8")
         touchPTCPrescaler.addKey("PRESC16", "PRSC_DIV_SEL_16", "16")
@@ -454,7 +454,7 @@ class classTouchNodeGroups():
         Returns:
             none
         """
-        touchPTCPrescaler.setLabel("PTC Clock Prescaler")
+        touchPTCPrescaler.setLabel("PTC Clock (MHz)")
         touchPTCPrescaler.addKey("PRESC2", "PRSC_DIV_SEL_2", "2")
         touchPTCPrescaler.addKey("PRESC4", "PRSC_DIV_SEL_4", "4")
         touchPTCPrescaler.addKey("PRESC8", "PRSC_DIV_SEL_8", "8")
@@ -472,7 +472,7 @@ class classTouchNodeGroups():
         Returns:
             none
         """
-        touchPTCPrescaler.setLabel("PTC Clock Prescaler")
+        touchPTCPrescaler.setLabel("PTC Clock (MHz)")
         touchPTCPrescaler.addKey("PRESC2", "PRSC_DIV_SEL_2", "2")
         touchPTCPrescaler.addKey("PRESC4", "PRSC_DIV_SEL_4", "4")
         touchPTCPrescaler.addKey("PRESC8", "PRSC_DIV_SEL_8", "8")
