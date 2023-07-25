@@ -66,6 +66,7 @@ class classTouchLP():
             enableEventLowPower = qtouchComponent.createBooleanSymbol("ENABLE_EVENT_LP", LowPowerEvntMenu)
             enableEventLowPower.setLabel("Event based Low Power")
             enableEventLowPower.setDefaultValue(False)
+            enableEventLowPower.setDescription("When using Low power with event system, the CPU is put into Standby mode and periodic RTC/Timer event triggers a touch sensor measurement on the configured low power sensor. In this mode, only a single button or lump sensor (a single group of buttons/sliders/wheels) can be configured as a low power wakeup sensor \n\n When using Low power without event system, a periodic RTC/Timer interrupt wakes up the CPU from Standby mode to trigger a touch measurement on the configured low power sensor. In this mode, a combination of buttons/lump sensors/slider or wheel sensors can be configured as low power wakeup sensor.")
         
         self.setLowPowerKeyValues(qtouchComponent,LowPowerEvntMenu)
         self.setLowPowerDetThreshold(qtouchComponent,LowPowerEvntMenu)
