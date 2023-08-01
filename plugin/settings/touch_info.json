@@ -13,9 +13,9 @@
         "frequencyhop": { "manual":"1.1", "auto":"1.2" },
         "surface": { "fingerOne":"1.4", "fingerTwo":"1.0", "gesture":"1.1" },
         "acquisition":[
-            { "device":"SAMD20", "manual":"1.2", "auto":"1.2" },
-            { "device":"SAME5", "manual":"1.2", "auto":"1.2" },
-            { "device":"SAMD5", "manual":"1.2", "auto":"1.2" },
+            { "device":"SAMD20", "manual":"1.4", "auto":"1.4" },
+            { "device":"SAME5", "manual":"1.5", "auto":"1.5" },
+            { "device":"SAMD5", "manual":"1.5", "auto":"1.5" },
             { "device":"SAMD21", "manual":"1.3", "auto":"1.3" },
             { "device":"SAMHA1", "manual":"1.3", "auto":"1.3" },
             { "device":"SAMDA1", "manual":"1.3", "auto":"1.3" },
