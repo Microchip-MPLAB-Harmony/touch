@@ -3,6 +3,24 @@
 
 #  Microchip MPLAB® Harmony 3 Touch Library Release Notes
 
+## Touch Library v3.14.0 Release
+### NEW FEATURES SUPPORTED
+* MISRA-C 2012 Mandatory and Required rules Compliance achieved for Harmony generated Touch files.
+* Touch Configurator UI is upgraded to the latest framework.
+* Touch Tuning (bidirectional) support is extended for Surface and Gesture features from Touch plugin version 2.2.0.
+### BUG FIXES
+* SAM D51, E5x acquisition libraries are updated to version 1.5 to fix a bug regarding acquisition module getting struck.
+* Fixed the bug to configure more than 3 steps in frequency hop UI.
+* Fixed the bug related to SAMD20 Driven Shield Plus.
+### DEVELOPMENT TOOLS
+* MPLAB® X IDE v6.10
+* MPLAB® XC32 C/C++ Compiler v4.30
+* MPLAB® XIDE plug-ins:
+    * MPLAB® Code Configurator (MCC)
+      * MCC Plugin v5.3.7
+      * MCC Harmony Core v1.3.2
+      * Harmony 3 – Harmony Services – v1.3.0(mandatory)
+
 ## Touch Library v3.13.1 Release
 ### BUG FIXES
 * Fixed bug related to SERCOM getting disconnected from Touch Library component when MCC is closed.

@@ -3,6 +3,33 @@
 
 #  Microchip MPLAB® Harmony 3 Touch Library Release Notes
 
+## Touch Library v3.14.0 Release
+### NEW FEATURES SUPPORTED
+* MISRA-C 2012 Mandatory and Required rules Compliance achieved for Harmony generated Touch files.
+* Touch Configurator UI is upgraded to the latest framework.
+* Touch Tuning (bidirectional) support is extended for Surface and Gesture features from Touch plugin version 2.2.0.
+### BUG FIXES
+* SAM D51, E5x acquisition libraries are updated to version 1.5 to fix a bug regarding acquisition module getting struck.
+* Fixed the bug to configure more than 3 steps in frequency hop UI.
+* Fixed the bug related to SAMD20 Driven Shield Plus.
+### DEVELOPMENT TOOLS
+* MPLAB® X IDE v6.10
+* MPLAB® XC32 C/C++ Compiler v4.30
+* MPLAB® XIDE plug-ins:
+    * MPLAB® Code Configurator (MCC)
+      * MCC Plugin v5.3.7
+      * MCC Harmony Core v1.3.2
+      * Harmony 3 – Harmony Services – v1.3.0(mandatory)
+
+## Touch Library v3.13.1 Release
+### BUG FIXES
+* Fixed bug related to SERCOM getting disconnected from Touch Library component when MCC is closed.
+* Software based low power code compilation error is fixed.
+* Sleep code moved to touch_example template.
+* Fixed bug related to PTC mask being disabled for PIC32CMJH device.
+* Updated SAML1x and PIC32CM LE00/LS00/LS60 device acquisition libraries for bug fix related to overwriting PORT_MUX registers for pins adjacent to touch pins.
+* Touch Configurator summary page update for displaying versions of few acquisition libraries.
+
 ## Touch Library v3.13.0 Release
 ### NEW FEATURES SUPPORTED
 Touch Tune tab provides information to user on bidirectional or unidirectional interface.
@@ -14,7 +41,7 @@ Touch Tune tab provides information to user on bidirectional or unidirectional i
 * Unintended braces in touch timer function is removed.
 * SAMD2x Low power related issues are fixed.
 ### KNOWN ISSUES
-* For PIC32CM JH and SAMC2x families, event system based low power has issues when it enters low power mode.
+* For PIC32CM JH and SAMC2x families, event system based low power has issues when it enters low power mode. Workaround - Use software based low power feature.
 * For SAML1x and PIC32CM LE00/LS00/LS60 device families, PORT_MUX registers for pins adjacent to touch pins may be overwritten by touch library.
 ### DEVELOPMENT TOOLS 
 * [MPLAB® X IDE v6.05](https://www.microchip.com/en-us/tools-resources/develop/mplab-x-ide)
