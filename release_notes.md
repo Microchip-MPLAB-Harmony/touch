@@ -19,7 +19,7 @@
     * MPLAB® Code Configurator (MCC)
       * MCC Plugin v5.3.7
       * MCC Harmony Core v1.3.2
-      * Harmony 3 – Harmony Services – v1.3.0(mandatory)
+      * Harmony 3 – Harmony Services – v1.3.1(mandatory)
 
 ## Touch Library v3.13.1 Release
 ### BUG FIXES

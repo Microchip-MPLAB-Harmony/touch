@@ -11,4 +11,4 @@ package:
       version: "3.17.0"
     - name: "harmony-services"
       type: "package"
-      version: "v1.3.0"
+      version: "v1.3.1"
