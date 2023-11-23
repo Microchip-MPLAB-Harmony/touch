@@ -269,6 +269,9 @@ class classTouchNodeGroups():
                         self.tchMutXPinSelection[len(self.tchMutXPinSelection)-1].addKey(str(index),
                         "X("+str(index)+")",
                         "X"+str(index)+"  ("+cvdTPins[index]+")")
+                        self.tchMutYPinSelection[len(self.tchMutYPinSelection)-1].addKey(str(index+1),
+                        "Y("+str(index+1)+")",
+                        "Y"+str(index+1)+"  ("+cvdRPins[index]+")")
                 else:
                     cvdRPins = ptcPinValues[0]
                     cvdTPins = ptcPinValues[1]
