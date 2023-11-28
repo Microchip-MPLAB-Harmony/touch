@@ -164,8 +164,9 @@ class classTouchNodeGroups():
                 touchSeriesResistor = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_SERIES_RESISTOR" + str(channelID), touchChEnable)
                 self.addDepSymbol(touchSeriesResistor, "updateParameter", ["DEF_NOD_SERIES_RESISTOR" + str(channelID)])
                 #PTC Clock Prescaler
-                touchPTCPrescaler = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_PTC_PRESCALER" + str(channelID), touchChEnable)
-                self.addDepSymbol(touchPTCPrescaler, "updateParameter", ["DEF_NOD_PTC_PRESCALER" + str(channelID)])
+                if instances['interfaceInst'].getDeviceSeries() not in instances['target_deviceInst'].picDevices:
+                    touchPTCPrescaler = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_PTC_PRESCALER" + str(channelID), touchChEnable)
+                    self.addDepSymbol(touchPTCPrescaler, "updateParameter", ["DEF_NOD_PTC_PRESCALER" + str(channelID)])
                 #Analog Gain
                 touchAnalogGain = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_GAIN_ANA" + str(channelID), touchChEnable)
                 self.addDepSymbol(touchAnalogGain, "updateParameter", ["DEF_NOD_GAIN_ANA" + str(channelID)])
@@ -226,7 +227,8 @@ class classTouchNodeGroups():
             elif(rSelMode == "pic32cz"):
                 self.setPTCPresscalerValuesCZ(touchPTCPrescaler)
             else:
-                self.setPTCPresscalerValues(touchPTCPrescaler)
+                if instances['interfaceInst'].getDeviceSeries() not in instances['target_deviceInst'].picDevices:
+                    self.setPTCPresscalerValues(touchPTCPrescaler)
             #Analog Gain
             if(rSelMode == "pic32cz"):
                 self.setAnalogGainValuesCZ(touchAnalogGain)
