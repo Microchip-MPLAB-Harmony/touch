@@ -994,7 +994,10 @@ static void qtm_measure_node(uint16_t channel_number)
 
     /* Apply additional delay for the frequency hopping */
     CVDSD0T2bits.SD0CONTIME = 20u + (sample_delay << 2u);
-
+    if(strcmp(DEVICE_NAME, "PIC32MZ2051W104132") == false)
+    {
+     CVDSD0C1bits.SD0THRESH = 0xf80000;
+    }
     /* Enable CVD */
     CVDSD0C3bits.SD0EN = 0b01u;
     CVDCONbits.SDHOLD = 0u;
