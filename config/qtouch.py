@@ -526,7 +526,8 @@ def onPTCClock(symbol,event):
 	if component.getSymbolValue("TOUCH_LOADED"):
 		frequency = event['symbol'].getValue()
 		channels = component.getSymbolValue("TOUCH_CHAN_ENABLE_CNT")
-		if frequency > 0 and channels > 0:   
+		prescaler = component.getSymbolByID("DEF_NOD_PTC_PRESCALER0") 
+		if frequency > 0 and channels > 0 and prescaler != None:   
 			symbol.setValue(symbol.getDefaultValue()+":sync")
 			sevent = component.getSymbolByID("TOUCH_SCRIPT_EVENT")
 			sevent.setValue("ptcclock")
