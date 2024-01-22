@@ -507,7 +507,7 @@ class classTouchDSGroup():
         component= symbol.getComponent()
         currentVal = int(event['symbol'].getValue())
         enableDrivenShieldAdjacent = False
-        if instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35"]:
+        if instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35", "PIC32MZW"]:
             enableDrivenShieldAdjacent = False
         else:
             enableDrivenShieldAdjacent = component.getSymbolByID("DS_ADJACENT_SENSE_LINE_AS_SHIELD").getValue()
@@ -568,6 +568,61 @@ class classTouchDSGroup():
 
         lumpConfigXSym.setValue(",".join(xconfig))
     
+
+    def updateLumpModeDrivenShieldNoLump(self,instances,symbol,event,totalChannelCount):
+        """Handler for lump mode support menu click event.  
+        Triggered by qtouch.processLump()
+        Arguments:
+            :symbol : the symbol that triggered the event
+            :event : new value of the symbol 
+            :totalChannelCount : see self.targetDeviceInst.getMutualCount()
+            :lump_feature : lump configuration
+        Returns:
+            :none
+        """
+        print("Updating shield - No Lump supported devices")
+        component= symbol.getComponent()
+        currentVal = int(event['symbol'].getValue())
+        enableDrivenShieldAdjacent = False
+        if instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35", "PIC32MZW"]:
+            enableDrivenShieldAdjacent = False
+        else:
+            enableDrivenShieldAdjacent = component.getSymbolByID("DS_ADJACENT_SENSE_LINE_AS_SHIELD").getValue()
+        enableDrivenShieldDedicated = component.getSymbolByID("DS_DEDICATED_PIN_ENABLE").getValue()
+        drivenShieldDedicatedPin = component.getSymbolByID("DS_DEDICATED_PIN")
+        
+        lumpConfigXSym = component.getSymbolByID("FTL_X_INFO")
+        lumpConfigYSym = component.getSymbolByID("FTL_Y_INFO")
+        xconfig = lumpConfigXSym.getValue().split(",")
+        yconfig = lumpConfigYSym.getValue().split(",")
+
+        for i in range(0,totalChannelCount):
+            if((enableDrivenShieldAdjacent == True) or (enableDrivenShieldDedicated == True)):
+                shieldPins = []
+                if (enableDrivenShieldDedicated == True):
+                    shieldY = drivenShieldDedicatedPin.getValue()
+                    shieldY = drivenShieldDedicatedPin.getKeyValue(shieldY)
+                    shieldPins.append(shieldY)
+                    print ("Dedicated Shield pins = "+ str(shieldPins))
+
+                if (enableDrivenShieldAdjacent == True):
+                    for j in range(0,totalChannelCount):
+                        if (i != j):
+                            shieldY = yconfig[j]
+                            shieldPins.append(shieldY)
+                            print ("Adjacent Shield pins = "+ str(shieldPins))
+                if(shieldPins != []):
+                    drivenPin = "|".join(shieldPins)
+                    print ("Drive pins = "+ str(drivenPin))
+                else:
+                    drivenPin = "X_NONE"
+                    print ("Drive pins = NONE")
+            
+            xconfig[i] = drivenPin
+
+        lumpConfigXSym.setValue(",".join(xconfig))
+    
+	
     def setDSNodesMenu(self,groupNumber,qtouchComponent,touchMenu,touchChannelMutual,timersSharingPTC, timersSharingPTCMUX):
         """Populate the driven shield settings in the nodes group menus 
         Arguments:

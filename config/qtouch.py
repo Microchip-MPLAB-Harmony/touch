@@ -476,9 +476,18 @@ def onGenerate(symbol,event):
 		print("Entering ProcessBoostmode")
 		qtouchInst['boostModeInst'].processBoostMode(symbol,event,targetDevice,nodeCount)
 
+	# processLump can also take care of DS
+	#	so perform ds calcualtion different for Lump supported and lump not-supported.
 	if targetDevice not in qtouchInst['target_deviceInst'].non_lump_support:
 		print("Entering ProcessLump")
 		processLump(symbol,event,targetDevice)
+	elif qtouchInst['target_deviceInst'].getShieldMode(targetDevice) == "hardware":
+		localComponent = symbol.getComponent()
+		touchSenseTechnology = localComponent.getSymbolByID("SENSE_TECHNOLOGY").getSelectedKey()
+		totalChannelCount = localComponent.getSymbolByID("TOUCH_CHAN_ENABLE_CNT").getValue()
+
+		if(touchSenseTechnology == "SelfCapShield"):
+			qtouchInst['ds_groupInst'].updateLumpModeDrivenShieldNoLump(qtouchInst,symbol,event,totalChannelCount)
 
 	# if(surfaceEnabled ==True):
 	# 	print("Entering surface_rearrange")
