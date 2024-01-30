@@ -207,7 +207,8 @@ class classTouchBoostModeGroups():
 
         touchNumChannel = nodeCount
         boostModeEnabled = False
-
+        if self.getBoostSupported(targetDevice):
+            boostModeEnabled = True
         localComponent = symbol.getComponent()
         touchSenseTechnology = localComponent.getSymbolByID("SENSE_TECHNOLOGY").getValue()
         surfaceEnabled = localComponent.getSymbolByID("ENABLE_SURFACE").getValue()
