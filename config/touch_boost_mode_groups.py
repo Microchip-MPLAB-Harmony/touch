@@ -207,12 +207,15 @@ class classTouchBoostModeGroups():
 
         touchNumChannel = nodeCount
         boostModeEnabled = False
-        if self.getBoostSupported(targetDevice):
-            boostModeEnabled = True
+
         localComponent = symbol.getComponent()
         touchSenseTechnology = localComponent.getSymbolByID("SENSE_TECHNOLOGY").getValue()
         surfaceEnabled = localComponent.getSymbolByID("ENABLE_SURFACE").getValue()
         lump_config = localComponent.getSymbolByID("LUMP_CONFIG").getValue()
+        
+        if self.getBoostSupported(targetDevice):
+            if localComponent.getSymbolByID("ENABLE_BOOST").getValue():
+                boostModeEnabled = True
 
         if(targetDevice in ["SAML10","SAML11","SAML1xE"]):
             if localComponent.getSymbolByID("ENABLE_BOOST").getValue():
@@ -318,10 +321,13 @@ class classTouchBoostModeGroups():
                 filterlevel.append(tempSymbol.getValue())
 
             if lump_config != "":
-                LUMP_INDI = lump_config.split(";")
-                LUMP_NUM = len(LUMP_INDI)
-                for length in range(LUMP_NUM):
-                    currLump = LUMP_INDI[length]
+                lump_ind = lump_config.split(";")
+                nolump = len(lump_ind)
+                for length in range(nolump):
+                    # check for empty configuration
+                    if lump_ind[length] == "":
+                        continue
+                    currLump = lump_ind[length]
                     channelnum = int(currLump.split(":")[0])
                     whichChannels = currLump.split(":")[1].split(",")
                     tempx = []
@@ -336,7 +342,6 @@ class classTouchBoostModeGroups():
                     else:
                         y_lines[channelnum] = tempy
                     x_lines[channelnum] = tempx
-
 
             if surface_enabled == True:
                 for channel_num in range(0, touchNumChannel):
