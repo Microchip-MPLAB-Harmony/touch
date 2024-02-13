@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Module name="Touch" id="ae5176fc-01bf-4a07-9dae-5580d465c03a" version="3.14.5">
+<Module name="Touch" id="ae5176fc-01bf-4a07-9dae-5580d465c03a" version="3.15.0">
     <ConfigRoot path="config/module.py"/>
 </Module>
