@@ -368,16 +368,6 @@ Notes  : none
 uint8_t qtm_samc21_acq_module_get_version(void);
 
 /*============================================================================
-void qtm_ptc_clear_interrupt(void)
-------------------------------------------------------------------------------
-Purpose:  Clears the eoc/wcomp interrupt bits
-Input    :  none
-Output  :  none
-Notes    :  none
-============================================================================*/
-void qtm_ptc_clear_interrupt(void);
-
-/*============================================================================
 void qtm_samc21_ptc_handler_eoc(void)
 ------------------------------------------------------------------------------
 Purpose:  Captures  the  measurement,  starts  the  next  or  End  Of  Sequence  handler
