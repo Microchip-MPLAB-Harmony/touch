@@ -1515,18 +1515,18 @@ void touch_timer_handler(void)
 }
 <#if pic_devices?seq_contains(DEVICE_NAME)>
 <#if TOUCH_TIMER_INSTANCE != "">
-void timer_handler( uint32_t intCause, uintptr_t context )
+static void timer_handler( uint32_t intCause, uintptr_t context )
 {
      touch_timer_handler();
 }
-uintptr_t tmr_context;
+static uintptr_t tmr_context;
 </#if>
 <#if USE_SYS_TIME?exists && USE_SYS_TIME == true>
-void touch_systime_hanlder(uintptr_t context )
+static void touch_systime_hanlder(uintptr_t context )
 {
      touch_timer_handler();
 }
-uintptr_t tmr_context;
+static uintptr_t tmr_context;
 </#if>
 
 void touch_timer_config(void)

@@ -52,8 +52,8 @@ Revision 1.1 - QTMODLIB-205: Fixed pointer casting issue
                QTMODLIB-207: Assigned the correct value to CVDADC register
 ============================================================================*/
 
-#ifndef __HCVD_PIC32MZ__
-#define __HCVD_PIC32MZ__
+#ifndef HCVD_DRIVER_PIC32MZ1025W104
+#define HCVD_DRIVER_PIC32MZ1025W104
 
 /*----------------------------------------------------------------------------
 include files
@@ -106,4 +106,4 @@ manifest constants
 #define QTM_ACQ_WINDOWCOMP 2u
 
 #define TIMEOUT_OVERHEAD        2
-#endif /* __HCVD_PIC32MZ__ */
+#endif /* HCVD_DRIVER_PIC32MZ1025W104 */
