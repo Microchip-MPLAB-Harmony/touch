@@ -259,16 +259,6 @@ Notes  : none
 static touch_ret_t qtm_load_group_config(qtm_acquisition_control_t* qtm_acq_control_pointer);
 
 /*============================================================================
-void qtm_cvd_clear_interrupt(void)
-------------------------------------------------------------------------------
-Purpose:  Clears the eoc/wcomp interrupt bits
-Input  : none
-Output : none
-Notes  : none
-============================================================================*/
-void qtm_cvd_clear_interrupt(void);
-
-/*============================================================================
 static uint8_t check_cvd_busy(void)
 ------------------------------------------------------------------------------
 Purpose: Checks is a measurement is in progress
@@ -831,7 +821,7 @@ static uint32_t get_cvd_result(void)
     return touch_measurement_capture;
 }
 /*============================================================================
-static uint8_t qtm_load_group_config(void)
+static touch_ret_t qtm_load_group_config(void)
 ------------------------------------------------------------------------------
 Purpose: Load node group configuration
 Input  : -
@@ -959,7 +949,7 @@ static void qtm_measure_node(uint16_t channel_number)
 
     /* Compensation cap */
     CVDSD0C3bits.CVDEN = 1u;
-    CVDSD0C3bits.CVDCPL = qtm_acquisition_control_working_set_ptr->qtm_acq_node_data[channel_number].node_comp_caps;
+    CVDSD0C3bits.CVDCPL = (uint8_t) (qtm_acquisition_control_working_set_ptr->qtm_acq_node_data[channel_number].node_comp_caps);
     /* Calibration requested? */
     if (0u == (qtm_acquisition_control_working_set_ptr->qtm_acq_node_data[channel_number].node_acq_status & NODE_CAL_REQ))
     {

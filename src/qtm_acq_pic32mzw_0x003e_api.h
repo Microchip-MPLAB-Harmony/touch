@@ -249,36 +249,6 @@ Notes  :
 touch_ret_t qtm_cvd_start_measurement_seq(qtm_acquisition_control_t* qtm_acq_control_pointer, void (*measure_complete_callback) (void));
 
 /*============================================================================
-void qtm_cvd_set_timer_period_function(void (*timer_period_function_ptr) (uint16_t period))
-------------------------------------------------------------------------------
-Purpose:  set the timer period function 
-Input  :  function pointer of the timer period function
-Output :  
-Notes  :
-============================================================================*/
-void qtm_cvd_set_timer_period_function(void (*timer_period_function_ptr) (uint16_t period));
-
-/*============================================================================
-void qtm_cvd_set_timer_start_function(void (*timer_start) (void))
-------------------------------------------------------------------------------
-Purpose:  set the timer start function 
-Input  :  function pointer of the timer start function
-Output :  
-Notes  :
-============================================================================*/
-void qtm_cvd_set_timer_start_function(void (*timer_start) (void));
-
-/*============================================================================
-void qtm_cvd_set_timer_stop_function(void (*timer_stop) (void))
-------------------------------------------------------------------------------
-Purpose:  set the timer start function 
-Input  :  function pointer of the timer start function
-Output :  
-Notes  :
-============================================================================*/
-void qtm_cvd_set_timer_stop_function(void (*timer_stop) (void));
-
-/*============================================================================
 void qtm_cvd_de_init(void)
 ------------------------------------------------------------------------------
 Purpose: Clear hcvd Pin registers, set TOUCH_STATE_NULL
@@ -327,15 +297,5 @@ Output  :  none
 Notes    :  none
 ============================================================================*/
 void qtm_cvd_clear_interrupt(void);
-
-/*============================================================================
-void qtm_pic32_cvd_handler_eoc(void)
-------------------------------------------------------------------------------
-Purpose:  Captures  the  measurement,  starts  the  next  or  End  Of  Sequence  handler
-Input    :  none
-Output  :  none
-Notes    :  none
-============================================================================*/
-void qtm_pic32_cvd_handler_eoc(void);
 
 #endif    /* TOUCH_API_PIC32MZW_ACQ_H */

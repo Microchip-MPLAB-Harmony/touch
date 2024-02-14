@@ -645,8 +645,8 @@ static touch_ret_t touch_sensors_config(void)
 
     /* Init acquisition module */
 <#if pic_devices?seq_contains(DEVICE_NAME)>
-    qtm_cvd_init_acquisition_module(&qtlib_acq_set1);
-    qtm_cvd_qtlib_assign_signal_memory(&touch_acq_signals_raw[0]);
+    touch_ret = qtm_cvd_init_acquisition_module(&qtlib_acq_set1);
+    touch_ret = qtm_cvd_qtlib_assign_signal_memory(&touch_acq_signals_raw[0]);
 <#else>
     touch_ret = qtm_ptc_init_acquisition_module(&qtlib_acq_set1);
     touch_ret = qtm_ptc_qtlib_assign_signal_memory(&touch_acq_signals_raw[0]);
@@ -1541,13 +1541,13 @@ void touch_timer_config(void)
 	<#if ENABLE_GESTURE==true>
 	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}(1*(${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].FREQUENCY_GET_API_NAME}()/1000));
 	<#else>
-	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}(DEF_TOUCH_MEASUREMENT_PERIOD_MS*(${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].FREQUENCY_GET_API_NAME}()/1000));
+	${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}((uint16_t)((uint16_t)(DEF_TOUCH_MEASUREMENT_PERIOD_MS)* (uint16_t)(${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].FREQUENCY_GET_API_NAME}()/((uint32_t)1000))));
 	</#if>
     <#else>
 	<#if ENABLE_GESTURE==true>
-	${TOUCH_TIMER_INSTANCE}_PeriodSet(1*(${TOUCH_TIMER_INSTANCE}_FrequencyGet()/1000));
+	${TOUCH_TIMER_INSTANCE}_PeriodSet(1u*(${TOUCH_TIMER_INSTANCE}_FrequencyGet()/1000));
 	<#else>
-	${TOUCH_TIMER_INSTANCE}_PeriodSet(DEF_TOUCH_MEASUREMENT_PERIOD_MS*(${TOUCH_TIMER_INSTANCE}_FrequencyGet()/1000));
+	${TOUCH_TIMER_INSTANCE}_PeriodSet((uint16_t)((uint16_t)(DEF_TOUCH_MEASUREMENT_PERIOD_MS)* (uint16_t)(${TOUCH_TIMER_INSTANCE}_FrequencyGet()/(uint32_t)1000)));
 	</#if>
     </#if>
 	<#else>
