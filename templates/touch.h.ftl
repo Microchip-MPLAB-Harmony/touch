@@ -564,7 +564,7 @@ extern qtm_drivenshield_config_t qtm_drivenshield_config;
 </#if>
 
 <#if DEVICE_NAME == "PIC32MZDA">
-#define TOUCH_DMA_CHANNEL ${TOUCH_PIC32MZDA_DMA}u
+#define TOUCH_DMA_CHANNEL ${TOUCH_PIC32MZDA_DMA}
 </#if>
 
 <#import "/misra.h.ftl" as misra>
