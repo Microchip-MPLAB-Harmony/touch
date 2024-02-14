@@ -51,6 +51,7 @@ Revision 1.0 - Baselining revision for release
 
 #include "hcvd_driver_PIC32MZ1025W104.h"
 #include "definitions.h" 
+#include "../interrupts.h"
 #include <math.h>
 
 #if (__XC32_VERSION <2500)

@@ -496,6 +496,13 @@ def onGenerate(symbol,event):
 		else:
 			print("Entering ProcessLump No boost mode")
 			processLump(symbol,event,targetDevice)
+	elif qtouchInst['target_deviceInst'].getShieldMode(targetDevice) == "hardware":
+		localComponent = symbol.getComponent()
+		touchSenseTechnology = localComponent.getSymbolByID("SENSE_TECHNOLOGY").getSelectedKey()
+		totalChannelCount = localComponent.getSymbolByID("TOUCH_CHAN_ENABLE_CNT").getValue()
+
+		if(touchSenseTechnology == "SelfCapShield"):
+			qtouchInst['ds_groupInst'].updateLumpModeDrivenShieldNoLump(qtouchInst,symbol,event,totalChannelCount)
 
 
 	# if(surfaceEnabled ==True):
