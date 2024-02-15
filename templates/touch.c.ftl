@@ -1157,7 +1157,7 @@ static void touch_disable_lowpower_measurement(void)
 <#if pic32cz?seq_contains(DEVICE_NAME)>
     <#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false>
     lowpower_measurement_flag = 0u;
-    <@softwarelp.lowpwer_disableevsys_saml_no_evs/>
+    <@softwarelp.lowpwer_disableevsys_pic32cz_no_evs/>
     <#else>
     <@eventlp.lowpwer_disable_pic32cz_evsys/>
     </#if>
@@ -1219,7 +1219,7 @@ static void touch_enable_lowpower_measurement(void)
 <#if pic32cz?seq_contains(DEVICE_NAME)>
 	<#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false>
     lowpower_measurement_flag = 1u;
-	<@softwarelp.lowpwer_enableevsys_saml_no_evs/>
+	<@softwarelp.lowpwer_enableevsys_pic32cz_no_evs/>
 	<#else>
 	<@eventlp.lowpwer_enable_pic32cz_evsys/>
 	</#if>

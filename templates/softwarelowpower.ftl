@@ -24,6 +24,32 @@
 	RTC_Timer32Start();
 </#macro>
 
+<#macro lowpwer_disableevsys_pic32cz_no_evs>
+    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    {
+        /* Wait for Synchronization after writing value to Count Register */
+    }
+	RTC_Timer32Stop();
+    RTC_Timer32CounterSet(0u);
+    RTC_Timer32Compare0Set(DEF_TOUCH_MEASUREMENT_PERIOD_MS);
+	/* Store the measurement period */
+	measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
+    RTC_Timer32Start();
+</#macro>
+
+<#macro lowpwer_enableevsys_pic32cz_no_evs>
+    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
+    {
+        /* Wait for Synchronization after writing value to Count Register */
+    }
+    RTC_Timer32Stop();
+    RTC_Timer32CounterSet(0u);
+    RTC_Timer32Compare0Set(QTM_LOWPOWER_TRIGGER_PERIOD);
+	/* Store the measurement period */
+	measurement_period_store = QTM_LOWPOWER_TRIGGER_PERIOD;
+	RTC_Timer32Start();
+</#macro>
+
 <#macro lowpwer_disable_samc20_c21_no_evs>
     while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
     {
