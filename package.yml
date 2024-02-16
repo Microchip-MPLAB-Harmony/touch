@@ -1,14 +1,12 @@
 package:
   format-version: "1.0.0"
   name: "touch"
-  version: "3.15.0"
+  version: "v3.15.0"
   type: "api"
   status: "production"
   
   dependencies:
     - name: "csp"
       type: "package"
-      version: "3.18.2"
-    - name: "harmony-services"
-      type: "package"
-      version: "v1.3.1"
+      version: "v3.18.2"
+

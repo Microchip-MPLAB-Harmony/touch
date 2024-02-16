@@ -2,6 +2,5 @@
 <Package name="touch">
     <Dependencies>
         <Dependency name="csp" version="v3.18.2"/>
-        <Dependency name="harmony-services" version="v1.3.1"/>
     </Dependencies>
 </Package>
