@@ -496,7 +496,7 @@ class classTouchTargetDevice():
                                 cvdRPinsIndex.append(int(index[4:]))
                                 cvdRPinsTemp.append(tempstring)
                 cvdRPins = [x for _,x in sorted(zip(cvdRPinsIndex,cvdRPinsTemp))]
-                cvdTPins = [x for _,x in sorted(zip(cvdRPinsIndex,cvdRPinsTemp))]
+                cvdTPins = [x for _,x in sorted(zip(cvdTPinsIndex,cvdTPinsTemp))]
                 print(cvdRPins)
                 print(cvdTPins)
                 self.touchChannelSelf = len(cvdRPins)
