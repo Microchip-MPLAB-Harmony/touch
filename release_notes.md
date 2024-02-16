@@ -3,6 +3,29 @@
 
 #  Microchip MPLAB® Harmony 3 Touch Library Release Notes
 
+## Touch Library v3.15.0 Release 
+### NEW FEATURES SUPPORTED 
+* Touch Library support has been added for the PIC32MZ2051W104132. 
+### UI ENHANCEMENTS 
+* Improved the Matrix View for Mutual Capacitance pin assignment. 
+* Added an option to update all parameters of the same category in the sensor parameters table. 
+* Improved visibility of the Horizontal Scrollbar. 
+* The lump sensor has been added as the (N+1)th sensor instead of the 0th lump sensor. 
+### BUG FIXES 
+* Fixed the bugs related to the Driven Shield configuration for the SAMD21. 
+* Fixed the issue with the selection of a 1T surface without gesture option. 
+* Fixed the code generation issue with the Boost mode and surface combination. 
+* Fixed the PIC32MZDA code compilation issue. 
+* Fixed the PIC32CZCA software low power compilation issue. 
+* Fixed the Configuration Summary screen for the PIC32CMLE. 
+### DEVELOPMENT TOOLS 
+* MPLAB® X IDE v6.20 
+* MPLAB® XC32 C/C++ Compiler v4.35 
+* MPLAB® X IDE plug-ins:     
+* MPLAB® Code Configurator (MCC)       
+* MCC Plugin v5.5.0       
+* MCC Harmony Core v1.5.1
+
 ## Touch Library v3.14.0 Release
 ### NEW FEATURES SUPPORTED
 * MISRA-C 2012 Mandatory and Required rules Compliance achieved for Harmony generated Touch files.
