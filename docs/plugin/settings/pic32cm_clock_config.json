@@ -1,0 +1,75 @@
+{
+    "settings": [ 
+        {
+            "symbol":"GCLK_INST_NUM1", 
+            "value":"True", 
+            "componentId":"core", 
+             "name":"Select GCLK1"
+        },{
+            "symbol":"CONFIG_CLOCK_OSC16M_ENABLE", 
+            "value":"True", 
+            "componentId":"core", 
+             "name":"Enable OSC16M"
+        },{
+            "symbol":"CONFIG_CLOCK_OSC16M_FREQSEL", 
+            "value":"2", 
+            "componentId":"core", 
+             "name":"Enable 12MHz output"
+        },{
+            "symbol":"CONFIG_CLOCK_DFLL48M_ENABLE", 
+            "value":"False", 
+            "componentId":"core", 
+             "name":"Disable DFLL"
+        },{
+            "symbol":"CONFIG_CLOCK_DPLL_ENABLE", 
+            "value":"False", 
+            "componentId":"core", 
+             "name":"Disable DPLL"
+        },{
+            "symbol":"CONFIG_CLOCK_OSC16M_RUNSTDBY", 
+            "value":"True", 
+            "componentId":"core", 
+             "name":"OSC16 Run in standby"
+        },{
+            "symbol":"CONFIG_CLOCK_OSC16M_ONDEMAND", 
+            "value":"1", 
+            "componentId":"core", 
+             "name":"OSC16 ondemand"
+        },{
+            "symbol":"GCLK_0_SRC", 
+            "value":"1", 
+            "componentId":"core", 
+             "name":"Set source as OSC16"
+        },{
+            "symbol":"GCLK_1_SRC", 
+            "value":"1", 
+            "componentId":"core", 
+             "name":"Select OSC16M"
+        },{
+            "symbol":"GCLK_1_DIV", 
+            "value":"3", 
+            "componentId":"core", 
+             "name":"Prescale 12MHz by 3 for PTC"
+        },{
+            "symbol":"NVM_RWS", 
+            "value":"1", 
+            "componentId":"nvmctrl", 
+             "name":"Wait state - 1"
+        },{
+            "symbol":"GCLK_ID_8_CHEN", 
+            "value":"True", 
+            "componentId":"core", 
+             "name":"Enable evsys"
+        },{
+            "symbol":"GCLK_ID_8_GENSEL", 
+            "value":"1", 
+            "componentId":"core", 
+             "name":"evsys - GCLK1"
+        }
+    ],
+    "descriptions":[
+            "{Oscillator| Prescaler Divisor | Frequency},{OSC16M| 3 | 12MHz}",
+            "{Generic clock(Peripherals)| Source | Frequency},{GCLK0(CPU)|OSC16M| 12MHz},{GCLK1(PTC, UART)|OSC16M(DIV 3)|4MHz},{Timer(RTC)|OSCULP32K|1.024KHz}",
+            "{Wait states},{NVM states| 1}"
+    ]
+}

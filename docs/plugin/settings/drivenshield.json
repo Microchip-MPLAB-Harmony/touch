@@ -1,0 +1,625 @@
+{
+    "ATSAME54":{
+       "core": {
+          "clock": {
+             "tc": "GCLK1",
+             "tcc": "GCLK1"
+          },
+          "dma": {
+             "DMAC_ENABLE_CH_0": "true",
+             "DMAC_BTCTRL_SRCINC_CH_0": "Fixed Address Mode",
+             "DMAC_BTCTRL_DSTINC_CH_0": "Fixed Address Mode",
+             "DMAC_BTCTRL_BEATSIZE_CH_0": "regex:^8-bit.*$",
+             "DMAC_CHCTRLA_RUNSTDBY_CH_0": "true",
+             "DMAC_ENABLE_EVSYS_OUT_0": "true",
+             "DMAC_BTCTRL_EVSYS_EVOSEL_0": "Block event strobe",
+             "DMAC_ENABLE_EVSYS_IN_0": "true",
+             "DMAC_CHEVCTRL_EVACT_0": "Transfer and periodic transfer trigger"
+          }
+       },
+       "timer": {
+          "tc": {
+             "TC_CTRLA_MODE": "Counter in 8-bit mode",
+             "TC_OPERATION_MODE": "Compare",
+             "TC_COMPARE_WAVE_WAVEGEN": "Normal PWM",
+             "TC_CTRLA_RUNSTDBY": "true",
+             "TC_COMPARE_EVCTRL_EV": "true",
+             "TC_COMPARE_EVCTRL_TCINV": "false"
+          },
+          "tcc": {
+             "TCC_0_WEXCTRL_DTIEN": "false",
+             "TCC_1_WEXCTRL_DTIEN": "false",
+             "TCC_2_WEXCTRL_DTIEN": "false",
+             "TCC_3_WEXCTRL_DTIEN": "false"
+          }
+       },
+       "evsys": {
+          "module": {
+             "EVSYS_CHANNEL_0": "true",
+             "EVSYS_CHANNEL_0_GENERATOR": "ADC0_RESRDY",
+             "EVSYS_CHANNEL_1": "true",
+             "EVSYS_CHANNEL_1_GENERATOR": "DMAC_CH_0"
+          },
+          "user": {
+             "EVSYS_USER_55": "CHANNEL_1",
+             "EVSYS_USER_5": "CHANNEL_0"
+          },
+          "timer": {
+             "evsys_user_tmr": "CHANNEL_1"
+          }
+       }
+    },
+    "ATSAME53": {
+       "core": {
+          "clock": {
+             "tc": "GCLK1",
+             "tcc": "GCLK1"
+          },
+          "dma": {
+             "DMAC_ENABLE_CH_0": "true",
+             "DMAC_BTCTRL_SRCINC_CH_0": "Fixed Address Mode",
+             "DMAC_BTCTRL_DSTINC_CH_0": "Fixed Address Mode",
+             "DMAC_BTCTRL_BEATSIZE_CH_0": "regex:^8-bit.*$",
+             "DMAC_CHCTRLA_RUNSTDBY_CH_0": "true",
+             "DMAC_ENABLE_EVSYS_OUT_0": "true",
+             "DMAC_BTCTRL_EVSYS_EVOSEL_0": "Block event strobe",
+             "DMAC_ENABLE_EVSYS_IN_0": "true",
+             "DMAC_CHEVCTRL_EVACT_0": "Transfer and periodic transfer trigger"
+          }
+       },
+       "timer": {
+          "tc": {
+             "TC_CTRLA_MODE": "Counter in 8-bit mode",
+             "TC_OPERATION_MODE": "Compare",
+             "TC_COMPARE_WAVE_WAVEGEN": "Normal PWM",
+             "TC_CTRLA_RUNSTDBY": "true",
+             "TC_COMPARE_EVCTRL_EV": "true",
+             "TC_COMPARE_EVCTRL_TCINV": "false"
+          },
+          "tcc": {
+             "TCC_0_WEXCTRL_DTIEN": "false",
+             "TCC_1_WEXCTRL_DTIEN": "false",
+             "TCC_2_WEXCTRL_DTIEN": "false",
+             "TCC_3_WEXCTRL_DTIEN": "false"
+          }
+       },
+       "evsys": {
+          "module": {
+             "EVSYS_CHANNEL_0": "true",
+             "EVSYS_CHANNEL_0_GENERATOR": "ADC0_RESRDY",
+             "EVSYS_CHANNEL_1": "true",
+             "EVSYS_CHANNEL_1_GENERATOR": "DMAC_CH_0"
+          },
+          "user": {
+             "EVSYS_USER_55": "CHANNEL_1",
+             "EVSYS_USER_5": "CHANNEL_0"
+          },
+          "timer": {
+             "evsys_user_tmr": "CHANNEL_1"
+          }
+       }
+    },
+    "ATSAME51":{
+       "core": {
+          "clock": {
+             "tc": "GCLK1",
+             "tcc": "GCLK1"
+          },
+          "dma": {
+             "DMAC_ENABLE_CH_0": "true",
+             "DMAC_BTCTRL_SRCINC_CH_0": "Fixed Address Mode",
+             "DMAC_BTCTRL_DSTINC_CH_0": "Fixed Address Mode",
+             "DMAC_BTCTRL_BEATSIZE_CH_0": "regex:^8-bit.*$",
+             "DMAC_CHCTRLA_RUNSTDBY_CH_0": "true",
+             "DMAC_ENABLE_EVSYS_OUT_0": "true",
+             "DMAC_BTCTRL_EVSYS_EVOSEL_0": "Block event strobe",
+             "DMAC_ENABLE_EVSYS_IN_0": "true",
+             "DMAC_CHEVCTRL_EVACT_0": "Transfer and periodic transfer trigger"
+          }
+       },
+       "timer": {
+          "tc": {
+             "TC_CTRLA_MODE": "Counter in 8-bit mode",
+             "TC_OPERATION_MODE": "Compare",
+             "TC_COMPARE_WAVE_WAVEGEN": "Normal PWM",
+             "TC_CTRLA_RUNSTDBY": "true",
+             "TC_COMPARE_EVCTRL_EV": "true",
+             "TC_COMPARE_EVCTRL_TCINV": "false"
+          },
+          "tcc": {
+             "TCC_0_WEXCTRL_DTIEN": "false",
+             "TCC_1_WEXCTRL_DTIEN": "false",
+             "TCC_2_WEXCTRL_DTIEN": "false",
+             "TCC_3_WEXCTRL_DTIEN": "false"
+          }
+       },
+       "evsys": {
+          "module": {
+             "EVSYS_CHANNEL_0": "true",
+             "EVSYS_CHANNEL_0_GENERATOR": "ADC0_RESRDY",
+             "EVSYS_CHANNEL_1": "true",
+             "EVSYS_CHANNEL_1_GENERATOR": "DMAC_CH_0"
+          },
+          "user": {
+             "EVSYS_USER_55": "CHANNEL_1",
+             "EVSYS_USER_5": "CHANNEL_0"
+          },
+          "timer": {
+             "evsys_user_tmr": "CHANNEL_1"
+          }
+       }
+    },
+    "ATSAMD51":{
+       "core": {
+          "clock": {
+             "tc": "GCLK1",
+             "tcc": "GCLK1"
+          },
+          "dma": {
+             "DMAC_ENABLE_CH_0": "true",
+             "DMAC_BTCTRL_SRCINC_CH_0": "Fixed Address Mode",
+             "DMAC_BTCTRL_DSTINC_CH_0": "Fixed Address Mode",
+             "DMAC_BTCTRL_BEATSIZE_CH_0": "regex:^8-bit.*$",
+             "DMAC_CHCTRLA_RUNSTDBY_CH_0": "true",
+             "DMAC_ENABLE_EVSYS_OUT_0": "true",
+             "DMAC_BTCTRL_EVSYS_EVOSEL_0": "Block event strobe",
+             "DMAC_ENABLE_EVSYS_IN_0": "true",
+             "DMAC_CHEVCTRL_EVACT_0": "Transfer and periodic transfer trigger"
+          }
+       },
+       "timer": {
+          "tc": {
+             "TC_CTRLA_MODE": "Counter in 8-bit mode",
+             "TC_OPERATION_MODE": "Compare",
+             "TC_COMPARE_WAVE_WAVEGEN": "Normal PWM",
+             "TC_CTRLA_RUNSTDBY": "true",
+             "TC_COMPARE_EVCTRL_EV": "true",
+             "TC_COMPARE_EVCTRL_TCINV": "false"
+          },
+          "tcc": {
+             "TCC_0_WEXCTRL_DTIEN": "false",
+             "TCC_1_WEXCTRL_DTIEN": "false",
+             "TCC_2_WEXCTRL_DTIEN": "false",
+             "TCC_3_WEXCTRL_DTIEN": "false"
+          }
+       },
+       "evsys": {
+          "module": {
+             "EVSYS_CHANNEL_0": "true",
+             "EVSYS_CHANNEL_0_GENERATOR": "ADC0_RESRDY",
+             "EVSYS_CHANNEL_1": "true",
+             "EVSYS_CHANNEL_1_GENERATOR": "DMAC_CH_0"
+          },
+          "user": {
+             "EVSYS_USER_55": "CHANNEL_1",
+             "EVSYS_USER_5": "CHANNEL_0"
+          },
+          "timer": {
+             "evsys_user_tmr": "CHANNEL_1"
+          }
+       }
+    },
+    "ATSAMC21":{
+      "core":{
+            "clock":{
+                "tc":"GCLK1" ,
+                "tcc":"GCLK1" 
+            },
+            "dma":{
+                "DMAC_ENABLE_CH_0":"true" ,
+                "DMAC_CHCTRLA_RUNSTDBY_CH_0":"true" ,
+                "DMAC_CHCTRLB_TRIGSRC_CH_0":"PTC_EOC" ,
+                "DMAC_CHCTRLB_TRIGACT_CH_0":"One Block Transfer Per DMA Request" ,
+                "DMAC_BTCTRL_SRCINC_CH_0":"Fixed Address Mode" ,
+                "DMAC_BTCTRL_DSTINC_CH_0":"Fixed Address Mode" ,
+                "DMAC_BTCTRL_BEATSIZE_CH_0":"regex:^32-bit.*$" ,
+                "DMAC_ENABLE_EVSYS_OUT_0":"true" ,
+                "DMAC_BTCTRL_EVSYS_EVOSEL_0":"Event strobe when block transfer complete"
+            }
+        },
+        "timer":{
+            "tc":{
+                "TC_CTRLA_MODE":"Counter in 8-bit mode" ,
+                "TC_OPERATION_MODE":"Compare" ,
+                "TC_COMPARE_WAVE_WAVEGEN":"Normal PWM" ,
+                "TC_CTRLA_RUNSTDBY":"true" ,
+                "TC_COMPARE_EVCTRL_EV":"true" ,
+                "TC_COMPARE_EVCTRL_TCINV":"false" 
+            },
+            "tcc":{
+                "TCC_0_WEXCTRL_DTIEN":"false" ,
+                "TCC_1_WEXCTRL_DTIEN":"false" ,
+                "TCC_2_WEXCTRL_DTIEN":"false" ,
+                "TCC_3_WEXCTRL_DTIEN":"false" 
+            }
+        },
+        "evsys":{
+            "module":{
+                 "EVSYS_CHANNEL_1":"true" ,
+                 "EVSYS_CHANNEL_1_GENERATOR":"DMAC_CH_0" 
+            },
+            "user":{
+            },
+            "timer":{
+                 "evsys_user_tmr":"CHANNEL_1" 
+            }
+        }
+    },
+    "ATSAMC20":{
+       "core": {
+          "clock": {
+             "tc": "GCLK1",
+             "tcc": "GCLK1"
+          },
+          "dma": {
+             "DMAC_ENABLE_CH_0": "true",
+             "DMAC_CHCTRLB_TRIGSRC_CH_0": "PTC_EOC",
+             "DMAC_BTCTRL_SRCINC_CH_0": "Fixed Address Mode",
+             "DMAC_BTCTRL_DSTINC_CH_0": "Fixed Address Mode",
+             "DMAC_CHCTRLB_TRIGACT_CH_0": "One Block Transfer Per DMA Request",
+             "DMAC_BTCTRL_BEATSIZE_CH_0": "regex:^32-bit.*$",
+             "DMAC_CHCTRLA_RUNSTDBY_CH_0": "true",
+             "DMAC_BTCTRL_EVSYS_EVOSEL_0": "Event strobe when block transfer complete",
+             "DMAC_ENABLE_EVSYS_OUT_0": "true"
+          }
+       },
+       "timer": {
+          "tc": {
+             "TC_CTRLA_MODE": "Counter in 8-bit mode",
+             "TC_OPERATION_MODE": "Compare",
+             "TC_COMPARE_WAVE_WAVEGEN": "Normal PWM",
+             "TC_CTRLA_RUNSTDBY": "true",
+             "TC_COMPARE_EVCTRL_EV": "true",
+             "TC_COMPARE_EVCTRL_TCINV": "false"
+          },
+          "tcc": {
+             "TCC_0_WEXCTRL_DTIEN": "false",
+             "TCC_1_WEXCTRL_DTIEN": "false",
+             "TCC_2_WEXCTRL_DTIEN": "false",
+             "TCC_3_WEXCTRL_DTIEN": "false"
+          }
+       },
+       "evsys": {
+          "module": {
+             "EVSYS_CHANNEL_1": "true",
+             "EVSYS_CHANNEL_1_GENERATOR": "DMAC_CH_0"
+          },
+          "user": {},
+          "timer": {
+             "evsys_user_tmr": "CHANNEL_1"
+          }
+       }
+    },
+    "ATSAML22":{
+       "core": {
+          "clock": {
+             "tc": "GCLK1",
+             "tcc": "GCLK1"
+          },
+          "dma": {
+             "DMAC_ENABLE_CH_0": "true",
+             "DMAC_CHCTRLB_TRIGSRC_CH_0": "PTC_EOC",
+             "DMAC_BTCTRL_SRCINC_CH_0": "Fixed Address Mode",
+             "DMAC_BTCTRL_DSTINC_CH_0": "Fixed Address Mode",
+             "DMAC_CHCTRLB_TRIGACT_CH_0": "One Block Transfer Per DMA Request",
+             "DMAC_BTCTRL_BEATSIZE_CH_0": "regex:^32-bit.*$",
+             "DMAC_CHCTRLA_RUNSTDBY_CH_0": "true",
+             "DMAC_BTCTRL_EVSYS_EVOSEL_0": "Event strobe when block transfer complete",
+             "DMAC_ENABLE_EVSYS_OUT_0": "true"
+          }
+       },
+       "timer": {
+          "tc": {
+             "TC_CTRLA_MODE": "Counter in 8-bit mode",
+             "TC_OPERATION_MODE": "Compare",
+             "TC_COMPARE_WAVE_WAVEGEN": "Normal PWM",
+             "TC_CTRLA_RUNSTDBY": "true",
+             "TC_COMPARE_EVCTRL_EV": "true",
+             "TC_COMPARE_EVCTRL_TCINV": "false"
+          },
+          "tcc": {
+             "TCC_0_WEXCTRL_DTIEN": "false",
+             "TCC_1_WEXCTRL_DTIEN": "false",
+             "TCC_2_WEXCTRL_DTIEN": "false",
+             "TCC_3_WEXCTRL_DTIEN": "false"
+          }
+       },
+       "evsys": {
+          "module": {
+             "EVSYS_CHANNEL_1": "true",
+             "EVSYS_CHANNEL_1_GENERATOR": "DMAC_CH_0"
+          },
+          "user": {},
+          "timer": {
+             "evsys_user_tmr": "CHANNEL_1"
+          }
+       }
+    },
+    "ATSAML21":{
+       "core": {
+          "clock": {
+             "tc": "GCLK1",
+             "tcc": "GCLK1"
+          },
+          "dma": {
+             "DMAC_ENABLE_CH_0": "true",
+             "DMAC_BTCTRL_SRCINC_CH_0": "Fixed Address Mode",
+             "DMAC_BTCTRL_DSTINC_CH_0": "Fixed Address Mode",
+             "DMAC_BTCTRL_BEATSIZE_CH_0": "regex:^8-bit.*$",
+             "DMAC_CHCTRLA_RUNSTDBY_CH_0": "true",
+             "DMAC_ENABLE_EVSYS_OUT_0": "true",
+             "DMAC_BTCTRL_EVSYS_EVOSEL_0": "Event strobe when block transfer complete",
+             "DMAC_ENABLE_EVSYS_IN_0": "true",
+             "DMAC_CHCTRLB_EVACT_0": "Transfer and periodic transfer trigger"
+          }
+       },
+       "timer": {
+          "tc": {
+             "TC_CTRLA_MODE": "Counter in 8-bit mode",
+             "TC_OPERATION_MODE": "Compare",
+             "TC_COMPARE_WAVE_WAVEGEN": "Normal PWM",
+             "TC_CTRLA_RUNSTDBY": "true",
+             "TC_COMPARE_EVCTRL_EV": "true",
+             "TC_COMPARE_EVCTRL_TCINV": "false"
+          },
+          "tcc": {
+             "TCC_0_WEXCTRL_DTIEN": "false",
+             "TCC_1_WEXCTRL_DTIEN": "false",
+             "TCC_2_WEXCTRL_DTIEN": "false",
+             "TCC_3_WEXCTRL_DTIEN": "false"
+          }
+       },
+       "evsys": {
+          "module": {
+             "EVSYS_CHANNEL_0": "true",
+             "EVSYS_CHANNEL_1": "true",
+             "EVSYS_CHANNEL_1_GENERATOR": "DMAC_CH_0"
+          },
+          "user": {
+             "EVSYS_USER_4": "CHANNEL_0"
+          },
+          "timer": {
+             "evsys_user_tmr": "CHANNEL_1"
+          }
+       }
+    },
+    "ATSAMD21":{
+       "core": {
+          "clock": {
+             "tc": "GCLK2",
+             "tcc": "GCLK2"
+          },
+          "dma": {
+             "DMAC_ENABLE_CH_0": "true",
+             "DMAC_BTCTRL_SRCINC_CH_0": "Fixed Address Mode",
+             "DMAC_BTCTRL_DSTINC_CH_0": "Fixed Address Mode",
+             "DMAC_BTCTRL_BEATSIZE_CH_0": "regex:^8-bit.*$",
+             "DMAC_ENABLE_EVSYS_OUT_0": "true",
+             "DMAC_BTCTRL_EVSYS_EVOSEL_0": "Event strobe when block transfer complete",
+             "DMAC_ENABLE_EVSYS_IN_0": "true",
+             "DMAC_CHCTRLB_EVACT_0": "Transfer and periodic transfer trigger"
+          }
+       },
+       "timer": {
+          "tc": {
+             "TC_CTRLA_MODE": "Counter in 8-bit mode",
+             "TC_OPERATION_MODE": "Compare",
+             "TC_COMPARE_CTRLA_WAVEGEN": "NPWM",
+             "TC_CTRLA_RUNSTDBY": "true",
+             "TC_COMPARE_EVCTRL_EV": "true",
+             "TC_COMPARE_EVCTRL_TCINV": "false"
+          },
+          "tcc": {
+             "TCC_0_WEXCTRL_DTIEN": "false",
+             "TCC_1_WEXCTRL_DTIEN": "false",
+             "TCC_2_WEXCTRL_DTIEN": "false",
+             "TCC_3_WEXCTRL_DTIEN": "false"
+          }
+       },
+       "evsys": {
+          "module": {
+             "EVSYS_CHANNEL_0": "true",
+             "EVSYS_CHANNEL_1": "true",
+             "EVSYS_CHANNEL_1_GENERATOR": "DMAC_CH_0"
+          },
+          "user": {
+             "EVSYS_USER_0": "CHANNEL_0"
+          },
+          "timer": {
+             "evsys_user_tmr": "CHANNEL_0"
+          }
+       }
+    },
+    "ATSAMD20":{
+       "core": {
+          "clock": {
+             "tc": "GCLK2",
+             "tcc": "GCLK2"
+          },
+          "dma": {}
+       },
+       "timer": {
+          "tc": {
+             "TC_CTRLA_MODE": "Counter in 8-bit mode",
+             "TC_OPERATION_MODE": "Compare",
+             "TC_COMPARE_CTRLA_WAVEGEN": "NPWM",
+             "TC_CTRLA_RUNSTDBY": "true",
+             "TC_COMPARE_EVCTRL_EV": "true",
+             "TC_COMPARE_EVCTRL_TCINV": "false"
+          },
+          "tcc": {}
+       },
+       "evsys": {
+          "module": {
+             "EVSYS_CHANNEL_0": "true"
+          },
+          "user": {},
+          "timer": {
+             "evsys_user_tmr": "CHANNEL_0"
+          }
+       }
+    },
+    "ATSAMDA1":{
+       "core": {
+          "clock": {
+             "tc": "GCLK2",
+             "tcc": "GCLK2"
+          },
+          "dma": {
+             "DMAC_ENABLE_CH_0": "true",
+             "DMAC_BTCTRL_SRCINC_CH_0": "Fixed Address Mode",
+             "DMAC_BTCTRL_DSTINC_CH_0": "Fixed Address Mode",
+             "DMAC_BTCTRL_BEATSIZE_CH_0": "regex:^8-bit.*$",
+             "DMAC_CHCTRLA_RUNSTDBY_CH_0": "true",
+             "DMAC_ENABLE_EVSYS_OUT_0": "true",
+             "DMAC_BTCTRL_EVSYS_EVOSEL_0": "Event strobe when block transfer complete",
+             "DMAC_ENABLE_EVSYS_IN_0": "true",
+             "DMAC_CHCTRLB_EVACT_0": "Transfer and periodic transfer trigger"
+          }
+       },
+       "timer": {
+          "tc": {
+             "TC_CTRLA_MODE": "Counter in 8-bit mode",
+             "TC_OPERATION_MODE": "Compare",
+             "TC_COMPARE_CTRLA_WAVEGEN": "NPWM",
+             "TC_CTRLA_RUNSTDBY": "true",
+             "TC_COMPARE_EVCTRL_EV": "true",
+             "TC_COMPARE_EVCTRL_TCINV": "false"
+          },
+          "tcc": {
+             "TCC_0_WEXCTRL_DTIEN": "false",
+             "TCC_1_WEXCTRL_DTIEN": "false",
+             "TCC_2_WEXCTRL_DTIEN": "false",
+             "TCC_3_WEXCTRL_DTIEN": "false"
+          }
+       },
+       "evsys": {
+          "module": {
+             "EVSYS_CHANNEL_0": "true",
+             "EVSYS_CHANNEL_1": "true",
+             "EVSYS_CHANNEL_1_GENERATOR": "DMAC_CH_0"
+          },
+          "user": {
+             "EVSYS_USER_0": "CHANNEL_0"
+          },
+          "timer": {
+             "evsys_user_tmr": "CHANNEL_0"
+          }
+       }
+    },
+    "ATSAMHA1":{
+       "core": {
+          "clock": {
+             "tc": "GCLK2",
+             "tcc": "GCLK2"
+          },
+          "dma": {
+             "DMAC_ENABLE_CH_0": "true",
+             "DMAC_BTCTRL_SRCINC_CH_0": "Fixed Address Mode",
+             "DMAC_BTCTRL_DSTINC_CH_0": "Fixed Address Mode",
+             "DMAC_BTCTRL_BEATSIZE_CH_0": "regex:^8-bit.*$",
+             "DMAC_CHCTRLA_RUNSTDBY_CH_0": "true",
+             "DMAC_ENABLE_EVSYS_OUT_0": "true",
+             "DMAC_BTCTRL_EVSYS_EVOSEL_0": "Event strobe when block transfer complete",
+             "DMAC_ENABLE_EVSYS_IN_0": "true",
+             "DMAC_CHCTRLB_EVACT_0": "Transfer and periodic transfer trigger"
+          }
+       },
+       "timer": {
+          "tc": {
+             "TC_CTRLA_MODE": "Counter in 8-bit mode",
+             "TC_OPERATION_MODE": "Compare",
+             "TC_COMPARE_CTRLA_WAVEGEN": "NPWM",
+             "TC_CTRLA_RUNSTDBY": "true",
+             "TC_COMPARE_EVCTRL_EV": "true",
+             "TC_COMPARE_EVCTRL_TCINV": "false"
+          },
+          "tcc": {
+             "TCC_0_WEXCTRL_DTIEN": "false",
+             "TCC_1_WEXCTRL_DTIEN": "false",
+             "TCC_2_WEXCTRL_DTIEN": "false",
+             "TCC_3_WEXCTRL_DTIEN": "false"
+          }
+       },
+       "evsys": {
+          "module": {
+             "EVSYS_CHANNEL_0": "true",
+             "EVSYS_CHANNEL_1": "true",
+             "EVSYS_CHANNEL_1_GENERATOR": "DMAC_CH_0"
+          },
+          "user": {
+             "EVSYS_USER_0": "CHANNEL_0"
+          },
+          "timer": {
+             "evsys_user_tmr": "CHANNEL_0"
+          }
+       }
+    },
+    "ATSAMD10":{
+       "core": {
+          "clock": {
+             "tc": "GCLK1",
+             "tcc": "GCLK1"
+          },
+          "dma": {}
+       },
+       "timer": {
+          "tc": {
+             "TC_CTRLA_MODE": "Counter in 8-bit mode",
+             "TC_OPERATION_MODE": "Compare",
+             "TC_COMPARE_CTRLA_WAVEGEN": "NPWM",
+             "TC_CTRLA_RUNSTDBY": "true",
+             "TC_COMPARE_EVCTRL_EV": "true",
+             "TC_COMPARE_EVCTRL_TCINV": "false"
+          },
+          "tcc": {
+             "TCC_0_WEXCTRL_DTIEN": "false",
+             "TCC_1_WEXCTRL_DTIEN": "false",
+             "TCC_2_WEXCTRL_DTIEN": "false",
+             "TCC_3_WEXCTRL_DTIEN": "false"
+          }
+       },
+       "evsys": {
+          "module": {
+             "EVSYS_CHANNEL_0": "true"
+          },
+          "user": {},
+          "timer": {
+             "evsys_user_tmr": "CHANNEL_0"
+          }
+       }
+    },
+    "ATSAMD11":{
+       "core": {
+          "dma": {},
+          "clock": {
+             "tc": "GCLK1",
+             "tcc": "GCLK1"
+          }
+       },
+       "timer": {
+          "tc": {
+             "TC_CTRLA_MODE": "Counter in 8-bit mode",
+             "TC_OPERATION_MODE": "Compare",
+             "TC_COMPARE_CTRLA_WAVEGEN": "NPWM",
+             "TC_COMPARE_EVCTRL_EV": "true",
+             "TC_COMPARE_EVCTRL_TCINV": "false"
+          },
+          "tcc": {
+             "TCC_0_WEXCTRL_DTIEN": "false",
+             "TCC_1_WEXCTRL_DTIEN": "false",
+             "TCC_2_WEXCTRL_DTIEN": "false",
+             "TCC_3_WEXCTRL_DTIEN": "false"
+          }
+       },
+       "evsys": {
+          "module": {
+             "EVSYS_CHANNEL_0": "true"
+          },
+          "user": {},
+          "timer": {
+             "evsys_user_tmr": "CHANNEL_0"
+          }
+       }
+    }
+}
