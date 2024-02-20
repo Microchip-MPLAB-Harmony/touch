@@ -17,7 +17,10 @@
 * Fixed the code generation issue with the Boost mode and surface combination. 
 * Fixed the PIC32MZDA code compilation issue. 
 * Fixed the PIC32CZCA software low power compilation issue. 
-* Fixed the Configuration Summary screen for the PIC32CMLE. 
+* Fixed the Configuration Summary screen for the PIC32CMLE.
+### KNOWN ISSUES
+* Timer based driven shield project may not work for SAM C2x, SAM L22.
+* Compilation error in SAML11 Boost Mode project. 
 ### DEVELOPMENT TOOLS 
 * MPLAB® X IDE v6.20 
 * MPLAB® XC32 C/C++ Compiler v4.35 
