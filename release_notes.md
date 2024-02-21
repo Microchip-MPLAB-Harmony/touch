@@ -10,7 +10,6 @@
 * Improved the Matrix View for Mutual Capacitance pin assignment. 
 * Added an option to update all parameters of the same category in the sensor parameters table. 
 * Improved visibility of the Horizontal Scrollbar. 
-* The lump sensor has been added as the (N+1)th sensor instead of the 0th lump sensor. 
 ### BUG FIXES 
 * Fixed the bugs related to the Driven Shield configuration for the SAMD21. 
 * Fixed the issue with the selection of a 1T surface without gesture option. 
@@ -18,6 +17,7 @@
 * Fixed the PIC32MZDA code compilation issue. 
 * Fixed the PIC32CZCA software low power compilation issue. 
 * Fixed the Configuration Summary screen for the PIC32CMLE.
+* Fixed the issue with surface pin configuration getting swapped on re-opening Touch configurator.
 ### KNOWN ISSUES
 * Timer based driven shield project may not work for SAM C2x, SAM L22.
 * Compilation error in SAML11 Boost Mode project. 

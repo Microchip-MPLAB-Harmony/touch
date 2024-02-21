@@ -1,1 +1,0 @@
-Microchip MPLAB Harmony for Touch provides several application examples for supported device families. The examples can be found at this [Github location] (https://github.com/Microchip-MPLAB-Harmony/touch_apps)
