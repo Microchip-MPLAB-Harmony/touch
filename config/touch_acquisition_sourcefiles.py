@@ -186,6 +186,12 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice in ["PIC32CZCA90"]):
             touchAcqLibraryFile.setSourcePath("/src/libraries/qtm_acq_pic32cz_ca90_0x004a.X.a")
             touchAcqLibraryFile.setOutputName("qtm_acq_pic32cz_ca90_0x004a.X.a")
+        elif(targetDevice in ["PIC32CKGC00","PIC32CKGC01"]):
+            touchAcqLibraryFile.setSourcePath("/src/libraries/qtm_acq_pic32ckgc_0x004e.X.a")
+            touchAcqLibraryFile.setOutputName("qtm_acq_pic32ckgc_0x004e.X.a")
+        elif(targetDevice in ["PIC32CKSG00","PIC32CKSG01"]):
+            touchAcqLibraryFile.setSourcePath("/src/libraries/qtm_acq_pic32cksg_0x004e.X.a")
+            touchAcqLibraryFile.setOutputName("qtm_acq_pic32cksg_0x004e.X.a")
         else:
             touchAcqLibraryFile.setSourcePath("Error_setAcquisitionLibraryFile")
             touchAcqLibraryFile.setOutputName("Error_setAcquisitionLibraryFile")
@@ -279,6 +285,12 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice in ["PIC32CZCA90"]):
             touchAcqAutoLibraryFile.setSourcePath("/src/libraries/qtm_acq_pic32cz_ca90_0x004a.X.a")
             touchAcqAutoLibraryFile.setOutputName("qtm_acq_pic32cz_ca90_0x004a.X.a")
+        elif(targetDevice in ["PIC32CKGC00","PIC32CKGC01"]):
+            touchAcqAutoLibraryFile.setSourcePath("/src/libraries/qtm_acq_pic32ckgc_0x004e.X.a")
+            touchAcqAutoLibraryFile.setOutputName("qtm_acq_pic32ckgc_0x004e.X.a")
+        elif(targetDevice in ["PIC32CKSG00","PIC32CKSG01"]):
+            touchAcqAutoLibraryFile.setSourcePath("/src/libraries/qtm_acq_pic32cksg_0x004e.X.a")
+            touchAcqAutoLibraryFile.setOutputName("qtm_acq_pic32cksg_0x004e.X.a")
         else:
             touchAcqAutoLibraryFile.setOutputName("Error_setAutoAcquisitionLibraryFile")
             touchAcqAutoLibraryFile.setOutputName("Error_setAutoAcquisitionLibraryFile")
@@ -389,6 +401,9 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
             touchAcqHeaderFile.setSourcePath("/src/qtm_acq_pic32czca_0x004a_api.h")
             touchAcqHeaderFile.setOutputName("qtm_acq_pic32czca_0x004a_api.h")
+        elif(targetDevice in ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
+            touchAcqHeaderFile.setSourcePath("/src/qtm_acq_pic32ck_0x004e_api.h")
+            touchAcqHeaderFile.setOutputName("qtm_acq_pic32ck_0x004e_api.h")
         else:
             touchAcqHeaderFile.setSourcePath("Error_setAcqHeaderFile")
             touchAcqHeaderFile.setOutputName("Error_setAcqHeaderFile")

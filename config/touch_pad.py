@@ -47,6 +47,8 @@ class classTouchPads():
             ptcPinValues = []
             ptcPinValues = ptcPinNode.getChildren()
             for index in range(0, len(ptcPinValues)):
+                if ptcPinValues[index].getAttribute("pad") not in list(self.pads.keys()):
+                    continue
                 groups = self.pads[ptcPinValues[index].getAttribute("pad")][1]
                 if(ptcPinValues[index].getAttribute("index")==None):
                     groups.append(ptcPinValues[index].getAttribute("group"))

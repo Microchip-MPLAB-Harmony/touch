@@ -106,7 +106,7 @@ class classTouchAcquisitionGroups():
             touchAutoTuneMode = qtouchComponent.createKeyValueSetSymbol("TUNE_MODE_SELECTED", parentMenu)
             touchScanRate = qtouchComponent.createIntegerSymbol("DEF_TOUCH_MEASUREMENT_PERIOD_MS", parentMenu)
             touchAcquisitonFrequency = qtouchComponent.createKeyValueSetSymbol("DEF_SEL_FREQ_INIT", parentMenu)
-            if (targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
+            if (targetDevice in ["PIC32CZCA80", "PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
                 ptcWakeupTime = qtouchComponent.createIntegerSymbol("DEF_PTC_WAKEUP_EXP", parentMenu)
         else:
             touchSenseTechnology = qtouchComponent.createKeyValueSetSymbol("SENSE_TECHNOLOGY_"+str(groupNumber), parentMenu)

@@ -459,7 +459,7 @@ def onGenerate(symbol,event):
 	nodeCount = localComponent.getSymbolByID("TOUCH_CHAN_ENABLE_CNT").getValue()
 	sercom = localComponent.getSymbolByID("TOUCH_SERCOM_INSTANCE").getValue()
 	timer = localComponent.getSymbolByID("TOUCH_TIMER_INSTANCE").getValue()
-	if targetDevice in ["PIC32CZCA80","PIC32CZCA90"]:
+	if targetDevice in ["PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]:
 		ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")
 		localComponent.getSymbolByID("GET_PTC_CLOCK_FREQUENCY").setValue(ptcClockFrequencyDefault)
 
@@ -761,7 +761,7 @@ def instantiateComponent(qtouchComponent):
 	else:
 		autoTuneCSDDisable.setValue(False)
 
-	if device in ["PIC32CZCA80","PIC32CZCA90"]:
+	if device in ["PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]:
 		ptcClockFrequency = qtouchComponent.createIntegerSymbol("GET_PTC_CLOCK_FREQUENCY", touchMenu)
 		ptcClockFrequency.setLabel("Get PTC Clock Frequency")
 		ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")

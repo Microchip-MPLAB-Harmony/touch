@@ -54,6 +54,7 @@ Microchip or any third party.
 <#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35"]>
 <#assign buckland = ["PIC32CXBZ31","WBZ35"]>
 <#assign pic32cz = ["PIC32CZCA80", "PIC32CZCA90"]>
+<#assign pic32ck = ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]>
 <#assign supc_devices = ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMLS60","PIC32CZCA80","PIC32CZCA90"]>
 <#assign no_standby_devices = ["SAMD10","SAMD11"]>
 <#assign no_standby_during_measurement = 0>
@@ -122,7 +123,7 @@ static void qtm_measure_complete_callback(void);
  */
 static void qtm_error_callback(uint8_t error);
 
-<#if pic32cz?seq_contains(DEVICE_NAME)>
+<#if pic32cz?seq_contains(DEVICE_NAME) || pic32ck?seq_contains(DEVICE_NAME) >
 void PTC_Initialize(void);
 </#if>
 
@@ -227,7 +228,7 @@ static uint32_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 /* Acquisition set 1 - General settings */
 static qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
     = {DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, DEF_PTC_CAL_AUTO_TUNE, (uint8_t)DEF_SEL_FREQ_INIT, 1u};
-<#elseif pic32cz?seq_contains(DEVICE_NAME)>
+<#elseif pic32cz?seq_contains(DEVICE_NAME) || pic32ck?seq_contains(DEVICE_NAME) >
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 /* Acquisition module internal data - Size to largest acquisition set */
 static uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
@@ -278,6 +279,8 @@ qtm_acq_pic32cmjh_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0.
 qtm_acq_pic32cx_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 <#elseif  DEVICE_NAME =="PIC32CZCA80"||DEVICE_NAME =="PIC32CZCA90">
 qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
+<#elseif  pic32ck?seq_contains(DEVICE_NAME)>
+qtm_acq_pic32ck_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 <#else>
 qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 </#if>
@@ -760,7 +763,7 @@ static void qtm_error_callback(uint8_t error)
 </#if>
 }
 
-<#if pic32cz?seq_contains(DEVICE_NAME)>
+<#if pic32cz?seq_contains(DEVICE_NAME) || pic32ck?seq_contains(DEVICE_NAME) >
 /*============================================================================
 void PTC_Initialize(void)
 ------------------------------------------------------------------------------
@@ -859,7 +862,7 @@ Notes  :
 ============================================================================*/
 void touch_init(void)
 {
-<#if pic32cz?seq_contains(DEVICE_NAME)>
+<#if pic32cz?seq_contains(DEVICE_NAME) || pic32ck?seq_contains(DEVICE_NAME) >
     PTC_Initialize();
     <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
     touch_Stuff_PinDefs();
@@ -1841,6 +1844,8 @@ void PTC_Handler(void)
     qtm_pic32cmjh_ptc_handler_eoc();
 <#elseif (DEVICE_NAME =="PIC32CZCA80" ||(DEVICE_NAME == "PIC32CZCA90"))>
     qtm_pic32cz_ptc_handler_eoc();
+<#elseif pic32ck?seq_contains(DEVICE_NAME)>
+    qtm_pic32ck_ptc_handler_eoc();
 <#else>
 	qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();
 </#if>
