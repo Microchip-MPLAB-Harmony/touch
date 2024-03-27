@@ -67,6 +67,9 @@ class classTouchSurfaceFiles():
         elif (targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
             surface1TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_pic32cz_0x0021.X.a")
             surface1TLibraryFile.setOutputName("qtm_surface_cs_pic32cz_0x0021.X.a")
+        elif(targetDevice in ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
+            surface1TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_cm33_0x0021.X.a")
+            surface1TLibraryFile.setOutputName("qtm_surface_cs_cm33_0x0021.X.a")
         else:
             surface1TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_cm0p_0x0021.X.a")
             surface1TLibraryFile.setOutputName("qtm_surface_cs_cm0p_0x0021.X.a")
@@ -97,6 +100,9 @@ class classTouchSurfaceFiles():
         elif (targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
             surface2TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_2t_pic32cz_0x0025.X.a")
             surface2TLibraryFile.setOutputName("qtm_surface_cs_2t_pic32cz_0x0025.X.a")
+        elif(targetDevice in ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
+            surface2TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_2t_cm33_0x0025.X.a")
+            surface2TLibraryFile.setOutputName("qtm_surface_cs_2t_cm33_0x0025.X.a")
         else:
             surface2TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_2t_cm0p_0x0025.X.a")
             surface2TLibraryFile.setOutputName("qtm_surface_cs_2t_cm0p_0x0025.X.a")

@@ -136,7 +136,7 @@ class classTouchAcquisitionGroups():
         self.setScanRateValues(touchScanRate)    
         #Acquisition Frequency
         self.setAcquisitionFrequencyValues(touchAcquisitonFrequency)
-        if (targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
+        if (targetDevice in ["PIC32CZCA80", "PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
             #PTC Wake up component   
             self.setPtcWakeupTime(ptcWakeupTime) 
 

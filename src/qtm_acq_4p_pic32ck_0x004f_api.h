@@ -1,45 +1,12 @@
+/*============================================================================
+Filename : qtm_acq_4p_pic32cksg_0x004F_api.h 
+Project  : Touch Modular Library
+Purpose  : Acquisition module - PIC32CK_SG01 
+         : Header file for application project - Acquisition library API
+============================================================================*/
 
-/*******************************************************************************
-  Touch Library
-
-  Company:
-    Microchip Technology Inc.
-
-  File Name:
-    qtm_acq_pic32ck_0x004e_api.h
-
-  Summary:
-    QTouch Modular Library
-
-  Description:
-    API for Acquisition module - PIC32CK/PTC
-	
-*******************************************************************************/
-
-/*******************************************************************************
-Copyright (C) [2023], Microchip Technology Inc., and its subsidiaries. All rights reserved.
-
-The software and documentation is provided by microchip and its contributors
-"as is" and any express, implied or statutory warranties, including, but not
-limited to, the implied warranties of merchantability, fitness for a particular
-purpose and non-infringement of third party intellectual property rights are
-disclaimed to the fullest extent permitted by law. In no event shall microchip
-or its contributors be liable for any direct, indirect, incidental, special,
-exemplary, or consequential damages (including, but not limited to, procurement
-of substitute goods or services; loss of use, data, or profits; or business
-interruption) however caused and on any theory of liability, whether in contract,
-strict liability, or tort (including negligence or otherwise) arising in any way
-out of the use of the software and documentation, even if advised of the
-possibility of such damage.
-
-Except as expressly permitted hereunder and subject to the applicable license terms
-for any third-party software incorporated in the software and any applicable open
-source software license terms, no license or other rights, whether express or
-implied, are granted under any patent or other intellectual property rights of
-Microchip or any third party.
-************************************************************************************/
-#ifndef TOUCH_API_PIC32CK_ACQ_H
-#define TOUCH_API_PIC32CK_ACQ_H
+#ifndef __TOUCH_API_PIC32CKSG_ACQ_4P_H__
+#define __TOUCH_API_PIC32CKSG_ACQ_4P_H__
 
 /* Include files */
 #include <stdint.h>
@@ -51,7 +18,6 @@ Microchip or any third party.
 #define TOUCH_BITMASK(np)  (uint32_t)((uint32_t) 1u << (np) )            
     
 /* Touch constant definitions */
-#undef X
 #define X(n)        TOUCH_BITMASK((n))
 #define Y(n)        TOUCH_BITMASK((n))
 #define X_NONE      (0u)
@@ -180,13 +146,13 @@ freq_config_sel_t;
 /* Acquisition module Sequential */
 typedef struct
 {
-  uint32_t node_xmask;		/* Selects the X Pins for this node */
-  uint32_t node_ymask;		/* Selects the Y Pins for this node */
+  uint32_t grp4_x_mask[4];	/* Selects the X Pins for this parallel node group */
+  uint32_t grp4_ymask;	/* Selects the Y Pins for this parallel node group */
   uint8_t node_csd;             /* Charge share delay */
   uint8_t node_rsel_prsc;       /* Bits 7:4 = Resistor, Bits 3:0  Prescaler */
   uint8_t node_gain;            /* Bits 7:4 = Analog gain, Bits 3:0 = Digital gain */
   uint8_t node_oversampling;	/* Accumulator setting  */
-}qtm_acq_pic32ck_node_config_t;
+}qtm_acq_4p_pic32ck_node_config_t;
 
 /* Node run-time data - Defined in common api as it will be used with all acquisition modules */
 
@@ -205,7 +171,7 @@ typedef struct
 typedef struct
 {
   qtm_acq_node_group_config_t *qtm_acq_node_group_config;
-  qtm_acq_pic32ck_node_config_t *qtm_acq_node_config;
+  qtm_acq_4p_pic32ck_node_config_t *qtm_acq_node_config;
   qtm_acq_node_data_t *qtm_acq_node_data;
 } qtm_acquisition_control_t;
 
@@ -356,4 +322,4 @@ Notes  : none
 ============================================================================*/
 uint8_t qtm_acq_module_get_version(void);
 
-#endif    /* TOUCH_API_PIC32CK_ACQ_H */
+#endif    /* __TOUCH_API_PIC32CK_ACQ_H__ */

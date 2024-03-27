@@ -228,7 +228,7 @@ static uint32_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 /* Acquisition set 1 - General settings */
 static qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
     = {DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, DEF_PTC_CAL_AUTO_TUNE, (uint8_t)DEF_SEL_FREQ_INIT, 1u};
-<#elseif pic32cz?seq_contains(DEVICE_NAME) || pic32ck?seq_contains(DEVICE_NAME) >
+<#elseif pic32cz?seq_contains(DEVICE_NAME)>
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 /* Acquisition module internal data - Size to largest acquisition set */
 static uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
@@ -246,6 +246,11 @@ static uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 static qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
     ={DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, (uint8_t)DEF_SEL_FREQ_INIT, DEF_PTC_INTERRUPT_PRIORITY, DEF_PTC_WAKEUP_EXP};
 </#if>
+<#elseif pic32ck?seq_contains(DEVICE_NAME)>
+static uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
+/* Acquisition set 1 - General settings */
+static qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
+    ={DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, (uint8_t)DEF_SEL_FREQ_INIT, DEF_PTC_INTERRUPT_PRIORITY, DEF_PTC_WAKEUP_EXP};
 <#else>
 static uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 /* Acquisition set 1 - General settings */
@@ -262,6 +267,8 @@ qtm_acq_node_data_t ptc_qtlib_node_stat1[DEF_NUM_CHANNELS];
 qtm_acq_4p_pic32cm_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
 <#elseif pic32cz?seq_contains(DEVICE_NAME)>
 qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
+<#elseif pic32ck?seq_contains(DEVICE_NAME)>
+qtm_acq_4p_pic32ck_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
 <#else>
 qtm_acq_4p_${DEVICE_NAME?lower_case}_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
 </#if>
@@ -662,7 +669,7 @@ static touch_ret_t touch_sensors_config(void)
         touch_ret = qtm_calibrate_sensor_node(&qtlib_acq_set1, sensor_nodes);
     }
 
-<#if pic32cz?seq_contains(DEVICE_NAME)>
+<#if pic32cz?seq_contains(DEVICE_NAME) ||  pic32ck?seq_contains(DEVICE_NAME)>
     /* Enable sensor keys and assign nodes */
     for (sensor_nodes = 0u; sensor_nodes < (uint16_t) DEF_NUM_SENSORS; sensor_nodes++) {
 			touch_ret=qtm_init_sensor_key(&qtlib_key_set1, (uint8_t) sensor_nodes, &ptc_qtlib_node_stat1[sensor_nodes]);
@@ -804,6 +811,8 @@ void PTC_Initialize(void)
     SUPC_REGS->SUPC_VREGCTRL |= SUPC_VREGCTRL_CPEN(4u);
     
 }
+</#if>
+<#if pic32cz?seq_contains(DEVICE_NAME)>
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 /*============================================================================
 void touch_Stuff_PinDefs(void)
@@ -864,8 +873,10 @@ void touch_init(void)
 {
 <#if pic32cz?seq_contains(DEVICE_NAME) || pic32ck?seq_contains(DEVICE_NAME) >
     PTC_Initialize();
+    <#if pic32cz?seq_contains(DEVICE_NAME)>
     <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
     touch_Stuff_PinDefs();
+    </#if>
     </#if>
 </#if>
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
@@ -1157,7 +1168,7 @@ static void touch_disable_lowpower_measurement(void)
 <#if sam_e5x_devices?seq_contains(DEVICE_NAME)>
     <@softwarelp.lowpwer_disable_same5x_no_evs/>
 </#if>
-<#if pic32cz?seq_contains(DEVICE_NAME)>
+<#if pic32cz?seq_contains(DEVICE_NAME)||pic32ck?seq_contains(DEVICE_NAME)>
     <#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false>
     lowpower_measurement_flag = 0u;
     <@softwarelp.lowpwer_disableevsys_pic32cz_no_evs/>
@@ -1219,7 +1230,7 @@ static void touch_enable_lowpower_measurement(void)
 <#if sam_e5x_devices?seq_contains(DEVICE_NAME)>
     <@softwarelp.lowpwer_enable_same5x_no_evs/>
 </#if>
-<#if pic32cz?seq_contains(DEVICE_NAME)>
+<#if pic32cz?seq_contains(DEVICE_NAME) || pic32ck?seq_contains(DEVICE_NAME)>
 	<#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false>
     lowpower_measurement_flag = 1u;
 	<@softwarelp.lowpwer_enableevsys_pic32cz_no_evs/>

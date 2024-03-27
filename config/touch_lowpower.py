@@ -37,7 +37,7 @@ class classTouchLP():
             "PIC32CMLE00","PIC32CMLS00",
             "SAME54","SAME53","SAME51","SAMD51",
             "SAML21","SAML22",
-            "SAMD10","SAMD11","PIC32CZCA80","PIC32CZCA90"]
+            "SAMD10","SAMD11","PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]
         self.symbolList = []
         self.depFuncName = []
         self.dependencies = []
