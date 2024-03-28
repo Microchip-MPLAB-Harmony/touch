@@ -1,12 +1,45 @@
-/*============================================================================
-Filename : qtm_acq_4p_pic32cksg_0x004F_api.h 
-Project  : Touch Modular Library
-Purpose  : Acquisition module - PIC32CK_SG01 
-         : Header file for application project - Acquisition library API
-============================================================================*/
 
-#ifndef __TOUCH_API_PIC32CKSG_ACQ_4P_H__
-#define __TOUCH_API_PIC32CKSG_ACQ_4P_H__
+/*******************************************************************************
+  Touch Library
+
+  Company:
+    Microchip Technology Inc.
+
+  File Name:
+    qtm_acq_4p_pic32ck_0x004f_api.h
+
+  Summary:
+    QTouch Modular Library
+
+  Description:
+    API for 4P Acquisition module - PIC32CK/PTC
+	
+*******************************************************************************/
+
+/*******************************************************************************
+Copyright (C) [2023], Microchip Technology Inc., and its subsidiaries. All rights reserved.
+
+The software and documentation is provided by microchip and its contributors
+"as is" and any express, implied or statutory warranties, including, but not
+limited to, the implied warranties of merchantability, fitness for a particular
+purpose and non-infringement of third party intellectual property rights are
+disclaimed to the fullest extent permitted by law. In no event shall microchip
+or its contributors be liable for any direct, indirect, incidental, special,
+exemplary, or consequential damages (including, but not limited to, procurement
+of substitute goods or services; loss of use, data, or profits; or business
+interruption) however caused and on any theory of liability, whether in contract,
+strict liability, or tort (including negligence or otherwise) arising in any way
+out of the use of the software and documentation, even if advised of the
+possibility of such damage.
+
+Except as expressly permitted hereunder and subject to the applicable license terms
+for any third-party software incorporated in the software and any applicable open
+source software license terms, no license or other rights, whether express or
+implied, are granted under any patent or other intellectual property rights of
+Microchip or any third party.
+************************************************************************************/
+#ifndef TOUCH_API_PIC32CK_ACQ_4P_H
+#define TOUCH_API_PIC32CK_ACQ_4P_H
 
 /* Include files */
 #include <stdint.h>
@@ -18,6 +51,7 @@ Purpose  : Acquisition module - PIC32CK_SG01
 #define TOUCH_BITMASK(np)  (uint32_t)((uint32_t) 1u << (np) )            
     
 /* Touch constant definitions */
+#undef X
 #define X(n)        TOUCH_BITMASK((n))
 #define Y(n)        TOUCH_BITMASK((n))
 #define X_NONE      (0u)
@@ -322,4 +356,4 @@ Notes  : none
 ============================================================================*/
 uint8_t qtm_acq_module_get_version(void);
 
-#endif    /* __TOUCH_API_PIC32CK_ACQ_H__ */
+#endif    /* TOUCH_API_4P_PIC32CK_ACQ_H */
