@@ -153,7 +153,7 @@ static uint16_t time_drift_wakeup_counter;
 </#if>
 </#if>
 <#else>
-<#if sam_d1x_devices?seq_contains(DEVICE_NAME) || sam_e5x_devices?seq_contains(DEVICE_NAME)>
+<#if sam_d1x_devices?seq_contains(DEVICE_NAME) || sam_e5x_devices?seq_contains(DEVICE_NAME)|| pic32ck?seq_contains(DEVICE_NAME)>
 <#if num_of_channel_more_than_one == 1>
 static void touch_seq_lp_sensor(void);
 static void touch_enable_nonlp_sensors(void);
@@ -183,7 +183,7 @@ static uint16_t current_lp_sensor = 0u;
 #endif
         </#if>
     <#else>
-        <#if sam_d1x_devices?seq_contains(DEVICE_NAME) || sam_e5x_devices?seq_contains(DEVICE_NAME)>
+        <#if sam_d1x_devices?seq_contains(DEVICE_NAME) || sam_e5x_devices?seq_contains(DEVICE_NAME)|| pic32ck?seq_contains(DEVICE_NAME)>
 #if DEF_TOUCH_LOWPOWER_ENABLE == 1u
 static uint8_t lowpower_measurement_flag = 0u;
 <#if num_of_channel_more_than_one == 1>
@@ -1169,11 +1169,11 @@ static void touch_disable_lowpower_measurement(void)
     <@softwarelp.lowpwer_disable_same5x_no_evs/>
 </#if>
 <#if pic32cz?seq_contains(DEVICE_NAME)||pic32ck?seq_contains(DEVICE_NAME)>
-    <#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false>
-    lowpower_measurement_flag = 0u;
-    <@softwarelp.lowpwer_disableevsys_pic32cz_no_evs/>
-    <#else>
+    <#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == true>
     <@eventlp.lowpwer_disable_pic32cz_evsys/>
+    <#else>
+     lowpower_measurement_flag = 0u;
+    <@softwarelp.lowpwer_disableevsys_pic32cz_no_evs/>
     </#if>
 </#if>
 }
@@ -1231,11 +1231,11 @@ static void touch_enable_lowpower_measurement(void)
     <@softwarelp.lowpwer_enable_same5x_no_evs/>
 </#if>
 <#if pic32cz?seq_contains(DEVICE_NAME) || pic32ck?seq_contains(DEVICE_NAME)>
-	<#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false>
+	<#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == true>
+    	<@eventlp.lowpwer_enable_pic32cz_evsys/>
+	<#else>
     lowpower_measurement_flag = 1u;
 	<@softwarelp.lowpwer_enableevsys_pic32cz_no_evs/>
-	<#else>
-	<@eventlp.lowpwer_enable_pic32cz_evsys/>
 	</#if>
 </#if>
 }
@@ -1311,6 +1311,37 @@ static void touch_process_lowpower(void) {
 }
         </#if>
 <#else>
+<#if pic32ck?seq_contains(DEVICE_NAME)>
+    if (time_since_touch >= DEF_TOUCH_TIMEOUT) {
+        <#if num_of_channel_more_than_one == 1>
+		touch_disable_nonlp_sensors();
+        </#if>
+        if (measurement_period_store != QTM_LOWPOWER_TRIGGER_PERIOD) {
+            touch_enable_lowpower_measurement();
+        }
+        <#if num_of_channel_more_than_one == 1>
+        if(lowpower_measurement_flag == 1u) {
+            if(get_sensor_state(current_lp_sensor) == QTM_KEY_STATE_NO_DET) {
+                /* change low-power sensor only when
+                    the current lp sensor is not in detect*/
+                touch_seq_lp_sensor();
+            }
+		}
+        </#if>
+    } 
+    else if(measurement_period_store != (uint16_t)DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
+        <#if num_of_channel_more_than_one == 1>
+        touch_enable_nonlp_sensors();
+        </#if>
+        /* disable low-power measurement */
+        touch_disable_lowpower_measurement();
+    }
+	else
+	{
+		//doesn't reach
+	}
+}    
+    </#if>
     <#if sam_d1x_devices?seq_contains(DEVICE_NAME) || sam_e5x_devices?seq_contains(DEVICE_NAME)>
     if (time_since_touch >= DEF_TOUCH_TIMEOUT) {
         <#if num_of_channel_more_than_one == 1>
@@ -1350,7 +1381,7 @@ static void touch_process_lowpower(void) {
 }
 </#if>
 
-<#if (ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false) || sam_d1x_devices?seq_contains(DEVICE_NAME) || sam_e5x_devices?seq_contains(DEVICE_NAME) >
+<#if (ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false) || sam_d1x_devices?seq_contains(DEVICE_NAME) || sam_e5x_devices?seq_contains(DEVICE_NAME) || pic32ck?seq_contains(DEVICE_NAME)>
 <#if num_of_channel_more_than_one == 1>
 static void touch_seq_lp_sensor(void)
 {
