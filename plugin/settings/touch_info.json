@@ -19,8 +19,8 @@
             { "device":"SAMD21", "manual":"1.3", "auto":"1.3" },
             { "device":"SAMHA1", "manual":"1.3", "auto":"1.3" },
             { "device":"SAMDA1", "manual":"1.3", "auto":"1.3" },
-            { "device":"SAMC20", "manual":"1.7", "auto":"1.7" },
-            { "device":"SAMC21", "manual":"1.7", "auto":"1.7" },
+            { "device":"SAMC20", "manual":"1.8", "auto":"1.8" },
+            { "device":"SAMC21", "manual":"1.8", "auto":"1.8" },
             { "device":"SAML10", "manual":"1.4", "auto":"1.4" },
             { "device":"SAML11", "manual":"1.4", "auto":"1.4" },
             { "device":"SAML1xE", "manual":"1.4", "auto":"1.4" },
@@ -32,8 +32,8 @@
             { "device":"PIC32CM\\d{4}LE00", "manual":"1.0", "auto":"1.0" },
             { "device":"PIC32CM\\d{4}LS00", "manual":"1.0", "auto":"1.0" },
             { "device":"PIC32CM\\d{4}LS60", "manual":"1.0", "auto":"1.0" },
-            { "device":"PIC32CM\\d{4}JH00", "manual":"1.0", "auto":"1.0" },
-            { "device":"PIC32CM\\d{4}JH01", "manual":"1.0", "auto":"1.0" },
+            { "device":"PIC32CM\\d{4}JH00", "manual":"1.1", "auto":"1.1" },
+            { "device":"PIC32CM\\d{4}JH01", "manual":"1.1", "auto":"1.1" },
             { "device":"PIC32CZ\\d{4}CA80", "manual":"1.0", "auto":"1.0" },
             { "device":"PIC32CZ\\d{4}CA90", "manual":"1.0", "auto":"1.0" }
         ]
