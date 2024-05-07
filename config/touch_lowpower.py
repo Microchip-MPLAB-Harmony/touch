@@ -113,6 +113,7 @@ class classTouchLP():
         lowPowerKey.setDefaultValue("")
         lowPowerKey.setDescription("Series of low-power key numbers separated by ,")
         self.addDepSymbol(lowPowerKey, "enablePM", ["LOW_POWER_KEYS"])
+        self.addDepSymbol(lowPowerKey, "onGenerate", ["LOW_POWER_KEYS"])
 
     def setLowPowerDetThreshold(self,qtouchComponent,LowPowerEvntMenu):
         """ Populates the low Power Detect threshold
