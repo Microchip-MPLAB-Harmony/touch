@@ -1525,7 +1525,7 @@ void touch_timer_handler(void)
         <@eventlp.lowpower_touch_timer_handler_pic32cz_evsys/>  
         </#if>
 
-    <#elseif (ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false) || (sam_e5x_devices?seq_contains(DEVICE_NAME)) || (sam_d1x_devices?seq_contains(DEVICE_NAME)) >  <#-- No event system -->
+    <#elseif (ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == false) || (sam_e5x_devices?seq_contains(DEVICE_NAME)) || (sam_d1x_devices?seq_contains(DEVICE_NAME)) || pic32ck?seq_contains(DEVICE_NAME)>  <#-- No event system -->
         /* Count complete - Measure touch sensors */
         time_to_measure_touch_var = 1u;
 
