@@ -808,7 +808,11 @@ void PTC_Initialize(void)
     /* 
      * Enable Analog Input Charge Pump of PTC , for weak VDD 
      */
-    SUPC_REGS->SUPC_VREGCTRL |= SUPC_VREGCTRL_CPEN(4u);
+	<#if pic32ck?seq_contains(DEVICE_NAME)>
+    SUPC_REGS->SUPC_VREGCTRL |= SUPC_VREGCTRL_CPEN(3u);
+	<#else>
+	SUPC_REGS->SUPC_VREGCTRL |= SUPC_VREGCTRL_CPEN(4u);
+	</#if>
     
 }
 </#if>
