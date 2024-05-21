@@ -3,6 +3,27 @@
 
 #  Microchip MPLAB® Harmony 3 Touch Library Release Notes
 
+## Touch Library v3.16.0 Release 
+### NEW FEATURES SUPPORTED 
+* Added Touch Library support for the PIC32CK devices.
+* Updated acquisition library files for SAMC2x and PIC32CMJH device families. 
+### UI ENHANCEMENTS 
+* Improved Matrix View for Mutual Capacitance pin assignment. 
+### BUG FIXES 
+* Fixed the software low power sensor's node mask re-generation issue.
+* Resolved dependency issues in Timer-based driven shield project generation for SAM C2x, SAM L22. 
+### KNOWN ISSUES
+* For Trustzone devices, RTC configured by Touch didn't work. Workaround: Call touch_init after RTC_Initialize in the SYS_Initialize function.
+* For Trustzone devices, certain Touch lines are inoperative due to the default configuration bits set during initialization. Workaround: Manually modify the configuration bits.
+* For Trustzone devices, there is a code compilation error when the boost mode feature is selected. Workaround: Library files have to be manually pasted in the specified path.
+### DEVELOPMENT TOOLS 
+* MPLAB® X IDE v6.20 
+* MPLAB® XC32 C/C++ Compiler v4.40 
+* MPLAB® X IDE plug-ins:     
+  * MPLAB® Code Configurator (MCC)       
+  * MCC Plugin v5.5.1       
+  * MCC Harmony Core v1.5.2
+
 ## Touch Library v3.15.0 Release 
 ### NEW FEATURES SUPPORTED 
 * Touch Library support has been added for the PIC32MZ2051W104132. 
