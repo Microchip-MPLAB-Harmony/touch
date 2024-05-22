@@ -1,54 +1,212 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<keywords publicationid="GUID-114468F8-CC71-44EB-BD47-4D32F1C4AF3C"
+<keywords publicationid="GUID-1B9D4635-2151-4E5D-9BFB-EE9E513397AC"
           language="en-US"
-          version="1"
-          documenttitle="MPLAB® Harmony Touch Configurator"
+          version="5"
+          documenttitle="Touch Sensing Online Documentation"
           pubtype="Online Reference"
           pubsubtype=""
           pubuserguidesubtype=""
           pubproducthierarchy=""
           devices=""
-          revisiondate="15/02/2023 03:47:56"
-          revisionletter="A"
+          revisiondate="24/04/2024 00:00:00"
+          revisionletter="5"
           isbn=""
           pubid=""
           reachid=""
           description=""
-          lastmodified="11/09/2023 06:37:10"
-          covertitle="MPLAB® Harmony Touch Configurator"
+          lastmodified="22/05/2024 05:35:57"
+          covertitle="Touch Sensing Online Documentation"
           frontcover="">
-   <keyworditem topicid="GUID-ADE751AB-6E7A-439F-92BA-FF566F108B79"
+   <keyworditem topicid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424"
                 nocomponent="true"
                 parent="">
       <device/>
       <module/>
       <component/>
-      <register>Status and Output Data</register>
-      <title>Status and Output Data</title>
+      <register>Generate Touch Project with MCC Melody</register>
+      <title>Generate Touch Project with MCC Melody</title>
       <bitfield/>
-      <keyword>node_acq_status</keyword>
+      <keyword>TOUCH.MCC.MELODY</keyword>
    </keyworditem>
-   <keyworditem topicid="GUID-ADE751AB-6E7A-439F-92BA-FF566F108B79"
+   <keyworditem topicid="GUID-E90AB64F-0444-4F82-9954-B2A4D380E3AD"
                 nocomponent="true"
                 parent="">
       <device/>
       <module/>
       <component/>
-      <register>Status and Output Data</register>
-      <title>Status and Output Data</title>
+      <register>Generate Touch Project with MCC
+        Harmony</register>
+      <title>Generate Touch Project with MCC Harmony</title>
       <bitfield/>
-      <keyword>node_acq_signals</keyword>
+      <keyword>gen-touch-project-with-h3</keyword>
    </keyworditem>
-   <keyworditem topicid="GUID-ADE751AB-6E7A-439F-92BA-FF566F108B79"
+   <keyworditem topicid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424"
                 nocomponent="true"
                 parent="">
       <device/>
       <module/>
       <component/>
-      <register>Status and Output Data</register>
-      <title>Status and Output Data</title>
+      <register>Generate Touch Project with MCC Melody</register>
+      <title>Generate Touch Project with MCC Melody</title>
       <bitfield/>
-      <keyword>node_comp_caps</keyword>
+      <keyword>gen-touch-project-with-melody</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-419F33CA-D125-44BA-85E7-6DB7EC35009F"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Tuning Options for touch in Melody/Harmony</register>
+      <title>Tuning Options for touch in Melody/Harmony</title>
+      <bitfield/>
+      <keyword>touch_tuning_options_mcc</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-9F536B24-DCF4-4D54-A659-CBC52A0ADF15"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>How to Enable Frequency Hop Auto tune</register>
+      <title>How to Enable Frequency Hop Auto tune</title>
+      <bitfield/>
+      <keyword>frequency_hop_autotune</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-EDEAD3E0-FB69-4554-808E-33904213BB26"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>How to Enable Boost Mode</register>
+      <title>How to Enable Boost Mode</title>
+      <bitfield/>
+      <keyword>boost_mode</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-936F6C9B-49AB-4EF7-A7D3-DCE0DC1AD0D9"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>How to enable Driven Shield</register>
+      <title>How to enable Driven Shield</title>
+      <bitfield/>
+      <keyword>driven_shield</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-033278AC-5674-470E-81DD-6FDA78349B00"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>How to create Low-power sensor </register>
+      <title>How to create Low-power sensor</title>
+      <bitfield/>
+      <keyword>Create-Low-power-sensor</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-854AA2E5-B835-4003-9BC9-1D9438DBC327"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>How to create Lump Sensor</register>
+      <title>How to create Lump Sensor</title>
+      <bitfield/>
+      <keyword>Create-Lump-sensor</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-C889AFDA-2BA2-4191-A426-21B463A64260"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>How to configure timers for touch project in
+        Melody</register>
+      <title>How to configure timers for touch project in Melody</title>
+      <bitfield/>
+      <keyword>touch-configure-timer-in-melody</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-0900C929-FAA3-46A6-946C-62D38391B95D"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Melody Touch Release Notes</register>
+      <title>Melody Touch Release Notes</title>
+      <bitfield/>
+      <keyword>release-notes-melody-touch</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-7B9D3030-2B0B-43EB-8BF4-68468BA0E9E9"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Known Issues</register>
+      <title>Known Issues</title>
+      <bitfield/>
+      <keyword>melody-touch-known-issue</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F8BE2E13-3EF5-4BC1-8DF8-DCE25EDE0CB9"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Harmony3 Touch Release Notes</register>
+      <title>Harmony3 Touch Release Notes</title>
+      <bitfield/>
+      <keyword>release-notes-harmony-touch</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-21B54348-3E8A-406E-94B6-24CACCDB10D7"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Known Issues</register>
+      <title>Known Issues</title>
+      <bitfield/>
+      <keyword>harmony-touch-known-issue</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-8F2641B0-4039-483B-9BE6-5141EE667743"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Visualize Touch Data Using
+            MPLAB® Data Visualizer</register>
+      <title>Visualize Touch Data Using MPLAB® Data Visualizer</title>
+      <bitfield/>
+      <keyword>visualize-touch-dv</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-EE969261-6E3F-4194-B7D0-B796C062E18A"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Guide to view Touch Tune Data using MPLAB®
+        Data Visualizer</register>
+      <title>Guide to view Touch Tune Data using MPLAB® Data Visualizer</title>
+      <bitfield/>
+      <keyword>bidirectional_touch_tuning</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-CA1C46EF-6095-4F9B-97AE-537971099B22"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Step by Step Procedure for Touch Plugin Installation </register>
+      <title>Step by Step Procedure for Touch Plugin Installation</title>
+      <bitfield/>
+      <keyword>touch_plugin_installation</keyword>
    </keyworditem>
    <keyworditem topicid="GUID-7E21BA80-E1A7-4358-8B94-97DC540A754C"
                 nocomponent="true"
@@ -171,82 +329,280 @@
       <bitfield/>
       <keyword>node_oversampling</keyword>
    </keyworditem>
-   <keyworditem topicid="GUID-3860D840-9DDA-427D-BA71-9C0AA8B1354C"
+   <keyworditem topicid="GUID-ADE751AB-6E7A-439F-92BA-FF566F108B79"
                 nocomponent="true"
                 parent="">
       <device/>
       <module/>
       <component/>
-      <register>Low Power APIs</register>
-      <title>Low Power APIs</title>
+      <register>Status and Output Data</register>
+      <title>Status and Output Data</title>
       <bitfield/>
-      <keyword>touch_configure_pm_supc</keyword>
+      <keyword>node_acq_status</keyword>
    </keyworditem>
-   <keyworditem topicid="GUID-3860D840-9DDA-427D-BA71-9C0AA8B1354C"
+   <keyworditem topicid="GUID-ADE751AB-6E7A-439F-92BA-FF566F108B79"
                 nocomponent="true"
                 parent="">
       <device/>
       <module/>
       <component/>
-      <register>Low Power APIs</register>
-      <title>Low Power APIs</title>
+      <register>Status and Output Data</register>
+      <title>Status and Output Data</title>
       <bitfield/>
-      <keyword> touch_disable_lowpower_measurement</keyword>
+      <keyword>node_acq_signals</keyword>
    </keyworditem>
-   <keyworditem topicid="GUID-3860D840-9DDA-427D-BA71-9C0AA8B1354C"
+   <keyworditem topicid="GUID-ADE751AB-6E7A-439F-92BA-FF566F108B79"
                 nocomponent="true"
                 parent="">
       <device/>
       <module/>
       <component/>
-      <register>Low Power APIs</register>
-      <title>Low Power APIs</title>
+      <register>Status and Output Data</register>
+      <title>Status and Output Data</title>
       <bitfield/>
-      <keyword> touch_enable_lowpower_measurement</keyword>
+      <keyword>node_comp_caps</keyword>
    </keyworditem>
-   <keyworditem topicid="GUID-3860D840-9DDA-427D-BA71-9C0AA8B1354C"
+   <keyworditem topicid="GUID-1F66BE42-2E0D-460A-93E7-09FBBC7F84CB"
                 nocomponent="true"
                 parent="">
       <device/>
       <module/>
       <component/>
-      <register>Low Power APIs</register>
-      <title>Low Power APIs</title>
+      <register>Acquisition Module APIs</register>
+      <title>Acquisition Module APIs</title>
       <bitfield/>
-      <keyword> touch_process_lowpower</keyword>
+      <keyword>qtm_acquisition_process</keyword>
    </keyworditem>
-   <keyworditem topicid="GUID-3860D840-9DDA-427D-BA71-9C0AA8B1354C"
+   <keyworditem topicid="GUID-1F66BE42-2E0D-460A-93E7-09FBBC7F84CB"
                 nocomponent="true"
                 parent="">
       <device/>
       <module/>
       <component/>
-      <register>Low Power APIs</register>
-      <title>Low Power APIs</title>
+      <register>Acquisition Module APIs</register>
+      <title>Acquisition Module APIs</title>
       <bitfield/>
-      <keyword> touch_disable_nonlp_sensors</keyword>
+      <keyword>qtm_ptc_init_acquisition_module</keyword>
    </keyworditem>
-   <keyworditem topicid="GUID-3860D840-9DDA-427D-BA71-9C0AA8B1354C"
+   <keyworditem topicid="GUID-1F66BE42-2E0D-460A-93E7-09FBBC7F84CB"
                 nocomponent="true"
                 parent="">
       <device/>
       <module/>
       <component/>
-      <register>Low Power APIs</register>
-      <title>Low Power APIs</title>
+      <register>Acquisition Module APIs</register>
+      <title>Acquisition Module APIs</title>
       <bitfield/>
-      <keyword> touch_enable_nonlp_sensors</keyword>
+      <keyword>qtm_ptc_qtlib_assign_signal_memory</keyword>
    </keyworditem>
-   <keyworditem topicid="GUID-3860D840-9DDA-427D-BA71-9C0AA8B1354C"
+   <keyworditem topicid="GUID-1F66BE42-2E0D-460A-93E7-09FBBC7F84CB"
                 nocomponent="true"
                 parent="">
       <device/>
       <module/>
       <component/>
-      <register>Low Power APIs</register>
-      <title>Low Power APIs</title>
+      <register>Acquisition Module APIs</register>
+      <title>Acquisition Module APIs</title>
       <bitfield/>
-      <keyword> touch_measure_wcomp_match</keyword>
+      <keyword>qtm_enable_sensor_node</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-1F66BE42-2E0D-460A-93E7-09FBBC7F84CB"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Acquisition Module APIs</register>
+      <title>Acquisition Module APIs</title>
+      <bitfield/>
+      <keyword>qtm_calibrate_sensor_node</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-1F66BE42-2E0D-460A-93E7-09FBBC7F84CB"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Acquisition Module APIs</register>
+      <title>Acquisition Module APIs</title>
+      <bitfield/>
+      <keyword>qtm_ptc_start_measurement_seq</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-1F66BE42-2E0D-460A-93E7-09FBBC7F84CB"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Acquisition Module APIs</register>
+      <title>Acquisition Module APIs</title>
+      <bitfield/>
+      <keyword>qtm_autoscan_sensor_node</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-1F66BE42-2E0D-460A-93E7-09FBBC7F84CB"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Acquisition Module APIs</register>
+      <title>Acquisition Module APIs</title>
+      <bitfield/>
+      <keyword>qtm_autoscan_node_cancel</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-1F66BE42-2E0D-460A-93E7-09FBBC7F84CB"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Acquisition Module APIs</register>
+      <title>Acquisition Module APIs</title>
+      <bitfield/>
+      <keyword>qtm_ptc_de_init</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-1F66BE42-2E0D-460A-93E7-09FBBC7F84CB"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Acquisition Module APIs</register>
+      <title>Acquisition Module APIs</title>
+      <bitfield/>
+      <keyword>qtm_DEVICE_FAMILY_acq_module_get_version</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-1F66BE42-2E0D-460A-93E7-09FBBC7F84CB"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Acquisition Module APIs</register>
+      <title>Acquisition Module APIs</title>
+      <bitfield/>
+      <keyword>qtm_ptc_clear_interrupt</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-23C3B324-C0A4-4A3E-BA00-6DF846F1D29E"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Data Structures</register>
+      <title>Data Structures</title>
+      <bitfield/>
+      <keyword>num_sensors</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-23C3B324-C0A4-4A3E-BA00-6DF846F1D29E"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Data Structures</register>
+      <title>Data Structures</title>
+      <bitfield/>
+      <keyword>num_freqs</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-23C3B324-C0A4-4A3E-BA00-6DF846F1D29E"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Data Structures</register>
+      <title>Data Structures</title>
+      <bitfield/>
+      <keyword>freq_option_select</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-23C3B324-C0A4-4A3E-BA00-6DF846F1D29E"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Data Structures</register>
+      <title>Data Structures</title>
+      <bitfield/>
+      <keyword>median_filter_freq</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-CBBE3B70-E32E-42D1-A048-4F5CB6609DDD"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Status and Output Data</register>
+      <title>Status and Output Data</title>
+      <bitfield/>
+      <keyword>module_status</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-CBBE3B70-E32E-42D1-A048-4F5CB6609DDD"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Status and Output Data</register>
+      <title>Status and Output Data</title>
+      <bitfield/>
+      <keyword>current_freq</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-CBBE3B70-E32E-42D1-A048-4F5CB6609DDD"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Status and Output Data</register>
+      <title>Status and Output Data</title>
+      <bitfield/>
+      <keyword>filter_buffer</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-CBBE3B70-E32E-42D1-A048-4F5CB6609DDD"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Status and Output Data</register>
+      <title>Status and Output Data</title>
+      <bitfield/>
+      <keyword>qtm_acq_node_data</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-4C2FEE1D-984B-4E3D-B240-079E1019F5DB"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Frequency Hop APIs</register>
+      <title>Frequency Hop APIs</title>
+      <bitfield/>
+      <keyword>qtm_freq_hop</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-4C2FEE1D-984B-4E3D-B240-079E1019F5DB"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Frequency Hop APIs</register>
+      <title>Frequency Hop APIs</title>
+      <bitfield/>
+      <keyword>qtm_get_freq_hop_module_id</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-4C2FEE1D-984B-4E3D-B240-079E1019F5DB"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Frequency Hop APIs</register>
+      <title>Frequency Hop APIs</title>
+      <bitfield/>
+      <keyword>qtm_get_freq_hop_module_ver</keyword>
    </keyworditem>
    <keyworditem topicid="GUID-916BB2DD-DDCB-4105-834C-1ADE6B7883AD"
                 nocomponent="true"
@@ -325,40 +681,7 @@
       <bitfield/>
       <keyword>Autotune_count_in</keyword>
    </keyworditem>
-   <keyworditem topicid="GUID-4C2FEE1D-984B-4E3D-B240-079E1019F5DB"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Frequency Hop APIs</register>
-      <title>Frequency Hop APIs</title>
-      <bitfield/>
-      <keyword>qtm_freq_hop</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-4C2FEE1D-984B-4E3D-B240-079E1019F5DB"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Frequency Hop APIs</register>
-      <title>Frequency Hop APIs</title>
-      <bitfield/>
-      <keyword> qtm_get_freq_hop_module_id</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-4C2FEE1D-984B-4E3D-B240-079E1019F5DB"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Frequency Hop APIs</register>
-      <title>Frequency Hop APIs</title>
-      <bitfield/>
-      <keyword> qtm_get_freq_hop_module_ver</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-CBBE3B70-E32E-42D1-A048-4F5CB6609DDD"
+   <keyworditem topicid="GUID-073E5924-7690-4369-82E7-054342A06C2B"
                 nocomponent="true"
                 parent="">
       <device/>
@@ -369,7 +692,7 @@
       <bitfield/>
       <keyword>module_status</keyword>
    </keyworditem>
-   <keyworditem topicid="GUID-CBBE3B70-E32E-42D1-A048-4F5CB6609DDD"
+   <keyworditem topicid="GUID-073E5924-7690-4369-82E7-054342A06C2B"
                 nocomponent="true"
                 parent="">
       <device/>
@@ -380,7 +703,7 @@
       <bitfield/>
       <keyword>current_freq</keyword>
    </keyworditem>
-   <keyworditem topicid="GUID-CBBE3B70-E32E-42D1-A048-4F5CB6609DDD"
+   <keyworditem topicid="GUID-073E5924-7690-4369-82E7-054342A06C2B"
                 nocomponent="true"
                 parent="">
       <device/>
@@ -389,9 +712,9 @@
       <register>Status and Output Data</register>
       <title>Status and Output Data</title>
       <bitfield/>
-      <keyword>filter_buffer</keyword>
+      <keyword>*filter_buffer</keyword>
    </keyworditem>
-   <keyworditem topicid="GUID-CBBE3B70-E32E-42D1-A048-4F5CB6609DDD"
+   <keyworditem topicid="GUID-073E5924-7690-4369-82E7-054342A06C2B"
                 nocomponent="true"
                 parent="">
       <device/>
@@ -400,504 +723,9 @@
       <register>Status and Output Data</register>
       <title>Status and Output Data</title>
       <bitfield/>
-      <keyword>qtm_acq_node_data</keyword>
+      <keyword>*qtm_acq_node_data</keyword>
    </keyworditem>
-   <keyworditem topicid="GUID-23C3B324-C0A4-4A3E-BA00-6DF846F1D29E"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Data Structures</register>
-      <title>Data Structures</title>
-      <bitfield/>
-      <keyword>num_sensors</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-23C3B324-C0A4-4A3E-BA00-6DF846F1D29E"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Data Structures</register>
-      <title>Data Structures</title>
-      <bitfield/>
-      <keyword>num_freqs</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-23C3B324-C0A4-4A3E-BA00-6DF846F1D29E"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Data Structures</register>
-      <title>Data Structures</title>
-      <bitfield/>
-      <keyword>freq_option_select</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-23C3B324-C0A4-4A3E-BA00-6DF846F1D29E"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Data Structures</register>
-      <title>Data Structures</title>
-      <bitfield/>
-      <keyword>median_filter_freq</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-1F66BE42-2E0D-460A-93E7-09FBBC7F84CB"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Acquisition Module APIs</register>
-      <title>Acquisition Module APIs</title>
-      <bitfield/>
-      <keyword>qtm_acquisition_process</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-1F66BE42-2E0D-460A-93E7-09FBBC7F84CB"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Acquisition Module APIs</register>
-      <title>Acquisition Module APIs</title>
-      <bitfield/>
-      <keyword> qtm_ptc_init_acquisition_module</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-1F66BE42-2E0D-460A-93E7-09FBBC7F84CB"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Acquisition Module APIs</register>
-      <title>Acquisition Module APIs</title>
-      <bitfield/>
-      <keyword> qtm_ptc_qtlib_assign_signal_memory</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-1F66BE42-2E0D-460A-93E7-09FBBC7F84CB"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Acquisition Module APIs</register>
-      <title>Acquisition Module APIs</title>
-      <bitfield/>
-      <keyword> qtm_enable_sensor_node</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-1F66BE42-2E0D-460A-93E7-09FBBC7F84CB"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Acquisition Module APIs</register>
-      <title>Acquisition Module APIs</title>
-      <bitfield/>
-      <keyword> qtm_calibrate_sensor_node</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-1F66BE42-2E0D-460A-93E7-09FBBC7F84CB"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Acquisition Module APIs</register>
-      <title>Acquisition Module APIs</title>
-      <bitfield/>
-      <keyword> qtm_ptc_start_measurement_seq</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-1F66BE42-2E0D-460A-93E7-09FBBC7F84CB"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Acquisition Module APIs</register>
-      <title>Acquisition Module APIs</title>
-      <bitfield/>
-      <keyword> qtm_autoscan_sensor_node</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-1F66BE42-2E0D-460A-93E7-09FBBC7F84CB"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Acquisition Module APIs</register>
-      <title>Acquisition Module APIs</title>
-      <bitfield/>
-      <keyword> qtm_autoscan_node_cancel</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-1F66BE42-2E0D-460A-93E7-09FBBC7F84CB"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Acquisition Module APIs</register>
-      <title>Acquisition Module APIs</title>
-      <bitfield/>
-      <keyword> qtm_ptc_de_init</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-1F66BE42-2E0D-460A-93E7-09FBBC7F84CB"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Acquisition Module APIs</register>
-      <title>Acquisition Module APIs</title>
-      <bitfield/>
-      <keyword> qtm_DEVICE_FAMILY_acq_module_get_version</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-1F66BE42-2E0D-460A-93E7-09FBBC7F84CB"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Acquisition Module APIs</register>
-      <title>Acquisition Module APIs</title>
-      <bitfield/>
-      <keyword> qtm_ptc_clear_interrupt</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-550D5665-F55D-46EC-990C-4097CF19711A"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Software Driven Shield APIs</register>
-      <title>Software Driven Shield APIs</title>
-      <bitfield/>
-      <keyword>drivenshield_configure</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-550D5665-F55D-46EC-990C-4097CF19711A"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Software Driven Shield APIs</register>
-      <title>Software Driven Shield APIs</title>
-      <bitfield/>
-      <keyword> drivenshield_start</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-550D5665-F55D-46EC-990C-4097CF19711A"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Software Driven Shield APIs</register>
-      <title>Software Driven Shield APIs</title>
-      <bitfield/>
-      <keyword> drivenshield_port_mux_config</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-550D5665-F55D-46EC-990C-4097CF19711A"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Software Driven Shield APIs</register>
-      <title>Software Driven Shield APIs</title>
-      <bitfield/>
-      <keyword> drivenshield_stop</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Helper APIs</register>
-      <title>Helper APIs</title>
-      <bitfield/>
-      <keyword>get_sensor_node_signal</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Helper APIs</register>
-      <title>Helper APIs</title>
-      <bitfield/>
-      <keyword> update_sensor_node_signal</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Helper APIs</register>
-      <title>Helper APIs</title>
-      <bitfield/>
-      <keyword> get_sensor_node_reference</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Helper APIs</register>
-      <title>Helper APIs</title>
-      <bitfield/>
-      <keyword> update_sensor_node_reference</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Helper APIs</register>
-      <title>Helper APIs</title>
-      <bitfield/>
-      <keyword> get_sensor_cc_val</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Helper APIs</register>
-      <title>Helper APIs</title>
-      <bitfield/>
-      <keyword> update_sensor_cc_val</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Helper APIs</register>
-      <title>Helper APIs</title>
-      <bitfield/>
-      <keyword> get_sensor_state</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Helper APIs</register>
-      <title>Helper APIs</title>
-      <bitfield/>
-      <keyword> update_sensor_state</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Helper APIs</register>
-      <title>Helper APIs</title>
-      <bitfield/>
-      <keyword> calibrate_node</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Helper APIs</register>
-      <title>Helper APIs</title>
-      <bitfield/>
-      <keyword> get_scroller_state</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Helper APIs</register>
-      <title>Helper APIs</title>
-      <bitfield/>
-      <keyword> get_scroller_position</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Helper APIs</register>
-      <title>Helper APIs</title>
-      <bitfield/>
-      <keyword> get_surface_state</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Helper APIs</register>
-      <title>Helper APIs</title>
-      <bitfield/>
-      <keyword> get_surface_position</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Helper APIs</register>
-      <title>Helper APIs</title>
-      <bitfield/>
-      <keyword> get_surface_position</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-FF9A05D0-21E2-4396-A2FB-1976362A70D1"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>General APIs</register>
-      <title>General APIs</title>
-      <bitfield/>
-      <keyword>touch_init</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-FF9A05D0-21E2-4396-A2FB-1976362A70D1"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>General APIs</register>
-      <title>General APIs</title>
-      <bitfield/>
-      <keyword> touch_process</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-FF9A05D0-21E2-4396-A2FB-1976362A70D1"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>General APIs</register>
-      <title>General APIs</title>
-      <bitfield/>
-      <keyword> qtm_measure_complete_callback</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-FF9A05D0-21E2-4396-A2FB-1976362A70D1"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>General APIs</register>
-      <title>General APIs</title>
-      <bitfield/>
-      <keyword> touch_timer_config</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-FF9A05D0-21E2-4396-A2FB-1976362A70D1"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>General APIs</register>
-      <title>General APIs</title>
-      <bitfield/>
-      <keyword> touch_timer_handler</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-693C4AFF-48E6-4858-93CF-C022220C260F"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Keys Module APIs</register>
-      <title>Keys Module APIs</title>
-      <bitfield/>
-      <keyword>qtm_init_sensor_key</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-693C4AFF-48E6-4858-93CF-C022220C260F"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Keys Module APIs</register>
-      <title>Keys Module APIs</title>
-      <bitfield/>
-      <keyword> qtm_key_sensors_process</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-693C4AFF-48E6-4858-93CF-C022220C260F"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Keys Module APIs</register>
-      <title>Keys Module APIs</title>
-      <bitfield/>
-      <keyword> qtm_key_suspend</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-693C4AFF-48E6-4858-93CF-C022220C260F"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Keys Module APIs</register>
-      <title>Keys Module APIs</title>
-      <bitfield/>
-      <keyword> qtm_key_resume</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-693C4AFF-48E6-4858-93CF-C022220C260F"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Keys Module APIs</register>
-      <title>Keys Module APIs</title>
-      <bitfield/>
-      <keyword> update_qtlib_timer</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-693C4AFF-48E6-4858-93CF-C022220C260F"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Keys Module APIs</register>
-      <title>Keys Module APIs</title>
-      <bitfield/>
-      <keyword> qtm_get_touch_keys_module_id</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-693C4AFF-48E6-4858-93CF-C022220C260F"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Keys Module APIs</register>
-      <title>Keys Module APIs</title>
-      <bitfield/>
-      <keyword> qtm_get_touch_keys_module_ver</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-D6ADCAD8-85F5-4D55-92DF-CF1F668542E2"
+   <keyworditem topicid="GUID-073E5924-7690-4369-82E7-054342A06C2B"
                 nocomponent="true"
                 parent="">
       <device/>
@@ -906,95 +734,40 @@
       <register>Status and Output Data</register>
       <title>Status and Output Data</title>
       <bitfield/>
-      <keyword>qtm_keys_status</keyword>
+      <keyword>*freq_tune_count_ins</keyword>
    </keyworditem>
-   <keyworditem topicid="GUID-D6ADCAD8-85F5-4D55-92DF-CF1F668542E2"
+   <keyworditem topicid="GUID-ACA244D9-9C61-4D69-AC23-B9BEC3018030"
                 nocomponent="true"
                 parent="">
       <device/>
       <module/>
       <component/>
-      <register>Status and Output Data</register>
-      <title>Status and Output Data</title>
+      <register>Frequency Hop AutoTune API</register>
+      <title>Frequency Hop AutoTune API</title>
       <bitfield/>
-      <keyword>acq_group_timestamp</keyword>
+      <keyword>qtm_freq_hop_autotune</keyword>
    </keyworditem>
-   <keyworditem topicid="GUID-D6ADCAD8-85F5-4D55-92DF-CF1F668542E2"
+   <keyworditem topicid="GUID-ACA244D9-9C61-4D69-AC23-B9BEC3018030"
                 nocomponent="true"
                 parent="">
       <device/>
       <module/>
       <component/>
-      <register>Status and Output Data</register>
-      <title>Status and Output Data</title>
+      <register>Frequency Hop AutoTune API</register>
+      <title>Frequency Hop AutoTune API</title>
       <bitfield/>
-      <keyword>dht_count_in</keyword>
+      <keyword>qtm_get_freq_auto_module_id</keyword>
    </keyworditem>
-   <keyworditem topicid="GUID-D6ADCAD8-85F5-4D55-92DF-CF1F668542E2"
+   <keyworditem topicid="GUID-ACA244D9-9C61-4D69-AC23-B9BEC3018030"
                 nocomponent="true"
                 parent="">
       <device/>
       <module/>
       <component/>
-      <register>Status and Output Data</register>
-      <title>Status and Output Data</title>
+      <register>Frequency Hop AutoTune API</register>
+      <title>Frequency Hop AutoTune API</title>
       <bitfield/>
-      <keyword>tch_drift_count_in</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-D6ADCAD8-85F5-4D55-92DF-CF1F668542E2"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Status and Output Data</register>
-      <title>Status and Output Data</title>
-      <bitfield/>
-      <keyword>antitch_drift_count_in</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-D6ADCAD8-85F5-4D55-92DF-CF1F668542E2"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Status and Output Data</register>
-      <title>Status and Output Data</title>
-      <bitfield/>
-      <keyword>sensor_state</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-D6ADCAD8-85F5-4D55-92DF-CF1F668542E2"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Status and Output Data</register>
-      <title>Status and Output Data</title>
-      <bitfield/>
-      <keyword>sensor_state_counter</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-D6ADCAD8-85F5-4D55-92DF-CF1F668542E2"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Status and Output Data</register>
-      <title>Status and Output Data</title>
-      <bitfield/>
-      <keyword>node_data_struct_ptr</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-D6ADCAD8-85F5-4D55-92DF-CF1F668542E2"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Status and Output Data</register>
-      <title>Status and Output Data</title>
-      <bitfield/>
-      <keyword>channel_reference</keyword>
+      <keyword>qtm_get_freq_hop_module_ver</keyword>
    </keyworditem>
    <keyworditem topicid="GUID-3B7D9A65-0F1A-4F05-BAB2-9DD9ED7E3470"
                 nocomponent="true"
@@ -1128,205 +901,7 @@
       <bitfield/>
       <keyword>channel_aks_group</keyword>
    </keyworditem>
-   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Data Structures</register>
-      <title>Data Structures</title>
-      <bitfield/>
-      <keyword>qt_surface_status</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Data Structures</register>
-      <title>Data Structures</title>
-      <bitfield/>
-      <keyword>h_position_abs</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Data Structures</register>
-      <title>Data Structures</title>
-      <bitfield/>
-      <keyword>h_position</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Data Structures</register>
-      <title>Data Structures</title>
-      <bitfield/>
-      <keyword>v_position_abs</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Data Structures</register>
-      <title>Data Structures</title>
-      <bitfield/>
-      <keyword>v_position</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Data Structures</register>
-      <title>Data Structures</title>
-      <bitfield/>
-      <keyword>contact_size</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Data Structures</register>
-      <title>Data Structures</title>
-      <bitfield/>
-      <keyword>start_key_h</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Data Structures</register>
-      <title>Data Structures</title>
-      <bitfield/>
-      <keyword>number_of_keys_h</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Data Structures</register>
-      <title>Data Structures</title>
-      <bitfield/>
-      <keyword>start_key_v</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Data Structures</register>
-      <title>Data Structures</title>
-      <bitfield/>
-      <keyword>number_of_keys_v</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Data Structures</register>
-      <title>Data Structures</title>
-      <bitfield/>
-      <keyword>resol_deadband</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Data Structures</register>
-      <title>Data Structures</title>
-      <bitfield/>
-      <keyword>position_hysteresis</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Data Structures</register>
-      <title>Data Structures</title>
-      <bitfield/>
-      <keyword>position_filter</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Data Structures</register>
-      <title>Data Structures</title>
-      <bitfield/>
-      <keyword>contact_min_threshold</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Data Structures</register>
-      <title>Data Structures</title>
-      <bitfield/>
-      <keyword>qtm_touch_key_data</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-ACA244D9-9C61-4D69-AC23-B9BEC3018030"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Frequency Hop AutoTune API</register>
-      <title>Frequency Hop AutoTune API</title>
-      <bitfield/>
-      <keyword>qtm_freq_hop_autotune</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-ACA244D9-9C61-4D69-AC23-B9BEC3018030"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Frequency Hop AutoTune API</register>
-      <title>Frequency Hop AutoTune API</title>
-      <bitfield/>
-      <keyword> qtm_get_freq_auto_module_id</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-ACA244D9-9C61-4D69-AC23-B9BEC3018030"
-                nocomponent="true"
-                parent="">
-      <device/>
-      <module/>
-      <component/>
-      <register>Frequency Hop AutoTune API</register>
-      <title>Frequency Hop AutoTune API</title>
-      <bitfield/>
-      <keyword> qtm_get_freq_hop_module_ver</keyword>
-   </keyworditem>
-   <keyworditem topicid="GUID-073E5924-7690-4369-82E7-054342A06C2B"
+   <keyworditem topicid="GUID-D6ADCAD8-85F5-4D55-92DF-CF1F668542E2"
                 nocomponent="true"
                 parent="">
       <device/>
@@ -1335,9 +910,9 @@
       <register>Status and Output Data</register>
       <title>Status and Output Data</title>
       <bitfield/>
-      <keyword>module_status</keyword>
+      <keyword>qtm_keys_status</keyword>
    </keyworditem>
-   <keyworditem topicid="GUID-073E5924-7690-4369-82E7-054342A06C2B"
+   <keyworditem topicid="GUID-D6ADCAD8-85F5-4D55-92DF-CF1F668542E2"
                 nocomponent="true"
                 parent="">
       <device/>
@@ -1346,9 +921,9 @@
       <register>Status and Output Data</register>
       <title>Status and Output Data</title>
       <bitfield/>
-      <keyword>current_freq</keyword>
+      <keyword>acq_group_timestamp</keyword>
    </keyworditem>
-   <keyworditem topicid="GUID-073E5924-7690-4369-82E7-054342A06C2B"
+   <keyworditem topicid="GUID-D6ADCAD8-85F5-4D55-92DF-CF1F668542E2"
                 nocomponent="true"
                 parent="">
       <device/>
@@ -1357,9 +932,9 @@
       <register>Status and Output Data</register>
       <title>Status and Output Data</title>
       <bitfield/>
-      <keyword>*filter_buffer</keyword>
+      <keyword>dht_count_in</keyword>
    </keyworditem>
-   <keyworditem topicid="GUID-073E5924-7690-4369-82E7-054342A06C2B"
+   <keyworditem topicid="GUID-D6ADCAD8-85F5-4D55-92DF-CF1F668542E2"
                 nocomponent="true"
                 parent="">
       <device/>
@@ -1368,9 +943,9 @@
       <register>Status and Output Data</register>
       <title>Status and Output Data</title>
       <bitfield/>
-      <keyword>*qtm_acq_node_data</keyword>
+      <keyword>tch_drift_count_in</keyword>
    </keyworditem>
-   <keyworditem topicid="GUID-073E5924-7690-4369-82E7-054342A06C2B"
+   <keyworditem topicid="GUID-D6ADCAD8-85F5-4D55-92DF-CF1F668542E2"
                 nocomponent="true"
                 parent="">
       <device/>
@@ -1379,7 +954,128 @@
       <register>Status and Output Data</register>
       <title>Status and Output Data</title>
       <bitfield/>
-      <keyword>*freq_tune_count_ins</keyword>
+      <keyword>antitch_drift_count_in</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-D6ADCAD8-85F5-4D55-92DF-CF1F668542E2"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Status and Output Data</register>
+      <title>Status and Output Data</title>
+      <bitfield/>
+      <keyword>sensor_state</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-D6ADCAD8-85F5-4D55-92DF-CF1F668542E2"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Status and Output Data</register>
+      <title>Status and Output Data</title>
+      <bitfield/>
+      <keyword>sensor_state_counter</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-D6ADCAD8-85F5-4D55-92DF-CF1F668542E2"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Status and Output Data</register>
+      <title>Status and Output Data</title>
+      <bitfield/>
+      <keyword>node_data_struct_ptr</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-D6ADCAD8-85F5-4D55-92DF-CF1F668542E2"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Status and Output Data</register>
+      <title>Status and Output Data</title>
+      <bitfield/>
+      <keyword>channel_reference</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-693C4AFF-48E6-4858-93CF-C022220C260F"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Keys Module APIs</register>
+      <title>Keys Module APIs</title>
+      <bitfield/>
+      <keyword>qtm_init_sensor_key</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-693C4AFF-48E6-4858-93CF-C022220C260F"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Keys Module APIs</register>
+      <title>Keys Module APIs</title>
+      <bitfield/>
+      <keyword>qtm_key_sensors_process</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-693C4AFF-48E6-4858-93CF-C022220C260F"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Keys Module APIs</register>
+      <title>Keys Module APIs</title>
+      <bitfield/>
+      <keyword>qtm_key_suspend</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-693C4AFF-48E6-4858-93CF-C022220C260F"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Keys Module APIs</register>
+      <title>Keys Module APIs</title>
+      <bitfield/>
+      <keyword>qtm_key_resume</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-693C4AFF-48E6-4858-93CF-C022220C260F"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Keys Module APIs</register>
+      <title>Keys Module APIs</title>
+      <bitfield/>
+      <keyword>update_qtlib_timer</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-693C4AFF-48E6-4858-93CF-C022220C260F"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Keys Module APIs</register>
+      <title>Keys Module APIs</title>
+      <bitfield/>
+      <keyword>qtm_get_touch_keys_module_id</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-693C4AFF-48E6-4858-93CF-C022220C260F"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Keys Module APIs</register>
+      <title>Keys Module APIs</title>
+      <bitfield/>
+      <keyword>qtm_get_touch_keys_module_ver</keyword>
    </keyworditem>
    <keyworditem topicid="GUID-4B08DFD5-0C4C-43F2-BD59-DE8ACF6B6FD6"
                 nocomponent="true"
@@ -1566,7 +1262,7 @@
       <register>Scroller Module API</register>
       <title>Scroller Module API</title>
       <bitfield/>
-      <keyword> qtm_scroller_process</keyword>
+      <keyword>qtm_scroller_process</keyword>
    </keyworditem>
    <keyworditem topicid="GUID-413BE21C-6915-4CA8-8698-4AD47177FEBB"
                 nocomponent="true"
@@ -1577,7 +1273,7 @@
       <register>Scroller Module API</register>
       <title>Scroller Module API</title>
       <bitfield/>
-      <keyword> qtm_get_scroller_module_id</keyword>
+      <keyword>qtm_get_scroller_module_id</keyword>
    </keyworditem>
    <keyworditem topicid="GUID-413BE21C-6915-4CA8-8698-4AD47177FEBB"
                 nocomponent="true"
@@ -1588,7 +1284,172 @@
       <register>Scroller Module API</register>
       <title>Scroller Module API</title>
       <bitfield/>
-      <keyword> qtm_get_scroller_module_ver</keyword>
+      <keyword>qtm_get_scroller_module_ver</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Data Structures</register>
+      <title>Data Structures</title>
+      <bitfield/>
+      <keyword>qt_surface_status</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Data Structures</register>
+      <title>Data Structures</title>
+      <bitfield/>
+      <keyword>h_position_abs</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Data Structures</register>
+      <title>Data Structures</title>
+      <bitfield/>
+      <keyword>h_position</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Data Structures</register>
+      <title>Data Structures</title>
+      <bitfield/>
+      <keyword>v_position_abs</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Data Structures</register>
+      <title>Data Structures</title>
+      <bitfield/>
+      <keyword>v_position</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Data Structures</register>
+      <title>Data Structures</title>
+      <bitfield/>
+      <keyword>contact_size</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Data Structures</register>
+      <title>Data Structures</title>
+      <bitfield/>
+      <keyword>start_key_h</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Data Structures</register>
+      <title>Data Structures</title>
+      <bitfield/>
+      <keyword>number_of_keys_h</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Data Structures</register>
+      <title>Data Structures</title>
+      <bitfield/>
+      <keyword>start_key_v</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Data Structures</register>
+      <title>Data Structures</title>
+      <bitfield/>
+      <keyword>number_of_keys_v</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Data Structures</register>
+      <title>Data Structures</title>
+      <bitfield/>
+      <keyword>resol_deadband</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Data Structures</register>
+      <title>Data Structures</title>
+      <bitfield/>
+      <keyword>position_hysteresis</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Data Structures</register>
+      <title>Data Structures</title>
+      <bitfield/>
+      <keyword>position_filter</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Data Structures</register>
+      <title>Data Structures</title>
+      <bitfield/>
+      <keyword>contact_min_threshold</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-F187FFD8-1C61-495D-B8FB-59793CE5DEE1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Data Structures</register>
+      <title>Data Structures</title>
+      <bitfield/>
+      <keyword>qtm_touch_key_data</keyword>
    </keyworditem>
    <keyworditem topicid="GUID-1D7A3D0E-8B8A-4479-993C-FCD6ED12DAD2"
                 nocomponent="true"
@@ -1610,7 +1471,7 @@
       <register>Surface CS/1T APIs</register>
       <title>Surface CS/1T APIs</title>
       <bitfield/>
-      <keyword> qtm_surface_cs_process</keyword>
+      <keyword>qtm_surface_cs_process</keyword>
    </keyworditem>
    <keyworditem topicid="GUID-1D7A3D0E-8B8A-4479-993C-FCD6ED12DAD2"
                 nocomponent="true"
@@ -1621,7 +1482,7 @@
       <register>Surface CS/1T APIs</register>
       <title>Surface CS/1T APIs</title>
       <bitfield/>
-      <keyword> qtm_get_surface_cs_module_id</keyword>
+      <keyword>qtm_get_surface_cs_module_id</keyword>
    </keyworditem>
    <keyworditem topicid="GUID-1D7A3D0E-8B8A-4479-993C-FCD6ED12DAD2"
                 nocomponent="true"
@@ -1632,7 +1493,7 @@
       <register>Surface CS/1T APIs</register>
       <title>Surface CS/1T APIs</title>
       <bitfield/>
-      <keyword> qtm_get_surface_cs_module_ver</keyword>
+      <keyword>qtm_get_surface_cs_module_ver</keyword>
    </keyworditem>
    <keyworditem topicid="GUID-B4A434FA-7A00-48F1-91E4-B56A8059E899"
                 nocomponent="true"
@@ -1830,7 +1691,7 @@
       <register>Surface CS/2T APIs</register>
       <title>Surface CS/2T APIs</title>
       <bitfield/>
-      <keyword> qtm_surface_cs_process</keyword>
+      <keyword>qtm_surface_cs_process</keyword>
    </keyworditem>
    <keyworditem topicid="GUID-328F35DA-D6F2-42F5-B23F-EFDC2A6CDAC8"
                 nocomponent="true"
@@ -1841,7 +1702,7 @@
       <register>Surface CS/2T APIs</register>
       <title>Surface CS/2T APIs</title>
       <bitfield/>
-      <keyword> qtm_get_surface_cs2t_module_id</keyword>
+      <keyword>qtm_get_surface_cs2t_module_id</keyword>
    </keyworditem>
    <keyworditem topicid="GUID-328F35DA-D6F2-42F5-B23F-EFDC2A6CDAC8"
                 nocomponent="true"
@@ -1852,7 +1713,7 @@
       <register>Surface CS/2T APIs</register>
       <title>Surface CS/2T APIs</title>
       <bitfield/>
-      <keyword> qtm_get_surface_cs2t_module_ver</keyword>
+      <keyword>qtm_get_surface_cs2t_module_ver</keyword>
    </keyworditem>
    <keyworditem topicid="GUID-62B13394-B4C2-43F4-86D9-B5D7D467F1B2"
                 nocomponent="true"
@@ -1874,7 +1735,7 @@
       <register>Gesture Module APIs</register>
       <title>Gesture Module APIs</title>
       <bitfield/>
-      <keyword> qtm_init_gestures_2d</keyword>
+      <keyword>qtm_init_gestures_2d</keyword>
    </keyworditem>
    <keyworditem topicid="GUID-62B13394-B4C2-43F4-86D9-B5D7D467F1B2"
                 nocomponent="true"
@@ -1885,7 +1746,7 @@
       <register>Gesture Module APIs</register>
       <title>Gesture Module APIs</title>
       <bitfield/>
-      <keyword> qtm_gestures_2d_process</keyword>
+      <keyword>qtm_gestures_2d_process</keyword>
    </keyworditem>
    <keyworditem topicid="GUID-62B13394-B4C2-43F4-86D9-B5D7D467F1B2"
                 nocomponent="true"
@@ -1896,7 +1757,7 @@
       <register>Gesture Module APIs</register>
       <title>Gesture Module APIs</title>
       <bitfield/>
-      <keyword> qtm_get_gesture_2d_module_id</keyword>
+      <keyword>qtm_get_gesture_2d_module_id</keyword>
    </keyworditem>
    <keyworditem topicid="GUID-62B13394-B4C2-43F4-86D9-B5D7D467F1B2"
                 nocomponent="true"
@@ -1907,6 +1768,336 @@
       <register>Gesture Module APIs</register>
       <title>Gesture Module APIs</title>
       <bitfield/>
-      <keyword> qtm_get_gesture_2d_module_ver</keyword>
+      <keyword>qtm_get_gesture_2d_module_ver</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-FF9A05D0-21E2-4396-A2FB-1976362A70D1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>General APIs</register>
+      <title>General APIs</title>
+      <bitfield/>
+      <keyword>touch_init</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-FF9A05D0-21E2-4396-A2FB-1976362A70D1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>General APIs</register>
+      <title>General APIs</title>
+      <bitfield/>
+      <keyword>touch_process</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-FF9A05D0-21E2-4396-A2FB-1976362A70D1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>General APIs</register>
+      <title>General APIs</title>
+      <bitfield/>
+      <keyword>qtm_measure_complete_callback</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-FF9A05D0-21E2-4396-A2FB-1976362A70D1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>General APIs</register>
+      <title>General APIs</title>
+      <bitfield/>
+      <keyword>touch_timer_config</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-FF9A05D0-21E2-4396-A2FB-1976362A70D1"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>General APIs</register>
+      <title>General APIs</title>
+      <bitfield/>
+      <keyword>touch_timer_handler</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Helper APIs</register>
+      <title>Helper APIs</title>
+      <bitfield/>
+      <keyword>get_sensor_node_signal</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Helper APIs</register>
+      <title>Helper APIs</title>
+      <bitfield/>
+      <keyword>update_sensor_node_signal</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Helper APIs</register>
+      <title>Helper APIs</title>
+      <bitfield/>
+      <keyword>get_sensor_node_reference</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Helper APIs</register>
+      <title>Helper APIs</title>
+      <bitfield/>
+      <keyword>update_sensor_node_reference</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Helper APIs</register>
+      <title>Helper APIs</title>
+      <bitfield/>
+      <keyword>get_sensor_cc_val</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Helper APIs</register>
+      <title>Helper APIs</title>
+      <bitfield/>
+      <keyword>update_sensor_cc_val</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Helper APIs</register>
+      <title>Helper APIs</title>
+      <bitfield/>
+      <keyword>get_sensor_state</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Helper APIs</register>
+      <title>Helper APIs</title>
+      <bitfield/>
+      <keyword>update_sensor_state</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Helper APIs</register>
+      <title>Helper APIs</title>
+      <bitfield/>
+      <keyword>calibrate_node</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Helper APIs</register>
+      <title>Helper APIs</title>
+      <bitfield/>
+      <keyword>get_scroller_state</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Helper APIs</register>
+      <title>Helper APIs</title>
+      <bitfield/>
+      <keyword>get_scroller_position</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Helper APIs</register>
+      <title>Helper APIs</title>
+      <bitfield/>
+      <keyword>get_surface_state</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Helper APIs</register>
+      <title>Helper APIs</title>
+      <bitfield/>
+      <keyword>get_surface_position</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-438D2FF7-58FA-4CD8-AEFF-052FAAD5FB48"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Helper APIs</register>
+      <title>Helper APIs</title>
+      <bitfield/>
+      <keyword>get_surface_position</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-3860D840-9DDA-427D-BA71-9C0AA8B1354C"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Low Power APIs</register>
+      <title>Low Power APIs</title>
+      <bitfield/>
+      <keyword>touch_configure_pm_supc</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-3860D840-9DDA-427D-BA71-9C0AA8B1354C"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Low Power APIs</register>
+      <title>Low Power APIs</title>
+      <bitfield/>
+      <keyword>touch_disable_lowpower_measurement</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-3860D840-9DDA-427D-BA71-9C0AA8B1354C"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Low Power APIs</register>
+      <title>Low Power APIs</title>
+      <bitfield/>
+      <keyword>touch_enable_lowpower_measurement</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-3860D840-9DDA-427D-BA71-9C0AA8B1354C"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Low Power APIs</register>
+      <title>Low Power APIs</title>
+      <bitfield/>
+      <keyword>touch_process_lowpower</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-3860D840-9DDA-427D-BA71-9C0AA8B1354C"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Low Power APIs</register>
+      <title>Low Power APIs</title>
+      <bitfield/>
+      <keyword>touch_disable_nonlp_sensors</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-3860D840-9DDA-427D-BA71-9C0AA8B1354C"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Low Power APIs</register>
+      <title>Low Power APIs</title>
+      <bitfield/>
+      <keyword>touch_enable_nonlp_sensors</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-3860D840-9DDA-427D-BA71-9C0AA8B1354C"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Low Power APIs</register>
+      <title>Low Power APIs</title>
+      <bitfield/>
+      <keyword>touch_measure_wcomp_match</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-550D5665-F55D-46EC-990C-4097CF19711A"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Software Driven Shield APIs</register>
+      <title>Software Driven Shield APIs</title>
+      <bitfield/>
+      <keyword>drivenshield_configure</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-550D5665-F55D-46EC-990C-4097CF19711A"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Software Driven Shield APIs</register>
+      <title>Software Driven Shield APIs</title>
+      <bitfield/>
+      <keyword>drivenshield_start</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-550D5665-F55D-46EC-990C-4097CF19711A"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Software Driven Shield APIs</register>
+      <title>Software Driven Shield APIs</title>
+      <bitfield/>
+      <keyword>drivenshield_port_mux_config</keyword>
+   </keyworditem>
+   <keyworditem topicid="GUID-550D5665-F55D-46EC-990C-4097CF19711A"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Software Driven Shield APIs</register>
+      <title>Software Driven Shield APIs</title>
+      <bitfield/>
+      <keyword>drivenshield_stop</keyword>
    </keyworditem>
 </keywords>

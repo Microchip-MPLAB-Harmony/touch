@@ -1,0 +1,504 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us" data-whc_version="24.1">
+    <head><link rel="shortcut icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><link rel="icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="description" content="Objective The following procedure shows how to create a Touch project with the MCC Melody platform where touch sensors and their parameters can be graphically added and tuned. The resulting project ..."/><meta name="copyright" content="(C) Copyright 2024"/><meta name="generator" content="DITA-OT"/><title>1.1.2 Generate Touch Project with MCC Melody</title><!--  Generated with Oxygen version 24.1, build number 2022062014.  --><meta name="wh-path2root" content=""/><meta name="wh-toc-id" content="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424-d1074e35"/><meta name="wh-source-relpath" content="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424.xml"/><meta name="wh-out-relpath" content="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424.html"/>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/lib/bootstrap/css/bootstrap.min.css"/>
+    
+    <link rel="stylesheet" href="./oxygen-webhelp/lib/jquery-ui/jquery-ui.min.css"/>
+    
+    <!-- Template default styles  -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/app/topic-page.css?buildId=2022062014"/>
+    
+    
+    <script src="./oxygen-webhelp/lib/jquery/jquery-3.5.1.min.js"></script>
+    
+    <script data-main="./oxygen-webhelp/app/topic-page.js" src="./oxygen-webhelp/lib/requirejs/require.js"></script>
+<link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/microchip.css?buildId=2022062014"/><link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/notes.css?buildId=2022062014"/>
+<script src="mchp-context-help.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async="" type="text/javascript"></script>
+    <script src="https://assets.adobedtm.com/6a72a357eb48/a636c708c7fe/launch-0b0023397020.min.js"></script><!-- Adobe Analytics -->
+</head>
+
+    <body id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424" class="wh_topic_page frmBody">
+        <a href="#wh_topic_body" class="sr-only sr-only-focusable">
+            Jump to main content
+        </a>
+        
+        
+        
+        
+        <header class="navbar navbar-default wh_header">
+    <div class="container-fluid">
+        <div class="wh_header_flex_container navbar-nav navbar-expand-md navbar-dark">
+            <div class="wh_logo_and_publication_title_container">
+                <div class="wh_logo_and_publication_title">
+                    
+                    <a href="index.html" class=" wh_logo d-none d-sm-block "><img src="oxygen-webhelp\template\resources/images/microchip.png" alt="Touch Sensing Online Documentation &#xA;    "/></a>
+                    <div class=" wh_publication_title "><a href="index.html">Touch Sensing Online Documentation 
+    </a></div>
+                    
+                </div>
+                
+                
+            </div>
+
+            <div class="wh_top_menu_and_indexterms_link collapse navbar-collapse" id="wh_top_menu_and_indexterms_link">
+                
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</header>
+        
+        
+         
+        
+        <div class=" wh_search_input navbar-form wh_topic_page_search search " role="form">
+            
+            
+            
+            <form id="searchForm" method="get" role="search" action="search.html"><div class="d-flex justify-contents-around"><div class="flex-grow-1"></div><div class="position-relative flex-grow-1"><input type="search" placeholder="Search " class="wh_search_textfield" id="textToSearch" name="searchQuery" aria-label="Search query" required="required"/><button type="submit" class="wh_search_button" aria-label="Search"><span class="search_input_text">Search</span></button></div><div class="align-self-center flex-grow-1 ml-2"></div></div></form>
+            
+            <div class="mchp-color-stripe-grid-container">
+  <div class="mchp-main-bar mchp-orange-bar"></div>
+  <div class="mchp-main-bar mchp-blue-bar"></div>
+  <div class="mchp-main-bar mchp-green-bar"></div>
+</div>
+            
+        </div>
+        
+        <div class="container-fluid" id="wh_topic_container">
+            <div class="row">
+
+                <nav class="wh_tools d-print-none navbar-expand-md" aria-label="Tools">
+                    
+                    <div data-tooltip-position="bottom" class=" wh_breadcrumb "><ol class="d-print-none"><li><span class="home"><a href="index.html"><span>Home</span></a></span></li><li><div class="topicref" data-id="GUID-04AE07CA-7B44-4458-8CA4-4BEF531E9146"><div class="title"><a href="GUID-04AE07CA-7B44-4458-8CA4-4BEF531E9146.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+MCC Touch Configurator</a></div></div></li><li><div class="topicref" data-id="GUID-FBE6D9DC-DAA0-41F2-84FC-08D645DF5734"><div class="title"><a href="GUID-FBE6D9DC-DAA0-41F2-84FC-08D645DF5734.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+Step by Step Guide</a></div></div></li><li class="active"><div class="topicref" data-id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424"><div class="title"><a href="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.2</ph>
+Generate Touch Project with MCC Melody</a></div></div></li></ol></div>
+                    
+                    
+                    
+                    <div class="wh_right_tools">
+                        <button class="wh_hide_highlight" aria-label="Toggle search highlights" title="Toggle search highlights"></button>
+                        <button class="webhelp_expand_collapse_sections" data-next-state="collapsed" aria-label="Collapse sections" title="Collapse sections"></button>
+                        
+                        
+                        
+                        
+                        <div class=" wh_print_link print d-none d-md-inline-block "><button onClick="window.print()" title="Print this page" aria-label="Print this page"></button></div>
+                        
+                        <button type="button" id="wh_toc_button" class="custom-toggler navbar-toggler collapsed wh_toggle_button navbar-light" aria-expanded="false" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    
+                </nav>
+            </div>
+            
+            <div class="row" style="margin-top: -1em;"><div class="col-lg-7 col-md-7 col-sm-12 offset-lg-3 offset-md-3 text-right border-bottom mb-1"><h2 class="text-dark header_title">
+    </h2></div></div>
+            
+            
+            <div class="wh_content_area">
+                <div class="row">
+                    
+                        <nav id="wh_publication_toc" class="col-lg-3 col-md-3 col-sm-12 d-md-block d-none d-print-none" aria-label="Table of Contents Container">
+                            <div id="wh_publication_toc_content">
+		                        
+                            	<div class=" wh_publication_toc " data-tooltip-position="right"><span class="expand-button-action-labels"><span id="button-expand-action" role="button" aria-label="Expand"></span><span id="button-collapse-action" role="button" aria-label="Collapse"></span><span id="button-pending-action" role="button" aria-label="Pending"></span></span><ul role="tree" aria-label="Table of Contents"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-04AE07CA-7B44-4458-8CA4-4BEF531E9146-d1074e11" class="topicref" data-id="GUID-04AE07CA-7B44-4458-8CA4-4BEF531E9146" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-04AE07CA-7B44-4458-8CA4-4BEF531E9146-d1074e11-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-04AE07CA-7B44-4458-8CA4-4BEF531E9146.html" id="GUID-04AE07CA-7B44-4458-8CA4-4BEF531E9146-d1074e11-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+MCC Touch Configurator</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-FBE6D9DC-DAA0-41F2-84FC-08D645DF5734-d1074e19" class="topicref" data-id="GUID-FBE6D9DC-DAA0-41F2-84FC-08D645DF5734" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-FBE6D9DC-DAA0-41F2-84FC-08D645DF5734-d1074e19-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-FBE6D9DC-DAA0-41F2-84FC-08D645DF5734.html" id="GUID-FBE6D9DC-DAA0-41F2-84FC-08D645DF5734-d1074e19-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1</ph>
+Step by Step Guide</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="GUID-E90AB64F-0444-4F82-9954-B2A4D380E3AD-d1074e27" class="topicref" data-id="GUID-E90AB64F-0444-4F82-9954-B2A4D380E3AD" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-E90AB64F-0444-4F82-9954-B2A4D380E3AD.html" id="GUID-E90AB64F-0444-4F82-9954-B2A4D380E3AD-d1074e27-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.1</ph>
+Generate Touch Project with MCC Harmony</a></div></div></li><li role="treeitem" class="active"><div data-tocid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424-d1074e35" class="topicref" data-id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424.html" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424-d1074e35-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.2</ph>
+Generate Touch Project with MCC Melody</a></div></div></li><li role="treeitem"><div data-tocid="GUID-419F33CA-D125-44BA-85E7-6DB7EC35009F-d1074e43" class="topicref" data-id="GUID-419F33CA-D125-44BA-85E7-6DB7EC35009F" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-419F33CA-D125-44BA-85E7-6DB7EC35009F.html" id="GUID-419F33CA-D125-44BA-85E7-6DB7EC35009F-d1074e43-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.3</ph>
+Tuning Options for touch in Melody/Harmony</a></div></div></li><li role="treeitem"><div data-tocid="GUID-9F536B24-DCF4-4D54-A659-CBC52A0ADF15-d1074e51" class="topicref" data-id="GUID-9F536B24-DCF4-4D54-A659-CBC52A0ADF15" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-9F536B24-DCF4-4D54-A659-CBC52A0ADF15.html" id="GUID-9F536B24-DCF4-4D54-A659-CBC52A0ADF15-d1074e51-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.4</ph>
+How to Enable Frequency Hop Auto tune</a></div></div></li><li role="treeitem"><div data-tocid="GUID-EDEAD3E0-FB69-4554-808E-33904213BB26-d1074e59" class="topicref" data-id="GUID-EDEAD3E0-FB69-4554-808E-33904213BB26" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-EDEAD3E0-FB69-4554-808E-33904213BB26.html" id="GUID-EDEAD3E0-FB69-4554-808E-33904213BB26-d1074e59-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.5</ph>
+How to Enable Boost Mode</a></div></div></li><li role="treeitem"><div data-tocid="GUID-936F6C9B-49AB-4EF7-A7D3-DCE0DC1AD0D9-d1074e67" class="topicref" data-id="GUID-936F6C9B-49AB-4EF7-A7D3-DCE0DC1AD0D9" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-936F6C9B-49AB-4EF7-A7D3-DCE0DC1AD0D9.html" id="GUID-936F6C9B-49AB-4EF7-A7D3-DCE0DC1AD0D9-d1074e67-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.6</ph>
+How to enable Driven Shield</a></div></div></li><li role="treeitem"><div data-tocid="GUID-033278AC-5674-470E-81DD-6FDA78349B00-d1074e75" class="topicref" data-id="GUID-033278AC-5674-470E-81DD-6FDA78349B00" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-033278AC-5674-470E-81DD-6FDA78349B00.html" id="GUID-033278AC-5674-470E-81DD-6FDA78349B00-d1074e75-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.7</ph>
+How to create Low-power sensor </a></div></div></li><li role="treeitem"><div data-tocid="GUID-854AA2E5-B835-4003-9BC9-1D9438DBC327-d1074e83" class="topicref" data-id="GUID-854AA2E5-B835-4003-9BC9-1D9438DBC327" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-854AA2E5-B835-4003-9BC9-1D9438DBC327.html" id="GUID-854AA2E5-B835-4003-9BC9-1D9438DBC327-d1074e83-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.8</ph>
+How to create Lump Sensor</a></div></div></li><li role="treeitem"><div data-tocid="GUID-C889AFDA-2BA2-4191-A426-21B463A64260-d1074e91" class="topicref" data-id="GUID-C889AFDA-2BA2-4191-A426-21B463A64260" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-C889AFDA-2BA2-4191-A426-21B463A64260.html" id="GUID-C889AFDA-2BA2-4191-A426-21B463A64260-d1074e91-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.1.9</ph>
+How to configure timers for touch project in Melody</a></div></div></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-BE143985-0F6A-4E8B-AAAC-97E4E900B815-d1074e99" class="topicref" data-id="GUID-BE143985-0F6A-4E8B-AAAC-97E4E900B815" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-BE143985-0F6A-4E8B-AAAC-97E4E900B815-d1074e99-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-BE143985-0F6A-4E8B-AAAC-97E4E900B815.html" id="GUID-BE143985-0F6A-4E8B-AAAC-97E4E900B815-d1074e99-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1.2</ph>
+Release Information</a></div></div></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-9E96FD2E-AAA2-4AF7-864B-DE1D49E68EB1-d1074e163" class="topicref" data-id="GUID-9E96FD2E-AAA2-4AF7-864B-DE1D49E68EB1" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-9E96FD2E-AAA2-4AF7-864B-DE1D49E68EB1-d1074e163-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-9E96FD2E-AAA2-4AF7-864B-DE1D49E68EB1.html" id="GUID-9E96FD2E-AAA2-4AF7-864B-DE1D49E68EB1-d1074e163-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2</ph>
+Touch Library API and Parameter Reference</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-60F1A1D6-B94E-4FA9-9C93-E05332190B1E-d1074e942" class="topicref" data-id="GUID-60F1A1D6-B94E-4FA9-9C93-E05332190B1E" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-60F1A1D6-B94E-4FA9-9C93-E05332190B1E-d1074e942-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-60F1A1D6-B94E-4FA9-9C93-E05332190B1E.html" id="GUID-60F1A1D6-B94E-4FA9-9C93-E05332190B1E-d1074e942-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">3</ph>
+Tuning Touch Applications using MPLAB® Data Visualizer</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d1074e980" class="topicref backmatter backmatter_parent" data-id="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d1074e980-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B.html" id="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d1074e980-link">Microchip Information</a></div></div></li></ul></div>
+		                        
+                            </div>
+                        </nav>
+                    
+                    
+                    <div class="col-lg-7 col-md-9 col-sm-12" id="wh_topic_body">
+                        <button id="wh_close_publication_toc_button" class="close-toc-button d-none" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        <button id="wh_close_topic_toc_button" class="close-toc-button d-none" aria-label="Toggle topic table of content" aria-controls="wh_topic_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        
+                        <div class=" wh_topic_content body "><main role="main"><article role="article" aria-labelledby="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-9EC37613-CFA4-4369-9FB5-E6ACCBD3348A">
+<h1 class="- topic/title title topictitle1" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-9EC37613-CFA4-4369-9FB5-E6ACCBD3348A" style="">1.1.2 Generate Touch Project with MCC Melody</h1>
+    
+    <div class="- topic/body body">
+        <p class="- topic/p p"></p>
+        <section class="- topic/section section" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SECTION_JKJ_HC1_KYB" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SECTION_JKJ_HC1_KYB"><h2 class="- topic/title title sectiontitle">Objective</h2>
+            
+            <p class="- topic/p p"></p>
+            <p class="- topic/p p">The following procedure shows how to create a Touch project with the MCC Melody
+                platform where touch sensors and their parameters can be graphically added and
+                tuned. The resulting project supports the MPLAB XC8 compiler in MPLABX IDE. This
+                project uses the ATTINY3217 Xplained Pro board along with the T10 Mutual Capacitance
+                Xplained Pro Extension Kit. </p>
+            <p class="- topic/p p"></p>
+        </section>
+        <section class="- topic/section section" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SECTION_CLH_JC1_KYB" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SECTION_CLH_JC1_KYB"><h2 class="- topic/title title sectiontitle">Materials </h2>
+            
+            <p class="- topic/p p"></p>
+            <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Hardware Tools</strong></p>
+            <p class="- topic/p p"></p>
+            <div class="- topic/p p">
+                <div class="simpletable-container"><table class="- topic/simpletable simpletable frame-all" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SIMPLETABLE_YS1_BD1_KYB" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SIMPLETABLE_YS1_BD1_KYB"><colgroup><col style="width:24.630541871921185%"/><col style="width:37.19211822660099%"/><col style="width:38.177339901477836%"/></colgroup><thead><tr class="- topic/sthead sthead">
+                        <th class="- topic/stentry stentry" scope="col" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SIMPLETABLE_YS1_BD1_KYB__stentry__1">Tool</th>
+                        <th class="- topic/stentry stentry" scope="col" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SIMPLETABLE_YS1_BD1_KYB__stentry__2">About</th>
+                        <th class="- topic/stentry stentry" scope="col" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SIMPLETABLE_YS1_BD1_KYB__stentry__3">Purchase</th>
+                    </tr></thead><tbody><tr class="- topic/strow strow">
+                        <td class="- topic/stentry stentry" headers="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SIMPLETABLE_YS1_BD1_KYB__stentry__1">ATTINY3217 XPRO</td>
+                        <td class="- topic/stentry stentry" headers="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SIMPLETABLE_YS1_BD1_KYB__stentry__2"><a class="- topic/xref xref" href="https://www.microchip.com/en-us/development-tool/ATTINY3217-XPRO" target="_blank" rel="external noopener">www.microchip.com/en-us/development-tool/ATTINY3217-XPRO</a></td>
+                        <td class="- topic/stentry stentry" headers="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SIMPLETABLE_YS1_BD1_KYB__stentry__3"><a class="- topic/xref xref" href="https://www.microchipdirect.com/dev-tools/ATTINY3217-XPRO?allDevTools=true" target="_blank" rel="external noopener">www.microchipdirect.com/dev-tools/ATTINY3217-XPRO?allDevTools=true</a></td>
+                    </tr><tr class="- topic/strow strow">
+                        <td class="- topic/stentry stentry" headers="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SIMPLETABLE_YS1_BD1_KYB__stentry__1">T10 XPRO</td>
+                        <td class="- topic/stentry stentry" headers="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SIMPLETABLE_YS1_BD1_KYB__stentry__2"><a class="- topic/xref xref" href="https://www.microchip.com/en-us/development-tool/AC47H23A" target="_blank" rel="external noopener">www.microchip.com/en-us/development-tool/AC47H23A</a></td>
+                        <td class="- topic/stentry stentry" headers="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SIMPLETABLE_YS1_BD1_KYB__stentry__3"><a class="- topic/xref xref" href="https://www.microchipdirect.com/dev-tools/DM320204?allDevTools=true" target="_blank" rel="external noopener">www.microchipdirect.com/dev-tools/DM320204?allDevTools=true</a></td>
+                    </tr></tbody></table></div>
+            </div>
+            <p class="- topic/p p"></p>
+            <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Software Tools</strong></p>
+            <p class="- topic/p p"></p>
+            <p class="- topic/p p">MPLABX IDE with <strong class="+ topic/ph hi-d/b ph b">MCC</strong> installed.</p>
+            <p class="- topic/p p"></p>
+        </section>
+        <section class="- topic/section section" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SECTION_AYM_PD1_KYB" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SECTION_AYM_PD1_KYB"><h2 class="- topic/title title sectiontitle">Procedure</h2><p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Step 1: Open MPLABX IDE</strong>
+            </p><p class="- topic/p p">Click and select the <strong class="+ topic/ph hi-d/b ph b">File</strong> &gt; <strong class="+ topic/ph hi-d/b ph b">New Project</strong> option in MPLAB X
+                IDE.</p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_IKV_X3C_5YB" src="GUID-AAE3884F-F334-4685-990A-A7DF7007B392-high.svg"/></div></p><p class="- topic/p p"></p><p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Step 2: Choose Project </strong></p><p class="- topic/p p">In the
+                    <strong class="+ topic/ph hi-d/b ph b">New Project</strong> window, select <strong class="+ topic/ph hi-d/b ph b">Application Project</strong> and click
+                    <strong class="+ topic/ph hi-d/b ph b">Next</strong>.</p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_LNT_RTX_31C" src="GUID-859558DE-C194-43F0-B35A-E89DBE9A27F8-high.svg"/></div></p><p class="- topic/p p"></p><strong class="+ topic/ph hi-d/b ph b">Step 3: Device and Tool Selection</strong><p class="- topic/p p">Type
+                    <strong class="+ topic/ph hi-d/b ph b">TINY3217</strong> in the <strong class="+ topic/ph hi-d/b ph b">Device</strong> option and select ATtiny3217.
+                    </p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_PNZ_Y3C_5YB" src="GUID-0040E713-95EA-4142-94DC-4A4E39A9A599-high.svg"/></div></p><p class="- topic/p p"></p><p class="- topic/p p">In the <strong class="+ topic/ph hi-d/b ph b">Tool</strong> option, select the
+                    <strong class="+ topic/ph hi-d/b ph b">Attiny3217 Xplained Pro</strong> Tool form the drop down and click <strong class="+ topic/ph hi-d/b ph b">Next</strong>.
+                    </p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_YZL_Z3C_5YB" src="GUID-EB374842-0CF4-497B-B87E-F829D0937EB4-high.svg"/></div></p><p class="- topic/p p"></p><p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Step 4: Compiler Selection </strong></p><p class="- topic/p p">In
+                the <strong class="+ topic/ph hi-d/b ph b">Select Compiler</strong> section, select the<strong class="+ topic/ph hi-d/b ph b"> XC8 compiler</strong> and click
+                    <strong class="+ topic/ph hi-d/b ph b">Next</strong>.</p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_X1Z_Z3C_5YB" src="GUID-95A9001F-D141-4C35-95FD-9D7E426B22BA-high.svg"/></div></p><p class="- topic/p p"></p><p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Step 5: Project Settings</strong></p><p class="- topic/p p">Enter
+                the project name, location and folder for the project and click
+                    <strong class="+ topic/ph hi-d/b ph b">Finish</strong>.</p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_SBN_1JC_5YB" src="GUID-49711C39-7DBF-4A60-A083-1ED0C16F72C9-high.svg"/></div></p><p class="- topic/p p"></p><p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Step 6: MCC with Melody </strong></p><p class="- topic/p p">Select
+                    <strong class="+ topic/ph hi-d/b ph b">MCC</strong> from the Toolbar </p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_SCC_B5X_31C" src="GUID-4ECC264E-0E4C-41EF-B5C7-D4FFEC86DD30-high.svg"/></div></p><p class="- topic/p p"></p><p class="- topic/p p">The MCC content Manager window opens and from it click <strong class="+ topic/ph hi-d/b ph b">Next</strong> in
+                MCC Melody.</p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_LBL_NYD_J1C" src="GUID-C3F2ED81-BDBD-4C31-8495-1375DF9229FE-high.svg" height="330" width="540"/></div></p><p class="- topic/p p"></p><p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Step 7: Melody with Touch
+                    package </strong></p><p class="- topic/p p"></p><p class="- topic/p p">Select the <strong class="+ topic/ph hi-d/b ph b">Touch</strong> content from the Optional Content
+                section and click <strong class="+ topic/ph hi-d/b ph b">Finish</strong>. </p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_NVK_RH2_J1C" src="GUID-8D9079C0-2691-4E4A-8524-2384D4693AF4-high.svg"/></div></p><p class="- topic/p p"></p><strong class="+ topic/ph hi-d/b ph b">Step 8: Adding Touch to the project </strong><p class="- topic/p p"></p><p class="- topic/p p">Add <strong class="+ topic/ph hi-d/b ph b">Touch</strong> from
+                Touch configurator from th <strong class="+ topic/ph hi-d/b ph b">Device Resources </strong>Tab.</p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_WML_VNS_XYB" src="GUID-4C1829E8-C01A-4597-B4D8-2F6230DE1174-high.svg"/></div></p><p class="- topic/p p"></p><p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Touch</strong> is added to the Project graph as shown below.
+                    </p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_BXW_F5X_31C" src="GUID-EF08BBA4-9FEF-4A30-A36B-D3F911F4A1C0-high.svg" height="528" width="609"/></div></p><p class="- topic/p p"></p><p class="- topic/p p">Include <strong class="+ topic/ph hi-d/b ph b">RTC</strong> from <strong class="+ topic/ph hi-d/b ph b">Device
+                    Resources</strong></p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_NLZ_GBY_31C" src="GUID-73B00339-F66D-437D-BBD9-EA27EAA2F377-high.svg" height="360" width="195"/></div></p><p class="- topic/p p"></p><p class="- topic/p p">The builder with <strong class="+ topic/ph hi-d/b ph b">RTC</strong> and
+                    <strong class="+ topic/ph hi-d/b ph b">Touch</strong> is as follows. </p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_TTJ_3BY_31C" src="GUID-184C3B95-57CA-49A6-9BE7-8FB05EF2D9B6-high.svg" height="525" width="599"/></div></p><p class="- topic/p p"></p><p class="- topic/p p">Enable <strong class="+ topic/ph hi-d/b ph b">Overflow Interrupt</strong> in
+                    RTC.</p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_LPH_MBY_31C" src="GUID-5A252B3A-AEBE-4662-A8F1-26227521EA49-high.svg" height="540" width="553"/></div></p><p class="- topic/p p"></p><strong class="+ topic/ph hi-d/b ph b">Step 9: Select
+                Technology</strong><p class="- topic/p p"></p><p class="- topic/p p">Select <strong class="+ topic/ph hi-d/b ph b">Mutual cap</strong> from the drop down as shown.
+                    </p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_E2Q_RTF_1ZB" src="GUID-9E2F4AE0-C5BE-43D0-89BF-14EE1D952D47-high.svg"/></div></p><p class="- topic/p p"></p><strong class="+ topic/ph hi-d/b ph b">Step 10: Add Buttons</strong><p class="- topic/p p"></p><p class="- topic/p p">Click
+                    <strong class="+ topic/ph hi-d/b ph b">Button</strong> icon and add 4 buttons</p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_FN3_STF_1ZB" src="GUID-EB90CA40-42D8-499D-B038-C6F585AD598C-high.svg"/></div></p><p class="- topic/p p"></p><p class="- topic/p p">The following dialog box opens indicating that the Sensor pins are auto
+                assigned on creation. Click <strong class="+ topic/ph hi-d/b ph b">Ok</strong>. </p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_DCD_TTF_1ZB" src="GUID-94D4EB49-E648-4276-8BB6-724560BD9F05-high.svg"/></div></p><p class="- topic/p p"></p><p class="- topic/p p"></p><strong class="+ topic/ph hi-d/b ph b">Step 11: Add Slider</strong><p class="- topic/p p"></p><p class="- topic/p p">Now click <strong class="+ topic/ph hi-d/b ph b">Slider</strong> and select 4
+                in segments and click <strong class="+ topic/ph hi-d/b ph b">Add</strong>. </p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_Y2L_3JC_5YB" src="GUID-F76333DB-694F-48D5-B84B-E26C1E09D17B-high.svg"/></div></p><p class="- topic/p p"></p><p class="- topic/p p">Now 4 buttons and 4 channel slider sensor are added.</p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_FNQ_TBG_1ZB" src="GUID-46396A59-9F70-436C-ADD8-E6A688D7EC2C-high.svg" height="483" width="546"/></div></p><p class="- topic/p p"></p><strong class="+ topic/ph hi-d/b ph b">Step 12: Pin Assignment</strong><p class="- topic/p p"></p><p class="- topic/p p">A generalized pin
+                assignment for a majority of the Xplained PROs and MCUs have been provided in a
+                downloadable file titled "<strong class="+ topic/ph hi-d/b ph b">Curiosity Nano Touch Adapter Pin Configurattion</strong>"
+                the <strong class="+ topic/ph hi-d/b ph b">Documentation</strong> section in <a class="- topic/xref xref" href="https://www.microchip.com/en-us/development-tool/ac80t88a" target="_blank" rel="external noopener">this link</a> as shown in the figure. </p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_OXD_WTF_1ZB" src="GUID-CB4E5D50-C054-46C8-8D92-AF572291EEB6-high.svg"/></div></p><p class="- topic/p p"></p><p class="- topic/p p">If the MCU or the XPRO board is not available then the user can assign
+                the pins based on the datatsheet/userguide of that particular MCU/ XPRO. A snapshot
+                of the pinout for SAML10 and T10 XPRO can be seen from the below figure.
+                    </p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_SJZ_WTF_1ZB" src="GUID-23FD1AF0-FD47-48BA-A8F7-1800E2828144-high.svg"/></div></p><p class="- topic/p p"></p><p class="- topic/p p">Based on the documentation file, the X and Y
+                lines should be selected as follows. </p><p class="- topic/p p"></p><div class="- topic/p p">
+                <div class="table-container"><table class="- topic/table table" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__TABLE_SHN_MSM_4YB" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__TABLE_SHN_MSM_4YB" data-cols="4"><caption></caption><colgroup><col/><col/><col/><col/></colgroup><tbody class="- topic/tbody tbody">
+                            <tr class="- topic/row">
+                                <td class="- topic/entry entry colsep-0 rowsep-0"><strong class="+ topic/ph hi-d/b ph b">Sensor</strong></td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0"><strong class="+ topic/ph hi-d/b ph b">Channel ID</strong></td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0"><strong class="+ topic/ph hi-d/b ph b">X Line</strong></td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0"><strong class="+ topic/ph hi-d/b ph b">Y Line</strong></td>
+                            </tr>
+                            <tr class="- topic/row">
+                                <td class="- topic/entry entry colsep-0 rowsep-0"><strong class="+ topic/ph hi-d/b ph b">Button 0</strong></td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0">0</td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0">5</td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0">4</td>
+                            </tr>
+                            <tr class="- topic/row">
+                                <td class="- topic/entry entry colsep-0 rowsep-0"><strong class="+ topic/ph hi-d/b ph b">Button 1</strong></td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0">1</td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0">4</td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0">4</td>
+                            </tr>
+                            <tr class="- topic/row">
+                                <td class="- topic/entry entry colsep-0 rowsep-0"><strong class="+ topic/ph hi-d/b ph b">Button 2</strong></td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0">2</td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0">1</td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0">4</td>
+                            </tr>
+                            <tr class="- topic/row">
+                                <td class="- topic/entry entry colsep-0 rowsep-0"><strong class="+ topic/ph hi-d/b ph b">Button 3</strong></td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0">3</td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0">0</td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0">4</td>
+                            </tr>
+                            <tr class="- topic/row">
+                                <td class="- topic/entry entry colsep-0 rowsep-0" rowspan="4"><strong class="+ topic/ph hi-d/b ph b">Slider 0</strong></td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0">4</td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0">5</td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0">3</td>
+                            </tr>
+                            <tr class="- topic/row">
+                                <td class="- topic/entry entry colsep-0 rowsep-0">5</td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0">4</td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0">3</td>
+                            </tr>
+                            <tr class="- topic/row">
+                                <td class="- topic/entry entry colsep-0 rowsep-0">6</td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0">1</td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0">3</td>
+                            </tr>
+                            <tr class="- topic/row">
+                                <td class="- topic/entry entry colsep-0 rowsep-0">7</td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0">0</td>
+                                <td class="- topic/entry entry colsep-0 rowsep-0">3</td>
+                            </tr>
+                        </tbody></table></div>
+            </div><p class="- topic/p p"></p><p class="- topic/p p">The pin assignement can be done in <strong class="+ topic/ph hi-d/b ph b">Configure → Sensor Pins.</strong> With
+                respect to the above table in touch configurator the pins were
+                    selected.</p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_EJ5_HZF_1ZB" src="GUID-F4D771A4-C6E6-4A86-916C-8C9195328AC9-high.svg"/></div></p><p class="- topic/p p"></p><div class="- topic/p p">
+                <div class="- topic/note note notype note_notype" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__NOTE_LCW_ZV5_TYB" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__NOTE_LCW_ZV5_TYB"><span class="note__title">Note:</span> It can be seen that when configuring the pins, we can
+                    drag and drop the sensor to modify the X and Y lines. For changing the
+                    multiplexed X or Y line the corresponding line should be clicked as shown below.
+                            <p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_OG2_MNS_XYB" src="GUID-9E1E27A5-9BFC-4EB9-8ADB-0A151215C880-high.gif"/></div></p><p class="- topic/p p"></p></div>
+            </div><p class="- topic/p p"></p><p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Parameters</strong></p><p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b"></strong></p><p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b"><strong class="+ topic/ph hi-d/b ph b">Step 13: </strong>Sensor Parameters
+                </strong></p><p class="- topic/p p"></p><p class="- topic/p p">For tuning the touch parameters, <strong class="+ topic/ph hi-d/b ph b">Config</strong> → <strong class="+ topic/ph hi-d/b ph b">Sensor
+                    Parameters</strong> and tune according to the application. </p><div class="- topic/p p">
+                <div class="- topic/note note notype note_notype" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__NOTE_IN4_NXM_4YB" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__NOTE_IN4_NXM_4YB"><span class="note__title">Note:</span> All the parameters are tunable for
+                    buttons/Sliders/Wheels. </div>
+            </div><p class="- topic/p p">The Sensor Parameters Tab allows to configure touch sensor parameters such as:
+                </p><p class="- topic/p p"></p><ul class="- topic/ul ul" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__UL_OTJ_N5M_4YB" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__UL_OTJ_N5M_4YB">
+                <li class="- topic/li li" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-2D304291-79F8-4944-AEA2-191ED26C5140" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-2D304291-79F8-4944-AEA2-191ED26C5140">Digital Filter Gain</li>
+                <li class="- topic/li li" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-13A447B1-E6C8-462E-B012-F71B08FA621E" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-13A447B1-E6C8-462E-B012-F71B08FA621E">Digital Filter Oversampling</li>
+                <li class="- topic/li li" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-0C3ABCE7-8832-4BF0-8193-1A73047D336F" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-0C3ABCE7-8832-4BF0-8193-1A73047D336F">Analog Gain</li>
+                <li class="- topic/li li" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-5E703761-880D-4327-9326-963B517B0C98" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-5E703761-880D-4327-9326-963B517B0C98">Series Resistor</li>
+                <li class="- topic/li li" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-F8421E3B-C739-4178-84EF-E926F99CA24B" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-F8421E3B-C739-4178-84EF-E926F99CA24B">Addition Charge Share Delay</li>
+                <li class="- topic/li li" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-091D2811-4820-4C6B-9F29-5B9DB1E7ADCD" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-091D2811-4820-4C6B-9F29-5B9DB1E7ADCD">PTC Clock</li>
+                <li class="- topic/li li" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-F54DA373-AA35-4950-AC7E-27107104C0CE" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-F54DA373-AA35-4950-AC7E-27107104C0CE">Sensor Detect Threshold</li>
+                <li class="- topic/li li" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-A356F82B-21D2-4668-B6F9-972DCA1070A2" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-A356F82B-21D2-4668-B6F9-972DCA1070A2">Sensor Hysteresis</li>
+                <li class="- topic/li li" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-6448E7BD-B88D-49C0-A0B9-161B3967BC38" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-6448E7BD-B88D-49C0-A0B9-161B3967BC38">Sensor AKS</li>
+            </ul><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_DDL_NH2_J1C" src="GUID-7A6620EB-D1A0-4C3C-91F1-55A0861CA9B5-high.svg"/></div></p><p class="- topic/p p"></p><p class="- topic/p p">Here the CPU operating frequency can be set
+                in the <strong class="+ topic/ph hi-d/b ph b">GCLK</strong> block in MHz as highlighted above.  </p><p class="- topic/p p"></p><p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Step 14:</strong>
+                <strong class="+ topic/ph hi-d/b ph b">Common Parameters</strong></p><p class="- topic/p p"></p><p class="- topic/p p">For tuning the touch parameters, <strong class="+ topic/ph hi-d/b ph b">Config</strong> →
+                    <strong class="+ topic/ph hi-d/b ph b">Common Parameters</strong> and tune according to the application. </p><p class="- topic/p p">The
+                Common Parameters Tab allows to configure touch sensor parameters such as:
+                </p><p class="- topic/p p"></p><ul class="- topic/ul ul" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__UL_AXB_4VM_4YB" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__UL_AXB_4VM_4YB">
+                <li class="- topic/li li" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-FB658737-410B-4AF1-B36B-8652F29CB43F" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-FB658737-410B-4AF1-B36B-8652F29CB43F"><strong class="+ topic/ph hi-d/b ph b">Acquisition</strong><ul class="- topic/ul ul" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__UL_D41_PVM_4YB" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__UL_D41_PVM_4YB">
+                        <li class="- topic/li li" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-552F09F7-F1EA-49AE-BA66-B13F6BCD0AAE" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-552F09F7-F1EA-49AE-BA66-B13F6BCD0AAE">Scan Rate</li>
+                        <li class="- topic/li li" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-010AD610-6B61-4E83-A926-FC90D6A9685B" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-010AD610-6B61-4E83-A926-FC90D6A9685B">PTC Interrupt
+                            Priority</li>
+                        <li class="- topic/li li" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-F5B8688B-99FD-44AB-BD2F-D89ED9F98D0E" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-F5B8688B-99FD-44AB-BD2F-D89ED9F98D0E">Acquisition
+                            Frequency</li>
+                    </ul></li>
+                <li class="- topic/li li" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-CE753C13-6EEE-4DD2-A3CC-50CB4360D698" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-CE753C13-6EEE-4DD2-A3CC-50CB4360D698"><strong class="+ topic/ph hi-d/b ph b">Sensor</strong><ul class="- topic/ul ul" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__UL_RGB_RVM_4YB" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__UL_RGB_RVM_4YB">
+                        <li class="- topic/li li" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-1824E4F2-D9CD-441B-9E42-35318B91445C" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-1824E4F2-D9CD-441B-9E42-35318B91445C">Detect Integration</li>
+                        <li class="- topic/li li" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-0CBEA78E-A63B-4305-A24A-395F8809104E" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-0CBEA78E-A63B-4305-A24A-395F8809104E">Away from Touch Recal
+                            Integration count</li>
+                        <li class="- topic/li li" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-23ACAE5C-689A-406B-8079-297AEB4FBB72" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-23ACAE5C-689A-406B-8079-297AEB4FBB72">Away from Touch Recal
+                            Threshold</li>
+                        <li class="- topic/li li" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-78FA5CB4-888F-4C22-ABC3-73513E6F0377" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-78FA5CB4-888F-4C22-ABC3-73513E6F0377">Touch Drift Rate</li>
+                        <li class="- topic/li li" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-3B5E1ADA-993E-48AF-9EFB-3D287F521E67" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-3B5E1ADA-993E-48AF-9EFB-3D287F521E67">Away from touch Drit
+                            Rate</li>
+                        <li class="- topic/li li" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-31E62EC5-AF1B-4E4F-89CD-2B8FAD172E96" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-31E62EC5-AF1B-4E4F-89CD-2B8FAD172E96">Drift Hold Time</li>
+                        <li class="- topic/li li" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-294EED21-5C23-43B6-AB43-7F513BEACC51" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-294EED21-5C23-43B6-AB43-7F513BEACC51">Re-burst mode</li>
+                        <li class="- topic/li li" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-604CEBA8-93F5-4D01-AB32-647314B188AE" data-ofbid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__GUID-604CEBA8-93F5-4D01-AB32-647314B188AE">Max ON Duration</li>
+                    </ul></li>
+            </ul><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_YN3_MH2_J1C" src="GUID-898B0D52-0812-4C68-B402-A3A5F4165A72-high.svg"/></div></p><p class="- topic/p p"></p><p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b"><strong class="+ topic/ph hi-d/b ph b">Step 15:</strong> Frequency
+                Hop</strong>:</p><p class="- topic/p p"></p><p class="- topic/p p">Frequency Hop can be enabled by navigating to <strong class="+ topic/ph hi-d/b ph b">Config</strong> →
+                    <strong class="+ topic/ph hi-d/b ph b">Frequency Hop</strong> and then sliding the <strong class="+ topic/ph hi-d/b ph b">Enable Frequency Hop </strong>button. A
+                maximum of 7 frequency steps can be selected which can be induvidually configured
+                using the drop down. Hop Frequencies are fixed at compile time in Frequency Hop.
+                    </p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_FYL_LH2_J1C" src="GUID-7AC15185-0C8B-4739-B3E6-47DB706469C2-high.svg"/></div></p><p class="- topic/p p"></p><p class="- topic/p p">The auto-tune feature can be enabled by
+                sliding the <strong class="+ topic/ph hi-d/b ph b">Enable Frequency Auto Tuning </strong>button. A detailed description on
+                how to configure the Frequency Hop and Frequency Hop Autotune is provided in the
+                    <a class="- topic/xref xref" href="GUID-9F536B24-DCF4-4D54-A659-CBC52A0ADF15.html"><span><span>1.1.4 </span><span>How to Enable Frequency Hop Auto tune</span></span></a>
+                    page.</p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_RZR_KH2_J1C" src="GUID-DCE65D9B-D66F-4680-BFEE-866EB564B915-high.svg"/></div></p><p class="- topic/p p"></p><p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Step 16: Touch Tuning</strong></p><p class="- topic/p p"></p><p class="- topic/p p">Enable
+                the datastreamer by selecting the <strong class="+ topic/ph hi-d/b ph b">Enable Touch tuning Data connection</strong> option.
+                A detailed description on how to configure the datastreamer is provided in the <a class="- topic/xref xref" href="GUID-EE969261-6E3F-4194-B7D0-B796C062E18A.html"><span><span>3.2 </span><span>Guide to view Touch Tune Data using MPLAB<sup class="+ topic/ph hi-d/sup ph sup">®</sup>
+        Data Visualizer</span></span></a>
+                    page.</p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_AYJ_WBY_31C" src="GUID-FB8DE0EF-FBBC-4917-A661-806A09BBD081-high.svg"/></div></p><p class="- topic/p p"></p><strong class="+ topic/ph hi-d/b ph b">Step 17: Summary</strong><p class="- topic/p p"></p><p class="- topic/p p">Click on the
+                    <strong class="+ topic/ph hi-d/b ph b">Summary</strong> Tab to review the project configuration and find versions of
+                Library modules. Check whether all the necessary paramneters are enabled and
+                present. </p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_CXW_KVF_1ZB" src="GUID-EA090237-227B-4BAA-B882-3B863D60B89B-high.svg"/></div></p><p class="- topic/p p"></p><p class="- topic/p p">The pins assignment can be checked as
+                configured above in the <strong class="+ topic/ph hi-d/b ph b">Pin Grid View</strong>. </p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_FCV_LVF_1ZB" src="GUID-71DD0ED8-90E4-495A-BAF3-4CAADCAD99AC-high.svg"/></div></p><p class="- topic/p p"></p><p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Step 18: Configuring Hints and Warnings</strong></p><p class="- topic/p p">In
+                    <strong class="+ topic/ph hi-d/b ph b">Notifications </strong>Tab, it can be seen that a few hints and warning have been
+                given for the project to build without any errors. </p><p class="- topic/p p"></p><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_YSP_MVF_1ZB" src="GUID-778F73DD-D218-401D-B0F0-F29654520CFA-high.svg"/></div><p class="- topic/p p"></p><p class="- topic/p p">To
+                clear these hints and warning, in <strong class="+ topic/ph hi-d/b ph b">Touch Configurator</strong> → Click <strong class="+ topic/ph hi-d/b ph b">Important
+                    Notes</strong>. </p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_K32_GCY_31C" src="GUID-32F3B085-93A2-4D7B-8550-C96694B244E0-high.svg" height="109" width="468"/></div></p><p class="- topic/p p"></p><p class="- topic/p p">A new pop up with the
+                notifications and a checkbox is displayed. Once all the items in the notificaitons
+                are checked, the warnings and hints are cleared. </p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_MYG_HCY_31C" src="GUID-C181C2B5-ED0C-4740-A485-18403F77405E-high.svg" height="540" width="720"/></div></p><p class="- topic/p p">In the <strong class="+ topic/ph hi-d/b ph b">Resource management</strong> tab select
+                    <strong class="+ topic/ph hi-d/b ph b">Interrupt Manager</strong> and enable the <strong class="+ topic/ph hi-d/b ph b">Global interrupt </strong>as indicated in
+                the Hints. </p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_IHK_NVF_1ZB" src="GUID-FB83D2E1-D4D4-4215-BE22-296CE7B2A571-high.svg"/></div></p><p class="- topic/p p"></p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_LS4_4VF_1ZB" src="GUID-E2CBE899-F8AE-4524-9F52-A41091A85A8A-high.svg"/></div></p><p class="- topic/p p"></p><strong class="+ topic/ph hi-d/b ph b">Step 19: Project Generation</strong>
+            <p class="- topic/p p"></p><p class="- topic/p p">Now click <strong class="+ topic/ph hi-d/b ph b">Generate</strong> from the Project Resources Tab. </p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_KWJ_PVF_1ZB" src="GUID-A0D10625-173B-4C1F-A2BF-CF24236E7C59-high.svg" height="197" width="343"/></div></p><p class="- topic/p p"></p><p class="- topic/p p"></p><p class="- topic/p p">The <strong class="+ topic/ph hi-d/b ph b">Generation</strong>
+                <strong class="+ topic/ph hi-d/b ph b">complete</strong> message is displayed in the output window.</p><p class="- topic/p p"></p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_YLW_4YF_1ZB" src="GUID-9EEC713C-866C-4335-AAC6-29818A984A22-high.svg"/></div></p><p class="- topic/p p"></p><p class="- topic/p p"></p><p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Step 19:</strong> Include <strong class="+ topic/ph hi-d/b ph b">touch_process()</strong> to the main
+                while(1) loop. Now the project is ready for testing on the kit.</p><p class="- topic/p p"></p><p class="- topic/p p"><div class=""><img class="- topic/image image" id="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__IMAGE_T2X_RVF_1ZB" src="GUID-22B4B51A-FC98-4B16-B03A-94AE967AFC10-high.svg"/></div></p><p class="- topic/p p"></p><p class="- topic/p p"></p></section>
+    </div>
+</article></main></div>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                    
+                        <nav role="navigation" id="wh_topic_toc" aria-label="On this page" class="col-lg-2 d-none d-lg-block navbar d-print-none"> 
+                            <div id="wh_topic_toc_content">
+		                        
+	                            <div class=" wh_topic_toc "><div class="wh_topic_label">On this page</div><ul><li class="section-item"><div class="section-title"><a href="#GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SECTION_JKJ_HC1_KYB" data-tocid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SECTION_JKJ_HC1_KYB">Objective</a></div></li><li class="section-item"><div class="section-title"><a href="#GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SECTION_CLH_JC1_KYB" data-tocid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SECTION_CLH_JC1_KYB">Materials </a></div></li><li class="section-item"><div class="section-title"><a href="#GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SECTION_AYM_PD1_KYB" data-tocid="GUID-B6D103D4-6484-45BF-B1E7-3535146B2424__SECTION_AYM_PD1_KYB">Procedure</a></div></li></ul></div>
+	                        	
+                        	</div>
+                        </nav>
+                    
+                </div>
+            </div>
+            
+            
+            
+        </div> 
+        <footer class="navbar navbar-default wh_footer">
+  <div class=" footer-container mx-auto ">
+    <div class="footer">
+  <div class="mchp-wh-footer">
+    <div class="mchp-footer">
+      <div class="mchp-footer-tier1">
+        <div class="spacer"></div>
+        <div class="mchp-footer-container">
+          <div class="mchp-footer-links mchp-social-media-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.facebook.com/pages/Microchip-Technology-Inc/20320981741" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Facebook" src="oxygen-webhelp/template/resources/images/201016-corp-facebook.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.linkedin.com/company/microchip-technology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip LinkedIn" src="oxygen-webhelp/template/resources/images/201016-corp-linkedin.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://twitter.com/MicrochipTech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Twitter" src="oxygen-webhelp/template/resources/images/201016-corp-twitter.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.youtube.com/user/MicrochipTechnology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip YouTube" src="oxygen-webhelp/template/resources/images/201016-corp-youtube.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.instagram.com/microchiptechnologyinc/" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Instagram" src="oxygen-webhelp/template/resources/images/201016-corp-instagram.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.weibo.com/microchiptech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Weibo" src="oxygen-webhelp/template/resources/images/201016-corp-weibo.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.microchip.com/en-us/about/blog" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Blog" src="oxygen-webhelp/template/resources/images/201016-corp-blog.png"/>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://www.microchip.com/about-us/contact-us" class="mchp-link__link">Contact</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information" class="mchp-link__link">Legal</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/privacy-policy" class="mchp-link__link">Privacy Policy</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/microchip-cookie-statement" class="mchp-link__link">Cookies</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://careers.microchip.com/" class="mchp-link__link">Careers</a>
+                  <span class="mchp-link__separator"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-newsletter">
+            <div class="cmp-text">
+              <p>Stay on the leading edge with our blog</p>
+            </div>
+            <div class="mchp-button-wrapper">
+              <a role="button" href="https://www.microchip.com/en-us/about/blog" class="mchp-button mchp-button-regular solid">
+                <span class="mchp-button__span">MicroSolutions</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="graphic">
+          <img src="oxygen-webhelp/template/resources/images/footer-graphic.png"/>
+        </div>
+      </div>
+      <div class="mchp-footer-tier2">
+        <p class="mchp-copyright">© Copyright 1998-2022 Microchip Technology Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-2724382-19"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];  
+    function gtag(){dataLayer.push(arguments);}  
+    gtag('js', new Date());   
+    gtag('config', 'UA-2724382-19');
+  </script>
+  
+  <script type="text/javascript">_satellite.pageBottom();</script><!-- Adobe Analytics -->
+  <script type="text/javascript" src="mchp-js/prepend.js"></script><!-- Package for viewing PDFs on mobile devices -->
+  
+</div>
+  </div>
+</footer>
+        
+        <div id="go2top" class="d-print-none">
+            <span class="oxy-icon oxy-icon-up"></span>
+        </div>
+        
+        <div id="modal_img_large" class="modal">
+            <span class="close oxy-icon oxy-icon-remove"></span>
+            <div id="modal_img_container"></div>
+            <div id="caption"></div>
+        </div>
+        
+        
+        
+       
+        </body>
+</html>

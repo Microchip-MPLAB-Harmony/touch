@@ -40,7 +40,6 @@ body {
  */
 .wh_publication_title > a {
   padding: 0.1em 0;
-  text-transform: uppercase;
   font-weight: bold;
   line-height: 1em;
   font-size: 1.8em;
@@ -50,6 +49,22 @@ body {
     padding: 0;
   }
 }
+
+/* 
+ * Edit/Comment button in webhelp
+ */
+
+.editbutton {
+  border: 2px solid green;
+  border-radius: 5px;
+  width: 200px;
+  text-align: center;
+  padding: 7px;
+  background-color: #04aa6d;
+  color: #ffffff;
+  font-weight: bold;
+  }
+
 
 /*
  * ------------------------------------------------------------------
@@ -752,16 +767,29 @@ dl.noboldlist dd {
 }
 
 .table-container{
-  max-height: 500px;
-  overflow: auto !important;
+  /* max-height: 500px; */
+  /* overflow: auto !important; */
+  overflow-x: unset;
 }
 
 .table-container tr:nth-child(1) th{
   position: sticky;
-  top: 0;
+  top: 111px;
+  z-index: 1;
 }
 
 .table-container tr:nth-child(2) th{
   position: sticky;
-  top: 29px;
+  /* top: 29px; */
+  top: 140px;
+  z-index: 1;
+}
+
+/* preserve line breaks */
+.wh_publication_title a, .header_title {
+  white-space: pre-line;
+}
+
+.wh_publication_title a {
+  text-align: left;
 }

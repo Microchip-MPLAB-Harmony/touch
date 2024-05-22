@@ -8,7 +8,6 @@
     ],
     "version":{
         "key":"1.4",
-        "binding":"1.4",
         "scroller":"1.0",
         "frequencyhop": { "manual":"1.1", "auto":"1.2" },
         "surface": { "fingerOne":"1.4", "fingerTwo":"1.0", "gesture":"1.1" },
@@ -35,7 +34,11 @@
             { "device":"PIC32CM\\d{4}JH00", "manual":"1.1", "auto":"1.1" },
             { "device":"PIC32CM\\d{4}JH01", "manual":"1.1", "auto":"1.1" },
             { "device":"PIC32CZ\\d{4}CA80", "manual":"1.0", "auto":"1.0" },
-            { "device":"PIC32CZ\\d{4}CA90", "manual":"1.0", "auto":"1.0" }
+            { "device":"PIC32CZ\\d{4}CA90", "manual":"1.0", "auto":"1.0" },
+            { "device":"PIC32CK\\d{4}GC00", "manual":"1.0", "auto":"1.0" },
+            { "device":"PIC32CK\\d{4}GC01", "manual":"1.0", "auto":"1.0" },
+            { "device":"PIC32CK\\d{4}SG00", "manual":"1.0", "auto":"1.0" },
+            { "device":"PIC32CK\\d{4}SG01", "manual":"1.0", "auto":"1.0" }
         ]
     }
 }
