@@ -13,9 +13,9 @@
 * Fixed the software low power sensor's node mask re-generation issue.
 * Resolved dependency issues in Timer-based driven shield project generation for SAM C2x, SAM L22. 
 ### KNOWN ISSUES
-* For Arm® TrustZone® devices, RTC configured by Touch didn't work. Workaround: Call touch_init after RTC_Initialize in the SYS_Initialize function.
-* For Arm® TrustZone® devices, few Touch lines are inoperative due to the default configuration bits set during initialization. Workaround: Manually modify the configuration bits.
-* For Arm® TrustZone® devices, there is a code compilation error when the boost mode feature is selected. Workaround: Library files have to be manually pasted in the specified path.
+* For Arm® Cortex-M TrustZone® devices, RTC configured by Touch didn't work. Workaround: Call touch_init after RTC_Initialize in the SYS_Initialize function.
+* For Arm® Cortex-M TrustZone® devices, few Touch lines are inoperative due to the default configuration bits set during initialization. Workaround: Manually modify the configuration bits.
+* For Arm® Cortex-M TrustZone® devices, there is a code compilation error when the boost mode feature is selected. Workaround: Library files have to be manually pasted in the specified path.
 ### DEVELOPMENT TOOLS 
 * MPLAB® X IDE v6.20 
 * MPLAB® XC32 C/C++ Compiler v4.40 
