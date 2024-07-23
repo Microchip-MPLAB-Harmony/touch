@@ -106,10 +106,6 @@ def onAttachmentConnected(source,target):
 		if (Database.getSymbolValue(remoteID, "USART_OPERATING_MODE") == 0):
 			Database.setSymbolValue(remoteID, "USART_OPERATING_MODE", 1)
 
-	if localComponent.getSymbolValue("TOUCH_PRE_GENERATE"):
-		localComponent.setSymbolValue("TOUCH_PRE_GENERATE", False)
-	localComponent.setSymbolValue("TOUCH_PRE_GENERATE", True)
-
 def onAttachmentDisconnected(source, target):
 	"""Handler for disconnect from touch module.
 	MHC reference : <http://confluence.microchip.com/display/MH/MHC+Python+Interface#MHCPythonInterface-voidonAttachmentConnected(source,target)>
@@ -134,10 +130,6 @@ def onAttachmentDisconnected(source, target):
 	if (connectID == "Touch_sercom_Krono"):
 		plibUsed = localComponent.getSymbolByID("TOUCH_SERCOM_KRONO_INSTANCE")
 		plibUsed.clearValue()
-
-	if localComponent.getSymbolValue("TOUCH_PRE_GENERATE"):
-		localComponent.setSymbolValue("TOUCH_PRE_GENERATE", False)
-	localComponent.setSymbolValue("TOUCH_PRE_GENERATE", True)
 
 def destroyComponent(qtouchComponent):
 	print "Destroy touch module"
@@ -453,13 +445,12 @@ def onGenerate(symbol,event):
 
 
 	localComponent = symbol.getComponent()
-	touchSenseTechnology = localComponent.getSymbolByID("SENSE_TECHNOLOGY").getSelectedKey()
 	targetDevice = localComponent.getSymbolByID("DEVICE_NAME").getValue()
 	surfaceEnabled = localComponent.getSymbolByID("ENABLE_SURFACE").getValue()
 	nodeCount = localComponent.getSymbolByID("TOUCH_CHAN_ENABLE_CNT").getValue()
 	sercom = localComponent.getSymbolByID("TOUCH_SERCOM_INSTANCE").getValue()
 	timer = localComponent.getSymbolByID("TOUCH_TIMER_INSTANCE").getValue()
-	if targetDevice in ["PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]:
+	if targetDevice in ["PIC32CZCA80","PIC32CZCA90","PIC32CMGC00"]:
 		ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")
 		localComponent.getSymbolByID("GET_PTC_CLOCK_FREQUENCY").setValue(ptcClockFrequencyDefault)
 
@@ -481,29 +472,13 @@ def onGenerate(symbol,event):
 
 	getXYinfo(localComponent)
 
-	if touchSenseTechnology == "MutualCap":
-		if qtouchInst['boostModeInst'].getBoostSupported(targetDevice):
-			print("Entering ProcessBoostmode")
-			qtouchInst['boostModeInst'].processBoostMode(symbol,event,targetDevice,nodeCount)
-			# qtouchprocessBoostMode(symbol,event,targetDevice,nodeCount)
+	if qtouchInst['boostModeInst'].getBoostSupported(targetDevice):
+		print("Entering ProcessBoostmode")
+		qtouchInst['boostModeInst'].processBoostMode(symbol,event,targetDevice,nodeCount)
 
 	if targetDevice not in qtouchInst['target_deviceInst'].non_lump_support:
-		# lump is processed if in "ProcessBoostmode" if boost mode is enabled
-		if qtouchInst['boostModeInst'].getBoostSupported(targetDevice):
-			if not localComponent.getSymbolByID("ENABLE_BOOST").getValue():
-				print("Entering ProcessLump boost mode = False")
-				processLump(symbol,event,targetDevice)
-		else:
-			print("Entering ProcessLump No boost mode")
-			processLump(symbol,event,targetDevice)
-	elif qtouchInst['target_deviceInst'].getShieldMode(targetDevice) == "hardware":
-		localComponent = symbol.getComponent()
-		touchSenseTechnology = localComponent.getSymbolByID("SENSE_TECHNOLOGY").getSelectedKey()
-		totalChannelCount = localComponent.getSymbolByID("TOUCH_CHAN_ENABLE_CNT").getValue()
-
-		if(touchSenseTechnology == "SelfCapShield"):
-			qtouchInst['ds_groupInst'].updateLumpModeDrivenShieldNoLump(qtouchInst,symbol,event,totalChannelCount)
-
+		print("Entering ProcessLump")
+		processLump(symbol,event,targetDevice)
 
 	# if(surfaceEnabled ==True):
 	# 	print("Entering surface_rearrange")
@@ -525,7 +500,7 @@ def enablePM(symbol,event):
 		lowPowerKey = localComponent.getSymbolByID("LOW_POWER_KEYS").getValue()
 		pmComponentID = ["pm"]
 		supcComponentID = ["supc"]
-		if(targetDevice in ["PIC32CZCA80","PIC32CZCA90"]):
+		if(targetDevice in ["PIC32CZCA80","PIC32CZCA90","PIC32CMGC00"]):
 			Database.activateComponents(supcComponentID)
 		if(lowPowerKey != ""):
 			Database.activateComponents(pmComponentID)
@@ -551,8 +526,7 @@ def onPTCClock(symbol,event):
 	if component.getSymbolValue("TOUCH_LOADED"):
 		frequency = event['symbol'].getValue()
 		channels = component.getSymbolValue("TOUCH_CHAN_ENABLE_CNT")
-		prescaler = component.getSymbolByID("DEF_NOD_PTC_PRESCALER0") 
-		if frequency > 0 and channels > 0 and prescaler != None:   
+		if frequency > 0 and channels > 0:   
 			symbol.setValue(symbol.getDefaultValue()+":sync")
 			sevent = component.getSymbolByID("TOUCH_SCRIPT_EVENT")
 			sevent.setValue("ptcclock")
@@ -623,7 +597,9 @@ def instantiateComponent(qtouchComponent):
 		:none
 	"""
 	print ("Entering initialise")
-	showConfiguration = False
+	import sys;sys.path.append(r'C:\Users\i70418\Downloads\eclipse-java-2020-12-R-win32-x86_64\eclipse\plugins\org.python.pydev.core_8.2.0.202102211157\pysrc')
+	import pydevd;pydevd.settrace()
+	showConfiguration = True
 	configName = Variables.get("__CONFIGURATION_NAME")
 
 	touchConfigurator = qtouchComponent.createMenuSymbol("TOUCH_CONFIGURATOR", None)
@@ -761,7 +737,7 @@ def instantiateComponent(qtouchComponent):
 	else:
 		autoTuneCSDDisable.setValue(False)
 
-	if device in ["PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]:
+	if device in ["PIC32CZCA80","PIC32CZCA90","PIC32CMGC00"]:
 		ptcClockFrequency = qtouchComponent.createIntegerSymbol("GET_PTC_CLOCK_FREQUENCY", touchMenu)
 		ptcClockFrequency.setLabel("Get PTC Clock Frequency")
 		ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")
@@ -969,21 +945,21 @@ def instantiateComponent(qtouchComponent):
 	qtouchTimerComponent.setReadOnly(True)
 	qtouchTimerComponent.setVisible(False)
 	qtouchTimerComponent.setDefaultValue("")
-	# qtouchTimerComponent.setDependencies(onGenerate, ["TOUCH_TIMER_INSTANCE"])
+	qtouchTimerComponent.setDependencies(onGenerate, ["TOUCH_TIMER_INSTANCE"])
 	
 	qtouchSercomComponent = qtouchComponent.createStringSymbol("TOUCH_SERCOM_INSTANCE", None)
 	qtouchSercomComponent.setLabel("Sercom Component Chosen for Touch middleware")
 	qtouchSercomComponent.setReadOnly(True)
 	qtouchSercomComponent.setVisible(False)
 	qtouchSercomComponent.setDefaultValue("")
-	# qtouchSercomComponent.setDependencies(onGenerate, ["TOUCH_SERCOM_INSTANCE"])
+	qtouchSercomComponent.setDependencies(onGenerate, ["TOUCH_SERCOM_INSTANCE"])
 
 	qtouchSercomComponent = qtouchComponent.createStringSymbol("TOUCH_SERCOM_KRONO_INSTANCE", None)
 	qtouchSercomComponent.setLabel("Sercom Component Chosen for Touch middleware")
 	qtouchSercomComponent.setReadOnly(True)
 	qtouchSercomComponent.setVisible(False)
 	qtouchSercomComponent.setDefaultValue("")
-	# qtouchSercomComponent.setDependencies(onGenerate, ["TOUCH_SERCOM_KRONO_INSTANCE"])
+	qtouchSercomComponent.setDependencies(onGenerate, ["TOUCH_SERCOM_KRONO_INSTANCE"])
 	
 	touchWarning = qtouchComponent.createMenuSymbol("TOUCH_WARNING", None)
 	touchWarning.setLabel("")

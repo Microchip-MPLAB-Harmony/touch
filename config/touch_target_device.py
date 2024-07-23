@@ -33,11 +33,11 @@ class classTouchTargetDevice():
         self.yPads = set()
         self.adc_based_acquisition = set(["SAME54","SAME53","SAME51","SAMD51"])
         self.no_csd_support = set(["SAMD20","SAMD21","SAMDA1","SAMHA1","SAMD10","SAMD11", "SAML21"])
-        self.csd_device_with_noAutoTuneCSD_support = set(["PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"])
+        self.csd_device_with_noAutoTuneCSD_support = set(["PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00"])
         self.non_lump_support = set(["PIC32MZW", "PIC32MZDA", "PIC32CXBZ31", "WBZ35"])
         self.picDevices = ["PIC32MZW", "PIC32MZDA", "PIC32CXBZ31", "WBZ35"]
         self.timer_driven_shield_support = set(["SAMD21","SAMDA1","SAMHA1","SAME54","SAME53","SAME51","SAMD51","SAMC21","SAMC20","SAML21","SAML22","SAMD10","SAMD11","SAMD20"])
-        self.hardware_driven_shield_support = set(["SAML10","SAML11","SAML1xE","PIC32MZW","PIC32CMLE00","PIC32CMLS00","PIC32CMJH01","PIC32CMJH00","PIC32CXBZ31", "WBZ35", "PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"])
+        self.hardware_driven_shield_support = set(["SAML10","SAML11","SAML1xE","PIC32MZW","PIC32CMLE00","PIC32CMLS00","PIC32CMJH01","PIC32CMJH00","PIC32CXBZ31", "WBZ35", "PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00"])
         self.touchChannelSelf = 0
         self.touchChannelMutual = 0
         self.ptcPinValues =[]
@@ -115,6 +115,8 @@ class classTouchTargetDevice():
             getModuleID.setDefaultValue("0x002f")
         elif(targetDevice in ["PIC32CZCA80","PIC32CZCA90"]):
             getModuleID.setDefaultValue("0x004a")
+        elif(targetDevice in ["PIC32CMGC00"]):
+            getModuleID.setDefaultValue("0x0053")           
         elif(targetDevice in ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
             getModuleID.setDefaultValue("0x004e")
         else:
@@ -129,7 +131,7 @@ class classTouchTargetDevice():
         Returns:
             :minimum Interrupt as (int)
         """
-        if (targetDevice in set(["SAMC20","SAMC21","SAMD20","SAMD21","SAMDA1","SAMHA1","SAMD10","SAMD11","SAMD51","SAME51","SAME53","SAME54","SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","SAML21","SAML22","PIC32CMJH01","PIC32CMJH00","PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"])):
+        if (targetDevice in set(["SAMC20","SAMC21","SAMD20","SAMD21","SAMDA1","SAMHA1","SAMD10","SAMD11","SAMD51","SAME51","SAME53","SAME54","SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","SAML21","SAML22","PIC32CMJH01","PIC32CMJH00","PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00"])):
             return 0
         else:
             return -1
@@ -143,7 +145,7 @@ class classTouchTargetDevice():
             :maximum Interrupt as (int)
         """
         if targetDevice not in self.picDevices:
-            if (targetDevice in set(["SAMC20","SAMC21","SAMD20","SAMD21","SAMDA1","SAMHA1","SAMD10","SAMD11","SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","SAML21","SAML22","PIC32CMJH01","PIC32CMJH00"])):
+            if (targetDevice in set(["SAMC20","SAMC21","SAMD20","SAMD21","SAMDA1","SAMHA1","SAMD10","SAMD11","SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","SAML21","SAML22","PIC32CMJH01","PIC32CMJH00","PIC32CMGC00"])):
                 return 3
             elif(targetDevice in set(["SAMD51","SAME51","SAME53","SAME54","PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"])):
                 return 7
@@ -159,7 +161,7 @@ class classTouchTargetDevice():
             :default Interrupt as (int)
         """
         
-        if (targetDevice in set(["SAMC20","SAMC21","SAMD20","SAMD21","SAMDA1","SAMHA1","SAML21","SAML22","PIC32CMJH01","PIC32CMJH00"])):
+        if (targetDevice in set(["SAMC20","SAMC21","SAMD20","SAMD21","SAMDA1","SAMHA1","SAML21","SAML22","PIC32CMJH01","PIC32CMJH00","PIC32CMGC00"])):
             return 3
         elif(targetDevice in set(["SAMD10","SAMD11","SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00"])):
             return 2
@@ -207,7 +209,7 @@ class classTouchTargetDevice():
             clockXml.setDefaultValue("l22_clock_config")
         elif(targetDevice == "SAML21"):
             clockXml.setDefaultValue("l21_clock_config")
-        elif(targetDevice in ["PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
+        elif(targetDevice in ["PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00"]):
             clockXml.setDefaultValue("pic32cz_clock_config")
         else:
             if targetDevice not in self.picDevices:
@@ -222,7 +224,7 @@ class classTouchTargetDevice():
         Returns:
             :none
         """
-        if (targetDevice in set(["SAMC21","SAMD10","SAMD11","SAMD21","SAMDA1","SAMHA1","SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","SAML21","SAML22","PIC32CMJH01","PIC32CMJH00","PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"])):
+        if (targetDevice in set(["SAMC21","SAMD10","SAMD11","SAMD21","SAMDA1","SAMHA1","SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","SAML21","SAML22","PIC32CMJH01","PIC32CMJH00","PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00"])):
             Database.setSymbolValue("core", "PTC_INTERRUPT_ENABLE", True)
             Database.setSymbolValue("core", "PTC_INTERRUPT_HANDLER", "PTC_Handler")
         elif (targetDevice in set(["SAMC20","SAMD20"])):
@@ -290,7 +292,7 @@ class classTouchTargetDevice():
         elif(targetDevice in set(["PIC32CZCA80", "PIC32CZCA90"])):
             Database.clearSymbolValue("core", "GCLK_ID_43_GENSEL")
             Database.setSymbolValue("core", "GCLK_ID_43_GENSEL", 2)
-        elif(targetDevice in set(["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"])):
+        elif(targetDevice in set(["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00"])):
             Database.clearSymbolValue("core", "GCLK_ID_35_GENSEL")
             Database.setSymbolValue("core", "GCLK_ID_35_GENSEL", 2)
         else:
@@ -310,7 +312,7 @@ class classTouchTargetDevice():
             Database.clearSymbolValue("core", "CVD_CLOCK_ENABLE")
             Database.setSymbolValue("core", "CVD_CLOCK_ENABLE", True)
         elif targetDevice not in self.picDevices:
-            if (targetDevice in set(["SAMC20","SAMC21","SAMD20","SAMD21","SAMHA1","SAMDA1","SAMD10","SAMD11","SAML10","SAML11","SAML21","SAML22","PIC32CMLE00","PIC32CMLS00","PIC32CZCA80","PIC32CZCA90","SAML1xE","PIC32CMJH01","PIC32CMJH00","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"])):
+            if (targetDevice in set(["SAMC20","SAMC21","SAMD20","SAMD21","SAMHA1","SAMDA1","SAMD10","SAMD11","SAML10","SAML11","SAML21","SAML22","PIC32CMLE00","PIC32CMLS00","PIC32CZCA80","PIC32CZCA90","SAML1xE","PIC32CMJH01","PIC32CMJH00","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00"])):
                 Database.clearSymbolValue("core", "PTC_CLOCK_ENABLE")
                 Database.setSymbolValue("core", "PTC_CLOCK_ENABLE", True)
             else:
@@ -382,7 +384,7 @@ class classTouchTargetDevice():
             return "e5x"
         elif (targetDevice in ["SAML22"]):
             return "l22"
-        elif (targetDevice in ["PIC32CZCA80", "PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
+        elif (targetDevice in ["PIC32CZCA80", "PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00"]):
             return "pic32cz"
         else:
             return "std"
