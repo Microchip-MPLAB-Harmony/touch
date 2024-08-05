@@ -597,8 +597,8 @@ def instantiateComponent(qtouchComponent):
 		:none
 	"""
 	print ("Entering initialise")
-	import sys;sys.path.append(r'C:\Users\i70418\Downloads\eclipse-java-2020-12-R-win32-x86_64\eclipse\plugins\org.python.pydev.core_8.2.0.202102211157\pysrc')
-	import pydevd;pydevd.settrace()
+	# import sys;sys.path.append(r'C:\Users\i70418\Downloads\eclipse-java-2020-12-R-win32-x86_64\eclipse\plugins\org.python.pydev.core_8.2.0.202102211157\pysrc')
+	# import pydevd;pydevd.settrace()
 	showConfiguration = True
 	configName = Variables.get("__CONFIGURATION_NAME")
 
