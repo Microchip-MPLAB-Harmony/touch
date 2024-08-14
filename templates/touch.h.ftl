@@ -499,7 +499,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
         <#elseif (DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21")||(DEVICE_NAME == "PIC32CMJH01")||(DEVICE_NAME == "PIC32CMJH00")>
             <@eventlp.lowpower_samc20_c21/>
             <@eventlp.lowpower_params_common/>
-        <#elseif (DEVICE_NAME == "PIC32CZCA80")||(DEVICE_NAME == "PIC32CZCA90") ||(DEVICE_NAME == "PIC32CMGC00")>
+        <#elseif (DEVICE_NAME == "PIC32CZCA80")||(DEVICE_NAME == "PIC32CZCA90")>
             <@eventlp.lowpower_PIC32CZ/>
             <@eventlp.lowpower_params_common/>
         </#if>

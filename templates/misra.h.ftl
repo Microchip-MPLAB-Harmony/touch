@@ -12,7 +12,7 @@ extern qtm_acq_4p_pic32cm_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
 <#elseif  DEVICE_NAME =="PIC32CZCA80"||DEVICE_NAME =="PIC32CZCA90">
 extern qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
 <#elseif  DEVICE_NAME =="PIC32CMGC00">
-extern qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
+extern qtm_acq_4p_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
 <#elseif pic32ck?seq_contains(DEVICE_NAME)>
 extern qtm_acq_4p_pic32ck_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
 <#else>
