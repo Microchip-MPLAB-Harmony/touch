@@ -257,6 +257,8 @@ def applyDrivenShieldTimers(symbol, event):
 		toAdd.append(timer.lower())
 		if "TCC" not in timer:
 			toConnect.append(["lib_qtouch", "Drivenshield_"+timer,timer.lower(), timer+"_TMR"])
+		else:
+			toConnect.append(["lib_qtouch", "Drivenshield_"+timer,timer.lower(), timer+"_PWM"])
 		component.setDependencyEnabled("Drivenshield_"+timer, True)
 	
 	if len(toRemove)!=0:
