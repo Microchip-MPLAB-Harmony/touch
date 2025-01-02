@@ -244,7 +244,7 @@ class classTouchNodeGroups():
             # X and Y assignment
 
             if instances['interfaceInst'].getDeviceSeries() in instances['target_deviceInst'].picDevices:
-                if instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35"]:
+                if instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35","WBZ65"]:
                     for index in range(0, len(ptcPinValues)):
                         if(ptcPinValues[index].getAttribute("group") == "CVDR"):
                             self.tchSelfPinSelection[len(self.tchSelfPinSelection)-1].addKey(

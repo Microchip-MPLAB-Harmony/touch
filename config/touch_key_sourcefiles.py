@@ -55,7 +55,7 @@ class classTouchKeySourceFiles():
         touchLibraryFile.setDestPath("/touch/lib/")
         touchLibraryFile.setEnabled(True)
 
-        if (targetDevice in set(["SAME51","SAME53","SAME54","SAMD51","PIC32CXBZ31","WBZ35"])):
+        if (targetDevice in set(["SAME51","SAME53","SAME54","SAMD51","PIC32CXBZ31","WBZ35","WBZ65"])):
             touchLibraryFile.setSourcePath("/src/libraries/qtm_touch_key_cm4_0x0002.X.a")
             touchLibraryFile.setOutputName("qtm_touch_key_cm4_0x0002.X.a")
         elif (targetDevice in set(["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMGC00"])):

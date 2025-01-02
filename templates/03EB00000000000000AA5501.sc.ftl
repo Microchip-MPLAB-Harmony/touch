@@ -1,4 +1,4 @@
-<#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35"]>
+<#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35","WBZ65"]>
 
 <#if (TOUCH_CHAN_ENABLE_CNT > 0) >
 <#assign total_channels = TOUCH_CHAN_ENABLE_CNT-1>

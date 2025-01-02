@@ -51,7 +51,7 @@ class classTouchScrollerSourceFiles():
         Returns:
             file symbol
         """
-        if (targetDevice in ["SAME51","SAME53","SAME54","SAMD51","PIC32CXBZ31","WBZ35"]):
+        if (targetDevice in ["SAME51","SAME53","SAME54","SAMD51","PIC32CXBZ31","WBZ35","WBZ65"]):
             scrollerLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SCR_LIB", None)
             scrollerLibraryFile.setSourcePath("/src/libraries/qtm_scroller_cm4_0x000b.X.a")
             scrollerLibraryFile.setOutputName("qtm_scroller_cm4_0x000b.X.a")

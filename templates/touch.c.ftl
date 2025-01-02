@@ -51,8 +51,8 @@ Microchip or any third party.
 <#assign sam_l2x_devices = ["SAML21","SAML22"]>
 <#assign sam_l1x_devices = ["SAML10","SAML11","SAML1xE"]>
 <#assign pic32cm_le_devices = ["PIC32CMLE00","PIC32CMLS00","PIC32CMLS60"]>
-<#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35"]>
-<#assign buckland = ["PIC32CXBZ31","WBZ35"]>
+<#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35","WBZ65"]>
+<#assign buckland = ["PIC32CXBZ31","WBZ35","WBZ65"]>
 <#assign pic32cz = ["PIC32CZCA80", "PIC32CZCA90"]>
 <#assign pic32ck = ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]>
 <#assign pic32cm = ["PIC32CMGC00"]>
@@ -285,7 +285,7 @@ qtm_acq_saml10_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TO
 qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 <#elseif  DEVICE_NAME =="PIC32CMJH00" || DEVICE_NAME=="PIC32CMJH01">
 qtm_acq_pic32cmjh_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
-<#elseif  DEVICE_NAME =="PIC32CXBZ31" || DEVICE_NAME=="WBZ35">
+<#elseif  DEVICE_NAME =="PIC32CXBZ31" || DEVICE_NAME=="WBZ35"|| DEVICE_NAME=="WBZ65">
 qtm_acq_pic32cx_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 <#elseif  DEVICE_NAME =="PIC32CZCA80"||DEVICE_NAME =="PIC32CZCA90">
 qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};

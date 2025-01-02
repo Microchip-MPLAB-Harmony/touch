@@ -59,6 +59,54 @@ asm(".section .__vector_offset_BF8107E0_data,data,keep,address(0xBF8107E0)");
 asm(".word __vector_offset_168");
 #endif
 
+#if TOUCH_DEVICE_VARIANT == TOUCH_VARIANT_WBZ65
+
+/* Library state */
+static const uint8_t CVD_TX_PINS[] = {
+    GPIO_PIN_RD2,
+    GPIO_PIN_RB5,
+    GPIO_PIN_RB6,
+    GPIO_PIN_RB7,
+    GPIO_PIN_RB0,
+    GPIO_PIN_RB1,
+    GPIO_PIN_RB2,
+    GPIO_PIN_RB3,
+    GPIO_PIN_RB4,
+    GPIO_PIN_RD3,
+    GPIO_PIN_RD4,
+    GPIO_PIN_RD5,
+    GPIO_PIN_RD6,
+    GPIO_PIN_RD7,
+    GPIO_PIN_RE6,
+    GPIO_PIN_RC7,
+    GPIO_PIN_RB15, 
+    GPIO_PIN_RB14 
+};
+
+static const uint8_t CVD_RX_PINS[] = {
+    (uint8_t) GPIO_PIN_NONE,
+    GPIO_PIN_RB5,
+    GPIO_PIN_RB6,
+    GPIO_PIN_RB7,
+    GPIO_PIN_RB0,
+    GPIO_PIN_RB1,
+    GPIO_PIN_RB2,
+    GPIO_PIN_RB3,
+    GPIO_PIN_RB4,
+    GPIO_PIN_RD3,
+    GPIO_PIN_RD4,
+    GPIO_PIN_RD5,
+    GPIO_PIN_RD6,
+    GPIO_PIN_RD7,
+    GPIO_PIN_RE6,
+    GPIO_PIN_RC7,
+    GPIO_PIN_RD2,
+    GPIO_PIN_RB15, 
+    GPIO_PIN_RB14 
+};
+
+#elif TOUCH_DEVICE_VARIANT == TOUCH_VARIANT_WBZ35
+
 /* Library state */
 static const uint8_t CVD_TX_PINS[] = {
     GPIO_PIN_RB4,
@@ -82,9 +130,58 @@ static const uint8_t CVD_RX_PINS[] = {
     GPIO_PIN_RB3
 };
 
+#endif
+
 static const uint8_t OVERSAMPLING_LUT[7] = {
     0, 1, 3, 7, 15, 31, 63
 };
+
+#if TOUCH_DEVICE_VARIANT == TOUCH_VARIANT_WBZ65
+
+static uint8_t* CVD_Y_REG[18] = {
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX0)),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX0) + 1),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX0) + 2),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX0) + 3),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX1)),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX1) + 1),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX1) + 2),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX1) + 3),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX2)),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX2) + 1),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX2) + 2),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX2) + 3),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX3)),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX3) + 1),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX3) + 2),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX3) + 3),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX4)),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX4) + 1)   
+};
+
+
+static uint8_t* CVD_X_REG[18] = {
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX0)),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX0) + 1),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX0) + 2),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX0) + 3),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX1)),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX1) + 1),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX1) + 2),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX1) + 3),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX2)),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX2) + 1),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX2) + 2),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX2) + 3),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX3)),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX3) + 1),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX3) + 2),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX3) + 3),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX4)),
+    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX4) + 1) 
+};
+
+#elif TOUCH_DEVICE_VARIANT == TOUCH_VARIANT_WBZ35
 
 static uint8_t* CVD_Y_REG[7] = {
     (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX[0])),
@@ -106,6 +203,8 @@ static uint8_t* CVD_X_REG[7] = {
     (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX[1]) + 1),
     (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX[1]) + 2)
 };
+
+#endif
 
 /* Container for tau constant scale factors */
 static const uint16_t tau_calc[NUM_TAU_OPTIONS] = {CHARGE_2_TAU, CHARGE_3_TAU, CHARGE_4_TAU, CHARGE_5_TAU};

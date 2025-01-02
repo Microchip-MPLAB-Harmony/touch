@@ -94,7 +94,11 @@ class classTouchInterface():
         getDeviceSeries.setVisible(True)
 
         getDeviceVariant = qtouchComponent.createStringSymbol("DEVICE_VARIANT", touchMenu)
-        getDeviceVariant.setDefaultValue(deviceVariant[0].getAttribute("pinout"))
+        #getDeviceVariant.setDefaultValue(deviceVariant[0].getAttribute("package"))
+        if deviceVariant[0].getAttribute("pinout") is not None:
+            getDeviceVariant.setDefaultValue(deviceVariant[0].getAttribute("pinout"))
+        elif deviceVariant[0].getAttribute("package") is not None:
+            getDeviceVariant.setDefaultValue(deviceVariant[0].getAttribute("package"))      
         getDeviceVariant.setVisible(False)
 
         getDeviceName = qtouchComponent.createStringSymbol("DEVICE_NAME_SPECIFIC", touchMenu)

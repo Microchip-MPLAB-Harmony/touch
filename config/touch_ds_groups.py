@@ -84,7 +84,7 @@ class classTouchDSGroup():
                         drivenShieldDedicatedPin.addKey(ptcPininfo[index].getAttribute("index"),ptcPininfo[index].getAttribute("group")+"("+ptcPininfo[index].getAttribute("index")+")",ptcPininfo[index].getAttribute("group")+ptcPininfo[index].getAttribute("index")+ "  ("+ ptcPininfo[index].getAttribute("pad")+")")
                     if(ptcPininfo[index].getAttribute("group") == "DRV"):
                         drivenShieldDedicatedPin.addKey(ptcPininfo[index].getAttribute("index"),"Y"+"("+ptcPininfo[index].getAttribute("index")+")","Y"+ptcPininfo[index].getAttribute("index")+ "  ("+ ptcPininfo[index].getAttribute("pad")+")")
-            elif instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35"]:
+            elif instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35","WBZ65"]:
                 for index in range(0, len(ptcPininfo)):
                     if(ptcPininfo[index].getAttribute("group") == "CVDR"):
                         drivenShieldDedicatedPin.addKey(ptcPininfo[index].getAttribute("index"),"Y("+ptcPininfo[index].getAttribute("index")+")","Y"+ptcPininfo[index].getAttribute("index")+ "  ("+ ptcPininfo[index].getAttribute("pad")+")")
@@ -511,7 +511,7 @@ class classTouchDSGroup():
         component= symbol.getComponent()
         currentVal = int(event['symbol'].getValue())
         enableDrivenShieldAdjacent = False
-        if instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35", "PIC32MZW"]:
+        if instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35","WBZ65","PIC32MZW"]:
             enableDrivenShieldAdjacent = False
         else:
             enableDrivenShieldAdjacent = component.getSymbolByID("DS_ADJACENT_SENSE_LINE_AS_SHIELD").getValue()
@@ -588,7 +588,7 @@ class classTouchDSGroup():
         component= symbol.getComponent()
         currentVal = int(event['symbol'].getValue())
         enableDrivenShieldAdjacent = False
-        if instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35", "PIC32MZW"]:
+        if instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35","WBZ65","PIC32MZW"]:
             enableDrivenShieldAdjacent = False
         else:
             enableDrivenShieldAdjacent = component.getSymbolByID("DS_ADJACENT_SENSE_LINE_AS_SHIELD").getValue()

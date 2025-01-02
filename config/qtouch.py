@@ -145,7 +145,7 @@ def finalizeComponent(qtouchComponent):
 	autoComponentIDTable = []
 	autoConnectTable = []
 	if qtouchInst['interfaceInst'].getDeviceSeries() in qtouchInst['target_deviceInst'].picDevices:
-		if qtouchInst['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35"]:
+		if qtouchInst['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35","WBZ65"]:
 			autoComponentIDTable[:] = ["adchs","rtc"]
 			autoConnectTable[:] = [["lib_qtouch", "Touch_timer","rtc","RTC_TMR"],
 									["lib_qtouch", "Acq_Engine","adchs","ADCHS_ADC"]]
@@ -381,7 +381,7 @@ def updateParameters(symbol, event):
 def updatePinsSettings(symbol,event):
 	localComponent = symbol.getComponent()
 	targetDevice = localComponent.getSymbolByID("DEVICE_NAME").getValue()
-	if targetDevice not in ["PIC32MZW", "PIC32MZDA", "PIC32CXBZ31", "WBZ35"]:
+	if targetDevice not in ["PIC32MZW", "PIC32MZDA", "PIC32CXBZ31", "WBZ35","WBZ65"]:
 		touchPads = qtouchInst['padsInfo'].getTouchPads()
 		touchModule = qtouchInst['padsInfo'].getTouchModule()
 		#print touchModule

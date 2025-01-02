@@ -55,7 +55,7 @@ extern "C" {
 #include "qtm_acq_samd1x_0x0009_api.h"
 <#elseif  DEVICE_NAME == "PIC32CMJH01"|| DEVICE_NAME=="PIC32CMJH00">
 #include "qtm_acq_pic32cmjh_0x002f_api.h"
-<#elseif ["PIC32CXBZ31","WBZ35"]?seq_contains(DEVICE_NAME) >
+<#elseif ["PIC32CXBZ31","WBZ35","WBZ65"]?seq_contains(DEVICE_NAME) >
 #include "qtm_acq_pic32cx_0x003e_api.h"
 <#else>
     <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>

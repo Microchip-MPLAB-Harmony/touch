@@ -106,4 +106,12 @@ manifest constants
 #define QTM_ACQ_WINDOWCOMP 2u
 
 #define TIMEOUT_OVERHEAD        2
+
+#define TOUCH_VARIANT_WBZ35 0u
+#define TOUCH_VARIANT_WBZ65 1u
+
+#ifndef TOUCH_DEVICE_VARIANT
+#define TOUCH_DEVICE_VARIANT TOUCH_VARIANT_${DEVICE_NAME}
+#endif
+
 #endif /* __HCVD_PIC32MZ__ */

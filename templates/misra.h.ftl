@@ -1,4 +1,4 @@
-<#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35"]>
+<#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35","WBZ65"]>
 <#assign pic32cz = ["PIC32CZCA80","PIC32CZCA90"]>
 <#assign no_standby_devices = ["SAMD10","SAMD11"]>
 <#assign pic32ck = ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]>
@@ -28,7 +28,7 @@ extern qtm_acq_saml10_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
 extern qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
 <#elseif  DEVICE_NAME =="PIC32CMJH00" || DEVICE_NAME=="PIC32CMJH01">
 extern qtm_acq_pic32cmjh_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#elseif  DEVICE_NAME =="PIC32CXBZ31" || DEVICE_NAME=="WBZ35">
+<#elseif  DEVICE_NAME =="PIC32CXBZ31" || DEVICE_NAME=="WBZ35"|| DEVICE_NAME=="WBZ65">
 extern qtm_acq_pic32cx_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
 <#elseif  DEVICE_NAME =="PIC32CZCA80"||DEVICE_NAME =="PIC32CZCA90">
 extern qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
