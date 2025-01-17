@@ -11,7 +11,7 @@ extern qtm_acq_node_data_t ptc_qtlib_node_stat1[DEF_NUM_CHANNELS];
 extern qtm_acq_4p_pic32cm_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
 <#elseif  DEVICE_NAME =="PIC32CZCA80"||DEVICE_NAME =="PIC32CZCA90">
 extern qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
-<#elseif  DEVICE_NAME =="PIC32CMGC00">
+<#elseif  DEVICE_NAME =="PIC32CMGC00"||DEVICE_NAME =="PIC32CMSG00">
 extern qtm_acq_4p_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
 <#elseif pic32ck?seq_contains(DEVICE_NAME)>
 extern qtm_acq_4p_pic32ck_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
@@ -32,7 +32,7 @@ extern qtm_acq_pic32cmjh_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
 extern qtm_acq_pic32cx_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
 <#elseif  DEVICE_NAME =="PIC32CZCA80"||DEVICE_NAME =="PIC32CZCA90">
 extern qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#elseif  DEVICE_NAME =="PIC32CMGC00">
+<#elseif  DEVICE_NAME =="PIC32CMGC00"||DEVICE_NAME =="PIC32CMSG00">
 extern qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
 <#elseif pic32ck?seq_contains(DEVICE_NAME)>
 extern qtm_acq_pic32ck_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];

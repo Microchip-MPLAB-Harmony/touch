@@ -189,6 +189,9 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice in ["PIC32CMGC00"]):
             touchAcqLibraryFile.setSourcePath("/src/libraries/qtm_acq_pic32cm_gc_0x0053.X.a")
             touchAcqLibraryFile.setOutputName("qtm_acq_pic32cm_gc_0x0053.X.a")
+        elif(targetDevice in ["PIC32CMSG00"]):
+            touchAcqLibraryFile.setSourcePath("/src/libraries/qtm_acq_pic32cm_sg_0x0053.X.a")
+            touchAcqLibraryFile.setOutputName("qtm_acq_pic32cm_sg_0x0053.X.a")            
         elif(targetDevice in ["PIC32CKGC00","PIC32CKGC01"]):
             touchAcqLibraryFile.setSourcePath("/src/libraries/qtm_acq_pic32ckgc_0x004e.X.a")
             touchAcqLibraryFile.setOutputName("qtm_acq_pic32ckgc_0x004e.X.a")
@@ -291,6 +294,9 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice in ["PIC32CMGC00"]):
             touchAcqAutoLibraryFile.setSourcePath("/src/libraries/qtm_acq_pic32cm_gc_0x0053.X.a")
             touchAcqAutoLibraryFile.setOutputName("qtm_acq_pic32cm_gc_0x0053.X.a")
+        elif(targetDevice in ["PIC32CMSG00"]):
+            touchAcqAutoLibraryFile.setSourcePath("/src/libraries/qtm_acq_pic32cm_sg_0x0053.X.a")
+            touchAcqAutoLibraryFile.setOutputName("qtm_acq_pic32cm_sg_0x0053.X.a")            
         elif(targetDevice in ["PIC32CKGC00","PIC32CKGC01"]):
             touchAcqAutoLibraryFile.setSourcePath("/src/libraries/qtm_acq_pic32ckgc_0x004e.X.a")
             touchAcqAutoLibraryFile.setOutputName("qtm_acq_pic32ckgc_0x004e.X.a")
@@ -407,7 +413,7 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
             touchAcqHeaderFile.setSourcePath("/src/qtm_acq_pic32czca_0x004a_api.h")
             touchAcqHeaderFile.setOutputName("qtm_acq_pic32czca_0x004a_api.h")
-        elif(targetDevice in ["PIC32CMGC00"]):
+        elif(targetDevice in ["PIC32CMGC00","PIC32CMSG00"]):
             touchAcqHeaderFile.setSourcePath("/src/qtm_acq_pic32cm_gc_0x0053_api.h")
             touchAcqHeaderFile.setOutputName("qtm_acq_pic32cm_gc_0x0053_api.h")            
         elif(targetDevice in ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):

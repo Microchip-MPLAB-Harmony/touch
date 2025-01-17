@@ -106,7 +106,7 @@ class classTouchAcquisitionGroups():
             touchAutoTuneMode = qtouchComponent.createKeyValueSetSymbol("TUNE_MODE_SELECTED", parentMenu)
             touchScanRate = qtouchComponent.createIntegerSymbol("DEF_TOUCH_MEASUREMENT_PERIOD_MS", parentMenu)
             touchAcquisitonFrequency = qtouchComponent.createKeyValueSetSymbol("DEF_SEL_FREQ_INIT", parentMenu)
-            if (targetDevice in ["PIC32CZCA80", "PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00"]):
+            if (targetDevice in ["PIC32CZCA80", "PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00","PIC32CMSG00"]):
                 ptcWakeupTime = qtouchComponent.createIntegerSymbol("DEF_PTC_WAKEUP_EXP", parentMenu)
         else:
             touchSenseTechnology = qtouchComponent.createKeyValueSetSymbol("SENSE_TECHNOLOGY_"+str(groupNumber), parentMenu)
@@ -136,7 +136,7 @@ class classTouchAcquisitionGroups():
         self.setScanRateValues(touchScanRate)    
         #Acquisition Frequency
         self.setAcquisitionFrequencyValues(touchAcquisitonFrequency)
-        if (targetDevice in ["PIC32CZCA80", "PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00"]):
+        if (targetDevice in ["PIC32CZCA80", "PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00","PIC32CMSG00"]):
             #PTC Wake up component   
             self.setPtcWakeupTime(ptcWakeupTime) 
 
@@ -204,7 +204,7 @@ class classTouchAcquisitionGroups():
         """
         touchAutoTuneMode.setLabel("Select the Required Tuning Mode")
         touchAutoTuneMode.addKey("Manual Tuning","CAL_AUTO_TUNE_NONE","Manual tuning is done based on the values defined by user")
-        if (targetDevice not in ["PIC32CZCA80", "PIC32CZCA90","PIC32CMGC00"]):
+        if (targetDevice not in ["PIC32CZCA80", "PIC32CZCA90","PIC32CMGC00","PIC32CMSG00"]):
             if(csdMode != "NoCSD"):
                 touchAutoTuneMode.addKey("Tune CSD","CAL_AUTO_TUNE_CSD","Charge Share Delay - CSD is tuned")
             else:

@@ -55,7 +55,7 @@ Microchip or any third party.
 <#assign buckland = ["PIC32CXBZ31","WBZ35","WBZ65"]>
 <#assign pic32cz = ["PIC32CZCA80", "PIC32CZCA90"]>
 <#assign pic32ck = ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]>
-<#assign pic32cm = ["PIC32CMGC00"]>
+<#assign pic32cm = ["PIC32CMGC00","PIC32CMSG00"]>
 <#assign supc_devices = ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMLS60","PIC32CZCA80","PIC32CZCA90"]>
 <#assign no_standby_devices = ["SAMD10","SAMD11"]>
 <#assign no_standby_during_measurement = 0>
@@ -281,7 +281,7 @@ qtm_acq_4p_${DEVICE_NAME?lower_case}_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS
 qtm_acq_samd1x_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 <#elseif DEVICE_NAME== "SAML11" || DEVICE_NAME== "SAML1xE">
 qtm_acq_saml10_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
-<#elseif  DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00" || DEVICE_NAME=="PIC32CMLS60" || DEVICE_NAME=="PIC32CMGC00">
+<#elseif  DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00" || DEVICE_NAME=="PIC32CMLS60" || DEVICE_NAME=="PIC32CMGC00"||DEVICE_NAME =="PIC32CMSG00">
 qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 <#elseif  DEVICE_NAME =="PIC32CMJH00" || DEVICE_NAME=="PIC32CMJH01">
 qtm_acq_pic32cmjh_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
@@ -1887,7 +1887,7 @@ void PTC_Handler(void)
 	qtm_samd1x_ptc_handler_eoc();
 <#elseif DEVICE_NAME=="SAML11">
     qtm_saml10_ptc_handler_eoc();
-<#elseif DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00" || DEVICE_NAME=="PIC32CMLS60" || DEVICE_NAME=="PIC32CMGC00">
+<#elseif DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00" || DEVICE_NAME=="PIC32CMLS60" || DEVICE_NAME=="PIC32CMGC00"||DEVICE_NAME =="PIC32CMSG00">
     qtm_pic32cm_ptc_handler_eoc();
 <#elseif DEVICE_NAME =="PIC32CMJH00" || DEVICE_NAME=="PIC32CMJH01">
     qtm_pic32cmjh_ptc_handler_eoc();

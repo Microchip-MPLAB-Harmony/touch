@@ -452,7 +452,7 @@ def onGenerate(symbol,event):
 	nodeCount = localComponent.getSymbolByID("TOUCH_CHAN_ENABLE_CNT").getValue()
 	sercom = localComponent.getSymbolByID("TOUCH_SERCOM_INSTANCE").getValue()
 	timer = localComponent.getSymbolByID("TOUCH_TIMER_INSTANCE").getValue()
-	if targetDevice in ["PIC32CZCA80","PIC32CZCA90","PIC32CMGC00"]:
+	if targetDevice in ["PIC32CZCA80","PIC32CZCA90","PIC32CMGC00","PIC32CMSG00"]:
 		ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")
 		localComponent.getSymbolByID("GET_PTC_CLOCK_FREQUENCY").setValue(ptcClockFrequencyDefault)
 
@@ -502,7 +502,7 @@ def enablePM(symbol,event):
 		lowPowerKey = localComponent.getSymbolByID("LOW_POWER_KEYS").getValue()
 		pmComponentID = ["pm"]
 		supcComponentID = ["supc"]
-		if(targetDevice in ["PIC32CZCA80","PIC32CZCA90","PIC32CMGC00"]):
+		if(targetDevice in ["PIC32CZCA80","PIC32CZCA90","PIC32CMGC00","PIC32CMSG00"]):
 			Database.activateComponents(supcComponentID)
 		if(lowPowerKey != ""):
 			Database.activateComponents(pmComponentID)
@@ -601,7 +601,7 @@ def instantiateComponent(qtouchComponent):
 	print ("Entering initialise")
 	# import sys;sys.path.append(r'C:\Users\i70418\Downloads\eclipse-java-2020-12-R-win32-x86_64\eclipse\plugins\org.python.pydev.core_8.2.0.202102211157\pysrc')
 	# import pydevd;pydevd.settrace()
-	showConfiguration = True
+	showConfiguration = False
 	configName = Variables.get("__CONFIGURATION_NAME")
 
 	touchConfigurator = qtouchComponent.createMenuSymbol("TOUCH_CONFIGURATOR", None)
@@ -739,7 +739,7 @@ def instantiateComponent(qtouchComponent):
 	else:
 		autoTuneCSDDisable.setValue(False)
 
-	if device in ["PIC32CZCA80","PIC32CZCA90","PIC32CMGC00"]:
+	if device in ["PIC32CZCA80","PIC32CZCA90","PIC32CMGC00","PIC32CMSG00"]:
 		ptcClockFrequency = qtouchComponent.createIntegerSymbol("GET_PTC_CLOCK_FREQUENCY", touchMenu)
 		ptcClockFrequency.setLabel("Get PTC Clock Frequency")
 		ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")

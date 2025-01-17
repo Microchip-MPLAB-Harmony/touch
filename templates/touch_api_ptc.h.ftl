@@ -65,7 +65,7 @@ extern "C" {
 #include "qtm_global_pic32czca_0x0049_api.h"
         <#elseif  ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]?seq_contains(DEVICE_NAME) >
 #include "qtm_acq_4p_pic32ck_0x004f_api.h"
-        <#elseif  DEVICE_NAME == "PIC32CMGC00">
+        <#elseif  DEVICE_NAME == "PIC32CMGC00"||DEVICE_NAME =="PIC32CMSG00">
 #include "qtm_acq_4p_pic32cm_gc_0x0054_api.h"
         <#else>
 #include "qtm_acq_4p_${DEVICE_NAME?lower_case}_${MODULE_ID}_api.h"
@@ -75,7 +75,7 @@ extern "C" {
 #include "qtm_acq_pic32cm_le_0x0040_api.h"
         <#elseif  DEVICE_NAME == "PIC32CZCA80"|| DEVICE_NAME == "PIC32CZCA90">
 #include "qtm_acq_pic32czca_0x004a_api.h"
-        <#elseif  DEVICE_NAME == "PIC32CMGC00">
+        <#elseif  DEVICE_NAME == "PIC32CMGC00"||DEVICE_NAME =="PIC32CMSG00">
 #include "qtm_acq_pic32cm_gc_0x0053_api.h"
         <#elseif ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]?seq_contains(DEVICE_NAME) >
 #include "qtm_acq_pic32ck_0x004e_api.h"

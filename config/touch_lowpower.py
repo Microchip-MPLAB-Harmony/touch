@@ -30,14 +30,14 @@ class classTouchLP():
                 "SAML11","SAML1xE","SAML10",
                 "SAMC21","SAMC20","PIC32CMJH01","PIC32CMJH00",
                 "PIC32CMLE00","PIC32CMLS00",
-                "SAML21","SAML22","PIC32CZCA80","PIC32CZCA90","PIC32CMGC00"]
+                "SAML21","SAML22","PIC32CZCA80","PIC32CZCA90","PIC32CMGC00","PIC32CMSG00"]
         self.LOW_POWER_SUPPORTED_DEVICES =  ["SAMD20","SAMD21","SAMDA1","SAMHA1",
             "SAML11","SAML1xE","SAML10",
             "SAMC21","SAMC20","PIC32CMJH01","PIC32CMJH00",
             "PIC32CMLE00","PIC32CMLS00",
             "SAME54","SAME53","SAME51","SAMD51",
             "SAML21","SAML22",
-            "SAMD10","SAMD11","PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00"]
+            "SAMD10","SAMD11","PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00","PIC32CMSG00"]
         self.symbolList = []
         self.depFuncName = []
         self.dependencies = []
@@ -141,7 +141,7 @@ class classTouchLP():
         """
         lowPowerPeriod = qtouchComponent.createKeyValueSetSymbol("LOW_POWER_PERIOD", LowPowerEvntMenu)
         lowPowerPeriod.setLabel("Low-power Measurement Period")
-        if (targetDevice in ["PIC32CZCA80", "PIC32CZCA90","PIC32CMGC00"]):
+        if (targetDevice in ["PIC32CZCA80", "PIC32CZCA90","PIC32CMGC00","PIC32CMSG00"]):
             lowPowerPeriod.addKey("NODE_SCAN_8MS", "NODE_SCAN_8MS", "8msec")
             lowPowerPeriod.addKey("NODE_SCAN_16MS", "NODE_SCAN_16MS", "16msec")
             lowPowerPeriod.addKey("NODE_SCAN_32MS", "NODE_SCAN_32MS", "32msec")

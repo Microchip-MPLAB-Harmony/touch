@@ -1,5 +1,5 @@
 <#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35","WBZ65"]>
-<#assign pic32czca = ["PIC32CZCA80","PIC32CZCA90","PIC32CMGC00"]>
+<#assign pic32czca = ["PIC32CZCA80","PIC32CZCA90","PIC32CMGC00","PIC32CMSG00"]>
 <#assign doubleCompensation= 0>
 <#list ["SAME51","SAME53","SAME54","SAMD51","SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMLS60"] as i>
 <#if DEVICE_NAME == i>
