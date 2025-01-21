@@ -204,7 +204,7 @@ class classTouchAcquisitionGroups():
         """
         touchAutoTuneMode.setLabel("Select the Required Tuning Mode")
         touchAutoTuneMode.addKey("Manual Tuning","CAL_AUTO_TUNE_NONE","Manual tuning is done based on the values defined by user")
-        if (targetDevice not in ["PIC32CZCA80", "PIC32CZCA90","PIC32CMGC00","PIC32CMSG00"]):
+        if (targetDevice not in ["PIC32CZCA80", "PIC32CZCA90","PIC32CMGC00","PIC32CMSG00","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
             if(csdMode != "NoCSD"):
                 touchAutoTuneMode.addKey("Tune CSD","CAL_AUTO_TUNE_CSD","Charge Share Delay - CSD is tuned")
             else:
