@@ -257,7 +257,7 @@ Input  :  function pointer of the timer period function
 Output :  
 Notes  :
 ============================================================================*/
-void qtm_cvd_set_timer_period_function(void (*timer_period_function_ptr) (uint16_t period));
+//void qtm_cvd_set_timer_period_function(void (*timer_period_function_ptr) (uint16_t period));
 
 /*============================================================================
 void qtm_cvd_set_timer_start_function(void (*timer_start) (void))
@@ -267,7 +267,7 @@ Input  :  function pointer of the timer start function
 Output :  
 Notes  :
 ============================================================================*/
-void qtm_cvd_set_timer_start_function(void (*timer_start) (void));
+//void qtm_cvd_set_timer_start_function(void (*timer_start) (void));
 
 /*============================================================================
 void qtm_cvd_set_timer_stop_function(void (*timer_stop) (void))
@@ -277,7 +277,7 @@ Input  :  function pointer of the timer start function
 Output :  
 Notes  :
 ============================================================================*/
-void qtm_cvd_set_timer_stop_function(void (*timer_stop) (void));
+//void qtm_cvd_set_timer_stop_function(void (*timer_stop) (void));
 
 /*============================================================================
 void qtm_cvd_de_init(void)

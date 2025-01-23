@@ -570,6 +570,10 @@ extern qtm_drivenshield_config_t qtm_drivenshield_config;
 <#import "/misra.h.ftl" as misra>
 <@misra.externvariables/>
 
+<#if (DEVICE_NAME == "WBZ35")||(DEVICE_NAME == "WBZ65")>
+void CVD_Handler(void);
+</#if>
+
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 

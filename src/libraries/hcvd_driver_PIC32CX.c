@@ -138,70 +138,70 @@ static const uint8_t OVERSAMPLING_LUT[7] = {
 
 #if TOUCH_DEVICE_VARIANT == TOUCH_VARIANT_WBZ65
 
-static uint8_t* CVD_Y_REG[18] = {
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX0)),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX0) + 1),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX0) + 2),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX0) + 3),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX1)),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX1) + 1),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX1) + 2),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX1) + 3),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX2)),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX2) + 1),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX2) + 2),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX2) + 3),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX3)),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX3) + 1),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX3) + 2),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX3) + 3),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX4)),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX4) + 1)   
+static volatile uint8_t* CVD_Y_REG[18] = {
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX0)),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX0) + 1),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX0) + 2),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX0) + 3),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX1)),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX1) + 1),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX1) + 2),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX1) + 3),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX2)),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX2) + 1),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX2) + 2),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX2) + 3),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX3)),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX3) + 1),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX3) + 2),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX3) + 3),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX4)),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX4) + 1)   
 };
 
 
-static uint8_t* CVD_X_REG[18] = {
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX0)),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX0) + 1),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX0) + 2),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX0) + 3),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX1)),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX1) + 1),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX1) + 2),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX1) + 3),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX2)),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX2) + 1),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX2) + 2),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX2) + 3),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX3)),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX3) + 1),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX3) + 2),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX3) + 3),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX4)),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX4) + 1) 
+static volatile uint8_t* CVD_X_REG[18] = {
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX0)),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX0) + 1),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX0) + 2),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX0) + 3),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX1)),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX1) + 1),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX1) + 2),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX1) + 3),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX2)),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX2) + 1),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX2) + 2),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX2) + 3),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX3)),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX3) + 1),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX3) + 2),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX3) + 3),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX4)),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX4) + 1) 
 };
 
 #elif TOUCH_DEVICE_VARIANT == TOUCH_VARIANT_WBZ35
 
-static uint8_t* CVD_Y_REG[7] = {
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX[0])),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX[0]) + 1),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX[0]) + 2),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX[0]) + 3),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX[1])),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX[1]) + 1),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDRX[1]) + 2)
+static volatile uint8_t* CVD_Y_REG[7] = {
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX[0])),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX[0]) + 1),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX[0]) + 2),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX[0]) + 3),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX[1])),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX[1]) + 1),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX[1]) + 2)
 };
 
 
-static uint8_t* CVD_X_REG[7] = {
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX[0])),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX[0]) + 1),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX[0]) + 2),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX[0]) + 3),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX[1])),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX[1]) + 1),
-    (uint8_t*) (((uint8_t*) & CVD_REGS->CVD_CVDTX[1]) + 2)
+static volatile uint8_t* CVD_X_REG[7] = {
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX[0])),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX[0]) + 1),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX[0]) + 2),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX[0]) + 3),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX[1])),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX[1]) + 1),
+    (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDTX[1]) + 2)
 };
 
 #endif
@@ -216,7 +216,7 @@ static uint16_t current_measure_channel = 0u;
 static uint8_t sample_delay;
 
 /* Library state */
-static uint8_t touch_seq_lib_state = TOUCH_STATE_NULL;
+static uint8_t touch_seq_lib_state = (uint8_t) TOUCH_STATE_NULL;
 
 /* Acquisition settings pointer */
 qtm_acquisition_control_t* qtm_acquisition_control_working_set_ptr;
@@ -319,7 +319,7 @@ Input  : none
 Output : none
 Notes  : none
 ============================================================================*/
-void qtm_cvd_clear_interrupt(void);
+//void qtm_cvd_clear_interrupt(void);
 
 /*============================================================================
 static uint8_t check_cvd_busy(void)
@@ -333,7 +333,7 @@ static uint8_t check_cvd_busy(void)
 {
     uint8_t return_busy_state = 0u;
 
-    if (CVD_REGS->CVD_CVDSD0C3 & CVD_CVDSD0C3_SDEN_Msk)
+    if ((CVD_REGS->CVD_CVDSD0C3 & CVD_CVDSD0C3_SDEN_Msk)!=0u)
     {
         return_busy_state = 1u;
     }
@@ -489,10 +489,10 @@ touch_ret_t qtm_cvd_init_acquisition_module(qtm_acquisition_control_t* qtm_acq_c
 
         else
         {
-            if (TOUCH_STATE_NULL == touch_seq_lib_state)
+            if ((uint8_t)TOUCH_STATE_NULL == touch_seq_lib_state)
             {
                 /* ADC Reset & Initialize */
-                touch_seq_lib_state = TOUCH_STATE_INIT;
+                touch_seq_lib_state = (uint8_t) TOUCH_STATE_INIT;
             }
             cvd_config_io_pins(which_ypins_cvd, 0, CVD_RX_PINS);
             cvd_config_io_pins(which_xpins_cvd, 0, CVD_TX_PINS);
@@ -537,17 +537,18 @@ static touch_ret_t node_process(uint8_t node)
         }
 
         /* Scale down according to analog gain(ADC resolution)settings */
-        scale_down += 2 - NODE_GAIN_ANA(qtm_acquisition_control_working_set_ptr->qtm_acq_node_config[node].node_gain);
+        scale_down += (uint8_t)(2u - NODE_GAIN_ANA(qtm_acquisition_control_working_set_ptr->qtm_acq_node_config[node].node_gain));
 
         qtm_acquisition_control_working_set_ptr->qtm_acq_node_data[node].node_acq_signals = (uint16_t) (measured_signal >> scale_down);
-    }
         break;
+    }
+        
     case (NODE_CC_CAL):
     {
         /* Calibration -> Scale down to ADC range => Number of samples */
         scale_down = this_node_oversampling;
         measured_signal = (uint16_t) (measured_signal >> scale_down);
-        qtm_acquisition_control_working_set_ptr->qtm_acq_node_data[node].node_acq_signals = measured_signal;
+        qtm_acquisition_control_working_set_ptr->qtm_acq_node_data[node].node_acq_signals = (uint16_t) measured_signal;
 
         /* Comp cap settings used for this measurement */
         comp_cap_test_val = qtm_acquisition_control_working_set_ptr->qtm_acq_node_data[node].node_comp_caps;
@@ -555,12 +556,12 @@ static touch_ret_t node_process(uint8_t node)
         /* Calculate Delta-C */
         if (measured_signal > ADC_MAX_READ)
         {
-            cal_sig_delta = measured_signal - ADC_MAX_READ;
+            cal_sig_delta = (uint16_t) (measured_signal - ADC_MAX_READ);
             delta_pol = 1u;
         }
         else
         {
-            cal_sig_delta = ADC_MAX_READ - measured_signal;
+            cal_sig_delta = (uint16_t) (ADC_MAX_READ - measured_signal);
             delta_pol = 0u;
         }
         /* Delta is doubled by differential measurement (mutual) OR by reduced selfcap */
@@ -642,8 +643,9 @@ static touch_ret_t node_process(uint8_t node)
             /* Write result to node status array */
             qtm_acquisition_control_working_set_ptr->qtm_acq_node_data[node].node_comp_caps = (uint16_t) (comp_cap_test_val & 0x0007u);
         }
-    }
         break;
+    }
+       
     case (NODE_CSD_CAL):
     {
         /* CSD tuning - Comp cap calibrated with largest CSD, then CSD reduced to a level showing little / no loss in charge transfer */
@@ -655,10 +657,10 @@ static touch_ret_t node_process(uint8_t node)
         if (qtm_acquisition_control_working_set_ptr->qtm_acq_node_config[node].node_csd == NODE_CSD_MAX)
         {
             /* Store the measured signal */
-            qtm_acquisition_control_working_set_ptr->qtm_acq_node_data[node].node_acq_signals = measured_signal;
+            qtm_acquisition_control_working_set_ptr->qtm_acq_node_data[node].node_acq_signals = (uint16_t) measured_signal;
 
             /* Set highest bit to 0 for next measurement */
-            qtm_acquisition_control_working_set_ptr->qtm_acq_node_config[node].node_csd &= ~(1u << (NUM_BITS_CSD - 1u));
+            qtm_acquisition_control_working_set_ptr->qtm_acq_node_config[node].node_csd &= (uint8_t) (~(uint8_t)(1u << (NUM_BITS_CSD - 1u)));
         }
         else
         {
@@ -670,7 +672,9 @@ static touch_ret_t node_process(uint8_t node)
                 {
                     /* This bit */
                     delta_pol = scale_down;
-                    scale_down = NUM_BITS_CSD;
+                    
+                    // scale_down = NUM_BITS_CSD; // commented for MISRA compliance
+
                 }
                 else
                 {
@@ -680,7 +684,7 @@ static touch_ret_t node_process(uint8_t node)
 
             /* Convert delta to (apparent) reduction in sensor capacitance */
             /* Variable re-use cal_sig_delta */
-            charge_share_check = charge_share_test(node, measured_signal);
+            charge_share_check = charge_share_test(node, (uint16_t) measured_signal);
             if (0u == charge_share_check)
             {
                 /* Good - Bit stays cleared */
@@ -704,23 +708,25 @@ static touch_ret_t node_process(uint8_t node)
             }
         }
         /* Save bit position */
-
+       break;
     }
-        break;
+        
     case (NODE_PRSC_CAL):
     {
         /* No prescaler for PIC32MZ */
-    }
         break;
+    }
+        
         /* /Prescaler tuning */
     default:
     {
         /* Shouldn't be here */
-        while (1)
-        {
-        }
-    }
+       // while (true)
+       // {                             //commented for MISRA
+       // }
         break;
+    }
+       
     }
 
     return touch_return;
@@ -740,7 +746,7 @@ touch_ret_t qtm_acquisition_process(void)
     /* Called from Result complete */
     uint16_t measured_nodes;
 
-    if (TOUCH_STATE_NULL == touch_seq_lib_state)
+    if ((uint8_t)TOUCH_STATE_NULL == touch_seq_lib_state)
     {
         touch_return = TOUCH_INVALID_LIB_STATE;
     }
@@ -748,10 +754,10 @@ touch_ret_t qtm_acquisition_process(void)
     {
         for (measured_nodes = 0u; measured_nodes < (qtm_acquisition_control_working_set_ptr->qtm_acq_node_group_config->num_sensor_nodes); measured_nodes++)
         {
-            node_process(measured_nodes);
+           (void) node_process((uint8_t)measured_nodes);
         }
         /* Allow next acquisition start */
-        touch_seq_lib_state = TOUCH_STATE_READY;
+        touch_seq_lib_state = (uint8_t)TOUCH_STATE_READY;
     } /* Not NULL */
 
     return touch_return;
@@ -780,7 +786,7 @@ static void cvd_config_io_pins(uint32_t cvd_lines, uint8_t direction, const uint
         }
         else
         {
-            if (direction)
+            if (direction!=0u)
             {
                 GPIO_PinInputEnable(pin_table[local_count_var]);
             }
@@ -873,13 +879,14 @@ static uint32_t get_cvd_result(void)
     /* the offset is to make sure the result of CVD is always positive 
        so that all the math afterwards will be unsigned math */
     uint32_t result_offset;
-    int32_t delta = (CVD_REGS->CVD_CVDRESH - CVD_REGS->CVD_CVDRESL);
+    int32_t delta = (int32_t)CVD_REGS->CVD_CVDRESH - (int32_t)CVD_REGS->CVD_CVDRESL;
 
-    result_offset = ADC_MAX_READ << \
+
+    result_offset = (uint32_t)((uint32_t)ADC_MAX_READ << \
     (qtm_acquisition_control_working_set_ptr->\
-        qtm_acq_node_config[current_measure_channel].node_oversampling);
+        qtm_acq_node_config[current_measure_channel].node_oversampling));
 
-    touch_measurement_capture = result_offset + (delta);//(int16_t) CVD_REGS->CVD_CVDRESD;// (CVD_REGS->CVD_CVDRESH - CVD_REGS->CVD_CVDRESL);
+    touch_measurement_capture = result_offset + (uint32_t)(delta);//(int16_t) CVD_REGS->CVD_CVDRESD;// (CVD_REGS->CVD_CVDRESH - CVD_REGS->CVD_CVDRESL);
     //touch_measurement_capture = result_offset + CVDRES0Dbits.DELTA;
     return touch_measurement_capture;
 }
@@ -893,7 +900,7 @@ Notes  : none
 ============================================================================*/
 static uint8_t qtm_load_group_config(qtm_acquisition_control_t* qtm_acq_control_pointer)
 {
-    uint8_t param_ok_status = TOUCH_SUCCESS;
+    uint8_t param_ok_status = (uint8_t)TOUCH_SUCCESS;
 
     /* CVD Common settings */
     /* enable write to descriptor */
@@ -917,16 +924,16 @@ static uint8_t qtm_load_group_config(qtm_acquisition_control_t* qtm_acq_control_
     else
     {
         /* Neither Mutual or Self configured - invalid */
-        param_ok_status = TOUCH_INVALID_INPUT_PARAM;
+        param_ok_status = (uint8_t)TOUCH_INVALID_INPUT_PARAM;
     }
 
-    if (param_ok_status == TOUCH_SUCCESS)
+    if (param_ok_status == (uint8_t)TOUCH_SUCCESS)
     {
 
         CVD_REGS->CVD_CVDADC =  0x0B;
         CVD_REGS->CVD_CVDSD0C3 |= CVD_CVDSD0C3_SDBUF(1);
 
-        if (qtm_acquisition_control_working_set_ptr->qtm_acq_node_group_config->freq_option_select < FREQ_SEL_SPREAD)
+        if (qtm_acquisition_control_working_set_ptr->qtm_acq_node_group_config->freq_option_select < (uint8_t) FREQ_SEL_SPREAD)
         {
             sample_delay = qtm_acquisition_control_working_set_ptr->qtm_acq_node_group_config->freq_option_select; /* Sampling delay */
 
@@ -972,7 +979,7 @@ static void qtm_measure_node(uint16_t channel_number)
 
     for (temp_var_mask_here = 0u; temp_var_mask_here < sizeof (CVD_RX_PINS); temp_var_mask_here++)
     {
-        if (0u == ((qtm_acquisition_control_working_set_ptr->qtm_acq_node_config[channel_number].node_ymask) & (1u << temp_var_mask_here)))
+        if (0u == ((qtm_acquisition_control_working_set_ptr->qtm_acq_node_config[channel_number].node_ymask) & ((uint32_t)1u << temp_var_mask_here)))
         {
         }
         else
@@ -985,7 +992,7 @@ static void qtm_measure_node(uint16_t channel_number)
     xy_counter = 0;
     for (temp_var_mask_here = 0u; temp_var_mask_here < sizeof (CVD_TX_PINS); temp_var_mask_here++)
     {
-        if (0u == ((qtm_acquisition_control_working_set_ptr->qtm_acq_node_config[channel_number].node_xmask) & (1u << temp_var_mask_here)))
+        if (0u == ((qtm_acquisition_control_working_set_ptr->qtm_acq_node_config[channel_number].node_xmask) & ((uint32_t)1u << temp_var_mask_here)))
         {
         }
         else
@@ -1000,10 +1007,10 @@ static void qtm_measure_node(uint16_t channel_number)
         num_x = 1u;
     }
 
-    CVD_REGS->CVD_CVDSD0C2 =    CVD_CVDSD0C2_SDRXEND(num_y-1) | CVD_CVDSD0C2_SDRXBEG(0) |
-                                CVD_CVDSD0C2_SDTXEND(num_x-1) | CVD_CVDSD0C2_SDTXBEG(0) |
-                                CVD_CVDSD0C2_SDRXSTRIDE0(num_y) |
-                                CVD_CVDSD0C2_SDTXSTRIDE0(num_x);
+    CVD_REGS->CVD_CVDSD0C2 =    CVD_CVDSD0C2_SDRXEND((uint32_t)num_y-1u) | CVD_CVDSD0C2_SDRXBEG(0) |
+                                CVD_CVDSD0C2_SDTXEND((uint32_t)num_x-1u) | CVD_CVDSD0C2_SDTXBEG(0) |
+                                CVD_CVDSD0C2_SDRXSTRIDE0((uint32_t)num_y) |
+                                CVD_CVDSD0C2_SDTXSTRIDE0((uint32_t)num_x);
     /* Compensation cap */
     CVD_REGS->CVD_CVDCON |= CVD_CVDCON_CVDIEN(1);
     sd3con |= CVD_CVDSD0C3_SDBUF(1) | CVD_CVDSD0C3_CVDEN_Msk | CVD_CVDSD0C3_CVDCPL(qtm_acquisition_control_working_set_ptr->qtm_acq_node_data[channel_number].node_comp_caps);//CVD_CVDSD0C3_SDADCCON(0x08 | qtm_acquisition_control_working_set_ptr->qtm_acq_node_data[channel_number].node_comp_caps);
@@ -1025,20 +1032,22 @@ static void qtm_measure_node(uint16_t channel_number)
 
     if (temp_var_mask_here < (uint8_t) (NODE_CSD_MAX - CSD_MIN_OFFSET))
     {
-        sd3con |= CVD_CVDSD0C3_SDCHGTIME(temp_var_mask_here + CSD_MIN_OFFSET) |
-        CVD_CVDSD0C3_SDACQTIME(temp_var_mask_here + CSD_MIN_OFFSET);
+        sd3con |= CVD_CVDSD0C3_SDCHGTIME((uint32_t)temp_var_mask_here + (uint32_t)CSD_MIN_OFFSET) |
+        CVD_CVDSD0C3_SDACQTIME((uint32_t)temp_var_mask_here + (uint32_t)CSD_MIN_OFFSET);
     }
     else
     {
-        sd3con |= CVD_CVDSD0C3_SDCHGTIME(temp_var_mask_here + NODE_CSD_MAX) |
-            CVD_CVDSD0C3_SDACQTIME(temp_var_mask_here + NODE_CSD_MAX);
+        temp_var_mask_here += (uint8_t) NODE_CSD_MAX;
+
+        sd3con |= (uint32_t)(CVD_CVDSD0C3_SDCHGTIME(temp_var_mask_here) |
+            CVD_CVDSD0C3_SDACQTIME(temp_var_mask_here));
     }
 
     /* Oversampling - Digital (2^n) */
     CVD_REGS->CVD_CVDSD0C1 = CVD_CVDSD0C1_SDTH(0xf80000) | CVD_CVDSD0C1_SDOVRSAMP(OVERSAMPLING_LUT[qtm_acquisition_control_working_set_ptr->qtm_acq_node_config[channel_number].node_oversampling]);
 
     CVD_REGS->CVD_CVDSD0T2 = 0x00010100;
-    CVD_REGS->CVD_CVDSD0T2 |= CVD_CVDSD0T2_SDCONTIME(20u + (sample_delay << 2u));
+    CVD_REGS->CVD_CVDSD0T2 |= CVD_CVDSD0T2_SDCONTIME((uint32_t)20u + ((uint32_t)sample_delay << 2u));
 
     /* Enable CVD */
     sd3con |= CVD_CVDSD0C3_SDINTEN(1);
@@ -1076,11 +1085,11 @@ touch_ret_t qtm_cvd_start_measurement_seq(qtm_acquisition_control_t* qtm_acq_con
     {
         param_ok_status = TOUCH_INVALID_POINTER;
     }
-    else if (touch_seq_lib_state == TOUCH_STATE_NULL)
+    else if (touch_seq_lib_state == (uint8_t)TOUCH_STATE_NULL)
     {
         param_ok_status = TOUCH_INVALID_LIB_STATE;
     }
-    else if (touch_seq_lib_state == TOUCH_STATE_BUSY)
+    else if (touch_seq_lib_state == (uint8_t)TOUCH_STATE_BUSY)
     {
         param_ok_status = TOUCH_ACQ_INCOMPLETE;
     }
@@ -1106,20 +1115,20 @@ touch_ret_t qtm_cvd_start_measurement_seq(qtm_acquisition_control_t* qtm_acq_con
         cvd_seq_measure_complete_pointer = measure_complete_callback;
 
         /* Load group config */
-        qtm_load_group_config(qtm_acquisition_control_working_set_ptr);
+        (void)qtm_load_group_config(qtm_acquisition_control_working_set_ptr);
 
         /* Load config for first enabled sensor channel */
         current_measure_channel = 0u;
         sequence_complete = select_next_channel_to_measure();
         if (0u == sequence_complete)
         {
-            touch_seq_lib_state = TOUCH_STATE_BUSY;
+            touch_seq_lib_state = (uint8_t)TOUCH_STATE_BUSY;
             qtm_measure_node(current_measure_channel);
         }
         else
         {
             param_ok_status = TOUCH_INVALID_INPUT_PARAM;
-            touch_seq_lib_state = TOUCH_STATE_READY;
+            touch_seq_lib_state = (uint8_t)TOUCH_STATE_READY;
         }
     }
 
@@ -1153,7 +1162,7 @@ void qtm_pic32_cvd_handler_eoc(void)
         {
             /* More nodes to measure */
             qtm_measure_node(current_measure_channel);
-            touch_seq_lib_state = TOUCH_STATE_BUSY;
+            touch_seq_lib_state = (uint8_t)TOUCH_STATE_BUSY;
         }
         else
         {
@@ -1215,7 +1224,7 @@ uint8_t qtm_cvd_last_measure_is_complete(void)
 {
     uint8_t return_is_complete = 0u;
 
-    if (CVD_REGS->CVD_CVDSTAT & CVD_CVDSTAT_SD1DONE_Msk)
+    if ((CVD_REGS->CVD_CVDSTAT & CVD_CVDSTAT_SD1DONE_Msk)!=0u)
     {
         return_is_complete = 1u;
     }
@@ -1246,7 +1255,7 @@ Notes  : none
 ============================================================================*/
 void qtm_cvd_de_init(void)
 {
-    touch_seq_lib_state = TOUCH_STATE_NULL;
+    touch_seq_lib_state = (uint8_t)TOUCH_STATE_NULL;
     CVD_REGS->CVD_CVDCON &= ~CVD_CVDCON_ON_Msk;
 }
 

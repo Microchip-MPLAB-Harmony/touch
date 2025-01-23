@@ -52,8 +52,8 @@ Revision 1.1 - QTMODLIB-205: Fixed pointer casting issue
                QTMODLIB-207: Assigned the correct value to CVDADC register
 ============================================================================*/
 
-#ifndef __HCVD_PIC32MZ__
-#define __HCVD_PIC32MZ__
+#ifndef HCVD_PIC32MZ
+#define HCVD_PIC32MZ
 
 /*----------------------------------------------------------------------------
 include files
@@ -114,4 +114,9 @@ manifest constants
 #define TOUCH_DEVICE_VARIANT TOUCH_VARIANT_${DEVICE_NAME}
 #endif
 
-#endif /* __HCVD_PIC32MZ__ */
+/* Acquisition settings pointer */
+extern qtm_acquisition_control_t* qtm_acquisition_control_working_set_ptr;
+extern uint32_t(*qtm_raw_data_measurements_ptr);
+extern uint8_t qtm_which_mode_current;
+
+#endif /* HCVD_PIC32MZ*/

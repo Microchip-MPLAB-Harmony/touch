@@ -18,6 +18,7 @@ Purpose  : Acquisition module - PIC32CM_GC00
 #define TOUCH_BITMASK(np)  (uint64_t)((uint64_t) 1u << (np) )            
     
 /* Touch constant definitions */
+#undef X
 #define X(n)        TOUCH_BITMASK((n))
 #define Y(n)        TOUCH_BITMASK((n))
 #define X_NONE      (0u)
