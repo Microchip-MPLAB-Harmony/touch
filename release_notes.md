@@ -3,6 +3,24 @@
 
 #  Microchip MPLAB® Harmony 3 Touch Library Release Notes
 
+## Touch Library v3.17.0 Release 
+### NEW FEATURES SUPPORTED 
+* Added Touch Library support for PIC32CM-GC/SG devices.
+* Added Touch Library support for PIC32WM_BZ6 devices.
+### UI ENHANCEMENTS 
+* Improved Mutual Capacitance pin assignment UI. 
+### BUG FIXES 
+* Resolved issue related to the lump feature support in Touch configurator UI.
+* Resolved compilation issues in Timer-based driven shield project generation for SAM D10, SAM D11. 
+### KNOWN ISSUES
+* Projects created for the PIC32WM_BZ6 device are currently experiencing compilation issues with the existing compiler (v4.45). Please await the next compiler release (v4.60), which will include a resolution for this problem.
+### DEVELOPMENT TOOLS 
+* MPLAB® X IDE v6.20 or higher
+* MPLAB® XC32 C/C++ Compiler v4.45 
+* MPLAB® X IDE plug-ins:     
+  * MPLAB® Code Configurator (MCC)       
+  * MCC Plugin v5.5.1
+
 ## Touch Library v3.16.0 Release 
 ### NEW FEATURES SUPPORTED 
 * Added Touch Library support for PIC32CK SG/GC devices.
