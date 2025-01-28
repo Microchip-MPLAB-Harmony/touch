@@ -3,17 +3,8 @@
     "clock": [ 
         { "device":"ATSAML1", "min":"0.5", "max":"2.0"  },
         { "device":"ATSAME5", "min":"0.16", "max":"2.0" },
-        { "device":"PIC32CM\\d{4}LE00", "min":"0.5", "max":"2.0"  },
-        { "device":"PIC32CM\\d{4}LS00", "min":"0.5", "max":"2.0"  },
-        { "device":"PIC32CM\\d{4}LS60", "min":"0.5", "max":"2.0"  },
-        { "device":"PIC32CZ\\d{4}CA80", "min":"0.5", "max":"2.0"  },
-        { "device":"PIC32CZ\\d{4}CA90", "min":"0.5", "max":"2.0"  },
-        { "device":"PIC32CK\\d{4}GC00", "min":"0.5", "max":"2.0"  },
-        { "device":"PIC32CK\\d{4}GC01", "min":"0.5", "max":"2.0"  },
-        { "device":"PIC32CK\\d{4}SG00", "min":"0.5", "max":"2.0"  },
-        { "device":"PIC32CK\\d{4}SG01", "min":"0.5", "max":"2.0"  },
-        { "device":"PIC32CM\\d{4}GC00", "min":"0.5", "max":"2.0"  },
-        { "device":"PIC32CM\\d{4}SG00", "min":"0.5", "max":"2.0"  }
+        { "device":"PIC32CM", "min":"0.5", "max":"2.0"  },
+        { "device":"PIC32CZCA", "min":"0.5", "max":"2.0"  }
     ],
     "version":{
         "key":"1.4",
@@ -47,9 +38,7 @@
             { "device":"PIC32CK\\d{4}GC00", "manual":"1.0", "auto":"1.0" },
             { "device":"PIC32CK\\d{4}GC01", "manual":"1.0", "auto":"1.0" },
             { "device":"PIC32CK\\d{4}SG00", "manual":"1.0", "auto":"1.0" },
-            { "device":"PIC32CK\\d{4}SG01", "manual":"1.0", "auto":"1.0" },
-            { "device":"PIC32CM\\d{4}SG00", "manual":"1.0", "auto":"1.0" },
-            { "device":"PIC32CM\\d{4}GC00", "manual":"1.0", "auto":"1.0" }
+            { "device":"PIC32CK\\d{4}SG01", "manual":"1.0", "auto":"1.0" }
         ]
     }
 }
