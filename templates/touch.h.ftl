@@ -44,7 +44,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#else>
 #include "device.h"
 
-<#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35","WBZ65"]>
+<#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35","PIC32WM_BZ6"]>
 <#assign pic32cz = ["PIC32CZCA80", "PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00","PIC32CMSG00"]>
 
 // DOM-IGNORE-BEGIN
@@ -570,7 +570,7 @@ extern qtm_drivenshield_config_t qtm_drivenshield_config;
 <#import "/misra.h.ftl" as misra>
 <@misra.externvariables/>
 
-<#if (DEVICE_NAME == "WBZ35")||(DEVICE_NAME == "WBZ65")>
+<#if (DEVICE_NAME == "WBZ35")||(DEVICE_NAME == "PIC32WM_BZ6")>
 void CVD_Handler(void);
 </#if>
 

@@ -34,10 +34,10 @@ class classTouchTargetDevice():
         self.adc_based_acquisition = set(["SAME54","SAME53","SAME51","SAMD51"])
         self.no_csd_support = set(["SAMD20","SAMD21","SAMDA1","SAMHA1","SAMD10","SAMD11", "SAML21"])
         self.csd_device_with_noAutoTuneCSD_support = set(["PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00","PIC32CMSG00"])
-        self.non_lump_support = set(["PIC32MZW", "PIC32MZDA", "PIC32CXBZ31", "WBZ35","WBZ65"])
-        self.picDevices = ["PIC32MZW", "PIC32MZDA", "PIC32CXBZ31", "WBZ35","WBZ65"]
+        self.non_lump_support = set(["PIC32MZW", "PIC32MZDA", "PIC32CXBZ31", "WBZ35","PIC32WM_BZ6"])
+        self.picDevices = ["PIC32MZW", "PIC32MZDA", "PIC32CXBZ31", "WBZ35","PIC32WM_BZ6"]
         self.timer_driven_shield_support = set(["SAMD21","SAMDA1","SAMHA1","SAME54","SAME53","SAME51","SAMD51","SAMC21","SAMC20","SAML21","SAML22","SAMD10","SAMD11","SAMD20"])
-        self.hardware_driven_shield_support = set(["SAML10","SAML11","SAML1xE","PIC32MZW","PIC32CMLE00","PIC32CMLS00","PIC32CMJH01","PIC32CMJH00","PIC32CXBZ31", "WBZ35","WBZ65", "PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00","PIC32CMSG00"])
+        self.hardware_driven_shield_support = set(["SAML10","SAML11","SAML1xE","PIC32MZW","PIC32CMLE00","PIC32CMLS00","PIC32CMJH01","PIC32CMJH00","PIC32CXBZ31", "WBZ35","PIC32WM_BZ6", "PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00","PIC32CMSG00"])
         self.touchChannelSelf = 0
         self.touchChannelMutual = 0
         self.ptcPinValues =[]
@@ -104,7 +104,7 @@ class classTouchTargetDevice():
             getModuleID.setDefaultValue("0x0027")
         elif(targetDevice in ["PIC32CMLE00","PIC32CMLS00"]):
             getModuleID.setDefaultValue("0x0040")
-        elif(targetDevice in set(["PIC32MZW","PIC32CXBZ31", "WBZ35","WBZ65"])):
+        elif(targetDevice in set(["PIC32MZW","PIC32CXBZ31", "WBZ35","PIC32WM_BZ6"])):
             getModuleID.setDefaultValue("0x003e")
         elif(targetDevice == "PIC32MZDA"):
             getModuleID.setDefaultValue("0x0046")
@@ -202,7 +202,7 @@ class classTouchTargetDevice():
             clockXml.setDefaultValue("pic32mzda_clock_config")
         elif(targetDevice == "PIC32MZW"):
             clockXml.setDefaultValue("pic32mzw_clock_config")
-        elif(targetDevice in ["PIC32CXBZ31", "WBZ35","WBZ65"]):
+        elif(targetDevice in ["PIC32CXBZ31", "WBZ35","PIC32WM_BZ6"]):
             clockXml.setDefaultValue("pic32cx_clock_config")
         elif(targetDevice in ["PIC32CMLE00","PIC32CMLS00"]):
             clockXml.setDefaultValue("pic32cm_clock_config")
@@ -309,7 +309,7 @@ class classTouchTargetDevice():
         Returns:
             :none
         """
-        if(targetDevice in ["PIC32CXBZ31", "WBZ35","WBZ65"]):
+        if(targetDevice in ["PIC32CXBZ31", "WBZ35","PIC32WM_BZ6"]):
             Database.clearSymbolValue("core", "CVD_CLOCK_ENABLE")
             Database.setSymbolValue("core", "CVD_CLOCK_ENABLE", True)
         elif targetDevice not in self.picDevices:
@@ -552,7 +552,7 @@ class classTouchTargetDevice():
                 print(self.touchChannelMutual)
                 self.ptcPinValues.append(cvdRPins)
                 self.ptcPinValues.append(cvdTPins)
-            elif targetDevice in ["PIC32CXBZ31", "WBZ35","WBZ65"]:
+            elif targetDevice in ["PIC32CXBZ31", "WBZ35","PIC32WM_BZ6"]:
                 ptcSignalsATDF = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"CVD\"]/instance/signals")
                 self.ptcPinValues = []
                 selectablePins =set()

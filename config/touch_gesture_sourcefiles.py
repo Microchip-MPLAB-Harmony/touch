@@ -51,7 +51,7 @@ class classTouchGestureSourceFiles():
         Returns:
             file symbol
         """
-        if (targetDevice in ["SAME51","SAME53","SAME54","SAMD51","PIC32CXBZ31","WBZ35","WBZ65"]):
+        if (targetDevice in ["SAME51","SAME53","SAME54","SAMD51","PIC32CXBZ31","WBZ35","PIC32WM_BZ6"]):
             # Library File
             gestureLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_GESTURE_LIB", None)
             gestureLibraryFile.setSourcePath("/src/libraries/qtm_surface_gestures_cm4_0x0023.X.a")

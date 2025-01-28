@@ -48,7 +48,7 @@ class classTouchAcquisitionSourceFiles():
         # touchAcqHeaderFile
         fileList.append(self.setAcqHeaderFile(configName, qtouchComponent, targetDevice))
         # touchAcqHeaderFile2 (some devices)
-        if(targetDevice in set(["SAMDA1","SAMHA1","SAMC20","SAMD51","SAME51","SAME53","PIC32MZW","PIC32MZDA", "PIC32CXBZ31", "WBZ35","WBZ65"])):
+        if(targetDevice in set(["SAMDA1","SAMHA1","SAMC20","SAMD51","SAME51","SAME53","PIC32MZW","PIC32MZDA", "PIC32CXBZ31", "WBZ35","PIC32WM_BZ6"])):
             fileList.append(self.setAcqHeaderFile2(configName, qtouchComponent, targetDevice))
         # touchBindHeaderFile
         fileList.append(self.setBindHeaderFile(configName, qtouchComponent, targetDevice))
@@ -107,7 +107,7 @@ class classTouchAcquisitionSourceFiles():
         Returns:
             file symbol
         """
-        if (targetDevice == "PIC32MZW") or (targetDevice == "PIC32MZDA")or (targetDevice == "PIC32CXBZ31")or (targetDevice == "WBZ35")or (targetDevice == "WBZ65"):
+        if (targetDevice == "PIC32MZW") or (targetDevice == "PIC32MZDA")or (targetDevice == "PIC32CXBZ31")or (targetDevice == "WBZ35")or (targetDevice == "PIC32WM_BZ6"):
             touchAcqLibraryFile = qtouchComponent.createFileSymbol("TOUCH_ACQ_LIB", None)   
             touchAcqLibraryFile.setDestPath("/touch/")
             touchAcqLibraryFile.setProjectPath("config/" + configName + "/touch/")
@@ -165,7 +165,7 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice == "PIC32MZDA"):
             touchAcqLibraryFile.setSourcePath("/src/libraries/cvd_driver_PIC32MZ.c")
             touchAcqLibraryFile.setOutputName("cvd_driver_PIC32MZ.c")
-        elif(targetDevice in ["PIC32CXBZ31", "WBZ35","WBZ65"]):
+        elif(targetDevice in ["PIC32CXBZ31", "WBZ35","PIC32WM_BZ6"]):
             touchAcqLibraryFile.setSourcePath("/src/libraries/hcvd_driver_PIC32CX.c")
             touchAcqLibraryFile.setOutputName("hcvd_driver_PIC32CX.c")
         elif(targetDevice in ["PIC32CMLE00","PIC32CMLS00"]):
@@ -212,7 +212,7 @@ class classTouchAcquisitionSourceFiles():
         Returns:
             file symbol
         """
-        if (targetDevice == "PIC32MZW") or (targetDevice == "PIC32MZDA") or (targetDevice == "PIC32CXBZ31") or (targetDevice == "WBZ35") or (targetDevice == "WBZ65"):
+        if (targetDevice == "PIC32MZW") or (targetDevice == "PIC32MZDA") or (targetDevice == "PIC32CXBZ31") or (targetDevice == "WBZ35") or (targetDevice == "PIC32WM_BZ6"):
             touchAcqAutoLibraryFile = qtouchComponent.createFileSymbol("TOUCH_ACQ_AUTO_LIB", None)
             touchAcqAutoLibraryFile.setDestPath("/touch/")
             touchAcqAutoLibraryFile.setProjectPath("config/" + configName + "/touch/")
@@ -270,7 +270,7 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice == "PIC32MZDA"):
             touchAcqAutoLibraryFile.setSourcePath("/src/libraries/cvd_driver_PIC32MZ.c")
             touchAcqAutoLibraryFile.setOutputName("cvd_driver_PIC32MZ.c")
-        elif(targetDevice in ["PIC32CXBZ31", "WBZ35","WBZ65"]):
+        elif(targetDevice in ["PIC32CXBZ31", "WBZ35","PIC32WM_BZ6"]):
             touchAcqAutoLibraryFile.setSourcePath("/src/libraries/hcvd_driver_PIC32CX.c")
             touchAcqAutoLibraryFile.setOutputName("hcvd_driver_PIC32CX.c")
         elif(targetDevice in ["PIC32CMLE00","PIC32CMLS00"]):
@@ -395,7 +395,7 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice == "PIC32MZDA"):
             touchAcqHeaderFile.setSourcePath("/src/qtm_acq_pic32mzda_0x0046_api.h")
             touchAcqHeaderFile.setOutputName("qtm_acq_pic32mzda_0x0046_api.h")
-        elif(targetDevice in ["PIC32CXBZ31", "WBZ35","WBZ65"]):
+        elif(targetDevice in ["PIC32CXBZ31", "WBZ35","PIC32WM_BZ6"]):
             touchAcqHeaderFile.setSourcePath("/src/qtm_acq_pic32cx_0x003e_api.h")
             touchAcqHeaderFile.setOutputName("qtm_acq_pic32cx_0x003e_api.h")
         elif(targetDevice in ["PIC32CMLE00","PIC32CMLS00"]):
@@ -457,7 +457,7 @@ class classTouchAcquisitionSourceFiles():
         elif(targetDevice == "PIC32MZDA"):
             touchAcqHeaderFile2.setSourcePath("/src/libraries/cvd_driver_PIC32MZ.h")
             touchAcqHeaderFile2.setOutputName("cvd_driver_PIC32MZ.h")
-        elif(targetDevice in ["PIC32CXBZ31", "WBZ35","WBZ65"]):
+        elif(targetDevice in ["PIC32CXBZ31", "WBZ35","PIC32WM_BZ6"]):
             touchAcqHeaderFile2.setSourcePath("/src/libraries/hcvd_driver_PIC32CX.h.ftl")
             touchAcqHeaderFile2.setOutputName("hcvd_driver_PIC32CX.h")
             touchAcqHeaderFile2.setMarkup(True)
