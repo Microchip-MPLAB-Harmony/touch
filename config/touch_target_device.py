@@ -70,9 +70,10 @@ class classTouchTargetDevice():
             return "NVIC_67_0_SECURITY_TYPE"
         elif(targetDevice in set(["PIC32CKSG00","PIC32CKSG01"])):
             return "NVIC_139_0_SECURITY_TYPE"
-
+        elif(targetDevice in set(["PIC32CMSG00"])):
+            return "NVIC_133_0_SECURITY_TYPE"
     def isSecureDevice(self,targetDevice):
-        if(targetDevice in set(["SAML10","SAML11","SAML1xE","PIC32CMLS60","PIC32CMLS00","PIC32CKSG00","PIC32CKSG01"])):
+        if(targetDevice in set(["SAML10","SAML11","SAML1xE","PIC32CMLS60","PIC32CMLS00","PIC32CKSG00","PIC32CKSG01","PIC32CMSG00"])):
             return True
         else:
             return False
