@@ -23,11 +23,13 @@ Microchip or any third party.
 """
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
+from json_loader import json_loader_instance
 
 class classTouchSurface():
     def __init__(self, node_inst):
         self.nodeInst = node_inst
-        self.surface_rearrangement_macro = set(["SAML10","SAML1xE","SAML11","PIC32CMLE00","PIC32CMLS00","SAME54","SAME53","SAME51","SAMD51"])
+        self.json_data=json_loader_instance.get_data()
+        # self.surface_rearrangement_macro = set(["SAML10","SAML1xE","SAML11","PIC32CMLE00","PIC32CMLS00","SAME54","SAME53","SAME51","SAMD51"])
 
     def initSurfaceInstance(self,qtouchComponent, parentLabel , targetDevice, touchKeyCountMax):
         """Initialise Surface Instance
@@ -49,7 +51,7 @@ class classTouchSurface():
         surfaceMenu.setDescription("Configure Surface")
         surfaceMenu.setVisible(False)
 
-        if targetDevice in self.surface_rearrangement_macro:
+        if self.json_data["features"]["xy_multiplex"] == True:
             touchChSurafceX = qtouchComponent.createStringSymbol("TOUCH_CH_SURFACE_X_LINES", surfaceMenu)
             touchChSurafceX.setVisible(True)
             touchChSurafceY = qtouchComponent.createStringSymbol("TOUCH_CH_SURFACE_Y_LINES", surfaceMenu)
@@ -329,11 +331,8 @@ class classTouchSurface():
             :True / False
         """
 
-        if(targetDevice in self.surface_rearrangement_macro):
-            return True
-        else:
-            return False
-
+        return self.json_data["features"]["xy_multiplex"]
+        
     def updateLumpModeSurface(self,symbol,touchSenseTechnology,totalChannelCount):
         """Handler for lump mode support menu click event.  
         Triggered by qtouch.processLump()

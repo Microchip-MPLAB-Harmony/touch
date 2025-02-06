@@ -24,71 +24,87 @@ Microchip or any third party.
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
 
-supportedDevices = ["PIC32CZ","PIC32CX","WBZ3","PIC32WM_BZ","PIC32MZ","SAMC21","SAMC20", "SAME51","SAME53","SAME54","SAMD51","SAMD20","SAMD21","SAML21","SAML22","SAML10","SAML11","SAML1xE","SAMD10","SAMD11","SAMDA1","SAMHA1","PIC32CM","PIC32CK"]
-#The following devices which have X,Y signals listed under ADC0 instead of PTC are listed as special devices.
-ADCDevices = ["SAME51","SAME53","SAME54","SAMD51"]
-#notSupportedVariants = ["ATSAMC21J18A"]
-notSupportedVariants = []
-PIC32Devices = ["PIC32MZ", "PIC32MZW","PIC32CX","WBZ3","PIC32WM_BZ"]
-PIC32DeviceVariant = ["PIC32MZW", "PIC32MZDA","PIC32CX","WBZ3","PIC32WM_BZ"]
+import os
+import re
+import sys
+import json
+import inspect
 
+def list_files_in_directory(directory_path):
+    try:
+        # List all files and directories in the specified directory
+        files_and_directories = os.listdir(directory_path)
 
+        # Filter out directories and non-json files, only keep .json files
+        json_files = [f for f in files_and_directories if os.path.isfile(os.path.join(directory_path, f)) and f.lower().endswith('.json')]
+
+        return json_files
+    except FileNotFoundError:
+        return []
+    except PermissionError:
+        return []
+
+def match_data(data, array):
+    pattern = re.compile(data)
+    return any(pattern.search(item) for item in array)
 
 def loadModule():
     #mod will have value if PTC peripheral is present in a device variant
     mod = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PTC\"]")
     deviceNode = ATDF.getNode("/avr-tools-device-file/devices")
+
+    parent_dir=os.path.dirname(os.path.realpath(inspect.getfile(inspect.currentframe())))
+    json_folder=os.path.join(parent_dir,"json")
+    files = list_files_in_directory(json_folder)
+    
     deviceChild = deviceNode.getChildren()
-    deviceName = deviceChild[0].getAttribute("family")
-    for x in supportedDevices:
-        if x in Variables.get("__PROCESSOR"):
-            if Variables.get("__PROCESSOR") not in notSupportedVariants:
-                if mod:
-                    qtouchComponent = Module.CreateComponent("lib_qtouch", "Touch Library", "/Touch/", "config/qtouch.py")
-                    qtouchComponentAcquistion = Module.CreateComponent("ptc","PTC","/Touch/","config/ptc_based_acq_engine.py")
-                    qtouchComponentAcquistion.addCapability("ptc_Acq_Engine", "Acq_Engine")
-                    qtouchComponent.setDisplayType("Peripheral Touch Controller(PTC)")
-                    qtouchComponent.setDependencyEnabled("PTC",True)
-                    qtouchComponent.addDependency("Touch_timer", "TMR", None, False, True)
-                    qtouchComponent.setDependencyEnabled("Touch_timer", True)
-                    qtouchComponent.addDependency("SW_Timer", "SYS_TIME", None, True, True)
-                    qtouchComponent.setDependencyEnabled("SW_Timer", False)
-                    qtouchComponent.addDependency("lib_acquire","Acq_Engine",None,False,True)
-                    qtouchComponent.setDependencyEnabled("lib_acquire", True)
-                    qtouchComponent.addDependency("Touch_sercom", "UART", None, False, False)
-                    qtouchComponent.setDependencyEnabled("Touch_sercom", False)
-                    qtouchComponent.addDependency("Touch_sercom_Krono", "UART", None, False, False)
-                    qtouchComponent.setDependencyEnabled("Touch_sercom_Krono", False)
-                    qtouchComponent.addCapability("lib_qtouch", "TouchData")
-                elif x in ADCDevices:
-                    qtouchComponent = Module.CreateComponent("lib_qtouch", "Touch Library", "/Touch/", "config/qtouch.py")
-                    qtouchComponentAcquistion = Module.CreateComponent("ptc","PTC","/Touch/","config/ptc_based_acq_engine.py")
-                    qtouchComponentAcquistion.addCapability("ptc_Acq_Engine", "Acq_Engine")
-                    qtouchComponent.setDisplayType("Peripheral Touch Controller(PTC)")
-                    qtouchComponent.addCapability("lib_qtouch", "TouchData")
-                    qtouchComponent.setDisplayType("Peripheral Touch Controller(PTC)")
-                    qtouchComponent.addDependency("Touch_timer", "TMR", None, False, True)
-                    qtouchComponent.addDependency("SW_Timer", "SYS_TIME", None, True, True)
-                    qtouchComponent.setDependencyEnabled("SW_Timer", False)
-                    qtouchComponent.addDependency("lib_acquire","Acq_Engine",None,False,True)
-                    qtouchComponent.setDependencyEnabled("lib_acquire", True)
-                    qtouchComponentAcquistion.addDependency("lib_acquire","ADC",None,False,True)
-                    qtouchComponentAcquistion.setDependencyEnabled("lib_acquire", True)
-                    qtouchComponent.setDependencyEnabled("Touch_timer", True)
-                    qtouchComponent.addDependency("Touch_sercom", "UART", None, False, False)
-                    qtouchComponent.setDependencyEnabled("Touch_sercom", False)
-                    qtouchComponent.addDependency("Touch_sercom_Krono", "UART", None, False, False)
-                    qtouchComponent.setDependencyEnabled("Touch_sercom_Krono", False)
-                elif (x in PIC32Devices) and (deviceName in PIC32DeviceVariant):
-                    qtouchComponent = Module.CreateComponent("lib_qtouch", "Touch Library", "/Touch/", "config/qtouch.py")
-                    qtouchComponent.setDisplayType("HCVD")
-                    qtouchComponent.addDependency("Acq_Engine", "ADC", None, False, True)
-                    qtouchComponent.setDependencyEnabled("Acq_Engine", True)
-                    qtouchComponent.addDependency("Touch_timer", "TMR", None, False, True)
-                    qtouchComponent.setDependencyEnabled("Touch_timer", True)
-                    qtouchComponent.addDependency("SW_Timer", "SYS_TIME", None, True, True)
-                    qtouchComponent.setDependencyEnabled("SW_Timer", False)
-                    qtouchComponent.addDependency("Touch_sercom", "UART", None, False, False)
-                    qtouchComponent.setDependencyEnabled("Touch_sercom", False)
-                    qtouchComponent.addDependency("Touch_sercom_Krono", "UART", None, False, False)
-                    qtouchComponent.setDependencyEnabled("Touch_sercom_Krono", False)
+    current_family=str(deviceChild[0].getAttribute("series"))
+    architecture=str(deviceChild[0].getAttribute("architecture"))
+    mod_id=mod.getAttribute("id")
+    mod_version=mod.getAttribute("version")
+    print("Mod",mod.getAttribute("id"))
+    is_supported_device=match_data(current_family,files)
+    
+    if(is_supported_device==True):
+        # json_loader_path="C:/Users/i78387/.mcc/HarmonyContent/touch/config"
+        sys.path.append(parent_dir)
+        from json_loader import json_loader_instance
+        data_from_json = json_loader_instance.load_json(json_folder,current_family,mod_id,mod_version,architecture)
+        core=data_from_json["features"]["core"]
+
+        #common
+        qtouchComponent = Module.CreateComponent("lib_qtouch", "Touch Library", "/Touch/", "config/qtouch.py")
+        qtouchComponent.addDependency("Touch_timer", "TMR", None, False, True)
+        qtouchComponent.setDependencyEnabled("Touch_timer", True)
+        qtouchComponent.addDependency("SW_Timer", "SYS_TIME", None, True, True)
+        qtouchComponent.setDependencyEnabled("SW_Timer", False)
+        qtouchComponent.addDependency("Touch_sercom", "UART", None, False, False)
+        qtouchComponent.setDependencyEnabled("Touch_sercom", False)
+        qtouchComponent.addDependency("Touch_sercom_Krono", "UART", None, False, False)
+        qtouchComponent.setDependencyEnabled("Touch_sercom_Krono", False)
+
+        if core=="PTC" and mod:
+            qtouchComponentAcquistion = Module.CreateComponent("ptc","PTC","/Touch/","config/ptc_based_acq_engine.py")
+            qtouchComponentAcquistion.addCapability("ptc_Acq_Engine", "Acq_Engine")
+            qtouchComponent.setDisplayType("Peripheral Touch Controller(PTC)")
+            qtouchComponent.setDependencyEnabled("PTC",True)
+            qtouchComponent.addDependency("lib_acquire","Acq_Engine",None,False,True)
+            qtouchComponent.setDependencyEnabled("lib_acquire", True)
+            qtouchComponent.addCapability("lib_qtouch", "TouchData")
+        elif core=="ADC":
+            qtouchComponentAcquistion = Module.CreateComponent("ptc","PTC","/Touch/","config/ptc_based_acq_engine.py")
+            qtouchComponentAcquistion.addCapability("ptc_Acq_Engine", "Acq_Engine")
+            qtouchComponent.setDisplayType("Peripheral Touch Controller(PTC)")
+            qtouchComponent.addCapability("lib_qtouch", "TouchData")
+            qtouchComponent.addDependency("lib_acquire","Acq_Engine",None,False,True)
+            qtouchComponent.setDependencyEnabled("lib_acquire", True)
+            qtouchComponentAcquistion.addDependency("lib_acquire","ADC",None,False,True)
+            qtouchComponentAcquistion.setDependencyEnabled("lib_acquire", True)
+        elif core=="CVD":
+            qtouchComponent.setDisplayType("HCVD")
+            qtouchComponent.addDependency("Acq_Engine", "ADC", None, False, True)
+            qtouchComponent.setDependencyEnabled("Acq_Engine", True)
+    else:
+        print(current_family+" - Device is not supported")
+
+    

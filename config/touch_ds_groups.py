@@ -26,6 +26,8 @@ MHC Python Interface documentation website <http://confluence.microchip.com/disp
 
 #import runtime
 
+from json_loader import json_loader_instance
+
 class classTouchDSGroup():
     def __init__(self, node_inst, targetdevice_inst):
         self.nodeInst = node_inst
@@ -33,6 +35,7 @@ class classTouchDSGroup():
         self.symbolList = []
         self.depFuncName = []
         self.dependencies = []
+        self.json_data=json_loader_instance.get_data()
 
     def addDepSymbol(self, symbol, func, depen):
         self.symbolList.append(symbol)
@@ -73,7 +76,7 @@ class classTouchDSGroup():
             drivenShieldDedicatedPin.setDisplayMode("Description")
             drivenShieldDedicatedPin.setDependencies(self.drivenShieldHwUpdate, ["DS_DEDICATED_PIN"])
 
-            if instances['interfaceInst'].getDeviceSeries() not in instances['target_deviceInst'].picDevices:
+            if self.json_data["features"]["core"]!="CVD":
                 enableDrivenShieldAdjacent = qtouchComponent.createBooleanSymbol("DS_ADJACENT_SENSE_LINE_AS_SHIELD", drivenShieldMenu)
                 enableDrivenShieldAdjacent.setLabel("Enable Adjacent Sense Pins as Shield")
                 enableDrivenShieldAdjacent.setDefaultValue(False)
@@ -84,7 +87,7 @@ class classTouchDSGroup():
                         drivenShieldDedicatedPin.addKey(ptcPininfo[index].getAttribute("index"),ptcPininfo[index].getAttribute("group")+"("+ptcPininfo[index].getAttribute("index")+")",ptcPininfo[index].getAttribute("group")+ptcPininfo[index].getAttribute("index")+ "  ("+ ptcPininfo[index].getAttribute("pad")+")")
                     if(ptcPininfo[index].getAttribute("group") == "DRV"):
                         drivenShieldDedicatedPin.addKey(ptcPininfo[index].getAttribute("index"),"Y"+"("+ptcPininfo[index].getAttribute("index")+")","Y"+ptcPininfo[index].getAttribute("index")+ "  ("+ ptcPininfo[index].getAttribute("pad")+")")
-            elif instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35","PIC32WM_BZ6"]:
+            elif json_loader_instance.get_architecture()=="cm4":
                 for index in range(0, len(ptcPininfo)):
                     if(ptcPininfo[index].getAttribute("group") == "CVDR"):
                         drivenShieldDedicatedPin.addKey(ptcPininfo[index].getAttribute("index"),"Y("+ptcPininfo[index].getAttribute("index")+")","Y"+ptcPininfo[index].getAttribute("index")+ "  ("+ ptcPininfo[index].getAttribute("pad")+")")
@@ -210,7 +213,7 @@ class classTouchDSGroup():
         Returns:
             none
         """
-        if instances['interfaceInst'].getDeviceSeries() in instances['target_deviceInst'].picDevices:
+        if self.json_data["features"]["core"]=="CVD":
             drivenShieldDedicatedPin.setLabel("Select Dedicated Driven Shield Pin")
             drivenShieldDedicatedPin.setDisplayMode("Description")
             for index in range(0, len(ptcPininfo)):
@@ -387,8 +390,6 @@ class classTouchDSGroup():
             timer = tccInstances[indexI].getAttribute("name")
             tcSignals = self.getTCCTimersSignals(ATDF,timer)
             for indexS in range(0, len(tcSignals)):
-                qtouchComponent.addDependency("Drivenshield_"+timer, "PWM", "DS_TCC", False, False)
-                qtouchComponent.setDependencyEnabled("Drivenshield_"+timer, False)
                 if tcSignals[indexS].getAttribute("pad") in ptcYPads:
                     string = tcSignals[indexS].getAttribute("pad")+tcSignals[indexS].getAttribute("function")+"_"+timer+"_"+tcSignals[indexS].getAttribute("group")+tcSignals[indexS].getAttribute("index")
                     timersSharingPTCMUX.append(string)
@@ -411,7 +412,7 @@ class classTouchDSGroup():
             timer = tcInstances[indexI].getAttribute("name")
             tcSignals = self.getTCTimersSignals(ATDF,timer)
             for indexS in range(0, len(tcSignals)):            
-                qtouchComponent.addDependency("Drivenshield_"+timer, "TMR", "Driven_Shield_"+timer, False, False)
+                qtouchComponent.addDependency("Drivenshield_"+timer, "TMR", None, False, False)
                 qtouchComponent.setDependencyEnabled("Drivenshield_"+timer, False)
                 if tcSignals[indexS].getAttribute("pad") in ptcYPads:
                     timersSharingPTC.append(timer)
@@ -420,8 +421,6 @@ class classTouchDSGroup():
             timer = tccInstances[indexI].getAttribute("name")
             tcSignals = self.getTCCTimersSignals(ATDF,timer)
             for indexS in range(0, len(tcSignals)):            
-                qtouchComponent.addDependency("Drivenshield_"+timer, "PWM", "Driven_Shield_"+timer, False, False)
-                qtouchComponent.setDependencyEnabled("Drivenshield_"+timer, False)
                 if tcSignals[indexS].getAttribute("pad") in ptcYPads:
                     timersSharingPTC.append(timer)
 
@@ -509,8 +508,9 @@ class classTouchDSGroup():
         """
         print("Updating shield lumps")
         component= symbol.getComponent()
+        currentVal = int(event['symbol'].getValue())
         enableDrivenShieldAdjacent = False
-        if instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35","PIC32WM_BZ6","PIC32MZW"]:
+        if instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35", "PIC32MZW"]:
             enableDrivenShieldAdjacent = False
         else:
             enableDrivenShieldAdjacent = component.getSymbolByID("DS_ADJACENT_SENSE_LINE_AS_SHIELD").getValue()
@@ -585,8 +585,9 @@ class classTouchDSGroup():
         """
         print("Updating shield - No Lump supported devices")
         component= symbol.getComponent()
+        currentVal = int(event['symbol'].getValue())
         enableDrivenShieldAdjacent = False
-        if instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35","PIC32WM_BZ6","PIC32MZW"]:
+        if instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35", "PIC32MZW"]:
             enableDrivenShieldAdjacent = False
         else:
             enableDrivenShieldAdjacent = component.getSymbolByID("DS_ADJACENT_SENSE_LINE_AS_SHIELD").getValue()

@@ -24,12 +24,15 @@ Microchip or any third party.
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
 import touch_boost_mode_sourcefiles
+from json_loader import json_loader_instance
+
 class classTouchBoostModeGroups():
     def __init__(self):
         self.maxGroups = 4 # defaultValue
-        self.boost_mode_support = set(["SAML10","SAML1xE","SAML11","PIC32CMLE00","PIC32CMLS00","PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00","PIC32CMSG00"])
-        self.boost_mode_remove_support_temporarily = set(["PIC32CZCA80","PIC32CZCA90"])
+        # self.boost_mode_support = set(["SAML10","SAML1xE","SAML11","PIC32CMLE00","PIC32CMLS00","PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"])
+        # self.boost_mode_remove_support_temporarily = set(["PIC32CZCA80","PIC32CZCA90"])
         self.bostModeSourceInstance = touch_boost_mode_sourcefiles.classTouchBoostModeFiles()
+        self.json_data=json_loader_instance.get_data()
 
     def getDepDetails(self):
         return self.bostModeSourceInstance.getDepDetails()
@@ -179,20 +182,22 @@ class classTouchBoostModeGroups():
         self.maxGroups = int(newMax)
 
 
-    def getBoostSupported(self,targetDevice):
+    def getBoostSupported(self):
         """
         Checks if the target device supports boost mode
         Arguments : targetDevice
         Returns : True / False
         """
+
+        return self.json_data["features"]["boost_mode"]
         
-        if(targetDevice in self.boost_mode_support):
-            if(targetDevice in self.boost_mode_remove_support_temporarily):
-                return False
-            else:
-                return True
-        else:
-            return False
+        # if(targetDevice in self.boost_mode_support):
+        #     if(targetDevice in self.boost_mode_remove_support_temporarily):
+        #         return False
+        #     else:
+        #         return True
+        # else:
+        #     return False
 
     def processBoostMode(self,symbol,event,targetDevice,nodeCount):
         """Handler for managing boost mode configuration 
@@ -213,39 +218,37 @@ class classTouchBoostModeGroups():
         surfaceEnabled = localComponent.getSymbolByID("ENABLE_SURFACE").getValue()
         lump_config = localComponent.getSymbolByID("LUMP_CONFIG").getValue()
         
-        if self.getBoostSupported(targetDevice):
+        if self.getBoostSupported():
             if localComponent.getSymbolByID("ENABLE_BOOST").getValue():
                 boostModeEnabled = True
 
-        if(targetDevice in ["SAML10","SAML11","SAML1xE"]):
-            if localComponent.getSymbolByID("ENABLE_BOOST").getValue():
-                localComponent.getSymbolByID("MODULE_ID").setValue("0x0033")
+        if localComponent.getSymbolByID("ENABLE_BOOST").getValue():
+                localComponent.getSymbolByID("MODULE_ID").setValue(self.json_data["acquisition"]["boost_mode"]["module_id"])
                 boostModeEnabled = True
-            else:
-                localComponent.getSymbolByID("MODULE_ID").setValue("0x0027")
-        if(targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
-            if localComponent.getSymbolByID("ENABLE_BOOST").getValue():
-                localComponent.getSymbolByID("MODULE_ID").setValue("0x0049")
-                boostModeEnabled = True
-            else:
-                localComponent.getSymbolByID("MODULE_ID").setValue("0x004a")
-        if(targetDevice in ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
-            if localComponent.getSymbolByID("ENABLE_BOOST").getValue():
-                localComponent.getSymbolByID("MODULE_ID").setValue("0x004f")
-                boostModeEnabled = True
-            else:
-                localComponent.getSymbolByID("MODULE_ID").setValue("0x004e")
-        if(targetDevice in ["PIC32CMGC00","PIC32CMSG00"]):
-            if localComponent.getSymbolByID("ENABLE_BOOST").getValue():
-                localComponent.getSymbolByID("MODULE_ID").setValue("0x0054")
-                boostModeEnabled = True
-            else:
-                localComponent.getSymbolByID("MODULE_ID").setValue("0x0053")
-        
+
+        # if(targetDevice in ["SAML10","SAML11","SAML1xE"]):
+        #     if localComponent.getSymbolByID("ENABLE_BOOST").getValue():
+        #         localComponent.getSymbolByID("MODULE_ID").setValue("0x0033")
+        #         boostModeEnabled = True
+        #     else:
+        #         localComponent.getSymbolByID("MODULE_ID").setValue("0x0027")
+        # if(targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
+        #     if localComponent.getSymbolByID("ENABLE_BOOST").getValue():
+        #         localComponent.getSymbolByID("MODULE_ID").setValue("0x0049")
+        #         boostModeEnabled = True
+        #     else:
+        #         localComponent.getSymbolByID("MODULE_ID").setValue("0x004a")
+        # if(targetDevice in ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
+        #     if localComponent.getSymbolByID("ENABLE_BOOST").getValue():
+        #         localComponent.getSymbolByID("MODULE_ID").setValue("0x004f")
+        #         boostModeEnabled = True
+        #     else:
+        #         localComponent.getSymbolByID("MODULE_ID").setValue("0x004e")
+
         if not boostModeEnabled:
             return
 
-        if (self.getBoostSupported(targetDevice)):
+        if (self.getBoostSupported()):
             # maximum number of boost mode group is limited to 32 in the script
             touch4pMaxGroup = 32
 

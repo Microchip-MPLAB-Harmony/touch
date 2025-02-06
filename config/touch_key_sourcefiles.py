@@ -23,7 +23,11 @@ Microchip or any third party.
 """
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
+
+from json_loader import json_loader_instance
 class classTouchKeySourceFiles():
+    def __init__(self):
+        self.json_data=json_loader_instance.get_data()
 
     def setKeysFiles(self,configName, qtouchComponent, targetDevice,useTrustZone):
         """
@@ -55,24 +59,28 @@ class classTouchKeySourceFiles():
         touchLibraryFile.setDestPath("/touch/lib/")
         touchLibraryFile.setEnabled(True)
 
-        if (targetDevice in set(["SAME51","SAME53","SAME54","SAMD51","PIC32CXBZ31","WBZ35","PIC32WM_BZ6"])):
-            touchLibraryFile.setSourcePath("/src/libraries/qtm_touch_key_cm4_0x0002.X.a")
-            touchLibraryFile.setOutputName("qtm_touch_key_cm4_0x0002.X.a")
-        elif (targetDevice in set(["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMGC00","PIC32CMSG00"])):
-            touchLibraryFile.setSourcePath("/src/libraries/qtm_touch_key_cm23_0x0002.X.a")
-            touchLibraryFile.setOutputName("qtm_touch_key_cm23_0x0002.X.a")
-        elif (targetDevice in ["PIC32MZW", "PIC32MZDA"]):
-            touchLibraryFile.setSourcePath("/src/libraries/qtm_touch_key_pic32mz_0x0002.X.a")
-            touchLibraryFile.setOutputName("qtm_touch_key_pic32mz_0x0002.X.a")
-        elif (targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
-            touchLibraryFile.setSourcePath("/src/libraries/qtm_touch_key_pic32cz_0x0002.X.a")
-            touchLibraryFile.setOutputName("qtm_touch_key_pic32cz_0x0002.X.a")
-        elif (targetDevice in ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
-            touchLibraryFile.setSourcePath("/src/libraries/qtm_touch_key_cm33_0x0002.X.a")
-            touchLibraryFile.setOutputName("qtm_touch_key_cm33_0x0002.X.a")
-        else:
-            touchLibraryFile.setSourcePath("/src/libraries/qtm_touch_key_cm0p_0x0002.X.a")
-            touchLibraryFile.setOutputName("qtm_touch_key_cm0p_0x0002.X.a")
+        architechture=json_loader_instance.get_architecture()
+        touchLibraryFile.setSourcePath("/src/libraries/qtm_touch_key_"+architechture+"_0x0002.X.a")
+        touchLibraryFile.setOutputName("qtm_touch_key_"+architechture+"_0x0002.X.a")
+
+        # if (targetDevice in set(["SAME51","SAME53","SAME54","SAMD51","PIC32CXBZ31","WBZ35"])):
+        #     touchLibraryFile.setSourcePath("/src/libraries/qtm_touch_key_cm4_0x0002.X.a")
+        #     touchLibraryFile.setOutputName("qtm_touch_key_cm4_0x0002.X.a")
+        # elif (targetDevice in set(["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00"])):
+        #     touchLibraryFile.setSourcePath("/src/libraries/qtm_touch_key_cm23_0x0002.X.a")
+        #     touchLibraryFile.setOutputName("qtm_touch_key_cm23_0x0002.X.a")
+        # elif (targetDevice in ["PIC32MZW", "PIC32MZDA"]):
+        #     touchLibraryFile.setSourcePath("/src/libraries/qtm_touch_key_pic32mz_0x0002.X.a")
+        #     touchLibraryFile.setOutputName("qtm_touch_key_pic32mz_0x0002.X.a")
+        # elif (targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
+        #     touchLibraryFile.setSourcePath("/src/libraries/qtm_touch_key_pic32cz_0x0002.X.a")
+        #     touchLibraryFile.setOutputName("qtm_touch_key_pic32cz_0x0002.X.a")
+        # elif (targetDevice in ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
+        #     touchLibraryFile.setSourcePath("/src/libraries/qtm_touch_key_cm33_0x0002.X.a")
+        #     touchLibraryFile.setOutputName("qtm_touch_key_cm33_0x0002.X.a")
+        # else:
+        #     touchLibraryFile.setSourcePath("/src/libraries/qtm_touch_key_cm0p_0x0002.X.a")
+        #     touchLibraryFile.setOutputName("qtm_touch_key_cm0p_0x0002.X.a")
         return touchLibraryFile
 
     def setTouchHeaderFile(self,configName, qtouchComponent):

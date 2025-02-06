@@ -21,13 +21,12 @@ implied, are granted under any patent or other intellectual property rights of
 Microchip or any third party.
 """
 import sys
-
 try:
 	#try required for pydoc server
 	sys.path.append(Module.getPath() + "config")
 except (NameError):
 	pass
-
+from json_loader import json_loader_instance
 import touch_target_device
 import touch_interface
 import touch_node_groups
@@ -58,6 +57,7 @@ import touchTrustZone
 
 qtouchInst = {}
 
+
 def onAttachmentConnected(source,target):
 	"""Handler for peripheral assignment to touch module.
 	MHC reference : <http://confluence.microchip.com/display/MH/MHC+Python+Interface#MHCPythonInterface-voidonAttachmentConnected(source,target)>
@@ -87,7 +87,7 @@ def onAttachmentConnected(source,target):
 				Database.setSymbolValue(remoteID, "RTC_MODE0_INTENSET_CMP0_ENABLE", True)
 				Database.setSymbolValue(remoteID, "RTC_MODULE_SELECTION", 0)
 				Database.setSymbolValue(remoteID, "RTC_MODE0_TIMER_COMPARE",long(1))
-			if (targetDevice in ["SAME51","SAME53","SAME54","SAMD51"]):
+			if (json_loader_instance.get_data()["features"]["core"]=="ADC"):
 				Database.setSymbolValue(remoteID, "RTC_MODE0_PRESCALER", 1)
 				Database.setSymbolValue(remoteID, "RTC_MODE0_TIMER_COMPARE0",long(1))
 		else:
@@ -152,8 +152,8 @@ def finalizeComponent(qtouchComponent):
 	"""
 	autoComponentIDTable = []
 	autoConnectTable = []
-	if qtouchInst['interfaceInst'].getDeviceSeries() in qtouchInst['target_deviceInst'].picDevices:
-		if qtouchInst['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35","PIC32WM_BZ6"]:
+	if json_loader_instance.get_data()["features"]["core"]=="CVD":
+		if json_loader_instance.get_architecture()=="cm4":
 			autoComponentIDTable[:] = ["adchs","rtc"]
 			autoConnectTable[:] = [["lib_qtouch", "Touch_timer","rtc","RTC_TMR"],
 									["lib_qtouch", "Acq_Engine","adchs","ADCHS_ADC"]]
@@ -162,7 +162,7 @@ def finalizeComponent(qtouchComponent):
 			autoConnectTable[:] = [["lib_qtouch", "Touch_timer","tmr4","TMR4_TMR"],
 									["lib_qtouch", "Acq_Engine","adchs","ADCHS_ADC"]]
 	else:
-		if qtouchInst['interfaceInst'].getDeviceSeries() in qtouchInst['target_deviceInst'].adc_based_acquisition:
+		if json_loader_instance.get_data()["features"]["core"]=="ADC":
 			autoComponentIDTable[:] = ["rtc","ptc","adc0"]
 			autoConnectTable[:] = [["lib_qtouch", "Touch_timer","rtc", "RTC_TMR"], ["lib_qtouch", "lib_acquire", "ptc", "ptc_Acq_Engine"], ["ptc", "lib_acquire", "adc0", "ADC0_ADC"]]
 		else:
@@ -265,8 +265,6 @@ def applyDrivenShieldTimers(symbol, event):
 		toAdd.append(timer.lower())
 		if "TCC" not in timer:
 			toConnect.append(["lib_qtouch", "Drivenshield_"+timer,timer.lower(), timer+"_TMR"])
-		else:
-			toConnect.append(["lib_qtouch", "Drivenshield_"+timer,timer.lower(), timer+"_PWM"])
 		component.setDependencyEnabled("Drivenshield_"+timer, True)
 	
 	if len(toRemove)!=0:
@@ -282,19 +280,31 @@ def applyDrivenShieldTimers(symbol, event):
 
 def libChangeBoostMode(symbol,event):
 	localcomponent = symbol.getComponent()
-	touchAcqLibraryFile = localcomponent.getSymbolByID("TOUCH_ACQ_LIB")
-	touchAcqHeaderFile = localcomponent.getSymbolByID("TOUCH_ACQ_HEADER")
+	library_list=json_loader_instance.get_data()["acquisition"]["file_names"]["library_files"]
+	header_list=json_loader_instance.get_data()["acquisition"]["file_names"]["header_files"]
 	touchAcq4pLibraryFile = localcomponent.getSymbolByID("TOUCH_ACQ_4P_LIB")
 	touchAcq4pHeaderFile = localcomponent.getSymbolByID("TOUCH_ACQ_4P_HEADER")
 
 	if(event["value"] == False):
-		touchAcqLibraryFile.setEnabled(True)
-		touchAcqHeaderFile.setEnabled(True)
+		# touchAcqLibraryFile.setEnabled(True)
+		# touchAcqHeaderFile.setEnabled(True)
+		for i in range(len(library_list)):
+			touchAcqLibraryFile = localcomponent.getSymbolByID("TOUCH_ACQ_LIB"+str(i+1))
+			touchAcqLibraryFile.setEnabled(True)
+		for i in range(len(header_list)):
+			touchAcqHeaderFile = localcomponent.getSymbolByID("TOUCH_ACQ_HEADER"+str(i+1))
+			touchAcqHeaderFile.setEnabled(True)
 		touchAcq4pLibraryFile.setEnabled(False)
 		touchAcq4pHeaderFile.setEnabled(False)
 	else:
-		touchAcqLibraryFile.setEnabled(False)
-		touchAcqHeaderFile.setEnabled(False)
+		# touchAcqLibraryFile.setEnabled(False)
+		# touchAcqHeaderFile.setEnabled(False)
+		for i in range(len(library_list)):
+			touchAcqLibraryFile = localcomponent.getSymbolByID("TOUCH_ACQ_LIB"+str(i+1))
+			touchAcqLibraryFile.setEnabled(False)
+		for i in range(len(header_list)):
+			touchAcqHeaderFile = localcomponent.getSymbolByID("TOUCH_ACQ_HEADER"+str(i+1))
+			touchAcqHeaderFile.setEnabled(False)
 		touchAcq4pLibraryFile.setEnabled(True)
 		touchAcq4pHeaderFile.setEnabled(True)
 
@@ -326,8 +336,8 @@ def securefileUpdate(symbol,event):
 	print "securefileUpdate"
 	component = symbol.getComponent()
 	device = component.getSymbolByID("DEVICE_NAME").getValue()
-	if qtouchInst['target_deviceInst'].isSecureDevice(device):
-		nvicid = qtouchInst['target_deviceInst'].getSecureNVICID(device)
+	if qtouchInst['target_deviceInst'].isSecureDevice():
+		nvicid = qtouchInst['target_deviceInst'].getSecureNVICID()
 		secureStatus = ""
 		if (Database.getSymbolValue("core", "PTC_IS_NON_SECURE") == False):
 			secureStatus = "SECURE"
@@ -349,8 +359,8 @@ def processLump(symbol, event, targetDevice):
 	localComponent = symbol.getComponent()
 	touchSenseTechnology = localComponent.getSymbolByID("SENSE_TECHNOLOGY").getSelectedKey()
 	totalChannelCount = localComponent.getSymbolByID("TOUCH_CHAN_ENABLE_CNT").getValue()
-	lumpSupported = qtouchInst['target_deviceInst'].getLumpSupported(targetDevice)
-	shieldMode = qtouchInst['target_deviceInst'].getShieldMode(targetDevice)
+	lumpSupported = qtouchInst['target_deviceInst'].getLumpSupported()
+	shieldMode = qtouchInst['target_deviceInst'].getShieldMode()
 	surfaceEnabled = localComponent.getSymbolByID("ENABLE_SURFACE").getValue()
 
 	if(totalChannelCount == 0):
@@ -379,7 +389,7 @@ def updateParameters(symbol, event):
 	localComponent = symbol.getComponent()
 	targetDevice = localComponent.getSymbolByID("DEVICE_NAME").getValue()
 
-	if qtouchInst['boostModeInst'].getBoostSupported(targetDevice):
+	if qtouchInst['boostModeInst'].getBoostSupported():
 		boostModeEnabled = localComponent.getSymbolByID("ENABLE_BOOST").getValue()
 		if boostModeEnabled:
 			nodeCount = localComponent.getSymbolByID("TOUCH_CHAN_ENABLE_CNT").getValue()
@@ -389,7 +399,7 @@ def updateParameters(symbol, event):
 def updatePinsSettings(symbol,event):
 	localComponent = symbol.getComponent()
 	targetDevice = localComponent.getSymbolByID("DEVICE_NAME").getValue()
-	if targetDevice not in ["PIC32MZW", "PIC32MZDA", "PIC32CXBZ31", "WBZ35","PIC32WM_BZ6"]:
+	if json_loader_instance.get_data()["features"]["core"]!="CVD":
 		touchPads = qtouchInst['padsInfo'].getTouchPads()
 		touchModule = qtouchInst['padsInfo'].getTouchModule()
 		#print touchModule
@@ -461,9 +471,9 @@ def onGenerate(symbol,event):
 	nodeCount = localComponent.getSymbolByID("TOUCH_CHAN_ENABLE_CNT").getValue()
 	sercom = localComponent.getSymbolByID("TOUCH_SERCOM_INSTANCE").getValue()
 	timer = localComponent.getSymbolByID("TOUCH_TIMER_INSTANCE").getValue()
-	if targetDevice in ["PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00","PIC32CMSG00"]:
-		ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")
-		localComponent.getSymbolByID("GET_PTC_CLOCK_FREQUENCY").setValue(ptcClockFrequencyDefault)
+	# if targetDevice in ["PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]:
+	ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")
+	localComponent.getSymbolByID("GET_PTC_CLOCK_FREQUENCY").setValue(ptcClockFrequencyDefault)
 
 	if int(nodeCount) == 0:
 		Log.writeErrorMessage("Touch Error: Number of sensor is ZERO")
@@ -484,21 +494,21 @@ def onGenerate(symbol,event):
 	getXYinfo(localComponent)
 
 	if touchSenseTechnology == "MutualCap":
-		if qtouchInst['boostModeInst'].getBoostSupported(targetDevice):
+		if qtouchInst['boostModeInst'].getBoostSupported():
 			print("Entering ProcessBoostmode")
 			qtouchInst['boostModeInst'].processBoostMode(symbol,event,targetDevice,nodeCount)
 			# qtouchprocessBoostMode(symbol,event,targetDevice,nodeCount)
 
-	if targetDevice not in qtouchInst['target_deviceInst'].non_lump_support:
+	if json_loader_instance.get_data()["features"]["lump_mode"]:
 		# lump is processed if in "ProcessBoostmode" if boost mode is enabled
-		if qtouchInst['boostModeInst'].getBoostSupported(targetDevice):
+		if qtouchInst['boostModeInst'].getBoostSupported():
 			if not localComponent.getSymbolByID("ENABLE_BOOST").getValue():
 				print("Entering ProcessLump boost mode = False")
 				processLump(symbol,event,targetDevice)
 		else:
 			print("Entering ProcessLump No boost mode")
 			processLump(symbol,event,targetDevice)
-	elif qtouchInst['target_deviceInst'].getShieldMode(targetDevice) == "hardware":
+	elif qtouchInst['target_deviceInst'].getShieldMode() == "hardware":
 		localComponent = symbol.getComponent()
 		touchSenseTechnology = localComponent.getSymbolByID("SENSE_TECHNOLOGY").getSelectedKey()
 		totalChannelCount = localComponent.getSymbolByID("TOUCH_CHAN_ENABLE_CNT").getValue()
@@ -522,22 +532,17 @@ def enablePM(symbol,event):
 		Returns:
 			:none
 		"""
-		localComponent = symbol.getComponent()
-		targetDevice = localComponent.getSymbolByID("DEVICE_NAME").getValue()
-		lowPowerKey = localComponent.getSymbolByID("LOW_POWER_KEYS").getValue()
+		# localComponent = symbol.getComponent()
+		# targetDevice = localComponent.getSymbolByID("DEVICE_NAME").getValue()
+		# lowPowerKey = localComponent.getSymbolByID("LOW_POWER_KEYS").getValue()
 		pmComponentID = ["pm"]
 		supcComponentID = ["supc"]
-		if(targetDevice in ["PIC32CZCA80","PIC32CZCA90"]):
+		if json_loader_instance.get_data()["features"]["low_power_event"]:
 			Database.activateComponents(supcComponentID)
-		if(lowPowerKey != ""):
-			Database.activateComponents(pmComponentID)
-			if (targetDevice in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]):
-				Database.activateComponents(supcComponentID)
+			Database.activateComponents(supcComponentID)
 		else:
-			if(targetDevice in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]):
-				Database.deactivateComponents(supcComponentID)
-			if(targetDevice not in ["SAML10","SAML11","PIC32CMLE00","PIC32CMLS00"]):
-				Database.deactivateComponents(pmComponentID)
+			Database.deactivateComponents(supcComponentID)
+			Database.deactivateComponents(pmComponentID)
 
 def onPTCClock(symbol,event):
 	"""Handler for setGCLKconfig gclkID frequency
@@ -624,17 +629,18 @@ def instantiateComponent(qtouchComponent):
 	Returns:
 		:none
 	"""
+	print("Version_data",json_loader_instance.get_version_data()["csd"])
+	print("architecture",json_loader_instance.get_architecture())
 	print ("Entering initialise")
-	# import sys;sys.path.append(r'C:\Users\i70418\Downloads\eclipse-java-2020-12-R-win32-x86_64\eclipse\plugins\org.python.pydev.core_8.2.0.202102211157\pysrc')
-	# import pydevd;pydevd.settrace()
-	showConfiguration = False
+	# return
+	showConfiguration = True
 	configName = Variables.get("__CONFIGURATION_NAME")
 
 	touchConfigurator = qtouchComponent.createMenuSymbol("TOUCH_CONFIGURATOR", None)
 	touchConfigurator.setLabel("Select Project Graph -> Plugins > Touch Configuration")
 	
 	touchMenu = qtouchComponent.createMenuSymbol("TOUCH_MENU", None)
-	touchMenu.setLabel("Touch Configuration")
+	touchMenu.setLabel("Touch Configuration Test")
 	touchMenu.setVisible(showConfiguration)
 
 	touchInfoMenu = qtouchComponent.createMenuSymbol("TOUCH_INFO", None)
@@ -698,7 +704,7 @@ def instantiateComponent(qtouchComponent):
 
 	print(interfaceInst.getDeviceSeries())
 
-	if device in ["PIC32MZDA","PIC32MZW"]:
+	if json_loader_instance.get_architecture()=="pic32mz":
 		customInst = touch_custom_pic32mzda.classTouchCustAddition()
 		customInst.initCustomMenu(ATDF,device, qtouchComponent, None, Database)
 		qtouchInst['customInst'] = customInst
@@ -707,22 +713,22 @@ def instantiateComponent(qtouchComponent):
 	target_deviceInst.initTargetParameters(qtouchComponent,touchMenu,device,Database)
 	qtouchInst['target_deviceInst'] = target_deviceInst
 
-	if device not in target_deviceInst.picDevices:
+	if json_loader_instance.get_data()["features"]["core"]!="CVD":
 	# Interrupts
 		ptcInterruptConfig = qtouchComponent.createIntegerSymbol("DEF_PTC_INTERRUPT_PRIORITY", touchMenu)
 		ptcInterruptConfig.setLabel("PTC Interrupt Priority")
-		ptcInterruptMin = target_deviceInst.getMinInterrupt(device)
-		ptcInterruptConfig.setMin(ptcInterruptMin)
-		ptcInterruptMax = target_deviceInst.getMaxInterrupt(device)
-		ptcInterruptConfig.setMax(ptcInterruptMax)
-		ptcInterruptDefault= target_deviceInst.getDefaultInterrupt(device)
-		ptcInterruptConfig.setDefaultValue(ptcInterruptDefault)
+		# ptcInterruptMin = target_deviceInst.getMinInterrupt(device)
+		ptcInterruptConfig.setMin(json_loader_instance.get_data()["acquisition"]["interrupt_priority"]["min"])
+		# ptcInterruptMax = target_deviceInst.getMaxInterrupt(device)
+		ptcInterruptConfig.setMax(json_loader_instance.get_data()["acquisition"]["interrupt_priority"]["max"])
+		# ptcInterruptDefault= target_deviceInst.getDefaultInterrupt(device)
+		ptcInterruptConfig.setDefaultValue(json_loader_instance.get_data()["acquisition"]["interrupt_priority"]["default"])
 		ptcInterruptConfig.setDescription("Defines the interrupt priority for the PTC. Set low priority to PTC interrupt for applications having interrupt time constraints.")
 	
 	node_groupInst = touch_node_groups.classTouchNodeGroups()
 	qtouchInst['node_groupInst'] = node_groupInst
 	# Lump support
-	lumpSupported = target_deviceInst.getLumpSupported(device)
+	lumpSupported = target_deviceInst.getLumpSupported()
 	if (lumpSupported == True):
 		lumpSymbol = qtouchComponent.createStringSymbol("LUMP_CONFIG", touchMenu)
 		lumpSymbol.setLabel("Lump Configuration")
@@ -748,15 +754,16 @@ def instantiateComponent(qtouchComponent):
 	# Channel Limits
 	touchChannelSelf = target_deviceInst.getSelfCount()
 	touchChannelMutual = target_deviceInst.getMutualCount()
+	print("Mutual_count",touchChannelMutual)
 	# clocksetup 
 	target_deviceInst.setGCLKconfig(qtouchComponent,ATDF,touchInfoMenu,device)
 	# CSD support
 	csdMode = target_deviceInst.getCSDMode(device)
 	csdDefaultValue = target_deviceInst.getDefaultCSDValue(device)
 	# Rsel support
-	rSelMode = target_deviceInst.getRSelMode(device)
+	# rSelMode = target_deviceInst.getRSelMode(device)
 	# Driven shield support
-	shieldMode = target_deviceInst.getShieldMode(device)
+	shieldMode = target_deviceInst.getShieldMode()
 	autoTuneCSDDisableGetValue = target_deviceInst.getAutotuneCSDDisabled(device)
 	autoTuneCSDDisable = qtouchComponent.createBooleanSymbol("DISABLE_AUTOTUNE_CSD", touchMenu)
 	autoTuneCSDDisable.setLabel("Disable AutotuneCSD feature")
@@ -765,11 +772,11 @@ def instantiateComponent(qtouchComponent):
 	else:
 		autoTuneCSDDisable.setValue(False)
 
-	if device in ["PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00","PIC32CMSG00"]:
-		ptcClockFrequency = qtouchComponent.createIntegerSymbol("GET_PTC_CLOCK_FREQUENCY", touchMenu)
-		ptcClockFrequency.setLabel("Get PTC Clock Frequency")
-		ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")
-		ptcClockFrequency.setDefaultValue(ptcClockFrequencyDefault)
+	# if device in ["PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]:
+	ptcClockFrequency = qtouchComponent.createIntegerSymbol("GET_PTC_CLOCK_FREQUENCY", touchMenu)
+	ptcClockFrequency.setLabel("Get PTC Clock Frequency")
+	ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")
+	ptcClockFrequency.setDefaultValue(ptcClockFrequencyDefault)
 	
 	if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
 		useTrustZone = True
@@ -779,7 +786,7 @@ def instantiateComponent(qtouchComponent):
 	else:
 		useTrustZone = False
 
-	if device not in target_deviceInst.picDevices:
+	if json_loader_instance.get_data()["features"]["core"]!="CVD":
 		padsInfo = touch_pad.classTouchPads()
 		padsInfo.collectPadInfo(ATDF)
 		qtouchInst['padsInfo'] = padsInfo
@@ -829,8 +836,7 @@ def instantiateComponent(qtouchComponent):
 		touchChannelMutual,
 		ptcPinValues,
 		csdMode,
-		csdDefaultValue,
-		rSelMode)
+		csdDefaultValue)
 	qtouchInst['node_groupInst'] = node_groupInst
 	symbol,func,depen = node_groupInst.getDepDetails()
 	qtouchSetDependencies(symbol, func, depen)
@@ -902,7 +908,7 @@ def instantiateComponent(qtouchComponent):
 	# ----Boost Mode----
 	# Boost mode support
 	boostModeInst = touch_boost_mode_groups.classTouchBoostModeGroups()
-	boostMode = boostModeInst.getBoostSupported(device)
+	boostMode = boostModeInst.getBoostSupported()
 	if(boostMode == True):
 		boostModeInst.initBoostModeGroup(
 			configName, 
@@ -1001,8 +1007,8 @@ def instantiateComponent(qtouchComponent):
 	ptcSystemDefFile = touchFiles.getSystemDefFileSymbol()
 
 	# Trustzone - secure device updates
-	if target_deviceInst.isSecureDevice(device):
-		nvicid = target_deviceInst.getSecureNVICID(device)
+	if target_deviceInst.isSecureDevice():
+		nvicid = target_deviceInst.getSecureNVICID()
 		secureStatus = ""
 		if (Database.getSymbolValue("core", "PTC_IS_NON_SECURE") == False):
 			secureStatus = "SECURE"
@@ -1018,7 +1024,7 @@ def instantiateComponent(qtouchComponent):
 		qtouchSetDependencies(symbol, func, depen)
 
 	# qtouchComponent.addPlugin("../touch/plugin/ptc_manager_c21.jar")
-	qtouchComponent.addPlugin("../harmony-services/plugins/generic_plugin.jar", "TOUCH_CONFIGURATION_BETA", {"plugin_name": "Touch Configuration", "main_html_path": "touch/plugin/index.html"})
+	qtouchComponent.addPlugin("../harmony-services/plugins/generic_plugin.jar", "TOUCH_CONFIGURATION_BETA", {"plugin_name": "Touch Configuration", "main_html_path": "touch/plugin/index.html","debug":"true","local_server":"true"})
 
 	print("Dependency details")
 	symbol,func,depen = target_deviceInst.getDepDetails()
@@ -1032,5 +1038,12 @@ def instantiateComponent(qtouchComponent):
 	loadedTimers = qtouchComponent.createStringSymbol("LOADED_TIMERS", touchInfoMenu)
 	loadedTimers.setLabel("Loaded Timers")
 	loadedTimers.setDefaultValue("")
-	touchScriptEvent.setReadOnly(True)
+	loadedTimers.setReadOnly(True)
 	loadedTimers.setVisible(True)
+
+	helperState = qtouchComponent.createStringSymbol("HELPER_STATE", touchInfoMenu)
+	helperState.setLabel("Touch Helper State")
+	helperState.setDefaultValue("")
+	helperState.setReadOnly(True)
+	helperState.setVisible(True)
+

@@ -23,11 +23,14 @@ Microchip or any third party.
 """
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
+from json_loader import json_loader_instance
+
 class classTouchAcquisitionGroups():
     def __init__(self):
         self.tchSelfPinSelection = []
         self.tchMutXPinSelection = []
         self.tchMutYPinSelection = []
+        self.json_data=json_loader_instance.get_data()
         # defaultValue
         self.maxGroups = 4
 
@@ -101,44 +104,53 @@ class classTouchAcquisitionGroups():
         global touchSenseTechnology
         if int(groupNumber) == 1:
             touchSenseTechnology = qtouchComponent.createKeyValueSetSymbol("SENSE_TECHNOLOGY", parentMenu)
-            totalChannelCountSelf = qtouchComponent.createIntegerSymbol("MAX_CHANNEL_COUNT_SELF",parentMenu)
-            totalChannelCountMutl = qtouchComponent.createIntegerSymbol("MAX_CHANNEL_COUNT_MUTL",parentMenu)
+            if(self.json_data["features"]["self"]==True):
+                totalChannelCountSelf = qtouchComponent.createIntegerSymbol("MAX_CHANNEL_COUNT_SELF",parentMenu)
+            if(self.json_data["features"]["mutual"]==True):
+                totalChannelCountMutl = qtouchComponent.createIntegerSymbol("MAX_CHANNEL_COUNT_MUTL",parentMenu)
             touchAutoTuneMode = qtouchComponent.createKeyValueSetSymbol("TUNE_MODE_SELECTED", parentMenu)
             touchScanRate = qtouchComponent.createIntegerSymbol("DEF_TOUCH_MEASUREMENT_PERIOD_MS", parentMenu)
             touchAcquisitonFrequency = qtouchComponent.createKeyValueSetSymbol("DEF_SEL_FREQ_INIT", parentMenu)
-            if (targetDevice in ["PIC32CZCA80", "PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00","PIC32CMSG00"]):
+            if (self.json_data["features"]["wake_up"]==True):
                 ptcWakeupTime = qtouchComponent.createIntegerSymbol("DEF_PTC_WAKEUP_EXP", parentMenu)
         else:
             touchSenseTechnology = qtouchComponent.createKeyValueSetSymbol("SENSE_TECHNOLOGY_"+str(groupNumber), parentMenu)
-            totalChannelCountSelf = qtouchComponent.createIntegerSymbol("MAX_CHANNEL_COUNT_SELF_"+str(groupNumber),parentMenu)
-            totalChannelCountMutl = qtouchComponent.createIntegerSymbol("MAX_CHANNEL_COUNT_MUTL_"+str(groupNumber),parentMenu)
+            if(self.json_data["features"]["self"]==True):
+                totalChannelCountSelf = qtouchComponent.createIntegerSymbol("MAX_CHANNEL_COUNT_SELF_"+str(groupNumber),parentMenu)
+            if(self.json_data["features"]["mutual"]==True):
+                totalChannelCountMutl = qtouchComponent.createIntegerSymbol("MAX_CHANNEL_COUNT_MUTL_"+str(groupNumber),parentMenu)
             touchAutoTuneMode = qtouchComponent.createKeyValueSetSymbol("TUNE_MODE_SELECTED_"+str(groupNumber),parentMenu)
             touchScanRate = qtouchComponent.createIntegerSymbol("DEF_TOUCH_MEASUREMENT_PERIOD_MS_"+str(groupNumber),parentMenu)
             touchAcquisitonFrequency = qtouchComponent.createKeyValueSetSymbol("DEF_SEL_FREQ_INIT_"+str(groupNumber),parentMenu)
 
         #parameter assignment    
         #touchSenseTechnology
-        if(shieldMode != "none"):
-            self.setTouchTechnologyDrivenShieldValues(touchSenseTechnology)
-        else:
-            self.setTouchTechnologyValues(touchSenseTechnology)
+        # if(shieldMode != "none"):
+        #     self.setTouchTechnologyDrivenShieldValues(touchSenseTechnology)
+        # else:
+        self.setTouchTechnologyValues(touchSenseTechnology)
         #totalChannelCountSelf
-        totalChannelCountSelf.setVisible(True)
-        totalChannelCountSelf.setDefaultValue(int(selfChannels))
-        totalChannelCountSelf.setLabel("Self-Capacitance Channels")
-        #totalChannelCountMutl
-        totalChannelCountMutl.setVisible(True)
-        totalChannelCountMutl.setDefaultValue(int(mutualChannels))
-        totalChannelCountMutl.setLabel("Mutual Capacitance Channels")
+        if(self.json_data["features"]["self"]==True):
+            totalChannelCountSelf.setVisible(True)
+            totalChannelCountSelf.setDefaultValue(int(selfChannels))
+            totalChannelCountSelf.setLabel("Self-Capacitance Channels")
+            #totalChannelCountMutl
+        if(self.json_data["features"]["mutual"]==True):
+            totalChannelCountMutl.setVisible(True)
+            totalChannelCountMutl.setDefaultValue(int(mutualChannels))
+            totalChannelCountMutl.setLabel("Mutual Capacitance Channels")
         # Select Tuning mode
         self.setAutoTuneModeValues(touchAutoTuneMode,csdMode, targetDevice)
         #Scan Rate (ms)    
-        self.setScanRateValues(touchScanRate)    
+        self.setScanRateValues(touchScanRate)
         #Acquisition Frequency
         self.setAcquisitionFrequencyValues(touchAcquisitonFrequency)
-        if (targetDevice in ["PIC32CZCA80", "PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00","PIC32CMSG00"]):
-            #PTC Wake up component   
-            self.setPtcWakeupTime(ptcWakeupTime) 
+        # if (targetDevice in ["PIC32CZCA80", "PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
+        #     #PTC Wake up component   
+        #     self.setPtcWakeupTime(ptcWakeupTime) 
+
+        if(self.json_data["features"]["wake_up"]==True):
+            self.setPtcWakeupTime(ptcWakeupTime)
 
     #updater
     def updateAcquisitionGroups(self,symbol,event):
@@ -170,29 +182,40 @@ class classTouchAcquisitionGroups():
             :none
         """
         touchSenseTechnology.setLabel("Sensor Technology")
-        touchSenseTechnology.addKey("SelfCap", "NODE_SELFCAP", "Self Capacitance Sensing")
-        touchSenseTechnology.addKey("MutualCap", "NODE_MUTUAL", "Mutual Capacitance Sensing")
-        touchSenseTechnology.setDefaultValue(0)
-        touchSenseTechnology.setOutputMode("Value")
-        touchSenseTechnology.setDisplayMode("Description")
-        touchSenseTechnology.setDescription("Selects the sensor technology - Selfcap: Requires one pin per channel; Simple sensor design; Recommended for small number of sensors (less than 12). Mutualcap: Requires one X pin and one Y pin per channel; Can realize X x Y number of sensors in a matrix form; Recommended for large number of sensors (more than 12)")
 
-    def setTouchTechnologyDrivenShieldValues(self,touchSenseTechnology):
-        """Populate the touchSenseTechnology symbol for DrivenShield
-        Arguments:
-            :param :touchSenseTechnology :symbol to be changed
-            :csdMode : see target_device.getCSDMode(targetDevice)
-        Returns:
-            :none
-        """
-        touchSenseTechnology.setLabel("Sensor Technology")
-        touchSenseTechnology.addKey("SelfCap", "NODE_SELFCAP", "Self Capacitance Sensing")
-        touchSenseTechnology.addKey("MutualCap", "NODE_MUTUAL", "Mutual Capacitance Sensing")
-        touchSenseTechnology.addKey("SelfCapShield", "NODE_SELFCAP_SHIELD", "Self-Capacitance Sensing With Driven Shield")
+        if(self.json_data["features"]["self"]==True):
+            touchSenseTechnology.addKey("SelfCap", "NODE_SELFCAP", "Self Capacitance Sensing")
+        if(self.json_data["features"]["mutual"]==True):
+            touchSenseTechnology.addKey("MutualCap", "NODE_MUTUAL", "Mutual Capacitance Sensing")
+        if(self.json_data["features"]["self"]==True and self.json_data["features"]["hardware_shield"]==True):
+            touchSenseTechnology.addKey("SelfCapShield", "NODE_SELFCAP_SHIELD", "Self-Capacitance Sensing With Driven Shield")
         touchSenseTechnology.setDefaultValue(0)
         touchSenseTechnology.setOutputMode("Value")
         touchSenseTechnology.setDisplayMode("Description")
-        touchSenseTechnology.setDescription("Selects the sensor technology - Selfcap: Requires one pin per channel; Simple sensor design; Recommended for small number of sensors (less than 12). SelfCapShield: Requires one pin per channel with Driven shield options; Simple sensor design; Recommended for small number of sensors (less than 12). Mutualcap: Requires one X pin and one Y pin per channel; Can realize X x Y number of sensors in a matrix form; Recommended for large number of sensors (more than 12)")
+        if(self.json_data["features"]["self"]==True and self.json_data["features"]["hardware_shield"]==True):
+            touchSenseTechnology.setDescription("Selects the sensor technology - Selfcap: Requires one pin per channel; Simple sensor design; Recommended for small number of sensors (less than 12). SelfCapShield: Requires one pin per channel with Driven shield options; Simple sensor design; Recommended for small number of sensors (less than 12). Mutualcap: Requires one X pin and one Y pin per channel; Can realize X x Y number of sensors in a matrix form; Recommended for large number of sensors (more than 12)")
+        else:
+            touchSenseTechnology.setDescription("Selects the sensor technology - Selfcap: Requires one pin per channel; Simple sensor design; Recommended for small number of sensors (less than 12). Mutualcap: Requires one X pin and one Y pin per channel; Can realize X x Y number of sensors in a matrix form; Recommended for large number of sensors (more than 12)")
+
+    # def setTouchTechnologyDrivenShieldValues(self,touchSenseTechnology):
+    #     """Populate the touchSenseTechnology symbol for DrivenShield
+    #     Arguments:
+    #         :param :touchSenseTechnology :symbol to be changed
+    #         :csdMode : see target_device.getCSDMode(targetDevice)
+    #     Returns:
+    #         :none
+    #     """
+    #     touchSenseTechnology.setLabel("Sensor Technology")
+    #     if(self.json_data["self"]==True):
+    #         touchSenseTechnology.addKey("SelfCap", "NODE_SELFCAP", "Self Capacitance Sensing")
+    #     if(self.json_data["mutual"]==True):
+    #         touchSenseTechnology.addKey("MutualCap", "NODE_MUTUAL", "Mutual Capacitance Sensing")
+    #     if(self.json_data["self"]==True):
+    #         touchSenseTechnology.addKey("SelfCapShield", "NODE_SELFCAP_SHIELD", "Self-Capacitance Sensing With Driven Shield")
+    #     touchSenseTechnology.setDefaultValue(0)
+    #     touchSenseTechnology.setOutputMode("Value")
+    #     touchSenseTechnology.setDisplayMode("Description")
+    #     touchSenseTechnology.setDescription("Selects the sensor technology - Selfcap: Requires one pin per channel; Simple sensor design; Recommended for small number of sensors (less than 12). SelfCapShield: Requires one pin per channel with Driven shield options; Simple sensor design; Recommended for small number of sensors (less than 12). Mutualcap: Requires one X pin and one Y pin per channel; Can realize X x Y number of sensors in a matrix form; Recommended for large number of sensors (more than 12)")
 
     def setAutoTuneModeValues(self,touchAutoTuneMode,csdMode, targetDevice):
         """Populate touchAutoTuneMode symbol
@@ -203,13 +226,23 @@ class classTouchAcquisitionGroups():
             :none
         """
         touchAutoTuneMode.setLabel("Select the Required Tuning Mode")
-        touchAutoTuneMode.addKey("Manual Tuning","CAL_AUTO_TUNE_NONE","Manual tuning is done based on the values defined by user")
-        if (targetDevice not in ["PIC32CZCA80", "PIC32CZCA90","PIC32CMGC00","PIC32CMSG00","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
-            if(csdMode != "NoCSD"):
+        tune_array = self.json_data["acquisition"]["tune_mode"]["component_values"]
+        # Loop through the array and format the string
+        for value in tune_array:
+            # touchAutoTuneMode.addKey(obj["name"],obj["value"],obj["desc"])
+            if value == "CAL_AUTO_TUNE_NONE":
+                touchAutoTuneMode.addKey("Manual Tuning","CAL_AUTO_TUNE_NONE","Manual tuning is done based on the values defined by user")
+            elif value=="CAL_AUTO_TUNE_CSD":
                 touchAutoTuneMode.addKey("Tune CSD","CAL_AUTO_TUNE_CSD","Charge Share Delay - CSD is tuned")
-            else:
+            elif value=="CAL_AUTO_TUNE_PRSC":
                 touchAutoTuneMode.addKey("Tune Prescaler value","CAL_AUTO_TUNE_PRSC","Clock Prescaler is tuned")
-        touchAutoTuneMode.setDefaultValue(0)
+        
+        # if (targetDevice not in ["PIC32CZCA80", "PIC32CZCA90"]):
+        #     if(csdMode != "NoCSD"):
+        #         touchAutoTuneMode.addKey("Tune CSD","CAL_AUTO_TUNE_CSD","Charge Share Delay - CSD is tuned")
+        #     else:
+        #         touchAutoTuneMode.addKey("Tune Prescaler value","CAL_AUTO_TUNE_PRSC","Clock Prescaler is tuned")
+        touchAutoTuneMode.setDefaultValue(self.json_data["acquisition"]["tune_mode"]["default_index"])
         touchAutoTuneMode.setOutputMode("Value")
         touchAutoTuneMode.setDisplayMode("Key")
         touchAutoTuneMode.setDescription("Sets the sensor calibration mode - CAL_AUTO_TUNE_NONE: Manual user setting of Prescaler, Charge share delay & Series resistor. AUTO_TUNE_CSD: QTouch library will use the configured prescaler and series resistor value and adjusts the CSD to ensure full charging.")
@@ -222,9 +255,9 @@ class classTouchAcquisitionGroups():
             :none
         """
         touchScanRate.setLabel("Scan Rate (ms)")
-        touchScanRate.setDefaultValue(20)
-        touchScanRate.setMin(1)
-        touchScanRate.setMax(255)
+        touchScanRate.setDefaultValue(self.json_data["acquisition"]["measurement_period"]["default"])
+        touchScanRate.setMin(self.json_data["acquisition"]["measurement_period"]["min"])
+        touchScanRate.setMax(self.json_data["acquisition"]["measurement_period"]["max"])
         touchScanRate.setDescription("Defines the timer scan rate in milliseconds to initiate periodic touch measurement on all enabled touch sensors.")
 
     def setPtcWakeupTime(self,ptcWakeupTime):
@@ -235,9 +268,9 @@ class classTouchAcquisitionGroups():
             :none
         """
         ptcWakeupTime.setLabel("PTC Wake up Time Exponent")
-        ptcWakeupTime.setDefaultValue(4)
-        ptcWakeupTime.setMin(4)
-        ptcWakeupTime.setMax(15)
+        ptcWakeupTime.setDefaultValue(self.json_data["acquisition"]["wake_up"]["default"])
+        ptcWakeupTime.setMin(self.json_data["acquisition"]["wake_up"]["min"])
+        ptcWakeupTime.setMax(self.json_data["acquisition"]["wake_up"]["max"])
         ptcWakeupTime.setDescription("The wake-up exponent is passed from the application to the library. The initial value of wakeup exponent that is passed from application is determined on the minimum prescaler and this is further updated automatically inside the library based on changes in Node prescaler values.")
 
     def setAcquisitionFrequencyValues(self,touchAcquisitonFrequency):

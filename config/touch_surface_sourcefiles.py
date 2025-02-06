@@ -23,7 +23,12 @@ Microchip or any third party.
 """
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
+
+from json_loader import json_loader_instance
 class classTouchSurfaceFiles():
+    def __init__(self):
+        self.json_data=json_loader_instance.get_data()
+
     def setSurfaceFiles(self,configName, qtouchComponent, targetDevice,useTrustZone):
         """
         Generates as List of source files required for Surface support
@@ -55,24 +60,28 @@ class classTouchSurfaceFiles():
         surface1TLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SURFACE1T_LIB", None)
         surface1TLibraryFile.setDestPath("/touch/lib/")
         surface1TLibraryFile.setEnabled(False)
-        if (targetDevice in ["SAME51","SAME53","SAME54","SAMD51","PIC32CXBZ31","WBZ35","PIC32WM_BZ6"]):
-            surface1TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_cm4_0x0021.X.a")
-            surface1TLibraryFile.setOutputName("qtm_surface_cs_cm4_0x0021.X.a")
-        elif(targetDevice in ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMGC00","PIC32CMSG00"]):
-            surface1TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_cm23_0x0021.X.a")
-            surface1TLibraryFile.setOutputName("qtm_surface_cs_cm23_0x0021.X.a")
-        elif (targetDevice in ["PIC32MZW", "PIC32MZDA"]):
-            surface1TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_pic32mz_0x0021.X.a")
-            surface1TLibraryFile.setOutputName("qtm_surface_cs_pic32mz_0x0021.X.a")
-        elif (targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
-            surface1TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_pic32cz_0x0021.X.a")
-            surface1TLibraryFile.setOutputName("qtm_surface_cs_pic32cz_0x0021.X.a")
-        elif(targetDevice in ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
-            surface1TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_cm33_0x0021.X.a")
-            surface1TLibraryFile.setOutputName("qtm_surface_cs_cm33_0x0021.X.a")
-        else:
-            surface1TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_cm0p_0x0021.X.a")
-            surface1TLibraryFile.setOutputName("qtm_surface_cs_cm0p_0x0021.X.a")
+
+        architechture=json_loader_instance.get_architecture()
+        surface1TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_"+architechture+"_0x0021.X.a")
+        surface1TLibraryFile.setOutputName("qtm_surface_cs_"+architechture+"_0x0021.X.a")
+        # if (targetDevice in ["SAME51","SAME53","SAME54","SAMD51","PIC32CXBZ31","WBZ35"]):
+        #     surface1TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_cm4_0x0021.X.a")
+        #     surface1TLibraryFile.setOutputName("qtm_surface_cs_cm4_0x0021.X.a")
+        # elif(targetDevice in ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00"]):
+        #     surface1TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_cm23_0x0021.X.a")
+        #     surface1TLibraryFile.setOutputName("qtm_surface_cs_cm23_0x0021.X.a")
+        # elif (targetDevice in ["PIC32MZW", "PIC32MZDA"]):
+        #     surface1TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_pic32mz_0x0021.X.a")
+        #     surface1TLibraryFile.setOutputName("qtm_surface_cs_pic32mz_0x0021.X.a")
+        # elif (targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
+        #     surface1TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_pic32cz_0x0021.X.a")
+        #     surface1TLibraryFile.setOutputName("qtm_surface_cs_pic32cz_0x0021.X.a")
+        # elif(targetDevice in ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
+        #     surface1TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_cm33_0x0021.X.a")
+        #     surface1TLibraryFile.setOutputName("qtm_surface_cs_cm33_0x0021.X.a")
+        # else:
+        #     surface1TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_cm0p_0x0021.X.a")
+        #     surface1TLibraryFile.setOutputName("qtm_surface_cs_cm0p_0x0021.X.a")
         return surface1TLibraryFile
 
 
@@ -88,24 +97,27 @@ class classTouchSurfaceFiles():
         surface2TLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SURFACE2T_LIB", None)
         surface2TLibraryFile.setDestPath("/touch/lib/")
         surface2TLibraryFile.setEnabled(False)
-        if (targetDevice in ["SAME51","SAME53","SAME54","SAMD51","PIC32CXBZ31","WBZ35","PIC32WM_BZ6"]):
-            surface2TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_2t_cm4_0x0025.X.a")
-            surface2TLibraryFile.setOutputName("qtm_surface_cs_2t_cm4_0x0025.X.a")
-        elif(targetDevice in ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMGC00","PIC32CMSG00"]):
-            surface2TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_2t_cm23_0x0025.X.a")
-            surface2TLibraryFile.setOutputName("qtm_surface_cs_2t_cm23_0x0025.X.a")
-        elif (targetDevice in ["PIC32MZW", "PIC32MZDA"]):
-            surface2TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_2t_pic32mz_0x0025.X.a")
-            surface2TLibraryFile.setOutputName("qtm_surface_cs_2t_pic32mz_0x0025.X.a")
-        elif (targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
-            surface2TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_2t_pic32cz_0x0025.X.a")
-            surface2TLibraryFile.setOutputName("qtm_surface_cs_2t_pic32cz_0x0025.X.a")
-        elif(targetDevice in ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
-            surface2TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_2t_cm33_0x0025.X.a")
-            surface2TLibraryFile.setOutputName("qtm_surface_cs_2t_cm33_0x0025.X.a")
-        else:
-            surface2TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_2t_cm0p_0x0025.X.a")
-            surface2TLibraryFile.setOutputName("qtm_surface_cs_2t_cm0p_0x0025.X.a")
+        architechture=json_loader_instance.get_architecture()
+        surface2TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_2t_"+architechture+"_0x0025.X.a")
+        surface2TLibraryFile.setOutputName("qtm_surface_cs_2t_"+architechture+"_0x0025.X.a")
+        # if (targetDevice in ["SAME51","SAME53","SAME54","SAMD51","PIC32CXBZ31","WBZ35"]):
+        #     surface2TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_2t_cm4_0x0025.X.a")
+        #     surface2TLibraryFile.setOutputName("qtm_surface_cs_2t_cm4_0x0025.X.a")
+        # elif(targetDevice in ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00"]):
+        #     surface2TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_2t_cm23_0x0025.X.a")
+        #     surface2TLibraryFile.setOutputName("qtm_surface_cs_2t_cm23_0x0025.X.a")
+        # elif (targetDevice in ["PIC32MZW", "PIC32MZDA"]):
+        #     surface2TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_2t_pic32mz_0x0025.X.a")
+        #     surface2TLibraryFile.setOutputName("qtm_surface_cs_2t_pic32mz_0x0025.X.a")
+        # elif (targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
+        #     surface2TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_2t_pic32cz_0x0025.X.a")
+        #     surface2TLibraryFile.setOutputName("qtm_surface_cs_2t_pic32cz_0x0025.X.a")
+        # elif(targetDevice in ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
+        #     surface2TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_2t_cm33_0x0025.X.a")
+        #     surface2TLibraryFile.setOutputName("qtm_surface_cs_2t_cm33_0x0025.X.a")
+        # else:
+        #     surface2TLibraryFile.setSourcePath("/src/libraries/qtm_surface_cs_2t_cm0p_0x0025.X.a")
+        #     surface2TLibraryFile.setOutputName("qtm_surface_cs_2t_cm0p_0x0025.X.a")
         return surface2TLibraryFile
 
     def setSurface1THeaderFile(self,configName, qtouchComponent):

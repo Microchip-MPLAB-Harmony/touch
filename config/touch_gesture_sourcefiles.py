@@ -23,7 +23,11 @@ Microchip or any third party.
 """
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
+
+from json_loader import json_loader_instance
 class classTouchGestureSourceFiles():
+    def __init__(self):
+        self.json_data=json_loader_instance.get_data()
 
     def setGestureFiles(self,configName, qtouchComponent, targetDevice,useTrustZone):
         """
@@ -51,48 +55,57 @@ class classTouchGestureSourceFiles():
         Returns:
             file symbol
         """
-        if (targetDevice in ["SAME51","SAME53","SAME54","SAMD51","PIC32CXBZ31","WBZ35","PIC32WM_BZ6"]):
-            # Library File
-            gestureLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_GESTURE_LIB", None)
-            gestureLibraryFile.setSourcePath("/src/libraries/qtm_surface_gestures_cm4_0x0023.X.a")
-            gestureLibraryFile.setOutputName("qtm_surface_gestures_cm4_0x0023.X.a")
-            gestureLibraryFile.setDestPath("/touch/lib/")
-            gestureLibraryFile.setEnabled(False)
-        elif (targetDevice in ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMGC00","PIC32CMSG00"]):
-            # Library File
-            gestureLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_GESTURE_LIB", None)
-            gestureLibraryFile.setSourcePath("/src/libraries/qtm_surface_gestures_cm23_0x0023.X.a")
-            gestureLibraryFile.setOutputName("qtm_surface_gestures_cm23_0x0023.X.a")
-            gestureLibraryFile.setDestPath("/touch/lib/")
-            gestureLibraryFile.setEnabled(False)
-        elif (targetDevice in ["PIC32MZW", "PIC32MZDA"]):
-            # Library File
-            gestureLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_GESTURE_LIB", None)
-            gestureLibraryFile.setSourcePath("/src/libraries/qtm_surface_gestures_pic32mz_0x0023.X.a")
-            gestureLibraryFile.setOutputName("qtm_surface_gestures_pic32mz_0x0023.X.a")
-            gestureLibraryFile.setDestPath("/touch/lib/")
-            gestureLibraryFile.setEnabled(False)
-        elif (targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
-            # Library File
-            gestureLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_GESTURE_LIB", None)
-            gestureLibraryFile.setSourcePath("/src/libraries/qtm_surface_gestures_pic32cz_0x0023.X.a")
-            gestureLibraryFile.setOutputName("qtm_surface_gestures_pic32cz_0x0023.X.a")
-            gestureLibraryFile.setDestPath("/touch/lib/")
-            gestureLibraryFile.setEnabled(False)
-        elif (targetDevice in ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
-            # Library File
-            gestureLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_GESTURE_LIB", None)
-            gestureLibraryFile.setSourcePath("/src/libraries/qtm_surface_gestures_cm33_0x0023.X.a")
-            gestureLibraryFile.setOutputName("qtm_surface_gestures_cm33_0x0023.X.a")
-            gestureLibraryFile.setDestPath("/touch/lib/")
-            gestureLibraryFile.setEnabled(False)
-        else:
-            # Library File
-            gestureLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_GESTURE_LIB", None)
-            gestureLibraryFile.setSourcePath("/src/libraries/qtm_surface_gestures_cm0p_0x0023.X.a")
-            gestureLibraryFile.setOutputName("qtm_surface_gestures_cm0p_0x0023.X.a")
-            gestureLibraryFile.setDestPath("/touch/lib/")
-            gestureLibraryFile.setEnabled(False)
+
+        gestureLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_GESTURE_LIB", None)
+        gestureLibraryFile.setDestPath("/touch/lib/")
+        gestureLibraryFile.setEnabled(False)
+
+        architechture=json_loader_instance.get_architecture()
+        gestureLibraryFile.setSourcePath("/src/libraries/qtm_surface_gestures_"+architechture+"_0x0023.X.a")
+        gestureLibraryFile.setOutputName("qtm_surface_gestures_"+architechture+"_0x0023.X.a")
+
+        # if (targetDevice in ["SAME51","SAME53","SAME54","SAMD51","PIC32CXBZ31","WBZ35"]):
+        #     # Library File
+        #     gestureLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_GESTURE_LIB", None)
+        #     gestureLibraryFile.setSourcePath("/src/libraries/qtm_surface_gestures_cm4_0x0023.X.a")
+        #     gestureLibraryFile.setOutputName("qtm_surface_gestures_cm4_0x0023.X.a")
+        #     gestureLibraryFile.setDestPath("/touch/lib/")
+        #     gestureLibraryFile.setEnabled(False)
+        # elif (targetDevice in ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00"]):
+        #     # Library File
+        #     gestureLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_GESTURE_LIB", None)
+        #     gestureLibraryFile.setSourcePath("/src/libraries/qtm_surface_gestures_cm23_0x0023.X.a")
+        #     gestureLibraryFile.setOutputName("qtm_surface_gestures_cm23_0x0023.X.a")
+        #     gestureLibraryFile.setDestPath("/touch/lib/")
+        #     gestureLibraryFile.setEnabled(False)
+        # elif (targetDevice in ["PIC32MZW", "PIC32MZDA"]):
+        #     # Library File
+        #     gestureLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_GESTURE_LIB", None)
+        #     gestureLibraryFile.setSourcePath("/src/libraries/qtm_surface_gestures_pic32mz_0x0023.X.a")
+        #     gestureLibraryFile.setOutputName("qtm_surface_gestures_pic32mz_0x0023.X.a")
+        #     gestureLibraryFile.setDestPath("/touch/lib/")
+        #     gestureLibraryFile.setEnabled(False)
+        # elif (targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
+        #     # Library File
+        #     gestureLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_GESTURE_LIB", None)
+        #     gestureLibraryFile.setSourcePath("/src/libraries/qtm_surface_gestures_pic32cz_0x0023.X.a")
+        #     gestureLibraryFile.setOutputName("qtm_surface_gestures_pic32cz_0x0023.X.a")
+        #     gestureLibraryFile.setDestPath("/touch/lib/")
+        #     gestureLibraryFile.setEnabled(False)
+        # elif (targetDevice in ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
+        #     # Library File
+        #     gestureLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_GESTURE_LIB", None)
+        #     gestureLibraryFile.setSourcePath("/src/libraries/qtm_surface_gestures_cm33_0x0023.X.a")
+        #     gestureLibraryFile.setOutputName("qtm_surface_gestures_cm33_0x0023.X.a")
+        #     gestureLibraryFile.setDestPath("/touch/lib/")
+        #     gestureLibraryFile.setEnabled(False)
+        # else:
+        #     # Library File
+        #     gestureLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_GESTURE_LIB", None)
+        #     gestureLibraryFile.setSourcePath("/src/libraries/qtm_surface_gestures_cm0p_0x0023.X.a")
+        #     gestureLibraryFile.setOutputName("qtm_surface_gestures_cm0p_0x0023.X.a")
+        #     gestureLibraryFile.setDestPath("/touch/lib/")
+        #     gestureLibraryFile.setEnabled(False)
         return gestureLibraryFile
 
     def setGestureHeaderFile(self,configName, qtouchComponent):

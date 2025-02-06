@@ -70,8 +70,8 @@ class classTouchInterface():
         Returns:
             self.deviceSeries (string)
         """
-        releaseVersion = "v3.17.0"
-        releaseYear    = "2025"
+        releaseVersion = "v3.16.0"
+        releaseYear    = "2024"
 
         devicesNode = ATDF.getNode("/avr-tools-device-file/devices")
         deviceVariant = ATDF.getNode("/avr-tools-device-file/variants").getChildren()
@@ -94,11 +94,7 @@ class classTouchInterface():
         getDeviceSeries.setVisible(True)
 
         getDeviceVariant = qtouchComponent.createStringSymbol("DEVICE_VARIANT", touchMenu)
-        #getDeviceVariant.setDefaultValue(deviceVariant[0].getAttribute("package"))
-        if deviceVariant[0].getAttribute("pinout") is not None:
-            getDeviceVariant.setDefaultValue(deviceVariant[0].getAttribute("pinout"))
-        elif deviceVariant[0].getAttribute("package") is not None:
-            getDeviceVariant.setDefaultValue(deviceVariant[0].getAttribute("package"))      
+        getDeviceVariant.setDefaultValue(deviceVariant[0].getAttribute("pinout"))
         getDeviceVariant.setVisible(False)
 
         getDeviceName = qtouchComponent.createStringSymbol("DEVICE_NAME_SPECIFIC", touchMenu)
