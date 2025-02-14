@@ -168,7 +168,7 @@ class classTouchNodeGroups():
                 touchSeriesResistor = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_SERIES_RESISTOR" + str(channelID), touchChEnable)
                 self.addDepSymbol(touchSeriesResistor, "updateParameter", ["DEF_NOD_SERIES_RESISTOR" + str(channelID)])
                 #PTC Clock Prescaler
-                if("ptc_prescaler" in self.json_data["node"]):
+                if(self.json_data["features"]["ptc_prescaler"]==True):
                     touchPTCPrescaler = qtouchComponent.createKeyValueSetSymbol("DEF_NOD_PTC_PRESCALER" + str(channelID), touchChEnable)
                     self.addDepSymbol(touchPTCPrescaler, "updateParameter", ["DEF_NOD_PTC_PRESCALER" + str(channelID)])
                 #Analog Gain
@@ -197,7 +197,7 @@ class classTouchNodeGroups():
                 #Series Resistor
                 touchSeriesResistor = qtouchComponent.createKeyValueSetSymbol("GROUP_"+str(groupNumber)+"_DEF_NOD_SERIES_RESISTOR" + str(channelID), vars()[dynamicTouchChEnable])
                 #PTC Clock Prescaler
-                if("ptc_prescaler" in self.json_data["node"]):
+                if(self.json_data["features"]["ptc_prescaler"]==True):
                     touchPTCPrescaler = qtouchComponent.createKeyValueSetSymbol("GROUP_"+str(groupNumber)+"_DEF_NOD_PTC_PRESCALER" + str(channelID), vars()[dynamicTouchChEnable])
                 #Analog Gain
                 touchAnalogGain = qtouchComponent.createKeyValueSetSymbol("GROUP_"+str(groupNumber)+"_DEF_NOD_GAIN_ANA" + str(channelID), vars()[dynamicTouchChEnable])
@@ -225,7 +225,7 @@ class classTouchNodeGroups():
             #     self.setSeriesRValuesL22(touchSeriesResistor)
             # else:
             self.setSeriesRValues(touchSeriesResistor)
-            if(self.json_data["features"]["ptc_prescaler"]):
+            if(self.json_data["features"]["ptc_prescaler"]==True):
                 self.setPTCPresscalerValues(touchPTCPrescaler)
             self.setAnalogGainValues(touchAnalogGain)
             self.setDigitalFilterGainValues(touchDigitalFilterGain)

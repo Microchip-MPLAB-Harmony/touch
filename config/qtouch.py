@@ -865,7 +865,8 @@ def instantiateComponent(qtouchComponent):
 	scroller_groupInst = touch_scroller_groups.classTouchScrollerGroups()
 	scroller_fileInst = touch_scroller_sourcefiles.classTouchScrollerSourceFiles()
 	projectFilesList = projectFilesList + scroller_fileInst.setScrollerFiles(configName, qtouchComponent, device,useTrustZone)
-	scroller_groupInst.initScrollerGroup(
+	if json_loader_instance.get_data()["features"]["scroller"]==True:
+		scroller_groupInst.initScrollerGroup(
 		qtouchComponent,
 		touchMenu,
 		minGroupCount,
@@ -878,7 +879,8 @@ def instantiateComponent(qtouchComponent):
 	freqhop_groupInst = touch_freq_hop_groups.classTouchFreqGroups()
 	freqhop_fileInst = touch_freq_hop_sourcefiles.classTouchFreqSourceFiles()
 	projectFilesList = projectFilesList + freqhop_fileInst.setFreqHopFiles(configName, qtouchComponent, device,useTrustZone)
-	freqhop_groupInst.initFreqHopGroup(
+	if json_loader_instance.get_data()["features"]["frequency_hop"]==True:
+		freqhop_groupInst.initFreqHopGroup(
 		qtouchComponent,
 		touchMenu,
 		minGroupCount,
@@ -924,7 +926,8 @@ def instantiateComponent(qtouchComponent):
 
 	# ----Surface----
 	surfaceInst = touch_surface.classTouchSurface(node_groupInst)
-	surfaceInst.initSurfaceInstance(
+	if json_loader_instance.get_data()["features"]["surface"]==True:
+		surfaceInst.initSurfaceInstance(
 		qtouchComponent, 
 		touchMenu, 
 		device, 
@@ -937,7 +940,8 @@ def instantiateComponent(qtouchComponent):
 
 	# ----Gesture----
 	gestureInst = touch_gesture.classTouchGesture()
-	gestureInst.initGestureInstance(qtouchComponent, touchMenu)
+	if json_loader_instance.get_data()["features"]["gesture"] == True:
+		gestureInst.initGestureInstance(qtouchComponent, touchMenu)
 	gesture_fileInst = touch_gesture_sourcefiles.classTouchGestureSourceFiles()
 	projectFilesList = projectFilesList + gesture_fileInst.setGestureFiles(configName, qtouchComponent, device,useTrustZone)
 	qtouchInst['gestureInst'] = gestureInst

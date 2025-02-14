@@ -49,7 +49,7 @@ class classTouchLP():
         Arguments : targetDevice
         Returns : True / False
         """
-        return self.json_data["features"]["low_power_event"]
+        return self.json_data["features"]["low_power_software"]
         # if( targetDevice in self.LOW_POWER_EVENTS_SUPPORTED_DEVICES):
         #     return True
         # else:
