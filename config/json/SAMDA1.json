@@ -1,0 +1,270 @@
+{
+    "features": {
+        "core": "PTC",
+        "module_id": "0x0024",
+        "self": true,
+        "mutual": true,
+        "scroller": true,
+        "surface": true,
+        "gesture": true,
+        "frequency_hop": true,
+        "frequency_hop_auto": true,
+        "low_power_software": true,
+        "low_power_event": true,
+        "xy_multiplex":false,
+        "lump_mode": true,
+        "boost_mode": false,
+        "wake_up":false,
+        "trust_zone":false
+    },
+    "acquisition": {
+        "tune_mode": {
+            "component_values":["CAL_AUTO_TUNE_NONE","CAL_AUTO_TUNE_PRSC"],
+            "default_index":0
+        },
+        "measurement_period": {
+            "min": 1,
+            "max": 255,
+            "default": 20
+        },
+        "interrupt_priority":{
+            "min": 0,
+            "max": 3,
+            "default": 3
+        },
+        "event_system_low_power":{
+        "component_values": [
+                4,
+                8,
+                16,
+                32,
+                64,
+                128,
+                256,
+                512,
+                1024
+            ],
+        "default_index": 4
+    },
+        "file_names": {
+            "library_files": ["qtm_acq_samd21_0x0024.X.a"],
+            "header_files": ["qtm_acq_samd21_0x0024_api.h"]
+        }
+    },
+    "node": {
+        "analog_gain": {
+            "component_values": [
+                1,
+                2,
+                4,
+                8,
+                16
+            ],
+            "default_index": 0
+        },
+        "digital_gain": {
+            "component_values": [
+                1,
+                2,
+                4,
+                8,
+                16
+            ],
+            "default_index": 0
+        },
+        "filter_level": {
+            "component_values": [
+                1,
+                2,
+                4,
+                8,
+                16,
+                32,
+                64
+            ],
+            "default_index": 4
+        },
+            "versions":{
+                "manual":1.3, 
+                "auto":1.3
+            }
+    },
+    "driven_shield":{
+        "core": {
+            "clock": {
+               "tc": "GCLK2",
+               "tcc": "GCLK2"
+            },
+            "dma": {
+               "DMAC_ENABLE_CH_0": "true",
+               "DMAC_BTCTRL_SRCINC_CH_0": "Fixed Address Mode",
+               "DMAC_BTCTRL_DSTINC_CH_0": "Fixed Address Mode",
+               "DMAC_BTCTRL_BEATSIZE_CH_0": "regex:^8-bit.*$",
+               "DMAC_CHCTRLA_RUNSTDBY_CH_0": "true",
+               "DMAC_ENABLE_EVSYS_OUT_0": "true",
+               "DMAC_BTCTRL_EVSYS_EVOSEL_0": "Event strobe when block transfer complete",
+               "DMAC_ENABLE_EVSYS_IN_0": "true",
+               "DMAC_CHCTRLB_EVACT_0": "Transfer and periodic transfer trigger"
+            }
+         },
+         "timer": {
+            "tc": {
+               "TC_CTRLA_MODE": "Counter in 8-bit mode",
+               "TC_OPERATION_MODE": "Compare",
+               "TC_COMPARE_CTRLA_WAVEGEN": "NPWM",
+               "TC_CTRLA_RUNSTDBY": "true",
+               "TC_COMPARE_EVCTRL_EV": "true",
+               "TC_COMPARE_EVCTRL_TCINV": "false"
+            },
+            "tcc": {
+               "TCC_0_WEXCTRL_DTIEN": "false",
+               "TCC_1_WEXCTRL_DTIEN": "false",
+               "TCC_2_WEXCTRL_DTIEN": "false",
+               "TCC_3_WEXCTRL_DTIEN": "false"
+            }
+         },
+         "evsys": {
+            "module": {
+               "EVSYS_CHANNEL_0": "true",
+               "EVSYS_CHANNEL_1": "true",
+               "EVSYS_CHANNEL_1_GENERATOR": "DMAC_CH_0"
+            },
+            "user": {
+               "EVSYS_USER_0": "CHANNEL_0"
+            },
+            "timer": {
+               "evsys_user_tmr": "CHANNEL_0"
+            }
+         }
+      },
+    "clock_config":{
+        "settings": [ 
+            {
+                "symbol":"CONFIG_CLOCK_DFLL_OPMODE", 
+                "value":"0", 
+                "componentId":"core", 
+                 "name":"DFLL Closed mode"
+            },{
+                "symbol":"CONFIG_CLOCK_DFLL_COARSE", 
+                "value":"10", 
+                "componentId":"core", 
+                 "name":"DFLL Course value"
+            },{
+                "symbol":"CONFIG_CLOCK_DFLL_FINE", 
+                "value":"10", 
+                "componentId":"core", 
+                 "name":"DFLL Fine value"
+            },{
+                "symbol":"CONFIG_CLOCK_DFLL_MUL", 
+                "value":"1500", 
+                "componentId":"core", 
+                 "name":"DFLL Mul value"
+            },{
+                "symbol":"GCLK_INST_NUM1", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"Select GCLK1"
+            },{
+                "symbol":"GCLK_INST_NUM2", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"Select GCLK2"
+            },{
+                "symbol":"GCLK_1_SRC", 
+                "value":"2", 
+                "componentId":"core", 
+                 "name":"GCLK1 Source"
+            },{
+                "symbol":"GCLK_2_SRC", 
+                "value":"6", 
+                "componentId":"core", 
+                 "name":"GCLK2 Source"
+            },{
+                "symbol":"CONFIG_CLOCK_OSC8M_ENABLE", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"Enable OSC8M"
+            },{
+                "symbol":"CONFIG_CLOCK_OSC8M_PRES", 
+                "value":"1", 
+                "componentId":"core", 
+                 "name":"OSC8M Prescaler - 2"
+            },{
+                "symbol":"GCLK_1_RUNSTDBY", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"GCLK1 Runinstandby"
+            },{
+                "symbol":"GCLK_2_RUNSTDBY", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"GCLK2 Runinstandby"
+            },{
+                "symbol":"CONFIG_CLOCK_OSC8M_ONDEMAND", 
+                "value":"1", 
+                "componentId":"core", 
+                 "name":"on demand - on request"
+            },{
+                "symbol":"RTC_MODE0_PRESCALER", 
+                "value":"1", 
+                "componentId":"rtc", 
+                 "name":"RTC pre-scaled by 2"
+            },{
+                "symbol":"NVM_RWS", 
+                "value":"3", 
+                "componentId":"nvmctrl", 
+                 "name":"Wait state - 4"
+            },{
+                "symbol":"GCLK_2_DIV", 
+                "value":"1", 
+                "componentId":"core", 
+                 "name":"GCLK2 Div"
+            },{
+                "symbol":"GCLK_1_DIV", 
+                "value":"16", 
+                "componentId":"core", 
+                 "name":"GCLK1 Div"
+            },{
+                "symbol":"CONFIG_CLOCK_OSC8M_RUNSTDY", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"OSC8M Runinstandby"
+            },{
+                "symbol":"GCLK_ID_2_GENSEL", 
+                "value":"1", 
+                "componentId":"core", 
+                 "name":"RTC Clock GCLK1"
+            },{
+                "symbol":"GCLK_ID_7_CHEN", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"EVSYS clock"
+            },{
+                "symbol":"GCLK_ID_7_GENSEL", 
+                "value":"2", 
+                "componentId":"core", 
+                 "name":"EVSYS set GCLK - 2"
+            },{
+                "symbol":"EVSYS_CHANNEL_0", 
+                "value":"True", 
+                "componentId":"evsys", 
+                 "name":"EVSYS 0"
+            },{
+                "symbol":"RTC_MODE0_EVCTRL_PEREO0_ENABLE", 
+                "value":"True", 
+                "componentId":"rtc", 
+                 "name":"EVSYS 0"
+            },{
+                "symbol":"EVSYS_CHANNEL_ONDEMAND", 
+                "value":"True", 
+                "componentId":"evsys", 
+                 "name":"EVSYS 0"
+            }
+        ],
+        "descriptions":[
+                "{Oscillator| Prescaler Divisor | Frequency},{OSC8M| 2 | 4MHz},{DFLL48M| 1 | 48MHz(GCLK3, open loop, multi factor 1500)}",
+                "{Generic clock(Peripherals)| Source | Frequency},{GCLK0(CPU)|DFLL48M| 48MHz},{GCLK1(Timer)|OSCULP32K|2.048KHz},{GCLK2(PTC,UART)| OSC8M| 4MHz}",
+                "{Wait states},{NVM states| 2}"
+        ]
+    }
+}

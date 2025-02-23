@@ -35,24 +35,26 @@ def check_mandatory(json_data, mandatory_properties, errors):
     check_properties(json_data, mandatory_properties, "", errors)
 
 def check_conditional(data, condition_key, condition_value, required_key, required_subkeys, errors):
+    # Helper function to get nested value
+    def get_nested_value(d, keys):
+        for key in keys:
+            if isinstance(d, dict) and key in d:
+                d = d[key]
+            else:
+                return None
+        return d
+
     # Extract the condition value
-    condition_value_actual = data.get(condition_key[0], {}).get(condition_key[1])
+    condition_value_actual = get_nested_value(data, condition_key)
 
     # Check if the condition is met
     if condition_value_actual == condition_value:
         # Split the required key to handle nested properties
-        required_key_parts = required_key.split('.')
-        required_data = data
-        for part in required_key_parts:
-            if part in required_data:
-                required_data = required_data[part]
-            else:
-                required_data = None
-                break
+        required_data = get_nested_value(data, required_key.split('.'))
 
         # Check if the required key is present
         if required_data is None:
-            errors.append(f"Error: '{required_key}' property must be provided when '{condition_key[1]}' is '{condition_value}'.")
+            errors.append(f"Error: '{required_key}' property must be provided when '{'.'.join(condition_key)}' is '{condition_value}'.")
         else:
             # Check if the required subkeys are present
             for subkey in required_subkeys:
@@ -60,17 +62,10 @@ def check_conditional(data, condition_key, condition_value, required_key, requir
                     errors.append(f"Error: '{required_key}' property must include '{subkey}' value.")
     else:
         # Check if the required key should not be present
-        required_key_parts = required_key.split('.')
-        required_data = data
-        for part in required_key_parts:
-            if part in required_data:
-                required_data = required_data[part]
-            else:
-                required_data = None
-                break
+        required_data = get_nested_value(data, required_key.split('.'))
 
         if required_data is not None:
-            errors.append(f"Error: '{required_key}' property should not be provided when '{condition_key[1]}' is not '{condition_value}'.")
+            errors.append(f"Error: '{required_key}' property should not be provided when '{'.'.join(condition_key)}' is not '{condition_value}'.")
 
 
 #function for autotune_list
@@ -84,19 +79,17 @@ def validate_json(data):
     errors = []
 
     mandatory_properties = [
-        {"features":["core","module_id","self","mutual","scroller","surface","gesture","frequency_hop","frequency_hop_auto","low_power_software","low_power_event","lump_mode","boost_mode"]},
+        {"features":["core","module_id","self","mutual","hardware_shield","timer_shield","csd","scroller","surface","gesture","frequency_hop","frequency_hop_auto","low_power_software","low_power_event","lump_mode","boost_mode","wake_up","ptc_prescaler","trust_zone"]},
 
-        {"acquisition":[{"tune_mode":["component_values","default_index"]},{"measurement_period":["min","max","default"]},{"interrupt_priority":["min","max","default"]}]},
+        {"acquisition":[{"tune_mode":["component_values","default_index"]},{"measurement_period":["min","max","default"]}]},
         
-        {"node":[{"series_resistor":["component_values","default_index"]},
+        {"node":[
         {"analog_gain":["component_values","default_index"]},
         {"digital_gain":["component_values","default_index"]},
         {"filter_level":["component_values","default_index"]},
-        {"ptc_clock_range":["min","max"]},{"versions":["manual","auto"]}]},
+        {"versions":["manual","auto"]}]},
 
         {"clock_config":["settings","descriptions"]},
-
-        {"version_data":["hardware_shield","timer_shield","csd","ptc_clock_range","series_resistor"]}
     ]
 
     # Validate JSON
@@ -104,19 +97,20 @@ def validate_json(data):
 
     # List of conditions and required properties
     conditions = [
-        (('features', 'ptc_precaler'), True, 'node.ptc_prescaler', ["component_values","default_index"]),
-        (('version_data','csd'),True,'node.csd',['min','max','default']),
+        (('features', 'ptc_prescaler'), True, 'node.ptc_prescaler', ["component_values","default_index"]),
+        (('features','csd'),True,'node.csd',['min','max','default']),
+        (('features','core'),"PTC",'acquisition.interrupt_priority',['min','max','default']),
         (('features','low_power_event'),True,'acquisition.event_system_low_power',["component_values","default_index"]),
         (('features','wake_up'),True,'acquisition.wake_up',['min','max','default']),
-        (('version_data','timer_shield'),True,"driven_shield",[]),
+        # (('version_data','timer_shield'),True,"driven_shield",[]),
         (('features','trust_zone'),True,"acquisition.trust_zone.nvicid",[]),
         (('features','boost_mode'),True,"acquisition.boost_mode.module_id",[])
     ]
 
     #validate nested properties of driven_shield only required
-    if "driven_shield" in data and data["version_data"]["timer_shield"]==True:
-        check_mandatory(data, [{"driven_shield":[{"core":[{"clock":["tc","tcc"]},"dma"]},
-        {"timer":["tc","tcc"]},{"evsys":["module","user","timer"]}]}],errors)
+    # if "driven_shield" in data and data["version_data"]["features"]["timer_shield"]==True:
+    #     check_mandatory(data, [{"driven_shield":[{"core":[{"clock":["tc","tcc"]},"dma"]},
+    #     {"timer":["tc","tcc"]},{"evsys":["module","user","timer"]}]}],errors)
 
     # Iterate over the conditions and call the check_property function
     for condition in conditions:
@@ -131,29 +125,31 @@ def validate_json(data):
 
 def main():
     # Load the JSON file
-    # parent_dir=os.path.dirname(os.path.realpath(inspect.getfile(inspect.currentframe())))
-    # json_folder=os.path.join(parent_dir,"json")
+    parent_dir=os.path.dirname(os.path.realpath(inspect.getfile(inspect.currentframe())))
+    json_folder=os.path.join(parent_dir,"json")
+    file_name=sys.argv[1]
+    
 
     try:
         # Validate the JSON data
-        with open('output.json', 'r') as file:
+        with open("../json/"+file_name, 'r') as file:
             data = json.load(file)
             errors = validate_json(data)
 
         # Print the validation results
         if errors:
-            print("Output.json - JSON file format is invalid. Please fix all below error.")
+            print(file_name+" - JSON file format is invalid. Please fix all below error.")
             for error in errors:
                 print(error)
         else:
-            print("Output.json - JSON file is valid.")
+            print(sys.argv[1]+" - JSON file is valid.")
     
     except FileNotFoundError:
-        print(" file was not found.")
+        print(sys.argv[1]+" file was not found.")
 
-    # except Exception as e:
-    #     print(sys.argv[1]+" has some errors in file. Please fix the below errors")
-    #     print(e)
+    except Exception as e:
+        print(sys.argv[1]+" has some errors in file. Please fix the below errors")
+        print(e)
 
 if __name__ == "__main__":
     main()

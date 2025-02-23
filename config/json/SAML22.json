@@ -1,0 +1,192 @@
+{
+    "features": {
+        "core": "PTC",
+        "module_id": "0x0028",
+        "self": true,
+        "mutual": true,
+        "scroller": true,
+        "surface": true,
+        "gesture": true,
+        "frequency_hop": true,
+        "frequency_hop_auto": true,
+        "low_power_software": true,
+        "low_power_event": true,
+        "xy_multiplex":true,
+        "lump_mode": true,
+        "boost_mode": false,
+        "wake_up":false,
+        "trust_zone":false
+    },
+    "acquisition": {
+        "tune_mode": {
+            "component_values":["CAL_AUTO_TUNE_NONE","CAL_AUTO_TUNE_CSD"],
+            "default_index":0
+        },
+        "measurement_period": {
+            "min": 1,
+            "max": 255,
+            "default": 20
+        },
+        "interrupt_priority":{
+            "min": 0,
+            "max": 3,
+            "default": 3
+        },
+        "event_system_low_power":{
+        "component_values": [
+                4,
+                8,
+                16,
+                32,
+                64,
+                128,
+                256,
+                512,
+                1024
+            ],
+        "default_index": 3
+    },
+        "file_names": {
+            "library_files": ["qtm_acq_saml22_0x0028.X.a"],
+            "header_files": ["qtm_acq_saml22_0x0028_api.h"]
+        }
+    },
+    "node": {
+        "analog_gain": {
+            "component_values": [
+                1,
+                2,
+                4,
+                8,
+                16
+            ],
+            "default_index": 0
+        },
+        "digital_gain": {
+            "component_values": [
+                1,
+                2,
+                4,
+                8,
+                16
+            ],
+            "default_index": 0
+        },
+        "filter_level": {
+            "component_values": [
+                1,
+                2,
+                4,
+                8,
+                16,
+                32,
+                64
+            ],
+            "default_index": 4
+        },
+        "versions":{
+            "manual":1.1, 
+            "auto":1.1
+        }
+    },
+    "driven_shield":{
+        "core": {
+           "clock": {
+              "tc": "GCLK1",
+              "tcc": "GCLK1"
+           },
+           "dma": {
+              "DMAC_ENABLE_CH_0": "true",
+              "DMAC_CHCTRLB_TRIGSRC_CH_0": "PTC_EOC",
+              "DMAC_BTCTRL_SRCINC_CH_0": "Fixed Address Mode",
+              "DMAC_BTCTRL_DSTINC_CH_0": "Fixed Address Mode",
+              "DMAC_CHCTRLB_TRIGACT_CH_0": "One Block Transfer Per DMA Request",
+              "DMAC_BTCTRL_BEATSIZE_CH_0": "regex:^32-bit.*$",
+              "DMAC_CHCTRLA_RUNSTDBY_CH_0": "true",
+              "DMAC_BTCTRL_EVSYS_EVOSEL_0": "Event strobe when block transfer complete",
+              "DMAC_ENABLE_EVSYS_OUT_0": "true"
+           }
+        },
+        "timer": {
+           "tc": {
+              "TC_CTRLA_MODE": "Counter in 8-bit mode",
+              "TC_OPERATION_MODE": "Compare",
+              "TC_COMPARE_WAVE_WAVEGEN": "Normal PWM",
+              "TC_CTRLA_RUNSTDBY": "true",
+              "TC_COMPARE_EVCTRL_EV": "true",
+              "TC_COMPARE_EVCTRL_TCINV": "false"
+           },
+           "tcc": {
+              "TCC_0_WEXCTRL_DTIEN": "false",
+              "TCC_1_WEXCTRL_DTIEN": "false",
+              "TCC_2_WEXCTRL_DTIEN": "false",
+              "TCC_3_WEXCTRL_DTIEN": "false"
+           }
+        },
+        "evsys": {
+           "module": {
+              "EVSYS_CHANNEL_1": "true",
+              "EVSYS_CHANNEL_1_GENERATOR": "DMAC_CH_0"
+           },
+           "user": {},
+           "timer": {
+              "evsys_user_tmr": "CHANNEL_1"
+           }
+        }
+     },
+    "clock_config":{
+        "settings": [ 
+            {
+                "symbol":"GCLK_0_SRC", 
+                "value":"1", 
+                "componentId":"core", 
+                 "name":"Set source as OSC16M"
+            },{
+                "symbol":"GCLK_INST_NUM1", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"Select GCLK1"
+            },{
+                "symbol":"GCLK_1_DIV", 
+                "value":"4", 
+                "componentId":"core", 
+                 "name":"Prescale 16MHz by 4 for PTC"
+            },{
+                "symbol":"NVM_RWS", 
+                "value":"2", 
+                "componentId":"nvmctrl", 
+                 "name":"Wait state - 2"
+            },{
+                "symbol":"CONFIG_CLOCK_OSC16M_FREQSEL", 
+                "value":"3", 
+                "componentId":"core", 
+                 "name":"Enable 16MHz output"
+            },{
+                "symbol":"GCLK_0_DIV", 
+                "value":"1", 
+                "componentId":"core", 
+                 "name":"Div GCLK0 by 1"
+            },{
+                "symbol":"CONFIG_CLOCK_DPLL_ENABLE", 
+                "value":"False", 
+                "componentId":"core", 
+                 "name":"Set DPLL as false"
+            },{
+                "symbol":"GCLK_ID_1_CHEN", 
+                "value":"False", 
+                "componentId":"core", 
+                 "name":"Set DPLL as false"
+            },{
+                "symbol":"CONFIG_CLOCK_DPLL_REF_CLOCK", 
+                "value":"1", 
+                "componentId":"core", 
+                 "name":"Set DPLL as false"
+            }
+        ],
+        "descriptions":[
+                "{Oscillator| Prescaler Divisor | Frequency},{OSC16M| 1 | 16MHz}",
+                "{Generic clock(Peripherals)| Source | Frequency},{GCLK0(CPU)|OSC16M| 16MHz}, {GCLK1(PTC, UART)|OSC16M(DIV 4)|4MHz},{Timer(RTC)|OSCULP32K|1KHz}",
+                "{Wait states},{NVM states| 2}"
+        ]
+    }
+}

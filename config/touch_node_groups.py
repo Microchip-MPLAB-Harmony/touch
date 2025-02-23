@@ -36,6 +36,7 @@ class classTouchNodeGroups():
         self.dependencies = []
         # defaultValue
         self.json_data=json_loader_instance.get_data()
+        # self.version_data=json_loader_instance.get_version_data()
         self.maxGroups = 4
 
     def getTchSelfPinSelection(self):

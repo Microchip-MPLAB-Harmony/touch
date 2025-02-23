@@ -1,0 +1,183 @@
+{
+    "features": {
+        "core": "PTC",
+        "module_id": "0x0027",
+        "self": true,
+        "mutual": true,
+        "scroller": true,
+        "surface": true,
+        "gesture": true,
+        "frequency_hop": true,
+        "frequency_hop_auto": true,
+        "low_power_software": true,
+        "low_power_event": true,
+        "xy_multiplex":true,
+        "lump_mode": true,
+        "boost_mode": true,
+        "wake_up":false,
+        "trust_zone":false
+    },
+    "acquisition": {
+        "tune_mode": {
+            "component_values":["CAL_AUTO_TUNE_NONE","CAL_AUTO_TUNE_CSD"],
+            "default_index":0
+        },
+        "measurement_period": {
+            "min": 1,
+            "max": 255,
+            "default": 20
+        },
+        "interrupt_priority":{
+            "min": 0,
+            "max": 3,
+            "default": 3
+        },
+        "event_system_low_power":{
+        "component_values": [
+                4,
+                8,
+                16,
+                32,
+                64,
+                128,
+                256,
+                512,
+                1024
+            ],
+        "default_index": 3
+    },
+        "file_names": {
+            "library_files": ["qtm_acq_saml10_0x0027.X.a"],
+            "header_files": ["qtm_acq_saml10_0x0027_api.h"]
+        },
+        "boost_mode":{
+            "module_id":"0x0033",
+            "library_files": ["qtm_acq_4p_saml10_0x0033.X.a"],
+            "header_files": ["qtm_acq_4p_saml10_0x0033_api.h"]            
+        }
+    },
+    "node": {
+        "analog_gain": {
+            "component_values": [
+                1,
+                2,
+                4,
+                8,
+                16
+            ],
+            "default_index": 0
+        },
+        "digital_gain": {
+            "component_values": [
+                1,
+                2,
+                4,
+                8,
+                16
+            ],
+            "default_index": 0
+        },
+        "filter_level": {
+            "component_values": [
+                1,
+                2,
+                4,
+                8,
+                16,
+                32,
+                64
+            ],
+            "default_index": 4
+        },
+        "versions":{
+            "manual":1.4, 
+            "auto":1.4
+        }
+    },
+    
+    "clock_config":{
+        "settings": [ 
+            {
+                "symbol":"GCLK_INST_NUM0", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"Select GCLK1"
+            },{
+                "symbol":"GCLK_0_SRC", 
+                "value":"1", 
+                "componentId":"core", 
+                 "name":"Select 16MHz OSC as main clock"
+            },{
+                "symbol":"GCLK_0_DIV", 
+                "value":"1", 
+                "componentId":"core", 
+                 "name":"Div GCLK0 by 16"
+            },{
+                "symbol":"GCLK_INST_NUM1", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"Select GCLK2"
+            },{
+                "symbol":"GCLK_1_SRC", 
+                "value":"1", 
+                "componentId":"core", 
+                 "name":"Select 16MHz OSC for GCLK1"
+            },{
+                "symbol":"GCLK_1_DIV", 
+                "value":"2", 
+                "componentId":"core", 
+                 "name":"Prescale 16MHz by 4 for PT"
+            },{
+                "symbol":"NVM_RWS", 
+                "value":"2", 
+                "componentId":"nvmctrl", 
+                 "name":"Wait state -2"
+            },{
+                "symbol":"CONFIG_CLOCK_OSC16M_ENABLE", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"Enable OSC16M"
+            },{
+                "symbol":"CONFIG_CLOCK_OSC16M_FREQSEL", 
+                "value":"3", 
+                "componentId":"core", 
+                 "name":"Enable 8MHz output"
+            },{
+                "symbol":"CONFIG_CLOCK_OSC16M_ONDEMAND", 
+                "value":"1", 
+                "componentId":"core", 
+                 "name":"OSC16 ondemand"
+            },{
+                "symbol":"CONFIG_CLOCK_OSC16M_FREQSEL", 
+                "value":"1", 
+                "componentId":"core", 
+                 "name":"OSC16 - 8MHz"
+            },{
+                "symbol":"CONFIG_CLOCK_DFLL_ENABLE", 
+                "value":"False", 
+                "componentId":"core", 
+                 "name":"Disable DFLL"
+            },{
+                "symbol":"CONFIG_CLOCK_DPLL_ENABLE", 
+                "value":"False", 
+                "componentId":"core", 
+                 "name":"Disable DPLL"
+            },{
+                "symbol":"GCLK_ID_6_CHEN", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"Enable evsys clock"
+            },{
+                "symbol":"GCLK_ID_6_GENSEL", 
+                "value":"1", 
+                "componentId":"core", 
+                 "name":"evsys - GCLK1"
+            }
+        ],
+        "descriptions":[
+                "{Oscillator| Prescaler Divisor | Frequency},{OSC8M|1|8MHz}",
+                "{Generic clock(Peripherals)| Source | Frequency},{GCLK0(CPU)|OSC8M|8MHz},{GCLK1(Timer)|OSCULP32K|2.048KHz},{GCLK2(PTC)|OSC8M|4MHz}",
+                "{Wait states}, {NVM states| 2}"
+        ]
+    }
+}

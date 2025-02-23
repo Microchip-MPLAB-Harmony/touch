@@ -47,8 +47,8 @@
         "default_index": 3
     },
         "file_names": {
-            "library_files": ["qtm_acq_samc21_0x0020.X.a"],
-            "header_files": ["qtm_acq_samc21_0x0020_api.h"]
+            "library_files": ["qtm_acq_samc20_0x0020.X.a"],
+            "header_files": ["qtm_acq_samc20_0x0020_api.h"]
         }
     },
     "node": {

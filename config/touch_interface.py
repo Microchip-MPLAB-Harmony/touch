@@ -28,11 +28,13 @@ MHC Python Interface documentation website <http://confluence.microchip.com/disp
         : releaseVersion
         : releaseYear
 """
+from json_loader import json_loader_instance
 class classTouchInterface():
     def __init__(self):
-        self.deviceChild = []
+        # self.deviceChild = []
         self.deviceName = ""
         self.deviceSeries = "" 
+        self.deviceVariant= ""
 
     def getDeviceName(self):
         """
@@ -73,17 +75,18 @@ class classTouchInterface():
         releaseVersion = "v3.17.0"
         releaseYear    = "2025"
 
-        devicesNode = ATDF.getNode("/avr-tools-device-file/devices")
-        deviceVariant = ATDF.getNode("/avr-tools-device-file/variants").getChildren()
+        # devicesNode = ATDF.getNode("/avr-tools-device-file/devices")
+        # deviceVariant = ATDF.getNode("/avr-tools-device-file/variants").getChildren()
 
 
-        self.deviceChild = devicesNode.getChildren()
-        self.deviceName = self.deviceChild[0].getAttribute("name")
-        self.deviceSeries = self.deviceChild[0].getAttribute("series")
-        if self.deviceSeries == "PIC32CMLS60":
-            self.deviceSeries = "PIC32CMLS00"
-        if self.deviceSeries == "PIC32MZ":
-            self.deviceSeries = self.deviceChild[0].getAttribute("family")
+        # self.deviceChild = devicesNode.getChildren()
+        self.deviceName = json_loader_instance.get_deviceName()
+        self.deviceSeries = json_loader_instance.get_deviceSeries()
+        self.deviceVariant = json_loader_instance.get_deviceVariant()
+        # if self.deviceSeries == "PIC32CMLS60":
+        #     self.deviceSeries = "PIC32CMLS00"
+        # if self.deviceSeries == "PIC32MZ":
+        #     self.deviceSeries = self.deviceChild[0].getAttribute("family")
 
         # deviceArchictecture = self.deviceChild[0].getAttribute("architecture")
         # deviceFamily = self.deviceChild[0].getAttribute("family")
@@ -94,7 +97,7 @@ class classTouchInterface():
         getDeviceSeries.setVisible(True)
 
         getDeviceVariant = qtouchComponent.createStringSymbol("DEVICE_VARIANT", touchMenu)
-        getDeviceVariant.setDefaultValue(deviceVariant[0].getAttribute("pinout"))
+        getDeviceVariant.setDefaultValue(self.deviceVariant)
         getDeviceVariant.setVisible(False)
 
         getDeviceName = qtouchComponent.createStringSymbol("DEVICE_NAME_SPECIFIC", touchMenu)

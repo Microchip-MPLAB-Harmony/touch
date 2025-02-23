@@ -1,0 +1,190 @@
+{
+    "features": {
+        "core": "ADC",
+        "module_id": "0x000f",
+        "self": true,
+        "mutual": true,
+        "scroller": true,
+        "surface": true,
+        "gesture": true,
+        "frequency_hop": true,
+        "frequency_hop_auto": true,
+        "low_power_software": true,
+        "low_power_event": false,
+        "xy_multiplex":true,
+        "lump_mode": true,
+        "boost_mode": false,
+        "wake_up":false,
+        "trust_zone":false
+    },
+    "acquisition": {
+        "tune_mode": {
+            "component_values":["CAL_AUTO_TUNE_NONE","CAL_AUTO_TUNE_CSD"],
+            "default_index":0
+        },
+        "measurement_period": {
+            "min": 1,
+            "max": 255,
+            "default": 20
+        },
+
+        "file_names": {
+            "library_files": ["qtm_acq_same51_0x000f.X.a"],
+            "header_files": ["qtm_acq_same51_0x000f_api.h"]
+        }
+
+    },
+    "node": {
+        "analog_gain": {
+            "component_values": [
+                1,
+                2,
+                4,
+                8,
+                16
+            ],
+            "default_index": 0
+        },
+        "digital_gain": {
+            "component_values": [
+                1,
+                2,
+                4,
+                8,
+                16
+            ],
+            "default_index": 0
+        },
+        "filter_level": {
+            "component_values": [
+                1,
+                2,
+                4,
+                8,
+                16,
+                32,
+                64
+            ],
+            "default_index": 4
+        },
+        "versions":{
+            "manual":1.5, 
+            "auto":1.5
+        }
+    },
+    "driven_shield":{
+        "core": {
+           "clock": {
+              "tc": "GCLK1",
+              "tcc": "GCLK1"
+           },
+           "dma": {
+              "DMAC_ENABLE_CH_0": "true",
+              "DMAC_BTCTRL_SRCINC_CH_0": "Fixed Address Mode",
+              "DMAC_BTCTRL_DSTINC_CH_0": "Fixed Address Mode",
+              "DMAC_BTCTRL_BEATSIZE_CH_0": "regex:^8-bit.*$",
+              "DMAC_CHCTRLA_RUNSTDBY_CH_0": "true",
+              "DMAC_ENABLE_EVSYS_OUT_0": "true",
+              "DMAC_BTCTRL_EVSYS_EVOSEL_0": "Block event strobe",
+              "DMAC_ENABLE_EVSYS_IN_0": "true",
+              "DMAC_CHEVCTRL_EVACT_0": "Transfer and periodic transfer trigger"
+           }
+        },
+        "timer": {
+           "tc": {
+              "TC_CTRLA_MODE": "Counter in 8-bit mode",
+              "TC_OPERATION_MODE": "Compare",
+              "TC_COMPARE_WAVE_WAVEGEN": "Normal PWM",
+              "TC_CTRLA_RUNSTDBY": "true",
+              "TC_COMPARE_EVCTRL_EV": "true",
+              "TC_COMPARE_EVCTRL_TCINV": "false"
+           },
+           "tcc": {
+              "TCC_0_WEXCTRL_DTIEN": "false",
+              "TCC_1_WEXCTRL_DTIEN": "false",
+              "TCC_2_WEXCTRL_DTIEN": "false",
+              "TCC_3_WEXCTRL_DTIEN": "false"
+           }
+        },
+        "evsys": {
+           "module": {
+              "EVSYS_CHANNEL_0": "true",
+              "EVSYS_CHANNEL_0_GENERATOR": "ADC0_RESRDY",
+              "EVSYS_CHANNEL_1": "true",
+              "EVSYS_CHANNEL_1_GENERATOR": "DMAC_CH_0"
+           },
+           "user": {
+              "EVSYS_USER_55": "CHANNEL_1",
+              "EVSYS_USER_5": "CHANNEL_0"
+           },
+           "timer": {
+              "evsys_user_tmr": "CHANNEL_1"
+           }
+        }
+     },
+    "clock_config":{
+        "settings": [ 
+            {
+                "symbol":"CONFIG_CLOCK_DFLL_ENABLE", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"DFLL Enable"
+            },{
+                "symbol":"CONFIG_CLOCK_DFLL_OPMODE", 
+                "value":"0", 
+                "componentId":"core", 
+                 "name":"DFLL Open mode"
+            },{
+                "symbol":"CONFIG_CLOCK_DFLL_RUNSTDY", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"DFLL To run in standby"
+            },{
+                "symbol":"CONFIG_CLOCK_DPLL0_ENABLE", 
+                "value":"False", 
+                "componentId":"core", 
+                 "name":"Disable DPLL0"
+            },{
+                "symbol":"GCLK_0_SRC", 
+                "value":"6", 
+                "componentId":"core", 
+                 "name":"Select GCLK0 source"
+            },{
+                "symbol":"GCLK_0_DIV", 
+                "value":"1", 
+                "componentId":"core", 
+                 "name":"Select GCLK0 div"
+            },{
+                "symbol":"GCLK_INST_NUM1", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"Select GCLK1"
+            },{
+                "symbol":"GCLK_1_SRC", 
+                "value":"5", 
+                "componentId":"core", 
+                 "name":"GCLK1 Source"
+            },{
+                "symbol":"GCLK_1_DIV", 
+                "value":"6", 
+                "componentId":"core", 
+                 "name":"GCLK1 Div"
+            },{
+                "symbol":"GCLK_1_RUNSTDBY", 
+                "value":"False", 
+                "componentId":"core", 
+                 "name":"GCLK1 Div"
+            },{
+                "symbol":"NVM_RWS", 
+                "value":"1", 
+                "componentId":"nvmctrl", 
+                 "name":"Wait state -4"
+            }
+        ],
+        "descriptions":[
+                "{Oscillator| Prescaler Divisor | Frequency},{DFLL48M| 1 | 48MHz(Open loop)}",
+                "{Generic clock(Peripherals)| Source | Frequency},{GCLK0(CPU)|DFLL48M| 48MHz}, {GCLK1(PTC, UART)|DFLL48M(DIV 6)|8MHz},{GCLK3(RTC)|ULP32K|1KHz}",
+                "{Wait states},{NVM states| 2}"
+        ]
+    }
+}

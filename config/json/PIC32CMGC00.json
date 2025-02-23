@@ -1,0 +1,121 @@
+{
+    "features": {
+        "core": "PTC",
+        "module_id": "0x0053",
+        "self": true,
+        "mutual": true,
+        "scroller": true,
+        "surface": true,
+        "gesture": true,
+        "frequency_hop": true,
+        "frequency_hop_auto": true,
+        "low_power_software": true,
+        "low_power_event": false,
+        "xy_multiplex":true,
+        "lump_mode": true,
+        "boost_mode": true,
+        "wake_up":true,
+        "trust_zone":false
+    },
+    "acquisition": {
+        "tune_mode": {
+            "component_values":["CAL_AUTO_TUNE_NONE"],
+            "default_index":0
+        },
+        "measurement_period": {
+            "min": 1,
+            "max": 255,
+            "default": 20
+        },
+        "interrupt_priority":{
+            "min": 0,
+            "max": 7,
+            "default": 7
+        },"wake_up":{
+            "min": 4,
+            "max": 15,
+            "default": 4
+        },
+
+        "file_names": {
+            "library_files": ["qtm_acq_pic32cm_gc_0x0053.X.a"],
+            "header_files": ["qtm_acq_pic32cm_gc_0x0053_api.h"]
+        },
+        "boost_mode":{
+            "module_id":"0x0054",
+            "library_files": ["qtm_acq_4p_pic32cm_gc_0x0054.X.a"],
+            "header_files": ["qtm_acq_4p_pic32cm_gc_0x0054_api.h"]
+        }
+    },
+    "node": {
+        "analog_gain": {
+            "component_values": [
+                1,
+                2,
+                4,
+                8
+            ],
+            "default_index": 0
+        },
+        "digital_gain": {
+            "component_values": [
+                1,
+                2,
+                4,
+                8
+            ],
+            "default_index": 0
+        },
+        "filter_level": {
+            "component_values": [
+                1,
+                2,
+                4,
+                8,
+                16,
+                32,
+                64
+            ],
+            "default_index": 4
+        },
+        "versions":{
+            "manual":1.0, 
+            "auto":1.0
+        }
+    },
+
+    "clock_config":{
+        
+        "settings": [ 
+        {
+            "symbol":"GCLK_INST_NUM2", 
+            "value":"True", 
+            "componentId":"core", 
+             "name":"Select GCLK2"
+        },
+        {
+            "symbol":"GCLK_2_SRC", 
+            "value":"5", 
+            "componentId":"core", 
+             "name":"Select DFLL for GCLK2"
+        },
+        {
+            "symbol":"GCLK_2_RUNSTDBY", 
+            "value":"True", 
+            "componentId":"core", 
+             "name":"Select Run in Standby for GCLK2"
+        },
+        {
+            "symbol":"GCLK_2_DIV", 
+            "value":"12", 
+            "componentId":"core", 
+             "name":"Prescale DFLL by 12 for PTC"
+        }      
+    ],
+    "descriptions":[
+            "{Oscillator| Prescaler Divisor | Frequency},{DFLL48M| 1 | 48MHz(Open loop)}",
+            "{Generic clock(Peripherals)| Source | Frequency}, {GCLK2(PTC, UART)|DFLL48M(DIV 12)|4MHz},{(RTC)|ULP32K|1KHz}",
+            "{Wait states},{NVM states| 2}"
+    ]
+}
+}

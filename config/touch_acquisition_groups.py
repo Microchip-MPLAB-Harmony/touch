@@ -31,6 +31,7 @@ class classTouchAcquisitionGroups():
         self.tchMutXPinSelection = []
         self.tchMutYPinSelection = []
         self.json_data=json_loader_instance.get_data()
+        # self.version_data=json_loader_instance.get_version_data()
         # defaultValue
         self.maxGroups = 4
 

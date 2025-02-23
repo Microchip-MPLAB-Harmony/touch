@@ -52,28 +52,43 @@ def loadModule():
     #mod will have value if PTC peripheral is present in a device variant
     mod = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"PTC\"]")
     deviceNode = ATDF.getNode("/avr-tools-device-file/devices")
+    mod_adc = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"ADC\"]")
+
+    if mod_adc:
+        mod_adc_id=mod_adc.getAttribute("id")
+        mod_adc_version=mod_adc.getAttribute("version")
+
+    deviceVariant = ATDF.getNode("/avr-tools-device-file/variants").getChildren()
 
     parent_dir=os.path.dirname(os.path.realpath(inspect.getfile(inspect.currentframe())))
     json_folder=os.path.join(parent_dir,"json")
     files = list_files_in_directory(json_folder)
     
     deviceChild = deviceNode.getChildren()
-    current_family=str(deviceChild[0].getAttribute("series"))
+    deviceName = deviceChild[0].getAttribute("name")
+    deviceVariant=deviceVariant[0].getAttribute("pinout")
+    deviceSeries=str(deviceChild[0].getAttribute("series"))
+    if deviceSeries == "PIC32MZ":
+        deviceSeries = deviceChild[0].getAttribute("family")
     architecture=str(deviceChild[0].getAttribute("architecture"))
     mod_id=mod.getAttribute("id")
     mod_version=mod.getAttribute("version")
     print("Mod",mod.getAttribute("id"))
-    is_supported_device=match_data(current_family,files)
+    is_supported_device=match_data(deviceSeries,files)
     
     if(is_supported_device==True):
         # json_loader_path="C:/Users/i78387/.mcc/HarmonyContent/touch/config"
         sys.path.append(parent_dir)
         from json_loader import json_loader_instance
-        data_from_json = json_loader_instance.load_json(json_folder,current_family,mod_id,mod_version,architecture)
-        core=data_from_json["features"]["core"]
-
+        data_from_json = json_loader_instance.load_json(json_folder,deviceSeries,deviceVariant,deviceName,mod_id,mod_version,architecture,mod_adc_id,mod_adc_version)
+    
         #common
-        qtouchComponent = Module.CreateComponent("lib_qtouch", "Touch Library", "/Touch/", "config/qtouch.py")
+        if data_from_json != None:
+            core=data_from_json["features"]["core"]
+            qtouchComponent = Module.CreateComponent("lib_qtouch", "Touch Library", "/Touch/", "config/qtouch.py")
+        else:
+            print("Version not found for this module_id")
+
         qtouchComponent.addDependency("Touch_timer", "TMR", None, False, True)
         qtouchComponent.setDependencyEnabled("Touch_timer", True)
         qtouchComponent.addDependency("SW_Timer", "SYS_TIME", None, True, True)
@@ -105,6 +120,6 @@ def loadModule():
             qtouchComponent.addDependency("Acq_Engine", "ADC", None, False, True)
             qtouchComponent.setDependencyEnabled("Acq_Engine", True)
     else:
-        print(current_family+" - Device is not supported")
+        print(deviceSeries+" - Device is not supported")
 
     

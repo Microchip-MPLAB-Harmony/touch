@@ -47,6 +47,7 @@ class classTouchTargetDevice():
         self.depFuncName = []
         self.dependencies = []
         self.json_data=json_loader_instance.get_data()
+        # self.version_data=json_loader_instance.get_version_data()
 
     def getSelfCount(self):
         """Get self capacitance channels
@@ -73,7 +74,7 @@ class classTouchTargetDevice():
         #     return "NVIC_67_0_SECURITY_TYPE"
         # elif(targetDevice in set(["PIC32CKSG00","PIC32CKSG01"])):
         #     return "NVIC_139_0_SECURITY_TYPE"
-        return self.json_data["acquisition"]["trust_zone"]["nvicid"]
+        return "NVIC_"+self.json_data["acquisition"]["trust_zone"]["nvicid"]+"_0_SECURITY_TYPE"
 
     def isSecureDevice(self):
         # if(targetDevice in set(["SAML10","SAML11","SAML1xE","PIC32CMLS60","PIC32CMLS00","PIC32CKSG00","PIC32CKSG01"])):
@@ -437,7 +438,7 @@ class classTouchTargetDevice():
 
         if(self.json_data["features"]["timer_shield"]):
             return "timer"
-        elif(self.json_data["features"]["hardware_shield"]):
+        elif(self.json_data_data["features"]["hardware_shield"]):
             return "hardware"
         else:
             return "none"

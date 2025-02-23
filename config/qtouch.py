@@ -629,9 +629,11 @@ def instantiateComponent(qtouchComponent):
 	Returns:
 		:none
 	"""
-	print("Version_data",json_loader_instance.get_version_data()["csd"])
-	print("architecture",json_loader_instance.get_architecture())
+	#print("Version_data",json_loader_instance.get_version_data()["csd"])
+	print("architecture",json_loader_instance.get_data())
 	print ("Entering initialise")
+	# if json_loader_instance.get_version_data()==None:
+	# 	return
 	# return
 	showConfiguration = True
 	configName = Variables.get("__CONFIGURATION_NAME")
@@ -640,7 +642,7 @@ def instantiateComponent(qtouchComponent):
 	touchConfigurator.setLabel("Select Project Graph -> Plugins > Touch Configuration")
 	
 	touchMenu = qtouchComponent.createMenuSymbol("TOUCH_MENU", None)
-	touchMenu.setLabel("Touch Configuration Test")
+	touchMenu.setLabel("Touch Configuration")
 	touchMenu.setVisible(showConfiguration)
 
 	touchInfoMenu = qtouchComponent.createMenuSymbol("TOUCH_INFO", None)
@@ -713,7 +715,7 @@ def instantiateComponent(qtouchComponent):
 	target_deviceInst.initTargetParameters(qtouchComponent,touchMenu,device,Database)
 	qtouchInst['target_deviceInst'] = target_deviceInst
 
-	if json_loader_instance.get_data()["features"]["core"]!="CVD":
+	if json_loader_instance.get_data()["features"]["core"]=="PTC":
 	# Interrupts
 		ptcInterruptConfig = qtouchComponent.createIntegerSymbol("DEF_PTC_INTERRUPT_PRIORITY", touchMenu)
 		ptcInterruptConfig.setLabel("PTC Interrupt Priority")

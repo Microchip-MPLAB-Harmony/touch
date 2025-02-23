@@ -1,3 +1,3 @@
 @echo off
-python merge.py "SAMC21.json" "03795" "7a0"
+python merge.py "PIC32CZCA91.json" "PTC" "03721" "6a0"
 pause

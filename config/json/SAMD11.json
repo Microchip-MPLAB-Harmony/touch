@@ -1,0 +1,181 @@
+{
+    "features": {
+        "core": "PTC",
+        "module_id": "0x0009",
+        "self": true,
+        "mutual": true,
+        "scroller": true,
+        "surface": true,
+        "gesture": true,
+        "frequency_hop": true,
+        "frequency_hop_auto": true,
+        "low_power_software": true,
+        "low_power_event": false,
+        "xy_multiplex":true,
+        "lump_mode": true,
+        "boost_mode": false,
+        "wake_up":false,
+        "trust_zone":false
+    },
+    "acquisition": {
+        "tune_mode": {
+            "component_values":["CAL_AUTO_TUNE_NONE","CAL_AUTO_TUNE_PRSC"],
+            "default_index":0
+        },
+        "measurement_period": {
+            "min": 1,
+            "max": 255,
+            "default": 20
+        },
+        "interrupt_priority":{
+            "min": 0,
+            "max": 3,
+            "default": 2
+        },
+        "file_names": {
+            "library_files": ["qtm_acq_samd11_0x0009.X.a"],
+            "header_files": ["qtm_acq_samd1x_0x0009_api.h"]
+        }
+    },
+    "node": {
+        "analog_gain": {
+            "component_values": [
+                1,
+                2,
+                4,
+                8,
+                16
+            ],
+            "default_index": 0
+        },
+        "digital_gain": {
+            "component_values": [
+                1,
+                2,
+                4,
+                8,
+                16
+            ],
+            "default_index": 0
+        },
+        "filter_level": {
+            "component_values": [
+                1,
+                2,
+                4,
+                8,
+                16,
+                32,
+                64
+            ],
+            "default_index": 4
+        },
+            "versions":{
+                "manual":1.8, 
+                "auto":1.8
+            }
+    },
+    "driven_shield":{
+        "core": {
+            "dma": {},
+            "clock": {
+               "tc": "GCLK1",
+               "tcc": "GCLK1"
+            }
+         },
+         "timer": {
+            "tc": {
+               "TC_CTRLA_MODE": "Counter in 8-bit mode",
+               "TC_OPERATION_MODE": "Compare",
+               "TC_COMPARE_CTRLA_WAVEGEN": "NPWM",
+               "TC_COMPARE_EVCTRL_EV": "true",
+               "TC_COMPARE_EVCTRL_TCINV": "false"
+            },
+            "tcc": {
+               "TCC_0_WEXCTRL_DTIEN": "false",
+               "TCC_1_WEXCTRL_DTIEN": "false",
+               "TCC_2_WEXCTRL_DTIEN": "false",
+               "TCC_3_WEXCTRL_DTIEN": "false"
+            }
+         },
+         "evsys": {
+            "module": {
+               "EVSYS_CHANNEL_0": "true"
+            },
+            "user": {},
+            "timer": {
+               "evsys_user_tmr": "CHANNEL_0"
+            }
+         }
+      },
+    "clock_config":{
+        "settings": [ 
+            {
+                "symbol":"CONFIG_CLOCK_OSC8M_ENABLE", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"Enable OSC8M"
+            },{
+                "symbol":"CONFIG_CLOCK_OSC8M_PRES", 
+                "value":"1", 
+                "componentId":"core", 
+                 "name":"OSC8M Prescaler - 2"
+            },{
+                "symbol":"GCLK_INST_NUM1", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"Select GCLK1"
+            },{
+                "symbol":"GCLK_INST_NUM2", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"Select GCLK2"
+            },{
+                "symbol":"GCLK_1_SRC", 
+                "value":"5", 
+                "componentId":"core", 
+                 "name":"GCLK1 Source"
+            },{
+                "symbol":"GCLK_2_SRC", 
+                "value":"3", 
+                "componentId":"core", 
+                 "name":"GCLK2 Source"
+            },{
+                "symbol":"RTC_MODE0_PRESCALER", 
+                "value":"0", 
+                "componentId":"rtc", 
+                 "name":"RTC pre-scaled by 1"
+            },{
+                "symbol":"NVM_RWS", 
+                "value":"4", 
+                "componentId":"nvmctrl", 
+                 "name":"Wait state - 4"
+            },{
+                "symbol":"GCLK_2_DIV", 
+                "value":"32", 
+                "componentId":"core", 
+                 "name":"GCLK2 Div"
+            },{
+                "symbol":"GCLK_1_DIV", 
+                "value":"1", 
+                "componentId":"core", 
+                 "name":"GCLK1 Div"
+            },{
+                "symbol":"GCLK_ID_4_GENSEL", 
+                "value":"2", 
+                "componentId":"core", 
+                 "name":"RTC Clock set to GCLK2"
+            },{
+                "symbol":"RTC_MODE0_INTENSET_CMP0_ENABLE", 
+                "value":"True", 
+                "componentId":"rtc", 
+                 "name":"Enable RTC Interrupt"
+            }
+        ],
+        "descriptions":[
+                "{Oscillator| Prescaler Divisor | Frequency},{OSC8M| 2 | 4MHz},{DFLL48M| 1 | 48MHz(GCLK3, closed loop, multi factor 1500)}",
+                "{Generic clock(Peripherals)| Source | Frequency},{GCLK0(CPU)|DFLL48M| 48MHz},{GCLK1(Timer)|OSCULP32K|1KHz},{GCLK2(PTC,UART)| OSC8M| 4MHz},{GCLK3(DFLL Ref.) |OSC8M(DIV 125)| 32KHz}",
+                "{Wait states},{NVM states| 2}"
+        ]
+    }
+}

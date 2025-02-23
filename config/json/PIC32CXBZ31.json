@@ -1,0 +1,110 @@
+{
+    "features": {
+        "core": "CVD",
+        "module_id": "0x003e",
+        "self": true,
+        "mutual": false,
+        "hardware_shield": true,
+        "timer_shield": false,
+        "csd":true,
+        "scroller": true,
+        "surface": true,
+        "gesture": true,
+        "frequency_hop": true,
+        "frequency_hop_auto": true,
+        "low_power_software": false,
+        "low_power_event": false,
+        "xy_multiplex":false,
+        "lump_mode": false,
+        "boost_mode": false,
+        "wake_up":false,
+        "ptc_prescaler":false,
+        "trust_zone":false
+    },
+    "acquisition": {
+        "tune_mode": {
+            "component_values":["CAL_AUTO_TUNE_NONE","CAL_AUTO_TUNE_CSD"],
+            "default_index":0
+        },
+        "measurement_period": {
+            "min": 1,
+            "max": 255,
+            "default": 20
+        },
+        "file_names": {
+            "library_files": ["hcvd_driver_PIC32CX.c"],
+            "header_files": ["hcvd_driver_PIC32CX.h","qtm_acq_pic32cx_0x003e_api.h"]
+        }
+    },
+    "node": {
+        "csd": {
+            "min": 0,
+            "max": 255,
+            "default": 30
+        },
+        "series_resistor": {
+            "component_values": [
+                0,
+                10,
+                20,
+                50,
+                100
+            ],
+            "default_index": 0
+        },
+        "analog_gain": {
+            "component_values": [
+                1,
+                2,
+                4,
+                8,
+                16
+            ],
+            "default_index": 0
+        },
+        "digital_gain": {
+            "component_values": [
+                1,
+                2,
+                4,
+                8,
+                16
+            ],
+            "default_index": 0
+        },
+        "filter_level": {
+            "component_values": [
+                1,
+                2,
+                4,
+                8,
+                16,
+                32,
+                64
+            ],
+            "default_index": 4
+        },
+            "versions":{
+                "manual":1.0, 
+                "auto":1.0
+            }
+    },
+     "clock_config":{
+        "settings": [ 
+            {
+                "symbol":"ADCHS_7_ENABLE", 
+                "value":"True", 
+                "componentId":"adchs", 
+                 "name":"Enable Shared ADC module"
+            },{
+                "symbol":"ADCCON3__CONCLKDIV", 
+                "value":"64", 
+                "componentId":"adchs", 
+                 "name":"Set resolution to 12 bit"
+            }
+        ],
+        "descriptions":[
+    
+        ]
+    }
+}

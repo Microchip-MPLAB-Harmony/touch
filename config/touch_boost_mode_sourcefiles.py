@@ -65,11 +65,11 @@ class classTouchBoostModeFiles():
         touchAcq4pLibraryFile.setEnabled(False)
         self.addDepSymbol(touchAcq4pLibraryFile, "libChangeBoostMode", ["ENABLE_BOOST"])
 
-        module_id=self.json_data["acquisition"]["boost_mode"]["module_id"]
-        device_family=json_loader_instance.get_deviceName().lower()
-        touchAcq4pLibraryFile.setSourcePath("/src/libraries/qtm_acq_4p_"+device_family+"_"+module_id+".X.a")
-        print("boostL","qtm_acq_4p_"+device_family+"_"+module_id+".X.a")
-        touchAcq4pLibraryFile.setOutputName("qtm_acq_4p_"+device_family+"_"+module_id+".X.a")
+        files_names=self.json_data["acquisition"]["boost_mode"]["library_files"]
+        # device_family=json_loader_instance.get_deviceSeries().lower()
+        for i,value in enumerate(files_names):
+            touchAcq4pLibraryFile.setSourcePath("/src/libraries/"+value)
+            touchAcq4pLibraryFile.setOutputName(value)
 
         # if(targetDevice == "SAML10"):
         #     touchAcq4pLibraryFile.setSourcePath("/src/libraries/qtm_acq_4p_saml10_0x0033.X.a")
@@ -105,12 +105,10 @@ class classTouchBoostModeFiles():
         touchAcq4pHeaderFile.setMarkup(False)
         touchAcq4pHeaderFile.setEnabled(False)
         self.addDepSymbol(touchAcq4pHeaderFile, "libChangeBoostMode", ["ENABLE_BOOST"])
-
-        module_id=self.json_data["acquisition"]["boost_mode"]["module_id"]
-        device_family=json_loader_instance.get_deviceName().lower()
-        touchAcq4pHeaderFile.setSourcePath("/src/qtm_acq_4p_"+device_family+"_"+module_id+"_api.h")
-        print("Boost","qtm_acq_4p_"+device_family+"_"+module_id+"_api.h")
-        touchAcq4pHeaderFile.setOutputName("qtm_acq_4p_"+device_family+"_"+module_id+"_api.h")
+        files_names=self.json_data["acquisition"]["boost_mode"]["header_files"]
+        for i,value in enumerate(files_names):
+            touchAcq4pHeaderFile.setSourcePath("/src/"+value)
+            touchAcq4pHeaderFile.setOutputName(value)
         
         # if(targetDevice == "SAML10"):
         #     touchAcq4pHeaderFile.setSourcePath("/src/qtm_acq_4p_saml10_0x0033_api.h")
