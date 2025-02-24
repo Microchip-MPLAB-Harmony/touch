@@ -54,10 +54,6 @@ def loadModule():
     deviceNode = ATDF.getNode("/avr-tools-device-file/devices")
     mod_adc = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals/module@[name=\"ADC\"]")
 
-    if mod_adc:
-        mod_adc_id=mod_adc.getAttribute("id")
-        mod_adc_version=mod_adc.getAttribute("version")
-
     deviceVariant = ATDF.getNode("/avr-tools-device-file/variants").getChildren()
 
     parent_dir=os.path.dirname(os.path.realpath(inspect.getfile(inspect.currentframe())))
@@ -71,16 +67,22 @@ def loadModule():
     if deviceSeries == "PIC32MZ":
         deviceSeries = deviceChild[0].getAttribute("family")
     architecture=str(deviceChild[0].getAttribute("architecture"))
-    mod_id=mod.getAttribute("id")
-    mod_version=mod.getAttribute("version")
-    print("Mod",mod.getAttribute("id"))
+
+    if mod_adc:
+        mod_id=mod_adc.getAttribute("id")
+        mod_version=mod_adc.getAttribute("version")
+        print("ADC-Mod",mod_adc.getAttribute("id"))
+    if mod:
+        mod_id=mod.getAttribute("id")
+        mod_version=mod.getAttribute("version")
+        print("PTC-Mod",mod.getAttribute("id"))
     is_supported_device=match_data(deviceSeries,files)
     
     if(is_supported_device==True):
         # json_loader_path="C:/Users/i78387/.mcc/HarmonyContent/touch/config"
         sys.path.append(parent_dir)
         from json_loader import json_loader_instance
-        data_from_json = json_loader_instance.load_json(json_folder,deviceSeries,deviceVariant,deviceName,mod_id,mod_version,architecture,mod_adc_id,mod_adc_version)
+        data_from_json = json_loader_instance.load_json(json_folder,deviceSeries,deviceVariant,deviceName,mod_id,mod_version,architecture)
     
         #common
         if data_from_json != None:

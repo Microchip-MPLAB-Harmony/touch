@@ -31,7 +31,7 @@ class classJsonLoader:
                 result[key] = dict2[key]
         return result
 
-    def load_json(self,json_dir,deviceSeries,deviceVariant,deviceName,mod_id,mod_version,architecture,mod_adc_id,mod_adc_version):
+    def load_json(self,json_dir,deviceSeries,deviceVariant,deviceName,mod_id,mod_version,architecture):
 
         print("Loading JSON for:", deviceSeries)
         file_path = os.path.join(json_dir, deviceSeries + ".json")
@@ -41,9 +41,9 @@ class classJsonLoader:
         with open(file_path, "r") as file:
             self._series_loaded_data = json.load(file)
 
-        if self._series_loaded_data["features"]["core"]=="ADC":
-            mod_id=mod_adc_id
-            mod_version=mod_adc_version
+        # if self._series_loaded_data["features"]["core"]=="ADC":
+        #     mod_id=mod_adc_id
+        #     mod_version=mod_adc_version
 
         # with open(version_path, "r") as file:
         #     version_data=json.load(file)
