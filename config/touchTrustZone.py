@@ -97,8 +97,8 @@ class touchTrustZone():
             
             if ("LIB" in entryname):
                 if(secureStatus == "SECURE"):
-                    self.localProjectFilesList[kx].setDestPath("../../../../../Secure/firmware/src/config/"+self.configName+"/touch/lib/")
+                    self.localProjectFilesList[kx].setDestPath("../../../src/config/"+self.configName+"/touch/lib/")
                 else:
-                    self.localProjectFilesList[kx].setDestPath("../../../../../NonSecure/firmware/src/config/"+self.configName+"/touch/lib/")
+                    self.localProjectFilesList[kx].setDestPath("../../../src/config/"+self.configName+"/touch/lib/")
 
             self.localProjectFilesList[kx].setSecurity(secureStatus)
