@@ -141,7 +141,7 @@
                 "symbol":"GCLK_ID_37_GENSEL",
                 "value":1, 
                 "componentId":"core", 
-                "name":"Generic Clock Generator 37 (GCLK1)"
+                "name":"Generic Clock Generator 37 (GCLK37)"
             },
             {
                 "symbol":"GCLK_INST_NUM1", 

@@ -438,7 +438,7 @@ class classTouchTargetDevice():
 
         if(self.json_data["features"]["timer_shield"]):
             return "timer"
-        elif(self.json_data_data["features"]["hardware_shield"]):
+        elif(self.json_data["features"]["hardware_shield"]):
             return "hardware"
         else:
             return "none"

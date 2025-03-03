@@ -111,6 +111,12 @@
     "clock_config":{
         "settings": [ 
             {
+                "symbol":"GCLK_ID_23_GENSEL",
+                "value":1, 
+                "componentId":"core", 
+                "name":"Generic Clock Generator 23 (GCLK23)"
+            },
+            {
                 "symbol":"CONFIG_CLOCK_OSC8M_ENABLE", 
                 "value":"True", 
                 "componentId":"core", 

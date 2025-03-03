@@ -471,9 +471,9 @@ def onGenerate(symbol,event):
 	nodeCount = localComponent.getSymbolByID("TOUCH_CHAN_ENABLE_CNT").getValue()
 	sercom = localComponent.getSymbolByID("TOUCH_SERCOM_INSTANCE").getValue()
 	timer = localComponent.getSymbolByID("TOUCH_TIMER_INSTANCE").getValue()
-	# if targetDevice in ["PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]:
-	ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")
-	localComponent.getSymbolByID("GET_PTC_CLOCK_FREQUENCY").setValue(ptcClockFrequencyDefault)
+	if json_loader_instance.get_data()["features"]["core"]=="PTC":
+		ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")
+		localComponent.getSymbolByID("GET_PTC_CLOCK_FREQUENCY").setValue(ptcClockFrequencyDefault)
 
 	if int(nodeCount) == 0:
 		Log.writeErrorMessage("Touch Error: Number of sensor is ZERO")
@@ -630,7 +630,6 @@ def instantiateComponent(qtouchComponent):
 		:none
 	"""
 	#print("Version_data",json_loader_instance.get_version_data()["csd"])
-	print("architecture",json_loader_instance.get_data())
 	print ("Entering initialise")
 	# if json_loader_instance.get_version_data()==None:
 	# 	return
@@ -775,10 +774,11 @@ def instantiateComponent(qtouchComponent):
 		autoTuneCSDDisable.setValue(False)
 
 	# if device in ["PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]:
-	ptcClockFrequency = qtouchComponent.createIntegerSymbol("GET_PTC_CLOCK_FREQUENCY", touchMenu)
-	ptcClockFrequency.setLabel("Get PTC Clock Frequency")
-	ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")
-	ptcClockFrequency.setDefaultValue(ptcClockFrequencyDefault)
+	if json_loader_instance.get_data()["features"]["core"]=="PTC":
+		ptcClockFrequency = qtouchComponent.createIntegerSymbol("GET_PTC_CLOCK_FREQUENCY", touchMenu)
+		ptcClockFrequency.setLabel("Get PTC Clock Frequency")
+		ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")
+		ptcClockFrequency.setDefaultValue(ptcClockFrequencyDefault)
 	
 	if Variables.get("__TRUSTZONE_ENABLED") != None and Variables.get("__TRUSTZONE_ENABLED") == "true":
 		useTrustZone = True

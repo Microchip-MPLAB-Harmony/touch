@@ -137,6 +137,12 @@
     "clock_config":{
         "settings": [ 
             {
+                "symbol":"GCLK_ID_27_GENSEL", 
+                "value":1, 
+                "componentId":"core", 
+                 "name":"Generic Clock Generator 27 (GCLK27)"
+            },
+            {
                 "symbol":"GCLK_0_SRC", 
                 "value":"1", 
                 "componentId":"core", 

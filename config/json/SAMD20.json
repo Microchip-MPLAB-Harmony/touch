@@ -169,6 +169,12 @@
     "clock_config":{
         "settings": [ 
             {
+                "symbol":"GCLK_ID_27_GENSEL",
+                "value":2, 
+                "componentId":"core", 
+                "name":"Generic Clock Generator 27 (GCLK27)"
+            },
+            {
                 "symbol":"CONFIG_CLOCK_DFLL_OPMODE", 
                 "value":"0", 
                 "componentId":"core", 

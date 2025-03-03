@@ -92,6 +92,12 @@
     "clock_config":{
         "settings": [ 
             {
+                "symbol":"GCLK_ID_39_GENSEL", 
+                "value":1, 
+                "componentId":"core", 
+                 "name":"Generic Clock Generator 39 (GCLK39)"
+            },
+            {
                 "symbol":"GCLK_INST_NUM1", 
                 "value":"True", 
                 "componentId":"core", 

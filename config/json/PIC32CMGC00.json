@@ -87,6 +87,12 @@
     "clock_config":{
         
         "settings": [ 
+            {
+                "symbol":"GCLK_ID_35_GENSEL", 
+                "value":2, 
+                "componentId":"core", 
+                 "name":"Generic Clock Generator 35 (GCLK35)"
+            },
         {
             "symbol":"GCLK_INST_NUM2", 
             "value":"True", 

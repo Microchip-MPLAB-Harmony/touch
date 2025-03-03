@@ -140,6 +140,12 @@
     "clock_config":{
         "settings": [ 
             {
+                "symbol":"GCLK_ID_33_GENSEL", 
+                "value":1, 
+                "componentId":"core", 
+                 "name":"Generic Clock Generator 33 (GCLK33)"
+            },
+            {
                 "symbol":"CONFIG_CLOCK_OSC16M_ENABLE", 
                 "value":"True", 
                 "componentId":"core", 
