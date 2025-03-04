@@ -59,7 +59,7 @@ asm(".section .__vector_offset_BF8107E0_data,data,keep,address(0xBF8107E0)");
 asm(".word __vector_offset_168");
 #endif
 
-#if TOUCH_DEVICE_VARIANT == TOUCH_VARIANT_WBZ65
+#if TOUCH_DEVICE_VARIANT == TOUCH_VARIANT_PIC32WM_BZ6
 
 /* Library state */
 static const uint8_t CVD_TX_PINS[] = {
@@ -136,7 +136,7 @@ static const uint8_t OVERSAMPLING_LUT[7] = {
     0, 1, 3, 7, 15, 31, 63
 };
 
-#if TOUCH_DEVICE_VARIANT == TOUCH_VARIANT_WBZ65
+#if TOUCH_DEVICE_VARIANT == TOUCH_VARIANT_PIC32WM_BZ6
 
 static volatile uint8_t* CVD_Y_REG[18] = {
     (volatile uint8_t*) (((volatile uint8_t*) & CVD_REGS->CVD_CVDRX0)),
