@@ -33,6 +33,29 @@ class classJsonLoader:
 
     def load_json(self,json_dir,deviceSeries,deviceVariant,deviceName,mod_id,mod_version,architecture):
 
+        PIC32CMJH00_V1=[
+            "PIC32CM2532JH00032",
+            "PIC32CM2532JH00048",
+            "PIC32CM2532JH00064",
+            "PIC32CM2532JH00100",
+            "PIC32CM5164JH00032",
+            "PIC32CM5164JH00048",
+            "PIC32CM5164JH00064",
+            "PIC32CM5164JH00100",
+        ]
+
+        PIC32CMJH00_V2=["PIC32CM3204JH00032",
+            "PIC32CM3204JH00048",
+            "PIC32CM3204JH00064",
+            "PIC32CM6408JH00032",
+            "PIC32CM6408JH00048",
+            "PIC32CM6408JH00064"]
+
+        if deviceName in PIC32CMJH00_V1:
+            deviceSeries="PIC32CMJH00_V1"
+        elif deviceName in PIC32CMJH00_V2:
+            deviceSeries="PIC32CMJH00_V2"
+
         print("Loading JSON for:", deviceSeries)
         file_path = os.path.join(json_dir, deviceSeries + ".json")
         version_path = os.path.join(json_dir,"versions.json")

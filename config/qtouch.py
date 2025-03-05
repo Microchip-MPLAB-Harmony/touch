@@ -714,7 +714,7 @@ def instantiateComponent(qtouchComponent):
 	target_deviceInst.initTargetParameters(qtouchComponent,touchMenu,device,Database)
 	qtouchInst['target_deviceInst'] = target_deviceInst
 
-	if json_loader_instance.get_data()["features"]["core"]=="PTC":
+	if json_loader_instance.get_data()["features"]["core"]=="PTC" or json_loader_instance.get_data()["features"]["core"]=="ADC":
 	# Interrupts
 		ptcInterruptConfig = qtouchComponent.createIntegerSymbol("DEF_PTC_INTERRUPT_PRIORITY", touchMenu)
 		ptcInterruptConfig.setLabel("PTC Interrupt Priority")
