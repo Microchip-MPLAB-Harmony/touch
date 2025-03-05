@@ -472,6 +472,10 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 <#assign DediTimerWo = .vars["DSPLUS_TIMER_PINMUX"+i]>
 <#assign DediTimerWo1 = DediTimerWo?split("WO")[1]>
 	${x}_REGS->TCC_CC[${DediTimerWo1}u%${x}_NUM_CHANNELS] = cc;
+	while (${x}_REGS->TCC_SYNCBUSY != 0U)
+    {
+        /* Wait for sync */
+    }
 	</#if>
 </#list>
 	<#if DS_DEDICATED_ENABLE ==true>
