@@ -634,7 +634,7 @@ def instantiateComponent(qtouchComponent):
 	# if json_loader_instance.get_version_data()==None:
 	# 	return
 	# return
-	showConfiguration = True
+	showConfiguration = False
 	configName = Variables.get("__CONFIGURATION_NAME")
 
 	touchConfigurator = qtouchComponent.createMenuSymbol("TOUCH_CONFIGURATOR", None)
@@ -1030,7 +1030,7 @@ def instantiateComponent(qtouchComponent):
 		qtouchSetDependencies(symbol, func, depen)
 
 	# qtouchComponent.addPlugin("../touch/plugin/ptc_manager_c21.jar")
-	qtouchComponent.addPlugin("../harmony-services/plugins/generic_plugin.jar", "TOUCH_CONFIGURATION_BETA", {"plugin_name": "Touch Configuration", "main_html_path": "touch/plugin/index.html","debug":"true","local_server":"true"})
+	qtouchComponent.addPlugin("../harmony-services/plugins/generic_plugin.jar", "TOUCH_CONFIGURATION_BETA", {"plugin_name": "Touch Configuration", "main_html_path": "touch/plugin/index.html"})
 
 	print("Dependency details")
 	symbol,func,depen = target_deviceInst.getDepDetails()

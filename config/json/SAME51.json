@@ -27,7 +27,11 @@
             "max": 255,
             "default": 20
         },
-
+        "interrupt_priority":{
+            "min": 0,
+            "max": 7,
+            "default": 7
+        },
         "file_names": {
             "library_files": ["qtm_acq_same51_0x000f.X.a"],
             "header_files": ["qtm_acq_same51_0x000f_api.h"]
