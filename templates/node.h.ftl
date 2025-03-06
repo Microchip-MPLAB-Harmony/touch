@@ -1,22 +1,12 @@
-<#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35","PIC32WM_BZ6"]>
-<#assign pic32cz = ["PIC32CZCA80","PIC32CZCA90"]>
-<#assign pic32ck = ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]>
-<#assign device_allpins_xy = ["PIC32CMLS60","PIC32CMLS00","PIC32CMLE00","SAML10","SAML11","SAML1xE","SAME54","SAME53","SAME51","SAMD51","PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00","PIC32CMSG00"]>
 <#macro nodeComponent>
-<#assign CSD = 0>
-<#list ["PIC32CMLS60","PIC32CMLS00","PIC32CMLE00","SAML10","SAML11","SAML1xE","SAML22","SAMC20","SAMC21","SAME54","SAME53","SAME51","SAMD51","PIC32MZW","PIC32MZDA","PIC32CMJH01","PIC32CMJH00","PIC32CXBZ31","WBZ35","PIC32WM_BZ6","PIC32CZCA80","PIC32CZCA90""PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00","PIC32CMSG00"] as csdSupported>
-    <#if DEVICE_NAME == csdSupported>
-        <#assign CSD = 1>
-    </#if>
-</#list>
 
-<#if pic_devices?seq_contains(DEVICE_NAME)>
+<#if JSONDATA?eval.features.core == "CVD">
 /* Defines node parameter setting
  * {X-line, Y-line, Charge Share Delay (CSD), 0, NODE_G(Analog Gain , Digital Gain),
  * filter level}
  */
 <#else>
-<#if CSD == 1>
+<#if JSONDATA?eval.features.csd == true>
 /* Defines node parameter setting
  * {X-line, Y-line, Charge Share Delay (CSD), NODE_RSEL_PRSC(series resistor, prescaler), NODE_G(Analog Gain , Digital Gain),
  * filter level}
@@ -29,11 +19,11 @@
 </#if>
 
 
-<#if CSD == 1 && pic_devices?seq_contains(DEVICE_NAME)>
+<#if JSONDATA?eval.features.csd == true && JSONDATA?eval.features.core == "CVD">
     <@Pic32mzwWithCSD/>
-<#elseif CSD == 1>
+<#elseif JSONDATA?eval.features.csd == true>
     <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
-        <#if pic32cz?seq_contains(DEVICE_NAME)>
+        <#if JSONDATA?eval.acquisition.boost_mode.global == true>
         <@boostPIC32CZ/>
         <#else>
         <@boostCSD/>
@@ -148,7 +138,7 @@
                     <#lt>   ${xInfo}, ${yInfo}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]},(uint8_t)${.vars["DEF_NOD_PTC_PRESCALER" + i]}, NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), (uint8_t)${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
                     <#lt>}
         <#else>
-            <#if  device_allpins_xy?seq_contains(DEVICE_NAME) && (ENABLE_SURFACE == true)>
+            <#if  JSONDATA?eval.features.xy_multiplex == true && (ENABLE_SURFACE == true)>
                     <#if (i < VERT_START_KEY) || (i >= (HORI_NUM_KEY + HORI_START_KEY)) >
                 <#lt>#define NODE_${i}_PARAMS                                                                                               \
                 <#lt>{                                                                                                                  \

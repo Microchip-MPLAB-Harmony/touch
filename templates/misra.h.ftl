@@ -1,47 +1,11 @@
-<#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35","PIC32WM_BZ6"]>
-<#assign pic32cz = ["PIC32CZCA80","PIC32CZCA90"]>
-<#assign no_standby_devices = ["SAMD10","SAMD11"]>
-<#assign pic32ck = ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]>
-
 <#macro externvariables>
 /* Acquisition variables */
 extern qtm_acq_node_data_t ptc_qtlib_node_stat1[DEF_NUM_CHANNELS];
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
-<#if DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00" || DEVICE_NAME=="PIC32CMLS60">
-extern qtm_acq_4p_pic32cm_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
-<#elseif  DEVICE_NAME =="PIC32CZCA80"||DEVICE_NAME =="PIC32CZCA90">
-extern qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
-<#elseif  DEVICE_NAME =="PIC32CMGC00"||DEVICE_NAME =="PIC32CMSG00">
-extern qtm_acq_4p_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
-<#elseif pic32ck?seq_contains(DEVICE_NAME)>
-extern qtm_acq_4p_pic32ck_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
-<#else>
-extern qtm_acq_4p_${DEVICE_NAME?lower_case}_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
-</#if>
+extern qtm_acq_4p_${JSONDATA?eval.acquisition.file_names.node_name}_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
 <#else>
 <#if TOUCH_CHAN_ENABLE_CNT&gt;=1>
-<#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
-extern qtm_acq_samd1x_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#elseif DEVICE_NAME== "SAML11" || DEVICE_NAME== "SAML1xE">
-extern qtm_acq_saml10_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#elseif  DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00" || DEVICE_NAME=="PIC32CMLS60">
-extern qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#elseif  DEVICE_NAME =="PIC32CMJH00" || DEVICE_NAME=="PIC32CMJH01">
-extern qtm_acq_pic32cmjh_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#elseif  DEVICE_NAME =="PIC32CXBZ31" || DEVICE_NAME=="WBZ35"|| DEVICE_NAME=="PIC32WM_BZ6">
-extern qtm_acq_pic32cx_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#elseif  DEVICE_NAME =="PIC32CZCA80"||DEVICE_NAME =="PIC32CZCA90">
-extern qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#elseif  DEVICE_NAME =="PIC32CMGC00"||DEVICE_NAME =="PIC32CMSG00">
-extern qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#elseif pic32ck?seq_contains(DEVICE_NAME)>
-extern qtm_acq_pic32ck_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-<#else>
-extern qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-</#if>
-<#else>
-extern qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
-</#if>
+extern qtm_acq_${JSONDATA?eval.acquisition.file_names.node_name}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
 </#if>
 
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
@@ -94,7 +58,7 @@ extern uint8_t module_error_code;
 
 <#assign no_standby_during_measurement = 0>
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
-<#if (DS_DEDICATED_ENABLE == true) || (DS_PLUS_ENABLE == true) || no_standby_devices?seq_contains(DEVICE_NAME)>
+<#if (DS_DEDICATED_ENABLE == true) || (DS_PLUS_ENABLE == true) || (JSONDATA?eval.features.noStandbydevice == true)>
 <#assign no_standby_during_measurement = 1>
 </#if>
 </#if>

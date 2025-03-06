@@ -25,8 +25,7 @@
 <#assign debug_data_node = ['Signal', 'Reference' , 'Delta', 'Compensation', 'CSD'] >
 </#if>
 
-<#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35","PIC32WM_BZ6"]>
-<#if pic_devices?seq_contains(DEVICE_NAME)>
+<#if JSONDATA?eval.features.core == "CVD">
 <#if TUNE_MODE_SELECTED != "CAL_AUTO_TUNE_NONE">
 <#assign debug_data_node_title = ['Signal', 'Reference' , 'Delta', 'added S/H cap pF', 'Acq Time'] >
 <#assign debug_data_node = ['Signal', 'Reference' , 'Delta', 'Compensation', 'CSD'] >
@@ -758,7 +757,7 @@ ${(dashboard_height+3) * 300}
 <#assign y_pos = y_pos + temp_height>
 <#assign ele_num = ele_num + 1>
 
-<#if pic_devices?seq_contains(DEVICE_NAME)>
+<#if JSONDATA?eval.features.core == "CVD">
 <#else>
 <#assign temp_string = "Compensation: Represents PTC compensation circuit value which is equivalent to sensor capacitance">
 <@db_buid_label_colourless node_tab,25, label_ele, x_pos, temp_y_pos, temp_string, 800 />

@@ -54,9 +54,11 @@ import touch_custom_pic32mzda
 import touch_pad
 import touch_tune_with_plugin
 import touchTrustZone
+import json
 
 qtouchInst = {}
 
+data = json_loader_instance.get_data()
 
 def onAttachmentConnected(source,target):
 	"""Handler for peripheral assignment to touch module.
@@ -647,6 +649,12 @@ def instantiateComponent(qtouchComponent):
 	touchInfoMenu = qtouchComponent.createMenuSymbol("TOUCH_INFO", None)
 	touchInfoMenu.setLabel("Touch Configuration Helper")
 	touchInfoMenu.setVisible(showConfiguration)
+	
+	touchConfig1 = qtouchComponent.createStringSymbol("JSONDATA", None)
+	touchConfig1.setLabel("Device Configuration")
+	touchConfig1.setReadOnly(True)
+	touchConfig1.setDefaultValue(json.dumps(data))
+	touchConfig1.setVisible(False)
 
 	touchConfigMenu = qtouchComponent.createMenuSymbol("TOUCH_EXPERIMENTAL_FEATURES", None)
 	touchConfigMenu.setLabel("Touch Experimental Features")

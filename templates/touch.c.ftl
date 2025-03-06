@@ -51,16 +51,16 @@ Microchip or any third party.
 <#assign sam_l2x_devices = ["SAML21","SAML22"]>
 <#assign sam_l1x_devices = ["SAML10","SAML11","SAML1xE"]>
 <#assign pic32cm_le_devices = ["PIC32CMLE00","PIC32CMLS00","PIC32CMLS60"]>
-<#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35","PIC32WM_BZ6"]>
+
 <#assign buckland = ["PIC32CXBZ31","WBZ35","PIC32WM_BZ6"]>
 <#assign pic32cz = ["PIC32CZCA80", "PIC32CZCA90"]>
 <#assign pic32ck = ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]>
 <#assign pic32cm = ["PIC32CMGC00","PIC32CMSG00"]>
 <#assign supc_devices = ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMLS60","PIC32CZCA80","PIC32CZCA90"]>
-<#assign no_standby_devices = ["SAMD10","SAMD11"]>
+
 <#assign no_standby_during_measurement = 0>
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
-<#if (DS_DEDICATED_ENABLE == true) || (DS_PLUS_ENABLE == true) || no_standby_devices?seq_contains(DEVICE_NAME)>
+<#if (DS_DEDICATED_ENABLE == true) || (DS_PLUS_ENABLE == true) || (JSONDATA?eval.features.noStandbydevice == true)>
 <#assign no_standby_during_measurement = 1>
 </#if>
 </#if>
@@ -106,7 +106,7 @@ Microchip or any third party.
  *   prototypes
  *----------------------------------------------------------------------------*/
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
-  <#if ["PIC32CZCA80","PIC32CZCA90"]?seq_contains(DEVICE_NAME) >
+  <#if JSONDATA?eval.acquisition.boost_mode.global == true >
  /*! \brief Initialization of Node Pin definitions
   */
 void touch_Stuff_PinDefs(void);
@@ -124,7 +124,7 @@ static void qtm_measure_complete_callback(void);
  */
 static void qtm_error_callback(uint8_t error);
 
-<#if pic32cz?seq_contains(DEVICE_NAME) || pic32ck?seq_contains(DEVICE_NAME) || pic32cm?seq_contains(DEVICE_NAME)>
+<#if JSONDATA?eval.features.wake_up == true>
 void PTC_Initialize(void);
 </#if>
 
@@ -208,7 +208,7 @@ static volatile uint8_t touch_postprocess_request = 0u;
 
 /* Measurement Done Touch Flag  */
 volatile uint8_t measurement_done_touch = 0u;
-<#if pic_devices?seq_contains(DEVICE_NAME)>
+<#if JSONDATA?eval.features.core == "CVD">
 static uint8_t all_measure_complete = 0u;
 </#if>
 
@@ -224,7 +224,7 @@ static uint16_t measurement_period_store = DEF_TOUCH_MEASUREMENT_PERIOD_MS;
 </#if>
 
 /* Acquisition module internal data - Size to largest acquisition set */
-<#if pic_devices?seq_contains(DEVICE_NAME)>
+<#if JSONDATA?eval.features.core == "CVD">
 static uint32_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 /* Acquisition set 1 - General settings */
 static qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
@@ -657,7 +657,7 @@ static touch_ret_t touch_sensors_config(void)
     touch_ret_t touch_ret = TOUCH_SUCCESS;
 
     /* Init acquisition module */
-<#if pic_devices?seq_contains(DEVICE_NAME)>
+<#if JSONDATA?eval.features.core == "CVD">
     touch_ret = qtm_cvd_init_acquisition_module(&qtlib_acq_set1);
     touch_ret = qtm_cvd_qtlib_assign_signal_memory(&touch_acq_signals_raw[0]);
 <#else>
@@ -732,13 +732,13 @@ Notes  :
 static void qtm_measure_complete_callback(void)
 {
     touch_postprocess_request = 1u;
-<#if pic_devices?seq_contains(DEVICE_NAME)>
+<#if JSONDATA?eval.features.core == "CVD">
 	all_measure_complete = 1;
 </#if>
 <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
 <#if no_standby_during_measurement == 1>
 #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
-<#if DEVICE_NAME == "SAMD10" || DEVICE_NAME == "SAMD11" >
+<#if JSONDATA?eval.features.noStandbydevice == true >
     qtm_autoscan_node_cancel(); /* disable PTC */
 </#if>
 measurement_in_progress = 0;
@@ -773,7 +773,7 @@ static void qtm_error_callback(uint8_t error)
 </#if>
 }
 
-<#if pic32cz?seq_contains(DEVICE_NAME) || pic32ck?seq_contains(DEVICE_NAME)|| pic32cm?seq_contains(DEVICE_NAME) >
+<#if JSONDATA?eval.features.wake_up == true>
 /*============================================================================
 void PTC_Initialize(void)
 ------------------------------------------------------------------------------
@@ -811,15 +811,12 @@ void PTC_Initialize(void)
     /* 
      * Enable Analog Input Charge Pump of PTC , for weak VDD 
      */
-	<#if pic32ck?seq_contains(DEVICE_NAME)|| pic32cm?seq_contains(DEVICE_NAME)>
-    SUPC_REGS->SUPC_VREGCTRL |= SUPC_VREGCTRL_CPEN(3u);
-	<#else>
-	SUPC_REGS->SUPC_VREGCTRL |= SUPC_VREGCTRL_CPEN(4u);
-	</#if>
+	
+    SUPC_REGS->SUPC_VREGCTRL |= SUPC_VREGCTRL_CPEN(${JSONDATA?eval.acquisition.supc_vreg_cpen}u);
     
 }
 </#if>
-<#if pic32cz?seq_contains(DEVICE_NAME)>
+<#if JSONDATA?eval.features.acquisition.boost_mode.global == true>
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 /*============================================================================
 void touch_Stuff_PinDefs(void)
@@ -878,9 +875,9 @@ Notes  :
 ============================================================================*/
 void touch_init(void)
 {
-<#if pic32cz?seq_contains(DEVICE_NAME) || pic32ck?seq_contains(DEVICE_NAME)|| pic32cm?seq_contains(DEVICE_NAME) >
+<#if JSONDATA?eval.features.wake_up == true >
     PTC_Initialize();
-    <#if pic32cz?seq_contains(DEVICE_NAME)>
+    <#if JSONDATA?eval.acquisition.boost_mode.global == true>
     <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
     touch_Stuff_PinDefs();
     </#if>
@@ -948,7 +945,7 @@ void touch_process(void)
     if (time_to_measure_touch_var == 1u) {
 
         /* Do the acquisition */
-        <#if pic_devices?seq_contains(DEVICE_NAME)>
+        <#if JSONDATA?eval.features.core == "CVD">
         touch_ret = qtm_cvd_start_measurement_seq(&qtlib_acq_set1, qtm_measure_complete_callback);
         <#else>
          touch_ret = qtm_ptc_start_measurement_seq(&qtlib_acq_set1, qtm_measure_complete_callback);
@@ -965,7 +962,7 @@ void touch_process(void)
             #endif
             </#if>
             </#if>
-<#if pic_devices?seq_contains(DEVICE_NAME)>
+<#if JSONDATA?eval.features.core == "CVD">
 			all_measure_complete = 0;
 </#if>
         }
@@ -1237,7 +1234,7 @@ static void touch_enable_lowpower_measurement(void)
 <#if sam_e5x_devices?seq_contains(DEVICE_NAME)>
     <@softwarelp.lowpwer_enable_same5x_no_evs/>
 </#if>
-<#if pic32cz?seq_contains(DEVICE_NAME) || pic32ck?seq_contains(DEVICE_NAME)|| pic32cm?seq_contains(DEVICE_NAME)>
+<#if JSONDATA?eval.features.wake_up == true>
 	<#if ENABLE_EVENT_LP?exists && ENABLE_EVENT_LP == true>
     	<@eventlp.lowpwer_enable_pic32cz_evsys/>
 	<#else>
@@ -1565,7 +1562,7 @@ void touch_timer_handler(void)
     </#if>
     </#if>
 }
-<#if pic_devices?seq_contains(DEVICE_NAME)>
+<#if JSONDATA?eval.features.core == "CVD">
 <#if TOUCH_TIMER_INSTANCE != "">
 static void timer_handler( uint32_t intCause, uintptr_t context )
 {
@@ -1819,7 +1816,7 @@ uint16_t get_surface_position(uint8_t ver_or_hor, uint8_t contact)
 }
 </#if>
 
-<#if pic_devices?seq_contains(DEVICE_NAME)>
+<#if JSONDATA?eval.features.core == "CVD">
 <#if buckland?seq_contains(DEVICE_NAME)>
 void CVD_Handler(void)
 {

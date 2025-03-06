@@ -19,7 +19,10 @@
         "boost_mode": false,
         "wake_up":false,
         "ptc_prescaler":false,
-        "trust_zone":false
+        "trust_zone":false,
+        "unidirectionalTune":true,
+        "bidirectionalTune":true,
+        "noStandbydevice":false
     },
     "acquisition": {
         "tune_mode": {
@@ -33,6 +36,7 @@
         },
 
         "file_names": {
+            "node_name":"pic32mzw",
             "library_files": ["hcvd_driver_PIC32MZ1025W104.c"],
             "header_files": ["hcvd_driver_PIC32MZ1025W104.h"]
         }

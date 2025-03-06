@@ -15,7 +15,10 @@
         "lump_mode": true,
         "boost_mode": true,
         "wake_up":false,
-        "trust_zone":false
+        "trust_zone":false,
+        "unidirectionalTune":true,
+        "bidirectionalTune":true,
+        "noStandbydevice":false
     },
     "acquisition": {
         "tune_mode": {
@@ -47,6 +50,7 @@
         "default_index": 3
     },
         "file_names": {
+            "node_name":"saml10",
             "library_files": ["qtm_acq_saml10_0x0027.X.a"],
             "header_files": ["qtm_acq_saml10_0x0027_api.h"]
         },

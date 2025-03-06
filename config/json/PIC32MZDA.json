@@ -19,7 +19,10 @@
         "boost_mode": false,
         "wake_up":false,
         "ptc_prescaler":false,
-        "trust_zone":false
+        "trust_zone":false,
+        "unidirectionalTune":true,
+        "bidirectionalTune":true,
+        "noStandbydevice":false
     },
     "acquisition": {
         "tune_mode": {
@@ -32,6 +35,7 @@
             "default": 20
         },
         "file_names": {
+            "node_name":"pic32mzda",
             "library_files": ["cvd_driver_PIC32MZ.c"],
             "header_files": ["qtm_acq_pic32mzda_0x0046_api.h","cvd_driver_PIC32MZ.h"]
         }

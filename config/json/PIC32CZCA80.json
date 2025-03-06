@@ -15,7 +15,10 @@
         "lump_mode": true,
         "boost_mode": true,
         "wake_up":true,
-        "trust_zone":false
+        "trust_zone":false,
+        "unidirectionalTune":true,
+        "bidirectionalTune":true,
+        "noStandbydevice":false
     },
     "acquisition": {
         "tune_mode": {
@@ -51,10 +54,12 @@
             "default": 4
         },
         "file_names": {
+            "node_name":"pic32czca",
             "library_files": ["qtm_acq_global_pic32cz_ca80_0x0049.X.a"],
             "header_files": ["qtm_global_pic32czca_0x0049_api.h"]
         },
         "boost_mode":{
+            "global": true,
             "module_id":"0x004a",
             "library_files": ["qtm_acq_pic32cz_ca80_0x004a.X.a"],
             "header_files": ["qtm_acq_pic32czca_0x004a_api.h"]

@@ -44,8 +44,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 <#else>
 #include "device.h"
 
-<#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35","PIC32WM_BZ6"]>
-<#assign pic32cz = ["PIC32CZCA80", "PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00","PIC32CMSG00"]>
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -55,7 +53,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #endif
 // DOM-IGNORE-END
 //${DEVICE_NAME}
-<#if pic_devices?seq_contains(DEVICE_NAME)>
+<#if JSONDATA?eval.features.core == "CVD">
 <#else>
 <#if LOW_POWER_KEYS?exists && LOW_POWER_KEYS !="">
     <#import "/eventlowpower.ftl" as eventlp>
@@ -100,7 +98,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
         </#if>
     </#if>
 
-<#if pic32cz?seq_contains(DEVICE_NAME)>
+<#if JSONDATA?eval.features.wake_up == true>
 <#else>
 /* Set sensor calibration mode for charge share delay ,Prescaler or series resistor.
  * Range: CAL_AUTO_TUNE_NONE / CAL_AUTO_TUNE_RSEL / CAL_AUTO_TUNE_PRSC / CAL_AUTO_TUNE_CSD
@@ -115,7 +113,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define DEF_PTC_CAL_AUTO_TUNE (uint8_t)((DEF_PTC_TAU_TARGET << CAL_CHRG_TIME_POS) | DEF_PTC_CAL_OPTION)
 </#if>
 
-<#if pic_devices?seq_contains(DEVICE_NAME)>
+<#if JSONDATA?eval.features.core == "CVD">
 <#else>
 /* Defines the interrupt priority for the PTC. Set low priority to PTC interrupt for applications having interrupt time
  * constraints.
@@ -129,7 +127,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  */
 #define DEF_SEL_FREQ_INIT ${DEF_SEL_FREQ_INIT}
 
-<#if pic32cz?seq_contains(DEVICE_NAME)>
+<#if JSONDATA?eval.features.wake_up == true>
 /* Set default wakeup exponent.
  * Range: 4u to 15u
  * Default value: 4u.

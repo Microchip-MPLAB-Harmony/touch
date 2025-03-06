@@ -15,7 +15,10 @@
         "lump_mode": true,
         "boost_mode": true,
         "wake_up":false,
-        "trust_zone":true
+        "trust_zone":true,
+        "unidirectionalTune":true,
+        "bidirectionalTune":true,
+        "noStandbydevice":false
     },
     "acquisition": {
         "tune_mode": {
@@ -50,6 +53,7 @@
         "nvicid":68
     },
         "file_names": {
+            "node_name":"pic32cm",
             "library_files": ["qtm_acq_pic32cm_le_0x0040.X.a"],
             "header_files": ["qtm_acq_pic32cm_le_0x0040_api.h"]
         },

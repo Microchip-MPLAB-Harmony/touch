@@ -19,7 +19,10 @@
         "boost_mode": false,
         "wake_up":false,
         "ptc_prescaler":false,
-        "trust_zone":true
+        "trust_zone":true,
+        "unidirectionalTune":true,
+        "bidirectionalTune":true,
+        "noStandbydevice":false
     },
     "acquisition": {
         "tune_mode": {
@@ -32,6 +35,7 @@
             "default": 20
         },
         "file_names": {
+            "node_name":"pic32wm",
             "library_files": ["hcvd_driver_PIC32CX.c"],
             "header_files": ["hcvd_driver_PIC32CX.h","qtm_acq_pic32cx_0x003e_api.h"]
         },

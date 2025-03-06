@@ -51,38 +51,10 @@ extern "C" {
  *----------------------------------------------------------------------------*/
 
 #include "qtm_common_components_api.h"
-<#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
-#include "qtm_acq_samd1x_0x0009_api.h"
-<#elseif  DEVICE_NAME == "PIC32CMJH01"|| DEVICE_NAME=="PIC32CMJH00">
-#include "qtm_acq_pic32cmjh_0x002f_api.h"
-<#elseif ["PIC32CXBZ31","WBZ35","PIC32WM_BZ6"]?seq_contains(DEVICE_NAME) >
-#include "qtm_acq_pic32cx_0x003e_api.h"
+<#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
+#include "qtm_acq_4p_${JSONDATA?eval.acquisition.file_names.node_name}_${JSONDATA?eval.features.module_id}_api.h"
 <#else>
-    <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
-        <#if DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00"|| DEVICE_NAME=="PIC32CMLS60">
-#include "qtm_acq_4p_pic32cm_le_0x0041_api.h"
-        <#elseif  DEVICE_NAME == "PIC32CZCA80" || DEVICE_NAME == "PIC32CZCA90">
-#include "qtm_global_pic32czca_0x0049_api.h"
-        <#elseif  ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]?seq_contains(DEVICE_NAME) >
-#include "qtm_acq_4p_pic32ck_0x004f_api.h"
-        <#elseif  DEVICE_NAME == "PIC32CMGC00"||DEVICE_NAME =="PIC32CMSG00">
-#include "qtm_acq_4p_pic32cm_gc_0x0054_api.h"
-        <#else>
-#include "qtm_acq_4p_${DEVICE_NAME?lower_case}_${MODULE_ID}_api.h"
-        </#if>
-    <#else>
-        <#if DEVICE_NAME == "PIC32CMLE00" || DEVICE_NAME == "PIC32CMLS00"|| DEVICE_NAME=="PIC32CMLS60">
-#include "qtm_acq_pic32cm_le_0x0040_api.h"
-        <#elseif  DEVICE_NAME == "PIC32CZCA80"|| DEVICE_NAME == "PIC32CZCA90">
-#include "qtm_acq_pic32czca_0x004a_api.h"
-        <#elseif  DEVICE_NAME == "PIC32CMGC00"||DEVICE_NAME =="PIC32CMSG00">
-#include "qtm_acq_pic32cm_gc_0x0053_api.h"
-        <#elseif ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]?seq_contains(DEVICE_NAME) >
-#include "qtm_acq_pic32ck_0x004e_api.h"
-        <#else>
-#include "qtm_acq_${DEVICE_NAME?lower_case}_${MODULE_ID}_api.h"
-        </#if>
-    </#if>
+#include "qtm_acq_${JSONDATA?eval.acquisition.file_names.node_name}_${JSONDATA?eval.features.module_id}_api.h"
 </#if>
 #include "qtm_touch_key_0x0002_api.h"
 <#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>

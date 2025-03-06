@@ -15,7 +15,7 @@ B,1,1,FrameCounter
 D,${2},${i+1},Signal${i}
 D,${3},${i+1},Reference${i}
 -D,${4},${i+1},Delta${i}
-<#if pic_devices?seq_contains(DEVICE_NAME) >
+<#if JSONDATA?eval.features.core == "CVD" >
 D,${5},${i+1},Compensation${i},F,(variable * 2.5)
 <#elseif pic32czca?seq_contains(DEVICE_NAME) && ((SENSE_TECHNOLOGY == "NODE_SELFCAP") || (SENSE_TECHNOLOGY == "NODE_SELFCAP_SHIELD"))>
 D,${5},${i+1},Compensation${i},F,((((variable>>8) &0x1F) * 1.5 + ((variable&0x1F)  +1) * 0.075))*2
