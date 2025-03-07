@@ -23,7 +23,7 @@
     <@Pic32mzwWithCSD/>
 <#elseif JSONDATA?eval.features.csd == true>
     <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
-        <#if JSONDATA?eval.acquisition.boost_mode.global == true>
+        <#if JSONDATA?eval.features.boost_mode_global == true>
         <@boostPIC32CZ/>
         <#else>
         <@boostCSD/>

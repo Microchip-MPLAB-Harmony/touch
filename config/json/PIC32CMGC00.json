@@ -14,6 +14,7 @@
         "xy_multiplex":true,
         "lump_mode": true,
         "boost_mode": true,
+        "boost_mode_global": false,
         "wake_up":true,
         "trust_zone":false,
         "unidirectionalTune":true,
@@ -49,7 +50,8 @@
             "module_id":"0x0054",
             "library_files": ["qtm_acq_4p_pic32cm_gc_0x0054.X.a"],
             "header_files": ["qtm_acq_4p_pic32cm_gc_0x0054_api.h"]
-        }
+        },
+        "supc_vreg_cpen":3
     },
     "node": {
         "analog_gain": {

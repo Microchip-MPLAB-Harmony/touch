@@ -7,6 +7,7 @@ extern qtm_acq_4p_${JSONDATA?eval.acquisition.file_names.node_name}_config_t ptc
 <#if TOUCH_CHAN_ENABLE_CNT&gt;=1>
 extern qtm_acq_${JSONDATA?eval.acquisition.file_names.node_name}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
 </#if>
+</#if>
 
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 <#if ENABLE_SURFACE == true>

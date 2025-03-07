@@ -14,6 +14,7 @@
         "xy_multiplex":true,
         "lump_mode": true,
         "boost_mode": true,
+        "boost_mode_global": true,
         "wake_up":true,
         "trust_zone":false,
         "unidirectionalTune":true,
@@ -59,11 +60,11 @@
             "header_files": ["qtm_global_pic32czca_0x0049_api.h"]
         },
         "boost_mode":{
-            "global": true,
             "module_id":"0x004a",
             "library_files": ["qtm_acq_pic32cz_ca80_0x004a.X.a"],
             "header_files": ["qtm_acq_pic32czca_0x004a_api.h"]
-        }
+        },
+        "supc_vreg_cpen":4
 
     },
     "node": {

@@ -14,6 +14,7 @@
         "xy_multiplex":true,
         "lump_mode": true,
         "boost_mode": true,
+        "boost_mode_global": false,
         "wake_up":false,
         "trust_zone":true,
         "unidirectionalTune":true,
@@ -53,7 +54,7 @@
         "nvicid":68
     },
         "file_names": {
-            "node_name":"pic32cm",
+            "node_name":"pic32cm_le",
             "library_files": ["qtm_acq_pic32cm_le_0x0040.X.a"],
             "header_files": ["qtm_acq_pic32cm_le_0x0040_api.h"]
         },
@@ -103,12 +104,6 @@
     },
     "clock_config":{
         "settings": [ 
-            {
-                "symbol":"GCLK_ID_31_GENSEL", 
-                "value":1, 
-                "componentId":"core", 
-                 "name":"Generic Clock Generator 31 (GCLK31)"
-            },
             {
                 "symbol":"GCLK_INST_NUM1", 
                 "value":"True", 

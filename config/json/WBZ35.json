@@ -17,6 +17,7 @@
         "xy_multiplex":false,
         "lump_mode": false,
         "boost_mode": false,
+        "boost_mode_global": false,
         "wake_up":false,
         "ptc_prescaler":false,
         "trust_zone":false,

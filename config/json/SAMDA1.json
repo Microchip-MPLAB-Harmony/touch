@@ -14,6 +14,7 @@
         "xy_multiplex":false,
         "lump_mode": true,
         "boost_mode": false,
+        "boost_mode_global": false,
         "wake_up":false,
         "trust_zone":false,
         "unidirectionalTune":true,

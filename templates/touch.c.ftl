@@ -106,7 +106,7 @@ Microchip or any third party.
  *   prototypes
  *----------------------------------------------------------------------------*/
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
-  <#if JSONDATA?eval.acquisition.boost_mode.global == true >
+  <#if JSONDATA?eval.features.boost_mode_global == true >
  /*! \brief Initialization of Node Pin definitions
   */
 void touch_Stuff_PinDefs(void);
@@ -816,7 +816,7 @@ void PTC_Initialize(void)
     
 }
 </#if>
-<#if JSONDATA?eval.features.acquisition.boost_mode.global == true>
+<#if JSONDATA?eval.features.boost_mode_global == true>
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 /*============================================================================
 void touch_Stuff_PinDefs(void)
@@ -877,7 +877,7 @@ void touch_init(void)
 {
 <#if JSONDATA?eval.features.wake_up == true >
     PTC_Initialize();
-    <#if JSONDATA?eval.acquisition.boost_mode.global == true>
+    <#if JSONDATA?eval.features.boost_mode_global == true>
     <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
     touch_Stuff_PinDefs();
     </#if>
