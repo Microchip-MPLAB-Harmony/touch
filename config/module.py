@@ -56,6 +56,9 @@ def loadModule():
 
     deviceVariant = ATDF.getNode("/avr-tools-device-file/variants").getChildren()
 
+    mod_id=None
+    mod_version=None
+
     parent_dir=os.path.dirname(os.path.realpath(inspect.getfile(inspect.currentframe())))
     json_folder=os.path.join(parent_dir,"json")
     files = list_files_in_directory(json_folder)

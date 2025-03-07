@@ -14,7 +14,9 @@ class classJsonLoader:
         self._architectureDict={
             "CORTEX-M0PLUS":"cm0p",
             "CORTEX-M23":"cm23",
+            "CORTEX-M33":"cm33",
             "CORTEX-M4":"cm4",
+            "CORTEX-M7":"pic32cz",
             "MIPS":"pic32mz"
         }
 

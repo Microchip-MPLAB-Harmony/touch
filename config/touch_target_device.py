@@ -74,7 +74,7 @@ class classTouchTargetDevice():
         #     return "NVIC_67_0_SECURITY_TYPE"
         # elif(targetDevice in set(["PIC32CKSG00","PIC32CKSG01"])):
         #     return "NVIC_139_0_SECURITY_TYPE"
-        return "NVIC_"+self.json_data["acquisition"]["trust_zone"]["nvicid"]+"_0_SECURITY_TYPE"
+        return "NVIC_"+str(self.json_data["acquisition"]["trust_zone"]["nvicid"])+"_0_SECURITY_TYPE"
 
     def isSecureDevice(self):
         # if(targetDevice in set(["SAML10","SAML11","SAML1xE","PIC32CMLS60","PIC32CMLS00","PIC32CKSG00","PIC32CKSG01"])):
