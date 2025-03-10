@@ -52,9 +52,9 @@ extern "C" {
 
 #include "qtm_common_components_api.h"
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
-#include "qtm_acq_4p_${JSONDATA?eval.acquisition.file_names.node_name}_${JSONDATA?eval.features.module_id}_api.h"
+#include "${JSONDATA?eval.acquisition.boost_mode.header_files[0]}"
 <#else>
-#include "qtm_acq_${JSONDATA?eval.acquisition.file_names.node_name}_${JSONDATA?eval.features.module_id}_api.h"
+#include "${JSONDATA?eval.acquisition.file_names.header_files[0]}"
 </#if>
 #include "qtm_touch_key_0x0002_api.h"
 <#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>

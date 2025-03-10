@@ -11,7 +11,7 @@
         "frequency_hop_auto": true,
         "low_power_software": true,
         "low_power_event": true,
-        "xy_multiplex":true,
+        "xy_multiplex":false,
         "lump_mode": true,
         "boost_mode": false,
         "boost_mode_global": false,
@@ -53,7 +53,7 @@
         "file_names": {
 	    "node_name": "pic32cmjh",
             "library_files": ["qtm_acq_pic32cmjh_0x0020.X.a"],
-            "header_files": ["qtm_acq_pic32cmjh_0x0020_api.h,qtm_acq_samc21_0x0020_api.h"]
+            "header_files": ["qtm_acq_pic32cmjh_0x0020_api.h", "qtm_acq_samc21_0x0020_api.h"]
         }
     },
     "node": {
@@ -89,90 +89,121 @@
             ],
             "default_index": 4
         },
-            "versions":{
-                "manual":1.1, 
-                "auto":1.1
+        "versions":{
+            "manual":1.8, 
+            "auto":1.8
+        }
+    },
+    "driven_shield":{
+        "core":{
+            "clock":{
+                "tc":"GCLK1" ,
+                "tcc":"GCLK1" 
+            },
+            "dma":{
+                "DMAC_ENABLE_CH_0":"true" ,
+                "DMAC_CHCTRLA_RUNSTDBY_CH_0":"true" ,
+                "DMAC_CHCTRLB_TRIGSRC_CH_0":"PTC_EOC" ,
+                "DMAC_CHCTRLB_TRIGACT_CH_0":"One Block Transfer Per DMA Request" ,
+                "DMAC_BTCTRL_SRCINC_CH_0":"Fixed Address Mode" ,
+                "DMAC_BTCTRL_DSTINC_CH_0":"Fixed Address Mode" ,
+                "DMAC_BTCTRL_BEATSIZE_CH_0":"regex:^16-bit.*$" ,
+                "DMAC_ENABLE_EVSYS_OUT_0":"true" ,
+                "DMAC_BTCTRL_EVSYS_EVOSEL_0":"Event strobe when block transfer complete"
             }
+        },
+        "timer":{
+            "tc":{
+                "TC_CTRLA_MODE":"Counter in 8-bit mode" ,
+                "TC_OPERATION_MODE":"Compare" ,
+                "TC_COMPARE_WAVE_WAVEGEN":"Normal PWM" ,
+                "TC_CTRLA_RUNSTDBY":"true" ,
+                "TC_COMPARE_EVCTRL_EV":"true" ,
+                "TC_COMPARE_EVCTRL_TCINV":"false" 
+            },
+            "tcc":{
+                "TCC_0_WEXCTRL_DTIEN":"false" ,
+                "TCC_1_WEXCTRL_DTIEN":"false" ,
+                "TCC_2_WEXCTRL_DTIEN":"false" ,
+                "TCC_3_WEXCTRL_DTIEN":"false" 
+            }
+        },
+        "evsys":{
+            "module":{
+                 "EVSYS_CHANNEL_1":"true" ,
+                 "EVSYS_CHANNEL_1_GENERATOR":"DMAC_CH_0" 
+            },
+            "user":{
+            },
+            "timer":{
+                 "evsys_user_tmr":"CHANNEL_1" 
+            }
+        }
     },
     "clock_config":{
         "settings": [ 
             {
-                "symbol":"GCLK_ID_39_GENSEL", 
+                "symbol":"GCLK_ID_37_GENSEL",
                 "value":1, 
                 "componentId":"core", 
-                 "name":"Generic Clock Generator 39 (GCLK39)"
+                "name":"Generic Clock Generator 37 (GCLK37)"
             },
             {
                 "symbol":"GCLK_INST_NUM1", 
                 "value":"True", 
                 "componentId":"core", 
-                 "name":"Select GCLK1"
-            },{
-                "symbol":"CONFIG_CLOCK_OSC16M_ENABLE", 
-                "value":"True", 
-                "componentId":"core", 
-                 "name":"Enable OSC16M"
-            },{
-                "symbol":"CONFIG_CLOCK_OSC16M_FREQSEL", 
-                "value":"2", 
-                "componentId":"core", 
-                 "name":"Enable 12MHz output"
-            },{
-                "symbol":"CONFIG_CLOCK_DFLL48M_ENABLE", 
-                "value":"False", 
-                "componentId":"core", 
-                 "name":"Disable DFLL"
-            },{
-                "symbol":"CONFIG_CLOCK_DPLL_ENABLE", 
-                "value":"False", 
-                "componentId":"core", 
-                 "name":"Disable DPLL"
-            },{
-                "symbol":"CONFIG_CLOCK_OSC16M_RUNSTDBY", 
-                "value":"True", 
-                "componentId":"core", 
-                 "name":"OSC16 Run in standby"
-            },{
-                "symbol":"CONFIG_CLOCK_OSC16M_ONDEMAND", 
-                "value":"1", 
-                "componentId":"core", 
-                 "name":"OSC16 ondemand"
-            },{
-                "symbol":"GCLK_0_SRC", 
-                "value":"1", 
-                "componentId":"core", 
-                 "name":"Set source as OSC16"
-            },{
-                "symbol":"GCLK_1_SRC", 
-                "value":"1", 
-                "componentId":"core", 
-                 "name":"Select OSC16M"
+                 "name":"Select Generic Clock Generator 1 (GCLK1)"
             },{
                 "symbol":"GCLK_1_DIV", 
-                "value":"3", 
+                "value":"12", 
                 "componentId":"core", 
-                 "name":"Prescale 12MHz by 3 for PTC"
+                 "name":"Div 48MHz by 12"
             },{
-                "symbol":"NVM_RWS", 
-                "value":"1", 
-                "componentId":"nvmctrl", 
-                 "name":"Wait state - 1"
-            },{
-                "symbol":"GCLK_ID_8_CHEN", 
+                "symbol":"CONFIG_CLOCK_OSC48M_RUNSTDY", 
                 "value":"True", 
                 "componentId":"core", 
-                 "name":"Enable evsys"
+                 "name":"48MHz Runinstandby"
             },{
-                "symbol":"GCLK_ID_8_GENSEL", 
+                "symbol":"GCLK_1_RUNSTDBY", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"GCLK1 Runinstandby"
+            },{
+                "symbol":"GCLK_ID_6_CHEN", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"enable evsys"
+            },{
+                "symbol":"GCLK_ID_6_GENSEL", 
                 "value":"1", 
                 "componentId":"core", 
-                 "name":"evsys - GCLK1"
+                 "name":"GCLK1 - evsys clk"
+            },{
+                "symbol":"EVSYS_CHANNEL_0", 
+                "value":"True", 
+                "componentId":"evsys", 
+                 "name":"EVSYS 0"
+            },{
+                "symbol":"EVSYS_CHANNEL_0_GENERATOR", 
+                "value":"41", 
+                "componentId":"evsys", 
+                 "name":"EVSYS 0"
+            },{
+                "symbol":"EVSYS_CHANNEL_0_ONDEMAND", 
+                "value":"True", 
+                "componentId":"evsys", 
+                 "name":"EVSYS 0"
+            },{
+                "symbol":"EVSYS_CHANNEL_0_RUNSTANDBY", 
+                "value":"True", 
+                "componentId":"evsys", 
+                 "name":"EVSYS 0"
             }
         ],
         "descriptions":[
-                "{Oscillator| Prescaler Divisor | Frequency},{OSC16M| 3 | 12MHz}",
-                "{Generic clock(Peripherals)| Source | Frequency},{GCLK0(CPU)|OSC16M| 12MHz},{GCLK1(PTC, UART)|OSC16M(DIV 3)|4MHz},{Timer(RTC)|OSCULP32K|1.024KHz}",
-                "{Wait states},{NVM states| 1}"
+                "{Oscillator| Prescaler Divisor | Frequency},{OSC48M| 1 | 48MHz}",
+                "{Generic clock(Peripherals)| Source | Frequency},{GCLK0(CPU)|OSC48M| 48MHz}, {GCLK1(PTC, UART)|OSC48M(DIV 12)|4MHz},{Timer (RTC)|OSCULP32K|1KHz}",
+                "{Wait states},{NVM states| 2}"
         ]
     }
 }

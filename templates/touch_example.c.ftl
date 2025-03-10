@@ -43,8 +43,6 @@ Microchip or any third party.
 #error "Number of Touch sensor is defined as ZERO. Include atleast one touch sensor or remove Touch library in MHC."
 <#else>
 
-<#assign no_standby_devices = ["SAMD10","SAMD11"]>
-
 <#assign no_standby_during_measurement = 0>
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
 <#if (DS_DEDICATED_ENABLE == true) || (DS_PLUS_ENABLE == true) || (JSONDATA?eval.features.noStandbydevice == true)>

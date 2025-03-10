@@ -264,39 +264,13 @@ qtm_acq_node_data_t ptc_qtlib_node_stat1[DEF_NUM_CHANNELS];
 
 /* Node configurations */
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
-<#if DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00" || DEVICE_NAME=="PIC32CMLS60">
-qtm_acq_4p_pic32cm_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
-<#elseif  DEVICE_NAME =="PIC32CZCA80"||DEVICE_NAME =="PIC32CZCA90">
-qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
-<#elseif  pic32cm?seq_contains(DEVICE_NAME)>
-qtm_acq_4p_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
-<#elseif pic32ck?seq_contains(DEVICE_NAME)>
-qtm_acq_4p_pic32ck_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
-<#else>
-qtm_acq_4p_${DEVICE_NAME?lower_case}_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
-</#if>
+qtm_acq_4p_${JSONDATA?eval.acquisition.file_names.node_name}_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
 <#else>
 <#if TOUCH_CHAN_ENABLE_CNT&gt;=1>
-<#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
-qtm_acq_samd1x_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
-<#elseif DEVICE_NAME== "SAML11" || DEVICE_NAME== "SAML1xE">
-qtm_acq_saml10_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
-<#elseif  DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00" || DEVICE_NAME=="PIC32CMLS60" || DEVICE_NAME=="PIC32CMGC00"||DEVICE_NAME =="PIC32CMSG00">
-qtm_acq_pic32cm_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
-<#elseif  DEVICE_NAME =="PIC32CMJH00" || DEVICE_NAME=="PIC32CMJH01">
-qtm_acq_pic32cmjh_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
-<#elseif  DEVICE_NAME =="PIC32CXBZ31" || DEVICE_NAME=="WBZ35"|| DEVICE_NAME=="PIC32WM_BZ6">
-qtm_acq_pic32cx_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
-<#elseif  DEVICE_NAME =="PIC32CZCA80"||DEVICE_NAME =="PIC32CZCA90">
-qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
-<#elseif  pic32ck?seq_contains(DEVICE_NAME)>
-qtm_acq_pic32ck_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
-<#else>
-qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
-</#if>
+qtm_acq_${JSONDATA?eval.acquisition.file_names.node_name}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS] = {<#list 0..TOUCH_CHAN_ENABLE_CNT-1 as i><#if i==TOUCH_CHAN_ENABLE_CNT-1>NODE_${i}_PARAMS<#else>NODE_${i}_PARAMS,</#if></#list>};
 <#else>
 /* Node configurations */
-qtm_acq_${DEVICE_NAME?lower_case}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
+qtm_acq_${JSONDATA?eval.acquisition.file_names.node_name}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS];
 </#if>
 </#if>
 
@@ -1833,7 +1807,7 @@ Input  : none
 Output : none
 Notes  : none
 ============================================================================*/
-<#if sam_e5x_devices?seq_contains(DEVICE_NAME)>
+<#if JSONDATA?eval.features.core == "ADC">
 void ADC0_1_Handler(void)
 {
     ADC0_REGS->ADC_INTFLAG |=1u;
@@ -1845,13 +1819,13 @@ void ADC0_1_Handler(void)
 		qtm_drivenshield_config.flags &= (uint8_t) ~(1u << DRIVEN_SHIELD_DUMMY_ACQ);
 	} else {
 		drivenshield_stop();
-    qtm_same54_ptc_handler();
+    qtm_${JSONDATA?eval.acquisition.file_names.node_name}_ptc_handler();
 	}
 #else
-	qtm_same54_ptc_handler();
+	qtm_${JSONDATA?eval.acquisition.file_names.node_name}_ptc_handler();
 #endif
 <#else>
-	qtm_same54_ptc_handler();
+	qtm_${JSONDATA?eval.acquisition.file_names.node_name}_ptc_handler();
 </#if>
 </#if>
 }
@@ -1865,36 +1839,22 @@ void PTC_Handler(void)
 	if ((qtm_drivenshield_config.flags & (1u << DRIVEN_SHIELD_DUMMY_ACQ)) != 0u) {
 		/* Clear the flag */
 		qtm_drivenshield_config.flags &= (uint8_t) ~(1u << DRIVEN_SHIELD_DUMMY_ACQ);
-    <#if DEVICE_NAME == "SAMD10" || DEVICE_NAME == "SAMD11" >
+    <#if JSONDATA?eval.features.noStandbydevice == true >
 	EVSYS_REGS->EVSYS_CHANNEL = EVSYS_CHANNEL_EVGEN(0) | EVSYS_CHANNEL_PATH(2) | EVSYS_CHANNEL_EDGSEL(0) \
 									 | EVSYS_CHANNEL_CHANNEL(0);
     </#if>
 	} else {
 		drivenshield_stop();
-	qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();
+	qtm_${JSONDATA?eval.acquisition.file_names.node_name}_ptc_handler_eoc();
 }
 #else
-	qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();
+	qtm_${JSONDATA?eval.acquisition.file_names.node_name}_ptc_handler_eoc();
 #endif
 <#else>
-	qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();
+	qtm_${JSONDATA?eval.acquisition.file_names.node_name}_ptc_handler_eoc();
 </#if>
 <#else>
-<#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
-	qtm_samd1x_ptc_handler_eoc();
-<#elseif DEVICE_NAME=="SAML11">
-    qtm_saml10_ptc_handler_eoc();
-<#elseif DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00" || DEVICE_NAME=="PIC32CMLS60" || DEVICE_NAME=="PIC32CMGC00"||DEVICE_NAME =="PIC32CMSG00">
-    qtm_pic32cm_ptc_handler_eoc();
-<#elseif DEVICE_NAME =="PIC32CMJH00" || DEVICE_NAME=="PIC32CMJH01">
-    qtm_pic32cmjh_ptc_handler_eoc();
-<#elseif (DEVICE_NAME =="PIC32CZCA80" ||(DEVICE_NAME == "PIC32CZCA90"))>
-    qtm_pic32cz_ptc_handler_eoc();
-<#elseif pic32ck?seq_contains(DEVICE_NAME)>
-    qtm_pic32ck_ptc_handler_eoc();
-<#else>
-	qtm_${DEVICE_NAME?lower_case}_ptc_handler_eoc();
-</#if>
+	qtm_${JSONDATA?eval.acquisition.file_names.node_name}_ptc_handler_eoc();
 </#if>
 }
 </#if>

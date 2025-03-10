@@ -22,7 +22,7 @@
         "ptc_prescaler":false,
         "trust_zone":true,
         "unidirectionalTune":true,
-        "bidirectionalTune":true,
+        "bidirectionalTune":false,
         "noStandbydevice":false
     },
     "acquisition": {
