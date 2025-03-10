@@ -34,7 +34,7 @@
         "interrupt_priority":{
             "min": 0,
             "max": 3,
-            "default": 3
+            "default": 2
         },
         "event_system_low_power":{
         "component_values": [
