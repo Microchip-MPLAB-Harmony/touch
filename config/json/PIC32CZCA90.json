@@ -56,14 +56,14 @@
         },
         "file_names": {
             "node_name":"pic32czca",
-            "library_files": ["qtm_acq_global_pic32cz_ca90_0x0049.X.a"],
-            "header_files": ["qtm_global_pic32czca_0x0049_api.h"]
+            "library_files": ["qtm_acq_pic32cz_ca90_0x004a.X.a"],
+            "header_files": ["qtm_acq_pic32czca_0x004a_api.h"]
         },
         "boost_mode":{
             "global": true,
             "module_id":"0x004a",
-            "library_files": ["qtm_acq_pic32cz_ca90_0x004a.X.a"],
-            "header_files": ["qtm_acq_pic32czca_0x004a_api.h"]
+            "library_files": ["qtm_acq_global_pic32cz_ca90_0x0049.X.a"],
+            "header_files": ["qtm_global_pic32czca_0x0049_api.h"]
         },
         "supc_vreg_cpen":4
 
