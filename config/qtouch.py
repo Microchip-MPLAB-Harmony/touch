@@ -165,10 +165,10 @@ def finalizeComponent(qtouchComponent):
 									["lib_qtouch", "Acq_Engine","adchs","ADCHS_ADC"]]
 	else:
 		if json_loader_instance.get_data()["features"]["core"]=="ADC":
-			autoComponentIDTable[:] = ["rtc","ptc","adc0"]
+			autoComponentIDTable[:] = ["rtc","ptc","adc0","pm"]
 			autoConnectTable[:] = [["lib_qtouch", "Touch_timer","rtc", "RTC_TMR"], ["lib_qtouch", "lib_acquire", "ptc", "ptc_Acq_Engine"], ["ptc", "lib_acquire", "adc0", "ADC0_ADC"]]
 		else:
-			autoComponentIDTable[:] = ["rtc","ptc"]
+			autoComponentIDTable[:] = ["rtc","ptc","pm"]
 			autoConnectTable[:] = [["lib_qtouch", "Touch_timer","rtc", "RTC_TMR"], ["lib_qtouch", "lib_acquire", "ptc", "ptc_Acq_Engine"]]
 	InterruptVector = "PTC" + "_INTERRUPT_ENABLE"
 	InterruptHandler = "PTC" + "_INTERRUPT_HANDLER"
@@ -325,8 +325,6 @@ def qtouchSetDependencies(symbol, func, dependency):
 			sym.setDependencies(updatePinsSettings, dependency[i])
 		elif(func[i] == "updateParameter"):
 			sym.setDependencies(updateParameters, dependency[i])
-		elif(func[i] == "enablePM"):
-			sym.setDependencies(enablePM, dependency[i])
 		elif(func[i] == "libChangeBoostMode"):
 			sym.setDependencies(libChangeBoostMode, dependency[i])
 		elif(func[i] == "securefileUpdate"):
@@ -526,25 +524,6 @@ def onGenerate(symbol,event):
 	if (qtouchInst['lowpowerInst'].lowPowerSupported(targetDevice)):
 		qtouchInst['lowpowerInst'].processSoftwareLP(symbol,event)
 
-def enablePM(symbol,event):
-		"""Event Handler enabling low power mode, updates pm and supc as required by targetDevice
-		Arguments:
-			:symbol : the symbol that triggered the callback
-			:event : the new value. 
-		Returns:
-			:none
-		"""
-		# localComponent = symbol.getComponent()
-		# targetDevice = localComponent.getSymbolByID("DEVICE_NAME").getValue()
-		# lowPowerKey = localComponent.getSymbolByID("LOW_POWER_KEYS").getValue()
-		pmComponentID = ["pm"]
-		supcComponentID = ["supc"]
-		if json_loader_instance.get_data()["features"]["low_power_event"]:
-			Database.activateComponents(supcComponentID)
-			Database.activateComponents(supcComponentID)
-		else:
-			Database.deactivateComponents(supcComponentID)
-			Database.deactivateComponents(pmComponentID)
 
 def onPTCClock(symbol,event):
 	"""Handler for setGCLKconfig gclkID frequency

@@ -58,6 +58,9 @@ Microchip or any third party.
 #include <stdlib.h>                     // Defines EXIT_FAILURE
 #include "definitions.h"                // SYS function prototypes
 #include "touch.h"
+#if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
+#include "../peripheral/pm/plib_pm.h"
+#endif
 
 void touch_mainloop_example(void);
 void touch_status_display(void);
