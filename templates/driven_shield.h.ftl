@@ -42,7 +42,7 @@ Microchip or any third party.
 #ifndef DRIVEN_SHIELD_H
 #define DRIVEN_SHIELD_H
 <#assign data_type = "uint8_t" >
-<#list ["SAMC20", "SAMC21","SAML22"] as i>
+<#list ["SAMC20", "SAMC21","SAML22", "PIC32CMJH00"] as i>
 	<#if DEVICE_NAME == i>
 		<#assign data_type = "uint32_t">
 	</#if>

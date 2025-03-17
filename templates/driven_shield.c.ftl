@@ -81,7 +81,7 @@ Microchip or any third party.
 	</#if>
 </#list>
 
-<#list ["SAMC20", "SAMC21"] as i>
+<#list ["SAMC20", "SAMC21", "PIC32CMJH00"] as i>
 	<#if DEVICE_NAME == i>
 	<#if DEVICE_VARIANT == "SAMC21N">
 		<#assign prescaler_value = "4, 3, 3, 4" >
@@ -173,7 +173,7 @@ static uint32_t driven_shield_pin[DEF_NUM_CHANNELS][2] = {
 
 qtm_drivenshield_config_t qtm_drivenshield_config;
 
-<#if DEVICE_NAME != "SAML22" && DEVICE_NAME != "SAMC20" && DEVICE_NAME != "SAMC21">
+<#if DEVICE_NAME != "SAML22" && DEVICE_NAME != "SAMC20" && DEVICE_NAME != "SAMC21" && (DEVICE_NAME != "PIC32CMJH00")>
 static const uint8_t offset_vs_prescaler[4] = { ${prescaler_value} };
 </#if>
 /*============================================================================
@@ -207,7 +207,7 @@ void drivenshield_configure(void)
 	/* Map DMA Transfer complete Event
 		output to PTC Start of convertion Event Inuput */
 	EVSYS_REGS->EVSYS_USER[23] = EVSYS_USER_CHANNEL(0x2);
-<#elseif DEVICE_NAME == "SAMC21" || DEVICE_NAME == "SAMC20">
+<#elseif DEVICE_NAME == "SAMC21" || DEVICE_NAME == "SAMC20" || (DEVICE_NAME == "PIC32CMJH00")>
 	/* Map DMA Transfer complete Event
 		output to PTC Start of convertion Event Inuput */
 	EVSYS_REGS->EVSYS_USER[39] = EVSYS_USER_CHANNEL(0x2);
@@ -343,7 +343,7 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
     count = (uint16_t) (count - offset_vs_prescaler[prescaler]);
 </#if>
 </#list>
-<#list ["SAML22", "SAMC20", "SAMC21"] as i>
+<#list ["SAML22", "SAMC20", "SAMC21", "PIC32CMJH00"] as i>
 <#if DEVICE_NAME == i>
 	/* TC/TCC period value */
 	period = (uint16_t)csd+1u;
@@ -368,7 +368,7 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	<#if DEVICE_VARIANT == "SAMC21N">
 	period = (uint16_t)period - 4u;
 	count = (uint16_t)count - 2u;
-	<#elseif (DEVICE_NAME == "SAMC21") || (DEVICE_NAME == "SAMC20")>
+	<#elseif (DEVICE_NAME == "SAMC21") || (DEVICE_NAME == "SAMC20") || (DEVICE_NAME == "PIC32CMJH00")>
 	cc = (uint16_t)cc + 3u;
 	</#if>
 	</#if>

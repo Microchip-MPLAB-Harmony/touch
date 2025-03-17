@@ -54,12 +54,6 @@ void touchUartRxComplete(uintptr_t lTouchUart);
 #define TECH MUTUAL_CAP
 #endif
 
-<#assign csdDevices = 0 />
-<#list ["PIC32CMLS60","PIC32CMLS00","PIC32CMLE00","SAML10","SAML11","SAML1xE","SAML22","SAMC20","SAMC21","SAME54","SAME53","SAME51","SAMD51","PIC32MZW","PIC32MZDA", "PIC32CMJH01","PIC32CMJH00","PIC32CXBZ31","WBZ35","PIC32WM_BZ6","PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01","PIC32CMGC00","PIC32CMSG00"] as csdSupported>
-    <#if DEVICE_NAME == csdSupported>
-        <#assign csdDevices = 1>
-    </#if>
-</#list>
 <#assign outputModuleCnt = 1 >
 <#assign configModuleCnt = 4 >
 <#assign configIdToPositionMap = ["PROJECT_CONFIG_ID"] />
@@ -73,7 +67,7 @@ void touchUartRxComplete(uintptr_t lTouchUart);
 <#assign saml22 = ["SAML22"] />
 <#assign same5x = ["SAME51","SAME53","SAME54","SAMD51"] />
 <#assign saml1x_pic32cmle = ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMLS60"] />
-<#assign pic32cvd = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35","PIC32WM_BZ6"] />
+
 <#assign pic32czca = ["PIC32CZCA80","PIC32CZCA90"] />
 <#assign pic32cmgc = ["PIC32CMGC00","PIC32CMSG00"] />
 <#assign pic32ck = ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]/>
@@ -85,7 +79,7 @@ void touchUartRxComplete(uintptr_t lTouchUart);
 <#assign familyname = "same5x" />
 <#elseif saml1x_pic32cmle?seq_contains(DEVICE_NAME)>
 <#assign familyname = "saml1x_pic32cmle" />
-<#elseif pic32cvd?seq_contains(DEVICE_NAME)>
+<#elseif JSONDATA?eval.features.core == "CVD">
 <#assign familyname = "pic32cvd" />
 <#elseif saml22?seq_contains(DEVICE_NAME)>
 <#assign familyname = "saml22" />
@@ -153,7 +147,7 @@ void touchUartRxComplete(uintptr_t lTouchUart);
 typedef struct __attribute__((packed)) {
 	uint16_t node_xmask;
 	uint16_t node_ymask;
-	<#if csdDevices == 1 >
+	<#if JSONDATA?eval.features.csd == true>
 	uint8_t csd;
 	</#if>
 	uint8_t  prsc_res;
@@ -592,24 +586,9 @@ void copy_gesture_run_time_data(uint8_t channel_num)
 static channel_acq_param acq_data;
 void copy_acq_config(uint8_t channel)
 {
-<#if DEVICE_NAME=="SAMD10" || DEVICE_NAME=="SAMD11">
-qtm_acq_samd1x_node_config_t *ptr = &ptc_seq_node_cfg1[channel];
-<#elseif DEVICE_NAME=="SAML11" || DEVICE_NAME=="SAML1xE">
-qtm_acq_saml10_node_config_t *ptr = &ptc_seq_node_cfg1[channel];
-<#elseif DEVICE_NAME =="PIC32CMLE00" || DEVICE_NAME=="PIC32CMLS00"|| DEVICE_NAME=="PIC32CMLS60"|| DEVICE_NAME=="PIC32CMGC00"||DEVICE_NAME =="PIC32CMSG00">
-qtm_acq_pic32cm_node_config_t *ptr = &ptc_seq_node_cfg1[channel];
-<#elseif DEVICE_NAME =="PIC32CMJH00" || DEVICE_NAME=="PIC32CMJH01">
-qtm_acq_pic32cmjh_node_config_t *ptr = &ptc_seq_node_cfg1[channel];
-<#elseif  DEVICE_NAME =="PIC32CZCA80"||DEVICE_NAME =="PIC32CZCA90">
-qtm_acq_pic32czca_node_config_t *ptr = &ptc_seq_node_cfg1[channel];
-<#elseif  pic32ck?seq_contains(DEVICE_NAME)>
-qtm_acq_pic32ck_node_config_t *ptr = &ptc_seq_node_cfg1[channel];
-
-<#else>
-qtm_acq_${DEVICE_NAME?lower_case}_node_config_t *ptr = &ptc_seq_node_cfg1[channel];
-</#if>
+qtm_acq_${JSONDATA?eval.acquisition.file_names.node_name}_node_config_t *ptr = &ptc_seq_node_cfg1[channel];
     max_channels_or_scrollers = DEF_NUM_CHANNELS;
-	<#if csdDevices == 1 >
+	<#if JSONDATA?eval.features.csd == true>
     acq_data.csd	= ptr->node_csd;
 	</#if>
 	acq_data.prsc_res	= ptr->node_rsel_prsc;
@@ -627,7 +606,7 @@ qtm_acq_${DEVICE_NAME?lower_case}_node_config_t *ptr = &ptc_seq_node_cfg1[channe
 void update_acq_config(uint8_t channel) {
 	ptc_seq_node_cfg1[channel].node_rsel_prsc = acq_data.prsc_res;
 	ptc_seq_node_cfg1[channel].node_gain = acq_data.gain;
-	<#if csdDevices == 1 >
+	<#if JSONDATA?eval.features.csd == true>
     ptc_seq_node_cfg1[channel].node_csd	= acq_data.csd;
 	</#if>
 	ptc_seq_node_cfg1[channel].node_oversampling = acq_data.node_oversampling;
