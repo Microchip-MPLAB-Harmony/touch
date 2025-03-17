@@ -1,5 +1,6 @@
 {
-    "features": {
+    "U2500_1.0.0":{
+        "features": {
         "core": "ADC",
         "module_id": "0x000f",
         "self": true,
@@ -9,6 +10,10 @@
         "gesture": true,
         "frequency_hop": true,
         "frequency_hop_auto": true,
+        "hardware_shield": false,
+        "timer_shield": true,
+        "csd":true,
+        "ptc_prescaler":true,
         "low_power_software": true,
         "low_power_event": false,
         "xy_multiplex":true,
@@ -44,6 +49,41 @@
 
     },
     "node": {
+        "csd": {
+            "min": 0,
+            "max": 63,
+            "default": 0
+        },
+        "series_resistor": {
+            "component_values": [
+                0,
+                3,
+                6,
+                20,
+                50,
+                75,
+                100,
+                200
+            ],
+            "default_index": 0
+        },
+        "ptc_prescaler": {
+            "component_values": [
+                2,
+                4,
+                8,
+                16,
+                32,
+                64,
+                128,
+                256
+            ],
+            "default_index": 0
+        },
+        "ptc_clock_range":{
+            "min":0.16,
+            "max":2.0
+        },
         "analog_gain": {
             "component_values": [
                 1,
@@ -196,5 +236,5 @@
                 "{Wait states},{NVM states| 2}"
         ]
     }
-
+    }
 }

@@ -74,11 +74,9 @@ def loadModule():
     if mod_adc:
         mod_id=mod_adc.getAttribute("id")
         mod_version=mod_adc.getAttribute("version")
-        print("ADC-Mod",mod_adc.getAttribute("id"))
     if mod:
         mod_id=mod.getAttribute("id")
         mod_version=mod.getAttribute("version")
-        print("PTC-Mod",mod.getAttribute("id"))
     is_supported_device=match_data(deviceSeries,files)
     
     if(is_supported_device==True):
@@ -92,7 +90,7 @@ def loadModule():
             core=data_from_json["features"]["core"]
             qtouchComponent = Module.CreateComponent("lib_qtouch", "Touch Library", "/Touch/", "config/qtouch.py")
         else:
-            print("Version not found for this module_id")
+            print("Check Module_id and version is not available in "+deviceSeries+" json file.")
 
         qtouchComponent.addDependency("Touch_timer", "TMR", None, False, True)
         qtouchComponent.setDependencyEnabled("Touch_timer", True)
@@ -125,6 +123,6 @@ def loadModule():
             qtouchComponent.addDependency("Acq_Engine", "ADC", None, False, True)
             qtouchComponent.setDependencyEnabled("Acq_Engine", True)
     else:
-        print(deviceSeries+" - Device is not supported")
+        print("Touch is not supported for the device "+deviceSeries)
 
     

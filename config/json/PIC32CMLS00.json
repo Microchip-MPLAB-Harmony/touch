@@ -1,5 +1,6 @@
 {
-    "features": {
+    "U2215_5.0.0":{
+        "features": {
         "core": "PTC",
         "module_id": "0x0040",
         "self": true,
@@ -9,6 +10,10 @@
         "gesture": true,
         "frequency_hop": true,
         "frequency_hop_auto": true,
+        "hardware_shield": true,
+        "timer_shield": false,
+        "csd":true,
+        "ptc_prescaler":true,
         "low_power_software": true,
         "low_power_event": true,
         "xy_multiplex":true,
@@ -65,6 +70,33 @@
         }
     },
     "node": {
+        "csd": {
+            "min": 0,
+            "max": 255,
+            "default": 0
+        },
+        "ptc_clock_range":{
+            "min":0.5,
+            "max":2.0
+        },
+        "series_resistor": {
+            "component_values": [
+                0,
+                20,
+                50,
+                100
+            ],
+            "default_index": 0
+        },
+        "ptc_prescaler": {
+            "component_values": [
+                4,
+                8,
+                16,
+                32
+            ],
+            "default_index": 0
+        },
         "analog_gain": {
             "component_values": [
                 1,
@@ -176,5 +208,6 @@
                 "{Generic clock(Peripherals)| Source | Frequency},{GCLK0(CPU)|OSC16M| 12MHz},{GCLK1(PTC, UART)|OSC16M(DIV 3)|4MHz},{Timer(RTC)|OSCULP32K|1.024KHz}",
                 "{Wait states},{NVM states| 1}"
         ]
+    }
     }
 }
