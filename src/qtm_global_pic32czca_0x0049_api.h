@@ -5,7 +5,7 @@
     Microchip Technology Inc.
     Filename : qtm_global_pic32czca_0x0049_api.h 
     Project  : Touch Modular Library
-    Purpose  : API for Global Acquisition module - PIC32CZ_CA80/CA90 
+    Purpose  : Acquisition module for parallel acquisition - PIC32CZ_CA80/CA90 
 *******************************************************************************/
 
 /*******************************************************************************
@@ -32,8 +32,6 @@ Microchip or any third party.
 ************************************************************************************/
 
 /* QTouch Modular Library Configuration */
-
-
 #ifndef TOUCH_API_PIC32CZCA_GLOBAL_ACQ_H
 #define TOUCH_API_PIC32CZCA_GLOBAL_ACQ_H
 
@@ -317,14 +315,14 @@ Notes    :  none
 void qtm_ptc_clear_interrupt(void);
 
 /*============================================================================
-void qtm_pic32cz_ptc_handler_eoc(void)
+void qtm_pic32czca_ptc_handler_eoc(void)
 ------------------------------------------------------------------------------
 Purpose  :  Captures  the  measurement,  starts  the  next  or  End  Of  Sequence  handler
 Input    :  none
 Output   :  none
 Notes    :  none
 ============================================================================*/
-void qtm_pic32cz_ptc_handler_eoc(void);
+void qtm_pic32czca_ptc_handler_eoc(void);
 
 /*============================================================================
 void qtm_set_wkupexp(uint8_t wakeup_exp, uint8_t node_prescaler)

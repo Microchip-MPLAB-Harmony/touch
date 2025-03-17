@@ -320,14 +320,14 @@ Notes    :  none
 void qtm_ptc_clear_interrupt(void);
 
 /*============================================================================
-void qtm_pic32cz_ptc_handler_eoc(void)
+void qtm_pic32czca_ptc_handler_eoc(void)
 ------------------------------------------------------------------------------
 Purpose:  Captures  the  measurement,  starts  the  next  or  End  Of  Sequence  handler
 Input    :  none
 Output  :  none
 Notes    :  none
 ============================================================================*/
-void qtm_pic32cz_ptc_handler_eoc(void);
+void qtm_pic32czca_ptc_handler_eoc(void);
 
 /*============================================================================
 uint16_t qtm_acq_module_get_id(void);
