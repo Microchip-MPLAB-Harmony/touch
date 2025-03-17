@@ -1,0 +1,8 @@
+{
+    "version":{
+        "key":"1.4",
+        "scroller":"1.0",
+        "frequencyhop": { "manual":"1.1", "auto":"1.2" },
+        "surface": { "fingerOne":"1.4", "fingerTwo":"1.0", "gesture":"1.1" }
+    }
+}

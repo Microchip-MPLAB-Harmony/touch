@@ -231,22 +231,26 @@ class classTouchTargetDevice():
         Returns:
             :none
         """
-        version = qtouchComponent.createStringSymbol("Version", touchMenu)
+        version = qtouchComponent.createStringSymbol("ACQ_VERSION", touchMenu)
         version.setVisible(False)
         version.setDefaultValue(json.dumps(self.json_data["node"]["versions"],ensure_ascii=False))
 
         if self.json_data["features"]["timer_shield"]==True:
-            driven_shield = qtouchComponent.createStringSymbol("Driven_shield", touchMenu)
+            driven_shield = qtouchComponent.createStringSymbol("DRIVEN_SHIELD", touchMenu)
             driven_shield.setVisible(False)
             driven_shield.setDefaultValue(json.dumps(self.json_data["driven_shield"],ensure_ascii=False))
 
-        clock_config = qtouchComponent.createStringSymbol("Clock_config", touchMenu)
+        clock_config = qtouchComponent.createStringSymbol("CLOCK_CONFIG", touchMenu)
         clock_config.setVisible(False)
         clock_config.setDefaultValue(json.dumps(self.json_data["clock_config"],ensure_ascii=False))
 
-        clock_range = qtouchComponent.createStringSymbol("Clock_range", touchMenu)
+        clock_range = qtouchComponent.createStringSymbol("CLOCK_RANGE", touchMenu)
         clock_range.setVisible(False)
         clock_range.setDefaultValue(json.dumps(self.json_data["node"]["ptc_clock_range"],ensure_ascii=False))
+
+        timer_shield = qtouchComponent.createBooleanSymbol("TIMER_SHIELD", touchMenu)
+        timer_shield.setVisible(True)
+        timer_shield.setDefaultValue(self.json_data["features"]["timer_shield"])
 
     def setPTCInterruptVector(self,Database,targetDevice):
         """
