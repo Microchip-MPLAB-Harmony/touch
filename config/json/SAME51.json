@@ -44,7 +44,8 @@
         "file_names": {
             "node_name":"same51",
             "library_files": ["qtm_acq_same51_0x000f.X.a"],
-            "header_files": ["qtm_acq_same51_0x000f_api.h","qtm_acq_same54_0x000f_api.h"]
+            "header_files": ["qtm_acq_same51_0x000f_api.h","qtm_acq_same54_0x000f_api.h"],
+            "bidirectionalTune_name": "same5x"
         }
 
     },

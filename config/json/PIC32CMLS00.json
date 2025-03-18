@@ -61,7 +61,8 @@
         "file_names": {
             "node_name":"pic32cm",
             "library_files": ["qtm_acq_pic32cm_le_0x0040.X.a"],
-            "header_files": ["qtm_acq_pic32cm_le_0x0040_api.h"]
+            "header_files": ["qtm_acq_pic32cm_le_0x0040_api.h"],
+            "bidirectionalTune_name": "saml1x_pic32cmle"
         },
         "boost_mode":{
             "module_id":"0x0041",

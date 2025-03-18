@@ -58,7 +58,8 @@
         "file_names": {
             "node_name":"pic32cmjh",
             "library_files": ["qtm_acq_pic32cmjh_0x002f.X.a"],
-            "header_files": ["qtm_acq_pic32cmjh_0x002f_api.h"]
+            "header_files": ["qtm_acq_pic32cmjh_0x002f_api.h"],
+            "bidirectionalTune_name": "samc2x"
         }
     },
     "node": {

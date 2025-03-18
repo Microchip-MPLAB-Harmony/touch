@@ -62,7 +62,8 @@
         "file_names": {
             "node_name":"pic32czca",
             "library_files": ["qtm_acq_pic32cz_ca80_0x004a.X.a"],
-            "header_files": ["qtm_acq_pic32czca_0x004a_api.h"]
+            "header_files": ["qtm_acq_pic32czca_0x004a_api.h"],
+            "bidirectionalTune_name": "pic32czca"
         },
         "boost_mode":{
             "module_id":"0x004a",

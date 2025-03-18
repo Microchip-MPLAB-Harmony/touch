@@ -58,7 +58,8 @@
         "file_names": {
             "node_name":"saml10",
             "library_files": ["qtm_acq_saml10_0x0027.X.a"],
-            "header_files": ["qtm_acq_saml10_0x0027_api.h"]
+            "header_files": ["qtm_acq_saml10_0x0027_api.h"],
+            "bidirectionalTune_name": "saml1x_pic32cmle"
         },
         "boost_mode":{
             "module_id":"0x0033",

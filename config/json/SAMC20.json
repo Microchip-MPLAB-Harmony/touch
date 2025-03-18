@@ -58,7 +58,8 @@
         "file_names": {
             "node_name":"samc20",
             "library_files": ["qtm_acq_samc20_0x0020.X.a"],
-            "header_files": ["qtm_acq_samc20_0x0020_api.h","qtm_acq_samc21_0x0020_api.h"]
+            "header_files": ["qtm_acq_samc20_0x0020_api.h","qtm_acq_samc21_0x0020_api.h"],
+            "bidirectionalTune_name": "samc2x"
         }
     },
     "node": {
@@ -304,7 +305,8 @@
         "file_names": {
             "node_name":"samc20",
             "library_files": ["qtm_acq_samc20_0x0020.X.a"],
-            "header_files": ["qtm_acq_samc20_0x0020_api.h","qtm_acq_samc21_0x0020_api.h"]
+            "header_files": ["qtm_acq_samc20_0x0020_api.h","qtm_acq_samc21_0x0020_api.h"],
+            "bidirectionalTune_name": "samc2x"
         }
     },
     "node": {

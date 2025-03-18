@@ -58,7 +58,8 @@
         "file_names": {
             "node_name":"samc21",
             "library_files": ["qtm_acq_samc21_0x0020.X.a"],
-            "header_files": ["qtm_acq_samc21_0x0020_api.h"]
+            "header_files": ["qtm_acq_samc21_0x0020_api.h"],
+            "bidirectionalTune_name": "samc2x"
         }
     },
     "node": {
@@ -298,7 +299,8 @@
         "file_names": {
             "node_name":"samc21",
             "library_files": ["qtm_acq_samc21_0x0020.X.a"],
-            "header_files": ["qtm_acq_samc21_0x0020_api.h"]
+            "header_files": ["qtm_acq_samc21_0x0020_api.h"],
+            "bidirectionalTune_name": "pic32czca"
         }
     },
     "node": {

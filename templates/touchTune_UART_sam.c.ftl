@@ -425,7 +425,7 @@ static sensorData_t runtime_data_arr;
 </#if>
 
 /* configuration details */
-static uint8_t proj_config[PROJECT_CONFIG_DATA_LEN] = {PROTOCOL_VERSION, (uint8_t) ${familyname}, (uint8_t) TECH, (DEF_NUM_CHANNELS),
+static uint8_t proj_config[PROJECT_CONFIG_DATA_LEN] = {PROTOCOL_VERSION, (uint8_t) ${JSONDATA?eval.acquisition.file_names.bidirectionalTune_name}, (uint8_t) TECH, (DEF_NUM_CHANNELS),
 									(uint8_t) (${availableConfig?join("|")}), (0u), (0u),
 									(uint8_t) (${availableData?join("|")}), (0u),(0u)};
 

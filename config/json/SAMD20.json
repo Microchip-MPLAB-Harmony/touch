@@ -58,7 +58,8 @@
         "file_names": {
             "node_name":"samd20",
             "library_files": ["qtm_acq_samd20_0x000e.X.a"],
-            "header_files": ["qtm_acq_samd20_0x000e_api.h"]
+            "header_files": ["qtm_acq_samd20_0x000e_api.h"],
+            "bidirectionalTune_name": "samd2x_d1x_l21"
         }
     },
     "node": {

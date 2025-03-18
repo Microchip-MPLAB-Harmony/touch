@@ -58,7 +58,8 @@
         "file_names": {
             "node_name":"saml22",
             "library_files": ["qtm_acq_saml22_0x0028.X.a"],
-            "header_files": ["qtm_acq_saml22_0x0028_api.h"]
+            "header_files": ["qtm_acq_saml22_0x0028_api.h"],
+            "bidirectionalTune_name": "saml22"
         }
     },
     "node": {
