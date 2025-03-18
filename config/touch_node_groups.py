@@ -225,7 +225,8 @@ class classTouchNodeGroups():
             # elif(rSelMode == "l22"):
             #     self.setSeriesRValuesL22(touchSeriesResistor)
             # else:
-            self.setSeriesRValues(touchSeriesResistor)
+            if "series_resistor" in self.json_data["node"]:
+                self.setSeriesRValues(touchSeriesResistor)
             if(self.json_data["features"]["ptc_prescaler"]==True):
                 self.setPTCPresscalerValues(touchPTCPrescaler)
             self.setAnalogGainValues(touchAnalogGain)
