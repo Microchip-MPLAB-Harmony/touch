@@ -398,8 +398,10 @@ class classTouchAcquisitionSourceFiles():
             acqHeaderFileN.setDestPath("/touch/")
             acqHeaderFileN.setProjectPath("config/" + configName + "/touch/")
             acqHeaderFileN.setType("HEADER")
-            acqHeaderFileN.setMarkup(False)
+            acqHeaderFileN.setMarkup(True)
             acqHeaderFileN.setSourcePath("/src/"+value)  
+            if ".ftl" in value:
+                value=value.replace(".ftl","")
             acqHeaderFileN.setOutputName(value)
             
 

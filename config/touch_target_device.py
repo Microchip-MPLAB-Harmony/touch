@@ -244,9 +244,10 @@ class classTouchTargetDevice():
         clock_config.setVisible(False)
         clock_config.setDefaultValue(json.dumps(self.json_data["clock_config"],ensure_ascii=False))
 
-        clock_range = qtouchComponent.createStringSymbol("CLOCK_RANGE", touchMenu)
-        clock_range.setVisible(False)
-        clock_range.setDefaultValue(json.dumps(self.json_data["node"]["ptc_clock_range"],ensure_ascii=False))
+        if self.json_data["features"]["core"]!="CVD":
+            clock_range = qtouchComponent.createStringSymbol("CLOCK_RANGE", touchMenu)
+            clock_range.setVisible(False)
+            clock_range.setDefaultValue(json.dumps(self.json_data["node"]["ptc_clock_range"],ensure_ascii=False))
 
         timer_shield = qtouchComponent.createBooleanSymbol("TIMER_SHIELD", touchMenu)
         timer_shield.setVisible(True)
