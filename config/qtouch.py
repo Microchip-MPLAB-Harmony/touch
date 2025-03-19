@@ -949,14 +949,12 @@ def instantiateComponent(qtouchComponent):
 
 	# ----Datastreamer----
 	datastreamerInst = touch_datastreamer.classTouchDataStreamer()
-	if json_loader_instance.get_data()["features"]["unidirectionalTune"]==True:
-		projectFilesList = projectFilesList + datastreamerInst.initDataStreamer(configName, qtouchComponent, tuneMenu)
+	projectFilesList = projectFilesList + datastreamerInst.initDataStreamer(configName, qtouchComponent, tuneMenu)
 	qtouchInst['datastreamerInst'] = datastreamerInst
 
 	# ----TouchTune----
 	touchTuneInst = touch_tune_with_plugin.classTouchTuneWithPlugin()
-	if json_loader_instance.get_data()["features"]["bidirectionalTune"]==True:
-		projectFilesList = projectFilesList + touchTuneInst.initTouchTune(configName, qtouchComponent, tuneMenu)
+	projectFilesList = projectFilesList + touchTuneInst.initTouchTune(configName, qtouchComponent, tuneMenu)
 	qtouchInst['touchTuneInst'] = touchTuneInst
 
 	# ----2D Surface Visualizer----

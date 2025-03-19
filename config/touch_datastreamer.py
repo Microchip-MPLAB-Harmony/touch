@@ -23,6 +23,7 @@ Microchip or any third party.
 """
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
+from json_loader import json_loader_instance
 class classTouchDataStreamer():
 
     def initDataStreamer(self,configName, qtouchComponent, parentLabel):
@@ -39,14 +40,16 @@ class classTouchDataStreamer():
         enableDataStreamerMenu.setLabel("Enable Data Visualizer")
         enableDataStreamerMenu.setDefaultValue(False)
         enableDataStreamerMenu.setDescription("The Data Visualizer allows touch sensor debug information to be relayed on the USART interface to Data Visualizer software tool. This setting should be enabled for initial sensor tuning and can be disabled later to avoid using USART and additionally save code memory. More information can be found in Microchip Developer Help page.")
-        enableDataStreamerMenu.setDependencies(self.enableDataStreamerFtlFiles,["ENABLE_DATA_STREAMER"])
+        
 
         fileList = []
-        fileList.append(self.setDatastreamerHeader(configName, qtouchComponent))
-        fileList.append(self.setDatastreamerDb(configName, qtouchComponent))
-        fileList.append(self.setDatastreamerDs(configName, qtouchComponent))
-        fileList.append(self.setDatastreamerSc(configName, qtouchComponent))
-        fileList.append(self.setDatastreamerSource(configName, qtouchComponent))
+        if json_loader_instance.get_data()["features"]["unidirectionalTune"]==True:
+            enableDataStreamerMenu.setDependencies(self.enableDataStreamerFtlFiles,["ENABLE_DATA_STREAMER"])
+            fileList.append(self.setDatastreamerHeader(configName, qtouchComponent))
+            fileList.append(self.setDatastreamerDb(configName, qtouchComponent))
+            fileList.append(self.setDatastreamerDs(configName, qtouchComponent))
+            fileList.append(self.setDatastreamerSc(configName, qtouchComponent))
+            fileList.append(self.setDatastreamerSource(configName, qtouchComponent))
         return fileList
 
 
