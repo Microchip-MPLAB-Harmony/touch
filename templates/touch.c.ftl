@@ -45,7 +45,7 @@ Microchip or any third party.
 <#import "/eventlowpower.ftl" as eventlp>
 <#import "/softwarelowpower.ftl" as softwarelp>
 <#assign sam_e5x_devices = ["SAME54","SAME53","SAME51","SAMD51"]>
-<#assign sam_d2x_devices = ["SAMD21","SAMDA1","SAMD20","SAMHA1"]>
+<#assign sam_d2x_devices = ["SAMD21","SAMDA1","SAMD20","SAMHA1", "PIC32CMGV00"]>
 <#assign sam_d1x_devices = ["SAMD10","SAMD11"]>
 <#assign sam_c2x_devices = ["SAMC21","SAMC20","PIC32CMJH01","PIC32CMJH00"]>
 <#assign sam_l2x_devices = ["SAML21","SAML22"]>
@@ -1606,7 +1606,7 @@ void touch_timer_config(void)
     <#if TOUCH_TIMER_INSTANCE != "">
     ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].CALLBACK_API_NAME}(rtc_cb, rtc_context);
 
-<#if (DEVICE_NAME == "SAMD20") || (DEVICE_NAME == "SAMD21") >
+<#if (DEVICE_NAME == "SAMD20") || (DEVICE_NAME == "SAMD21") || (DEVICE_NAME == "PIC32CMGV00") >
     while((RTC_REGS->MODE0.RTC_STATUS & RTC_STATUS_SYNCBUSY_Msk) == RTC_STATUS_SYNCBUSY_Msk)
     {
 

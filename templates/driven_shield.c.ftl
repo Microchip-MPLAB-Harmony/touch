@@ -43,7 +43,7 @@ Microchip or any third party.
 #include "driven_shield.h"
 #include "touch.h"
 
-<#assign noDmaDevice = ["SAMD11", "SAMD10", "SAMD20"] >
+<#assign noDmaDevice = ["SAMD11", "SAMD10", "SAMD20", "PIC32CMGV00"] >
 
 #if (DEF_ENABLE_DRIVEN_SHIELD == 1u)
 <#assign prescaler_value = "0, 0, 0, 0" >
@@ -228,7 +228,7 @@ void drivenshield_configure(void)
 	/* Map DMA Transfer complete Event
 		output to PTC Start of convertion Event Inuput */
 	EVSYS_REGS->EVSYS_USER = EVSYS_USER_CHANNEL(0x2)|EVSYS_USER_USER(0x1C);
-<#elseif (DEVICE_NAME == "SAMD20")>
+<#elseif (DEVICE_NAME == "SAMD20")||(DEVICE_NAME == "PIC32CMGV00")>
 
 	EVSYS_REGS->EVSYS_CHANNEL = EVSYS_CHANNEL_EVGEN(0x3A) | EVSYS_CHANNEL_PATH(2) | EVSYS_CHANNEL_EDGSEL(0) \
 									 | EVSYS_CHANNEL_CHANNEL(0);
@@ -266,7 +266,7 @@ Notes  : This function uses the EVSYS to start the PTC to acquire touch
 ============================================================================*/
 void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type} volatile *dst_addr, ${data_type} value)
 {
-	<#if (DEVICE_NAME != "SAMD11") && (DEVICE_NAME != "SAMD10") && (DEVICE_NAME != "SAMD20")>
+	<#if (DEVICE_NAME != "SAMD11") && (DEVICE_NAME != "SAMD10") && (DEVICE_NAME != "SAMD20") && (DEVICE_NAME != "PIC32CMGV00")>
 	static ${data_type}  filter_level = 0;
 	static uint32_t addr;
 	</#if>
@@ -283,7 +283,7 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 		/* error condition. During normal operation control shouldn't come here */
 	}
 <#else>
-	<#if (DEVICE_NAME == "SAMD20")>
+	<#if (DEVICE_NAME == "SAMD20")||(DEVICE_NAME == "PIC32CMGV00")>
 	EVSYS_REGS->EVSYS_USER = EVSYS_USER_CHANNEL(0x1)|EVSYS_USER_USER(0x0D);
 	<#else>
 	EVSYS_REGS->EVSYS_USER = EVSYS_USER_CHANNEL(0x1)|EVSYS_USER_USER(0x11);
@@ -317,10 +317,10 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	<#break>
 </#if>
 </#list>
-<#list ["SAMD11", "SAMD10","SAMD20"] as i>
+<#list ["SAMD11", "SAMD10","SAMD20","PIC32CMGV00"] as i>
 <#if DEVICE_NAME == i>
 
-	<#if DEVICE_NAME == "SAMD20"]
+	<#if DEVICE_NAME == "SAMD20" || DEVICE_NAME == "PIC32CMGV00">
 	EVSYS_REGS->EVSYS_CHANNEL = EVSYS_CHANNEL_EVGEN(0x3A) | EVSYS_CHANNEL_PATH(2) | EVSYS_CHANNEL_EDGSEL(0) \
 									 | EVSYS_CHANNEL_CHANNEL(0);
 	<#else>
@@ -533,7 +533,7 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_CC[${DediTimerWo1}] = (uint8_t)cc;
 <#if ((DEVICE_NAME == "SAMD21")||(DEVICE_NAME == "SAMDA1")||(DEVICE_NAME == "SAMHA1"))>
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_CTRLA = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER(prescaler) | TC_CTRLA_WAVEGEN_NPWM | TC_CTRLA_RUNSTDBY_Msk ;
-<#elseif ((DEVICE_NAME == "SAMD11")||(DEVICE_NAME == "SAMD10")||(DEVICE_NAME == "SAMD20"))>	
+<#elseif ((DEVICE_NAME == "SAMD11")||(DEVICE_NAME == "SAMD10")||(DEVICE_NAME == "SAMD20")||(DEVICE_NAME == "PIC32CMGV00"))>	
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_CTRLA = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER(prescaler) | TC_CTRLA_WAVEGEN_NPWM;
 <#else>
 	${DS_DEDICATED_TIMER}_REGS->COUNT8.TC_CTRLA = TC_CTRLA_MODE_COUNT8 | TC_CTRLA_PRESCALER(prescaler);

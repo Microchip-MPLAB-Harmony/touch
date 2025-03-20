@@ -61,31 +61,6 @@ void touchUartRxComplete(uintptr_t lTouchUart);
 <#assign availableData = ["KEY_DEBUG_MASK"] />
 <#assign availableConfig = ["SENSOR_NODE_CONFIG_MASK","SENSOR_KEY_CONFIG_MASK","COMMON_SENSOR_CONFIG_MASK"] />
 <#assign configIdToPositionMap = configIdToPositionMap + ["SENSOR_NODE_CONFIG_ID", "SENSOR_KEY_CONFIG_ID", "COMMON_SENSOR_CONFIG_ID"] />
-<#assign familyname = "" />
-<#assign samd2x_d1x_l21 = ["SAMD11", "SAMD10", "SAMD20", "SAMD21", "SAMDA1","SAMHA1", "SAML21" ] />
-<#assign samc2x = ["SAMC20", "SAMC21","PIC32CMJH00","PIC32CMJH01"] />
-<#assign saml22 = ["SAML22"] />
-<#assign same5x = ["SAME51","SAME53","SAME54","SAMD51"] />
-<#assign saml1x_pic32cmle = ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMLS60"] />
-
-<#assign pic32czca = ["PIC32CZCA80","PIC32CZCA90"] />
-<#assign pic32cmgc = ["PIC32CMGC00","PIC32CMSG00"] />
-<#assign pic32ck = ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]/>
-<#if samd2x_d1x_l21?seq_contains(DEVICE_NAME)>
-<#assign familyname = "samd2x_d1x_l21" />
-<#elseif samc2x?seq_contains(DEVICE_NAME)>
-<#assign familyname = "samc2x" />
-<#elseif same5x?seq_contains(DEVICE_NAME)>
-<#assign familyname = "same5x" />
-<#elseif saml1x_pic32cmle?seq_contains(DEVICE_NAME)>
-<#assign familyname = "saml1x_pic32cmle" />
-<#elseif JSONDATA?eval.features.core == "CVD">
-<#assign familyname = "pic32cvd" />
-<#elseif saml22?seq_contains(DEVICE_NAME)>
-<#assign familyname = "saml22" />
-<#elseif pic32czca?seq_contains(DEVICE_NAME) || pic32ck?seq_contains(DEVICE_NAME)  || pic32cmgc?seq_contains(DEVICE_NAME)>
-<#assign familyname = "pic32czca" />
-</#if>
 
 <#if ENABLE_SCROLLER == true>
 <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>
