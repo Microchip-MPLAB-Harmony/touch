@@ -179,7 +179,7 @@
                 },
                 {
                     "symbol":"GCLK_ID_34_GENSEL", 
-                    "value":1, 
+                    "value":2, 
                     "componentId":"core", 
                      "name":"Generic Clock Generator 34 (GCLK34)"
                 },

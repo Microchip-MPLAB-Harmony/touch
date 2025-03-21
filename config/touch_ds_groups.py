@@ -529,7 +529,7 @@ class classTouchDSGroup():
                     shieldY = drivenShieldDedicatedPin.getValue()
                     shieldY = drivenShieldDedicatedPin.getKeyValue(shieldY)
                     shieldPins.append(shieldY)
-                    print ("Dedicated Shield pins = "+ str(shieldPins))
+                    # print ("Dedicated Shield pins = "+ str(shieldPins))
 
                 if (enableDrivenShieldAdjacent == True):
                     lump_feature = lump_symbol.getValue()
@@ -559,10 +559,10 @@ class classTouchDSGroup():
                             if (i != j):
                                 shieldY = yconfig[j]
                                 shieldPins.append(shieldY)
-                                print ("Adjacent Shield pins = "+ str(shieldPins))
+                                # print ("Adjacent Shield pins = "+ str(shieldPins))
                 if(shieldPins != []):
                     drivenPin = "|".join(shieldPins)
-                    print ("Drive pins = "+ str(drivenPin))
+                    # print ("Drive pins = "+ str(drivenPin))
                 else:
                     drivenPin = "X_NONE"
                     print ("Drive pins = NONE")
@@ -606,17 +606,17 @@ class classTouchDSGroup():
                     shieldY = drivenShieldDedicatedPin.getValue()
                     shieldY = drivenShieldDedicatedPin.getKeyValue(shieldY)
                     shieldPins.append(shieldY)
-                    print ("Dedicated Shield pins = "+ str(shieldPins))
+                    # print ("Dedicated Shield pins = "+ str(shieldPins))
 
                 if (enableDrivenShieldAdjacent == True):
                     for j in range(0,totalChannelCount):
                         if (i != j):
                             shieldY = yconfig[j]
                             shieldPins.append(shieldY)
-                            print ("Adjacent Shield pins = "+ str(shieldPins))
+                            # print ("Adjacent Shield pins = "+ str(shieldPins))
                 if(shieldPins != []):
                     drivenPin = "|".join(shieldPins)
-                    print ("Drive pins = "+ str(drivenPin))
+                    # print ("Drive pins = "+ str(drivenPin))
                 else:
                     drivenPin = "X_NONE"
                     print ("Drive pins = NONE")
