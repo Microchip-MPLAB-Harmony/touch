@@ -15,12 +15,12 @@
         "low_power_software": true,
         "low_power_event": false,
         "xy_multiplex":false,
-        "lump_mode": true,
+        "lump_mode": false,
         "boost_mode": false,
         "boost_mode_global": false,
         "wake_up":false,
         "ptc_prescaler":false,
-        "trust_zone":true,
+        "trust_zone":false,
         "unidirectionalTune":true,
         "bidirectionalTune":false,
         "noStandbydevice":false
@@ -49,16 +49,6 @@
             "min": 0,
             "max": 255,
             "default": 30
-        },
-        "series_resistor": {
-            "component_values": [
-                0,
-                10,
-                20,
-                50,
-                100
-            ],
-            "default_index": 0
         },
         "analog_gain": {
             "component_values": [

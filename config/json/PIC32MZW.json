@@ -46,7 +46,7 @@
         "csd": {
             "min": 0,
             "max": 255,
-            "default": 4
+            "default": 30
         },
 
         "analog_gain": {

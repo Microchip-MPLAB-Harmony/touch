@@ -47,16 +47,6 @@
             "max": 255,
             "default": 30
         },
-        "series_resistor": {
-            "component_values": [
-                0,
-                10,
-                20,
-                50,
-                100
-            ],
-            "default_index": 0
-        },
         "analog_gain": {
             "component_values": [
                 1,
