@@ -508,7 +508,6 @@ class classTouchDSGroup():
         """
         print("Updating shield lumps")
         component= symbol.getComponent()
-        currentVal = int(event['symbol'].getValue())
         enableDrivenShieldAdjacent = False
         if instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35", "PIC32MZW"]:
             enableDrivenShieldAdjacent = False

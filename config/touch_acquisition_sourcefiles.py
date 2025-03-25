@@ -531,13 +531,15 @@ class classTouchAcquisitionSourceFiles():
         Returns:
             :none
         """
+        library_list=self.json_data["acquisition"]["file_names"]["library_files"]
         localcomponent = symbol.getComponent()
-        touchAcqLibraryFile = localcomponent.getSymbolByID("TOUCH_ACQ_LIB")
-        touchAcqAutoLibraryFile = localcomponent.getSymbolByID("TOUCH_ACQ_AUTO_LIB")
+        for i in range(len(library_list)):
+            touchAcqLibraryFile = localcomponent.getSymbolByID("TOUCH_ACQ_LIB"+str(i+1))
+            touchAcqAutoLibraryFile = localcomponent.getSymbolByID("TOUCH_ACQ_AUTO_LIB"+str(i+1))
 
-        if(event["value"] == 0):
-            touchAcqAutoLibraryFile.setEnabled(False)
-            touchAcqLibraryFile.setEnabled(True)
-        else:
-            touchAcqAutoLibraryFile.setEnabled(True)
-            touchAcqLibraryFile.setEnabled(False)
+            if(event["value"] == 0):
+                touchAcqAutoLibraryFile.setEnabled(False)
+                touchAcqLibraryFile.setEnabled(True)
+            else:
+                touchAcqAutoLibraryFile.setEnabled(True)
+                touchAcqLibraryFile.setEnabled(False)
