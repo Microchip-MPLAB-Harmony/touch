@@ -138,6 +138,11 @@
     "clock_config":{
         "settings": [ 
             {
+                "symbol":"GCLK_ID_31_GENSEL", 
+                "value":1, 
+                "componentId":"core", 
+                 "name":"Generic Clock Generator 31 (GCLK31)"
+            },{
                 "symbol":"GCLK_INST_NUM1", 
                 "value":"True", 
                 "componentId":"core", 

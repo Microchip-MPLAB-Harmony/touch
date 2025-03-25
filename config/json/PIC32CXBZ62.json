@@ -12,7 +12,7 @@
         "gesture": true,
         "frequency_hop": true,
         "frequency_hop_auto": true,
-        "low_power_software": false,
+        "low_power_software": true,
         "low_power_event": false,
         "xy_multiplex":false,
         "lump_mode": true,

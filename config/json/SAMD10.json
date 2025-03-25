@@ -16,7 +16,7 @@
         "ptc_prescaler":true,
         "low_power_software": true,
         "low_power_event": false,
-        "xy_multiplex":true,
+        "xy_multiplex":false,
         "lump_mode": true,
         "boost_mode": false,
         "boost_mode_global": false,

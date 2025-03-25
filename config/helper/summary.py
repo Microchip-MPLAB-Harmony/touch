@@ -48,6 +48,8 @@ def generate_nested_table_html(table_data):
     values = []
 
     for key, value in table_data.items():
+        if isinstance(value, (int, float)):
+            continue
         if isinstance(value, dict):
             if 'min' in value and 'max' in value and 'default' in value:
                 headers.append((key.replace('_', ' ').title(), 3))
