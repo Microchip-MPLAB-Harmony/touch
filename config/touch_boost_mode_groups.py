@@ -226,25 +226,6 @@ class classTouchBoostModeGroups():
                 localComponent.getSymbolByID("MODULE_ID").setValue(self.json_data["acquisition"]["boost_mode"]["module_id"])
                 boostModeEnabled = True
 
-        # if(targetDevice in ["SAML10","SAML11","SAML1xE"]):
-        #     if localComponent.getSymbolByID("ENABLE_BOOST").getValue():
-        #         localComponent.getSymbolByID("MODULE_ID").setValue("0x0033")
-        #         boostModeEnabled = True
-        #     else:
-        #         localComponent.getSymbolByID("MODULE_ID").setValue("0x0027")
-        # if(targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
-        #     if localComponent.getSymbolByID("ENABLE_BOOST").getValue():
-        #         localComponent.getSymbolByID("MODULE_ID").setValue("0x0049")
-        #         boostModeEnabled = True
-        #     else:
-        #         localComponent.getSymbolByID("MODULE_ID").setValue("0x004a")
-        # if(targetDevice in ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
-        #     if localComponent.getSymbolByID("ENABLE_BOOST").getValue():
-        #         localComponent.getSymbolByID("MODULE_ID").setValue("0x004f")
-        #         boostModeEnabled = True
-        #     else:
-        #         localComponent.getSymbolByID("MODULE_ID").setValue("0x004e")
-
         if not boostModeEnabled:
             return
 

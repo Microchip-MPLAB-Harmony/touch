@@ -75,22 +75,10 @@ class classTouchInterface():
         releaseVersion = "v3.18.0"
         releaseYear    = "2025"
 
-        # devicesNode = ATDF.getNode("/avr-tools-device-file/devices")
-        # deviceVariant = ATDF.getNode("/avr-tools-device-file/variants").getChildren()
-
-
         # self.deviceChild = devicesNode.getChildren()
         self.deviceName = json_loader_instance.get_deviceName()
         self.deviceSeries = json_loader_instance.get_deviceSeries()
         self.deviceVariant = json_loader_instance.get_deviceVariant()
-        # if self.deviceSeries == "PIC32CMLS60":
-        #     self.deviceSeries = "PIC32CMLS00"
-        # if self.deviceSeries == "PIC32MZ":
-        #     self.deviceSeries = self.deviceChild[0].getAttribute("family")
-
-        # deviceArchictecture = self.deviceChild[0].getAttribute("architecture")
-        # deviceFamily = self.deviceChild[0].getAttribute("family")
-
 
         getDeviceSeries = qtouchComponent.createStringSymbol("DEVICE_NAME", touchMenu)
         getDeviceSeries.setDefaultValue(self.deviceSeries)

@@ -63,42 +63,6 @@ class classTouchScrollerSourceFiles():
         scrollerLibraryFile.setSourcePath("/src/libraries/qtm_scroller_"+architechture+"_0x000b.X.a")
         scrollerLibraryFile.setOutputName("qtm_scroller_"+architechture+"_0x000b.X.a")
 
-        # if (targetDevice in ["SAME51","SAME53","SAME54","SAMD51","PIC32CXBZ31","WBZ35"]):
-        #     scrollerLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SCR_LIB", None)
-        #     scrollerLibraryFile.setSourcePath("/src/libraries/qtm_scroller_cm4_0x000b.X.a")
-        #     scrollerLibraryFile.setOutputName("qtm_scroller_cm4_0x000b.X.a")
-        #     scrollerLibraryFile.setDestPath("/touch/lib/")
-        #     scrollerLibraryFile.setEnabled(False)
-        # elif (targetDevice in ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00"]):
-        #     scrollerLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SCR_LIB", None)
-        #     scrollerLibraryFile.setSourcePath("/src/libraries/qtm_scroller_cm23_0x000b.X.a")
-        #     scrollerLibraryFile.setOutputName("qtm_scroller_cm23_0x000b.X.a")
-        #     scrollerLibraryFile.setDestPath("/touch/lib/")
-        #     scrollerLibraryFile.setEnabled(False)
-        # elif (targetDevice in ["PIC32MZW", "PIC32MZDA"]):
-        #     scrollerLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SCR_LIB", None)
-        #     scrollerLibraryFile.setSourcePath("/src/libraries/qtm_scroller_pic32mz_0x000b.X.a")
-        #     scrollerLibraryFile.setOutputName("qtm_scroller_pic32mz_0x000b.X.a")
-        #     scrollerLibraryFile.setDestPath("/touch/lib/")
-        #     scrollerLibraryFile.setEnabled(False)
-        # elif (targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
-        #     scrollerLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SCR_LIB", None)
-        #     scrollerLibraryFile.setSourcePath("/src/libraries/qtm_scroller_pic32cz_0x000b.X.a")
-        #     scrollerLibraryFile.setOutputName("qtm_scroller_pic32cz_0x000b.X.a")
-        #     scrollerLibraryFile.setDestPath("/touch/lib/")
-        #     scrollerLibraryFile.setEnabled(False)
-        # elif (targetDevice in ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]):
-        #     scrollerLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SCR_LIB", None)
-        #     scrollerLibraryFile.setSourcePath("/src/libraries/qtm_scroller_cm33_0x000b.X.a")
-        #     scrollerLibraryFile.setOutputName("qtm_scroller_cm33_0x000b.X.a")
-        #     scrollerLibraryFile.setDestPath("/touch/lib/")
-        #     scrollerLibraryFile.setEnabled(False)
-        # else:
-        #     scrollerLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_SCR_LIB", None)
-        #     scrollerLibraryFile.setSourcePath("/src/libraries/qtm_scroller_cm0p_0x000b.X.a")
-        #     scrollerLibraryFile.setOutputName("qtm_scroller_cm0p_0x000b.X.a")
-        #     scrollerLibraryFile.setDestPath("/touch/lib/")
-        #     scrollerLibraryFile.setEnabled(False)
         return scrollerLibraryFile
 
     def setScrollerHeaderFile(self,configName, qtouchComponent):

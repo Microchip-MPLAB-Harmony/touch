@@ -48,7 +48,9 @@ Microchip or any third party.
 	</#if>
 </#list>
 #include <definitions.h>
+<#if DS_PLUS_ENABLE == true>
 extern uint16_t current_measure_channel;
+</#if>
 /*============================================================================
 void drivenshield_configure(void)
 ------------------------------------------------------------------------------

@@ -610,11 +610,7 @@ def instantiateComponent(qtouchComponent):
 	Returns:
 		:none
 	"""
-	#print("Version_data",json_loader_instance.get_version_data()["csd"])
 	print ("Entering initialise")
-	# if json_loader_instance.get_version_data()==None:
-	# 	return
-	# return
 	showConfiguration = False
 	configName = Variables.get("__CONFIGURATION_NAME")
 

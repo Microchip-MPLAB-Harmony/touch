@@ -40,11 +40,10 @@ class classTouchDataStreamer():
         enableDataStreamerMenu.setLabel("Enable Data Visualizer")
         enableDataStreamerMenu.setDefaultValue(False)
         enableDataStreamerMenu.setDescription("The Data Visualizer allows touch sensor debug information to be relayed on the USART interface to Data Visualizer software tool. This setting should be enabled for initial sensor tuning and can be disabled later to avoid using USART and additionally save code memory. More information can be found in Microchip Developer Help page.")
-        
+        enableDataStreamerMenu.setDependencies(self.enableDataStreamerFtlFiles,["ENABLE_DATA_STREAMER"])
 
         fileList = []
         if json_loader_instance.get_data()["features"]["unidirectionalTune"]==True:
-            enableDataStreamerMenu.setDependencies(self.enableDataStreamerFtlFiles,["ENABLE_DATA_STREAMER"])
             fileList.append(self.setDatastreamerHeader(configName, qtouchComponent))
             fileList.append(self.setDatastreamerDb(configName, qtouchComponent))
             fileList.append(self.setDatastreamerDs(configName, qtouchComponent))

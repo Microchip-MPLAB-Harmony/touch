@@ -26,18 +26,6 @@ MHC Python Interface documentation website <http://confluence.microchip.com/disp
 from json_loader import json_loader_instance
 class classTouchLP():
     def __init__(self):
-        # self.LOW_POWER_EVENTS_SUPPORTED_DEVICES =  ["SAMD20","SAMD21","SAMDA1","SAMHA1",
-        #         "SAML11","SAML1xE","SAML10",
-        #         "SAMC21","SAMC20","PIC32CMJH01","PIC32CMJH00",
-        #         "PIC32CMLE00","PIC32CMLS00",
-        #         "SAML21","SAML22","PIC32CZCA80","PIC32CZCA90"]
-        # self.LOW_POWER_SUPPORTED_DEVICES =  ["SAMD20","SAMD21","SAMDA1","SAMHA1",
-        #     "SAML11","SAML1xE","SAML10",
-        #     "SAMC21","SAMC20","PIC32CMJH01","PIC32CMJH00",
-        #     "PIC32CMLE00","PIC32CMLS00",
-        #     "SAME54","SAME53","SAME51","SAMD51",
-        #     "SAML21","SAML22",
-        #     "SAMD10","SAMD11","PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]
         self.symbolList = []
         self.depFuncName = []
         self.dependencies = []
@@ -147,30 +135,6 @@ class classTouchLP():
         # Loop through the array and format the string
         for value in low_power_array:
             lowPowerPeriod.addKey("NODE_SCAN_"+str(value)+"MS", "NODE_SCAN_"+str(value)+"MS", str(value)+"msec")
-        # if (targetDevice in ["PIC32CZCA80", "PIC32CZCA90"]):
-        #     lowPowerPeriod.addKey("NODE_SCAN_8MS", "NODE_SCAN_8MS", "8msec")
-        #     lowPowerPeriod.addKey("NODE_SCAN_16MS", "NODE_SCAN_16MS", "16msec")
-        #     lowPowerPeriod.addKey("NODE_SCAN_32MS", "NODE_SCAN_32MS", "32msec")
-        #     lowPowerPeriod.addKey("NODE_SCAN_64MS", "NODE_SCAN_64MS", "64msec")
-        #     lowPowerPeriod.addKey("NODE_SCAN_128MS", "NODE_SCAN_128MS", "128msec")
-        #     lowPowerPeriod.addKey("NODE_SCAN_256MS", "NODE_SCAN_256MS", "256msec")
-        #     lowPowerPeriod.addKey("NODE_SCAN_512MS", "NODE_SCAN_512MS", "512msec")
-        #     lowPowerPeriod.addKey("NODE_SCAN_1024MS", "NODE_SCAN_1024MS", "1024msec")
-        #     lowPowerPeriod.setDefaultValue(2)
-        # else:
-        #     lowPowerPeriod.addKey("NODE_SCAN_4MS", "NODE_SCAN_4MS", "4msec")
-        #     lowPowerPeriod.addKey("NODE_SCAN_8MS", "NODE_SCAN_8MS", "8msec")
-        #     lowPowerPeriod.addKey("NODE_SCAN_16MS", "NODE_SCAN_16MS", "16msec")
-        #     lowPowerPeriod.addKey("NODE_SCAN_32MS", "NODE_SCAN_32MS", "32msec")
-        #     lowPowerPeriod.addKey("NODE_SCAN_64MS", "NODE_SCAN_64MS", "64msec")
-        #     lowPowerPeriod.addKey("NODE_SCAN_128MS", "NODE_SCAN_128MS", "128msec")
-        #     lowPowerPeriod.addKey("NODE_SCAN_256MS", "NODE_SCAN_256MS", "256msec")
-        #     lowPowerPeriod.addKey("NODE_SCAN_512MS", "NODE_SCAN_512MS", "512msec")
-        #     if (targetDevice not in ["SAMD20","SAMD21","SAMDA1","SAMHA1"]):
-        #         lowPowerPeriod.addKey("NODE_SCAN_1024MS", "NODE_SCAN_1024MS", "1024msec")
-        #         lowPowerPeriod.setDefaultValue(3)
-        #     else:
-        #         lowPowerPeriod.setDefaultValue(4)
         lowPowerPeriod.setDefaultValue(self.json_data["acquisition"]["event_system_low_power"]["default_index"])
         lowPowerPeriod.setOutputMode("Value")
         lowPowerPeriod.setDisplayMode("Description")

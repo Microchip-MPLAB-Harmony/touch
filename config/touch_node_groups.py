@@ -231,25 +231,6 @@ class classTouchNodeGroups():
                 self.setPTCPresscalerValues(touchPTCPrescaler)
             self.setAnalogGainValues(touchAnalogGain)
             self.setDigitalFilterGainValues(touchDigitalFilterGain)
-            #PTC Clock Prescaler
-            # if(rSelMode == "e5x"):
-            #     self.setPTCPresscalerValuesE5x(touchPTCPrescaler)
-            # elif(rSelMode == "pic32cz"):
-            #     self.setPTCPresscalerValuesCZ(touchPTCPrescaler)
-            # else:
-            #     if instances['interfaceInst'].getDeviceSeries() not in instances['target_deviceInst'].picDevices:
-            #         self.setPTCPresscalerValues(touchPTCPrescaler)
-            #Analog Gain
-            # if(rSelMode == "pic32cz"):
-            #     self.setAnalogGainValuesCZ(touchAnalogGain)
-            # else:
-            #     self.setAnalogGainValues(touchAnalogGain)
-            #Digital Filter Gain - Accumulated sum is scaled to Digital Gain
-            # if(rSelMode == "pic32cz"):
-            #     self.setDigitalFilterGainValuesCZ(touchDigitalFilterGain)
-            # else:
-            #     self.setDigitalFilterGainValues(touchDigitalFilterGain)
-            #Digital Filter Oversampling - Number of samples for each measurement
             self.setDigitalFilterOversamplingValues(touchDigitalFilterOversampling)
             # X and Y assignment
 
@@ -431,46 +412,6 @@ class classTouchNodeGroups():
         touchSeriesResistor.setDisplayMode("Description")
         touchSeriesResistor.setDescription("Selection for internal series resistor.Higher series resistor provides higher noise immunity and requires long time for charging. This could affect response time. So, series resistor should be selected optimally.")
 
-    # def setSeriesRValuesE5x(self,touchSeriesResistor):
-    #     """Populate the series resistor symbol for d5x,e5x devices
-    #     Arguments:
-    #         :touchSeriesResistor : symbol to be populated
-    #     Returns:
-    #         none
-    #     """
-    #     touchSeriesResistor.setLabel("Series Resistor")
-    #     touchSeriesResistor.addKey("RES0", "RSEL_VAL_0", "No resistor")
-    #     touchSeriesResistor.addKey("RES3", "RSEL_VAL_3", "3")
-    #     touchSeriesResistor.addKey("RES6", "RSEL_VAL_6", "6 k")
-    #     touchSeriesResistor.addKey("RES20", "RSEL_VAL_20", "20 k")
-    #     touchSeriesResistor.addKey("RES50", "RSEL_VAL_50", "50 k")
-    #     touchSeriesResistor.addKey("RES75", "RSEL_VAL_75", "75 k")
-    #     touchSeriesResistor.addKey("RES100", "RSEL_VAL_100", "100 k")
-    #     touchSeriesResistor.addKey("RES200", "RSEL_VAL_200", "200 k")
-    #     touchSeriesResistor.setDefaultValue(0)
-    #     touchSeriesResistor.setOutputMode("Value")
-    #     touchSeriesResistor.setDisplayMode("Description")
-    #     touchSeriesResistor.setDescription("Selection for internal series resistor.Higher series resistor provides higher noise immunity and requires long time for charging. This could affect response time. So, series resistor should be selected optimally.")
-
-    # def setSeriesRValuesL22(self,touchSeriesResistor):
-    #     """Populate the series resistor symbol for l22 devices
-    #     Arguments:
-    #         :touchSeriesResistor : symbol to be populated
-    #     Returns:
-    #         none
-    #     """
-    #     touchSeriesResistor.setLabel("Series Resistor")
-    #     touchSeriesResistor.addKey("RES0", "RSEL_VAL_0", "No resistor")
-    #     touchSeriesResistor.addKey("RES20", "RSEL_VAL_20", "20 k")
-    #     touchSeriesResistor.addKey("RES50", "RSEL_VAL_50", "50 k")
-    #     touchSeriesResistor.addKey("RES75", "RSEL_VAL_75", "75 k")
-    #     touchSeriesResistor.addKey("RES100", "RSEL_VAL_100", "100 k")
-    #     touchSeriesResistor.addKey("RES200", "RSEL_VAL_200", "200 k")
-    #     touchSeriesResistor.setDefaultValue(0)
-    #     touchSeriesResistor.setOutputMode("Value")
-    #     touchSeriesResistor.setDisplayMode("Description")
-    #     touchSeriesResistor.setDescription("Selection for internal series resistor.Higher series resistor provides higher noise immunity and requires long time for charging. This could affect response time. So, series resistor should be selected optimally.")
-
     def setPTCPresscalerValues(self,touchPTCPrescaler):
         """Populate the ptc prescaler symbol
         Arguments:
@@ -487,46 +428,6 @@ class classTouchNodeGroups():
         touchPTCPrescaler.setOutputMode("Value")
         touchPTCPrescaler.setDisplayMode("Description")
         touchPTCPrescaler.setDescription("The PTC clock is prescaled by PTC and then used for touch measurement.The PTC prescaling factor is defined by this parameter. It is recommended to configure this parameter such that the clock after the prescaler is less than or equal to 1MHz.")
-
-    # def setPTCPresscalerValuesCZ(self,touchPTCPrescaler):
-    #     """Populate the ptc prescaler symbol
-    #     Arguments:
-    #         :touchPTCPrescaler : symbol to be populated
-    #     Returns:
-    #         none
-    #     """
-    #     touchPTCPrescaler.setLabel("PTC Clock (MHz)")
-    #     touchPTCPrescaler.addKey("PRESC2", "PRSC_DIV_SEL_2", "2")
-    #     touchPTCPrescaler.addKey("PRESC4", "PRSC_DIV_SEL_4", "4")
-    #     touchPTCPrescaler.addKey("PRESC8", "PRSC_DIV_SEL_8", "8")
-    #     touchPTCPrescaler.addKey("PRESC16", "PRSC_DIV_SEL_16", "16")
-    #     touchPTCPrescaler.addKey("PRESC32", "PRSC_DIV_SEL_32", "32")
-    #     touchPTCPrescaler.setDefaultValue(0)
-    #     touchPTCPrescaler.setOutputMode("Value")
-    #     touchPTCPrescaler.setDisplayMode("Description")
-    #     touchPTCPrescaler.setDescription("The PTC clock is prescaled by PTC and then used for touch measurement.The PTC prescaling factor is defined by this parameter. It is recommended to configure this parameter such that the clock after the prescaler is less than or equal to 1MHz.")
-
-    # def setPTCPresscalerValuesE5x(self,touchPTCPrescaler):
-    #     """Populate the ptc prescaler symbol
-    #     Arguments:
-    #         :touchPTCPrescaler : symbol to be populated
-    #     Returns:
-    #         none
-    #     """
-    #     touchPTCPrescaler.setLabel("PTC Clock (MHz)")
-    #     touchPTCPrescaler.addKey("PRESC2", "PRSC_DIV_SEL_2", "2")
-    #     touchPTCPrescaler.addKey("PRESC4", "PRSC_DIV_SEL_4", "4")
-    #     touchPTCPrescaler.addKey("PRESC8", "PRSC_DIV_SEL_8", "8")
-    #     touchPTCPrescaler.addKey("PRESC16", "PRSC_DIV_SEL_16", "16")
-    #     touchPTCPrescaler.addKey("PRESC32", "PRSC_DIV_SEL_32", "32")
-    #     touchPTCPrescaler.addKey("PRESC64", "PRSC_DIV_SEL_64", "64")
-    #     touchPTCPrescaler.addKey("PRESC128", "PRSC_DIV_SEL_128", "128")
-    #     touchPTCPrescaler.addKey("PRESC256", "PRSC_DIV_SEL_256", "256")
-    #     touchPTCPrescaler.setDefaultValue(0)
-    #     touchPTCPrescaler.setOutputMode("Value")
-    #     touchPTCPrescaler.setDisplayMode("Description")
-    #     touchPTCPrescaler.setDescription("The PTC clock is prescaled by PTC and then used for touch measurement.The PTC prescaling factor is defined by this parameter. It is recommended to configure this parameter such that the clock after the prescaler is less than or equal to 1MHz.")
-
 
     def setAnalogGainValues(self,touchAnalogGain):
         """Populate the analog gain symbol
@@ -562,41 +463,7 @@ class classTouchNodeGroups():
         touchDigitalFilterGain.setOutputMode("Value")
         touchDigitalFilterGain.setDisplayMode("Description")
         touchDigitalFilterGain.setDescription("Gain setting for touch delta value. Higher gain setting increases touch delta as well as noise. So, optimum gain setting should be used.Gain should be tuned such that the touch delta is between 40~60 counts. ")
-    
-    # def setAnalogGainValuesCZ(self,touchAnalogGain):
-    #     """Populate the analog gain symbol
-    #     Arguments:
-    #         :touchPTCPrescaler : symbol to be populated
-    #     Returns:
-    #         none
-    #     """
-    #     touchAnalogGain.setLabel("Analog Gain")
-    #     touchAnalogGain.addKey("ANA_GAIN1", "GAIN_1", "1")
-    #     touchAnalogGain.addKey("ANA_GAIN2", "GAIN_2", "2")
-    #     touchAnalogGain.addKey("ANA_GAIN4", "GAIN_4", "4")
-    #     touchAnalogGain.addKey("ANA_GAIN8", "GAIN_8", "8")
-    #     touchAnalogGain.setDefaultValue(0)
-    #     touchAnalogGain.setOutputMode("Value")
-    #     touchAnalogGain.setDisplayMode("Description")
-    #     touchAnalogGain.setDescription("Gain setting for touch delta value.Higher gain setting increases touch delta as well as noise.So, optimum gain setting should be used.Gain should be tuned such that the touch delta is between 40~60 counts.")
-            
-    # def setDigitalFilterGainValuesCZ(self,touchDigitalFilterGain):
-    #     """Populate the digital gain symbol
-    #     Arguments:
-    #         :touchPTCPrescaler : symbol to be populated
-    #     Returns:
-    #         none
-    #     """
-    #     touchDigitalFilterGain.setLabel("Digital Filter Gain")
-    #     touchDigitalFilterGain.addKey("GAIN1", "GAIN_1", "1")
-    #     touchDigitalFilterGain.addKey("GAIN2", "GAIN_2", "2")
-    #     touchDigitalFilterGain.addKey("GAIN4", "GAIN_4", "4")
-    #     touchDigitalFilterGain.addKey("GAIN8", "GAIN_8", "8")
-    #     touchDigitalFilterGain.setDefaultValue(0)
-    #     touchDigitalFilterGain.setOutputMode("Value")
-    #     touchDigitalFilterGain.setDisplayMode("Description")
-    #     touchDigitalFilterGain.setDescription("Gain setting for touch delta value. Higher gain setting increases touch delta as well as noise. So, optimum gain setting should be used.Gain should be tuned such that the touch delta is between 40~60 counts. ")
-            
+                
     def setDigitalFilterOversamplingValues(self,touchDigitalFilterOversampling):
         """Populate the digital oversampling symbol
         Arguments:

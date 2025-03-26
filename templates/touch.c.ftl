@@ -263,7 +263,9 @@ static qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
 qtm_acq_node_data_t ptc_qtlib_node_stat1[DEF_NUM_CHANNELS];
 
 /* Node configurations */
-<#if ENABLE_BOOST?exists && ENABLE_BOOST == true && JSONDATA?eval.features.wake_up == true>
+<#if ENABLE_BOOST?exists && ENABLE_BOOST == true && JSONDATA?eval.features.wake_up == true && JSONDATA?eval.features.boost_mode_global == true>
+qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
+<#elseif ENABLE_BOOST?exists && ENABLE_BOOST == true && JSONDATA?eval.features.wake_up == true>
 qtm_acq_4p_${JSONDATA?eval.acquisition.file_names.node_name}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
 <#elseif ENABLE_BOOST?exists && ENABLE_BOOST == true>
 qtm_acq_4p_${JSONDATA?eval.acquisition.file_names.node_name}_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};

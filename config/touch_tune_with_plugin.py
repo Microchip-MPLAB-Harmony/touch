@@ -40,11 +40,10 @@ class classTouchTuneWithPlugin():
         enableTouchTuneMenu.setLabel("Enable Tuning With Touch Plugin")
         enableTouchTuneMenu.setDefaultValue(False)
         enableTouchTuneMenu.setDescription("The Tuning With Touch Plugin allows touch sensor debug information to be relayed on the USART interface to Tuning With Touch Plugin software tool. This setting should be enabled for initial sensor tuning and can be disabled later to avoid using USART and additionally save code memory. More information can be found in Microchip Developer Help page.")
-        
+        enableTouchTuneMenu.setDependencies(self.enableTouchTuneFtlFiles,["ENABLE_TOUCH_TUNE_WITH_PLUGIN"])
 
         fileList = []
         if json_loader_instance.get_data()["features"]["bidirectionalTune"]==True:
-            enableTouchTuneMenu.setDependencies(self.enableTouchTuneFtlFiles,["ENABLE_TOUCH_TUNE_WITH_PLUGIN"])
             fileList.append(self.setTouchTuneHeader(configName, qtouchComponent))
             fileList.append(self.setTouchTuneSource(configName, qtouchComponent))
         return fileList

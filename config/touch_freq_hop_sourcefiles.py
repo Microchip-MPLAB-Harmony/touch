@@ -71,24 +71,6 @@ class classTouchFreqSourceFiles():
         freqHopLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_"+architechture+"_0x0006.X.a")
         freqHopLibraryFile.setOutputName("qtm_freq_hop_"+architechture+"_0x0006.X.a")
         
-        # if (targetDevice in set(["SAME51","SAME53","SAME54","SAMD51","PIC32CXBZ31","WBZ35"])):    
-        #     freqHopLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_cm4_0x0006.X.a")
-        #     freqHopLibraryFile.setOutputName("qtm_freq_hop_cm4_0x0006.X.a")
-        # elif(targetDevice in set(["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00"])):
-        #     freqHopLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_cm23_0x0006.X.a")
-        #     freqHopLibraryFile.setOutputName("qtm_freq_hop_cm23_0x0006.X.a")
-        # elif (targetDevice in set(["PIC32MZW", "PIC32MZDA"])):
-        #     freqHopLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_pic32mz_0x0006.X.a")
-        #     freqHopLibraryFile.setOutputName("qtm_freq_hop_pic32mz_0x0006.X.a")
-        # elif (targetDevice in set(["PIC32CZCA80", "PIC32CZCA90"])):
-        #     freqHopLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_pic32cz_0x0006.X.a")
-        #     freqHopLibraryFile.setOutputName("qtm_freq_hop_pic32cz_0x0006.X.a")
-        # elif(targetDevice in set(["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"])):
-        #     freqHopLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_cm33_0x0006.X.a")
-        #     freqHopLibraryFile.setOutputName("qtm_freq_hop_cm33_0x0006.X.a")
-        # else:
-        #     freqHopLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_cm0p_0x0006.X.a")
-        #     freqHopLibraryFile.setOutputName("qtm_freq_hop_cm0p_0x0006.X.a")
         return freqHopLibraryFile
 
     # freqHopAutoLibraryFile
@@ -108,25 +90,7 @@ class classTouchFreqSourceFiles():
         architechture=json_loader_instance.get_architecture()
         freqHopAutoLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_auto_"+architechture+"_0x0004.X.a")
         freqHopAutoLibraryFile.setOutputName("qtm_freq_hop_auto_"+architechture+"_0x0004.X.a")
-    
-        # if (targetDevice in set(["SAME51","SAME53","SAME54","SAMD51","PIC32CXBZ31","WBZ35"])):    
-        #     freqHopAutoLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_auto_cm4_0x0004.X.a")
-        #     freqHopAutoLibraryFile.setOutputName("qtm_freq_hop_auto_cm4_0x0004.X.a")
-        # elif(targetDevice in set(["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00"])):
-        #     freqHopAutoLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_auto_cm23_0x0004.X.a")
-        #     freqHopAutoLibraryFile.setOutputName("qtm_freq_hop_auto_cm23_0x0004.X.a")
-        # elif (targetDevice in set(["PIC32MZW", "PIC32MZDA"])):
-        #     freqHopAutoLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_auto_pic32mz_0x0004.X.a")
-        #     freqHopAutoLibraryFile.setOutputName("qtm_freq_hop_auto_pic32mz_0x0004.X.a")
-        # elif (targetDevice in set(["PIC32CZCA80", "PIC32CZCA90"])):
-        #     freqHopAutoLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_auto_pic32cz_0x0004.X.a")
-        #     freqHopAutoLibraryFile.setOutputName("qtm_freq_hop_auto_pic32cz_0x0004.X.a")          
-        # elif(targetDevice in set(["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"])):
-        #     freqHopAutoLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_auto_cm33_0x0004.X.a")
-        #     freqHopAutoLibraryFile.setOutputName("qtm_freq_hop_auto_cm33_0x0004.X.a")  
-        # else:
-        #     freqHopAutoLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_auto_cm0p_0x0004.X.a")
-        #     freqHopAutoLibraryFile.setOutputName("qtm_freq_hop_auto_cm0p_0x0004.X.a")
+
         return freqHopAutoLibraryFile
 
     # freqHopHeaderFile
