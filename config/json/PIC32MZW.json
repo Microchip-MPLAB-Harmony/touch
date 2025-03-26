@@ -39,7 +39,7 @@
         "file_names": {
             "node_name":"pic32mzw",
             "library_files": ["hcvd_driver_PIC32MZ1025W104.c"],
-            "header_files": ["hcvd_driver_PIC32MZ1025W104.h"]
+            "header_files": ["hcvd_driver_PIC32MZ1025W104.h", "qtm_acq_pic32mzw_0x003e_api.h"]
         }
     },
     "node": {

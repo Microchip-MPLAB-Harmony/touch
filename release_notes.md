@@ -2,6 +2,19 @@
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 #  Microchip MPLAB® Harmony 3 Touch Library Release Notes
+## Touch Library v3.18.0 Release
+### NEW FEATURES SUPPORTED
+* Added Touch Library support for PIC32CM[3204|6408]JH000[32|48|64] devices.
+* Added Touch Library support for PIC32CM-GV Family of Microcontrollers.
+### BUG FIXES
+* Resolved issue related to sync busy code missing for TC/TCC in timer-based Driven Shield projects.
+* Resolved touch library path issues for TrustZone® devices.
+### DEVELOPMENT TOOLS
+* MPLAB® X IDE v6.25 or higher
+* MPLAB® XC32 C/C++ Compiler v4.60
+* MPLAB® X IDE plug-ins:
+  * MPLAB® Code Configurator (MCC)
+  * MCC Plugin v5.5.1
 
 ## Touch Library v3.17.0 Release 
 ### NEW FEATURES SUPPORTED 
