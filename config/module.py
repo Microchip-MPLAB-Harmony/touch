@@ -65,7 +65,10 @@ def loadModule():
     
     deviceChild = deviceNode.getChildren()
     deviceName = deviceChild[0].getAttribute("name")
-    deviceVariant=deviceVariant[0].getAttribute("pinout")
+    if deviceVariant[0].getAttribute("pinout") is not None:
+        deviceVariant=deviceVariant[0].getAttribute("pinout")
+    elif deviceVariant[0].getAttribute("package") is not None:
+        deviceVariant=deviceVariant[0].getAttribute("package")
     deviceSeries=str(deviceChild[0].getAttribute("series"))
     if deviceSeries == "PIC32MZ":
         deviceSeries = deviceChild[0].getAttribute("family")

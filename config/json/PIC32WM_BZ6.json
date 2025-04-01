@@ -36,7 +36,7 @@
             "default": 20
         },
         "file_names": {
-            "node_name":"pic32wm",
+            "node_name":"pic32cx",
             "library_files": ["hcvd_driver_PIC32CX.c"],
             "header_files": ["hcvd_driver_PIC32CX.h.ftl","qtm_acq_pic32cx_0x003e_api.h"]
         }

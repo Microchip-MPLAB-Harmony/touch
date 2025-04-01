@@ -509,7 +509,7 @@ class classTouchDSGroup():
         print("Updating shield lumps")
         component= symbol.getComponent()
         enableDrivenShieldAdjacent = False
-        if instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35", "PIC32MZW"]:
+        if self.json_data["features"]["core"]=="CVD" and self.json_data["features"]["hardware_shield"]==True:
             enableDrivenShieldAdjacent = False
         else:
             enableDrivenShieldAdjacent = component.getSymbolByID("DS_ADJACENT_SENSE_LINE_AS_SHIELD").getValue()
@@ -586,7 +586,7 @@ class classTouchDSGroup():
         component= symbol.getComponent()
         currentVal = int(event['symbol'].getValue())
         enableDrivenShieldAdjacent = False
-        if instances['interfaceInst'].getDeviceSeries() in ["PIC32CXBZ31", "WBZ35", "PIC32MZW"]:
+        if self.json_data["features"]["core"]=="CVD" and self.json_data["features"]["hardware_shield"]==True:
             enableDrivenShieldAdjacent = False
         else:
             enableDrivenShieldAdjacent = component.getSymbolByID("DS_ADJACENT_SENSE_LINE_AS_SHIELD").getValue()

@@ -54,7 +54,14 @@ extern "C" {
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 #include "${JSONDATA?eval.acquisition.boost_mode.header_files[0]}"
 <#else>
-#include "${JSONDATA?eval.acquisition.file_names.header_files[0]}"
+<#-- Assign the node name to a variable -->
+<#assign header_files = JSONDATA?eval.acquisition.file_names.header_files[0] />
+<#-- Check if the header files ends with ".ftl" -->
+<#if header_files?ends_with(".ftl")>
+<#-- Trim the ".ftl" extension -->
+<#assign header_files =header_files?substring(0, header_files?length - 4) />
+</#if>
+#include "${header_files}"
 </#if>
 #include "qtm_touch_key_0x0002_api.h"
 <#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>

@@ -120,6 +120,14 @@ class classTouchTargetDevice():
         uni_tune = qtouchComponent.createBooleanSymbol("ENABLE_DATA_STREAMER_UNI", touchMenu)
         uni_tune.setVisible(False)
         uni_tune.setDefaultValue(self.json_data["features"]["unidirectionalTune"])
+        
+        mutual = qtouchComponent.createBooleanSymbol("MUTUAL_SUPPORT", touchMenu)
+        mutual.setVisible(False)
+        mutual.setDefaultValue(self.json_data["features"]["mutual"])
+ 
+        lump = qtouchComponent.createBooleanSymbol("LUMP_SUPPORT", touchMenu)
+        lump.setVisible(False)
+        lump.setDefaultValue(self.json_data["features"]["lump_mode"])
 
     def setPTCInterruptVector(self,Database,targetDevice):
         """
