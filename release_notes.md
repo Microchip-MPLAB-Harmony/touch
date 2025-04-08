@@ -2,6 +2,11 @@
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 #  Microchip MPLAB® Harmony 3 Touch Library Release Notes
+
+## Touch Library v3.18.1 Release
+### BUG FIXES
+* Resolved issue related to touch configurator not loading for PIC32WM_BZ6204
+
 ## Touch Library v3.18.0 Release
 ### NEW FEATURES SUPPORTED
 * Added Touch Library support for PIC32CM[3204|6408]JH000[32|48|64] devices.
