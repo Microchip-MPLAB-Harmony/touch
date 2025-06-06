@@ -98,14 +98,27 @@ class classTouchTuneWithPlugin():
         """
         component = symbol.getComponent()
         surfaceUtility = symbol.getComponent().getSymbolByID("ENABLE_KRONOCOMM").getValue()
-        if(event["value"] == True):
+        if event["value"] == True:
             component.setDependencyEnabled("Touch_sercom_Krono", True)
-            component.getSymbolByID("TOUCH_SERCOM_KRONO_INSTANCE").setVisible(True)
-            component.getSymbolByID("TOUCH_TUNE_WITH_PLUGIN_SOURCE").setEnabled(True)
-            component.getSymbolByID("TOUCH_TUNE_WITH_PLUGIN_HEADER").setEnabled(True)
+            symbol_instance = component.getSymbolByID("TOUCH_SERCOM_KRONO_INSTANCE")
+            if symbol_instance is not None:
+                symbol_instance.setVisible(True)
+            symbol_source = component.getSymbolByID("TOUCH_TUNE_WITH_PLUGIN_SOURCE")
+            if symbol_source is not None:
+                symbol_source.setEnabled(True)
+            symbol_header = component.getSymbolByID("TOUCH_TUNE_WITH_PLUGIN_HEADER")
+            if symbol_header is not None:
+                symbol_header.setEnabled(True)
         else:
-            if (surfaceUtility == False):
+            if surfaceUtility == False:
                 component.setDependencyEnabled("Touch_sercom_Krono", False)
-                component.getSymbolByID("TOUCH_SERCOM_KRONO_INSTANCE").setVisible(False)
-            component.getSymbolByID("TOUCH_TUNE_WITH_PLUGIN_SOURCE").setEnabled(False)
-            component.getSymbolByID("TOUCH_TUNE_WITH_PLUGIN_HEADER").setEnabled(False)
+                symbol_instance = component.getSymbolByID("TOUCH_SERCOM_KRONO_INSTANCE")
+                if symbol_instance is not None:
+                    symbol_instance.setVisible(False)
+            symbol_source = component.getSymbolByID("TOUCH_TUNE_WITH_PLUGIN_SOURCE")
+            if symbol_source is not None:
+                symbol_source.setEnabled(False)
+            symbol_header = component.getSymbolByID("TOUCH_TUNE_WITH_PLUGIN_HEADER")
+            if symbol_header is not None:
+                symbol_header.setEnabled(False)
+
