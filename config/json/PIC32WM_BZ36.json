@@ -79,13 +79,12 @@
             ],
             "default_index": 4
         },
-
             "versions":{
                 "manual":1.0, 
                 "auto":1.0
             }
     },
-    "clock_config":{
+     "clock_config":{
         "settings": [ 
             {
                 "symbol":"ADCHS_7_ENABLE", 
