@@ -42,9 +42,9 @@
             "default": 7
         },
         "file_names": {
-            "node_name":"pic32cxsg41",
+            "node_name":"pic32cxsg",
             "library_files": ["qtm_acq_pic32cxsg41_0x000f.X.a"],
-            "header_files": ["qtm_acq_pic32cxsg41_0x000f_api.h" ,"qtm_acq_same54_0x000f_api.h"],
+            "header_files": ["qtm_acq_pic32cxsg_0x000f_api.h" ,"qtm_acq_same54_0x000f_api.h"],
             "bidirectionalTune_name": "same5x"
         }
 
