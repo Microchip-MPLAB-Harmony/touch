@@ -3,6 +3,20 @@
 
 #  Microchip MPLAB® Harmony 3 Touch Library Release Notes
 
+## Touch Library v3.19.0 Release
+### NEW FEATURES SUPPORTED
+* Added Touch Library support for new devices in the PIC32CX SG (ARIEL) family of microcontrollers.
+* Extended Touch Library support to additional WSG device variants, including PIC32CXBZ36 and PIC32WM_BZ36.
+* Updated the acquisition library for SAMC21, SAMD21, SAMDA1, SAMHA1, and PIC32CMJH device families.
+### BUG FIXES
+* Corrected minor wording changes in the Touch Configurator user interface.
+### DEVELOPMENT TOOLS
+* MPLAB® X IDE v6.25 or higher
+* MPLAB® XC32 C/C++ Compiler v4.60
+* MPLAB® X IDE plug-ins:
+  * MPLAB® Code Configurator (MCC)
+  * MCC Plugin v5.6.2
+
 ## Touch Library v3.18.1 Release
 ### BUG FIXES
 * Resolved issue related to touch configurator not loading for PIC32WM_BZ6204
