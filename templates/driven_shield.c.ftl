@@ -73,7 +73,7 @@ Microchip or any third party.
 <#elseif DEVICE_NAME == "SAML21">
 	<#assign prescaler_value = "0, 3, 2, 3" >
 <#else>
-<#list ["SAME54","SAME53","SAME51","SAMD51"] as i>
+<#list ["SAME54","SAME53","SAME51","SAMD51","PIC32CXSG41", "PIC32CXSG60", "PIC32CXSG61"] as i>
 	<#if DEVICE_NAME == i>
 		<#assign prescaler_value = "1, 1, 1, 1" >
 		<#assign block_transfer_count = "3" >
@@ -290,7 +290,7 @@ void drivenshield_start(uint8_t csd, uint8_t sds, uint8_t prescaler, ${data_type
 	</#if>
 </#if>
 
-<#list ["SAME54", "SAME53", "SAME51", "SAMD51"] as i>
+<#list ["SAME54", "SAME53", "SAME51", "SAMD51", "PIC32CXSG41", "PIC32CXSG60", "PIC32CXSG61"] as i>
 <#if DEVICE_NAME == i>
 	/* TC/TCC period value */
 	period = (uint16_t) ((uint16_t)csd + 1u);

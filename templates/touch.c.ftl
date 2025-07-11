@@ -44,7 +44,7 @@ Microchip or any third party.
 <#else>
 <#import "/eventlowpower.ftl" as eventlp>
 <#import "/softwarelowpower.ftl" as softwarelp>
-<#assign sam_e5x_devices = ["SAME54","SAME53","SAME51","SAMD51"]>
+<#assign sam_e5x_devices = ["SAME54","SAME53","SAME51","SAMD51", "PIC32CXSG41", "PIC32CXSG60", "PIC32CXSG61"]>
 <#assign sam_d2x_devices = ["SAMD21","SAMDA1","SAMD20","SAMHA1", "PIC32CMGV00"]>
 <#assign sam_d1x_devices = ["SAMD10","SAMD11"]>
 <#assign sam_c2x_devices = ["SAMC21","SAMC20","PIC32CMJH01","PIC32CMJH00"]>
