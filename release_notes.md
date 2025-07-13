@@ -5,8 +5,8 @@
 
 ## Touch Library v3.19.0 Release
 ### NEW FEATURES SUPPORTED
-* Added Touch Library support for new devices in the PIC32CX SG (ARIEL) family of microcontrollers.
-* Extended Touch Library support to additional WSG device variants, including PIC32CXBZ36 and PIC32WM_BZ36.
+* Added Touch Library support for new devices in the PIC32CX SG family of microcontrollers.
+* Extended Touch Library support to PIC32CXBZ36 and PIC32WM_BZ36.
 * Updated the acquisition library for SAMC21, SAMD21, SAMDA1, SAMHA1, and PIC32CMJH device families.
 ### BUG FIXES
 * Corrected minor wording changes in the Touch Configurator user interface.
