@@ -19,6 +19,6 @@ and microprocessor devices.  Refer to the following links for more information.
 
 * Also, refer the microchip developer pages listed under "Harmony 3 Touch Configurator" > Step by Step Examples > [Set Up the Environment](http://microchipdeveloper.com/touch:set-up-the-environment) for detailed information regarding configuring touch projects in Harmony framework.
 
-* For licensing information about contents of this module, please refer to [MPLAB Harmony License](Microchip_SLA001.md).
+* For licensing information about contents of this module, please refer to [MPLAB Harmony License](License.md).
 
 * For more information about the latest release, please refer to [Release Notes](release_notes.md).

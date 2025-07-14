@@ -9,6 +9,7 @@
 * Extended Touch Library support to PIC32CXBZ36 and PIC32WM_BZ36.
 * Updated the acquisition library for SAMC21, SAMD21, SAMDA1, SAMHA1, and PIC32CMJH device families.
 ### BUG FIXES
+* Drivenshield Plus timing synchronization has been updated for SAMD20 and PIC32CM-GV devices.
 * Corrected minor wording changes in the Touch Configurator user interface.
 ### DEVELOPMENT TOOLS
 * MPLAB® X IDE v6.25 or higher
