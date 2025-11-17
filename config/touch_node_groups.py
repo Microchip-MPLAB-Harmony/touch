@@ -315,6 +315,19 @@ class classTouchNodeGroups():
                             ptcPinValues[index].getAttribute("index"),"X"+"("+ptcPinValues[index].getAttribute("index")+")",
                             "X"+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
 
+                    if(ptcPinValues[index].getAttribute("group") == "PAD"):
+                        self.tchSelfPinSelection[len(self.tchSelfPinSelection)-1].addKey(
+                            ptcPinValues[index].getAttribute("index"),"Y"+"("+ptcPinValues[index].getAttribute("index")+")",
+                            "Y"+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
+
+                        self.tchMutYPinSelection[len(self.tchMutYPinSelection)-1].addKey(
+                            ptcPinValues[index].getAttribute("index"),"Y"+"("+ptcPinValues[index].getAttribute("index")+")",
+                            "Y"+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
+
+                        self.tchMutXPinSelection[len(self.tchMutXPinSelection)-1].addKey(
+                            ptcPinValues[index].getAttribute("index"),"X"+"("+ptcPinValues[index].getAttribute("index")+")",
+                            "X"+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
+
 
     def initNodeGroup(self,instances,qtouchComponent, touchMenu, minVal,maxVal,selfChannels,mutualChannels, ptcPinValues,csdMode,csdDefaultValue):
         """Initialise Node Groups and add to touch Module

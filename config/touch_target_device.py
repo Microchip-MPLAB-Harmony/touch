@@ -476,6 +476,9 @@ class classTouchTargetDevice():
                     elif (self.ptcPinValues[idx].getAttribute("group") in ["DRV"]):
                         if (int(self.ptcPinValues[idx].getAttribute("index")) == found):
                             sortedptcPinValues.append(self.ptcPinValues[idx])
+                    elif (self.ptcPinValues[idx].getAttribute("group") in ["PAD"]):
+                        if (int(self.ptcPinValues[idx].getAttribute("index")) == found):
+                            sortedptcPinValues.append(self.ptcPinValues[idx])
             self.ptcPinValues = sortedptcPinValues
 
             for index in range(0, len(self.ptcPinValues)):
@@ -484,6 +487,9 @@ class classTouchTargetDevice():
                 elif(self.ptcPinValues[index].getAttribute("group") == "Y"):
                     self.yPads.add(self.ptcPinValues[index].getAttribute("pad"))
                 elif(self.ptcPinValues[index].getAttribute("group") == "DRV"):
+                    self.xPads.add(self.ptcPinValues[index].getAttribute("pad"))
+                    self.yPads.add(self.ptcPinValues[index].getAttribute("pad"))
+                elif(self.ptcPinValues[index].getAttribute("group") == "PAD"):
                     self.xPads.add(self.ptcPinValues[index].getAttribute("pad"))
                     self.yPads.add(self.ptcPinValues[index].getAttribute("pad"))
 
