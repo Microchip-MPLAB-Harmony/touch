@@ -129,6 +129,28 @@ class classTouchTargetDevice():
         lump.setVisible(False)
         lump.setDefaultValue(self.json_data["features"]["lump_mode"])
 
+        if "precision" in self.json_data["acquisition"]:
+            precision = qtouchComponent.createIntegerSymbol("CC_PRECISION", touchMenu)
+            precision.setLabel("CC Precision")
+            precision.setVisible(False)
+            precision.setMin(self.json_data["acquisition"]["precision"]["min"])
+            precision.setMax(self.json_data["acquisition"]["precision"]["max"])
+            precision.setDefaultValue(self.json_data["acquisition"]["precision"]["default"])
+            precision.setDescription("Defines the CC Precision Description")
+
+        if "adc_prescaler" in self.json_data["acquisition"]:
+            adcprescaler = qtouchComponent.createKeyValueSetSymbol("ADC_PRESCALER" , touchMenu)
+            adc_array = self.json_data["acquisition"]["adc_prescaler"]["component_values"]
+            adcprescaler.setLabel("ADC Prescaler")
+            adcprescaler.setVisible(False)
+            # Loop through the array and format the string
+            for value in adc_array:
+                adcprescaler.addKey("GAIN_"+str(value), "ADC_GAIN_"+str(value), str(value)+" GAIN")
+            adcprescaler.setDefaultValue(self.json_data["acquisition"]["adc_prescaler"]["default_index"])
+            adcprescaler.setOutputMode("Value")
+            adcprescaler.setDisplayMode("Description")
+            adcprescaler.setDescription("Defines the ADC Prescaler Description")
+
     def setPTCInterruptVector(self,Database,targetDevice):
         """
         assigns the PTC interrupt handler based on targetDevice
