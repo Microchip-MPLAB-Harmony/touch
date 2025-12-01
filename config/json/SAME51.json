@@ -2,6 +2,7 @@
     "U2500_1.0.0":{
         "features": {
         "core": "ADC",
+        "shared_single_adc":false,
         "module_id": "0x000f",
         "self": true,
         "mutual": true,

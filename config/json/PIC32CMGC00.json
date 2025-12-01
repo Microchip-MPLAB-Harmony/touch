@@ -2,6 +2,7 @@
    "04743_1a0":{
     "features": {
         "core": "PTC",
+        "shared_single_adc":false,
         "module_id": "0x0053",
         "self": true,
         "mutual": true,

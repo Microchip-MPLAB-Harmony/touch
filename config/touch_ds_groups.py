@@ -87,8 +87,8 @@ class classTouchDSGroup():
                         drivenShieldDedicatedPin.addKey(ptcPininfo[index].getAttribute("index"),ptcPininfo[index].getAttribute("group")+"("+ptcPininfo[index].getAttribute("index")+")",ptcPininfo[index].getAttribute("group")+ptcPininfo[index].getAttribute("index")+ "  ("+ ptcPininfo[index].getAttribute("pad")+")")
                     if(ptcPininfo[index].getAttribute("group") == "DRV"):
                         drivenShieldDedicatedPin.addKey(ptcPininfo[index].getAttribute("index"),"Y"+"("+ptcPininfo[index].getAttribute("index")+")","Y"+ptcPininfo[index].getAttribute("index")+ "  ("+ ptcPininfo[index].getAttribute("pad")+")")
-                    if(ptcPininfo[index].getAttribute("group") == "PAD"):
-                        drivenShieldDedicatedPin.addKey(ptcPininfo[index].getAttribute("index"),"Y"+"("+ptcPininfo[index].getAttribute("index")+")","Y"+ptcPininfo[index].getAttribute("index")+ "  ("+ ptcPininfo[index].getAttribute("pad")+")")
+                    if(ptcPininfo[index].getAttribute("group") == "AIN"):
+                        drivenShieldDedicatedPin.addKey(ptcPininfo[index].getAttribute("index"),"Y"+"("+ptcPininfo[index].getAttribute("index")+")","Y"+ptcPininfo[index].getAttribute("index")+ "  ("+ ptcPininfo[index].getAttribute("pad")+")")                        
             elif json_loader_instance.get_architecture()=="cm4":
                 for index in range(0, len(ptcPininfo)):
                     if(ptcPininfo[index].getAttribute("group") == "CVDR"):

@@ -2,6 +2,7 @@
     "U2215_4.0.1":{
         "features": {
         "core": "PTC",
+        "shared_single_adc":false,
         "module_id": "0x0028",
         "self": true,
         "mutual": true,

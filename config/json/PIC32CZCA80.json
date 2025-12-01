@@ -2,6 +2,7 @@
     "03721_6a0":{
         "features": {
         "core": "PTC",
+        "shared_single_adc":false,
         "module_id": "0x0049",
         "self": true,
         "mutual": true,

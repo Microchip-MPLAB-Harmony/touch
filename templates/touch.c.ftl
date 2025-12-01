@@ -47,7 +47,7 @@ Microchip or any third party.
 <#assign sam_e5x_devices = ["SAME54","SAME53","SAME51","SAMD51", "PIC32CXSG41", "PIC32CXSG60", "PIC32CXSG61"]>
 <#assign sam_d2x_devices = ["SAMD21","SAMDA1","SAMD20","SAMHA1", "PIC32CMGV00"]>
 <#assign sam_d1x_devices = ["SAMD10","SAMD11"]>
-<#assign sam_c2x_devices = ["SAMC21","SAMC20","PIC32CMJH01","PIC32CMJH00"]>
+<#assign sam_c2x_devices = ["SAMC21","SAMC20","PIC32CMJH01","PIC32CMJH00","PIC32CMPL10"]>
 <#assign sam_l2x_devices = ["SAML21","SAML22"]>
 <#assign sam_l1x_devices = ["SAML10","SAML11","SAML1xE"]>
 <#assign pic32cm_le_devices = ["PIC32CMLE00","PIC32CMLS00","PIC32CMLS60"]>
@@ -56,6 +56,7 @@ Microchip or any third party.
 <#assign pic32cz = ["PIC32CZCA80", "PIC32CZCA90"]>
 <#assign pic32ck = ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]>
 <#assign pic32cm = ["PIC32CMGC00","PIC32CMSG00"]>
+<#assign pic32cmpl = ["PIC32CMPL10"]>
 <#assign supc_devices = ["SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMLS60","PIC32CZCA80","PIC32CZCA90"]>
 
 <#assign no_standby_during_measurement = 0>
@@ -252,6 +253,11 @@ static uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 /* Acquisition set 1 - General settings */
 static qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
     ={DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, (uint8_t)DEF_SEL_FREQ_INIT, DEF_PTC_INTERRUPT_PRIORITY, DEF_PTC_WAKEUP_EXP};
+<#elseif pic32cmpl?seq_contains(DEVICE_NAME)>
+static uint32_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
+/* Acquisition set 1 - General settings */
+static qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
+    = {DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, DEF_PTC_CAL_AUTO_TUNE, (uint8_t)DEF_SEL_FREQ_INIT, DEF_PTC_INTERRUPT_PRIORITY};
 <#else>
 static uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 /* Acquisition set 1 - General settings */
@@ -1615,7 +1621,7 @@ void touch_timer_config(void)
     {
 
     }
-<#elseif (DEVICE_NAME == "SAMC20") || (DEVICE_NAME == "SAMC21") || (DEVICE_NAME == "SAML21") || (DEVICE_NAME == "SAML22") || (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "SAML1xE")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")||(DEVICE_NAME == "PIC32CMLS60")|| (DEVICE_NAME == "PIC32CMJH01")|| (DEVICE_NAME == "PIC32CMJH00")>
+<#elseif (DEVICE_NAME == "SAMC20") || (DEVICE_NAME == "SAMC21") || (DEVICE_NAME == "PIC32CMPL10") || (DEVICE_NAME == "SAML21") || (DEVICE_NAME == "SAML22") || (DEVICE_NAME == "SAML10")||(DEVICE_NAME == "SAML11")||(DEVICE_NAME == "SAML1xE")||(DEVICE_NAME == "PIC32CMLE00")||(DEVICE_NAME == "PIC32CMLS00")||(DEVICE_NAME == "PIC32CMLS60")|| (DEVICE_NAME == "PIC32CMJH01")|| (DEVICE_NAME == "PIC32CMJH00")>
     while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_COUNT_Msk) == RTC_MODE0_SYNCBUSY_COUNT_Msk)
     {
         
@@ -1811,7 +1817,14 @@ Input  : none
 Output : none
 Notes  : none
 ============================================================================*/
-<#if JSONDATA?eval.features.core == "ADC">
+<#if JSONDATA?eval.features.shared_single_adc == true>
+void ADC0_Handler(void)
+{
+
+qtm_${JSONDATA?eval.acquisition.file_names.node_name}_ptc_handler_eoc();
+
+}
+<#elseif JSONDATA?eval.features.core == "ADC">
 void ADC0_1_Handler(void)
 {
     ADC0_REGS->ADC_INTFLAG |=1u;
@@ -1836,7 +1849,7 @@ void ADC0_1_Handler(void)
 <#else>
 void PTC_Handler(void)
 {
-	qtm_ptc_clear_interrupt();
+qtm_ptc_clear_interrupt();
 <#if DS_DEDICATED_ENABLE??|| DS_PLUS_ENABLE??>
 <#if DS_DEDICATED_ENABLE == true || DS_PLUS_ENABLE == true>
 #if (DEF_ENABLE_DRIVEN_SHIELD == 1u)

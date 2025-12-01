@@ -3,6 +3,7 @@
         "features": {
         "core": "PTC",
         "module_id": "0x004e",
+        "shared_single_adc":false,
         "self": true,
         "mutual": true,
         "scroller": true,

@@ -314,8 +314,7 @@ class classTouchNodeGroups():
                         self.tchMutXPinSelection[len(self.tchMutXPinSelection)-1].addKey(
                             ptcPinValues[index].getAttribute("index"),"X"+"("+ptcPinValues[index].getAttribute("index")+")",
                             "X"+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")
-
-                    if(ptcPinValues[index].getAttribute("group") == "PAD"):
+                    if(ptcPinValues[index].getAttribute("group") == "AIN"):
                         self.tchSelfPinSelection[len(self.tchSelfPinSelection)-1].addKey(
                             ptcPinValues[index].getAttribute("index"),"Y"+"("+ptcPinValues[index].getAttribute("index")+")",
                             "Y"+ptcPinValues[index].getAttribute("index")+ "  ("+ ptcPinValues[index].getAttribute("pad")+")")

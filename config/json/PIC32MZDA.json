@@ -1,6 +1,7 @@
 {
     "features": {
         "core": "CVD",
+        "shared_single_adc":false,
         "module_id": "0x0046",
         "self": true,
         "mutual": false,

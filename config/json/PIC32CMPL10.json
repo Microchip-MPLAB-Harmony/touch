@@ -1,9 +1,9 @@
 {
-    "03721_6a0":{
+    "06273_1.a.0":{
         "features": {
-        "core": "PTC",
-        "shared_single_adc":false,
-        "module_id": "0x004e",
+        "core": "ADC",
+        "shared_single_adc":true,
+        "module_id": "0x005b",
         "self": true,
         "mutual": true,
         "scroller": true,
@@ -15,13 +15,13 @@
         "timer_shield": false,
         "csd":true,
         "ptc_prescaler":true,
-        "low_power_software": true,
-        "low_power_event": false,
+        "low_power_software": false,
+        "low_power_event": true,
         "xy_multiplex":true,
         "lump_mode": true,
-        "boost_mode": true,
+        "boost_mode": false,
         "boost_mode_global": false,
-        "wake_up":true,
+        "wake_up":false,
         "trust_zone":false,
         "unidirectionalTune":true,
         "bidirectionalTune":true,
@@ -29,7 +29,7 @@
     },
     "acquisition": {
         "tune_mode": {
-            "component_values":["CAL_AUTO_TUNE_NONE"],
+            "component_values":["CAL_AUTO_TUNE_NONE","CAL_AUTO_TUNE_PRSC","CAL_AUTO_TUNE_CSD"],
             "default_index":0
         },
         "measurement_period": {
@@ -39,31 +39,26 @@
         },
         "interrupt_priority":{
             "min": 0,
-            "max": 7,
-            "default": 7
-        },"wake_up":{
-            "min": 4,
-            "max": 15,
-            "default": 4
+            "max": 3,
+            "default": 3
         },
+        "precision":{
+            "min": 40,
+            "max": 100,
+            "default": 40
+        },        
 
         "file_names": {
-            "node_name":"pic32ck",
-            "library_files": ["qtm_acq_pic32ckgc_0x004e.X.a"],
-            "header_files": ["qtm_acq_pic32ck_0x004e_api.h"],
-            "bidirectionalTune_name": "pic32czca"
-        },
-        "boost_mode":{
-            "module_id":"0x004f",
-            "library_files": ["qtm_acq_4p_pic32ck_gc_0x004f.X.a"],
-            "header_files": ["qtm_acq_4p_pic32ck_0x004f_api.h"]
-        },
-        "supc_vreg_cpen":3
+            "node_name":"pic32cm_pl",
+            "library_files": ["qtm_acq_pic32cm_pl10_0x005b.X.a"],
+            "header_files": ["qtm_acq_pic32cm_pl10_0x005b_api.h"],
+            "bidirectionalTune_name": "samc2x"
+        }
     },
     "node": {
         "ptc_clock_range":{
-            "min":0.5,
-            "max":2.0
+            "min":0.8,
+            "max":24.0
         },
         "csd": {
             "min": 0,
@@ -73,12 +68,12 @@
         "series_resistor": {
             "component_values": [
                 0,
-                3,
-                6,
                 20,
                 50,
-                75,
+                70,
+                80,
                 100,
+                120,
                 200
             ],
             "default_index": 0
@@ -87,18 +82,30 @@
             "component_values": [
                 2,
                 4,
+                6,
                 8,
+                10,
+                12,
+                14,
                 16,
-                32
+                18,
+                20,
+                22,
+                24,
+                26,
+                28,
+                30
             ],
             "default_index": 0
         },
         "analog_gain": {
             "component_values": [
                 1,
+                1.5,
                 2,
                 4,
-                8
+                8,
+                16
             ],
             "default_index": 0
         },
@@ -107,7 +114,8 @@
                 1,
                 2,
                 4,
-                8
+                8,
+                16
             ],
             "default_index": 0
         },
@@ -119,7 +127,9 @@
                 8,
                 16,
                 32,
-                64
+                64,
+                128,
+                256
             ],
             "default_index": 4
         },
@@ -128,46 +138,28 @@
             "auto":1.0
         }
     },
-
+    
     "clock_config":{
-        
         "settings": [ 
+           
             {
-                "symbol":"GCLK_ID_35_GENSEL", 
-                "value":2, 
+                "symbol":"OSCHF_OSCHFCTRL_FREQSEL",
+                "value":"9", 
                 "componentId":"core", 
-                 "name":"Generic Clock Generator 35 (GCLK35)"
+                "name":"24 MHz output clock"
             },
-        {
-            "symbol":"GCLK_INST_NUM2", 
-            "value":"True", 
-            "componentId":"core", 
-             "name":"Select GCLK2"
-        },
-        {
-            "symbol":"GCLK_2_SRC", 
-            "value":"5", 
-            "componentId":"core", 
-             "name":"Select DFLL for GCLK2"
-        },
-        {
-            "symbol":"GCLK_2_RUNSTDBY", 
-            "value":"True", 
-            "componentId":"core", 
-             "name":"Select Run in Standby for GCLK2"
-        },
-        {
-            "symbol":"GCLK_2_DIV", 
-            "value":"12", 
-            "componentId":"core", 
-             "name":"Prescale DFLL by 12 for PTC"
-        }      
-    ],
-    "descriptions":[
-            "{Oscillator| Prescaler Divisor | Frequency},{DFLL48M| 1 | 48MHz(Open loop)}",
-            "{Generic clock(Peripherals)| Source | Frequency}, {GCLK2(PTC, UART)|DFLL48M(DIV 12)|4MHz},{(RTC)|ULP32K|1KHz}",
-            "{Wait states},{NVM states| 2}"
-    ]
-}
+            {
+                "symbol":"OSCHF_OSCHFCTRL_ONDEMAND",
+                "value":"0", 
+                "componentId":"core", 
+                "name":"Always Enable"
+            }
+        ],
+        "descriptions":[
+                "{Oscillator| Prescaler Divisor | Frequency},{OSC24M| 1 | 24MHz}",
+                "{Generic clock(Peripherals)| Source | Frequency},{GCLK0(CPU)|OSC24M| 24MHz}, {GCLK0(UART)|OSC24M| 24MHz},{Timer (RTC)|OSCULP32K|1KHz}",
+                "{Wait states},{NVM states| 2}"
+        ]
+    }
     }
 }

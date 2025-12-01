@@ -176,7 +176,11 @@ class classTouchTargetDevice():
         Returns:
             :none
         """
-        if (self.json_data["features"]["core"]=="ADC"):
+        if(self.json_data["features"]["shared_single_adc"]):
+            Database.setSymbolValue("core", "NVIC_13_0_ENABLE", True)
+            Database.setSymbolValue("core", "NVIC_13_0_HANDLER", "ADC0_Handler")            
+
+        elif (self.json_data["features"]["core"]=="ADC"):
             Database.setSymbolValue("core", "NVIC_119_0_ENABLE", True)
             Database.setSymbolValue("core", "NVIC_119_0_HANDLER", "ADC0_1_Handler")
         else:
@@ -316,7 +320,10 @@ class classTouchTargetDevice():
         ptcFreqencyId= qtouchComponent.createStringSymbol("PTC_CLOCK_FREQ", parentSymbol)
         ptcFreqencyId.setLabel("PTC Freqency Id ")
         ptcFreqencyId.setReadOnly(True)
-        if (self.json_data["features"]["core"]!="CVD"):
+        if(self.json_data["features"]["shared_single_adc"]):
+            ptcFreqencyId.setDefaultValue("ADC0_CLOCK_FREQUENCY")
+            self.addDepSymbol(ptcFreqencyId, "onPTCClock", ["core."+"ADC0_CLOCK_FREQUENCY"])        
+        elif (self.json_data["features"]["core"]!="CVD"):
             ptcFreqencyId.setDefaultValue("GCLK_ID_"+ptcClockInfo.getAttribute("value")+"_FREQ")
             self.addDepSymbol(ptcFreqencyId, "onPTCClock", ["core."+"GCLK_ID_"+ptcClockInfo.getAttribute("value")+"_FREQ"])
         else:
@@ -498,7 +505,7 @@ class classTouchTargetDevice():
                     elif (self.ptcPinValues[idx].getAttribute("group") in ["DRV"]):
                         if (int(self.ptcPinValues[idx].getAttribute("index")) == found):
                             sortedptcPinValues.append(self.ptcPinValues[idx])
-                    elif (self.ptcPinValues[idx].getAttribute("group") in ["PAD"]):
+                    elif (self.ptcPinValues[idx].getAttribute("group") in ["AIN"]):
                         if (int(self.ptcPinValues[idx].getAttribute("index")) == found):
                             sortedptcPinValues.append(self.ptcPinValues[idx])
             self.ptcPinValues = sortedptcPinValues
@@ -511,7 +518,7 @@ class classTouchTargetDevice():
                 elif(self.ptcPinValues[index].getAttribute("group") == "DRV"):
                     self.xPads.add(self.ptcPinValues[index].getAttribute("pad"))
                     self.yPads.add(self.ptcPinValues[index].getAttribute("pad"))
-                elif(self.ptcPinValues[index].getAttribute("group") == "PAD"):
+                elif(self.ptcPinValues[index].getAttribute("group") == "AIN"):
                     self.xPads.add(self.ptcPinValues[index].getAttribute("pad"))
                     self.yPads.add(self.ptcPinValues[index].getAttribute("pad"))
 
@@ -593,7 +600,11 @@ class classTouchTargetDevice():
         # self.setClockXML(qtouchComponent,touchMenu,targetDevice)
         self.setFrontendSymbol(qtouchComponent,touchMenu)
         self.setInterruptVector(Database,targetDevice)
-        if(self.json_data["features"]["core"]=="ADC"):
+        if(self.json_data["features"]["shared_single_adc"]):
+            Database.clearSymbolValue("core", "ADC0_CLOCK_ENABLE")
+            Database.setSymbolValue("core", "ADC0_CLOCK_ENABLE", True)
+
+        elif(self.json_data["features"]["core"]=="ADC"):
             self.setADCClock(Database,targetDevice)
 
         else:

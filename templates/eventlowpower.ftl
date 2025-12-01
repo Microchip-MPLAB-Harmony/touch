@@ -270,6 +270,9 @@ static qtm_auto_scan_config_t auto_scan_setup
 <#if  DEVICE_NAME == "PIC32CMJH01"|| DEVICE_NAME=="PIC32CMJH00">
 #define QTM_AUTOSCAN_TRIGGER_GENERATOR          ((uint32_t)QTM_AUTOSCAN_TRIGGER_PERIOD + 8UL)
 #define QTM_AUTOSCAN_STCONV_USER                37u
+<#elseif  DEVICE_NAME == "PIC32CMPL10">
+#define QTM_AUTOSCAN_TRIGGER_GENERATOR          ((uint32_t)QTM_AUTOSCAN_TRIGGER_PERIOD + 7UL)
+#define QTM_AUTOSCAN_STCONV_USER                15u
 <#else>
 #define QTM_AUTOSCAN_TRIGGER_GENERATOR          ((uint32_t)QTM_AUTOSCAN_TRIGGER_PERIOD + 6UL)
 #define QTM_AUTOSCAN_STCONV_USER                39u

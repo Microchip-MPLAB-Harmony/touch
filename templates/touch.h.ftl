@@ -494,7 +494,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
         <#elseif (DEVICE_NAME == "SAML21")>
             <@eventlp.lowpower_SAML21/>
             <@eventlp.lowpower_params_common/>
-        <#elseif (DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21")||(DEVICE_NAME == "PIC32CMJH01")||(DEVICE_NAME == "PIC32CMJH00")>
+        <#elseif (DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21") ||(DEVICE_NAME == "PIC32CMPL10") ||(DEVICE_NAME == "PIC32CMJH01")||(DEVICE_NAME == "PIC32CMJH00")>
             <@eventlp.lowpower_samc20_c21/>
             <@eventlp.lowpower_params_common/>
         <#elseif (DEVICE_NAME == "PIC32CZCA80")||(DEVICE_NAME == "PIC32CZCA90")>
@@ -515,8 +515,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
         <#elseif (DEVICE_NAME == "SAMD20") || (DEVICE_NAME == "PIC32CMGV00")>
             <@softwarelp.lowpower_samd20/>
             <@eventlp.lowpower_params_samdx/>
-        <#elseif (DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21")||(DEVICE_NAME == "PIC32CMJH01")||(DEVICE_NAME == "PIC32CMJH00")>
-            <@softwarelp.lowpower_samc20_c21/>
+        <#elseif (DEVICE_NAME == "SAMC20")||(DEVICE_NAME == "SAMC21") ||(DEVICE_NAME == "PIC32CMPL10") ||(DEVICE_NAME == "PIC32CMJH01")||(DEVICE_NAME == "PIC32CMJH00")>
+            <@softwarelp.lowpwer_disable_samc20_c21_no_evs/>
             <@eventlp.lowpower_params_samc2x/>
         </#if>  -->
         <@softwarelp.lowpower_params_noevs/>
