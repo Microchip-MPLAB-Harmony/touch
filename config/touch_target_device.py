@@ -145,7 +145,7 @@ class classTouchTargetDevice():
             adcprescaler.setVisible(False)
             # Loop through the array and format the string
             for value in adc_array:
-                adcprescaler.addKey("GAIN_"+str(value), "ADC_GAIN_"+str(value), str(value)+" GAIN")
+                adcprescaler.addKey("ADC_PRE_"+str(value), "ADC_PRE_"+str(value), str(value))
             adcprescaler.setDefaultValue(self.json_data["acquisition"]["adc_prescaler"]["default_index"])
             adcprescaler.setOutputMode("Value")
             adcprescaler.setDisplayMode("Description")
