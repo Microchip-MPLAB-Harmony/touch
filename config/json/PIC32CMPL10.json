@@ -46,6 +46,42 @@
             "min": 40,
             "max": 100,
             "default": 40
+        },
+        "adc_prescaler": {
+            "component_values": [
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32
+            ],
+            "default_index": 0
         },  
         "event_system_low_power":{
         "component_values": [
@@ -93,6 +129,7 @@
         },
         "ptc_prescaler": {
             "component_values": [
+                1,
                 2,
                 4,
                 6,
@@ -116,9 +153,7 @@
                 1,
                 1.5,
                 2,
-                4,
-                8,
-                16
+                4
             ],
             "default_index": 0
         },

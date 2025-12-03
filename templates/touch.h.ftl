@@ -127,6 +127,29 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  */
 #define DEF_SEL_FREQ_INIT ${DEF_SEL_FREQ_INIT}
 
+<#if (DEVICE_NAME == "PIC32CMPL10")>
+
+/* Set calibration precision.
+ * Range: 0u- 255u
+ * Default value: 40u.
+ */
+#define DEF_CAL_PRCISION ${DEF_CAL_PRCISION}u
+
+/* Set ADC interrupt priority.
+ * Range: 1u- 3u
+ * Default value: 3u.
+ */        
+#define DEF_ADC_INTERRUPT_PRIORITY  ${DEF_ADC_INTERRUPT_PRIORITY}u        
+
+/* Enable ADC voltage pump.
+ * pump must be disabled for touch while operating above 4.5V
+ * Range: 0u- disable, 1u-enable
+ * Default value: 0u.
+ */        
+#define DEF_ADC_PUMP_ENABLE  0u
+
+</#if>
+
 <#if JSONDATA?eval.features.wake_up == true>
 /* Set default wakeup exponent.
  * Range: 4u to 15u

@@ -534,7 +534,7 @@ def onPTCClock(symbol,event):
 		:none
 	"""
 
-	print "calling onPTCClock function"
+	print ("calling onPTCClock function")
 	component = symbol.getComponent()
 	if component.getSymbolValue("TOUCH_LOADED"):
 		frequency = event['symbol'].getValue()
@@ -709,6 +709,37 @@ def instantiateComponent(qtouchComponent):
 		ptcInterruptConfig.setDefaultValue(json_loader_instance.get_data()["acquisition"]["interrupt_priority"]["default"])
 		ptcInterruptConfig.setDescription("Defines the interrupt priority for the PTC. Set low priority to PTC interrupt for applications having interrupt time constraints.")
 	
+	if json_loader_instance.get_data()["features"]["shared_single_adc"]== True:		
+		ptcInterruptConfig = qtouchComponent.createIntegerSymbol("DEF_ADC_INTERRUPT_PRIORITY", touchMenu)
+		ptcInterruptConfig.setLabel("ADC Interrupt Priority")
+		# ptcInterruptMin = target_deviceInst.getMinInterrupt(device)
+		ptcInterruptConfig.setMin(json_loader_instance.get_data()["acquisition"]["interrupt_priority"]["min"])
+		# ptcInterruptMax = target_deviceInst.getMaxInterrupt(device)
+		ptcInterruptConfig.setMax(json_loader_instance.get_data()["acquisition"]["interrupt_priority"]["max"])
+		# ptcInterruptDefault= target_deviceInst.getDefaultInterrupt(device)
+		ptcInterruptConfig.setDefaultValue(json_loader_instance.get_data()["acquisition"]["interrupt_priority"]["default"])
+		ptcInterruptConfig.setDescription("Defines the interrupt priority for the ADC. Set low priority to ADC interrupt for applications having interrupt time constraints.")
+		
+		precision = qtouchComponent.createIntegerSymbol("DEF_CAL_PRCISION", touchMenu)
+		precision.setLabel("CC Precision")
+		precision.setVisible(False)
+		precision.setMin(json_loader_instance.get_data()["acquisition"]["precision"]["min"])
+		precision.setMax(json_loader_instance.get_data()["acquisition"]["precision"]["max"])
+		precision.setDefaultValue(json_loader_instance.get_data()["acquisition"]["precision"]["default"])
+		precision.setDescription("Acceptable deviation in the measured signal value")
+	
+		adcprescaler = qtouchComponent.createKeyValueSetSymbol("ADC_PRESCALER" , touchMenu)
+		adc_array = json_loader_instance.get_data()["acquisition"]["adc_prescaler"]["component_values"]
+		adcprescaler.setLabel("ADC Prescaler")
+		adcprescaler.setVisible(False)
+		# Loop through the array and format the string
+		for value in adc_array:
+			adcprescaler.addKey("GAIN_"+str(value), str(value), str(value))
+		adcprescaler.setDefaultValue(json_loader_instance.get_data()["acquisition"]["adc_prescaler"]["default_index"])
+		adcprescaler.setOutputMode("Value")
+		adcprescaler.setDisplayMode("Description")
+		adcprescaler.setDescription("The ADC clock is prescaled by ADC and then used for touch measurement.The ADC prescaling factor is defined by this parameter")	
+	
 	node_groupInst = touch_node_groups.classTouchNodeGroups()
 	qtouchInst['node_groupInst'] = node_groupInst
 	# Lump support
@@ -732,9 +763,9 @@ def instantiateComponent(qtouchComponent):
 	
 	# PinValues
 	ptcPinValues = target_deviceInst.setDevicePinValues(ATDF,True,lumpSupported,device,deviceFullName)
-	print target_deviceInst.getSelfCount()
-	print target_deviceInst.getMutualCount()
-	print ptcPinValues
+	print (target_deviceInst.getSelfCount())
+	print (target_deviceInst.getMutualCount())
+	print (ptcPinValues)
 	# Channel Limits
 	touchChannelSelf = target_deviceInst.getSelfCount()
 	touchChannelMutual = target_deviceInst.getMutualCount()

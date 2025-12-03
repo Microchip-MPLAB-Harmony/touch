@@ -103,6 +103,12 @@ Microchip or any third party.
 </#if>
 </#if>
 
+<#if pic32cmpl?seq_contains(DEVICE_NAME)>
+#include <math.h>
+#define CLK_APB 24000000ul // 24 MHz
+#define ADC_TIMEBASE_VALUE ((uint8_t) ceil(CLK_APB*0.000001))
+</#if>
+
 /*----------------------------------------------------------------------------
  *   prototypes
  *----------------------------------------------------------------------------*/
@@ -257,7 +263,14 @@ static qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
 static uint32_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 /* Acquisition set 1 - General settings */
 static qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
-    = {DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, DEF_PTC_CAL_AUTO_TUNE, (uint8_t)DEF_SEL_FREQ_INIT, DEF_PTC_INTERRUPT_PRIORITY};
+    = {DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, DEF_PTC_CAL_AUTO_TUNE, (uint8_t)DEF_SEL_FREQ_INIT, DEF_CAL_PRCISION};
+
+qtm_acq_pic32cm_pl_device_config_t acq_adc_config = { 
+    .adc_interrupt_priority =  DEF_ADC_INTERRUPT_PRIORITY, 
+    .adc_prescaler = ADC_PRSC_DIV_SEL_${ADC_PRESCALER},
+    .adc_pump_enable = 0u,
+    .adc_timebase = ADC_TIMEBASE_VALUE        
+};
 <#else>
 static uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
 /* Acquisition set 1 - General settings */
@@ -285,7 +298,11 @@ qtm_acq_${JSONDATA?eval.acquisition.file_names.node_name}_node_config_t ptc_seq_
 </#if>
 
 /* Container */
+<#if pic32cmpl?seq_contains(DEVICE_NAME)>
+static qtm_acquisition_control_t qtlib_acq_set1 = {&ptc_qtlib_acq_gen1, &ptc_seq_node_cfg1[0], &ptc_qtlib_node_stat1[0],&acq_adc_config};
+<#else>
 static qtm_acquisition_control_t qtlib_acq_set1 = {&ptc_qtlib_acq_gen1, &ptc_seq_node_cfg1[0], &ptc_qtlib_node_stat1[0]};
+</#if>
 
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 <#if ENABLE_SURFACE == true>
