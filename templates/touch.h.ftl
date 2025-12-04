@@ -134,12 +134,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  * Default value: 40u.
  */
 #define DEF_CAL_PRCISION ${DEF_CAL_PRCISION}u
-
-/* Set ADC interrupt priority.
- * Range: 1u- 3u
- * Default value: 3u.
- */        
-#define DEF_ADC_INTERRUPT_PRIORITY  ${DEF_ADC_INTERRUPT_PRIORITY}u        
+      
 
 /* Enable ADC voltage pump.
  * pump must be disabled for touch while operating above 4.5V

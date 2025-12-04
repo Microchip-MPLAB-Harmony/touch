@@ -710,15 +710,6 @@ def instantiateComponent(qtouchComponent):
 		ptcInterruptConfig.setDescription("Defines the interrupt priority for the PTC. Set low priority to PTC interrupt for applications having interrupt time constraints.")
 	
 	if json_loader_instance.get_data()["features"]["shared_single_adc"]== True:		
-		ptcInterruptConfig = qtouchComponent.createIntegerSymbol("DEF_ADC_INTERRUPT_PRIORITY", touchMenu)
-		ptcInterruptConfig.setLabel("ADC Interrupt Priority")
-		# ptcInterruptMin = target_deviceInst.getMinInterrupt(device)
-		ptcInterruptConfig.setMin(json_loader_instance.get_data()["acquisition"]["interrupt_priority"]["min"])
-		# ptcInterruptMax = target_deviceInst.getMaxInterrupt(device)
-		ptcInterruptConfig.setMax(json_loader_instance.get_data()["acquisition"]["interrupt_priority"]["max"])
-		# ptcInterruptDefault= target_deviceInst.getDefaultInterrupt(device)
-		ptcInterruptConfig.setDefaultValue(json_loader_instance.get_data()["acquisition"]["interrupt_priority"]["default"])
-		ptcInterruptConfig.setDescription("Defines the interrupt priority for the ADC. Set low priority to ADC interrupt for applications having interrupt time constraints.")
 		
 		precision = qtouchComponent.createIntegerSymbol("DEF_CAL_PRCISION", touchMenu)
 		precision.setLabel("CC Precision")

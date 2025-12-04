@@ -266,7 +266,7 @@ static qtm_acq_node_group_config_t ptc_qtlib_acq_gen1
     = {DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, DEF_PTC_CAL_AUTO_TUNE, (uint8_t)DEF_SEL_FREQ_INIT, DEF_CAL_PRCISION};
 
 qtm_acq_pic32cm_pl_device_config_t acq_adc_config = { 
-    .adc_interrupt_priority =  DEF_ADC_INTERRUPT_PRIORITY, 
+    .adc_interrupt_priority =  DEF_PTC_INTERRUPT_PRIORITY, 
     .adc_prescaler = ADC_PRSC_DIV_SEL_${ADC_PRESCALER},
     .adc_pump_enable = DEF_ADC_PUMP_ENABLE,
     .adc_timebase = ADC_TIMEBASE_VALUE        

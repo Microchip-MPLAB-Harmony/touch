@@ -129,13 +129,6 @@ class classTouchTargetDevice():
         lump.setVisible(False)
         lump.setDefaultValue(self.json_data["features"]["lump_mode"])
 
-        if self.json_data["acquisition"]["file_names"]["node_name"]=="pic32cm_pl":
-            adc_pump = qtouchComponent.createBooleanSymbol("DEF_ADC_PUMP_ENABLE", touchMenu)
-            adc_pump.setLabel("ADC Pump Enabler")
-            adc_pump.setVisible(False)
-            adc_pump.setDefaultValue(False)
-            adc_pump.setDescription("Defines the ADC Pump Description")
-
     def setPTCInterruptVector(self,Database,targetDevice):
         """
         assigns the PTC interrupt handler based on targetDevice
@@ -588,6 +581,7 @@ class classTouchTargetDevice():
         if(self.json_data["features"]["shared_single_adc"]):
             Database.clearSymbolValue("core", "ADC0_CLOCK_ENABLE")
             Database.setSymbolValue("core", "ADC0_CLOCK_ENABLE", True)
+            self.setPTCClockEnable(Database, targetDevice)
 
         elif(self.json_data["features"]["core"]=="ADC"):
             self.setADCClock(Database,targetDevice)
