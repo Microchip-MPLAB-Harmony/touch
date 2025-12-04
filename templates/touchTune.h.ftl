@@ -87,7 +87,8 @@ typedef enum {
 	saml1x_pic32cmle = 0x36u,
 	saml22 = 0x37u,
 	pic32cvd = 0x38u,
-	pic32czca = 0x39u
+	pic32czca = 0x39u,
+	pic32cmpl= 0x40u
 }DEVICE_TYPE;
 
 /***********

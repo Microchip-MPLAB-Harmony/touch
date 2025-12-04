@@ -120,8 +120,13 @@ void touchUartRxComplete(uintptr_t lTouchUart);
  * Acqusition Parameters
 *******************************************************************************/
 typedef struct __attribute__((packed)) {
+	<#if JSONDATA?eval.features.shared_single_adc == true>
+	uint64_t node_xmask;
+	uint64_t node_ymask;
+	<#else>
 	uint16_t node_xmask;
 	uint16_t node_ymask;
+	</#if>
 	<#if JSONDATA?eval.features.csd == true>
 	uint8_t csd;
 	</#if>

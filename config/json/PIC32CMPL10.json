@@ -101,7 +101,7 @@
             "node_name":"pic32cm_pl",
             "library_files": ["qtm_acq_pic32cm_pl10_0x005b.X.a"],
             "header_files": ["qtm_acq_pic32cm_pl10_0x005b_api.h"],
-            "bidirectionalTune_name": "samc2x"
+            "bidirectionalTune_name": "pic32cmpl"
         }
     },
     "node": {
