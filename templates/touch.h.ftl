@@ -146,7 +146,13 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  * Range: 0u- disable, 1u-enable
  * Default value: 0u.
  */        
-#define DEF_ADC_PUMP_ENABLE  0u
+<#if (DEF_ADC_PUMP_ENABLE == true)>
+<#assign pump_enabler = 1>
+<#else>
+<#assign pump_enabler = 0>
+</#if>
+
+#define DEF_ADC_PUMP_ENABLE  ${pump_enabler}u
 
 </#if>
 
