@@ -1,5 +1,6 @@
 <#assign pic_devices = ["PIC32MZW","PIC32MZDA","PIC32CXBZ31","WBZ35","PIC32WM_BZ6"]>
 <#assign pic32czca = ["PIC32CZCA80","PIC32CZCA90","PIC32CMGC00","PIC32CMSG00","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]>
+<#assign pic32cmpl = ["PIC32CMPL10"]>
 <#assign doubleCompensation= 0>
 <#list ["SAME51","SAME53","SAME54","SAMD51","SAML10","SAML11","SAML1xE","PIC32CMLE00","PIC32CMLS00","PIC32CMLS60", "PIC32CXSG41", "PIC32CXSG60", "PIC32CXSG61"] as i>
 <#if DEVICE_NAME == i>
@@ -21,6 +22,10 @@ D,${5},${i+1},Compensation${i},F,(variable * 2.5)
 D,${5},${i+1},Compensation${i},F,((((variable>>8) &0x1F) * 1.5 + ((variable&0x1F)  +1) * 0.075))*2
 <#elseif pic32czca?seq_contains(DEVICE_NAME) && ((SENSE_TECHNOLOGY == "NODE_MUTUAL") || (SENSE_TECHNOLOGY == "NODE_MUTUAL_4P"))>
 D,${5},${i+1},Compensation${i},F,(((variable>>8) &0x1F) * 1.5 + ((variable&0x1F)  +1) * 0.075)
+<#elseif pic32cmpl?seq_contains(DEVICE_NAME) && ((SENSE_TECHNOLOGY == "NODE_SELFCAP") || (SENSE_TECHNOLOGY == "NODE_SELFCAP_SHIELD"))>
+D,${5},${i+1},Compensation${i},F,((variable>>8)*0.5 + (variable&0x0F)*0.05) * 2
+<#elseif pic32cmpl?seq_contains(DEVICE_NAME) && ((SENSE_TECHNOLOGY == "NODE_MUTUAL") || (SENSE_TECHNOLOGY == "NODE_MUTUAL_4P"))>
+D,${5},${i+1},Compensation${i},F,((variable>>8)*0.5 + (variable&0x0F)*0.05)
 <#else>
 <#if ((SENSE_TECHNOLOGY == "NODE_SELFCAP") && (doubleCompensation ==1))>
 D,${5},${i+1},Compensation${i},F,((variable & 0x0F)*0.00675+((variable >> 4) & 0x0F)*0.0675+((variable >> 8) & 0x0F)*0.675+((variable >> 12) & 0x3) * 6.75)*2

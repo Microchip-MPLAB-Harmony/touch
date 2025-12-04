@@ -588,7 +588,8 @@ class classTouchTargetDevice():
         if(self.json_data["features"]["shared_single_adc"]):
             Database.clearSymbolValue("core", "ADC0_CLOCK_ENABLE")
             Database.setSymbolValue("core", "ADC0_CLOCK_ENABLE", True)
-            self.setPTCClockEnable(Database, targetDevice)
+            Database.clearSymbolValue("core", "PTC_CLOCK_ENABLE")
+            Database.setSymbolValue("core", "PTC_CLOCK_ENABLE", True)
 
         elif(self.json_data["features"]["core"]=="ADC"):
             self.setADCClock(Database,targetDevice)
