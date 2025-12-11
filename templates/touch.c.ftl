@@ -105,7 +105,7 @@ Microchip or any third party.
 
 <#if pic32cmpl?seq_contains(DEVICE_NAME)>
 #include <math.h>
-#define CLK_APB 24000000ul // 24 MHz
+#define CLK_APB ${GET_PTC_CLOCK_FREQUENCY}UL
 #define ADC_TIMEBASE_VALUE ((uint8_t) ceil(CLK_APB*0.000001))
 </#if>
 
@@ -222,7 +222,11 @@ static uint8_t all_measure_complete = 0u;
 /* Error Handling */
 uint8_t module_error_code = 0u;
 
-<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>  
+<#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>
+<#if (JSONDATA?eval.features.shared_single_adc == true)>
+/* Touch Measurement In Progress flag */
+volatile uint8_t touch_meas_in_progress = 1u;
+</#if>
 /* Low-power measurement variables */
 static uint16_t time_since_touch = 0u;
 /* store the drift period for comparison */
@@ -285,6 +289,8 @@ qtm_acq_node_data_t ptc_qtlib_node_stat1[DEF_NUM_CHANNELS];
 <#if ENABLE_BOOST?exists && ENABLE_BOOST == true && JSONDATA?eval.features.wake_up == true && JSONDATA?eval.features.boost_mode_global == true>
 qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
 <#elseif ENABLE_BOOST?exists && ENABLE_BOOST == true && JSONDATA?eval.features.wake_up == true>
+qtm_acq_4p_${JSONDATA?eval.acquisition.file_names.node_name}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
+<#elseif ENABLE_BOOST?exists && ENABLE_BOOST == true && JSONDATA?eval.features.shared_single_adc == true>
 qtm_acq_4p_${JSONDATA?eval.acquisition.file_names.node_name}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
 <#elseif ENABLE_BOOST?exists && ENABLE_BOOST == true>
 qtm_acq_4p_${JSONDATA?eval.acquisition.file_names.node_name}_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2] = {<#list 0..MUTL_4P_NUM_GROUP-1 as i><#if i==MUTL_4P_NUM_GROUP-1>GRP_${i}_4P_PARAMS<#else>GRP_${i}_4P_PARAMS,</#if></#list>};
@@ -745,6 +751,9 @@ static void qtm_measure_complete_callback(void)
 measurement_in_progress = 0;
 #endif
 </#if>
+<#if (JSONDATA?eval.features.shared_single_adc == true)>
+touch_meas_in_progress = 0u;
+</#if>
 </#if>
 }
 
@@ -944,6 +953,17 @@ void touch_process(void)
 
     /* check the time_to_measure_touch for Touch Acquisition */
     if (time_to_measure_touch_var == 1u) {
+        <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
+        <#if (JSONDATA?eval.features.shared_single_adc == true)>
+        #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
+            if((touch_meas_in_progress == 1u) && (measurement_period_store == DEF_TOUCH_DRIFT_PERIOD_MS))
+            {
+                /* release ADC for Drift Wakeup Measurement */
+                qtm_release_adc();
+            }
+        #endif
+        </#if>
+        </#if>
 
         /* Do the acquisition */
         <#if JSONDATA?eval.features.core == "CVD">
@@ -956,7 +976,10 @@ void touch_process(void)
         if (TOUCH_SUCCESS == touch_ret) {
             /* Clear the Measure request flag */
 			time_to_measure_touch_var = 0;
-            <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")> 
+            <#if (LOW_POWER_KEYS?exists && LOW_POWER_KEYS != "")>
+            <#if (JSONDATA?eval.features.shared_single_adc == true)>
+            touch_meas_in_progress = 1u;
+            </#if> 
             <#if no_standby_during_measurement == 1>
             #if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
             measurement_in_progress = 1;
@@ -1265,14 +1288,21 @@ static void touch_process_lowpower(void) {
     
 		/* Start Autoscan */
 		touch_ret = qtm_autoscan_sensor_node(&auto_scan_setup, touch_measure_wcomp_match);
-
+        <#if (JSONDATA?eval.features.shared_single_adc == true)>
+        if(touch_ret == TOUCH_SUCCESS)
+        {
+            touch_meas_in_progress = 1u;
+        }
+        </#if>
         if ((touch_ret == TOUCH_SUCCESS) && (measurement_period_store != DEF_TOUCH_DRIFT_PERIOD_MS)){
 
             /* Enable Event System */
             touch_enable_lowpower_measurement();
         }
     } else if (measurement_period_store != DEF_TOUCH_MEASUREMENT_PERIOD_MS) {
-
+        <#if (JSONDATA?eval.features.shared_single_adc == true)>
+        touch_meas_in_progress = 0u;
+        </#if>
         /* Cancel node auto scan */
         touch_ret = qtm_autoscan_node_cancel();
 
@@ -1459,6 +1489,10 @@ static void touch_measure_wcomp_match(void)
         time_since_touch = 0u;
         time_to_measure_touch_var =1u; 
 		}
+        <#if (JSONDATA?eval.features.shared_single_adc == true)>
+         /* clear flag */
+        touch_meas_in_progress = 0u;
+        </#if>
         <#else>
         touch_disable_lowpower_measurement();
         time_to_measure_touch_var = 1u;	

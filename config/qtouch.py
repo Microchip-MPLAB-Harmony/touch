@@ -474,6 +474,9 @@ def onGenerate(symbol,event):
 	if json_loader_instance.get_data()["features"]["core"]=="PTC":
 		ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")
 		localComponent.getSymbolByID("GET_PTC_CLOCK_FREQUENCY").setValue(ptcClockFrequencyDefault)
+	if json_loader_instance.get_data()["features"]["shared_single_adc"]==True:
+		ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")
+		localComponent.getSymbolByID("GET_PTC_CLOCK_FREQUENCY").setValue(ptcClockFrequencyDefault)		
 
 	if int(nodeCount) == 0:
 		Log.writeErrorMessage("Touch Error: Number of sensor is ZERO")
@@ -717,7 +720,7 @@ def instantiateComponent(qtouchComponent):
 		precision.setMin(json_loader_instance.get_data()["acquisition"]["precision"]["min"])
 		precision.setMax(json_loader_instance.get_data()["acquisition"]["precision"]["max"])
 		precision.setDefaultValue(json_loader_instance.get_data()["acquisition"]["precision"]["default"])
-		precision.setDescription("Acceptable deviation in the measured signal value")
+		precision.setDescription("The acceptable deviation in the measured signal value from the midpoint during calibration.")
 	
 		adcprescaler = qtouchComponent.createKeyValueSetSymbol("ADC_PRESCALER" , touchMenu)
 		adc_array = json_loader_instance.get_data()["acquisition"]["adc_prescaler"]["component_values"]
@@ -780,6 +783,12 @@ def instantiateComponent(qtouchComponent):
 
 	# if device in ["PIC32CZCA80","PIC32CZCA90","PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]:
 	if json_loader_instance.get_data()["features"]["core"]=="PTC":
+		ptcClockFrequency = qtouchComponent.createIntegerSymbol("GET_PTC_CLOCK_FREQUENCY", touchMenu)
+		ptcClockFrequency.setLabel("Get PTC Clock Frequency")
+		ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")
+		ptcClockFrequency.setDefaultValue(ptcClockFrequencyDefault)
+
+	if json_loader_instance.get_data()["features"]["shared_single_adc"]==True:
 		ptcClockFrequency = qtouchComponent.createIntegerSymbol("GET_PTC_CLOCK_FREQUENCY", touchMenu)
 		ptcClockFrequency.setLabel("Get PTC Clock Frequency")
 		ptcClockFrequencyDefault =  Database.getSymbolValue("core", "PTC_CLOCK_FREQUENCY")

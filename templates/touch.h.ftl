@@ -83,7 +83,11 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
     <#if SENSE_TECHNOLOGY == "NODE_SELFCAP">
         <#if ((DS_ADJACENT_SENSE_LINE_AS_SHIELD?exists)&&(DS_DEDICATED_PIN_ENABLE?exists))>
             <#if (DS_ADJACENT_SENSE_LINE_AS_SHIELD == true) || (DS_DEDICATED_PIN_ENABLE == true)> 
+                <#if (JSONDATA?eval.features.hardware_shield_2L == true)>
+#define DEF_SENSOR_TYPE NODE_SELFCAP_SHIELD_2L                 
+                <#else>
 #define DEF_SENSOR_TYPE NODE_SELFCAP_SHIELD
+                </#if>
             <#else>
 #define DEF_SENSOR_TYPE ${SENSE_TECHNOLOGY}
             </#if>
@@ -94,7 +98,11 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
         <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 #define DEF_SENSOR_TYPE NODE_MUTUAL_4P
         <#else>
+            <#if (JSONDATA?eval.features.hardware_shield_2L == true)>
+#define DEF_SENSOR_TYPE NODE_SELFCAP_SHIELD_2L                 
+            <#else>
 #define DEF_SENSOR_TYPE ${SENSE_TECHNOLOGY}
+            </#if>
         </#if>
     </#if>
 

@@ -134,7 +134,9 @@ class classTouchTargetDevice():
             adc_pump.setLabel("ADC Pump Enabler")
             adc_pump.setVisible(False)
             adc_pump.setDefaultValue(False)
-            adc_pump.setDescription("Defines the ADC Pump Description")
+            adc_pump.setDescription("When operating the PTC above 4.5V, ensure that the ADC voltage pump is disabled. For all other conditions, the voltage pump should remain enabled by default.") 
+ 
+
 
     def setPTCInterruptVector(self,Database,targetDevice):
         """

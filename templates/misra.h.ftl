@@ -5,6 +5,8 @@ extern qtm_acq_node_data_t ptc_qtlib_node_stat1[DEF_NUM_CHANNELS];
 extern qtm_acq_pic32czca_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
 <#elseif ENABLE_BOOST?exists && ENABLE_BOOST == true && JSONDATA?eval.features.wake_up == true>
 extern qtm_acq_4p_${JSONDATA?eval.acquisition.file_names.node_name}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
+<#elseif ENABLE_BOOST?exists && ENABLE_BOOST == true && JSONDATA?eval.features.shared_single_adc == true>
+extern qtm_acq_4p_${JSONDATA?eval.acquisition.file_names.node_name}_node_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
 <#elseif ENABLE_BOOST?exists && ENABLE_BOOST == true>
 extern qtm_acq_4p_${JSONDATA?eval.acquisition.file_names.node_name}_config_t ptc_seq_node_cfg1[DEF_NUM_CHANNELS >> 2];
 <#else>

@@ -130,30 +130,30 @@
         <#if (SENSE_TECHNOLOGY == "NODE_SELFCAP")>
                     <#lt>#define NODE_${i}_PARAMS                                                                                               \
                     <#lt>{                                                                                                                  \
-                    <#lt>   X_NONE, ${yInfo}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]},(uint8_t)${.vars["DEF_NOD_PTC_PRESCALER" + i]}, NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), (uint8_t)${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
+                    <#lt>   X_NONE, ${yInfo}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]},(uint8_t)${.vars["DEF_NOD_PTC_PRESCALER" + i]}, NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]?replace(".", "_")}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), (uint8_t)${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
                     <#lt>}
         <#elseif (SENSE_TECHNOLOGY == "NODE_SELFCAP_SHIELD")>
                     <#lt>#define NODE_${i}_PARAMS                                                                                               \
                     <#lt>{                                                                                                                  \
-                    <#lt>   ${xInfo}, ${yInfo}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]},(uint8_t)${.vars["DEF_NOD_PTC_PRESCALER" + i]}, NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), (uint8_t)${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
+                    <#lt>   ${xInfo}, ${yInfo}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]},(uint8_t)${.vars["DEF_NOD_PTC_PRESCALER" + i]}, NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]?replace(".", "_")}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), (uint8_t)${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
                     <#lt>}
         <#else>
             <#if  JSONDATA?eval.features.xy_multiplex == true && (ENABLE_SURFACE == true)>
                     <#if (i < VERT_START_KEY) || (i >= (HORI_NUM_KEY + HORI_START_KEY)) >
                 <#lt>#define NODE_${i}_PARAMS                                                                                               \
                 <#lt>{                                                                                                                  \
-                <#lt>   ${xInfo}, ${yInfo}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]},NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, (uint8_t)${.vars["DEF_NOD_PTC_PRESCALER" + i]}), NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), (uint8_t)${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
+                <#lt>   ${xInfo}, ${yInfo}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]},NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, (uint8_t)${.vars["DEF_NOD_PTC_PRESCALER" + i]}), NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]?replace(".", "_")}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), (uint8_t)${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
                 <#lt>}
                     <#else>
                 <#lt>#define NODE_${i}_PARAMS                                                                                               \
                 <#lt>{                                                                                                                  \
-                <#lt>  ${xInfo}, ${yInfo}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]},NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, (uint8_t)${.vars["DEF_NOD_PTC_PRESCALER" + i]}), NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), (uint8_t)${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
+                <#lt>  ${xInfo}, ${yInfo}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]},NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, (uint8_t)${.vars["DEF_NOD_PTC_PRESCALER" + i]}), NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]?replace(".", "_")}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), (uint8_t)${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
                             <#lt>}
                     </#if>
             <#else>
                     <#lt>#define NODE_${i}_PARAMS                                                                                               \
                     <#lt>{                                                                                                                  \
-                    <#lt> ${xInfo}, ${yInfo}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]}, NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, (uint8_t)${.vars["DEF_NOD_PTC_PRESCALER" + i]}), NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), (uint8_t)${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
+                    <#lt> ${xInfo}, ${yInfo}, ${.vars["DEF_TOUCH_CHARGE_SHARE_DELAY" + i]}, NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, (uint8_t)${.vars["DEF_NOD_PTC_PRESCALER" + i]}), NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]?replace(".", "_")}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), (uint8_t)${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
                     <#lt>}
             </#if>
         </#if>
@@ -167,17 +167,17 @@
         <#if (SENSE_TECHNOLOGY == "NODE_SELFCAP")>
                     <#lt>#define NODE_${i}_PARAMS                                                                                               \
                     <#lt>{                                                                                                                  \
-                    <#lt>   X_NONE, ${yInfo}, (uint8_t)${.vars["DEF_NOD_PTC_PRESCALER" + i]}, NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), (uint8_t)${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
+                    <#lt>   X_NONE, ${yInfo}, (uint8_t)${.vars["DEF_NOD_PTC_PRESCALER" + i]}, NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]?replace(".", "_")}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), (uint8_t)${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
                     <#lt>}
         <#elseif (SENSE_TECHNOLOGY == "NODE_SELFCAP_SHIELD")>
                     <#lt>#define NODE_${i}_PARAMS                                                                                               \
                     <#lt>{                                                                                                                  \
-                    <#lt>   ${xInfo}, ${yInfo}, (uint8_t)${.vars["DEF_NOD_PTC_PRESCALER" + i]}, NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), (uint8_t)${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
+                    <#lt>   ${xInfo}, ${yInfo}, (uint8_t)${.vars["DEF_NOD_PTC_PRESCALER" + i]}, NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]?replace(".", "_")}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), (uint8_t)${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
                     <#lt>}
         <#else>
                     <#lt>#define NODE_${i}_PARAMS                                                                                               \
                     <#lt>{                                                                                                                  \
-                    <#lt>   ${xInfo}, ${yInfo},  NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, (uint8_t)${.vars["DEF_NOD_PTC_PRESCALER" + i]}), NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), (uint8_t)${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
+                    <#lt>   ${xInfo}, ${yInfo},  NODE_RSEL_PRSC(${.vars["DEF_NOD_SERIES_RESISTOR" + i]}, (uint8_t)${.vars["DEF_NOD_PTC_PRESCALER" + i]}), NODE_GAIN(${.vars["DEF_NOD_GAIN_ANA" + i]?replace(".", "_")}, ${.vars["DEF_DIGI_FILT_GAIN" + i]}), (uint8_t)${.vars["DEF_DIGI_FILT_OVERSAMPLING" + i]}                   \
                     <#lt>}
         </#if>
     </#list>

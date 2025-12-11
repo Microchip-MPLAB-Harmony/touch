@@ -12,6 +12,7 @@
         "frequency_hop": true,
         "frequency_hop_auto": true,
         "hardware_shield": true,
+        "hardware_shield_2L": true,
         "timer_shield": false,
         "csd":true,
         "ptc_prescaler":true,
@@ -19,7 +20,7 @@
         "low_power_event": true,
         "xy_multiplex":true,
         "lump_mode": true,
-        "boost_mode": false,
+        "boost_mode": true,
         "boost_mode_global": false,
         "wake_up":false,
         "trust_zone":false,
@@ -43,8 +44,8 @@
             "default": 3
         },
         "precision":{
-            "min": 40,
-            "max": 100,
+            "min": 0,
+            "max": 255,
             "default": 40
         },
         "adc_prescaler": {
@@ -102,7 +103,12 @@
             "library_files": ["qtm_acq_pic32cm_pl10_0x005b.X.a"],
             "header_files": ["qtm_acq_pic32cm_pl10_0x005b_api.h"],
             "bidirectionalTune_name": "pic32cmpl"
-        }
+        },
+        "boost_mode":{
+            "module_id":"0x005f",
+            "library_files": ["qtm_acq_4p_pic32cm_pl10_0x005f.X.a"],
+            "header_files": ["qtm_acq_4p_pic32cm_pl10_0x005f_api.h"]
+        }        
     },
     "node": {
         "ptc_clock_range":{

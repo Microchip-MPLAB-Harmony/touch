@@ -6,6 +6,7 @@
         "self": true,
         "mutual": false,
         "hardware_shield": true,
+        "hardware_shield_2L": false,
         "timer_shield": false,
         "csd":true,
         "scroller": true,
