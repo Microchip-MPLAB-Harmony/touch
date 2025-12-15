@@ -715,7 +715,7 @@ def instantiateComponent(qtouchComponent):
 	if json_loader_instance.get_data()["features"]["shared_single_adc"]== True:		
 		
 		precision = qtouchComponent.createIntegerSymbol("DEF_CAL_PRCISION", touchMenu)
-		precision.setLabel("CC Precision")
+		precision.setLabel("Calibrated Signal Precision")
 		precision.setVisible(False)
 		precision.setMin(json_loader_instance.get_data()["acquisition"]["precision"]["min"])
 		precision.setMax(json_loader_instance.get_data()["acquisition"]["precision"]["max"])

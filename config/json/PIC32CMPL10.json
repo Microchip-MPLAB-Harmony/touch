@@ -204,9 +204,45 @@
             },
             {
                 "symbol":"OSCHF_OSCHFCTRL_ONDEMAND",
+                "value":"1", 
+                "componentId":"core", 
+                "name":"Only on Peripheral Request"
+            }, 
+            {
+                "symbol":"GCLK_INST_NUM0", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"Select Generic Clock Generator 0 (GCLK0)"
+            },
+            {
+                "symbol":"GCLK_0_DIVSEL", 
                 "value":"0", 
                 "componentId":"core", 
-                "name":"Always Enable"
+                 "name":"Div 24MHz by 1"
+            },
+            {
+                "symbol":"GCLK_0_RUNSTDBY", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"GCLK0 Runinstandby"
+            },
+            {
+                "symbol":"GCLK_ID_1_CHEN", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"enable evsys"
+            },
+            {
+                "symbol":"EVSYS_0_CLOCK_ENABLE", 
+                "value":"True", 
+                "componentId":"core", 
+                 "name":"EVSYS Peripheral Clock Enable"
+            },
+            {
+                "symbol":"GCLK_ID_1_GENSEL", 
+                "value":"0", 
+                "componentId":"core", 
+                 "name":"GCLK0 - evsys clk"
             }
         ],
         "descriptions":[

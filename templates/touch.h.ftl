@@ -94,15 +94,15 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
         <#else>
 #define DEF_SENSOR_TYPE ${SENSE_TECHNOLOGY}
         </#if>
+
+    <#elseif (SENSE_TECHNOLOGY == "NODE_SELFCAP_SHIELD") && (JSONDATA?eval.features.hardware_shield_2L == true)>
+#define DEF_SENSOR_TYPE NODE_SELFCAP_SHIELD_2L                 
+    
     <#else>
         <#if ENABLE_BOOST?exists && ENABLE_BOOST == true>
 #define DEF_SENSOR_TYPE NODE_MUTUAL_4P
         <#else>
-            <#if (JSONDATA?eval.features.hardware_shield_2L == true)>
-#define DEF_SENSOR_TYPE NODE_SELFCAP_SHIELD_2L                 
-            <#else>
 #define DEF_SENSOR_TYPE ${SENSE_TECHNOLOGY}
-            </#if>
         </#if>
     </#if>
 
