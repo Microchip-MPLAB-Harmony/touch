@@ -1686,7 +1686,7 @@ void touch_timer_config(void)
 <#if ENABLE_KRONOCOMM == true>
 #if ((KRONO_GESTURE_ENABLE == 1u) || (DEF_TOUCH_DATA_STREAMER_ENABLE == 1u))
 <#else>
-#if (DEF_TOUCH_DATA_STREAMER_ENABLE == 1u)
+#if (DEF_TOUCH_DATA_STREAMER_ENABLE == 1u || DEF_TOUCH_TUNE_ENABLE == 1u)
 </#if>
     ${.vars["${TOUCH_TIMER_INSTANCE?lower_case}"].COMPARE_SET_API_NAME}(1);
 #else
