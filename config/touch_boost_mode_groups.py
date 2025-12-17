@@ -23,6 +23,7 @@ Microchip or any third party.
 """
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
+import re
 import touch_boost_mode_sourcefiles
 from json_loader import json_loader_instance
 
@@ -299,10 +300,14 @@ class classTouchBoostModeGroups():
             tempSymbol.setValue("")
             for channel_num in range(0, touchNumChannel):
                 tempSymbol = localComponent.getSymbolByID("MUTL-X-INPUT_"+ str(channel_num))
-                x_lines.append(tempSymbol.getValue())
+                index=tempSymbol.getValue()
+                value=tempSymbol.getKeyValue(index)
+                x_lines.append(re.search(r'\((\d+)\)', value).group(1))
                 tempSymbol = localComponent.getSymbolByID("MUTL-Y-INPUT_"+ str(channel_num))
                 # print(str(tempSymbol))
-                y_lines.append(tempSymbol.getValue())
+                index=tempSymbol.getValue()
+                value=tempSymbol.getKeyValue(index)
+                y_lines.append(re.search(r'\((\d+)\)', value).group(1))
                 tempSymbol = localComponent.getSymbolByID("DEF_TOUCH_CHARGE_SHARE_DELAY"+str(channel_num))
                 csd.append(tempSymbol.getValue())
                 tempSymbol = localComponent.getSymbolByID("DEF_NOD_SERIES_RESISTOR"+str(channel_num))
