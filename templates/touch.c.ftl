@@ -52,7 +52,7 @@ Microchip or any third party.
 <#assign sam_l1x_devices = ["SAML10","SAML11","SAML1xE"]>
 <#assign pic32cm_le_devices = ["PIC32CMLE00","PIC32CMLS00","PIC32CMLS60"]>
 
-<#assign buckland = ["PIC32CXBZ31","WBZ35","PIC32WM_BZ6"]>
+<#assign buckland = ["PIC32CXBZ31","WBZ35","PIC32WM_BZ6","PIC32CXBZ62","PIC32CXBZ66"]>
 <#assign pic32cz = ["PIC32CZCA80", "PIC32CZCA90"]>
 <#assign pic32ck = ["PIC32CKSG00","PIC32CKSG01", "PIC32CKGC00","PIC32CKGC01"]>
 <#assign pic32cm = ["PIC32CMGC00","PIC32CMSG00"]>
