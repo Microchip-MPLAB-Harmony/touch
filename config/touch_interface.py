@@ -72,8 +72,8 @@ class classTouchInterface():
         Returns:
             self.deviceSeries (string)
         """
-        releaseVersion = "v3.19.0"
-        releaseYear    = "2025"
+        releaseVersion = "v3.20.0"
+        releaseYear    = "2026"
 
         # self.deviceChild = devicesNode.getChildren()
         self.deviceName = json_loader_instance.get_deviceName()

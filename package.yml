@@ -1,12 +1,12 @@
 package:
   format-version: "1.0.0"
   name: "touch"
-  version: "v3.19.0"
+  version: "v3.20.0"
   type: "api"
   status: "production"
   
   dependencies:
     - name: "csp"
       type: "package"
-      version: "v3.22.5"
+      version: "v3.25.0"
 

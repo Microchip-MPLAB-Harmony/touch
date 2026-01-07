@@ -2,6 +2,15 @@
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 #  Microchip MPLAB® Harmony 3 Touch Library Release Notes
+## Touch Library v3.20.0 Release
+### NEW FEATURES SUPPORTED
+* Added Touch Library support for new devices in the PIC32CM-PL10 family of microcontrollers.
+* Extended Touch Library support for the variants of the PIC32CX-BZ6  family of microcontrollers.
+### DEVELOPMENT TOOLS
+* [MPLAB® X IDE v6.25](https://www.microchip.com/mplab/mplab-x-ide) or higher
+* [MPLAB® XC32 C/C++ Compiler v5.00](https://www.microchip.com/mplab/compilers) or higher
+- MPLAB® X IDE plug-ins:
+    - MPLAB® Code Configurator 5.6.3 or higher
 
 ## Touch Library v3.19.0 Release
 ### NEW FEATURES SUPPORTED
