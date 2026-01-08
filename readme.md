@@ -6,7 +6,7 @@
 MPLAB Harmony 3 Touch Library is a royalty-free software library for developing touch applications on 32-bit microcontrollers with Peripheral Touch Controller peripheral.
 Developers can use it to integrate touch-sensing capability into their applications. The library supports both self-capacitance and mutual-capacitance acquisition methods.
 
-MPLAB Harmony 3 is an extension of the MPLAB� ecosystem for creating
+MPLAB Harmony 3 is an extension of the MPLAB ecosystem for creating
 embedded firmware solutions for Microchip 32-bit SAM and PIC microcontroller
 and microprocessor devices.  Refer to the following links for more information.
  - [Microchip 32-bit MCUs](https://www.microchip.com/design-centers/32-bit)
@@ -32,7 +32,7 @@ and microprocessor devices.  Refer to the following links for more information.
 
 ## Documentation
 
-Click [here](https://onlinedocs.microchip.com/v2/keyword-lookup?keyword=h3-touch-introduction&version=latest&redirect=true) to view the Touch Host Driver help documentation.
+Click [here](https://onlinedocs.microchip.com/v2/keyword-lookup?keyword=h3-touch-introduction&version=latest&redirect=true) to view the Touch help documentation.
 
 To view the documentation offline, follow these steps:
  - Download the publication as a zip file from [here](https://onlinedocs.microchip.com/download/GUID-ED35EA59-1D88-42EB-A51B-A089FAD3541C?type=webhelp).
