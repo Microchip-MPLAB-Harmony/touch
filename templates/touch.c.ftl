@@ -483,7 +483,7 @@ qtm_surface_cs2t_data_t qtm_surface_cs_data1;
 qtm_surface_contact_data_t qtm_surface_contacts[2];
 
 /* Container */
-static qtm_surface_cs2t_control_t qtm_surface_cs_control1
+qtm_surface_cs2t_control_t qtm_surface_cs_control1
     = {&qtm_surface_cs_data1, &qtm_surface_contacts[0], &qtm_surface_cs_config1};
 </#if>
 
@@ -542,7 +542,7 @@ qtm_gestures_2d_config_t qtm_gestures_2d_config = {&qtm_surface_cs_data1.h_posit
 </#if>
 qtm_gestures_2d_data_t qtm_gestures_2d_data;
 
-static qtm_gestures_2d_control_t qtm_gestures_2d_control1 = {&qtm_gestures_2d_data, &qtm_gestures_2d_config};
+qtm_gestures_2d_control_t qtm_gestures_2d_control1 = {&qtm_gestures_2d_data, &qtm_gestures_2d_config};
 </#if>
 
 /*----------------------------------------------------------------------------
@@ -1504,8 +1504,8 @@ static void touch_measure_wcomp_match(void)
 #endif
 </#if>
 <#if ENABLE_GESTURE==true>
-static uint8_t interrupt_cnt;
-static uint16_t touch_gesture_time_cnt;
+uint8_t interrupt_cnt;
+uint16_t touch_gesture_time_cnt;
 </#if>
 
 /*============================================================================

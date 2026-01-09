@@ -78,5 +78,10 @@ extern uint8_t measurement_in_progress;
 #endif
 </#if>
 extern volatile uint8_t measurement_done_touch;
+
+<#if JSONDATA?eval.features.shared_single_adc == true>
+extern qtm_acq_${JSONDATA?eval.acquisition.file_names.node_name}_device_config_t acq_adc_config;
+</#if>
+
 </#macro>
 
