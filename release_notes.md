@@ -6,6 +6,8 @@
 ### NEW FEATURES SUPPORTED
 * Added Touch Library support for new devices in the PIC32CM-PL10 family of microcontrollers.
 * Extended Touch Library support for the variants of the PIC32CX-BZ6  family of microcontrollers.
+### BUG FIXES
+* PIC32CMJH acquisition library is updated to fix event system based low power issue.
 ### DEVELOPMENT TOOLS
 * [MPLAB® X IDE v6.25](https://www.microchip.com/mplab/mplab-x-ide) or higher
 * [MPLAB® XC32 C/C++ Compiler v5.00](https://www.microchip.com/mplab/compilers) or higher
