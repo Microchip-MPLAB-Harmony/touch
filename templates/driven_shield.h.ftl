@@ -48,7 +48,24 @@ Microchip or any third party.
 	</#if>
 </#list>
 #include <definitions.h>
+<#assign uniqueTimersDSP = []>
 <#if DS_PLUS_ENABLE == true>
+<#list 0..TOUCH_KEY_ENABLE_CNT-1 as i>
+<#if (i = 0) && (.vars["DSPLUS_TIMER_PIN"+0] != "---")>
+        <#assign uniqueTimersDSP = uniqueTimersDSP + [ .vars["DSPLUS_TIMER_PIN"+0] ] >
+<#else>
+  <#list 0..i as j>
+    <#if .vars["DSPLUS_TIMER_PIN"+i] == .vars["DSPLUS_TIMER_PIN"+j]&& i!=j>
+        <#break>
+    <#elseif .vars["DSPLUS_TIMER_PIN"+i] != "---" && i==j>
+        <#assign uniqueTimersDSP = uniqueTimersDSP + [ .vars["DSPLUS_TIMER_PIN"+i] ] >
+         <#break>
+    </#if>
+  </#list>
+</#if>
+</#list>
+</#if>
+<#if DS_PLUS_ENABLE == true && uniqueTimersDSP?size != 0>
 extern uint16_t current_measure_channel;
 </#if>
 /*============================================================================
