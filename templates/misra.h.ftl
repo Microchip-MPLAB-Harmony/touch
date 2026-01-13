@@ -53,14 +53,14 @@ extern qtm_surface_contact_data_t qtm_surface_cs_data1;
 extern qtm_surface_cs_config_t  qtm_surface_cs_config1;
 extern qtm_surface_contact_data_t qtm_surface_contacts[2];
 extern qtm_surface_cs2t_data_t qtm_surface_cs_data1;
-extern qtm_surface_cs2t_control_t qtm_surface_cs_control1
+extern qtm_surface_cs2t_control_t qtm_surface_cs_control1;
 </#if>
 </#if>
 <#if ENABLE_GESTURE == true>
 /* Gesture variables */
 extern qtm_gestures_2d_config_t qtm_gestures_2d_config;
 extern qtm_gestures_2d_data_t qtm_gestures_2d_data;
-extern qtm_gestures_2d_control_t qtm_gestures_2d_control1
+extern qtm_gestures_2d_control_t qtm_gestures_2d_control1;
 extern uint16_t touch_gesture_time_cnt;
 extern uint8_t interrupt_cnt;
 </#if>
