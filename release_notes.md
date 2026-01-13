@@ -5,7 +5,6 @@
 ## Touch Library v3.20.0 Release
 ### NEW FEATURES SUPPORTED
 * Added Touch Library support for new devices in the PIC32CM-PL10 family of microcontrollers.
-* Extended Touch Library support for the variants of the PIC32CX-BZ6  family of microcontrollers.
 ### BUG FIXES
 * PIC32CMJH acquisition library is updated to fix event system based low power issue.
 ### DEVELOPMENT TOOLS
