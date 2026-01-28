@@ -1,6 +1,12 @@
 ![Microchip logo](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_logo.png)
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
+## Touch Library v3.20.1 Release
+### BUG FIXES
+* Resolved the data validation issue related to the display of negative values in the Compensation Capacitor.
+### KNOWN ISSUES
+* The mutual capacitance feature may exhibit incorrect behavior when the PTC is configured to operate at its maximum frequency of 24 MHz with the pre-scaler set to zero, and the supply voltage exceeds 4.5V.
+
 #  Microchip MPLAB® Harmony 3 Touch Library Release Notes
 ## Touch Library v3.20.0 Release
 ### NEW FEATURES SUPPORTED
