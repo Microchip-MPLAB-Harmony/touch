@@ -72,7 +72,7 @@ class classTouchInterface():
         Returns:
             self.deviceSeries (string)
         """
-        releaseVersion = "v3.20.0"
+        releaseVersion = "v3.20.1"
         releaseYear    = "2026"
 
         # self.deviceChild = devicesNode.getChildren()

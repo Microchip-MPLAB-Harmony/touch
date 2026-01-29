@@ -517,6 +517,7 @@ void copy_surface_run_time_data(uint8_t contact_num)
 	runtime_surface_data_arr.contact_size = qtm_surface_contacts[contact_num].contact_size;
 	runtime_surface_data_arr.h_position = qtm_surface_contacts[contact_num].h_position;
 	runtime_surface_data_arr.v_position = qtm_surface_contacts[contact_num].v_position;
+	runtime_surface_data_arr.resolution = (uint8_t) qtm_surface_cs_config1.resol_deadband >> 4;	
 }
 </#if>
 
