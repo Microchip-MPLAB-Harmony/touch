@@ -40,8 +40,8 @@
         },
         "interrupt_priority":{
             "min": 0,
-            "max": 7,
-            "default": 7
+            "max": 3,
+            "default": 3
         },"wake_up":{
             "min": 4,
             "max": 15,
