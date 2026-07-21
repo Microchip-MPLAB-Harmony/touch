@@ -23,6 +23,7 @@ Microchip or any third party.
 """
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
+from json_loader import json_loader_instance
 
 class classTouchKeyGroups():
     def __init__(self):
@@ -159,7 +160,11 @@ class classTouchKeyGroups():
         touchKeyDetectThreshold.setLabel("Sensor Detect Threshold")
         touchKeyDetectThreshold.setDefaultValue(20)
         touchKeyDetectThreshold.setMin(0)
-        touchKeyDetectThreshold.setMax(255)
+        deviceName = json_loader_instance.get_deviceSeries()
+        if deviceName == "PIC32CMPL10":
+            touchKeyDetectThreshold.setMax(65535)
+        else:
+            touchKeyDetectThreshold.setMax(255)
         touchKeyDetectThreshold.setDescription("Configure the sensor's detect threshold. When finger touches sensor, the touch delta increases.Sensor will be reported as touched only if the sensor's touch delta value is more than Sensor Threshold.It is recommended to configure Sensor Threshold as 50~70% of touch delta. User can start with default value and can configure after monitoring touch delta value.")
 
     def setHysteresisValues(self,touchKeyHysteresis):

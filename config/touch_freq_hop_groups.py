@@ -23,6 +23,8 @@ Microchip or any third party.
 """
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
+from json_loader import json_loader_instance
+
 class classTouchFreqGroups():
     def __init__(self):
         self.maxGroups = 4
@@ -268,7 +270,7 @@ class classTouchFreqGroups():
                 freqHopValues.setVisible(False)
 
     def setMaxVarianceValues(self,maxVariance):
-        """Populate the maximum variance symbol 
+        """Populate the maximum variance symbol
         Arguments:
             :maxVariance : symbol to be updated
         Returns:
@@ -277,7 +279,11 @@ class classTouchFreqGroups():
         maxVariance.setLabel("Maximum Variance")
         maxVariance.setDefaultValue(25)
         maxVariance.setMin(1)
-        maxVariance.setMax(255)
+        deviceName = json_loader_instance.get_deviceSeries()
+        if deviceName == "PIC32CMPL10":
+            maxVariance.setMax(65535)
+        else:
+            maxVariance.setMax(255)
         maxVariance.setDescription("When frequency auto tune is enabled, the touch measurement frequencies are automatically changed based on noise levels.This parameter sets the threshold for noise level in touch data.If noise level is more than this threshold, then the noisy frequency will be replaced.")
 
     def setTuneInCountValues(self,tuneInCount):

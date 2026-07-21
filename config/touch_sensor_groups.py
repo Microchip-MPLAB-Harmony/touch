@@ -23,6 +23,8 @@ Microchip or any third party.
 """
 MHC Python Interface documentation website <http://confluence.microchip.com/display/MH/MHC+Python+Interface>
 """
+from json_loader import json_loader_instance
+
 class classTouchSensorGroups():
     def __init__(self):
         self.maxGroups = 4
@@ -55,12 +57,15 @@ class classTouchSensorGroups():
         Returns:
             :none
         """
+        deviceName = json_loader_instance.get_deviceSeries()
         if int(groupNumber) == 1:
             DetectIntegration = qtouchComponent.createIntegerSymbol("DEF_TOUCH_DET_INT", parentLabel)
             AntiTouchDetectIntegration = qtouchComponent.createIntegerSymbol("DEF_ANTI_TCH_DET_INT", parentLabel)
             AntiTouchRecalThreshold = qtouchComponent.createKeyValueSetSymbol("DEF_ANTI_TCH_RECAL_THRSHLD", parentLabel)
             DriftRate = qtouchComponent.createIntegerSymbol("DEF_TCH_DRIFT_RATE", parentLabel)
             AntiTouchDriftRate = qtouchComponent.createIntegerSymbol("DEF_ANTI_TCH_DRIFT_RATE", parentLabel)
+            if deviceName == "PIC32CMPL10":
+                DriftStep = qtouchComponent.createIntegerSymbol("DEF_TCH_DRIFT_STEP", parentLabel)
             DriftHoldTime = qtouchComponent.createIntegerSymbol("DEF_DRIFT_HOLD_TIME", parentLabel)
             ReburstMode = qtouchComponent.createKeyValueSetSymbol("DEF_REBURST_MODE", parentLabel)
             MaxOnDuration = qtouchComponent.createIntegerSymbol("DEF_MAX_ON_DURATION", parentLabel)
@@ -70,6 +75,8 @@ class classTouchSensorGroups():
             AntiTouchRecalThreshold = qtouchComponent.createKeyValueSetSymbol("DEF_ANTI_TCH_RECAL_THRSHLD_"+str(groupNumber), parentLabel)
             DriftRate = qtouchComponent.createIntegerSymbol("DEF_TCH_DRIFT_RATE_"+str(groupNumber), parentLabel)
             AntiTouchDriftRate = qtouchComponent.createIntegerSymbol("DEF_ANTI_TCH_DRIFT_RATE_"+str(groupNumber), parentLabel)
+            if deviceName == "PIC32CMPL10":
+                DriftStep = qtouchComponent.createIntegerSymbol("DEF_TCH_DRIFT_STEP_"+str(groupNumber), parentLabel)
             DriftHoldTime = qtouchComponent.createIntegerSymbol("DEF_DRIFT_HOLD_TIME_"+str(groupNumber), parentLabel)
             ReburstMode = qtouchComponent.createKeyValueSetSymbol("DEF_REBURST_MODE_"+str(groupNumber), parentLabel)
             MaxOnDuration = qtouchComponent.createIntegerSymbol("DEF_MAX_ON_DURATION_"+str(groupNumber), parentLabel)
@@ -79,6 +86,8 @@ class classTouchSensorGroups():
         self.setAntiTouchRecalThresholdValues(AntiTouchRecalThreshold)
         self.setDriftRateValues(DriftRate)
         self.setAntiTouchDriftRateVlues(AntiTouchDriftRate)
+        if deviceName == "PIC32CMPL10":
+            self.setDriftStepValues(DriftStep)
         self.setDriftHoldTimeValues(DriftHoldTime)
         self.setReburstModeValues(ReburstMode)
         self.setMaxOnDurationValues(MaxOnDuration)
@@ -205,6 +214,19 @@ class classTouchSensorGroups():
         AntiTouchDriftRate.setMin(0)
         AntiTouchDriftRate.setMax(255)
         AntiTouchDriftRate.setDescription("When signal value is smaller than reference, this value defines the rate at which sensor reference value should be adjusted towards change in signal value.'Away from Touch Drift Rate' value is scaled by 200msec. If 'Away from Touch Drift Rate' is 10, then drift period is 10x200msec = 2seconds. Every two seconds, reference value will be decremented by '1' till it is equal to signal value. Value of 0 will disable Away from touch  drift rate Default: 5")
+
+    def setDriftStepValues(self,DriftStep):
+        """Populate the drift step symbol
+        Arguments:
+            :DriftStep : symbol to be populated
+        Returns:
+            none
+        """
+        DriftStep.setLabel("Touch Drift Step")
+        DriftStep.setDefaultValue(1)
+        DriftStep.setMin(0)
+        DriftStep.setMax(255)
+        DriftStep.setDescription("Amount to drift each drift period. Range: 0-255. Default value: 1 = 1 count per 200ms.")
 
     def setDriftHoldTimeValues(self,DriftHoldTime):
         """Populate the drift hold time  symbol 

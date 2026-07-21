@@ -63,11 +63,19 @@ extern "C" {
 </#if>
 #include "${header_files}"
 </#if>
+<#if DEVICE_NAME == "PIC32CMPL10">
+#include "qtm_touch_key_adc12bit_0x0002_api.h"
+<#else>
 #include "qtm_touch_key_0x0002_api.h"
+</#if>
 <#if ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE!=true>
 #include "qtm_freq_hop_0x0006_api.h"
 <#elseif ENABLE_FREQ_HOP==true && FREQ_AUTOTUNE==true>
+<#if DEVICE_NAME == "PIC32CMPL10">
+#include "qtm_freq_hop_auto_adc12bit_0x0004_api.h"
+<#else>
 #include "qtm_freq_hop_auto_0x0004_api.h"
+</#if>
 </#if>
 <#if ENABLE_SCROLLER == true>
 <#if TOUCH_SCROLLER_ENABLE_CNT&gt;=1>

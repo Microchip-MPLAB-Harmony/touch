@@ -385,6 +385,18 @@ static qtm_freq_hop_autotune_control_t qtm_freq_hop_autotune_control1
 /**********************************************************/
 
 /* Keys set 1 - General settings */
+<#if DEVICE_NAME == "PIC32CMPL10">
+qtm_touch_key_group_config_t qtlib_key_grp_config_set1 = {DEF_NUM_SENSORS,
+                                                          DEF_TOUCH_DET_INT,
+                                                          DEF_MAX_ON_DURATION,
+                                                          DEF_ANTI_TCH_DET_INT,
+                                                          DEF_ANTI_TCH_RECAL_THRSHLD,
+                                                          DEF_TCH_DRIFT_RATE,
+                                                          DEF_ANTI_TCH_DRIFT_RATE,
+                                                          DEF_DRIFT_HOLD_TIME,
+                                                          DEF_REBURST_MODE,
+                                                          DEF_TCH_DRIFT_STEP};
+<#else>
 qtm_touch_key_group_config_t qtlib_key_grp_config_set1 = {DEF_NUM_SENSORS,
                                                           DEF_TOUCH_DET_INT,
                                                           DEF_MAX_ON_DURATION,
@@ -394,6 +406,7 @@ qtm_touch_key_group_config_t qtlib_key_grp_config_set1 = {DEF_NUM_SENSORS,
                                                           DEF_ANTI_TCH_DRIFT_RATE,
                                                           DEF_DRIFT_HOLD_TIME,
                                                           DEF_REBURST_MODE};
+</#if>
 
 static qtm_touch_key_group_data_t qtlib_key_grp_data_set1;
 

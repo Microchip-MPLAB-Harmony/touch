@@ -201,7 +201,13 @@ void datastreamer_output(void)
 		}
 
 		/* Threshold */
+<#if DEVICE_NAME == "PIC32CMPL10">
+		u16temp_output = qtlib_key_configs_set1[count_bytes_out].channel_threshold;
+		datastreamer_transmit((uint8_t)u16temp_output);
+		datastreamer_transmit((uint8_t)(u16temp_output >> 8u));
+<#else>
 		datastreamer_transmit(qtlib_key_configs_set1[count_bytes_out].channel_threshold);
+</#if>
 	}
 
 #if (SCROLLER_MODULE_OUTPUT == 1)

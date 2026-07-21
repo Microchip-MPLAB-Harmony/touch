@@ -250,6 +250,14 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  */
 #define DEF_ANTI_TCH_DRIFT_RATE ${DEF_ANTI_TCH_DRIFT_RATE}u
 
+<#if DEVICE_NAME == "PIC32CMPL10">
+/* Amount to drift each drift period.
+ * Range: 1-10
+ * Default value: 1u = 1 count per 200ms.
+ */
+#define DEF_TCH_DRIFT_STEP ${DEF_TCH_DRIFT_STEP}u
+
+</#if>
 /* Time to restrict drift on all sensor when one or more sensors are activated.
  * Units: 200ms
  * Range: 0-255

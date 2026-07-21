@@ -60,8 +60,13 @@ class classTouchKeySourceFiles():
         touchLibraryFile.setEnabled(True)
 
         architechture=json_loader_instance.get_architecture()
-        touchLibraryFile.setSourcePath("/src/libraries/qtm_touch_key_"+architechture+"_0x0002.X.a")
-        touchLibraryFile.setOutputName("qtm_touch_key_"+architechture+"_0x0002.X.a")
+        deviceName = json_loader_instance.get_deviceSeries()
+        if deviceName == "PIC32CMPL10":
+            touchLibraryFile.setSourcePath("/src/libraries/qtm_touch_key_"+architechture+"_adc12bit_0x0002.X.a")
+            touchLibraryFile.setOutputName("qtm_touch_key_"+architechture+"_adc12bit_0x0002.X.a")
+        else:
+            touchLibraryFile.setSourcePath("/src/libraries/qtm_touch_key_"+architechture+"_0x0002.X.a")
+            touchLibraryFile.setOutputName("qtm_touch_key_"+architechture+"_0x0002.X.a")
 
         return touchLibraryFile
 
@@ -74,8 +79,13 @@ class classTouchKeySourceFiles():
             file symbol
         """
         touchHeaderFile = qtouchComponent.createFileSymbol("TOUCH_KEY_HEADER", None)
-        touchHeaderFile.setSourcePath("/src/qtm_touch_key_0x0002_api.h")
-        touchHeaderFile.setOutputName("qtm_touch_key_0x0002_api.h")
+        deviceName = json_loader_instance.get_deviceSeries()
+        if deviceName == "PIC32CMPL10":
+            touchHeaderFile.setSourcePath("/src/qtm_touch_key_adc12bit_0x0002_api.h")
+            touchHeaderFile.setOutputName("qtm_touch_key_adc12bit_0x0002_api.h")
+        else:
+            touchHeaderFile.setSourcePath("/src/qtm_touch_key_0x0002_api.h")
+            touchHeaderFile.setOutputName("qtm_touch_key_0x0002_api.h")
         touchHeaderFile.setDestPath("/touch/")
         touchHeaderFile.setProjectPath("config/" + configName + "/touch/")
         touchHeaderFile.setType("HEADER")

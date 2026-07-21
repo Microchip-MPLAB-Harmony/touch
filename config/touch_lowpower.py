@@ -117,7 +117,11 @@ class classTouchLP():
         lowPowerDetThreshold.setLabel("Low-power Detect Threshold")
         lowPowerDetThreshold.setDefaultValue(10)
         lowPowerDetThreshold.setMin(10)
-        lowPowerDetThreshold.setMax(255)
+        deviceName = json_loader_instance.get_deviceSeries()
+        if deviceName == "PIC32CMPL10":
+            lowPowerDetThreshold.setMax(65535)
+        else:
+            lowPowerDetThreshold.setMax(255)
         lowPowerDetThreshold.setDescription("Sensor detect threshold for low-power measurement")
 
     def setLowPowerPeriod(self,qtouchComponent,LowPowerEvntMenu,targetDevice):

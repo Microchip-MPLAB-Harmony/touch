@@ -85,11 +85,16 @@ class classTouchFreqSourceFiles():
         """
         freqHopAutoLibraryFile = qtouchComponent.createLibrarySymbol("TOUCH_HOP_AUTO_LIB", None)
         freqHopAutoLibraryFile.setDestPath("/touch/lib/")
-        freqHopAutoLibraryFile.setEnabled(True)     
+        freqHopAutoLibraryFile.setEnabled(True)
 
         architechture=json_loader_instance.get_architecture()
-        freqHopAutoLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_auto_"+architechture+"_0x0004.X.a")
-        freqHopAutoLibraryFile.setOutputName("qtm_freq_hop_auto_"+architechture+"_0x0004.X.a")
+        deviceName = json_loader_instance.get_deviceSeries()
+        if deviceName == "PIC32CMPL10":
+            freqHopAutoLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_auto_"+architechture+"_adc12bit_0x0004.X.a")
+            freqHopAutoLibraryFile.setOutputName("qtm_freq_hop_auto_"+architechture+"_adc12bit_0x0004.X.a")
+        else:
+            freqHopAutoLibraryFile.setSourcePath("/src/libraries/qtm_freq_hop_auto_"+architechture+"_0x0004.X.a")
+            freqHopAutoLibraryFile.setOutputName("qtm_freq_hop_auto_"+architechture+"_0x0004.X.a")
 
         return freqHopAutoLibraryFile
 
@@ -122,8 +127,13 @@ class classTouchFreqSourceFiles():
             file symbol
         """
         freqHopAutoHeaderFile = qtouchComponent.createFileSymbol("TOUCH_HOP_AUTO_HEADER", None)
-        freqHopAutoHeaderFile.setSourcePath("/src/qtm_freq_hop_auto_0x0004_api.h")
-        freqHopAutoHeaderFile.setOutputName("qtm_freq_hop_auto_0x0004_api.h")
+        deviceName = json_loader_instance.get_deviceSeries()
+        if deviceName == "PIC32CMPL10":
+            freqHopAutoHeaderFile.setSourcePath("/src/qtm_freq_hop_auto_adc12bit_0x0004_api.h")
+            freqHopAutoHeaderFile.setOutputName("qtm_freq_hop_auto_adc12bit_0x0004_api.h")
+        else:
+            freqHopAutoHeaderFile.setSourcePath("/src/qtm_freq_hop_auto_0x0004_api.h")
+            freqHopAutoHeaderFile.setOutputName("qtm_freq_hop_auto_0x0004_api.h")
         freqHopAutoHeaderFile.setDestPath("/touch/")
         freqHopAutoHeaderFile.setProjectPath("config/" + configName + "/touch/")
         freqHopAutoHeaderFile.setType("HEADER")

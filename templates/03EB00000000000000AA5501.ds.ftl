@@ -37,7 +37,11 @@ D,${5},${i+1},Compensation${i},F,(variable & 0x0F)*0.00675+((variable >> 4) & 0x
 B,${6},${i+1},CSD${i}
 </#if>
 B,${7},${i+1},State${i}
+<#if pic32cmpl?seq_contains(DEVICE_NAME)>
+D,${8},${i+1},Threshold${i}
+<#else>
 B,${8},${i+1},Threshold${i}
+</#if>
 
 </#list>
 
