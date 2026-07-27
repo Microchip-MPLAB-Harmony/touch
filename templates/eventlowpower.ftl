@@ -90,8 +90,8 @@ static qtm_auto_scan_config_t auto_scan_setup
 <#-- =======================================SAMD21============================================= -->
 
 <#macro lowpower_touch_timer_handler_samd21_evsys>
-#if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
     time_to_measure_touch_var = 1u;
+#if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
         if (time_since_touch < (65535u - measurement_period_store)) {
             time_since_touch += measurement_period_store;
         } else {
@@ -205,8 +205,8 @@ static qtm_auto_scan_config_t auto_scan_setup
 <#-- ========================================================================================== -->
 <#-- =======================================SAMC2x============================================= -->
 <#macro lowpower_touch_timer_handler_samc20_c21_evsys>
-#if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
     time_to_measure_touch_var = 1u;
+#if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
         if (time_since_touch < (65535u - measurement_period_store)) {
             time_since_touch += measurement_period_store;
         } else {
@@ -572,8 +572,8 @@ static qtm_auto_scan_config_t auto_scan_setup
 <#-- ========================================================================================== -->
 
 <#macro lowpower_touch_timer_handler_saml1x_evsys>
-#if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
     time_to_measure_touch_var = 1u;
+#if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
         if (time_since_touch < (65535u - measurement_period_store)) {
             time_since_touch += measurement_period_store;
         } else {
@@ -586,8 +586,8 @@ static qtm_auto_scan_config_t auto_scan_setup
 </#macro>
 
 <#macro lowpower_touch_timer_handler_saml2x_evsys>
-#if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
     time_to_measure_touch_var = 1u;
+#if (DEF_TOUCH_LOWPOWER_ENABLE == 1u)
         if (time_since_touch < (65535u - measurement_period_store)) {
             time_since_touch += measurement_period_store;
         } else {
