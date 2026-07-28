@@ -252,7 +252,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 <#if DEVICE_NAME == "PIC32CMPL10">
 /* Amount to drift each drift period.
- * Range: 1-10
+ * Range: 1-255
  * Default value: 1u = 1 count per 200ms.
  */
 #define DEF_TCH_DRIFT_STEP ${DEF_TCH_DRIFT_STEP}u
@@ -501,7 +501,11 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define DEF_FREQ_AUTOTUNE_ENABLE ${(FREQ_AUTOTUNE)?then('1', '0')}u
 
 /* sets the maximum variance for Frequency Hop Auto tune.
+<#if DEVICE_NAME == "PIC32CMPL10">
+ * Range: 1 to 65535.
+<#else>
  * Range: 1 to 255.
+</#if>
  * Default value: 15
  */
 #define FREQ_AUTOTUNE_MAX_VARIANCE ${DEF_TOUCH_MAX_VARIANCE}u

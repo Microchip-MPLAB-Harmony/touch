@@ -224,9 +224,9 @@ class classTouchSensorGroups():
         """
         DriftStep.setLabel("Touch Drift Step")
         DriftStep.setDefaultValue(1)
-        DriftStep.setMin(0)
+        DriftStep.setMin(1)
         DriftStep.setMax(255)
-        DriftStep.setDescription("Amount to drift each drift period. Range: 0-255. Default value: 1 = 1 count per 200ms.")
+        DriftStep.setDescription("Amount to drift each drift period. Range: 1-255. Default value: 1 = 1 count per 200ms.")
 
     def setDriftHoldTimeValues(self,DriftHoldTime):
         """Populate the drift hold time  symbol 

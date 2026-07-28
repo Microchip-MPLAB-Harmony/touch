@@ -56,8 +56,12 @@ static qtm_auto_scan_config_t auto_scan_setup
 */
 #define QTM_AUTOSCAN_NODE			 ${LOW_POWER_KEYS}
 
-/* Touch detection threshold for Low-power node. 
+/* Touch detection threshold for Low-power node.
+<#if DEVICE_NAME == "PIC32CMPL10">
+* Range: 10 to 65535
+<#else>
 * Range: 10 to 255
+</#if>
 * Default value: 10
 */
 #define QTM_AUTOSCAN_THRESHOLD		 ${LOW_POWER_DET_THRESHOLD}u
