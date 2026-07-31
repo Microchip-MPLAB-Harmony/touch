@@ -76,12 +76,12 @@ class classTouchDSGroup():
             drivenShieldDedicatedPin.setDisplayMode("Description")
             drivenShieldDedicatedPin.setDependencies(self.drivenShieldHwUpdate, ["DS_DEDICATED_PIN"])
 
-            enableDrivenShieldAdjacent = qtouchComponent.createBooleanSymbol("DS_ADJACENT_SENSE_LINE_AS_SHIELD", drivenShieldMenu)
-            enableDrivenShieldAdjacent.setLabel("Enable Adjacent Sense Pins as Shield")
-            enableDrivenShieldAdjacent.setDefaultValue(False)
-            enableDrivenShieldAdjacent.setDependencies(self.drivenShieldHwUpdate, ["DS_ADJACENT_SENSE_LINE_AS_SHIELD"])
-
             if self.json_data["features"]["core"]!="CVD":
+                enableDrivenShieldAdjacent = qtouchComponent.createBooleanSymbol("DS_ADJACENT_SENSE_LINE_AS_SHIELD", drivenShieldMenu)
+                enableDrivenShieldAdjacent.setLabel("Enable Adjacent Sense Pins as Shield")
+                enableDrivenShieldAdjacent.setDefaultValue(False)
+                enableDrivenShieldAdjacent.setDependencies(self.drivenShieldHwUpdate, ["DS_ADJACENT_SENSE_LINE_AS_SHIELD"])
+
                 for index in range(0, len(ptcPininfo)):
                     if(ptcPininfo[index].getAttribute("group") == "Y"):
                         drivenShieldDedicatedPin.addKey(ptcPininfo[index].getAttribute("index"),ptcPininfo[index].getAttribute("group")+"("+ptcPininfo[index].getAttribute("index")+")",ptcPininfo[index].getAttribute("group")+ptcPininfo[index].getAttribute("index")+ "  ("+ ptcPininfo[index].getAttribute("pad")+")")
@@ -511,7 +511,10 @@ class classTouchDSGroup():
         print("Updating shield lumps")
         component= symbol.getComponent()
         enableDrivenShieldAdjacent = False
-        enableDrivenShieldAdjacent = component.getSymbolByID("DS_ADJACENT_SENSE_LINE_AS_SHIELD").getValue()
+        if self.json_data["features"]["core"]=="CVD" and self.json_data["features"]["hardware_shield"]==True:
+            enableDrivenShieldAdjacent = False
+        else:
+            enableDrivenShieldAdjacent = component.getSymbolByID("DS_ADJACENT_SENSE_LINE_AS_SHIELD").getValue()
         enableDrivenShieldDedicated = component.getSymbolByID("DS_DEDICATED_PIN_ENABLE").getValue()
         drivenShieldDedicatedPin = component.getSymbolByID("DS_DEDICATED_PIN")
         
@@ -585,7 +588,10 @@ class classTouchDSGroup():
         component= symbol.getComponent()
         currentVal = int(event['symbol'].getValue())
         enableDrivenShieldAdjacent = False
-        enableDrivenShieldAdjacent = component.getSymbolByID("DS_ADJACENT_SENSE_LINE_AS_SHIELD").getValue()
+        if self.json_data["features"]["core"]=="CVD" and self.json_data["features"]["hardware_shield"]==True:
+            enableDrivenShieldAdjacent = False
+        else:
+            enableDrivenShieldAdjacent = component.getSymbolByID("DS_ADJACENT_SENSE_LINE_AS_SHIELD").getValue()
         enableDrivenShieldDedicated = component.getSymbolByID("DS_DEDICATED_PIN_ENABLE").getValue()
         drivenShieldDedicatedPin = component.getSymbolByID("DS_DEDICATED_PIN")
         
